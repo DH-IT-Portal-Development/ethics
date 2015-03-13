@@ -1,0 +1,23 @@
+{% extends "proposals/base.html" %}
+
+{% block content %}
+<h2>Aanvraag <em>{{ proposal.name }}</em></h2>
+<h3>Algemene informatie</h3>
+<table class="pure-table">
+	<tr>
+		<th>Longitudinaal</th>
+		<td>{{ proposal.longitudinal }}</td>
+	</tr>
+	<tr>
+		<th>Supervisor</th>
+		<td>{{ proposal.supervisor_name }} (<a href="mailto:{{ proposal.supervisor_email }}">{{ proposal.supervisor_email }}</a>)</td>
+	</tr>
+</table>
+<h3>WMO-plichtig of niet?</h3>
+<table class="pure-table">
+	<tr>
+		<th>METC?</th>
+		<td>{{ proposal.wmo.metc }}</td>
+	</tr>
+</table>
+{% endblock %}

@@ -1,0 +1,56 @@
+[
+{
+    "fields": {
+        "age_max": 4,
+        "description": "Baby",
+        "age_min": 0
+    },
+    "model": "proposals.agegroup",
+    "pk": 1
+},
+{
+    "fields": {
+        "age_max": 6,
+        "description": "Peuter",
+        "age_min": 4
+    },
+    "model": "proposals.agegroup",
+    "pk": 2
+},
+{
+    "fields": {
+        "age_max": 12,
+        "description": "Kind",
+        "age_min": 6
+    },
+    "model": "proposals.agegroup",
+    "pk": 3
+},
+{
+    "fields": {
+        "age_max": 18,
+        "description": "Adolescent",
+        "age_min": 12
+    },
+    "model": "proposals.agegroup",
+    "pk": 4
+},
+{
+    "fields": {
+        "age_max": 70,
+        "description": "Volwassene",
+        "age_min": 18
+    },
+    "model": "proposals.agegroup",
+    "pk": 5
+},
+{
+    "fields": {
+        "age_max": null,
+        "description": "70-plusser",
+        "age_min": 70
+    },
+    "model": "proposals.agegroup",
+    "pk": 6
+}
+]

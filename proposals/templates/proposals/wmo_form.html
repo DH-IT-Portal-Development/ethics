@@ -1,0 +1,33 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles%}
+
+{% block content %} 
+<script>
+$(function() {
+	$("#id_has_metc").change(function() {
+		var has_metc = $("#id_has_metc").val() == 2;
+		var has_metc_doubt = has_metc || $("#id_has_metc").val() == 1;
+		$("#id_metc_institution").prop('disabled', !has_metc_doubt);
+		$("#id_is_medical, #id_is_behavioristic").prop('disabled', !has_metc);
+	});
+	$("#id_has_metc").change();
+
+	$("[id^=id]").each(function() { 
+		var help = $(this).next().next(); 
+		if (help.html()) 
+		{
+			$(this).after('<img src="{% static 'proposals/images/information.png' %}">');
+			$(this).next().attr('title', help.html());
+			help.hide();
+		}
+	});
+});
+</script>
+<h2>Aanvraag indienen: fase 2</h2>
+<p></p>
+<h3>WMO-plichtig of niet?</h3>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+	<table>{{ form.as_table }}</table>
+    <input class="pure-button pure-button-primary" type="submit" value="Doorgaan" />
+</form>
+{% endblock %}

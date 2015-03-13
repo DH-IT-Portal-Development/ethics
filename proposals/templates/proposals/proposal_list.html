@@ -1,0 +1,41 @@
+{% extends "proposals/base.html" %}
+
+{% block content %} 
+<script>
+$(document).ready( function () {
+    $('#applications').DataTable();
+} );
+</script>
+
+<h2>Mijn aanvragen</h2>
+<p>Aanvragen (titel en deze tekst nog corrigeren)</p>
+<table id="applications" class="display">
+    <thead>
+        <tr>
+            <th>Titel studie</th>
+            <th>Eindverantwoordelijke</th>
+            <th>Longitudinaal?</th>
+            <th>Status</th>
+            <th>Laatst bijgewerkt</th>
+            <th>Acties</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proposal in proposals %}
+        <tr>
+            <td>{{ proposal.name }}</td>
+            <td><a href="mailto:{{proposal.supervisor_email}}">{{ proposal.supervisor_name }}</a></td>
+            <td>{{ proposal.longitudinal }}</td>
+            <td>{{ proposal.status }}</td>
+            <td>{{ proposal.date_modified }}</td>
+            <td>
+            	<a href="/proposals/{{ proposal.id }}/">Inzien</a>, 
+            	<a href="/proposals/update/{{ proposal.id }}/">Bewerken</a>, 
+            	<a href="/proposals/delete/{{ proposal.id }}/">Verwijderen</a>, 
+            	<a href="/proposals/continue/{{ proposal.id }}/">Doorgaan</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

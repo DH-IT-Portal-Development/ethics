@@ -1,0 +1,65 @@
+[
+{
+    "fields": {
+        "description": "dyslexie"
+    },
+    "model": "proposals.trait",
+    "pk": 1
+},
+{
+    "fields": {
+        "description": "taalontwikkelingsstoornis"
+    },
+    "model": "proposals.trait",
+    "pk": 2
+},
+{
+    "fields": {
+        "description": "stotteren"
+    },
+    "model": "proposals.trait",
+    "pk": 3
+},
+{
+    "fields": {
+        "description": "dyspraxie"
+    },
+    "model": "proposals.trait",
+    "pk": 4
+},
+{
+    "fields": {
+        "description": "aandachtstekortstoornis (met hyperactiviteit) ook wel: AD(H)D"
+    },
+    "model": "proposals.trait",
+    "pk": 5
+},
+{
+    "fields": {
+        "description": "autismespectrumstoornissen (ASS)"
+    },
+    "model": "proposals.trait",
+    "pk": 6
+},
+{
+    "fields": {
+        "description": "doof (met cochleair implantaat) of slechthorend (met hoorapparaat)"
+    },
+    "model": "proposals.trait",
+    "pk": 7
+},
+{
+    "fields": {
+        "description": "afasie"
+    },
+    "model": "proposals.trait",
+    "pk": 8
+},
+{
+    "fields": {
+        "description": "pre/-postmatuur"
+    },
+    "model": "proposals.trait",
+    "pk": 9
+}
+]

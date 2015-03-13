@@ -1,0 +1,38 @@
+{% extends "proposals/base.html" %}
+
+{% block content %}
+
+<h2>Create Project</h2>
+
+{% if form.errors %}
+<p class="form-errors"></p>
+{% endif %}
+
+<form class="pure-form pure-form-stacked" method="post" action="/proposals/add_project/">
+<fieldset>
+    {% csrf_token %}
+
+    <div class="pure-g" style="width:30%">
+    <div class="pure-u-1">
+        <label>{{ form.name.label }}</label>{{ form.name }}
+    </div>
+    <div class="pure-u-1-2">
+        <label>{{ form.date_start.label }}</label>{{ form.date_start }}
+    </div>
+    <div class="pure-u-1-2">
+        <label>{{ form.date_end.label }}</label>{{ form.date_end }}
+    </div>
+    <div class="pure-u-1-2">
+        <label for="id_{{form.nwo_number.name}}">{{ form.nwo_number.label }}</label>{{ form.nwo_number }}
+    </div>
+    <div class="pure-u-1-2">
+        <label>{{ form.wbs_number.label }}</label>{{ form.wbs_number }}
+    </div>
+</div>
+    <input class="pure-button pure-button-primary" type="submit" value="Create Project" />
+
+</fieldset>
+
+
+</form>
+{% endblock %}
