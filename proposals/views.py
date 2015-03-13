@@ -5,7 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import generic
 from django.shortcuts import render_to_response
 
-from .models import Proposal, Wmo, ParticipantGroup
+from .models import Proposal, Wmo, ParticipantGroup, Member, Meeting, Faq
 from .forms import ProposalForm
 
 # List views 
@@ -26,6 +26,19 @@ class ConceptsView(ArchiveView):
         """Return all the proposals for the current user with status concept"""
         return Proposal.objects.filter(applicants=self.request.user)
 
+class MembersView(generic.ListView): 
+    def get_queryset(self):
+        return Member.objects.all()
+
+class MeetingsView(generic.ListView): 
+    def get_queryset(self):
+        return Meeting.objects.all()
+
+class FaqsView(generic.ListView): 
+    def get_queryset(self):
+        return Faq.objects.all()
+
+# Proposal detail
 class DetailView(generic.DetailView):
     model = Proposal
 

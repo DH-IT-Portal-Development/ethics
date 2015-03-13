@@ -1,0 +1,10 @@
+{% extends "proposals/base.html" %}
+
+{% block content %} 
+<h2>Leden</h2>
+<ul>
+{% for member in members %}
+<li>{{ member.first_name }} {{ member.last_name }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -22,18 +22,18 @@
         <h1>ETCL UiL OTS</h1>
         <div class="pure-menu pure-menu-open pure-menu-horizontal pure-menu-custom">
             <ul>
-                <li><a href="/proposals/">{% trans "Home" %}</a></li>
+                <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
             {% if user.is_authenticated %}
                 <li><a href="/proposals/concepts">{% trans "Mijn conceptaanvragen" %}</a></li>
                 <li><a href="/proposals/applications">{% trans "Mijn aanvraagarchief" %}</a></li>
                 <li><a href="/proposals/archive">{% trans "Publiek aanvraagarchief" %}</a></li>
-                <li><a href="/proposals/faq">{% trans "FAQ" %}</a></li>
+                <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
                 <li><a href="/accounts/logout/"><em>{% trans "Uitloggen" %}</em></a></li>
             {% else %}
-                <li><a href="/proposals/faq">{% trans "Voorbeelddocumenten" %}</a></li>
+                <li><a href="{% url 'faq' %}">{% trans "Voorbeelddocumenten" %}</a></li>
                 <li><a href="/proposals/members">{% trans "Leden" %}</a></li>
                 <li><a href="/proposals/meetings">{% trans "Vergaderdata" %}</a></li>
-                <li><a href="/proposals/faq">{% trans "FAQ" %}</a></li>
+                <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
                 <li><a href="/accounts/login/"><em>{% trans "Inloggen" %}</em></a></li>
             {% endif %}
             </ul>
