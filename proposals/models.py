@@ -185,3 +185,6 @@ class Member(models.Model):
 class Meeting(models.Model):
     date = models.DateField()
     deadline = models.DateField()
+
+    def __unicode__(self):
+        return '%s' % (self.date)

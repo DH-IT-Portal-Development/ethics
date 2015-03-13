@@ -27,16 +27,16 @@ class ConceptsView(ArchiveView):
         return Proposal.objects.filter(applicants=self.request.user)
 
 class MembersView(generic.ListView): 
-    def get_queryset(self):
-        return Member.objects.all()
+    context_object_name = 'members'
+    model = Member
 
 class MeetingsView(generic.ListView): 
-    def get_queryset(self):
-        return Meeting.objects.all()
+    context_object_name = 'meetings'
+    model = Meeting
 
 class FaqsView(generic.ListView): 
-    def get_queryset(self):
-        return Faq.objects.all()
+    context_object_name = 'faqs'
+    model = Faq
 
 # Proposal detail
 class DetailView(generic.DetailView):
