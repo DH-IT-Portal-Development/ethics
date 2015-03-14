@@ -64,9 +64,10 @@ class ProposalUpdate(SuccessMessageMixin, generic.UpdateView):
         form.instance.status = 0
         return super(ProposalUpdate, self).form_valid(form)
 
-class ProposalDelete(generic.DeleteView):
+class ProposalDelete(SuccessMessageMixin, generic.DeleteView):
     model = Proposal
     success_url = '/proposals/concepts/'
+    success_message = 'Aanvraag verwijderd'
 
 # CRUD actions on Wmo
 class WmoCreate(generic.CreateView): 

@@ -2,9 +2,13 @@ from django.conf import settings
 from django.db import models
 
 class Proposal(models.Model):
+    DRAFT = 0 
+    WMO_IN_PROGRESS = 1
+    WMO_FINISHED = 2
     STATUSES = (
-        (0, 'draft'),
-        (1, 'wmo'),
+        (DRAFT, 'draft'),
+        (WMO_IN_PROGRESS, 'wmo_'),
+        (WMO_FINISHED, 'wmo_finished'),
         (2, 'participant_groups'),
         (3, 'experiments'),
         (4, 'concept'),
@@ -48,8 +52,17 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     date_modified = models.DateTimeField(auto_now=True)
 
     # References
-    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL) # todo: more than one
+    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL)
     parent = models.ForeignKey('self', null=True)
+
+    def denormalize_status(self):
+        """Sets the correct status on save of a Proposal"""
+        if not self.status: 
+            self.status = DRAFT
+        if self.Wmo.metc: 
+            self.status = WMO_IN_PROGRESS
+        else:
+            self.status = WMO_FINISHED
 
     def __unicode__(self):
         return 'Proposal %s' % self.name
