@@ -52,7 +52,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     date_modified = models.DateTimeField(auto_now=True)
 
     # References
-    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='Uitvoerende(n)')
     parent = models.ForeignKey('self', null=True)
 
     def denormalize_status(self):
@@ -74,7 +74,7 @@ class Wmo(models.Model):
     metc_institution = models.CharField(
         'Instelling',
         max_length=200,
-        null=True)
+        blank=True)
     is_medical = models.NullBooleanField(
         'Is de onderzoeksvraag medisch-wetenschappelijk van aard?', 
         default=False)
@@ -107,6 +107,7 @@ class AgeGroup(models.Model):
 
 class Trait(models.Model):
     description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description
@@ -118,27 +119,33 @@ class Survey(models.Model):
     def __unicode__(self):
         return self.name
 
-class ParticipantGroup(models.Model): 
-    SETTINGS = (
-        ('h', 'At home'),
-        ('c', 'Care institution'),
-        ('s', 'School'),
-        ('d', 'Daycare'),
-        ('p', 'Peuterspeelzaal'),
-        ('l', 'Lab'),
-        ('o', 'Other'),
-    )
-    RECRUITMENTS = (
-        ('ad', 'Adult database'),
-        ('bd', 'Babylab database'),
-        ('on', 'Own network'),
-        ('ps', 'Public space'),
-        ('sc', 'Schools'),
-        ('dc', 'Daycare'),
-    )
+class Setting(models.Model):
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
 
-    age_groups = models.ManyToManyField(AgeGroup)
-    traits = models.ManyToManyField(Trait)
+    def __unicode__(self):
+        return self.description
+
+class Recruitment(models.Model):
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.description
+
+class Study(models.Model): 
+    age_groups = models.ManyToManyField(
+        AgeGroup, 
+        verbose_name='Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, er zijn meerdere antwoorden zijn mogelijk')
+    traits = models.ManyToManyField(
+        Trait, 
+        verbose_name='Worden de beoogde proefpersonen op bijzondere kenmerken geselecteerden die mogelijk een negatief effect hebben \
+op de kwetsbaarheid of verminderde belastbaarheid van de proefpersoon? Indien u twee (of meer) groepen voor ogen heeft, \
+hoeft u over de controlegroep (die dus geen bijzondere kenmerken heeft) niet in het hoofd te nemen bij het beantwoorden van de ze vraag')
+    traits_details = models.CharField(
+        'Namelijk', 
+        max_length=200,
+        blank=True)
     necessity = models.NullBooleanField(
         'Is het noodzakelijk om deze geselecteerde groep proefpersonen aan de door jou opgelegde handeling te onderwerpen om de onderzoeksvraag beantwoord te krijgen? \
 Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?',
@@ -146,31 +153,34 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
     necessity_reason = models.TextField(
         'Leg uit waarom',
         blank=True)
-    setting = models.CharField(
-        'Geef aan waar de studie plaatsvindt', 
-        max_length=1,
-        choices=SETTINGS)
+    setting = models.ManyToManyField(
+        Setting,
+        verbose_name='Geef aan waar de studie plaatsvindt')
     setting_details = models.CharField(
-        'Anders, namelijk', 
+        'Namelijk', 
         max_length=200,
         blank=True)
     surveys = models.ManyToManyField(Survey)
     risk_physical = models.NullBooleanField(
-        'Is er een kans dat de proefpersoon fysiek letsel oploopt?')
+        'Is er een kans dat de proefpersoon fysiek letsel oploopt?',
+        default=False)
     risk_psychological = models.NullBooleanField(
-        'Is er een kans dat de proefpersoon psychisch letsel oploopt?')
+        'Is er een kans dat de proefpersoon psychisch letsel oploopt?',
+        default=False)
     compensation = models.CharField(
         'Welke vergoeding krijgt de proefpersoon voor verrichte taken?',
         max_length=200,
         help_text='tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld')
-    recruitment = models.CharField(
-        'Hoe worden de proefpersonen geworven?',
-        max_length=2,
-        choices=RECRUITMENTS)
-    recruitment_details = models.CharField(max_length=200, blank=True)
+    recruitment = models.ManyToManyField(
+        Recruitment,
+        verbose_name='Hoe worden de proefpersonen geworven?')
+    recruitment_details = models.CharField(
+        'Namelijk', 
+        max_length=200, 
+        blank=True)
 
     # References
-    proposal = models.ForeignKey(Proposal)
+    proposal = models.OneToOneField(Proposal, primary_key=True)
 
     def __unicode__(self):
         return 'Experiment settings for proposal %s' % self.proposal.name
@@ -184,6 +194,7 @@ class Action(models.Model):
 
 class Registration(models.Model): 
     description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description
@@ -199,7 +210,8 @@ belastend/onaangenaam ervaren kunnen worden?')
         'Wat is de duur van de taak, waarbij de proefpersoon een handeling moet verrichten, van begin tot eind, \
 dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak?')
     actions = models.ManyToManyField(Action)
-    registration = models.ManyToManyField(Registration)
+    registrations = models.ManyToManyField(Registration)
+    registrations_details = models.CharField(max_length=200, blank=True)
 
     # References
     proposal = models.ForeignKey(Proposal)

@@ -23,3 +23,50 @@ body {
 .form-errors {
     color: red;
 }
+
+form ul {
+    list-style-type: none;
+    padding: 0; 
+    margin: 0;
+}
+
+form li {
+    display: inline;
+}
+
+/* Bootstrap-like contextual boxes */
+.success {
+    text-align: center;
+    padding: 10px; 
+    margin-bottom: 10px;
+    background-color: #DFF0D8;
+    border: 1px solid #00C008;
+    list-style-type: none;
+}
+
+.failed {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #F2DEDE;
+    border: 1px solid red;
+    list-style-type: none;
+}
+
+.warning {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #FCF8E3;
+    border: 1px solid yellow;
+    list-style-type: none;
+}
+
+.info {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #D9EDF7;
+    border: 1px solid blue;
+    list-style-type: none;
+}

@@ -24,5 +24,6 @@ $(function() {
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" value="Aanmaken" />
+    <a class="pure-button pure-button-secondary" href="/proposals/concepts">Annuleren</a>
 </form>
 {% endblock %}

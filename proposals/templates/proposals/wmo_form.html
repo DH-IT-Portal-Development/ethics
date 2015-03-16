@@ -4,13 +4,21 @@
 {% block content %} 
 <script>
 $(function() {
-	$("#id_has_metc").change(function() {
-		var has_metc = $("#id_has_metc").val() == 2;
-		var has_metc_doubt = has_metc || $("#id_has_metc").val() == 1;
-		$("#id_metc_institution").prop('disabled', !has_metc_doubt);
-		$("#id_is_medical, #id_is_behavioristic").prop('disabled', !has_metc);
+	$("#id_metc").change(function() {
+		var metc_true = $('#id_metc_0:checked').val() == "True";
+		var metc_doubt = metc_true || $('#id_metc_2:checked').val() == "None";
+		$("#id_metc_institution").parent().parent().toggle(metc_doubt);
+		$("#id_is_medical, #id_is_behavioristic").parent().parent().toggle(!metc_true);
 	});
-	$("#id_has_metc").change();
+	$("#id_metc").change();
+	
+	$("#id_metc").change(function() {
+		var metc_true = $('#id_metc_0:checked').val() == "True";
+		var metc_doubt = metc_true || $('#id_metc_2:checked').val() == "None";
+		$("#id_metc_institution").parent().parent().toggle(metc_doubt);
+		$("#id_is_medical, #id_is_behavioristic").parent().parent().toggle(!metc_true);
+	});
+	$("#id_metc").change();
 
 	$("[id^=id]").each(function() { 
 		var help = $(this).next().next(); 

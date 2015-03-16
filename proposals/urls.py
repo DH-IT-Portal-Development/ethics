@@ -18,6 +18,7 @@ urlpatterns = [
     
     url(r'^continue/(?P<pk>\d+)/$', WmoCreate.as_view()),
     url(r'^continue2/(?P<pk>\d+)/$', StudyCreate.as_view()),
+    url(r'^continue3/(?P<pk>\d+)/$', TaskCreate.as_view()),
 
     url(r'^members/$', MembersView.as_view(), name='members'),
     url(r'^meetings/$', MeetingsView.as_view(), name='meetings'),

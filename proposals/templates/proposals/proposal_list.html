@@ -14,7 +14,6 @@ $(document).ready( function () {
         <tr>
             <th>Titel studie</th>
             <th>Eindverantwoordelijke</th>
-            <th>Longitudinaal?</th>
             <th>Status</th>
             <th>Laatst bijgewerkt</th>
             <th>Acties</th>
@@ -25,7 +24,6 @@ $(document).ready( function () {
         <tr>
             <td>{{ proposal.name }}</td>
             <td><a href="mailto:{{proposal.supervisor_email}}">{{ proposal.supervisor_name }}</a></td>
-            <td>{{ proposal.longitudinal }}</td>
             <td>{{ proposal.status }}</td>
             <td>{{ proposal.date_modified }}</td>
             <td>

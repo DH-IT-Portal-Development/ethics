@@ -1,12 +1,8 @@
-from django.http import HttpResponseRedirect
-from django.contrib.formtools.wizard.views import SessionWizardView
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import generic
-from django.shortcuts import render_to_response
 
-from .models import Proposal, Wmo, ParticipantGroup, Member, Meeting, Faq
-from .forms import ProposalForm
+from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
+from .forms import WmoForm, StudyForm
 
 # List views 
 class ArchiveView(generic.ListView):
@@ -70,25 +66,31 @@ class ProposalDelete(SuccessMessageMixin, generic.DeleteView):
     success_message = 'Aanvraag verwijderd'
 
 # CRUD actions on Wmo
-class WmoCreate(generic.CreateView): 
+class WmoCreate(SuccessMessageMixin, generic.CreateView): 
     model = Wmo
-    fields = ('metc', 'metc_institution', 'is_medical', 'is_behavioristic', 'metc_decision', 'metc_decision_pdf')
+    form_class = WmoForm
     success_url = '/proposals/concepts/'
+    success_message = 'WMO-gegevens opgeslagen'
 
     def form_valid(self, form):
-        form.instance.status = 1
+        form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(WmoCreate, self).form_valid(form)
 
 # CRUD actions on a Study
-class StudyCreate(generic.CreateView): 
-    model = ParticipantGroup
-    fields = ('age_groups', 'traits', 'necessity', 'necessity_reason', 'setting', 'setting_details', \
-        'risk_physical', 'risk_psychological', 'compensation', 'recruitment')
+class StudyCreate(SuccessMessageMixin, generic.CreateView): 
+    model = Study
+    form_class = StudyForm
     success_url = '/proposals/concepts/'
+    success_message = 'Algemene kenmerken opgeslagen'
 
     def form_valid(self, form):
-        form.instance.status = 2
+        form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(StudyCreate, self).form_valid(form)
+
+# CRUD actions on a Task
+class TaskCreate(generic.CreateView):
+    model = Task
+    fields = ('name', 'procedure', 'duration', 'actions', 'registrations', 'registrations_details')
 
 # Home view
 class HomeView(generic.TemplateView):
@@ -98,33 +100,3 @@ class HomeView(generic.TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['current_user'] = self.request.user
         return context
-
-# Actions... to be deleted?
-def add_proposal(request): 
-    if request.method == 'POST':
-        form = ProposalForm(request.POST)
-
-        if form.is_valid():
-            form.save(commit=True)
-            return index(request)
-        else:
-            print form.errors
-    else:
-        form = ProposalForm()
-
-    return render_to_response('proposals/add_proposal.html', {'form': form})
-
-def save_proposal(form_list, request): 
-    proposal = Proposal()
-    for form in form_list: 
-        for field, value in form.cleaned_data.iteritems():
-            setattr(proposal, field, value)
-    proposal.applicant = request.user
-    proposal.save()
-
-class ApplicationWizard(SessionWizardView):
-    #file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'informed_consent'))
-
-    def done(self, form_list, **kwargs):
-        save_proposal(form_list, self.request) # TODO
-        return HttpResponseRedirect('/proposals/')

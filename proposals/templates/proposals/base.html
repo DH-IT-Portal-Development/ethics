@@ -5,13 +5,13 @@
 <html lang="en">
 <head>
     <title>{% block title %}ETCL UiL OTS{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'proposals/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.3/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" charset="utf8" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.3/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js"></script>
 </head>
 <body>
 
@@ -20,24 +20,7 @@
     <div id="content" class="pure-u-3-4">
         <img id="header-img" src="{% static 'proposals/images/uu-header.png' %}">
         <h1>ETCL UiL OTS</h1>
-        <div class="pure-menu pure-menu-open pure-menu-horizontal pure-menu-custom">
-            <ul>
-                <li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-            {% if user.is_authenticated %}
-                <li><a href="/proposals/concepts">{% trans "Mijn conceptaanvragen" %}</a></li>
-                <li><a href="/proposals/applications">{% trans "Mijn aanvraagarchief" %}</a></li>
-                <li><a href="/proposals/archive">{% trans "Publiek aanvraagarchief" %}</a></li>
-                <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
-                <li><a href="/accounts/logout/"><em>{% trans "Uitloggen" %}</em></a></li>
-            {% else %}
-                <li><a href="{% url 'faq' %}">{% trans "Voorbeelddocumenten" %}</a></li>
-                <li><a href="/proposals/members">{% trans "Leden" %}</a></li>
-                <li><a href="/proposals/meetings">{% trans "Vergaderdata" %}</a></li>
-                <li><a href="{% url 'faq' %}">{% trans "FAQ" %}</a></li>
-                <li><a href="/accounts/login/"><em>{% trans "Inloggen" %}</em></a></li>
-            {% endif %}
-            </ul>
-        </div>
+        {% include "proposals/menu.html" %}
         <div id="messages">
         {% if messages %}
             <ul class="messages">

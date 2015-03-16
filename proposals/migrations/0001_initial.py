@@ -73,25 +73,6 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='ParticipantGroup',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('necessity', models.NullBooleanField(default=True, verbose_name=b'Is het noodzakelijk om deze geselecteerde groep proefpersonen aan de door jou opgelegde handeling te onderwerpen om de onderzoeksvraag beantwoord te krijgen? Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?')),
-                ('necessity_reason', models.TextField(verbose_name=b'Leg uit waarom', blank=True)),
-                ('setting', models.CharField(max_length=1, verbose_name=b'Geef aan waar de studie plaatsvindt', choices=[(b'h', b'At home'), (b'c', b'Care institution'), (b's', b'School'), (b'd', b'Daycare'), (b'p', b'Peuterspeelzaal'), (b'l', b'Lab'), (b'o', b'Other')])),
-                ('setting_details', models.CharField(max_length=200, verbose_name=b'Anders, namelijk', blank=True)),
-                ('risk_physical', models.NullBooleanField(verbose_name=b'Is er een kans dat de proefpersoon fysiek letsel oploopt?')),
-                ('risk_psychological', models.NullBooleanField(verbose_name=b'Is er een kans dat de proefpersoon psychisch letsel oploopt?')),
-                ('compensation', models.CharField(help_text=b'tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld', max_length=200, verbose_name=b'Welke vergoeding krijgt de proefpersoon voor verrichte taken?')),
-                ('recruitment', models.CharField(max_length=2, verbose_name=b'Hoe worden de proefpersonen geworven?', choices=[(b'ad', b'Adult database'), (b'bd', b'Babylab database'), (b'on', b'Own network'), (b'ps', b'Public space'), (b'sc', b'Schools'), (b'dc', b'Daycare')])),
-                ('recruitment_details', models.CharField(max_length=200, blank=True)),
-                ('age_groups', models.ManyToManyField(to='proposals.AgeGroup')),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
             name='Proposal',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -110,10 +91,53 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Recruitment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('description', models.CharField(max_length=200)),
+                ('needs_details', models.BooleanField(default=False)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Registration',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(max_length=200)),
+                ('needs_details', models.BooleanField(default=False)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Setting',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('description', models.CharField(max_length=200)),
+                ('needs_details', models.BooleanField(default=False)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Study',
+            fields=[
+                ('traits_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
+                ('necessity', models.NullBooleanField(default=True, verbose_name=b'Is het noodzakelijk om deze geselecteerde groep proefpersonen aan de door jou opgelegde handeling te onderwerpen om de onderzoeksvraag beantwoord te krijgen? Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?')),
+                ('necessity_reason', models.TextField(verbose_name=b'Leg uit waarom', blank=True)),
+                ('setting_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
+                ('risk_physical', models.NullBooleanField(default=False, verbose_name=b'Is er een kans dat de proefpersoon fysiek letsel oploopt?')),
+                ('risk_psychological', models.NullBooleanField(default=False, verbose_name=b'Is er een kans dat de proefpersoon psychisch letsel oploopt?')),
+                ('compensation', models.CharField(help_text=b'tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld', max_length=200, verbose_name=b'Welke vergoeding krijgt de proefpersoon voor verrichte taken?')),
+                ('recruitment_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
+                ('proposal', models.OneToOneField(primary_key=True, serialize=False, to='proposals.Proposal')),
+                ('age_groups', models.ManyToManyField(to='proposals.AgeGroup', verbose_name=b'Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, er zijn meerdere antwoorden zijn mogelijk')),
+                ('recruitment', models.ManyToManyField(to='proposals.Recruitment', verbose_name=b'Hoe worden de proefpersonen geworven?')),
+                ('setting', models.ManyToManyField(to='proposals.Setting', verbose_name=b'Geef aan waar de studie plaatsvindt')),
             ],
             options={
             },
@@ -137,6 +161,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=200, verbose_name=b'Naam van de taak')),
                 ('procedure', models.NullBooleanField(verbose_name=b'Welk onderdeel, of welke combinatie van onderdelen, van de procedure zouden door de proefpersonen als belastend/onaangenaam ervaren kunnen worden?')),
                 ('duration', models.PositiveIntegerField(verbose_name=b'Wat is de duur van de taak, waarbij de proefpersoon een handeling moet verrichten, van begin tot eind, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak?')),
+                ('registrations_details', models.CharField(max_length=200, blank=True)),
                 ('actions', models.ManyToManyField(to='proposals.Action')),
             ],
             options={
@@ -148,6 +173,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(max_length=200)),
+                ('needs_details', models.BooleanField(default=False)),
             ],
             options={
             },
@@ -157,7 +183,7 @@ class Migration(migrations.Migration):
             name='Wmo',
             fields=[
                 ('metc', models.NullBooleanField(default=False, verbose_name=b'Vindt de studie plaats binnen het UMC Utrecht, of een andere instelling waarbij de METC verplicht betrokken wordt?')),
-                ('metc_institution', models.CharField(max_length=200, null=True, verbose_name=b'Instelling')),
+                ('metc_institution', models.CharField(max_length=200, verbose_name=b'Instelling', blank=True)),
                 ('is_medical', models.NullBooleanField(default=False, verbose_name=b'Is de onderzoeksvraag medisch-wetenschappelijk van aard?')),
                 ('is_behavioristic', models.NullBooleanField(default=False, help_text=b'Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten drukken.', verbose_name=b'Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd?')),
                 ('metc_decision', models.BooleanField(default=False, verbose_name=b'Is uw onderzoek al in behandeling genomen door een METC?')),
@@ -176,38 +202,32 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='task',
-            name='registration',
+            name='registrations',
             field=models.ManyToManyField(to='proposals.Registration'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='study',
+            name='surveys',
+            field=models.ManyToManyField(to='proposals.Survey'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='study',
+            name='traits',
+            field=models.ManyToManyField(to='proposals.Trait', verbose_name=b'Worden de beoogde proefpersonen op bijzondere kenmerken geselecteerden die mogelijk een negatief effect hebben op de kwetsbaarheid of verminderde belastbaarheid van de proefpersoon? Indien u twee (of meer) groepen voor ogen heeft, hoeft u over de controlegroep (die dus geen bijzondere kenmerken heeft) niet in het hoofd te nemen bij het beantwoorden van de ze vraag'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='proposal',
             name='applicants',
-            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, verbose_name=b'Uitvoerende(n)'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='proposal',
             name='parent',
             field=models.ForeignKey(to='proposals.Proposal', null=True),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='participantgroup',
-            name='proposal',
-            field=models.ForeignKey(to='proposals.Proposal'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='participantgroup',
-            name='surveys',
-            field=models.ManyToManyField(to='proposals.Survey'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='participantgroup',
-            name='traits',
-            field=models.ManyToManyField(to='proposals.Trait'),
             preserve_default=True,
         ),
     ]
