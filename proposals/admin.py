@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AgeGroup, Trait, Faq, Member, Meeting
+from .models import AgeGroup, Trait, Action, Registration, Faq, Member, Meeting
 
 @admin.register(AgeGroup)
 class AgeGroupAdmin(admin.ModelAdmin):
@@ -8,6 +8,16 @@ class AgeGroupAdmin(admin.ModelAdmin):
 
 @admin.register(Trait)
 class TraitAdmin(admin.ModelAdmin):
+    list_display = ('description', )
+    ordering = ['description']
+
+@admin.register(Action)
+class ActionAdmin(admin.ModelAdmin):
+    list_display = ('description', 'info_text')
+    ordering = ['description']
+
+@admin.register(Registration)
+class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('description', )
     ordering = ['description']
 

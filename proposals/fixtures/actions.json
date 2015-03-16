@@ -1,0 +1,42 @@
+[
+{
+    "fields": {
+        "description": "Verbale responsie",
+        "info_text": "interview, spontane taal opnamen, etc"
+    },
+    "model": "proposals.action",
+    "pk": 1
+},
+{
+    "fields": {
+        "description": "Manuele responsie",
+        "info_text": "toetsenbord, knoppenkast, aanwijzen stimulus"
+    },
+    "model": "proposals.action",
+    "pk": 2
+},
+{
+    "fields": {
+        "description": "Schriftelijke responsie",
+        "info_text": "o.a. offline vragenlijst"
+    },
+    "model": "proposals.action",
+    "pk": 3
+},
+{
+    "fields": {
+        "description": "Kijk- en luistergedrag",
+        "info_text": "bijvoorbeeld bij babystudies"
+    },
+    "model": "proposals.action",
+    "pk": 4
+},
+{
+    "fields": {
+        "description": "Geen",
+        "info_text": "dit is het geval bij een observatiestudie"
+    },
+    "model": "proposals.action",
+    "pk": 5
+}
+]

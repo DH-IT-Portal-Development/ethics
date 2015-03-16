@@ -1,0 +1,37 @@
+[
+{
+    "fields": {
+        "description": "(audio- en) video-opnamen"
+    },
+    "model": "proposals.registration",
+    "pk": 1
+},
+{
+    "fields": {
+        "description": "reactie- of kijktijden"
+    },
+    "model": "proposals.registration",
+    "pk": 2
+},
+{
+    "fields": {
+        "description": "gedragsregistratie (wat wordt aangewezen of waar wordt gekeken)"
+    },
+    "model": "proposals.registration",
+    "pk": 3
+},
+{
+    "fields": {
+        "description": "oogbewegingsdata"
+    },
+    "model": "proposals.registration",
+    "pk": 4
+},
+{
+    "fields": {
+        "description": "psychofysiologische meting (aangeven welk, aanvinken: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling)"
+    },
+    "model": "proposals.registration",
+    "pk": 5
+}
+]

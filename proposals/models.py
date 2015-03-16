@@ -58,11 +58,11 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     def denormalize_status(self):
         """Sets the correct status on save of a Proposal"""
         if not self.status: 
-            self.status = DRAFT
+            self.status = self.DRAFT
         if self.Wmo.metc: 
-            self.status = WMO_IN_PROGRESS
+            self.status = self.WMO_IN_PROGRESS
         else:
-            self.status = WMO_FINISHED
+            self.status = self.WMO_FINISHED
 
     def __unicode__(self):
         return 'Proposal %s' % self.name
@@ -174,6 +174,35 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
 
     def __unicode__(self):
         return 'Experiment settings for proposal %s' % self.proposal.name
+
+class Action(models.Model): 
+    description = models.CharField(max_length=200)
+    info_text = models.TextField()
+
+    def __unicode__(self):
+        return self.description
+
+class Registration(models.Model): 
+    description = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.description
+
+class Task(models.Model): 
+    name = models.CharField(
+        'Naam van de taak', 
+        max_length=200)
+    procedure = models.NullBooleanField(
+        'Welk onderdeel, of welke combinatie van onderdelen, van de procedure zouden door de proefpersonen als \
+belastend/onaangenaam ervaren kunnen worden?')
+    duration = models.PositiveIntegerField(
+        'Wat is de duur van de taak, waarbij de proefpersoon een handeling moet verrichten, van begin tot eind, \
+dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak?')
+    actions = models.ManyToManyField(Action)
+    registration = models.ManyToManyField(Registration)
+
+    # References
+    proposal = models.ForeignKey(Proposal)
 
 class Faq(models.Model):
     order = models.PositiveIntegerField()
