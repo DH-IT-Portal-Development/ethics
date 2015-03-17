@@ -7,7 +7,7 @@ yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
 class WmoForm(forms.ModelForm):
     class Meta:
         model = Wmo
-        fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic', 'metc_decision']
+        fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic', 'metc_decision', 'metc_decision_pdf']
         widgets = {
             'metc': forms.RadioSelect(choices=yes_no_doubt),
             'is_medical': forms.RadioSelect(choices=yes_no_doubt),

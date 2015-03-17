@@ -12,14 +12,21 @@ $(function() {
 		$("#id_is_medical, #id_is_behavioristic").parent().parent().toggle(!metc_true);
 	});
 	$("#id_metc").change();
-	
-	$("#id_metc").change(function() {
-		var metc_true = $('#id_metc_0:checked').val() == "True";
-		var metc_doubt = metc_true || $('#id_metc_2:checked').val() == "None";
-		$("#id_metc_institution").parent().parent().toggle(metc_doubt);
-		$("#id_is_medical, #id_is_behavioristic").parent().parent().toggle(!metc_true);
+
+	$("#id_metc, #id_is_medical, #id_is_behavioristic").change(function() {
+		var metc = $('#id_metc_0:checked').val() == "True";
+		var medical = $('#id_is_medical_0:checked').val() == "True";
+		var behavioristic = $('#id_is_behavioristic_0:checked').val() == "True";
+
+		$("#id_metc_decision").parent().parent().toggle(metc || (medical && behavioristic));
 	});
-	$("#id_metc").change();
+	$("#id_metc, #id_is_medical, #id_is_behavioristic").change();
+
+	$("#id_metc_decision").change(function() {
+		var decision = $("#id_metc_decision").is(':checked');
+		$("#id_metc_decision_pdf").parent().parent().toggle(decision);
+	});
+	$("#id_metc_decision").change();
 });
 </script>
 <h2>Aanvraag indienen: fase 2</h2>

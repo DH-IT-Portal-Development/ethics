@@ -86,7 +86,8 @@ class Wmo(models.Model):
         'Is uw onderzoek al in behandeling genomen door een METC?',
         default=False)
     metc_decision_pdf = models.FileField(
-        'Upload hier de beslissing van het METC')
+        'Upload hier de beslissing van het METC',
+        blank=True)
 
     # References
     proposal = models.OneToOneField(Proposal, primary_key=True)

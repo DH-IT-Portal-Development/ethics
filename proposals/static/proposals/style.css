@@ -35,6 +35,10 @@ form th {
     width: 40%;
 }
 
+.errorlist { 
+    color: red;
+}
+
 /* Bootstrap-like contextual boxes */
 .success {
     text-align: center;
