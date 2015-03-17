@@ -2,7 +2,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import generic
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
-from .forms import WmoForm, StudyForm
+from .forms import WmoForm, StudyForm, TaskForm
 
 # List views 
 class ArchiveView(generic.ListView):
@@ -88,9 +88,11 @@ class StudyCreate(SuccessMessageMixin, generic.CreateView):
         return super(StudyCreate, self).form_valid(form)
 
 # CRUD actions on a Task
-class TaskCreate(generic.CreateView):
+class TaskCreate(SuccessMessageMixin, generic.CreateView):
     model = Task
-    fields = ('name', 'procedure', 'duration', 'actions', 'registrations', 'registrations_details')
+    form_class = TaskForm
+    success_url = '/proposals/concepts/'
+    success_message = 'Taak opgeslagen'
 
 # Home view
 class HomeView(generic.TemplateView):

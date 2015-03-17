@@ -30,8 +30,9 @@ form ul {
     margin: 0;
 }
 
-form li {
-    display: inline;
+form th {
+    font-weight: normal;
+    width: 40%;
 }
 
 /* Bootstrap-like contextual boxes */

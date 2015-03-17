@@ -214,9 +214,16 @@ belastend/onaangenaam ervaren kunnen worden?')
     duration = models.PositiveIntegerField(
         'Wat is de duur van de taak, waarbij de proefpersoon een handeling moet verrichten, van begin tot eind, \
 dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak?')
-    actions = models.ManyToManyField(Action)
-    registrations = models.ManyToManyField(Registration)
-    registrations_details = models.CharField(max_length=200, blank=True)
+    actions = models.ManyToManyField(
+        Action,
+        verbose_name='Geef aan welke handeling de proefpersoon moet uitvoeren of aan welke gedragsregel de proefpersoon wordt onderworpen')
+    registrations = models.ManyToManyField(
+        Registration,
+        verbose_name='Hoe worden de gegevens vastgelegd? Door middel van:')
+    registrations_details = models.CharField(
+        'Namelijk', 
+        max_length=200, 
+        blank=True)
 
     # References
     proposal = models.ForeignKey(Proposal)
