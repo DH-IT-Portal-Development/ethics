@@ -51,7 +51,6 @@ class ProposalCreate(SuccessMessageMixin, generic.CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.applicant = self.request.user
         form.instance.status = 0
         return super(ProposalCreate, self).form_valid(form)
 
