@@ -1,0 +1,65 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "order": 1,
+        "description": "volwassen databestand UiL OTS"
+    },
+    "model": "proposals.recruitment",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 2,
+        "description": "databestand babylab"
+    },
+    "model": "proposals.recruitment",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 3,
+        "description": "netwerk"
+    },
+    "model": "proposals.recruitment",
+    "pk": 3
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 4,
+        "description": "verloskundige praktijken"
+    },
+    "model": "proposals.recruitment",
+    "pk": 4
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 5,
+        "description": "scholen"
+    },
+    "model": "proposals.recruitment",
+    "pk": 5
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 6,
+        "description": "KDV, BSO"
+    },
+    "model": "proposals.recruitment",
+    "pk": 6
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 7,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.recruitment",
+    "pk": 7
+}
+]

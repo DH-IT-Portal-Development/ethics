@@ -106,6 +106,7 @@ class AgeGroup(models.Model):
             return '%d+' % (self.age_min)
 
 class Trait(models.Model):
+    order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
 
@@ -120,6 +121,7 @@ class Survey(models.Model):
         return self.name
 
 class Setting(models.Model):
+    order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
 
@@ -127,6 +129,7 @@ class Setting(models.Model):
         return self.description
 
 class Recruitment(models.Model):
+    order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
 
@@ -186,6 +189,7 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
         return 'Experiment settings for proposal %s' % self.proposal.name
 
 class Action(models.Model): 
+    order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     info_text = models.TextField()
 
@@ -193,6 +197,7 @@ class Action(models.Model):
         return self.description
 
 class Registration(models.Model): 
+    order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
 
@@ -217,7 +222,7 @@ dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak
     proposal = models.ForeignKey(Proposal)
 
 class Faq(models.Model):
-    order = models.PositiveIntegerField()
+    order = models.PositiveIntegerField(unique=True)
     question = models.TextField()
     answer = models.TextField()
 

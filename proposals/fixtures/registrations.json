@@ -1,6 +1,8 @@
 [
 {
     "fields": {
+        "needs_details": false,
+        "order": 1,
         "description": "(audio- en) video-opnamen"
     },
     "model": "proposals.registration",
@@ -8,6 +10,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 2,
         "description": "reactie- of kijktijden"
     },
     "model": "proposals.registration",
@@ -15,6 +19,8 @@
 },
 {
     "fields": {
+        "needs_details": true,
+        "order": 3,
         "description": "gedragsregistratie (wat wordt aangewezen of waar wordt gekeken)"
     },
     "model": "proposals.registration",
@@ -22,6 +28,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 4,
         "description": "oogbewegingsdata"
     },
     "model": "proposals.registration",
@@ -29,9 +37,20 @@
 },
 {
     "fields": {
+        "needs_details": true,
+        "order": 5,
         "description": "psychofysiologische meting (aangeven welk, aanvinken: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling)"
     },
     "model": "proposals.registration",
     "pk": 5
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 6,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.registration",
+    "pk": 6
 }
 ]

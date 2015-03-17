@@ -1,0 +1,74 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "order": 1,
+        "description": "thuis"
+    },
+    "model": "proposals.setting",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 2,
+        "description": "zorginstelling (wat voor? METC?)"
+    },
+    "model": "proposals.setting",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 3,
+        "description": "school/onderwijsinstelling"
+    },
+    "model": "proposals.setting",
+    "pk": 3
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 4,
+        "description": "dagopvang"
+    },
+    "model": "proposals.setting",
+    "pk": 4
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 5,
+        "description": "peuterspeelzaal"
+    },
+    "model": "proposals.setting",
+    "pk": 5
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 6,
+        "description": "buitenschoolse opvang"
+    },
+    "model": "proposals.setting",
+    "pk": 6
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 7,
+        "description": "lab"
+    },
+    "model": "proposals.setting",
+    "pk": 7
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 8,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.setting",
+    "pk": 8
+}
+]

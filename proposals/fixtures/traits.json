@@ -1,6 +1,8 @@
 [
 {
     "fields": {
+        "needs_details": false,
+        "order": 1,
         "description": "dyslexie"
     },
     "model": "proposals.trait",
@@ -8,6 +10,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 2,
         "description": "taalontwikkelingsstoornis"
     },
     "model": "proposals.trait",
@@ -15,6 +19,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 3,
         "description": "stotteren"
     },
     "model": "proposals.trait",
@@ -22,6 +28,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 4,
         "description": "dyspraxie"
     },
     "model": "proposals.trait",
@@ -29,6 +37,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 5,
         "description": "aandachtstekortstoornis (met hyperactiviteit) ook wel: AD(H)D"
     },
     "model": "proposals.trait",
@@ -36,6 +46,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 6,
         "description": "autismespectrumstoornissen (ASS)"
     },
     "model": "proposals.trait",
@@ -43,6 +55,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 7,
         "description": "doof (met cochleair implantaat) of slechthorend (met hoorapparaat)"
     },
     "model": "proposals.trait",
@@ -50,6 +64,8 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 8,
         "description": "afasie"
     },
     "model": "proposals.trait",
@@ -57,9 +73,20 @@
 },
 {
     "fields": {
+        "needs_details": false,
+        "order": 9,
         "description": "pre/-postmatuur"
     },
     "model": "proposals.trait",
     "pk": 9
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 10,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.trait",
+    "pk": 10
 }
 ]
