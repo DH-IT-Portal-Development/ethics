@@ -1,7 +1,8 @@
 {% extends "proposals/base.html" %}
-{% load staticfiles%}
+{% load staticfiles %}
 
 {% block content %} 
+{% include "proposals/form_styling.html" %}
 <script>
 $(function() {
 	$("[id^=id]").each(function() { 
@@ -13,8 +14,6 @@ $(function() {
 			help.hide();
 		}
 	});
-
-	$("form table").addClass("pure-table pure-table-horizontal");
 });
 </script>
 <h2>Aanvraag indienen: fase 3</h2>

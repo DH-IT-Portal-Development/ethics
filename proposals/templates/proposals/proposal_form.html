@@ -1,29 +1,16 @@
 {% extends "proposals/base.html" %}
-{% load staticfiles%}
+{% load staticfiles %}
 
 {% block content %} 
-<script>
-$(function() {
-	/*$("#id_multiple_tasks, #id_longitudinal").change(function() {
-		var add_parent = $("#id_multiple_tasks, #id_longitudinal").is(':checked');
-		$("#id_parent").prop('disabled', !add_parent);
-	});
-	$("#id_multiple_tasks, #id_longitudinal").change();*/
-
-	$("[id^=id]").each(function() { 
-		var help = $(this).next().next(); 
-		$(this).after('<img src="{% static 'proposals/images/information.png' %}">');
-		$(this).next().attr('title', help.html());
-		help.hide();
-	});
-});
-</script>
+{% include "proposals/form_styling.html" %}
 <h2>Aanvraag indienen: fase 1</h2>
+{% if create %}
 <p>U staat op het punt een aanvraag in te dienen. In het eerste gedeelte van de aanvraag (algemene informatie) zal er gevraagd worden naar het e-mailadres van de eindverantwoordelijke. Nadat dit is ingevuld, zal er een e-mail verstuurd worden naar de eindverantwoordelijke zodat de studie geverifieerd kan worden door de eindverantwoordelijke. Pas wanneer deze verificatie binnen is, kan men de aanvraag afronden. U kunt wel de hele aanvraagprocedure doorlopen, de vragen beantwoorden om vervolgens de aanvraag als concept aanvraag opslaan. Wanneer de eindverantwoordelijke de studie heeft geverifieerd, krijgt u automatisch een e-mail toegezonden, zodat u de aanvraag kunt afronden.</p>
+{% endif %}
 <h3>Algemene informatie</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="Aanmaken" />
+    <input class="pure-button pure-button-primary" type="submit" value="{% if create %}Aanmaken{% else %}Bewerken{% endif %}" />
     <a class="pure-button pure-button-secondary" href="/proposals/concepts">Annuleren</a>
 </form>
 {% endblock %}

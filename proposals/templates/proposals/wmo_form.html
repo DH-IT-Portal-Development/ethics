@@ -1,7 +1,8 @@
 {% extends "proposals/base.html" %}
-{% load staticfiles%}
+{% load staticfiles %}
 
 {% block content %} 
+{% include "proposals/form_styling.html" %}
 <script>
 $(function() {
 	$("#id_metc").change(function() {
@@ -19,16 +20,6 @@ $(function() {
 		$("#id_is_medical, #id_is_behavioristic").parent().parent().toggle(!metc_true);
 	});
 	$("#id_metc").change();
-
-	$("[id^=id]").each(function() { 
-		var help = $(this).next().next(); 
-		if (help.html()) 
-		{
-			$(this).after('<img src="{% static 'proposals/images/information.png' %}">');
-			$(this).next().attr('title', help.html());
-			help.hide();
-		}
-	});
 });
 </script>
 <h2>Aanvraag indienen: fase 2</h2>

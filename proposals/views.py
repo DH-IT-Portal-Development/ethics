@@ -45,6 +45,11 @@ class ProposalCreate(SuccessMessageMixin, generic.CreateView):
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag aangemaakt'
 
+    def get_context_data(self, **kwargs):
+        context = super(ProposalCreate, self).get_context_data(**kwargs)
+        context['create'] = True
+        return context
+
     def form_valid(self, form):
         form.instance.applicant = self.request.user
         form.instance.status = 0

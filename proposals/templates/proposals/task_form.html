@@ -1,22 +1,8 @@
 {% extends "proposals/base.html" %}
-{% load staticfiles%}
+{% load staticfiles %}
 
 {% block content %} 
-<script>
-$(function() {
-	$("[id^=id]").each(function() { 
-		var help = $(this).next().next(); 
-		if (help.html()) 
-		{
-			$(this).after('<img src="{% static 'proposals/images/information.png' %}">');
-			$(this).next().attr('title', help.html());
-			help.hide();
-		}
-	});
-
-	$("form table").addClass("pure-table pure-table-horizontal");
-});
-</script>
+{% include "proposals/form_styling.html" %}
 <h2>Aanvraag indienen: fase 3</h2>
 <p></p>
 <h3>Vragen per taak</h3>
