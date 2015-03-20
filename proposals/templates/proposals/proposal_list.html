@@ -1,15 +1,10 @@
 {% extends "proposals/base.html" %}
 
 {% block content %} 
-<script>
-$(document).ready( function () {
-    $('#proposals').DataTable();
-} );
-</script>
 
 <h2>Mijn aanvragen</h2>
 <p>Aanvragen (titel en deze tekst nog corrigeren)</p>
-<table id="proposals" class="display">
+<table class="dataTable display">
     <thead>
         <tr>
             <th>Titel studie</th>

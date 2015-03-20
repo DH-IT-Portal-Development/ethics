@@ -37,14 +37,9 @@
 {% endif %}
 
 {% if proposal.task_set %}
-<script>
-$(document).ready( function () {
-    $('#tasks').DataTable();
-} );
-</script>
 <h3>Taken</h3>
 <a href="{% url 'proposals:task_create' proposal.id %}">Taak toevoegen</a>
-<table id="tasks" class="display">
+<table class="dataTable display">
     <thead>
         <tr>
             <th>Naam</th>
