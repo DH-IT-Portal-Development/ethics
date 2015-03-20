@@ -187,7 +187,7 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
     proposal = models.OneToOneField(Proposal, primary_key=True)
 
     def __unicode__(self):
-        return 'Experiment settings for proposal %s' % self.proposal.name
+        return 'Study details for proposal %s' % self.proposal.name
 
 class Action(models.Model): 
     order = models.PositiveIntegerField(unique=True)

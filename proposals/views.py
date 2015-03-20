@@ -80,6 +80,12 @@ class WmoCreate(SuccessMessageMixin, generic.CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(WmoCreate, self).form_valid(form)
 
+class WmoUpdate(SuccessMessageMixin, generic.UpdateView): 
+    model = Wmo
+    form_class = WmoForm
+    success_url = '/proposals/concepts/'
+    success_message = 'WMO-gegevens bewerkt'
+
 # CRUD actions on a Study
 class StudyCreate(SuccessMessageMixin, generic.CreateView): 
     model = Study
@@ -90,6 +96,12 @@ class StudyCreate(SuccessMessageMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(StudyCreate, self).form_valid(form)
+
+class StudyUpdate(SuccessMessageMixin, generic.UpdateView): 
+    model = Study
+    form_class = StudyForm
+    success_url = '/proposals/concepts/'
+    success_message = 'Algemene kenmerken bewerkt'
 
 # CRUD actions on a Task
 class TaskCreate(SuccessMessageMixin, generic.CreateView):

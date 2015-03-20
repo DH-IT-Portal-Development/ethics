@@ -20,11 +20,11 @@ urlpatterns = [
     
     # WMO
     url(r'^wmo/create/(?P<pk>\d+)/$', WmoCreate.as_view(), name='wmo_create'),
-    #url(r'^wmo/update/(?P<pk>\d+)/$', WmoUpdate.as_view(), name='wmo_update'),
+    url(r'^wmo/update/(?P<pk>\d+)/$', WmoUpdate.as_view(), name='wmo_update'),
 
     # Study
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
-    #url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
+    url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
 
     # Task(s)
     url(r'^task/create/(?P<pk>\d+)/$', TaskCreate.as_view(), name='task_create'),

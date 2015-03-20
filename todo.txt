@@ -1,5 +1,5 @@
 TODO: 
 
 v refactor URLs 
+v editen WMO/Experiment
 - doorlopen applicatie
-- editen WMO/Experiment

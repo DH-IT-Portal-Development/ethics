@@ -16,10 +16,22 @@
 
 {% if proposal.wmo %}
 <h3>WMO-plichtig of niet?</h3>
+<a href="{% url 'proposals:wmo_update' proposal.id %}">Bewerken</a>
 <table class="pure-table">
     <tr>
         <th>METC?</th>
         <td>{{ proposal.wmo.metc }}</td>
+    </tr>
+</table>
+{% endif %}
+
+{% if proposal.study %}
+<h3>Algemene kenmerken van de studie</h3>
+<a href="{% url 'proposals:study_update' proposal.id %}">Bewerken</a>
+<table class="pure-table">
+    <tr>
+        <th>Leeftijdsgroepen</th>
+        <td>{{ proposal.study }}</td>
     </tr>
 </table>
 {% endif %}
