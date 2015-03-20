@@ -98,6 +98,21 @@ class TaskCreate(SuccessMessageMixin, generic.CreateView):
     success_url = '/proposals/concepts/'
     success_message = 'Taak opgeslagen'
 
+    def form_valid(self, form):
+        form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
+        return super(TaskCreate, self).form_valid(form)
+
+class TaskUpdate(SuccessMessageMixin, generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+    success_url = '/proposals/concepts/'
+    success_message = 'Taak bewerkt'
+
+class TaskDelete(SuccessMessageMixin, generic.DeleteView):
+    model = Task
+    success_url = '/proposals/concepts/'
+    success_message = 'Taak verwijderd'
+
 # Home view
 class HomeView(generic.TemplateView):
     template_name = 'proposals/index.html'

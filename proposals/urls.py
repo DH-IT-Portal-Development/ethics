@@ -28,7 +28,8 @@ urlpatterns = [
 
     # Task(s)
     url(r'^task/create/(?P<pk>\d+)/$', TaskCreate.as_view()),
-    #url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view()),
+    url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view()),
+    url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view()),
 
     url(r'^members/$', MembersView.as_view(), name='members'),
     url(r'^meetings/$', MeetingsView.as_view(), name='meetings'),

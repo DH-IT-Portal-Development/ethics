@@ -13,6 +13,8 @@
 		<td>{{ proposal.supervisor_name }} (<a href="mailto:{{ proposal.supervisor_email }}">{{ proposal.supervisor_email }}</a>)</td>
 	</tr>
 </table>
+
+{% if proposal.wmo %}
 <h3>WMO-plichtig of niet?</h3>
 <table class="pure-table">
 	<tr>
@@ -20,4 +22,37 @@
 		<td>{{ proposal.wmo.metc }}</td>
 	</tr>
 </table>
+{% endif %}
+
+{% if proposal.task_set %}
+<script>
+$(document).ready( function () {
+    $('#tasks').DataTable();
+} );
+</script>
+<h3>Taken</h3>
+<a href="/proposals/task/create/{{ proposal.id }}/">Taak toevoegen</a>
+<table id="tasks" class="display">
+    <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Duur</th>
+            <th>Acties</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in proposal.task_set.all %}
+        <tr>
+            <td>{{ task.name }}</td>
+            <td>{{ task.duration }}</td>
+            <td>
+            	<a href="/proposals/task/update/{{ task.id }}/">Bewerken</a>, 
+            	<a href="/proposals/task/delete/{{ task.id }}/">Verwijderen</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
 {% endblock %}
