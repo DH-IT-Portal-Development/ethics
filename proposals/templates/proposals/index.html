@@ -3,6 +3,6 @@
 {% block content %} 
 <h2>Home</h2>
 <p>Welkom {{current_user.first_name}} {{current_user.last_name}}!</p>
-<p><a href="/proposals/create">Nieuwe aanvraag indienen</a></p>
+<p><a href="{% url 'proposals:create' %}">Nieuwe aanvraag indienen</a></p>
 
 {% endblock %}

@@ -5,6 +5,6 @@
 <form action="" method="post">{% csrf_token %}
     <p>Weet je zeker dat je de taak <em>{{ object.name }}</em> van de studie <em>{{ object.proposal.name }}</em> wilt verwijderen?</p>
     <input class="pure-button pure-button-primary" type="submit" value="Verwijderen" />
-    <a class="pure-button pure-button-secondary" href="/proposals/{{ object.proposal.id }}">Annuleren</a>
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
 </form>
 {% endblock %}

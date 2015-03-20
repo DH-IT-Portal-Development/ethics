@@ -3,39 +3,39 @@
 <div class="pure-menu pure-menu-horizontal pure-menu-custom">
     <ul class="pure-menu-list">
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'home' %}">{% trans "Home" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:home' %}">{% trans "Home" %}</a>
         </li>
     {% if user.is_authenticated %}
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="/proposals/concepts">{% trans "Mijn conceptaanvragen" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptaanvragen" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="/proposals/applications">{% trans "Mijn aanvraagarchief" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:my_archive' %}">{% trans "Mijn aanvraagarchief" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="/proposals/archive">{% trans "Publiek aanvraagarchief" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:archive' %}e">{% trans "Publiek aanvraagarchief" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'faq' %}">{% trans "FAQ" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:faq' %}">{% trans "FAQ" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="/accounts/logout/"><em>{% trans "Uitloggen" %}</em></a>
+            <a class="pure-menu-link" href="{% url 'logout' %}"><em>{% trans "Uitloggen" %}</em></a>
         </li>
     {% else %}
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'faq' %}">{% trans "Voorbeelddocumenten" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:faq' %}">{% trans "Voorbeelddocumenten" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="/proposals/members">{% trans "Leden" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:members' %}">{% trans "Leden" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="/proposals/meetings">{% trans "Vergaderdata" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:meetings' %}">{% trans "Vergaderdata" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'faq' %}">{% trans "FAQ" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:faq' %}">{% trans "FAQ" %}</a>
         </li>
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="/accounts/login/"><em>{% trans "Inloggen" %}</em></a>
+            <a class="pure-menu-link" href="{% url 'login' %}"><em>{% trans "Inloggen" %}</em></a>
         </li>
     {% endif %}
     </ul>
