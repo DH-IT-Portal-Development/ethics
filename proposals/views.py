@@ -50,19 +50,11 @@ class ProposalCreate(SuccessMessageMixin, generic.CreateView):
         context['create'] = True
         return context
 
-    def form_valid(self, form):
-        form.instance.status = 0
-        return super(ProposalCreate, self).form_valid(form)
-
 class ProposalUpdate(SuccessMessageMixin, generic.UpdateView): 
     model = Proposal
     fields = ('name', 'tech_summary', 'longitudinal', 'supervisor_name', 'supervisor_email', 'applicants')
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag bewerkt'
-
-    def form_valid(self, form):
-        form.instance.status = 0
-        return super(ProposalUpdate, self).form_valid(form)
 
 class ProposalDelete(SuccessMessageMixin, generic.DeleteView):
     model = Proposal

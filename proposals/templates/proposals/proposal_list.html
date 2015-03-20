@@ -22,10 +22,9 @@
             <td>{{ proposal.status }}</td>
             <td>{{ proposal.date_modified }}</td>
             <td>
-            	<a href="{% url 'proposals:detail' proposal.id %}">Inzien</a>, 
-            	<a href="{% url 'proposals:update' proposal.id %}">Bewerken</a>, 
+            	<a href="{% url 'proposals:detail' proposal.id %}">Inzien</a>,
             	<a href="{% url 'proposals:delete' proposal.id %}">Verwijderen</a>, 
-            	<a href="{% url 'proposals:wmo_create' proposal.id %}">Doorgaan</a>
+            	<a href="{{ proposal.continue_url }}">Doorgaan</a>
             </td>
         </tr>
         {% endfor %}

@@ -3,6 +3,7 @@
 {% block content %}
 <h2>Aanvraag <em>{{ proposal.name }}</em></h2>
 <h3>Algemene informatie</h3>
+<a href="{% url 'proposals:update' proposal.id %}">Bewerken</a>
 <table class="pure-table">
     <tr>
         <th>Longitudinaal</th>
@@ -36,7 +37,7 @@
 </table>
 {% endif %}
 
-{% if proposal.task_set %}
+{% if proposal.task_set.all %}
 <h3>Taken</h3>
 <a href="{% url 'proposals:task_create' proposal.id %}">Taak toevoegen</a>
 <table class="dataTable display">

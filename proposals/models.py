@@ -1,18 +1,25 @@
 from django.conf import settings
 from django.db import models
+from django.core.urlresolvers import reverse
 
 class Proposal(models.Model):
     DRAFT = 0 
-    WMO_IN_PROGRESS = 1
-    WMO_FINISHED = 2
+    WMO_CREATED = 1
+    WMO_AWAITING_DECISION = 2
+    WMO_COMPLETED = 3
+    STUDY_CREATED = 4
+    TASKS_ADDED = 5
+    CONCEPT = 6
+    SUBMITTED = 7
     STATUSES = (
         (DRAFT, 'draft'),
-        (WMO_IN_PROGRESS, 'wmo_'),
-        (WMO_FINISHED, 'wmo_finished'),
-        (2, 'participant_groups'),
-        (3, 'experiments'),
-        (4, 'concept'),
-        (5, 'submitted'),
+        (WMO_CREATED, 'wmo_created'),
+        (WMO_AWAITING_DECISION, 'wmo_progress'),
+        (WMO_COMPLETED, 'wmo_finished'),
+        (STUDY_CREATED, 'study'),
+        (TASKS_ADDED, 'tasks'),
+        (CONCEPT, 'concept'),
+        (SUBMITTED, 'submitted'),
     )
 
     # Fields
@@ -44,7 +51,7 @@ Wanneer een student de aanvraag doet, dan is de eindverantwoordelijke de begelei
         'E-mailadres eindverantwoordelijke',
         help_text='Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.')
-    status = models.PositiveIntegerField(choices=STATUSES)
+    status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
 
     # Dates 
     date_submitted = models.DateTimeField(null=True)
@@ -55,14 +62,39 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     applicants = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='Uitvoerende(n)')
     parent = models.ForeignKey('self', null=True)
 
-    def denormalize_status(self):
+    def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
-        if not self.status: 
-            self.status = self.DRAFT
-        if self.Wmo.metc: 
-            self.status = self.WMO_IN_PROGRESS
-        else:
-            self.status = self.WMO_FINISHED
+        self.status = self.get_status()
+        super(Proposal, self).save(*args, **kwargs)
+
+    def get_status(self):
+        status = self.status
+        if hasattr(self, 'wmo'): 
+            wmo = self.wmo
+            if wmo.metc or (wmo.is_medical and wmo.is_behavioristic):
+                if not wmo.metc_decision: 
+                    return self.WMO_AWAITING_DECISION
+                if wmo.metc_decision and metc_decision_pdf: 
+                    return self.WMO_COMPLETED
+            else: 
+                status = self.WMO_COMPLETED
+        if hasattr(self, 'study'):
+            status = self.STUDY_CREATED
+        if self.task_set.all():
+            status = self.TASKS_ADDED
+        return status
+
+    def continue_url(self): 
+        if self.status == self.DRAFT:
+            return reverse('proposals:wmo_create', args=(self.id,))
+        if self.status == self.WMO_AWAITING_DECISION:
+            return reverse('proposals:wmo_update', args=(self.id,))
+        if self.status == self.WMO_COMPLETED:
+            return reverse('proposals:study_create', args=(self.id,))
+        if self.status == self.STUDY_CREATED:
+            return reverse('proposals:task_create', args=(self.id,))
+        if self.status == self.TASKS_ADDED:
+            return reverse('proposals:task_create', args=(self.id,))
 
     def __unicode__(self):
         return 'Proposal %s' % self.name
