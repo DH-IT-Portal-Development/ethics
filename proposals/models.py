@@ -3,21 +3,21 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 class Proposal(models.Model):
-    DRAFT = 0 
-    WMO_CREATED = 1
+    DRAFT = 1
     WMO_AWAITING_DECISION = 2
     WMO_COMPLETED = 3
     STUDY_CREATED = 4
-    TASKS_ADDED = 5
-    CONCEPT = 6
-    SUBMITTED = 7
+    TASKS_CREATED = 5
+    INFORMED_CONSENT = 6
+    CONCEPT = 7
+    SUBMITTED = 8
     STATUSES = (
         (DRAFT, 'draft'),
-        (WMO_CREATED, 'wmo_created'),
-        (WMO_AWAITING_DECISION, 'wmo_progress'),
+        (WMO_AWAITING_DECISION, 'wmo_awaiting_decision'),
         (WMO_COMPLETED, 'wmo_finished'),
         (STUDY_CREATED, 'study'),
-        (TASKS_ADDED, 'tasks'),
+        (TASKS_CREATED, 'tasks'),
+        (INFORMED_CONSENT, 'informed_consent'),
         (CONCEPT, 'concept'),
         (SUBMITTED, 'submitted'),
     )
@@ -74,14 +74,14 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
             if wmo.metc or (wmo.is_medical and wmo.is_behavioristic):
                 if not wmo.metc_decision: 
                     return self.WMO_AWAITING_DECISION
-                if wmo.metc_decision and metc_decision_pdf: 
+                if wmo.metc_decision and wmo.metc_decision_pdf: 
                     return self.WMO_COMPLETED
             else: 
                 status = self.WMO_COMPLETED
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
         if self.task_set.all():
-            status = self.TASKS_ADDED
+            status = self.TASKS_CREATED
         return status
 
     def continue_url(self): 
@@ -93,7 +93,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
             return reverse('proposals:study_create', args=(self.id,))
         if self.status == self.STUDY_CREATED:
             return reverse('proposals:task_create', args=(self.id,))
-        if self.status == self.TASKS_ADDED:
+        if self.status == self.TASKS_CREATED:
             return reverse('proposals:task_create', args=(self.id,))
 
     def __unicode__(self):
@@ -123,6 +123,11 @@ class Wmo(models.Model):
 
     # References
     proposal = models.OneToOneField(Proposal, primary_key=True)
+
+    def save(self, *args, **kwargs):
+        """Sets the correct status on save of a Proposal"""
+        self.proposal.save()
+        super(Wmo, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return 'Wmo %s' % self.proposal.name
@@ -218,6 +223,11 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
     # References
     proposal = models.OneToOneField(Proposal, primary_key=True)
 
+    def save(self, *args, **kwargs):
+        """Sets the correct status on save of a Proposal"""
+        self.proposal.save()
+        super(Study, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return 'Study details for proposal %s' % self.proposal.name
 
@@ -257,6 +267,11 @@ dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak
         'Namelijk', 
         max_length=200, 
         blank=True)
+
+    def save(self, *args, **kwargs):
+        """Sets the correct status on save of a Proposal"""
+        self.proposal.save()
+        super(Task, self).save(*args, **kwargs)
 
     # References
     proposal = models.ForeignKey(Proposal)

@@ -2,10 +2,14 @@ TODO:
 
 v refactor URLs 
 v editen WMO/Experiment
-- doorlopen applicatie
+v doorlopen applicatie
 v datatables Nederlands
 v titel voor pagina's in ander block
-- inregelen statussen
-- detail-pagina
+v inregelen statussen
 v authorisatie: login required
 - authorisatie: alleen eigen proposals aanpassen
+- verplicht maken velden bij bepaalde waarden
+- detail-pagina proposal mooi maken
+- bij taken: nog een taak toevoegen of klaar
+- pagina met informed consent toevoegen
+- pagina met submitten proposal
