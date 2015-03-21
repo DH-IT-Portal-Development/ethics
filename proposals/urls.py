@@ -1,5 +1,4 @@
 from django.conf.urls import url
-from django.contrib.auth.decorators import login_required
 
 from .views import *
 
@@ -13,7 +12,7 @@ urlpatterns = [
     url(r'^concepts/$', ConceptsView.as_view(), name='my_concepts'),
 
     # Proposal
-    url(r'^create/$', login_required(ProposalCreate.as_view()), name='create'),
+    url(r'^create/$', ProposalCreate.as_view(), name='create'),
     url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
     url(r'^(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),

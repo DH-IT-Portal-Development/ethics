@@ -1,9 +1,12 @@
 {% extends "proposals/base.html" %}
 {% load staticfiles %}
 
+{% block title %} 
+Aanvraag indienen: fase 1
+{% endblock %} 
+
 {% block content %} 
 {% include "proposals/form_styling.html" %}
-<h2>Aanvraag indienen: fase 1</h2>
 {% if create %}
 <p>U staat op het punt een aanvraag in te dienen. In het eerste gedeelte van de aanvraag (algemene informatie) zal er gevraagd worden naar het e-mailadres van de eindverantwoordelijke. Nadat dit is ingevuld, zal er een e-mail verstuurd worden naar de eindverantwoordelijke zodat de studie geverifieerd kan worden door de eindverantwoordelijke. Pas wanneer deze verificatie binnen is, kan men de aanvraag afronden. U kunt wel de hele aanvraagprocedure doorlopen, de vragen beantwoorden om vervolgens de aanvraag als concept aanvraag opslaan. Wanneer de eindverantwoordelijke de studie heeft geverifieerd, krijgt u automatisch een e-mail toegezonden, zodat u de aanvraag kunt afronden.</p>
 {% endif %}

@@ -1,11 +1,31 @@
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
 from .forms import WmoForm, StudyForm, TaskForm
 
+class LoginRequiredMixin(object):
+    """Mixin for generic views to retun to login view if not logged in"""
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view)
+
+class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
+    """Generic create view including success message and login required mixins"""
+    pass
+
+class UpdateView(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
+    """Generic update view including success message and login required mixins"""
+    pass
+
+class DeleteView(SuccessMessageMixin, LoginRequiredMixin, generic.DeleteView):
+    """Generic delete view including success message and login required mixins"""
+    pass
+
 # List views 
-class ArchiveView(generic.ListView):
+class ArchiveView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
 
     def get_queryset(self):
@@ -35,11 +55,11 @@ class FaqsView(generic.ListView):
     model = Faq
 
 # Proposal detail
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Proposal
 
 # CRUD actions on Proposal
-class ProposalCreate(SuccessMessageMixin, generic.CreateView): 
+class ProposalCreate(CreateView): 
     model = Proposal
     fields = ('name', 'tech_summary', 'longitudinal', 'supervisor_name', 'supervisor_email', 'applicants')
     success_url = '/proposals/concepts/'
@@ -50,19 +70,19 @@ class ProposalCreate(SuccessMessageMixin, generic.CreateView):
         context['create'] = True
         return context
 
-class ProposalUpdate(SuccessMessageMixin, generic.UpdateView): 
+class ProposalUpdate(UpdateView): 
     model = Proposal
     fields = ('name', 'tech_summary', 'longitudinal', 'supervisor_name', 'supervisor_email', 'applicants')
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag bewerkt'
 
-class ProposalDelete(SuccessMessageMixin, generic.DeleteView):
+class ProposalDelete(DeleteView):
     model = Proposal
     success_url = '/proposals/concepts/'
     success_message = 'Aanvraag verwijderd'
 
 # CRUD actions on Wmo
-class WmoCreate(SuccessMessageMixin, generic.CreateView): 
+class WmoCreate(CreateView): 
     model = Wmo
     form_class = WmoForm
     success_url = '/proposals/concepts/'
@@ -72,14 +92,14 @@ class WmoCreate(SuccessMessageMixin, generic.CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(WmoCreate, self).form_valid(form)
 
-class WmoUpdate(SuccessMessageMixin, generic.UpdateView): 
+class WmoUpdate(UpdateView): 
     model = Wmo
     form_class = WmoForm
     success_url = '/proposals/concepts/'
     success_message = 'WMO-gegevens bewerkt'
 
 # CRUD actions on a Study
-class StudyCreate(SuccessMessageMixin, generic.CreateView): 
+class StudyCreate(CreateView): 
     model = Study
     form_class = StudyForm
     success_url = '/proposals/concepts/'
@@ -89,14 +109,14 @@ class StudyCreate(SuccessMessageMixin, generic.CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(StudyCreate, self).form_valid(form)
 
-class StudyUpdate(SuccessMessageMixin, generic.UpdateView): 
+class StudyUpdate(UpdateView): 
     model = Study
     form_class = StudyForm
     success_url = '/proposals/concepts/'
     success_message = 'Algemene kenmerken bewerkt'
 
 # CRUD actions on a Task
-class TaskCreate(SuccessMessageMixin, generic.CreateView):
+class TaskCreate(CreateView):
     model = Task
     form_class = TaskForm
     success_url = '/proposals/concepts/'
@@ -106,13 +126,13 @@ class TaskCreate(SuccessMessageMixin, generic.CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(TaskCreate, self).form_valid(form)
 
-class TaskUpdate(SuccessMessageMixin, generic.UpdateView):
+class TaskUpdate(UpdateView):
     model = Task
     form_class = TaskForm
     success_url = '/proposals/concepts/'
     success_message = 'Taak bewerkt'
 
-class TaskDelete(SuccessMessageMixin, generic.DeleteView):
+class TaskDelete(DeleteView):
     model = Task
     success_url = '/proposals/concepts/'
     success_message = 'Taak verwijderd'
