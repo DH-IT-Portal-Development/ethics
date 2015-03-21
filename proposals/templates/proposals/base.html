@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>{% block title %}ETCL UiL OTS{% endblock %}</title>
+    <title>ETCL UiL OTS</title>
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'proposals/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
@@ -30,6 +30,7 @@
         <img id="header-img" src="{% static 'proposals/images/uu-header.png' %}">
         <h1>ETCL UiL OTS</h1>
         {% include "proposals/menu.html" %}
+        <h2>{% block title %}{% endblock %}</h2>
         <div id="messages">
         {% if messages %}
             <ul class="messages">

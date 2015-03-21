@@ -1,7 +1,10 @@
 {% extends "proposals/base.html" %}
 
+{% block title %} 
+Aanvraag <em>{{ proposal.name }}</em>
+{% endblock %} 
+
 {% block content %}
-<h2>Aanvraag <em>{{ proposal.name }}</em></h2>
 <h3>Algemene informatie</h3>
 <a href="{% url 'proposals:update' proposal.id %}">Bewerken</a>
 <table class="pure-table">

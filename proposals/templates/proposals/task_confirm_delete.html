@@ -1,7 +1,10 @@
 {% extends "proposals/base.html" %}
 
+{% block title %} 
+Taak verwijderen
+{% endblock %} 
+
 {% block content %} 
-<h2>Taak verwijderen</h2>
 <form action="" method="post">{% csrf_token %}
     <p>Weet je zeker dat je de taak <em>{{ object.name }}</em> van de studie <em>{{ object.proposal.name }}</em> wilt verwijderen?</p>
     <input class="pure-button pure-button-primary" type="submit" value="Verwijderen" />

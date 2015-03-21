@@ -4,7 +4,7 @@ v refactor URLs
 v editen WMO/Experiment
 - doorlopen applicatie
 v datatables Nederlands
-- titel voor pagina's in ander block
+v titel voor pagina's in ander block
 - inregelen statussen
 - detail-pagina
 - authorisatie: login-required en alleen eigen proposals aanpassen
