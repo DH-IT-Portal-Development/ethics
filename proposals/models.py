@@ -8,17 +8,15 @@ class Proposal(models.Model):
     WMO_COMPLETED = 3
     STUDY_CREATED = 4
     TASKS_CREATED = 5
-    INFORMED_CONSENT = 6
-    CONCEPT = 7
-    SUBMITTED = 8
+    INFORMED_CONSENT_UPLOADED = 6
+    SUBMITTED = 7
     STATUSES = (
         (DRAFT, 'draft'),
         (WMO_AWAITING_DECISION, 'wmo_awaiting_decision'),
         (WMO_COMPLETED, 'wmo_finished'),
         (STUDY_CREATED, 'study'),
         (TASKS_CREATED, 'tasks'),
-        (INFORMED_CONSENT, 'informed_consent'),
-        (CONCEPT, 'concept'),
+        (INFORMED_CONSENT_UPLOADED, 'informed_consent_uploaded'),
         (SUBMITTED, 'submitted'),
     )
 
@@ -52,6 +50,9 @@ Wanneer een student de aanvraag doet, dan is de eindverantwoordelijke de begelei
         help_text='Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.')
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
+    informed_consent_pdf = models.FileField(
+        'Upload hier de informed consent',
+        blank=True)
 
     # Dates 
     date_submitted = models.DateTimeField(null=True)
@@ -82,6 +83,8 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
             status = self.STUDY_CREATED
         if self.task_set.all():
             status = self.TASKS_CREATED
+        if self.informed_consent_pdf: 
+            status = self.INFORMED_CONSENT_UPLOADED
         return status
 
     def continue_url(self): 

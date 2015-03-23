@@ -13,3 +13,7 @@ v authorisatie: login required
 - bij taken: nog een taak toevoegen of klaar
 - pagina met informed consent toevoegen
 - pagina met submitten proposal
+- plaatjes voor inzien, bewerken, verwijderen
+- opsplitsen website/proposals
+- testcases 
+- WMO: verschillende success_messages
