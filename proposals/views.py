@@ -1,6 +1,8 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.views import generic
+from django.core.urlresolvers import reverse
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
 from .forms import ProposalForm, WmoForm, StudyForm, TaskForm, UploadConsentForm
@@ -20,9 +22,11 @@ class UpdateView(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
     """Generic update view including success message and login required mixins"""
     pass
 
-class DeleteView(SuccessMessageMixin, LoginRequiredMixin, generic.DeleteView):
-    """Generic delete view including success message and login required mixins"""
-    pass
+class DeleteView(LoginRequiredMixin, generic.DeleteView):
+    """Generic delete view including login required mixin and alternative for success message"""
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(DeleteView, self).delete(request, *args, **kwargs)
 
 # List views 
 class ArchiveView(LoginRequiredMixin, generic.ListView):
@@ -126,18 +130,29 @@ class StudyUpdate(UpdateView):
 class TaskCreate(CreateView):
     model = Task
     form_class = TaskForm
-    success_url = '/proposals/concepts/'
     success_message = 'Taak opgeslagen'
 
     def form_valid(self, form):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(TaskCreate, self).form_valid(form)
 
+    def get_success_url(self):
+        if 'save_add' in self.request.POST:
+            return reverse('proposals:task_create', args=(self.kwargs['pk'],))
+        else: 
+            return reverse('proposals:my_concepts')
+
 class TaskUpdate(UpdateView):
     model = Task
     form_class = TaskForm
-    success_url = '/proposals/concepts/'
     success_message = 'Taak bewerkt'
+
+    def get_success_url(self):
+        task = Task.objects.get(pk=self.kwargs['pk'])
+        if 'save_add' in self.request.POST:
+            return reverse('proposals:task_create', args=(task.proposal.id,))
+        else: 
+            return reverse('proposals:my_concepts')
 
 class TaskDelete(DeleteView):
     model = Task
