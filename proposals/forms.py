@@ -1,8 +1,13 @@
 from django import forms
 
-from .models import Wmo, Study, Task
+from .models import Proposal, Wmo, Study, Task
 
 yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
+
+class ProposalForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['name', 'tech_summary', 'longitudinal', 'supervisor_name', 'supervisor_email', 'applicants']
 
 class WmoForm(forms.ModelForm):
     class Meta:
@@ -38,3 +43,12 @@ class TaskForm(forms.ModelForm):
             'actions': forms.CheckboxSelectMultiple(),
             'registrations': forms.CheckboxSelectMultiple(),
         }
+
+class UploadConsentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(UploadConsentForm, self).__init__(*args, **kwargs)
+        self.fields['informed_consent_pdf'].required = True
+
+    class Meta:
+        model = Proposal
+        fields = ['informed_consent_pdf']

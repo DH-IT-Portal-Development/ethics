@@ -138,4 +138,4 @@ populate_user.connect(make_staff)
 #logger.setLevel(logging.DEBUG)
 
 # File handling
-MEDIA_ROOT = 'C:\Users\Martijn\Documents\Werk\Universiteit Utrecht\ethics\media'
+MEDIA_ROOT = 'media'

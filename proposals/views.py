@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
-from .forms import WmoForm, StudyForm, TaskForm
+from .forms import ProposalForm, WmoForm, StudyForm, TaskForm, UploadConsentForm
 
 class LoginRequiredMixin(object):
     """Mixin for generic views to retun to login view if not logged in"""
@@ -61,7 +61,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 # CRUD actions on Proposal
 class ProposalCreate(CreateView): 
     model = Proposal
-    fields = ('name', 'tech_summary', 'longitudinal', 'supervisor_name', 'supervisor_email', 'applicants')
+    form_class = ProposalForm
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag aangemaakt'
 
@@ -72,9 +72,16 @@ class ProposalCreate(CreateView):
 
 class ProposalUpdate(UpdateView): 
     model = Proposal
-    fields = ('name', 'tech_summary', 'longitudinal', 'supervisor_name', 'supervisor_email', 'applicants')
+    form_class = ProposalForm
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag bewerkt'
+
+class ProposalUploadConsent(UpdateView): 
+    model = Proposal
+    form_class = UploadConsentForm
+    template_name = 'proposals/proposal_consent.html'
+    success_url = '/proposals/concepts/'
+    success_message = 'Informed consent geupload'
 
 class ProposalDelete(DeleteView):
     model = Proposal

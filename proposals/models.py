@@ -97,7 +97,9 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         if self.status == self.STUDY_CREATED:
             return reverse('proposals:task_create', args=(self.id,))
         if self.status == self.TASKS_CREATED:
-            return reverse('proposals:task_create', args=(self.id,))
+            return reverse('proposals:consent', args=(self.id,))
+        if self.status == self.INFORMED_CONSENT_UPLOADED:
+            return reverse('proposals:consent', args=(self.id,))
 
     def __unicode__(self):
         return 'Proposal %s' % self.name
