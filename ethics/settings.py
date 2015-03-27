@@ -97,32 +97,33 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/proposals/'
 
-import ldap
-from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+#import ldap
+#from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
-AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
+#AUTHENTICATION_BACKENDS = (
+#    'django_auth_ldap.backend.LDAPBackend',
+#    'django.contrib.auth.backends.ModelBackend',
+#)
 
-AUTH_LDAP_SERVER_URI = 'ldap://ldap.forumsys.com'
-AUTH_LDAP_BIND_DN = 'cn=read-only-admin,dc=example,dc=com'
-AUTH_LDAP_BIND_PASSWORD = 'password'
-AUTH_LDAP_USER_DN_TEMPLATE = 'uid=%(user)s,dc=example,dc=com'
-AUTH_LDAP_USER_ATTR_MAP = {
-    'first_name': 'uid', 
-    'last_name': 'sn'
-}
-AUTH_LDAP_ALWAYS_UPDATE_USER = False
+#AUTH_LDAP_SERVER_URI = 'ldap://ldap.forumsys.com'
+#AUTH_LDAP_BIND_DN = 'cn=read-only-admin,dc=example,dc=com'
+#AUTH_LDAP_BIND_PASSWORD = 'password'
+#AUTH_LDAP_USER_DN_TEMPLATE = 'uid=%(user)s,dc=example,dc=com'
+#AUTH_LDAP_USER_ATTR_MAP = {
+#    'first_name': 'uid', 
+#    'last_name': 'sn'
+#}
+#AUTH_LDAP_ALWAYS_UPDATE_USER = False
 
-from django_auth_ldap.backend import populate_user 
+#from django_auth_ldap.backend import populate_user 
 
-def make_staff(sender, user, **kwargs): 
-    user.is_staff = True 
-    user.is_superuser = True 
+#def make_staff(sender, user, **kwargs): 
+#    user.is_staff = True 
+#    user.is_superuser = True 
 
-populate_user.connect(make_staff) 
+#populate_user.connect(make_staff) 
 
+# BELOW DOESN'T WORK YET
 #AUTH_LDAP_GROUP_TYPE = GroupOfNamesType()
 #AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=scientists,dc=example,dc=com', ldap.SCOPE_SUBTREE, '(objectClass=groupOfUniqueNames)')
 #AUTH_LDAP_USER_FLAGS_BY_GROUP = {
