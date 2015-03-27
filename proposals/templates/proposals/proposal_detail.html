@@ -1,12 +1,16 @@
 {% extends "proposals/base.html" %}
+{% load staticfiles %}
 
 {% block title %} 
 Aanvraag <em>{{ proposal.name }}</em>
 {% endblock %} 
 
 {% block content %}
-<h3>Algemene informatie</h3>
-<a href="{% url 'proposals:update' proposal.id %}">Bewerken</a>
+<h3>Algemene informatie
+    <a href="{% url 'proposals:update' proposal.id %}">
+        <img src="{% static 'proposals/images/pencil.png' %}">
+    </a>
+</h3>
 <table class="pure-table">
     <tr>
         <th>Longitudinaal</th>
@@ -19,8 +23,11 @@ Aanvraag <em>{{ proposal.name }}</em>
 </table>
 
 {% if proposal.wmo %}
-<h3>WMO-plichtig of niet?</h3>
-<a href="{% url 'proposals:wmo_update' proposal.id %}">Bewerken</a>
+<h3>WMO-plichtig of niet?
+    <a href="{% url 'proposals:wmo_update' proposal.id %}">
+        <img src="{% static 'proposals/images/pencil.png' %}">
+    </a>
+</h3>
 <table class="pure-table">
     <tr>
         <th>METC?</th>
@@ -30,8 +37,11 @@ Aanvraag <em>{{ proposal.name }}</em>
 {% endif %}
 
 {% if proposal.study %}
-<h3>Algemene kenmerken van de studie</h3>
-<a href="{% url 'proposals:study_update' proposal.id %}">Bewerken</a>
+<h3>Algemene kenmerken van de studie 
+    <a href="{% url 'proposals:study_update' proposal.id %}">
+        <img src="{% static 'proposals/images/pencil.png' %}">
+    </a>
+</h3>
 <table class="pure-table">
     <tr>
         <th>Leeftijdsgroepen</th>
@@ -57,8 +67,8 @@ Aanvraag <em>{{ proposal.name }}</em>
             <td>{{ task.name }}</td>
             <td>{{ task.duration }}</td>
             <td>
-                <a href="{% url 'proposals:task_update' task.id %}">Bewerken</a>, 
-                <a href="{% url 'proposals:task_delete' task.id %}">Verwijderen</a>
+                <a href="{% url 'proposals:task_update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                <a href="{% url 'proposals:task_delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
             </td>
         </tr>
         {% endfor %}

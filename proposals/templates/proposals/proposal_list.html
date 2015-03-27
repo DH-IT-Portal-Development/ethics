@@ -1,4 +1,5 @@
 {% extends "proposals/base.html" %}
+{% load staticfiles %}
 
 {% block title %} 
 Mijn aanvragen
@@ -24,9 +25,9 @@ Mijn aanvragen
             <td>{{ proposal.status }}</td>
             <td>{{ proposal.date_modified }}</td>
             <td>
-            	<a href="{% url 'proposals:detail' proposal.id %}">Inzien</a>,
-            	<a href="{% url 'proposals:delete' proposal.id %}">Verwijderen</a>, 
-            	<a href="{{ proposal.continue_url }}">Doorgaan</a>
+            	<a href="{% url 'proposals:detail' proposal.id %}"><img src="{% static 'proposals/images/zoom.png' %}"></a>
+                <a href="{{ proposal.continue_url }}"><img src="{% static 'proposals/images/page_white_go.png' %}"></a>
+            	<a href="{% url 'proposals:delete' proposal.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
             </td>
         </tr>
         {% endfor %}
