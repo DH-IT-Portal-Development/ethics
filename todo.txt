@@ -17,3 +17,4 @@ v icons voor inzien, bewerken, verwijderen
 - opsplitsen website/proposals
 - testcases 
 - WMO: verschillende success_messages
+- kopieren bestaande aanvraag

@@ -7,7 +7,7 @@ yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
 class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['name', 'tech_summary', 'longitudinal', 'supervisor_name', 'supervisor_email', 'applicants']
+        fields = ['creator_function', 'supervisor_name', 'supervisor_email', 'name', 'tech_summary', 'applicants', 'longitudinal']
 
 class WmoForm(forms.ModelForm):
     class Meta:

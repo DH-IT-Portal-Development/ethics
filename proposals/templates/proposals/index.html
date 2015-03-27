@@ -7,4 +7,5 @@ Home
 {% block content %} 
 <p>Welkom {{current_user.first_name}} {{current_user.last_name}}!</p>
 <p><a href="{% url 'proposals:create' %}">Nieuwe aanvraag indienen</a></p>
+<p><a href="{% url 'proposals:create' %}">Bestaande aanvraag kopieren</a> (nog niet geimplementeerd)</p>
 {% endblock %}

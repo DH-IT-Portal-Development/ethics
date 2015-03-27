@@ -20,6 +20,13 @@ class Proposal(models.Model):
         (SUBMITTED, 'submitted'),
     )
 
+    FUNCTIONS = (
+        (1, '(PhD) student'),
+        (2, 'post-doc'),
+        (3, 'UD'),
+        (4, 'professor'),
+    )
+
     # Fields
     name = models.CharField(
         'Titel studie', 
@@ -40,6 +47,10 @@ het aantal taken en de methode waarmee het gedrag van de proefpersoon wordt vast
     longitudinal = models.BooleanField(
         'Is uw studie een longitudinale studie?',
         default=False)
+    creator_function = models.CharField(
+        'Functie', 
+        max_length=1, 
+        choices=FUNCTIONS)
     supervisor_name = models.CharField(
         'Naam eindverantwoordelijke',
         max_length=200, 
@@ -49,10 +60,11 @@ Wanneer een student de aanvraag doet, dan is de eindverantwoordelijke de begelei
         'E-mailadres eindverantwoordelijke',
         help_text='Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.')
-    status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
     informed_consent_pdf = models.FileField(
         'Upload hier de informed consent',
         blank=True)
+
+    status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
 
     # Dates 
     date_submitted = models.DateTimeField(null=True)
@@ -60,7 +72,8 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     date_modified = models.DateTimeField(auto_now=True)
 
     # References
-    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='Uitvoerende(n)')
+    #created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='created_by')
+    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='Uitvoerende(n)', related_name='applicants')
     parent = models.ForeignKey('self', null=True)
 
     def save(self, *args, **kwargs):
@@ -208,10 +221,10 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
         blank=True)
     surveys = models.ManyToManyField(Survey)
     risk_physical = models.NullBooleanField(
-        'Is er een kans dat de proefpersoon fysiek letsel oploopt?',
+        'Is de kans dat de proefpersoon fysiek letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?',
         default=False)
     risk_psychological = models.NullBooleanField(
-        'Is er een kans dat de proefpersoon psychisch letsel oploopt?',
+        'Is de kans dat de proefpersoon psychisch letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?',
         default=False)
     compensation = models.CharField(
         'Welke vergoeding krijgt de proefpersoon voor verrichte taken?',

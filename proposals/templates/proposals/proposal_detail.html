@@ -51,7 +51,7 @@ Aanvraag <em>{{ proposal.name }}</em>
 {% endif %}
 
 {% if proposal.task_set.all %}
-<h3>Taken</h3>
+<h3>Belasting voor de proefpersoon</h3>
 <a href="{% url 'proposals:task_create' proposal.id %}">Taak toevoegen</a>
 <table class="dataTable display">
     <thead>
