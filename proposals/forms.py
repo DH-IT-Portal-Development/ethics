@@ -52,3 +52,8 @@ class UploadConsentForm(forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['informed_consent_pdf']
+
+class ProposalSubmitForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['']

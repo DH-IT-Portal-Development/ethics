@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
     url(r'^consent/(?P<pk>\d+)/$', ProposalUploadConsent.as_view(), name='consent'),
+    url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
     url(r'^(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
     
     # WMO

@@ -5,7 +5,7 @@ from django.views import generic
 from django.core.urlresolvers import reverse
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
-from .forms import ProposalForm, WmoForm, StudyForm, TaskForm, UploadConsentForm
+from .forms import ProposalForm, WmoForm, StudyForm, TaskForm, UploadConsentForm, ProposalSubmitForm
 
 class LoginRequiredMixin(object):
     """Mixin for generic views to retun to login view if not logged in"""
@@ -86,6 +86,15 @@ class ProposalUploadConsent(UpdateView):
     template_name = 'proposals/proposal_consent.html'
     success_url = '/proposals/concepts/'
     success_message = 'Informed consent geupload'
+
+class ProposalSubmit(UpdateView): 
+    model = Proposal
+    form_class = ProposalSubmitForm
+    template_name = 'proposals/proposal_submit.html'
+    success_url = '/proposals/concepts/'
+    success_message = 'Aanvraag verzonden'
+    # TODO: set date_submitted on form submit
+    # TODO: send e-mail to supervisor on form submit
 
 class ProposalDelete(DeleteView):
     model = Proposal

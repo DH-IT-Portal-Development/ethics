@@ -8,7 +8,7 @@ v titel voor pagina's in ander block
 v inregelen statussen
 v authorisatie: login required
 - authorisatie: alleen eigen proposals aanpassen
-- verplicht maken velden bij bepaalde waarden
+- verplicht maken velden bij bepaalde waarden selectie-velden
 - detail-pagina proposal mooi maken
 v bij taken: nog een taak toevoegen of klaar
 v pagina met informed consent toevoegen
@@ -18,3 +18,4 @@ v icons voor inzien, bewerken, verwijderen
 - testcases 
 - WMO: verschillende success_messages
 - kopieren bestaande aanvraag
+- fixen nav nieuwe specs 
