@@ -2,6 +2,14 @@ from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 
+class Relation(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_supervisor = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.description
+
 class Proposal(models.Model):
     DRAFT = 1
     WMO_AWAITING_DECISION = 2
@@ -20,23 +28,12 @@ class Proposal(models.Model):
         (SUBMITTED, 'submitted'),
     )
 
-    FUNCTIONS = (
-        (1, '(PhD) student'),
-        (2, 'post-doc'),
-        (3, 'UD'),
-        (4, 'professor'),
-    )
-
     # Fields
-    name = models.CharField(
+    title = models.CharField(
         'Titel studie', 
         max_length=200, 
-        help_text='Een studie wordt als volgt gedefinieerd: proefpersonen worden aan eenzelfde handeling of reeks handelingen onderworpen. \
-Dus proefpersonen binnen de studie, ongeacht de groep (controle of  experimentele groep), doen allemaal dezelfde taak/taken. \
-Wanneer het om herhaalde metingen gaat en de procedure verandert per meetmoment, moeten er verschillende aanvragen worden ingediend \
-bij de commissie via deze webportal. Ook wanneer de taken onveranderd blijven, maar de proefpersonen kruisen een leeftijdscategorie \
-(--link leeftijdscategorieen--), moeten er meerdere aanvragen ingediend worden. Vragen 6 en 7 gaan hierover. \
-Het is handig voor het overzicht en het aanvraagproces om in de titel van de studie de leeftijdscategorie te vermelden.')
+        unique=True,
+        help_text='Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies.')
     tech_summary = models.TextField(
         'Samenvatting',
         help_text='Schrijf hier een samenvatting van max. 500 woorden. \
@@ -44,22 +41,21 @@ Deze samenvatting moet in ieder geval bestaan uit een duidelijke beschrijving va
 Geef een helder beeld van de procedure en een beschrijving van de stimuli (indien daar sprake van is), \
 het aantal taken en de methode waarmee het gedrag van de proefpersoon wordt vastgelegd \
 (bijv.: reactietijden; knoppenbox; schriftelijke vragenlijst; interview; etc.).')
-    longitudinal = models.BooleanField(
-        'Is uw studie een longitudinale studie?',
-        default=False)
-    creator_function = models.CharField(
-        'Functie', 
-        max_length=1, 
-        choices=FUNCTIONS)
-    supervisor_name = models.CharField(
-        'Naam eindverantwoordelijke',
-        max_length=200, 
-        help_text='De eindverantwoordelijke is een onderzoeker die de graad van doctor behaald heeft. \
-Wanneer een student de aanvraag doet, dan is de eindverantwoordelijke de begeleidende onderzoeker met in ieder geval een doctorstitel.')
+    relation = models.ManyToManyField(
+        Relation,
+        verbose_name='Wat is uw relatie tot het UiL OTS?')
     supervisor_email = models.EmailField(
         'E-mailadres eindverantwoordelijke',
+        blank='True',
         help_text='Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.')
+    other_applicants = models.BooleanField(
+        'Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?',
+        default=False)
+    longitudinal = models.BooleanField(
+        'Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen aan een sessie deelnemen? \
+(bijvoorbeeld een longitudinale studie, of een kortlopende studie waar proefpersonen op twee of meer verschillende dagen getest worden)',
+        default=False)
     informed_consent_pdf = models.FileField(
         'Upload hier de informed consent',
         blank=True)
@@ -67,14 +63,21 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
 
     # Dates 
-    date_submitted = models.DateTimeField(null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    date_submitted = models.DateTimeField(null=True)
 
     # References
-    #created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='created_by')
-    applicants = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='Uitvoerende(n)', related_name='applicants')
-    parent = models.ForeignKey('self', null=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        related_name='created_by')
+    applicants = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, 
+        verbose_name='Uitvoerende(n)', 
+        related_name='applicants')
+    parent = models.ForeignKey(
+        'self', 
+        null=True)
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
@@ -119,21 +122,24 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
 
 class Wmo(models.Model):
     metc = models.NullBooleanField(
-        'Vindt de studie plaats binnen het UMC Utrecht, of een andere instelling waarbij de METC verplicht betrokken wordt?', 
+        'Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?', 
         default=False)
     metc_institution = models.CharField(
-        'Instelling',
+        'Welke instelling?',
         max_length=200,
         blank=True)
     is_medical = models.NullBooleanField(
-        'Is de onderzoeksvraag medisch-wetenschappelijk van aard?', 
+        'Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?', 
         default=False)
     is_behavioristic = models.NullBooleanField(
-        'Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd?', 
+        'Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?', 
         help_text='Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten drukken.',
         default=False)
+    metc_application = models.BooleanField(
+        'Uw studie moet beoordeeld worden door de METC<link>, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag ingediend?',
+        default=False)
     metc_decision = models.BooleanField(
-        'Is uw onderzoek al in behandeling genomen door een METC?',
+        'Is de METC al tot een beslissing gekomen?',
         default=False)
     metc_decision_pdf = models.FileField(
         'Upload hier de beslissing van het METC',
@@ -169,14 +175,15 @@ class Trait(models.Model):
     def __unicode__(self):
         return self.description
 
-class Survey(models.Model):
-    name = models.CharField(max_length=200)
-    minutes = models.PositiveIntegerField()
+class Setting(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.name
+        return self.description
 
-class Setting(models.Model):
+class Compensation(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
@@ -195,20 +202,24 @@ class Recruitment(models.Model):
 class Study(models.Model): 
     age_groups = models.ManyToManyField(
         AgeGroup, 
-        verbose_name='Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, er zijn meerdere antwoorden zijn mogelijk')
+        verbose_name='Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, er zijn meerdere antwoorden mogelijk')
+    has_traits = models.BooleanField(
+        'Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie \
+(bijvoorbeeld: kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale beledigingen; \
+pati&#235;nten met afasie die een gesprek moeten voeren, ook al gaat het gesprek over alledaagse dingen). \
+Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
+        default=False)
     traits = models.ManyToManyField(
         Trait, 
-        verbose_name='Worden de beoogde proefpersonen op bijzondere kenmerken geselecteerden die mogelijk een negatief effect hebben \
-op de kwetsbaarheid of verminderde belastbaarheid van de proefpersoon? Indien u twee (of meer) groepen voor ogen heeft, \
-hoeft u over de controlegroep (die dus geen bijzondere kenmerken heeft) niet in het hoofd te nemen bij het beantwoorden van de ze vraag')
+        verbose_name='Selecteer de bijzondere kenmerken van uw proefpersonen')
     traits_details = models.CharField(
         'Namelijk', 
         max_length=200,
         blank=True)
     necessity = models.NullBooleanField(
-        'Is het noodzakelijk om deze geselecteerde groep proefpersonen aan de door jou opgelegde handeling te onderwerpen om de onderzoeksvraag beantwoord te krijgen? \
-Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?',
-        default=True)
+        'Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type proefpersonen aan de studie te laten deelnemen?',
+        default=True, 
+        help_text='Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?')
     necessity_reason = models.TextField(
         'Leg uit waarom',
         blank=True)
@@ -219,17 +230,21 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
         'Namelijk', 
         max_length=200,
         blank=True)
-    surveys = models.ManyToManyField(Survey)
     risk_physical = models.NullBooleanField(
         'Is de kans dat de proefpersoon fysiek letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?',
         default=False)
     risk_psychological = models.NullBooleanField(
         'Is de kans dat de proefpersoon psychisch letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?',
         default=False)
+    # TODO: make OneToOneField
     compensation = models.CharField(
-        'Welke vergoeding krijgt de proefpersoon voor verrichte taken?',
+        'Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze studie?',
         max_length=200,
         help_text='tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld')
+    compensation_details = models.CharField(
+        'Namelijk', 
+        max_length=200, 
+        blank=True)
     recruitment = models.ManyToManyField(
         Recruitment,
         verbose_name='Hoe worden de proefpersonen geworven?')
@@ -248,6 +263,14 @@ Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag ook k
 
     def __unicode__(self):
         return 'Study details for proposal %s' % self.proposal.name
+
+class Survey(models.Model):
+    name = models.CharField(max_length=200)
+    minutes = models.PositiveIntegerField()
+    study = models.ForeignKey(Study)
+
+    def __unicode__(self):
+        return self.name
 
 class Action(models.Model): 
     order = models.PositiveIntegerField(unique=True)
