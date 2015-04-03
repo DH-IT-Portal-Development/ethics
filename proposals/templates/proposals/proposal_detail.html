@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %} 
-Aanvraag <em>{{ proposal.name }}</em>
+Aanvraag <em>{{ proposal.title }}</em>
 {% endblock %} 
 
 {% block content %}
@@ -18,7 +18,7 @@ Aanvraag <em>{{ proposal.name }}</em>
     </tr>
     <tr>
         <th>Supervisor</th>
-        <td>{{ proposal.supervisor_name }} (<a href="mailto:{{ proposal.supervisor_email }}">{{ proposal.supervisor_email }}</a>)</td>
+        <td>{{ proposal.supervisor_email }}</td>
     </tr>
 </table>
 

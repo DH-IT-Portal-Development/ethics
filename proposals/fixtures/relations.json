@@ -1,0 +1,47 @@
+[
+{
+    "fields": {
+        "needs_supervisor": true,
+        "order": 1,
+        "description": "student in TLC Bachelorprogramma of -cursus"
+    },
+    "model": "proposals.relation",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_supervisor": true,
+        "order": 2,
+        "description": "student in TLC Masterprogramma of -cursus"
+    },
+    "model": "proposals.relation",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_supervisor": true,
+        "order": 3,
+        "description": "student in TLC Research Masterprogramma of -cursus"
+    },
+    "model": "proposals.relation",
+    "pk": 3
+},
+{
+    "fields": {
+        "needs_supervisor": true,
+        "order": 4,
+        "description": "PhD student (AIO)"
+    },
+    "model": "proposals.relation",
+    "pk": 4
+},
+{
+    "fields": {
+        "needs_supervisor": true,
+        "order": 5,
+        "description": "gepromoveerd onderzoeker/docent (postdoc, UD, UHD, HL)"
+    },
+    "model": "proposals.relation",
+    "pk": 5
+}
+]

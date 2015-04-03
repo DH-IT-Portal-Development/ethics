@@ -1,5 +1,4 @@
 TODO: 
-
 v refactor URLs 
 v editen WMO/Experiment
 v doorlopen applicatie
@@ -7,15 +6,18 @@ v datatables Nederlands
 v titel voor pagina's in ander block
 v inregelen statussen
 v authorisatie: login required
-- authorisatie: alleen eigen proposals aanpassen
-- verplicht maken velden bij bepaalde waarden selectie-velden
-- detail-pagina proposal mooi maken
 v bij taken: nog een taak toevoegen of klaar
 v pagina met informed consent toevoegen
-- pagina met submitten proposal
 v icons voor inzien, bewerken, verwijderen
-- opsplitsen website/proposals
-- testcases 
+- authorisatie: alleen eigen proposals aanpassen
+- verplicht maken velden bij bepaalde waarden selectie-velden
+- PROPOSAL: detail-pagina proposal mooi maken
+- PROPOSAL: pagina met submitten proposal
+- PROPOSAL/TASKS: stap met bruto tijd
 - WMO: verschillende success_messages
+- TASKS: mooi maken
+
+NA EMLAR: 
 - kopieren bestaande aanvraag
-- fixen nav nieuwe specs 
+- opsplitsen website/proposals
+- testcases

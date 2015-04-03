@@ -11,7 +11,6 @@ Mijn aanvragen
     <thead>
         <tr>
             <th>Titel studie</th>
-            <th>Eindverantwoordelijke</th>
             <th>Status</th>
             <th>Laatst bijgewerkt</th>
             <th>Acties</th>
@@ -20,8 +19,7 @@ Mijn aanvragen
     <tbody>
         {% for proposal in proposals %}
         <tr>
-            <td>{{ proposal.name }}</td>
-            <td><a href="mailto:{{proposal.supervisor_email}}">{{ proposal.supervisor_name }}</a></td>
+            <td>{{ proposal.title }}</td>
             <td>{{ proposal.status }}</td>
             <td>{{ proposal.date_modified }}</td>
             <td>

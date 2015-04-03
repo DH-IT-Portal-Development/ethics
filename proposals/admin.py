@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import AgeGroup, Trait, Action, Registration, Setting, Recruitment, Faq, Member, Meeting
+from .models import Relation, AgeGroup, Trait, Action, Registration, Setting, Recruitment, Faq, Member, Meeting
+
+@admin.register(Relation)
+class RelationAdmin(admin.ModelAdmin):
+    list_display = ('order', 'description', 'needs_supervisor', )
+    ordering = ['order']
 
 @admin.register(AgeGroup)
 class AgeGroupAdmin(admin.ModelAdmin):

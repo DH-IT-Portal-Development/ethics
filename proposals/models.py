@@ -30,20 +30,17 @@ class Proposal(models.Model):
 
     # Fields
     title = models.CharField(
-        'Titel studie', 
+        'Wat is de titel van uw studie?', 
         max_length=200, 
         unique=True,
         help_text='Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies.')
     tech_summary = models.TextField(
-        'Samenvatting',
-        help_text='Schrijf hier een samenvatting van max. 500 woorden. \
-Deze samenvatting moet in ieder geval bestaan uit een duidelijke beschrijving van deonderzoeksvraag, de proefpersonen. \
-Geef een helder beeld van de procedure en een beschrijving van de stimuli (indien daar sprake van is), \
-het aantal taken en de methode waarmee het gedrag van de proefpersoon wordt vastgelegd \
-(bijv.: reactietijden; knoppenbox; schriftelijke vragenlijst; interview; etc.).')
-    relation = models.ManyToManyField(
-        Relation,
-        verbose_name='Wat is uw relatie tot het UiL OTS?')
+        'Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een duidelijke, \
+bondige beschrijving van de onderzoeksvraag of -vragen, en (b) een korte beschrijving van de beoogde methode, \
+d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over proefpersonen, materiaal (taken, stimuli), \
+design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen \
+en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingredi&#235;nten \
+van de methode meer gedetailleerde informatie worden gevraagd.')
     supervisor_email = models.EmailField(
         'E-mailadres eindverantwoordelijke',
         blank='True',
@@ -60,14 +57,18 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         'Upload hier de informed consent',
         blank=True)
 
+    # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
 
-    # Dates 
+    # Dates for bookkeeping
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     date_submitted = models.DateTimeField(null=True)
 
-    # References
+    # References to other models
+    relation = models.ForeignKey(
+        Relation,
+        verbose_name='Wat is uw relatie tot het UiL OTS?')
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         related_name='created_by')
@@ -118,7 +119,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
             return reverse('proposals:submit', args=(self.id,))
 
     def __unicode__(self):
-        return 'Proposal %s' % self.name
+        return 'Proposal %s' % self.title
 
 class Wmo(models.Model):
     metc = models.NullBooleanField(
@@ -154,7 +155,7 @@ class Wmo(models.Model):
         super(Wmo, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return 'Wmo %s' % self.proposal.name
+        return 'Wmo %s' % self.proposal.title
 
 class AgeGroup(models.Model):
     age_min = models.PositiveIntegerField()
@@ -223,7 +224,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
     necessity_reason = models.TextField(
         'Leg uit waarom',
         blank=True)
-    setting = models.ManyToManyField(
+    setting = models.ForeignKey(
         Setting,
         verbose_name='Geef aan waar de studie plaatsvindt')
     setting_details = models.CharField(
@@ -236,10 +237,9 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
     risk_psychological = models.NullBooleanField(
         'Is de kans dat de proefpersoon psychisch letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?',
         default=False)
-    # TODO: make OneToOneField
-    compensation = models.CharField(
-        'Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze studie?',
-        max_length=200,
+    compensation = models.ForeignKey(
+        Compensation,
+        verbose_name='Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze studie?',
         help_text='tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld')
     compensation_details = models.CharField(
         'Namelijk', 
@@ -262,7 +262,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         super(Study, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return 'Study details for proposal %s' % self.proposal.name
+        return 'Study details for proposal %s' % self.proposal.title
 
 class Survey(models.Model):
     name = models.CharField(max_length=200)

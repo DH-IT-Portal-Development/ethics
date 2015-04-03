@@ -69,6 +69,10 @@ class ProposalCreate(CreateView):
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag aangemaakt'
 
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super(ProposalCreate, self).form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True

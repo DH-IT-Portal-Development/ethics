@@ -7,6 +7,22 @@ Aanvraag indienen: fase 1
 
 {% block content %} 
 {% include "proposals/form_styling.html" %}
+<script>
+$(function() {
+	$("input[name=relation]").change(function() {
+		// TODO: ajax call to check if supervisor is needed 
+		relation_id = $('input[name=relation]:checked').val();
+		$("input[name=supervisor_email]").parent().parent().toggle(relation_id != 5);
+	});
+	$("input[name=relation]").change();
+
+	$("input[name=other_applicants]").change(function() {
+		has_other = $('input[name=other_applicants]').is(':checked');
+		$("select[name=applicants]").parent().parent().toggle(has_other);
+	});
+	$("input[name=other_applicants]").change();
+});
+</script>
 {% if create %}
 <p>U staat op het punt een aanvraag in te dienen. In het eerste gedeelte van de aanvraag (algemene informatie) zal er gevraagd worden naar het e-mailadres van de eindverantwoordelijke. Nadat dit is ingevuld, zal er een e-mail verstuurd worden naar de eindverantwoordelijke zodat de studie geverifieerd kan worden door de eindverantwoordelijke. Pas wanneer deze verificatie binnen is, kan men de aanvraag afronden. U kunt wel de hele aanvraagprocedure doorlopen, de vragen beantwoorden om vervolgens de aanvraag als concept aanvraag opslaan. Wanneer de eindverantwoordelijke de studie heeft geverifieerd, krijgt u automatisch een e-mail toegezonden, zodat u de aanvraag kunt afronden.</p>
 {% endif %}
