@@ -203,7 +203,8 @@ class Recruitment(models.Model):
 class Study(models.Model): 
     age_groups = models.ManyToManyField(
         AgeGroup, 
-        verbose_name='Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, er zijn meerdere antwoorden mogelijk')
+        verbose_name='Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
+er zijn meerdere antwoorden mogelijk')
     has_traits = models.BooleanField(
         'Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie \
 (bijvoorbeeld: kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale beledigingen; \
