@@ -60,17 +60,23 @@ class WmoForm(forms.ModelForm):
 class StudyForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['age_groups', 'traits', 'traits_details', 'necessity', 'necessity_reason', 'setting', 'setting_details', \
-            'risk_physical', 'risk_psychological', 'compensation', 'recruitment', 'recruitment_details']
+        fields = ['age_groups', 'has_traits', 'traits', 'traits_details', 'necessity', 'necessity_reason', 'setting', 'setting_details', \
+            'risk_physical', 'risk_psychological', 'compensation', 'compensation_details', 'recruitment', 'recruitment_details']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
+            'has_traits': forms.RadioSelect(choices=yes_no),
             'traits': forms.CheckboxSelectMultiple(),
             'necessity': forms.RadioSelect(choices=yes_no_doubt),
             'risk_physical': forms.RadioSelect(choices=yes_no_doubt),
-            'setting': forms.CheckboxSelectMultiple(),
+            'setting': forms.RadioSelect(),
             'risk_psychological': forms.RadioSelect(choices=yes_no_doubt),
             'recruitment': forms.CheckboxSelectMultiple(),
         }
+
+    def __init__(self, *args, **kwargs):
+        """Remove empty label from setting field"""
+        super(StudyForm, self).__init__(*args, **kwargs)
+        self.fields['setting'].empty_label = None
 
 class TaskStartForm(forms.ModelForm):
     class Meta:
