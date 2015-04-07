@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 class Relation(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -63,7 +64,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         help_text='Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
     tasks_duration = models.PositiveIntegerField(
-        'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op %d. \
+        'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op <strong>{duration__sum} minuten</strong>. \
 Hoe lang duurt de totale sessie, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)',
         null=True)
     tasks_stressful = models.NullBooleanField(
@@ -100,6 +101,9 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         'self', 
         null=True)
 
+    def gross_duration(self):
+        return self.task_set.aggregate(models.Sum('duration'))
+
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
         self.status = self.get_status()
@@ -120,8 +124,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             status = self.STUDY_CREATED
         if self.tasks_number: 
             status = self.TASKS_STARTED
-        if self.task_set.all():
-            status = self.TASKS_CREATED
+        if self.task_set.count() == self.tasks_number:
+            status = self.TASKS_COMPLETED
         if self.informed_consent_pdf: 
             status = self.INFORMED_CONSENT_UPLOADED
         return status
@@ -138,7 +142,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         if self.status == self.TASKS_STARTED:
             return reverse('proposals:task_create', args=(self.id,))
         if self.status == self.TASKS_COMPLETED:
-            return reverse('proposals:consent', args=(self.id,))
+            return reverse('proposals:task_end', args=(self.id,))
         if self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))
 

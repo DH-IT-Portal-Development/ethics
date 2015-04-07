@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.safestring import mark_safe
 
 from .models import Proposal, Wmo, Study, Task
 
@@ -107,11 +108,15 @@ class TaskEndForm(forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['tasks_duration', 'tasks_stressful']
+        widgets = {
+            'tasks_stressful': forms.RadioSelect(choices=yes_no_doubt),
+        }
 
     def __init__(self, *args, **kwargs):
         """Set the tasks_duration and tasks_stressful fields as required"""
         super(TaskEndForm, self).__init__(*args, **kwargs)
         self.fields['tasks_duration'].required = True
+        self.fields['tasks_duration'].label = mark_safe(self.fields['tasks_duration'].label.format(**self.instance.gross_duration()))
         self.fields['tasks_stressful'].required = True
 
 class UploadConsentForm(forms.ModelForm):
