@@ -3,7 +3,7 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "thuis"
+        "description": "thuis bij de proefpersoon"
     },
     "model": "proposals.setting",
     "pk": 1
@@ -57,7 +57,7 @@
     "fields": {
         "needs_details": false,
         "order": 7,
-        "description": "lab"
+        "description": "het UiL OTS lab"
     },
     "model": "proposals.setting",
     "pk": 7

@@ -244,7 +244,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         blank=True)
     setting = models.ForeignKey(
         Setting,
-        verbose_name='Geef aan waar de studie plaatsvindt')
+        verbose_name='Geef aan waar de dataverzameling plaatsvindt')
     setting_details = models.CharField(
         'Namelijk', 
         max_length=200,

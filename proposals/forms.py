@@ -82,7 +82,7 @@ class TaskStartForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'procedure', 'duration', 'actions', 'registrations', 'registrations_details']
+        fields = ['name', 'duration', 'actions', 'registrations', 'registrations_details']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'actions': forms.CheckboxSelectMultiple(),

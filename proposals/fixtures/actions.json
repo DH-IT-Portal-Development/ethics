@@ -10,9 +10,9 @@
 },
 {
     "fields": {
-        "info_text": "toetsenbord, knoppenkast, aanwijzen stimulus",
+        "info_text": "knoppenkast, of met muis of vinger iets aanwijzen/aanklikken, etc; dus ook meerkeuzevragen in een enquete, of beoordelen van bekeken/beluisterde stimuli",
         "order": 2,
-        "description": "knoppenkast, of met muis of vinger iets aanwijzen/aanklikken, etc; dus ook meerkeuzevragen in een enquete, of beoordelen van bekeken/beluisterde stimuli"
+        "description": "simpele manuele responsie"
     },
     "model": "proposals.action",
     "pk": 2
@@ -52,7 +52,7 @@
     },
     "model": "proposals.action",
     "pk": 6
-}
+},
 {
     "fields": {
         "order": 7,

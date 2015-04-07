@@ -3,7 +3,7 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "(audio- en) video-opnamen"
+        "description": "audio-opname"
     },
     "model": "proposals.registration",
     "pk": 1
@@ -12,16 +12,16 @@
     "fields": {
         "needs_details": false,
         "order": 2,
-        "description": "reactie- of kijktijden"
+        "description": "video-opname"
     },
     "model": "proposals.registration",
     "pk": 2
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
         "order": 3,
-        "description": "gedragsregistratie (wat wordt aangewezen of waar wordt gekeken)"
+        "description": "'live' gedragsscoring (bijv. wat wordt aangewezen, waar wordt gekeken)"
     },
     "model": "proposals.registration",
     "pk": 3
@@ -30,16 +30,16 @@
     "fields": {
         "needs_details": false,
         "order": 4,
-        "description": "oogbewegingsdata"
+        "description": "RT-registratie via Zep, Presentation, E-prime, etc"
     },
     "model": "proposals.registration",
     "pk": 4
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
         "order": 5,
-        "description": "psychofysiologische meting (aangeven welk, aanvinken: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling)"
+        "description": "oogbewegingsregistratie via eye-trackers"
     },
     "model": "proposals.registration",
     "pk": 5
@@ -48,9 +48,18 @@
     "fields": {
         "needs_details": true,
         "order": 6,
-        "description": "anders, namelijk"
+        "description": "psychofysiologische meting (aangeven welk: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling, vingertemperatuur)"
     },
     "model": "proposals.registration",
     "pk": 6
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 7,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.registration",
+    "pk": 7
 }
 ]
