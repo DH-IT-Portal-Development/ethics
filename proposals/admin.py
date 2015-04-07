@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Relation, AgeGroup, Trait, Action, Registration, Setting, Recruitment, Faq, Member, Meeting
+from .models import Relation, AgeGroup, Trait, Action, Registration, Setting, Compensation, Recruitment, Faq, Member, Meeting
 
 @admin.register(Relation)
 class RelationAdmin(admin.ModelAdmin):
@@ -28,6 +28,11 @@ class RegistrationAdmin(admin.ModelAdmin):
 
 @admin.register(Setting)
 class SettingAdmin(admin.ModelAdmin):
+    list_display = ('order', 'description', 'needs_details', )
+    ordering = ['order']
+
+@admin.register(Compensation)
+class CompensationAdmin(admin.ModelAdmin):
     list_display = ('order', 'description', 'needs_details', )
     ordering = ['order']
 

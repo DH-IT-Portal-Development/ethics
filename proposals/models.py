@@ -111,7 +111,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
                 if not wmo.metc_decision: 
                     return self.WMO_AWAITING_DECISION
                 if wmo.metc_decision and wmo.metc_decision_pdf: 
-                    return self.WMO_COMPLETED
+                    status = self.WMO_COMPLETED
             else: 
                 status = self.WMO_COMPLETED
         if hasattr(self, 'study'):
@@ -229,7 +229,8 @@ pati&#235;nten met afasie die een gesprek moeten voeren, ook al gaat het gesprek
 Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         default=False)
     traits = models.ManyToManyField(
-        Trait, 
+        Trait,
+        blank=True,
         verbose_name='Selecteer de bijzondere kenmerken van uw proefpersonen')
     traits_details = models.CharField(
         'Namelijk', 

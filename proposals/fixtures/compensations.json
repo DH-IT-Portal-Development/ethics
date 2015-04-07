@@ -1,0 +1,29 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "order": 1,
+        "description": "geen"
+    },
+    "model": "proposals.compensation",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 2,
+        "description": "geld"
+    },
+    "model": "proposals.compensation",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 3,
+        "description": "cadeautje"
+    },
+    "model": "proposals.compensation",
+    "pk": 3
+}
+]

@@ -70,6 +70,7 @@ class StudyForm(forms.ModelForm):
             'risk_physical': forms.RadioSelect(choices=yes_no_doubt),
             'setting': forms.RadioSelect(),
             'risk_psychological': forms.RadioSelect(choices=yes_no_doubt),
+            'compensation': forms.RadioSelect(),
             'recruitment': forms.CheckboxSelectMultiple(),
         }
 
@@ -77,6 +78,7 @@ class StudyForm(forms.ModelForm):
         """Remove empty label from setting field"""
         super(StudyForm, self).__init__(*args, **kwargs)
         self.fields['setting'].empty_label = None
+        self.fields['compensation'].empty_label = None
 
 class TaskStartForm(forms.ModelForm):
     class Meta:
@@ -84,6 +86,7 @@ class TaskStartForm(forms.ModelForm):
         fields = ['tasks_number']
 
     def __init__(self, *args, **kwargs):
+        """Set the tasks_number field as required"""
         super(TaskStartForm, self).__init__(*args, **kwargs)
         self.fields['tasks_number'].required = True
 
@@ -96,6 +99,17 @@ class TaskForm(forms.ModelForm):
             'actions': forms.CheckboxSelectMultiple(),
             'registrations': forms.CheckboxSelectMultiple(),
         }
+
+class TaskEndForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['tasks_duration', 'tasks_stressful']
+
+    def __init__(self, *args, **kwargs):
+        """Set the tasks_duration and tasks_stressful fields as required"""
+        super(TaskEndForm, self).__init__(*args, **kwargs)
+        self.fields['tasks_duration'].required = True
+        self.fields['tasks_stressful'].required = True
 
 class UploadConsentForm(forms.ModelForm):
     class Meta:
