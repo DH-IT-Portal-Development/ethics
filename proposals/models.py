@@ -19,13 +19,13 @@ class Proposal(models.Model):
     INFORMED_CONSENT_UPLOADED = 6
     SUBMITTED = 7
     STATUSES = (
-        (DRAFT, 'draft'),
-        (WMO_AWAITING_DECISION, 'wmo_awaiting_decision'),
-        (WMO_COMPLETED, 'wmo_finished'),
-        (STUDY_CREATED, 'study'),
-        (TASKS_CREATED, 'tasks'),
-        (INFORMED_CONSENT_UPLOADED, 'informed_consent_uploaded'),
-        (SUBMITTED, 'submitted'),
+        (DRAFT, 'Algemene informatie ingevuld'),
+        (WMO_AWAITING_DECISION, 'In afwachting beslissing WMO'),
+        (WMO_COMPLETED, 'WMO-gedeelte afgerond'),
+        (STUDY_CREATED, 'Kenmerken studie toegevoegd'),
+        (TASKS_CREATED, 'Belasting proefpersoon toegevoegd'),
+        (INFORMED_CONSENT_UPLOADED, 'Informed consent geupload'),
+        (SUBMITTED, 'Opgestuurd'),
     )
 
     # Fields
@@ -43,7 +43,7 @@ en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor 
 van de methode meer gedetailleerde informatie worden gevraagd.')
     supervisor_email = models.EmailField(
         'E-mailadres eindverantwoordelijke',
-        blank='True',
+        blank=True,
         help_text='Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.')
     other_applicants = models.BooleanField(
@@ -123,8 +123,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
 
 class Wmo(models.Model):
     metc = models.NullBooleanField(
-        'Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?', 
-        default=False)
+        'Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?')
     metc_institution = models.CharField(
         'Welke instelling?',
         max_length=200,

@@ -13,12 +13,18 @@ Aanvraag <em>{{ proposal.title }}</em>
 </h3>
 <table class="pure-table">
     <tr>
-        <th>Longitudinaal</th>
-        <td>{{ proposal.longitudinal }}</td>
+        <th>Ingediend door</th>
+        <td>{{ proposal.created_by }} ({{ proposal.relation }})</td>
     </tr>
+    {% if proposal.relation.needs_supervisor %}
     <tr>
         <th>Supervisor</th>
-        <td>{{ proposal.supervisor_email }}</td>
+        <td>{{ proposal.supervisor_email|urlize }}</td>
+    </tr>
+    {% endif %}
+    <tr>
+        <th>Longitudinaal</th>
+        <td>{{ proposal.longitudinal }}</td>
     </tr>
 </table>
 

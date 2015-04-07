@@ -17,14 +17,16 @@ $(function() {
 	$("input[name=relation]").change();
 
 	$("input[name=other_applicants]").change(function() {
-		has_other = $('input[name=other_applicants]').is(':checked');
+		has_other = $('input[name=other_applicants]:checked').val() == "True";
 		$("select[name=applicants]").parent().parent().toggle(has_other);
 	});
 	$("input[name=other_applicants]").change();
 });
 </script>
 {% if create %}
-<p>U staat op het punt een aanvraag in te dienen. In het eerste gedeelte van de aanvraag (algemene informatie) zal er gevraagd worden naar het e-mailadres van de eindverantwoordelijke. Nadat dit is ingevuld, zal er een e-mail verstuurd worden naar de eindverantwoordelijke zodat de studie geverifieerd kan worden door de eindverantwoordelijke. Pas wanneer deze verificatie binnen is, kan men de aanvraag afronden. U kunt wel de hele aanvraagprocedure doorlopen, de vragen beantwoorden om vervolgens de aanvraag als concept aanvraag opslaan. Wanneer de eindverantwoordelijke de studie heeft geverifieerd, krijgt u automatisch een e-mail toegezonden, zodat u de aanvraag kunt afronden.</p>
+<p>U wilt een nieuwe studie ter ethische toetsing bij de ETCL indienen. De eerste stap in de toetsingsprocedure is het aan de ETCL verstrekken van alle relevante informatie. Hieronder volgen daartoe een aantal vragen, en wordt U verzocht om de voor Uw studie aangepaste informatiebrief en toestemmingsverklaring (samen nodig voor <em>informed consent</em>) te uploaden.</p>
+<p>Een <strong>studie</strong>, de beoordelingseenheid voor de ETCL, wordt gedefinieerd als: een onderzoek waar in één of meerdere met elkaar samenhangende sessies nieuwe gegevens van proefpersonen worden verzameld, bijv. via laboratoriumtaken, internet-vragenlijsten, of veldobservatie. Grofweg is dit dezelfde eenheid als waar onderzoekers normaalgesproken een methodesectie voor schrijven. Hergebruik van reeds verzamelde gegevens hoeft <em>niet</em> ter toetsing bij de ECTL te worden ingediend (dergelijk hergebruik dient uiteraard wel in lijn te zijn met de destijds verkregen informed consent en de reguliere privacy-wetgeving <link>).</p>
+<p>Onder de term <strong>sessie</strong> verstaat de ETCL het volgende: het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een proefpersoon vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de proefpersoon ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes.</p>
 {% endif %}
 <h3>Algemene informatie</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}

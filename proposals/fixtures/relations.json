@@ -37,7 +37,7 @@
 },
 {
     "fields": {
-        "needs_supervisor": true,
+        "needs_supervisor": false,
         "order": 5,
         "description": "gepromoveerd onderzoeker/docent (postdoc, UD, UHD, HL)"
     },

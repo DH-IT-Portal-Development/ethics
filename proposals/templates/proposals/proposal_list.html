@@ -20,8 +20,8 @@ Mijn aanvragen
         {% for proposal in proposals %}
         <tr>
             <td>{{ proposal.title }}</td>
-            <td>{{ proposal.status }}</td>
-            <td>{{ proposal.date_modified }}</td>
+            <td>{{ proposal.get_status_display }}</td>
+            <td>{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
             	<a href="{% url 'proposals:detail' proposal.id %}"><img src="{% static 'proposals/images/zoom.png' %}"></a>
                 <a href="{{ proposal.continue_url }}"><img src="{% static 'proposals/images/page_white_go.png' %}"></a>

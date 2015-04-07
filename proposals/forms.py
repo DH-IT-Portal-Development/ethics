@@ -2,15 +2,37 @@ from django import forms
 
 from .models import Proposal, Wmo, Study, Task
 
+yes_no = [(True, "ja"), (False, "nee")]
 yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
 
 class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['relation', 'supervisor_email', 'title', 'tech_summary', 'other_applicants', 'applicants', 'longitudinal']
+        fields = ['relation', 'supervisor_email', 'other_applicants', 'applicants', 'title', 'tech_summary', 'longitudinal']
         widgets = {
             'relation': forms.RadioSelect(),
+            'other_applicants': forms.RadioSelect(choices=yes_no),
+            'longitudinal': forms.RadioSelect(choices=yes_no),
         }
+
+    def __init__(self, *args, **kwargs):
+        """Remove empty label from relation field"""
+        super(ProposalForm, self).__init__(*args, **kwargs)
+        self.fields['relation'].empty_label = None
+
+    def clean(self):
+        """
+        Check for conditional requirements: 
+        - If relation needs supervisor, make sure supervisor_email is set
+        - TODO: If other_applicants is checked, make sure applicants are set
+        """
+        cleaned_data = super(ProposalForm, self).clean()
+        relation = cleaned_data.get('relation')
+        supervisor_email = cleaned_data.get('supervisor_email')
+
+        if relation and relation.needs_supervisor and not supervisor_email:
+            self.add_error('supervisor_email', forms.ValidationError('U dient een eindverantwoordelijke op te geven.', code='required'))
+
 
 class WmoForm(forms.ModelForm):
     class Meta:
@@ -21,6 +43,17 @@ class WmoForm(forms.ModelForm):
             'is_medical': forms.RadioSelect(choices=yes_no_doubt),
             'is_behavioristic': forms.RadioSelect(choices=yes_no_doubt),
         }
+    def clean(self):
+        """
+        Check for conditional requirements: 
+        - If metc is checked, make sure institution is set
+        """
+        cleaned_data = super(WmoForm, self).clean()
+        metc = cleaned_data.get('metc')
+        metc_institution = cleaned_data.get('metc_institution')
+
+        if metc and not metc_institution:
+            self.add_error('metc_institution', forms.ValidationError('U dient een instelling op te geven.', code='required'))
 
 class StudyForm(forms.ModelForm):
     class Meta:
