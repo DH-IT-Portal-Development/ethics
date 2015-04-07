@@ -9,43 +9,55 @@ Aanvraag indienen: fase 2
 {% include "proposals/form_styling.html" %}
 <script>
 $(function() {
-	$("#id_metc").change(function() {
-		var metc_undef = typeof $('#id_metc:checked').val() == "undefined";
-		var metc_true = $('#id_metc_0:checked').val() == "True";
-		var metc_doubt = metc_true || $('#id_metc_2:checked').val() == "None";
+    $("input[name=metc]").change(function() {
+        var metc_undef = typeof $('input[name=metc]:checked').val() == "undefined";
+        var metc_true = $('input[name=metc]:checked').val() == "True";
+        var metc_doubt = metc_true || $('input[name=metc]:checked').val() == "None";
 
-		$("#id_metc_institution").parent().parent().toggle(metc_doubt);
-		if (metc_undef) $("#id_is_medical").parent().parent().hide();
-		else $("#id_is_medical, #id_is_behavioristic").parent().parent().toggle(!metc_true);
-	});
-	$("#id_metc").change();
+        $("input[name=metc_institution]").parent().parent().toggle(metc_doubt);
+        if (metc_undef)
+        {
+            $("#id_is_medical, #id_is_behavioristic").parent().parent().hide();
+        }
+        else
+        {
+            $("#id_is_medical, #id_is_behavioristic").parent().parent().toggle(!metc_true);
+        }
+    });
+    $("input[name=metc]").change();
 
-	$("#id_is_medical").change(function() {
-		var medical = $('#id_is_medical_0:checked').val() == "True";
-		$("#id_is_behavioristic").parent().parent().toggle(medical);
-	});
-	$("#id_is_medical").change();
+    $("input[name=is_medical]").change(function() {
+        var medical = $('input[name=is_medical]:checked').val() == "False";
+        $("#id_is_behavioristic").parent().parent().toggle(!medical);
+    });
+    $("input[name=is_medical]").change();
 
-	$("#id_metc, #id_is_medical, #id_is_behavioristic").change(function() {
-		var metc = $('#id_metc_0:checked').val() == "True";
-		var medical = $('#id_is_medical_0:checked').val() == "True";
-		var behavioristic = $('#id_is_behavioristic_0:checked').val() == "True";
+    $("#id_metc, #id_is_medical, #id_is_behavioristic").change(function() {
+        var metc = $('#id_metc_0:checked').val() == "True";
+        var medical = $('#id_is_medical_0:checked').val() == "True";
+        var behavioristic = $('#id_is_behavioristic_0:checked').val() == "True";
 
-		$("#id_metc_decision").parent().parent().toggle(metc || (medical && behavioristic));
-	});
-	$("#id_metc, #id_is_medical, #id_is_behavioristic").change();
+        $("#id_metc_application, #id_metc_decision, #id_metc_decision_pdf").parent().parent().toggle(metc || (medical && behavioristic));
+    });
+    $("#id_metc, #id_is_medical, #id_is_behavioristic").change();
 
-	$("#id_metc_decision").change(function() {
-		var decision = $("#id_metc_decision").is(':checked');
-		$("#id_metc_decision_pdf").parent().parent().toggle(decision);
-	});
-	$("#id_metc_decision").change();
+    $("#id_metc_application").change(function() {
+        var decision = $('#id_metc_application_0:checked').val() == "True";
+        $("#id_metc_decision").parent().parent().toggle(decision);
+    });
+    $("#id_metc_application").change();
+
+    $("#id_metc_decision").change(function() {
+        var decision = $('#id_metc_decision_0:checked').val() == "True";
+        $("#id_metc_decision_pdf").parent().parent().toggle(decision);
+    });
+    $("#id_metc_decision").change();
 });
 </script>
 <p></p>
 <h3>WMO-plichtig of niet?</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-	<table>{{ form.as_table }}</table>
+    <table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" value="Doorgaan" />
 </form>
 {% endblock %}

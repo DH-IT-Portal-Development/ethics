@@ -154,7 +154,7 @@ class Wmo(models.Model):
         help_text='Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten drukken.',
         default=False)
     metc_application = models.BooleanField(
-        'Uw studie moet beoordeeld worden door de METC<link>, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag ingediend?',
+        'Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag ingediend?',
         default=False)
     metc_decision = models.BooleanField(
         'Is de METC al tot een beslissing gekomen?',

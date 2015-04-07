@@ -37,11 +37,13 @@ class ProposalForm(forms.ModelForm):
 class WmoForm(forms.ModelForm):
     class Meta:
         model = Wmo
-        fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic', 'metc_decision', 'metc_decision_pdf']
+        fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic', 'metc_application', 'metc_decision', 'metc_decision_pdf']
         widgets = {
             'metc': forms.RadioSelect(choices=yes_no_doubt),
             'is_medical': forms.RadioSelect(choices=yes_no_doubt),
             'is_behavioristic': forms.RadioSelect(choices=yes_no_doubt),
+            'metc_application': forms.RadioSelect(choices=yes_no),
+            'metc_decision': forms.RadioSelect(choices=yes_no),
         }
     def clean(self):
         """
