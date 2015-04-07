@@ -116,7 +116,7 @@ class TaskEndForm(forms.ModelForm):
         """Set the tasks_duration and tasks_stressful fields as required"""
         super(TaskEndForm, self).__init__(*args, **kwargs)
         self.fields['tasks_duration'].required = True
-        self.fields['tasks_duration'].label = mark_safe(self.fields['tasks_duration'].label.format(**self.instance.gross_duration()))
+        self.fields['tasks_duration'].label = mark_safe(self.fields['tasks_duration'].label.format(self.instance.gross_duration()))
         self.fields['tasks_stressful'].required = True
 
 class UploadConsentForm(forms.ModelForm):
@@ -131,3 +131,6 @@ class UploadConsentForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
+        fields = ['date_submitted']
+
+    approved = forms.BooleanField()

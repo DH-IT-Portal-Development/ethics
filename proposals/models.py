@@ -17,16 +17,18 @@ class Proposal(models.Model):
     WMO_COMPLETED = 3
     STUDY_CREATED = 4
     TASKS_STARTED = 5
-    TASKS_COMPLETED = 6
-    INFORMED_CONSENT_UPLOADED = 7
-    SUBMITTED = 8
+    TASKS_ADDED = 6
+    TASKS_ENDED = 7
+    INFORMED_CONSENT_UPLOADED = 8
+    SUBMITTED = 9
     STATUSES = (
         (DRAFT, 'Algemene informatie ingevuld'),
-        (WMO_AWAITING_DECISION, 'In afwachting beslissing WMO'),
-        (WMO_COMPLETED, 'WMO-gedeelte afgerond'),
+        (WMO_AWAITING_DECISION, 'WMO: in afwachting beslissing'),
+        (WMO_COMPLETED, 'WMO: afgerond'),
         (STUDY_CREATED, 'Kenmerken studie toegevoegd'),
-        (TASKS_STARTED, 'Belasting proefpersoon aan het toevoegen'),
-        (TASKS_COMPLETED, 'Belasting proefpersoon toegevoegd'),
+        (TASKS_STARTED, 'Belasting proefpersoon: taken toevoegen'),
+        (TASKS_ADDED, 'Belasting proefpersoon: alle taken toegevoegd'),
+        (TASKS_ENDED, 'Belasting proefpersoon: afgerond'),
         (INFORMED_CONSENT_UPLOADED, 'Informed consent geupload'),
         (SUBMITTED, 'Opgestuurd'),
     )
@@ -64,7 +66,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         help_text='Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
     tasks_duration = models.PositiveIntegerField(
-        'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op <strong>{duration__sum} minuten</strong>. \
+        'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
 Hoe lang duurt de totale sessie, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)',
         null=True)
     tasks_stressful = models.NullBooleanField(
@@ -102,7 +104,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         null=True)
 
     def gross_duration(self):
-        return self.task_set.aggregate(models.Sum('duration'))
+        return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
@@ -125,7 +127,9 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         if self.tasks_number: 
             status = self.TASKS_STARTED
         if self.task_set.count() == self.tasks_number:
-            status = self.TASKS_COMPLETED
+            status = self.TASKS_ADDED
+        if self.tasks_duration:
+            status = self.TASKS_ENDED
         if self.informed_consent_pdf: 
             status = self.INFORMED_CONSENT_UPLOADED
         return status
@@ -141,8 +145,10 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             return reverse('proposals:task_start', args=(self.id,))
         if self.status == self.TASKS_STARTED:
             return reverse('proposals:task_create', args=(self.id,))
-        if self.status == self.TASKS_COMPLETED:
+        if self.status == self.TASKS_ADDED:
             return reverse('proposals:task_end', args=(self.id,))
+        if self.status == self.TASKS_ENDED:
+            return reverse('proposals:consent', args=(self.id,))
         if self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))
 
@@ -355,9 +361,16 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
         default=False)
 
     def save(self, *args, **kwargs):
-        """Sets the correct status on save of a Proposal"""
+        """Sets the correct status on Proposal on save of a Task"""
         self.proposal.save()
         super(Task, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        """Sets the correct status on Proposal on deletion of a Task
+        TODO: does this work?!
+        """
+        super(Task, self).delete(*args, **kwargs)
+        self.proposal.save()
 
     # References
     proposal = models.ForeignKey(Proposal)

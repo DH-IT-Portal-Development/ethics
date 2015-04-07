@@ -58,12 +58,44 @@ Aanvraag <em>{{ proposal.title }}</em>
 
 {% if proposal.task_set.all %}
 <h3>Belasting voor de proefpersoon</h3>
-<a href="{% url 'proposals:task_create' proposal.id %}">Taak toevoegen</a>
+<table class="pure-table">
+    <tr>
+        <th>Aantal taken</th>
+        <td>
+            {{ proposal.task_set.count }} / {{ proposal.tasks_number }} 
+            <a href="{% url 'proposals:task_start' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+            <a href="{% url 'proposals:task_create' proposal.id %}">Taak toevoegen</a>
+        </td>
+    </tr>
+    <tr>
+        <th>Netto duur</th>
+        <td>{{ proposal.gross_duration }}</td>
+    </tr>
+    <tr>
+        <th>Bruto duur</th>
+        <td>
+            {{ proposal.tasks_duration }}
+            <a href="{% url 'proposals:task_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+        </td>
+    </tr>
+    <tr>
+        <th>Belastend?</th>
+        <td>
+            {{ proposal.tasks_stressful|yesno:"ja,nee,twijfel" }}
+            <a href="{% url 'proposals:task_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+        </td>
+    </tr>
+</table>
+<h4>Taken</h4>
 <table class="dataTable display">
     <thead>
         <tr>
             <th>Naam</th>
-            <th>Duur</th>
+            <th>Duur (in minuten)</th>
+            <th>Actie(s)</th>
+            <th>Registratie</th>
+            <th>Feedback?</th>
+            <th>Belastend?</th>
             <th>Acties</th>
         </tr>
     </thead>
@@ -72,6 +104,10 @@ Aanvraag <em>{{ proposal.title }}</em>
         <tr>
             <td>{{ task.name }}</td>
             <td>{{ task.duration }}</td>
+            <td>{{ task.feedback }}</td>
+            <td>{{ task.feedback }}</td>
+            <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
+            <td>{{ task.stressful|yesno:"ja,nee,twijfel" }}</td>
             <td>
                 <a href="{% url 'proposals:task_update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
                 <a href="{% url 'proposals:task_delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
