@@ -15,15 +15,17 @@ class Proposal(models.Model):
     WMO_AWAITING_DECISION = 2
     WMO_COMPLETED = 3
     STUDY_CREATED = 4
-    TASKS_CREATED = 5
-    INFORMED_CONSENT_UPLOADED = 6
-    SUBMITTED = 7
+    TASKS_STARTED = 5
+    TASKS_COMPLETED = 6
+    INFORMED_CONSENT_UPLOADED = 7
+    SUBMITTED = 8
     STATUSES = (
         (DRAFT, 'Algemene informatie ingevuld'),
         (WMO_AWAITING_DECISION, 'In afwachting beslissing WMO'),
         (WMO_COMPLETED, 'WMO-gedeelte afgerond'),
         (STUDY_CREATED, 'Kenmerken studie toegevoegd'),
-        (TASKS_CREATED, 'Belasting proefpersoon toegevoegd'),
+        (TASKS_STARTED, 'Belasting proefpersoon aan het toevoegen'),
+        (TASKS_COMPLETED, 'Belasting proefpersoon toegevoegd'),
         (INFORMED_CONSENT_UPLOADED, 'Informed consent geupload'),
         (SUBMITTED, 'Opgestuurd'),
     )
@@ -116,6 +118,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
                 status = self.WMO_COMPLETED
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
+        if self.tasks_number: 
+            status = self.TASKS_STARTED
         if self.task_set.all():
             status = self.TASKS_CREATED
         if self.informed_consent_pdf: 
@@ -130,8 +134,10 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         if self.status == self.WMO_COMPLETED:
             return reverse('proposals:study_create', args=(self.id,))
         if self.status == self.STUDY_CREATED:
+            return reverse('proposals:task_start', args=(self.id,))
+        if self.status == self.TASKS_STARTED:
             return reverse('proposals:task_create', args=(self.id,))
-        if self.status == self.TASKS_CREATED:
+        if self.status == self.TASKS_COMPLETED:
             return reverse('proposals:consent', args=(self.id,))
         if self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))

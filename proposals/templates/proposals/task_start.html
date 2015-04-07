@@ -1,0 +1,22 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles %}
+
+{% block title %} 
+Aanvraag indienen: fase 4
+{% endblock %} 
+
+{% block content %} 
+{% include "proposals/form_styling.html" %}
+<h3>Belasting voor de proefpersoon</h3>
+<p>U heeft aangegeven dat u gebruik maakt van proefpersonen binnen de leeftijdsgroepen {{ proposal.study.age_groups.all }} met de volgende bijzondere kenmerken: {{ proposal.study.traits.all }}.</p>
+<p>In de volgende vragen gaan we nader in op wat u in een sessie van uw proefpersonen zal verlangen (d.w.z. welke taak of taken), en hoe belastend de binnen die sessie gevolgde procedure voor de proefpersonen zou kunnen zijn. Daarbij gelden de volgende definities (aansluitend bij hoe een en ander in een onderzoeksartikel zal worden beschreven):</p>
+<p><strong>Sessie:</strong> Het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een proefpersoon vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de proefpersoon ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes.</p> 
+<p><strong>Procedure:</strong> De voor het onderzoek benodigde gang van zaken binnen één sessie (bijvoorbeeld: eerst ontvangst en preview, dan EEG-electrodes plakken, dan taak A, dan pauze, dan taak B, dan debriefing).</p>
+<p><strong>Taak:</strong> Een coherente verzameling handelingen die U via een gesproken of geschreven taak-instructie aan de proefpersoon oplegt, en ook als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: "Beluister de volgende 200 zinnetjes en druk op een knop als u een fout ontdekt", "Vul persoonlijkheidsvragenlijst X in", "Speel 10 minuten met Uw kind zoals U dat thuis doet").  Indien de specifieke opdracht aan de proefpersoon per item varieert (bijvoorbeeld: "bij een Nederlandse zin beoordeelt u de betekenis, bij een Engelse zin de grammatica"), beschouw dit dan gewoon als één taak.</p>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <p>Voor elke taak stellen we in de komende schermen steeds dezelfde vragen.</p>
+    <input class="pure-button pure-button-primary" type="submit" value="Doorgaan" />
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
+</form>
+{% endblock %}

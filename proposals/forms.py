@@ -93,11 +93,14 @@ class TaskStartForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'duration', 'actions', 'registrations', 'registrations_details']
+        fields = ['name', 'duration', 'actions', 'actions_details', 'registrations', 'registrations_details', \
+            'feedback', 'feedback_details', 'stressful']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'actions': forms.CheckboxSelectMultiple(),
             'registrations': forms.CheckboxSelectMultiple(),
+            'feedback': forms.RadioSelect(choices=yes_no),
+            'stressful': forms.RadioSelect(choices=yes_no_doubt),
         }
 
 class TaskEndForm(forms.ModelForm):

@@ -15,9 +15,12 @@ urlpatterns = [
     url(r'^create/$', ProposalCreate.as_view(), name='create'),
     url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
+    url(r'^(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
+
+    url(r'^task_start/(?P<pk>\d+)/$', ProposalTaskStart.as_view(), name='task_start'),
+    url(r'^task_end/(?P<pk>\d+)/$', ProposalTaskEnd.as_view(), name='task_end'),
     url(r'^consent/(?P<pk>\d+)/$', ProposalUploadConsent.as_view(), name='consent'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
-    url(r'^(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
     
     # WMO
     url(r'^wmo/create/(?P<pk>\d+)/$', WmoCreate.as_view(), name='wmo_create'),

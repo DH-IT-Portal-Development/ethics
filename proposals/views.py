@@ -5,7 +5,7 @@ from django.views import generic
 from django.core.urlresolvers import reverse
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
-from .forms import ProposalForm, WmoForm, StudyForm, TaskForm, UploadConsentForm, ProposalSubmitForm
+from .forms import ProposalForm, WmoForm, StudyForm, TaskStartForm, TaskForm, TaskEndForm, UploadConsentForm, ProposalSubmitForm
 
 class LoginRequiredMixin(object):
     """Mixin for generic views to retun to login view if not logged in"""
@@ -84,6 +84,20 @@ class ProposalUpdate(UpdateView):
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag bewerkt'
 
+class ProposalTaskStart(UpdateView): 
+    model = Proposal
+    form_class = TaskStartForm
+    template_name = 'proposals/task_start.html'
+    success_url = '/proposals/concepts/'
+    success_message = ''
+
+class ProposalTaskEnd(UpdateView): 
+    model = Proposal
+    form_class = TaskEndForm
+    template_name = 'proposals/task_end.html'
+    success_url = '/proposals/concepts/'
+    success_message = ''
+
 class ProposalUploadConsent(UpdateView): 
     model = Proposal
     form_class = UploadConsentForm
@@ -145,6 +159,11 @@ class TaskCreate(CreateView):
     form_class = TaskForm
     success_message = 'Taak opgeslagen'
 
+    def get_context_data(self, **kwargs):
+        context = super(TaskCreate, self).get_context_data(**kwargs)
+        context['proposal'] = Proposal.objects.get(pk=self.kwargs['pk'])
+        return context
+
     def form_valid(self, form):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(TaskCreate, self).form_valid(form)
@@ -159,6 +178,11 @@ class TaskUpdate(UpdateView):
     model = Task
     form_class = TaskForm
     success_message = 'Taak bewerkt'
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskUpdate, self).get_context_data(**kwargs)
+        context['proposal'] = Task.objects.get(pk=self.kwargs['pk']).proposal
+        return context
 
     def get_success_url(self):
         task = Task.objects.get(pk=self.kwargs['pk'])
