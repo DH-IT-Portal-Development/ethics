@@ -28,7 +28,7 @@ class Proposal(models.Model):
         (SUBMITTED, 'Opgestuurd'),
     )
 
-    # Fields
+    # Fields of a proposal
     title = models.CharField(
         'Wat is de titel van uw studie?', 
         max_length=200, 
@@ -53,6 +53,24 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         'Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen aan een sessie deelnemen? \
 (bijvoorbeeld een longitudinale studie, of een kortlopende studie waar proefpersonen op twee of meer verschillende dagen getest worden)',
         default=False)
+
+    # Fields with respect to tasks
+    tasks_number = models.PositiveIntegerField(
+        'Hoeveel taken worden er binnen deze studie bij de proefpersoon afgenomen?',
+        null=True,
+        help_text='Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
+Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
+    tasks_duration = models.PositiveIntegerField(
+        'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op %d. \
+Hoe lang duurt de totale sessie, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)',
+        null=True)
+    tasks_stressful = models.NullBooleanField(
+        'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
+ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. \
+Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.')
+
+    # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
         'Upload hier de informed consent',
         blank=True)
@@ -290,24 +308,40 @@ class Registration(models.Model):
 
 class Task(models.Model): 
     name = models.CharField(
-        'Naam van de taak', 
+        'Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv "lexicale decisietaak")', 
         max_length=200)
-    procedure = models.NullBooleanField(
-        'Welk onderdeel, of welke combinatie van onderdelen, van de procedure zouden door de proefpersonen als \
-belastend/onaangenaam ervaren kunnen worden?')
     duration = models.PositiveIntegerField(
-        'Wat is de duur van de taak, waarbij de proefpersoon een handeling moet verrichten, van begin tot eind, \
-dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak?')
+        'Wat is de duur van deze taak van begin tot eind, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
+Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.')
     actions = models.ManyToManyField(
         Action,
-        verbose_name='Geef aan welke handeling de proefpersoon moet uitvoeren of aan welke gedragsregel de proefpersoon wordt onderworpen')
+        verbose_name='Wat vraag je bij deze taak de proefpersoon te doen?')
+    actions_details = models.CharField(
+        'Namelijk', 
+        max_length=200, 
+        blank=True)
     registrations = models.ManyToManyField(
         Registration,
-        verbose_name='Hoe worden de gegevens vastgelegd? Door middel van:')
+        verbose_name='Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?')
     registrations_details = models.CharField(
         'Namelijk', 
         max_length=200, 
         blank=True)
+    feedback = models.BooleanField(
+        'Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag of toestand?',
+        default=False)
+    feedback_details = models.CharField(
+        'Van welke aard is deze feedback?', 
+        max_length=200, 
+        blank=True)
+    stressful = models.NullBooleanField(
+        'Is deze taak belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
+vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
+de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
+of bepaald gedrag, etcetera. \
+En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
+        default=False)
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""

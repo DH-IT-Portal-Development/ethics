@@ -1,9 +1,9 @@
 [
 {
     "fields": {
-        "info_text": "interview, spontane taal opnamen, etc",
+        "info_text": "geschreven of gesproken zinnetjes, woordjes, plaatjes, geluiden etc",
         "order": 1,
-        "description": "Verbale responsie"
+        "description": "bekijken en/of beluisteren van geselecteerde stimuli"
     },
     "model": "proposals.action",
     "pk": 1
@@ -12,36 +12,53 @@
     "fields": {
         "info_text": "toetsenbord, knoppenkast, aanwijzen stimulus",
         "order": 2,
-        "description": "Manuele responsie"
+        "description": "knoppenkast, of met muis of vinger iets aanwijzen/aanklikken, etc; dus ook meerkeuzevragen in een enquete, of beoordelen van bekeken/beluisterde stimuli"
     },
     "model": "proposals.action",
     "pk": 2
 },
 {
     "fields": {
-        "info_text": "o.a. offline vragenlijst",
+        "info_text": "mondeling interview, spontane taal opnamen, etc",
         "order": 3,
-        "description": "Schriftelijke responsie"
+        "description": "spreken"
     },
     "model": "proposals.action",
     "pk": 3
 },
 {
     "fields": {
-        "info_text": "bijvoorbeeld bij babystudies",
+        "info_text": "met pen en papier of met toetsenbord",
         "order": 4,
-        "description": "Kijk- en luistergedrag"
+        "description": "schrijven"
     },
     "model": "proposals.action",
     "pk": 4
 },
 {
     "fields": {
-        "info_text": "dit is het geval bij een observatiestudie",
+        "info_text": "bijvoorbeeld met speelgoed, of een game",
         "order": 5,
-        "description": "Geen"
+        "description": "spelen"
     },
     "model": "proposals.action",
     "pk": 5
+},
+{
+    "fields": {
+        "info_text": "dit is het geval bij een observatiestudie",
+        "order": 6,
+        "description": "niets"
+    },
+    "model": "proposals.action",
+    "pk": 6
+}
+{
+    "fields": {
+        "order": 7,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.action",
+    "pk": 7
 }
 ]

@@ -70,6 +70,15 @@ class StudyForm(forms.ModelForm):
             'recruitment': forms.CheckboxSelectMultiple(),
         }
 
+class TaskStartForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['tasks_number']
+
+    def __init__(self, *args, **kwargs):
+        super(TaskStartForm, self).__init__(*args, **kwargs)
+        self.fields['tasks_number'].required = True
+
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -81,13 +90,13 @@ class TaskForm(forms.ModelForm):
         }
 
 class UploadConsentForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(UploadConsentForm, self).__init__(*args, **kwargs)
-        self.fields['informed_consent_pdf'].required = True
-
     class Meta:
         model = Proposal
         fields = ['informed_consent_pdf']
+
+    def __init__(self, *args, **kwargs):
+        super(UploadConsentForm, self).__init__(*args, **kwargs)
+        self.fields['informed_consent_pdf'].required = True
 
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:

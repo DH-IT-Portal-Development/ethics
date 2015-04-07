@@ -33,7 +33,7 @@ $(function() {
 
 		$("#id_metc_decision").parent().parent().toggle(metc || (medical && behavioristic));
 	});
-	$("#id_metc, #id_is_medical, #v").change();
+	$("#id_metc, #id_is_medical, #id_is_behavioristic").change();
 
 	$("#id_metc_decision").change(function() {
 		var decision = $("#id_metc_decision").is(':checked');

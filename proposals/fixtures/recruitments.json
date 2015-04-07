@@ -12,7 +12,7 @@
     "fields": {
         "needs_details": false,
         "order": 2,
-        "description": "databestand babylab"
+        "description": "databestand babylab UiL OTS"
     },
     "model": "proposals.recruitment",
     "pk": 2
@@ -21,7 +21,7 @@
     "fields": {
         "needs_details": false,
         "order": 3,
-        "description": "netwerk"
+        "description": "eigen netwerk"
     },
     "model": "proposals.recruitment",
     "pk": 3
