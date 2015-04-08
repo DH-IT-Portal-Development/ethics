@@ -1,6 +1,27 @@
 {% load staticfiles %}
 
 <script>
+function depends_on_value(a, a_value, b)
+{
+    $('input[name=' + a + ']').change(function() {
+        var check = $('input[name=' + a + ']:checked').val() == a_value;
+        $('#id_' + b).parent().parent().toggle(check);
+    });
+    $('input[name=' + a + ']').change();
+}
+
+function depends_on_list_value(a, a_value, b)
+{
+    $('input[name=' + a + ']').change(function() {
+        var values = $('input[name=' + a + ']:checked').map(function() {
+            return this.value;
+        }).get();
+        // TODO: do this via AJAX request
+        $('#id_' + b).parent().parent().toggle(values.indexOf(a_value) > -1);
+    });
+    $('input[name=' + a + ']').change();
+}
+
 $(function() {
 	$("[id^=id]").each(function() { 
 		var help = $(this).next().next(); 
