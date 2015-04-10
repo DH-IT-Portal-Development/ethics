@@ -14,8 +14,16 @@ $(function() {
     depends_on_list_value('traits', '10', 'traits_details');
     depends_on_value('necessity', 'True', 'necessity_reason');
     depends_on_list_value('setting', '8', 'setting_details');
-    depends_on_list_value('compensation', ['2', '3'], 'compensation_details'); // TODO: make this work
+    depends_on_list_value('compensation', ['2', '3'], 'compensation_details');
     depends_on_list_value('recruitment', '7', 'recruitment_details');
+
+    add_title('age_groups', 'De leeftijdsgroep van uw proefpersonen');
+    add_title('has_traits', 'Bijzondere kenmerken van de proefpersonen');
+    add_title('necessity', 'Noodzakelijkheid');
+    add_title('setting', 'Setting');
+    add_title('risk_physical', 'Risico op letsel');
+    add_title('compensation', 'Vergoeding');
+    add_title('recruitment', 'Werving');
 });
 </script>
 <h3>Algemene kenmerken van de studie</h3>

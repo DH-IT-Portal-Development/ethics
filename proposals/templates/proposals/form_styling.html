@@ -29,6 +29,12 @@ function intersect(a, b)
     });
 }
 
+function add_title(field, title)
+{
+    var insert = $('<tr>').append($('<th>').append($('<strong>').text(title))).append($('<td>'));
+    $('#id_' + field).parents('tr').before(insert);
+}
+
 $(function() {
 	$("[id^=id]").each(function() { 
 		var help = $(this).next().next(); 
