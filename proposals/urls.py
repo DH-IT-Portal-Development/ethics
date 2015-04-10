@@ -6,7 +6,7 @@ urlpatterns = [
     # Home
     url(r'^$', HomeView.as_view(), name='home'),
 
-    # Lists 
+    # Lists
     url(r'^archive/$', ArchiveView.as_view(), name='archive'),
     url(r'^applications/$', IndexView.as_view(), name='my_archive'),
     url(r'^concepts/$', ConceptsView.as_view(), name='my_concepts'),
@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^task_end/(?P<pk>\d+)/$', ProposalTaskEnd.as_view(), name='task_end'),
     url(r'^consent/(?P<pk>\d+)/$', ProposalUploadConsent.as_view(), name='consent'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
-    
+
     # WMO
     url(r'^wmo/create/(?P<pk>\d+)/$', WmoCreate.as_view(), name='wmo_create'),
     url(r'^wmo/update/(?P<pk>\d+)/$', WmoUpdate.as_view(), name='wmo_update'),

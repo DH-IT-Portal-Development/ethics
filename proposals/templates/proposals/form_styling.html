@@ -17,9 +17,16 @@ function depends_on_list_value(a, a_value, b)
             return this.value;
         }).get();
         // TODO: do this via AJAX request
-        $('#id_' + b).parent().parent().toggle(values.indexOf(a_value) > -1);
+        $('#id_' + b).parent().parent().toggle(intersect(values, a_value).length > 0);
     });
     $('input[name=' + a + ']').change();
+}
+
+function intersect(a, b)
+{
+    return a.filter(function (e) {
+        if (b.indexOf(e) !== -1) return true;
+    });
 }
 
 $(function() {

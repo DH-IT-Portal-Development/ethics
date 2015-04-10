@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
 from .forms import ProposalForm, WmoForm, StudyForm, TaskStartForm, TaskForm, TaskEndForm, UploadConsentForm, ProposalSubmitForm
 
+
 class LoginRequiredMixin(object):
     """Mixin for generic views to retun to login view if not logged in"""
     @classmethod
@@ -14,13 +15,16 @@ class LoginRequiredMixin(object):
         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
         return login_required(view)
 
+
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     """Generic create view including success message and login required mixins"""
     pass
 
+
 class UpdateView(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
     """Generic update view including success message and login required mixins"""
     pass
+
 
 class DeleteView(LoginRequiredMixin, generic.DeleteView):
     """Generic delete view including login required mixin and alternative for success message"""
@@ -28,7 +32,8 @@ class DeleteView(LoginRequiredMixin, generic.DeleteView):
         messages.success(self.request, self.success_message)
         return super(DeleteView, self).delete(request, *args, **kwargs)
 
-# List views 
+
+# List views
 class ArchiveView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
 
@@ -36,34 +41,41 @@ class ArchiveView(LoginRequiredMixin, generic.ListView):
         """Return all the proposals"""
         return Proposal.objects.all()
 
+
 class IndexView(ArchiveView):
     def get_queryset(self):
         """Return all the proposals for the current user"""
         return Proposal.objects.filter(applicants=self.request.user).filter(status=6)
+
 
 class ConceptsView(ArchiveView):
     def get_queryset(self):
         """Return all the proposals for the current user with status concept"""
         return Proposal.objects.filter(applicants=self.request.user)
 
-class MembersView(generic.ListView): 
+
+class MembersView(generic.ListView):
     context_object_name = 'members'
     model = Member
 
-class MeetingsView(generic.ListView): 
+
+class MeetingsView(generic.ListView):
     context_object_name = 'meetings'
     model = Meeting
 
-class FaqsView(generic.ListView): 
+
+class FaqsView(generic.ListView):
     context_object_name = 'faqs'
     model = Faq
+
 
 # Proposal detail
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Proposal
 
+
 # CRUD actions on Proposal
-class ProposalCreate(CreateView): 
+class ProposalCreate(CreateView):
     model = Proposal
     form_class = ProposalForm
     success_url = '/proposals/concepts/'
@@ -78,34 +90,39 @@ class ProposalCreate(CreateView):
         context['create'] = True
         return context
 
-class ProposalUpdate(UpdateView): 
+
+class ProposalUpdate(UpdateView):
     model = Proposal
     form_class = ProposalForm
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag bewerkt'
 
-class ProposalTaskStart(UpdateView): 
+
+class ProposalTaskStart(UpdateView):
     model = Proposal
     form_class = TaskStartForm
     template_name = 'proposals/task_start.html'
     success_url = '/proposals/concepts/'
     success_message = ''
 
-class ProposalTaskEnd(UpdateView): 
+
+class ProposalTaskEnd(UpdateView):
     model = Proposal
     form_class = TaskEndForm
     template_name = 'proposals/task_end.html'
     success_url = '/proposals/concepts/'
     success_message = ''
 
-class ProposalUploadConsent(UpdateView): 
+
+class ProposalUploadConsent(UpdateView):
     model = Proposal
     form_class = UploadConsentForm
     template_name = 'proposals/proposal_consent.html'
     success_url = '/proposals/concepts/'
     success_message = 'Informed consent geupload'
 
-class ProposalSubmit(UpdateView): 
+
+class ProposalSubmit(UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
@@ -114,13 +131,15 @@ class ProposalSubmit(UpdateView):
     # TODO: set date_submitted on form submit
     # TODO: send e-mail to supervisor on form submit
 
+
 class ProposalDelete(DeleteView):
     model = Proposal
     success_url = '/proposals/concepts/'
     success_message = 'Aanvraag verwijderd'
 
+
 # CRUD actions on Wmo
-class WmoCreate(CreateView): 
+class WmoCreate(CreateView):
     model = Wmo
     form_class = WmoForm
     success_url = '/proposals/concepts/'
@@ -130,14 +149,16 @@ class WmoCreate(CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(WmoCreate, self).form_valid(form)
 
-class WmoUpdate(UpdateView): 
+
+class WmoUpdate(UpdateView):
     model = Wmo
     form_class = WmoForm
     success_url = '/proposals/concepts/'
     success_message = 'WMO-gegevens bewerkt'
 
+
 # CRUD actions on a Study
-class StudyCreate(CreateView): 
+class StudyCreate(CreateView):
     model = Study
     form_class = StudyForm
     success_url = '/proposals/concepts/'
@@ -147,11 +168,13 @@ class StudyCreate(CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(StudyCreate, self).form_valid(form)
 
-class StudyUpdate(UpdateView): 
+
+class StudyUpdate(UpdateView):
     model = Study
     form_class = StudyForm
     success_url = '/proposals/concepts/'
     success_message = 'Algemene kenmerken bewerkt'
+
 
 # CRUD actions on a Task
 class TaskCreate(CreateView):
@@ -173,8 +196,9 @@ class TaskCreate(CreateView):
     def get_success_url(self):
         if 'save_add' in self.request.POST:
             return reverse('proposals:task_create', args=(self.kwargs['pk'],))
-        else: 
+        else:
             return reverse('proposals:my_concepts')
+
 
 class TaskUpdate(UpdateView):
     model = Task
@@ -192,13 +216,15 @@ class TaskUpdate(UpdateView):
         task = Task.objects.get(pk=self.kwargs['pk'])
         if 'save_add' in self.request.POST:
             return reverse('proposals:task_create', args=(task.proposal.id,))
-        else: 
+        else:
             return reverse('proposals:my_concepts')
+
 
 class TaskDelete(DeleteView):
     model = Task
     success_url = '/proposals/concepts/'
     success_message = 'Taak verwijderd'
+
 
 # Home view
 class HomeView(generic.TemplateView):

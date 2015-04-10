@@ -6,6 +6,7 @@ from .models import Proposal, Wmo, Study, Task
 yes_no = [(True, "ja"), (False, "nee")]
 yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
 
+
 class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
@@ -23,7 +24,7 @@ class ProposalForm(forms.ModelForm):
 
     def clean(self):
         """
-        Check for conditional requirements: 
+        Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor_email is set
         - TODO: If other_applicants is checked, make sure applicants are set
         """
@@ -46,9 +47,10 @@ class WmoForm(forms.ModelForm):
             'metc_application': forms.RadioSelect(choices=yes_no),
             'metc_decision': forms.RadioSelect(choices=yes_no),
         }
+
     def clean(self):
         """
-        Check for conditional requirements: 
+        Check for conditional requirements:
         - If metc is checked, make sure institution is set
         """
         cleaned_data = super(WmoForm, self).clean()
@@ -58,11 +60,12 @@ class WmoForm(forms.ModelForm):
         if metc and not metc_institution:
             self.add_error('metc_institution', forms.ValidationError('U dient een instelling op te geven.', code='required'))
 
+
 class StudyForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['age_groups', 'has_traits', 'traits', 'traits_details', 'necessity', 'necessity_reason', 'setting', 'setting_details', \
-            'risk_physical', 'risk_psychological', 'compensation', 'compensation_details', 'recruitment', 'recruitment_details']
+        fields = ['age_groups', 'has_traits', 'traits', 'traits_details', 'necessity', 'necessity_reason', 'setting', 'setting_details',
+                  'risk_physical', 'risk_psychological', 'compensation', 'compensation_details', 'recruitment', 'recruitment_details']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
             'has_traits': forms.RadioSelect(choices=yes_no),
@@ -81,6 +84,7 @@ class StudyForm(forms.ModelForm):
         self.fields['setting'].empty_label = None
         self.fields['compensation'].empty_label = None
 
+
 class TaskStartForm(forms.ModelForm):
     class Meta:
         model = Proposal
@@ -91,11 +95,12 @@ class TaskStartForm(forms.ModelForm):
         super(TaskStartForm, self).__init__(*args, **kwargs)
         self.fields['tasks_number'].required = True
 
+
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'duration', 'actions', 'actions_details', 'registrations', 'registrations_details', \
-            'feedback', 'feedback_details', 'stressful']
+        fields = ['name', 'duration', 'actions', 'actions_details', 'registrations', 'registrations_details',
+                  'feedback', 'feedback_details', 'stressful']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'actions': forms.CheckboxSelectMultiple(),
@@ -103,6 +108,7 @@ class TaskForm(forms.ModelForm):
             'feedback': forms.RadioSelect(choices=yes_no),
             'stressful': forms.RadioSelect(choices=yes_no_doubt),
         }
+
 
 class TaskEndForm(forms.ModelForm):
     class Meta:
@@ -119,6 +125,7 @@ class TaskEndForm(forms.ModelForm):
         self.fields['tasks_duration'].label = mark_safe(self.fields['tasks_duration'].label.format(self.instance.gross_duration()))
         self.fields['tasks_stressful'].required = True
 
+
 class UploadConsentForm(forms.ModelForm):
     class Meta:
         model = Proposal
@@ -127,6 +134,7 @@ class UploadConsentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UploadConsentForm, self).__init__(*args, **kwargs)
         self.fields['informed_consent_pdf'].required = True
+
 
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
