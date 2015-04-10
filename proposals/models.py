@@ -269,7 +269,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
     necessity_reason = models.TextField(
         'Leg uit waarom',
         blank=True)
-    setting = models.ForeignKey(
+    setting = models.ManyToManyField(
         Setting,
         verbose_name='Geef aan waar de dataverzameling plaatsvindt')
     setting_details = models.CharField(

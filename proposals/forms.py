@@ -72,7 +72,7 @@ class StudyForm(forms.ModelForm):
             'traits': forms.CheckboxSelectMultiple(),
             'necessity': forms.RadioSelect(choices=yes_no_doubt),
             'risk_physical': forms.RadioSelect(choices=yes_no_doubt),
-            'setting': forms.RadioSelect(),
+            'setting': forms.CheckboxSelectMultiple(),
             'risk_psychological': forms.RadioSelect(choices=yes_no_doubt),
             'compensation': forms.RadioSelect(),
             'recruitment': forms.CheckboxSelectMultiple(),

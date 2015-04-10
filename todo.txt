@@ -18,11 +18,11 @@ v diacrieten
 v STUDY: tussenkopjes
 v STUDY: bij nee traits, namelijk weg
 - STUDY: noodzakelijkheid alleen als... 
-- STUDY: setting -> ManyToManyField
+v STUDY: setting -> ManyToManyField
 v TASKS: loopt iets fout bij vragen na alle taken
 - WMO: verschillende berichten op detail-pagina
 - WMO: logica javascript checken
-- EMLAR users toevoegen
+v EMLAR users toevoegen
 
 NA EMLAR: 
 - kopieren bestaande aanvraag
