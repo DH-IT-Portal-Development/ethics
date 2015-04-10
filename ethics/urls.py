@@ -7,3 +7,7 @@ urlpatterns = patterns('',
     url(r'^proposals/', include('proposals.urls', namespace="proposals")),
     url(r'^admin/', include(admin.site.urls)),
 )
+
+admin.site.site_header = 'ETCL'
+admin.site.site_title = 'ETCL administratie'
+admin.site.index_title = 'ETCL administratie'
