@@ -10,6 +10,7 @@ Aanvraag indienen: fase 3
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
+    depends_on_value('has_traits', 'True', 'traits_details');
     depends_on_list_value('traits', '10', 'traits_details');
     depends_on_value('necessity', 'True', 'necessity_reason');
     depends_on_list_value('setting', '8', 'setting_details');

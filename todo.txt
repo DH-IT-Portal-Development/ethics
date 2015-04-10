@@ -9,15 +9,24 @@ v authorisatie: login required
 v bij taken: nog een taak toevoegen of klaar
 v pagina met informed consent toevoegen
 v icons voor inzien, bewerken, verwijderen
-- authorisatie: alleen eigen proposals aanpassen
-- verplicht maken velden bij bepaalde waarden selectie-velden
-- PROPOSAL: detail-pagina proposal mooi maken
+v verplicht maken velden bij bepaalde waarden selectie-velden
+v PROPOSAL: detail-pagina proposal mooi maken
 v PROPOSAL: pagina met submitten proposal
 v PROPOSAL/TASKS: stap met bruto tijd
-- WMO: verschillende success_messages
-- TASKS: mooi maken
+v TASKS: mooi maken
+v diacrieten
+- STUDY: tussenkopjes
+v STUDY: bij nee traits, namelijk weg
+- STUDY: noodzakelijkheid alleen als... 
+- STUDY: setting -> ManyToManyField
+- TASKS: loopt iets fout bij vragen na alle taken
+- WMO: verschillende berichten op detail-pagina
+- WMO: logica javascript checken
+- EMLAR users toevoegen
 
 NA EMLAR: 
 - kopieren bestaande aanvraag
 - opsplitsen website/proposals
 - testcases
+- niet meer bewerken als verzonden
+- authorisatie: alleen eigen proposals aanpassen

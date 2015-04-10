@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.utils.safestring import mark_safe
 
 
 class Relation(models.Model):
@@ -46,7 +47,7 @@ class Proposal(models.Model):
 bondige beschrijving van de onderzoeksvraag of -vragen, en (b) een korte beschrijving van de beoogde methode, \
 d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over proefpersonen, materiaal (taken, stimuli), \
 design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen \
-en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingredi&#235;nten \
+en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingrediënten \
 van de methode meer gedetailleerde informatie worden gevraagd.')
     supervisor_email = models.EmailField(
         'E-mailadres eindverantwoordelijke',
@@ -250,7 +251,7 @@ er zijn meerdere antwoorden mogelijk')
     has_traits = models.BooleanField(
         'Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie \
 (bijvoorbeeld: kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale beledigingen; \
-pati&#235;nten met afasie die een gesprek moeten voeren, ook al gaat het gesprek over alledaagse dingen). \
+patiënten met afasie die een gesprek moeten voeren, ook al gaat het gesprek over alledaagse dingen). \
 Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         default=False)
     traits = models.ManyToManyField(
