@@ -62,10 +62,9 @@ WSGI_APPLICATION = 'ethics.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-    ,
+    },
     'mysql': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ethics',
@@ -77,7 +76,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'nl-nl'
 
 TIME_ZONE = 'Europe/Amsterdam'
 
@@ -110,18 +109,18 @@ LOGIN_REDIRECT_URL = '/proposals/'
 #AUTH_LDAP_BIND_PASSWORD = 'password'
 #AUTH_LDAP_USER_DN_TEMPLATE = 'uid=%(user)s,dc=example,dc=com'
 #AUTH_LDAP_USER_ATTR_MAP = {
-#    'first_name': 'uid', 
+#    'first_name': 'uid',
 #    'last_name': 'sn'
 #}
 #AUTH_LDAP_ALWAYS_UPDATE_USER = False
 
-#from django_auth_ldap.backend import populate_user 
+#from django_auth_ldap.backend import populate_user
 
-#def make_staff(sender, user, **kwargs): 
-#    user.is_staff = True 
-#    user.is_superuser = True 
+#def make_staff(sender, user, **kwargs):
+#    user.is_staff = True
+#    user.is_superuser = True
 
-#populate_user.connect(make_staff) 
+#populate_user.connect(make_staff)
 
 # BELOW DOESN'T WORK YET
 #AUTH_LDAP_GROUP_TYPE = GroupOfNamesType()
