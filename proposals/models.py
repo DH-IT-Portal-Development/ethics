@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.utils.safestring import mark_safe
+
 
 class Relation(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -10,6 +10,7 @@ class Relation(models.Model):
 
     def __unicode__(self):
         return self.description
+
 
 class Proposal(models.Model):
     DRAFT = 1
@@ -35,8 +36,8 @@ class Proposal(models.Model):
 
     # Fields of a proposal
     title = models.CharField(
-        'Wat is de titel van uw studie?', 
-        max_length=200, 
+        'Wat is de titel van uw studie?',
+        max_length=200,
         unique=True,
         help_text='Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies.')
     tech_summary = models.TextField(
@@ -93,14 +94,14 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         Relation,
         verbose_name='Wat is uw relatie tot het UiL OTS?')
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, 
+        settings.AUTH_USER_MODEL,
         related_name='created_by')
     applicants = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, 
-        verbose_name='Uitvoerende(n)', 
+        settings.AUTH_USER_MODEL,
+        verbose_name='Uitvoerende(n)',
         related_name='applicants')
     parent = models.ForeignKey(
-        'self', 
+        'self',
         null=True)
 
     def gross_duration(self):
@@ -113,28 +114,28 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     def get_status(self):
         status = self.status
-        if hasattr(self, 'wmo'): 
+        if hasattr(self, 'wmo'):
             wmo = self.wmo
             if wmo.metc or (wmo.is_medical and wmo.is_behavioristic):
-                if not wmo.metc_decision: 
+                if not wmo.metc_decision:
                     return self.WMO_AWAITING_DECISION
-                if wmo.metc_decision and wmo.metc_decision_pdf: 
+                if wmo.metc_decision and wmo.metc_decision_pdf:
                     status = self.WMO_COMPLETED
-            else: 
+            else:
                 status = self.WMO_COMPLETED
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
-        if self.tasks_number: 
+        if self.tasks_number:
             status = self.TASKS_STARTED
         if self.task_set.count() == self.tasks_number:
             status = self.TASKS_ADDED
         if self.tasks_duration:
             status = self.TASKS_ENDED
-        if self.informed_consent_pdf: 
+        if self.informed_consent_pdf:
             status = self.INFORMED_CONSENT_UPLOADED
         return status
 
-    def continue_url(self): 
+    def continue_url(self):
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.id,))
         if self.status == self.WMO_AWAITING_DECISION:
@@ -155,6 +156,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     def __unicode__(self):
         return 'Proposal %s' % self.title
 
+
 class Wmo(models.Model):
     metc = models.NullBooleanField(
         'Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?')
@@ -163,10 +165,10 @@ class Wmo(models.Model):
         max_length=200,
         blank=True)
     is_medical = models.NullBooleanField(
-        'Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?', 
+        'Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?',
         default=False)
     is_behavioristic = models.NullBooleanField(
-        'Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?', 
+        'Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?',
         help_text='Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten drukken.',
         default=False)
     metc_application = models.BooleanField(
@@ -190,16 +192,18 @@ class Wmo(models.Model):
     def __unicode__(self):
         return 'Wmo %s' % self.proposal.title
 
+
 class AgeGroup(models.Model):
     age_min = models.PositiveIntegerField()
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
 
     def __unicode__(self):
-        if self.age_max: 
+        if self.age_max:
             return '%d-%d' % (self.age_min, self.age_max)
         else:
             return '%d+' % (self.age_min)
+
 
 class Trait(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -209,6 +213,7 @@ class Trait(models.Model):
     def __unicode__(self):
         return self.description
 
+
 class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -216,6 +221,7 @@ class Setting(models.Model):
 
     def __unicode__(self):
         return self.description
+
 
 class Compensation(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -225,6 +231,7 @@ class Compensation(models.Model):
     def __unicode__(self):
         return self.description
 
+
 class Recruitment(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -233,9 +240,10 @@ class Recruitment(models.Model):
     def __unicode__(self):
         return self.description
 
-class Study(models.Model): 
+
+class Study(models.Model):
     age_groups = models.ManyToManyField(
-        AgeGroup, 
+        AgeGroup,
         verbose_name='Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
 er zijn meerdere antwoorden mogelijk')
     has_traits = models.BooleanField(
@@ -249,12 +257,12 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         blank=True,
         verbose_name='Selecteer de bijzondere kenmerken van uw proefpersonen')
     traits_details = models.CharField(
-        'Namelijk', 
+        'Namelijk',
         max_length=200,
         blank=True)
     necessity = models.NullBooleanField(
         'Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type proefpersonen aan de studie te laten deelnemen?',
-        default=True, 
+        default=True,
         help_text='Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?')
     necessity_reason = models.TextField(
         'Leg uit waarom',
@@ -263,7 +271,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         Setting,
         verbose_name='Geef aan waar de dataverzameling plaatsvindt')
     setting_details = models.CharField(
-        'Namelijk', 
+        'Namelijk',
         max_length=200,
         blank=True)
     risk_physical = models.NullBooleanField(
@@ -277,15 +285,15 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         verbose_name='Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze studie?',
         help_text='tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld')
     compensation_details = models.CharField(
-        'Namelijk', 
-        max_length=200, 
+        'Namelijk',
+        max_length=200,
         blank=True)
     recruitment = models.ManyToManyField(
         Recruitment,
         verbose_name='Hoe worden de proefpersonen geworven?')
     recruitment_details = models.CharField(
-        'Namelijk', 
-        max_length=200, 
+        'Namelijk',
+        max_length=200,
         blank=True)
 
     # References
@@ -299,6 +307,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
     def __unicode__(self):
         return 'Study details for proposal %s' % self.proposal.title
 
+
 class Survey(models.Model):
     name = models.CharField(max_length=200)
     minutes = models.PositiveIntegerField()
@@ -307,7 +316,8 @@ class Survey(models.Model):
     def __unicode__(self):
         return self.name
 
-class Action(models.Model): 
+
+class Action(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     info_text = models.TextField()
@@ -315,7 +325,8 @@ class Action(models.Model):
     def __unicode__(self):
         return self.description
 
-class Registration(models.Model): 
+
+class Registration(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
@@ -323,9 +334,10 @@ class Registration(models.Model):
     def __unicode__(self):
         return self.description
 
-class Task(models.Model): 
+
+class Task(models.Model):
     name = models.CharField(
-        'Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv "lexicale decisietaak")', 
+        'Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv "lexicale decisietaak")',
         max_length=200)
     duration = models.PositiveIntegerField(
         'Wat is de duur van deze taak van begin tot eind, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
@@ -334,22 +346,22 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         Action,
         verbose_name='Wat vraag je bij deze taak de proefpersoon te doen?')
     actions_details = models.CharField(
-        'Namelijk', 
-        max_length=200, 
+        'Namelijk',
+        max_length=200,
         blank=True)
     registrations = models.ManyToManyField(
         Registration,
         verbose_name='Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?')
     registrations_details = models.CharField(
-        'Namelijk', 
-        max_length=200, 
+        'Namelijk',
+        max_length=200,
         blank=True)
     feedback = models.BooleanField(
         'Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag of toestand?',
         default=False)
     feedback_details = models.CharField(
-        'Van welke aard is deze feedback?', 
-        max_length=200, 
+        'Van welke aard is deze feedback?',
+        max_length=200,
         blank=True)
     stressful = models.NullBooleanField(
         'Is deze taak belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
@@ -375,18 +387,20 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
     # References
     proposal = models.ForeignKey(Proposal)
 
+
 class Faq(models.Model):
     order = models.PositiveIntegerField(unique=True)
     question = models.TextField()
     answer = models.TextField()
 
-    class Meta: 
+    class Meta:
         verbose_name = 'FAQ'
 
     def __unicode__(self):
         return self.question
 
-class Member(models.Model): 
+
+class Member(models.Model):
     title = models.CharField(max_length=200, blank=True)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
@@ -394,6 +408,7 @@ class Member(models.Model):
 
     def __unicode__(self):
         return '%s %s' % (self.first_name, self.last_name)
+
 
 class Meeting(models.Model):
     date = models.DateField()
