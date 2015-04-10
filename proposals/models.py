@@ -188,8 +188,8 @@ class Wmo(models.Model):
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
-        self.proposal.save()
         super(Wmo, self).save(*args, **kwargs)
+        self.proposal.save()
 
     def __unicode__(self):
         return 'Wmo %s' % self.proposal.title
@@ -303,8 +303,8 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
-        self.proposal.save()
         super(Study, self).save(*args, **kwargs)
+        self.proposal.save()
 
     def __unicode__(self):
         return 'Study details for proposal %s' % self.proposal.title
@@ -376,15 +376,16 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
 
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Task"""
-        self.proposal.save()
         super(Task, self).save(*args, **kwargs)
+        self.proposal.save()
 
     def delete(self, *args, **kwargs):
-        """Sets the correct status on Proposal on deletion of a Task
-        TODO: does this work?!
-        """
+        """Sets the correct status on Proposal on deletion of a Task"""
+        proposal = self.proposal
+        proposal.tasks_duration = None
+        proposal.tasks_stressful = None
         super(Task, self).delete(*args, **kwargs)
-        self.proposal.save()
+        proposal.save()
 
     # References
     proposal = models.ForeignKey(Proposal)

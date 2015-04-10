@@ -8,7 +8,7 @@ Home
 {% if user.is_authenticated %}
 <p>Welkom {{ user.first_name }} {{ user.last_name }}!</p>
 <p><a href="{% url 'proposals:create' %}">Nieuwe aanvraag indienen</a></p>
-<p><a href="{% url 'proposals:create' %}">Bestaande aanvraag kopieren</a> (nog niet geimplementeerd)</p>
+<!--<p><a href="{% url 'proposals:create' %}">Bestaande aanvraag kopieren</a> (nog niet geimplementeerd)</p>-->
 {% else %}
 <p>Welkom bij het ETCL. U kunt <a href="{% url 'login' %}">hier</a> inloggen.</p>
 
