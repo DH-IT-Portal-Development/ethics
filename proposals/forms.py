@@ -10,7 +10,8 @@ yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
 class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['relation', 'supervisor_email', 'other_applicants', 'applicants', 'title', 'tech_summary', 'longitudinal']
+        fields = ['relation', 'supervisor_email', 'other_applicants',
+                  'applicants', 'title', 'tech_summary', 'longitudinal']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=yes_no),
@@ -103,7 +104,7 @@ class TaskForm(forms.ModelForm):
                   'feedback', 'feedback_details', 'stressful']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
-            #'actions': forms.CheckboxSelectMultiple(),
+            # 'actions': forms.CheckboxSelectMultiple(),
             'registrations': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=yes_no),
             'stressful': forms.RadioSelect(choices=yes_no_doubt),
@@ -122,7 +123,8 @@ class TaskEndForm(forms.ModelForm):
         """Set the tasks_duration and tasks_stressful fields as required"""
         super(TaskEndForm, self).__init__(*args, **kwargs)
         self.fields['tasks_duration'].required = True
-        self.fields['tasks_duration'].label = mark_safe(self.fields['tasks_duration'].label % self.instance.gross_duration())
+        label = self.fields['tasks_duration'].label % self.instance.gross_duration()
+        self.fields['tasks_duration'].label = mark_safe(label)
         self.fields['tasks_stressful'].required = True
 
 
