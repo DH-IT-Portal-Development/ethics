@@ -81,6 +81,9 @@ class ProposalCreate(CreateView):
     success_url = '/proposals/concepts/'
     success_message = 'Conceptaanvraag aangemaakt'
 
+    def get_initial(self):
+        return {'applicants': [self.request.user]}
+
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super(ProposalCreate, self).form_valid(form)
