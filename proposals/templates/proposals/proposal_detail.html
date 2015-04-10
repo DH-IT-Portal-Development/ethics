@@ -14,17 +14,17 @@ Aanvraag <em>{{ proposal.title }}</em>
 <table class="pure-table">
     <tr>
         <th>Ingediend door</th>
-        <td>{{ proposal.created_by }} ({{ proposal.relation }})</td>
+        <td>{{ proposal.created_by }} (<em>{{ proposal.relation }}</em>)</td>
     </tr>
     {% if proposal.relation.needs_supervisor %}
     <tr>
-        <th>Supervisor</th>
+        <th>E-mailadres eindverantwoordelijke</th>
         <td>{{ proposal.supervisor_email|urlize }}</td>
     </tr>
     {% endif %}
     <tr>
-        <th>Longitudinaal</th>
-        <td>{{ proposal.longitudinal }}</td>
+        <th>Longitudinale studie?</th>
+        <td>{{ proposal.longitudinal|yesno:"ja,nee" }}</td>
     </tr>
 </table>
 
@@ -34,12 +34,7 @@ Aanvraag <em>{{ proposal.title }}</em>
         <img src="{% static 'proposals/images/pencil.png' %}">
     </a>
 </h3>
-<table class="pure-table">
-    <tr>
-        <th>METC?</th>
-        <td>{{ proposal.wmo.metc }}</td>
-    </tr>
-</table>
+TODO: text per status
 {% endif %}
 
 {% if proposal.study %}
@@ -51,7 +46,29 @@ Aanvraag <em>{{ proposal.title }}</em>
 <table class="pure-table">
     <tr>
         <th>Leeftijdsgroepen</th>
-        <td>{{ proposal.study }}</td>
+        <td>{{ proposal.study.age_groups.all|unordered_list }}</td>
+    </tr>
+    <tr>
+        <th>Bijzondere kenmerken</th>
+        <td>
+            {% if proposal.study.has_traits %}
+            {{ proposal.study.traits.all|unordered_list }}
+            {% else %}
+            geen
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th>Setting</th>
+        <td>{{ proposal.study.setting }}</td>
+    </tr>
+    <tr>
+        <th>Vergoeding</th>
+        <td>{{ proposal.study.compensation }}</td>
+    </tr>
+    <tr>
+        <th>Werving via</th>
+        <td>{{ proposal.study.recruitment.all|unordered_list }}</td>
     </tr>
 </table>
 {% endif %}
@@ -69,12 +86,13 @@ Aanvraag <em>{{ proposal.title }}</em>
     </tr>
     <tr>
         <th>Netto duur</th>
-        <td>{{ proposal.gross_duration }}</td>
+        <td>{{ proposal.gross_duration }} minuten</td>
     </tr>
+    {% if proposal.tasks_duration %}
     <tr>
         <th>Bruto duur</th>
         <td>
-            {{ proposal.tasks_duration }}
+            {{ proposal.tasks_duration }} minuten
             <a href="{% url 'proposals:task_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
         </td>
     </tr>
@@ -85,6 +103,7 @@ Aanvraag <em>{{ proposal.title }}</em>
             <a href="{% url 'proposals:task_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
         </td>
     </tr>
+    {% endif %}
 </table>
 <h4>Taken</h4>
 <table class="dataTable display">
@@ -93,7 +112,7 @@ Aanvraag <em>{{ proposal.title }}</em>
             <th>Naam</th>
             <th>Duur (in minuten)</th>
             <th>Actie(s)</th>
-            <th>Registratie</th>
+            <th>Registratie via</th>
             <th>Feedback?</th>
             <th>Belastend?</th>
             <th>Acties</th>
@@ -104,8 +123,8 @@ Aanvraag <em>{{ proposal.title }}</em>
         <tr>
             <td>{{ task.name }}</td>
             <td>{{ task.duration }}</td>
-            <td>{{ task.feedback }}</td>
-            <td>{{ task.feedback }}</td>
+            <td>{{ task.actions.all|unordered_list }}</td>
+            <td>{{ task.registrations.all|unordered_list }}</td>
             <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
             <td>{{ task.stressful|yesno:"ja,nee,twijfel" }}</td>
             <td>

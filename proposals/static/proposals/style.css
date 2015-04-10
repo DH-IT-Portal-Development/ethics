@@ -40,6 +40,11 @@ form th {
     color: red;
 }
 
+/* No bullet for list items in tables */
+td li {
+    list-style-type: none;
+}
+
 /* Bootstrap-like contextual boxes */
 .success {
     text-align: center;
