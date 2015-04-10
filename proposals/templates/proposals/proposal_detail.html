@@ -111,7 +111,6 @@ TODO: text per status
         <tr>
             <th>Naam</th>
             <th>Duur (in minuten)</th>
-            <th>Actie(s)</th>
             <th>Registratie via</th>
             <th>Feedback?</th>
             <th>Belastend?</th>
@@ -123,7 +122,6 @@ TODO: text per status
         <tr>
             <td>{{ task.name }}</td>
             <td>{{ task.duration }}</td>
-            <td>{{ task.actions.all|unordered_list }}</td>
             <td>{{ task.registrations.all|unordered_list }}</td>
             <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
             <td>{{ task.stressful|yesno:"ja,nee,twijfel" }}</td>

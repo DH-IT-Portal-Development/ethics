@@ -99,11 +99,11 @@ class TaskStartForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'duration', 'actions', 'actions_details', 'registrations', 'registrations_details',
+        fields = ['name', 'duration', 'registrations', 'registrations_details',
                   'feedback', 'feedback_details', 'stressful']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
-            'actions': forms.CheckboxSelectMultiple(),
+            #'actions': forms.CheckboxSelectMultiple(),
             'registrations': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=yes_no),
             'stressful': forms.RadioSelect(choices=yes_no_doubt),
@@ -122,7 +122,7 @@ class TaskEndForm(forms.ModelForm):
         """Set the tasks_duration and tasks_stressful fields as required"""
         super(TaskEndForm, self).__init__(*args, **kwargs)
         self.fields['tasks_duration'].required = True
-        self.fields['tasks_duration'].label = mark_safe(self.fields['tasks_duration'].label.format(self.instance.gross_duration()))
+        self.fields['tasks_duration'].label = mark_safe(self.fields['tasks_duration'].label % self.instance.gross_duration())
         self.fields['tasks_stressful'].required = True
 
 

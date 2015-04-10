@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 
 class Relation(models.Model):
@@ -68,7 +69,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
     tasks_duration = models.PositiveIntegerField(
         'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
-Hoe lang duurt de totale sessie, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)',
+Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)',
         null=True)
     tasks_stressful = models.NullBooleanField(
         'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
@@ -200,9 +201,9 @@ class AgeGroup(models.Model):
 
     def __unicode__(self):
         if self.age_max:
-            return '%d-%d' % (self.age_min, self.age_max)
+            return '%d-%d jaar' % (self.age_min, self.age_max)
         else:
-            return '%d+' % (self.age_min)
+            return '%d+ jaar' % (self.age_min)
 
 
 class Trait(models.Model):
@@ -340,7 +341,7 @@ class Task(models.Model):
         'Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv "lexicale decisietaak")',
         max_length=200)
     duration = models.PositiveIntegerField(
-        'Wat is de duur van deze taak van begin tot eind, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
+        'Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
 Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.')
     actions = models.ManyToManyField(
         Action,

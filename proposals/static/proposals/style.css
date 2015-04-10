@@ -40,6 +40,8 @@ form th {
     color: red;
 }
 
+.dataTable td { text-align: center; }
+
 /* No bullet for list items in tables */
 td li {
     list-style-type: none;
