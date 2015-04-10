@@ -39,19 +39,29 @@ class ArchiveView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Return all the proposals"""
-        return Proposal.objects.all()
+        return Proposal.objects.all().filter(status=9)
 
 
 class IndexView(ArchiveView):
     def get_queryset(self):
-        """Return all the proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status=6)
+        """Return all the submitted proposals for the current user"""
+        return Proposal.objects.filter(applicants=self.request.user).filter(status=9)
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['submitted'] = True
+        return context
 
 
 class ConceptsView(ArchiveView):
     def get_queryset(self):
-        """Return all the proposals for the current user with status concept"""
+        """Return all the proposals for the current user"""
         return Proposal.objects.filter(applicants=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super(ConceptsView, self).get_context_data(**kwargs)
+        context['concepts'] = True
+        return context
 
 
 class MembersView(generic.ListView):
@@ -232,8 +242,3 @@ class TaskDelete(DeleteView):
 # Home view
 class HomeView(generic.TemplateView):
     template_name = 'proposals/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        context['current_user'] = self.request.user
-        return context
