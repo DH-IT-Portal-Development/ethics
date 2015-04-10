@@ -2,17 +2,17 @@
 
 {% block content %}
 
-<h2>Login</h2>
+<h2>Inloggen</h2>
 
 {% if form.errors %}
-<p class="form-errors">Your username and password didn't match. Please try again.</p>
+<p class="form-errors">Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw.</p>
 {% endif %}
 
 <form class="pure-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
 {{ form.username }}
 {{ form.password }}
-<input class="pure-button pure-button-primary" type="submit" value="Login" />
+<input class="pure-button pure-button-primary" type="submit" value="Inloggen" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
