@@ -273,7 +273,6 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         blank=True)
     necessity = models.NullBooleanField(
         'Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type proefpersonen aan de studie te laten deelnemen?',
-        default=True,
         help_text='Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?')
     necessity_reason = models.TextField(
         'Leg uit waarom',

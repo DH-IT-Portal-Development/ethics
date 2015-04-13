@@ -24,6 +24,17 @@ $(function() {
     add_title('risk_physical', 'Risico op letsel');
     add_title('compensation', 'Vergoeding');
     add_title('recruitment', 'Werving');
+
+    // Logic for necessity display. TODO: change into AJAX call, solve this on model level
+    $('input[name=has_traits], input[name=age_groups]').change(function() {
+        var values = $('input[name=age_groups]:checked').map(function() {
+            return this.value;
+        }).get();
+        var check = $('input[name=has_traits]:checked').val() == 'True';
+        check = check || intersect(values, ['1', '2', '3', '4', '6']).length > 0;
+        $('#id_necessity').parent().parent().toggle(check);
+    });
+    $('input[name=has_traits], input[name=age_groups]').change();
 });
 </script>
 <h3>Algemene kenmerken van de studie</h3>
