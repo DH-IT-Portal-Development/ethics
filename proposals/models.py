@@ -191,6 +191,15 @@ class Wmo(models.Model):
         super(Wmo, self).save(*args, **kwargs)
         self.proposal.save()
 
+    def status(self): 
+        if self.metc or (self.is_medical and self.is_behavioristic):
+            if not self.metc_decision:
+                return 'In afwachting beslissing METC.'
+            if self.metc_decision and self.metc_decision_pdf:
+                return 'Beslissing METC geüpload.'
+        else:
+            return 'Geen beoordeling door METC noodzakelijk.'
+
     def __unicode__(self):
         return 'Wmo %s' % self.proposal.title
 

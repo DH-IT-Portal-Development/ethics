@@ -34,7 +34,7 @@ Aanvraag <em>{{ proposal.title }}</em>
         <img src="{% static 'proposals/images/pencil.png' %}">
     </a>
 </h3>
-TODO: text per status
+{{ proposal.wmo.status }}
 {% endif %}
 
 {% if proposal.study %}
