@@ -22,7 +22,6 @@ v STUDY: setting -> ManyToManyField
 v TASKS: loopt iets fout bij vragen na alle taken
 v WMO: verschillende berichten op detail-pagina
 v WMO: logica javascript checken
-v WMO: success messages
 v EMLAR users toevoegen
 
 NA EMLAR: 
@@ -31,5 +30,5 @@ NA EMLAR:
 - testcases
 - niet meer bewerken als verzonden
 - authorisatie: alleen eigen proposals aanpassen
-- WMO afhandeling regelen (aparte flow)
-- 
+- WMO: afhandeling regelen (aparte flow)
+- WMO: success messages

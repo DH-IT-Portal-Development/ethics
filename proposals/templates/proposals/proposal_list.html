@@ -15,6 +15,17 @@
 <p>
     {% if concepts %}
     Dit overzicht toont al uw nog niet verstuurde aanvragen.
+    <ul>
+        <li>
+            Klik op <img src="{% static 'proposals/images/zoom.png' %}" title="Inzien"> om uw aanvraag in te zien en eventueel vorige stappen bewerken. 
+        </li>
+        <li>
+            Klik op <img src="{% static 'proposals/images/page_white_go.png' %}" title="Naar volgende stap"> om naar de volgende stap in het aanvraagproces te gaan. 
+        </li>
+        <li>
+            Klik op <img src="{% static 'proposals/images/delete.png' %}" title="Verwijderen"> om uw aanvraag te verwijderen.
+        </li>
+    </ul>
     {% elif submitted %}
     Dit overzicht toont al uw verstuurde aanvragen.
     {% else %}
