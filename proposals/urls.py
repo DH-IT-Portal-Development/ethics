@@ -13,6 +13,7 @@ urlpatterns = [
 
     # Proposal
     url(r'^create/$', ProposalCreate.as_view(), name='create'),
+    url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
     url(r'^(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),

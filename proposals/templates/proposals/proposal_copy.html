@@ -1,0 +1,16 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles %}
+
+{% block title %} 
+Aanvraag kopiëren
+{% endblock %} 
+
+{% block content %} 
+{% include "proposals/form_styling.html" %}
+<p>U kunt hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren aangepast worden.</p>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <input class="pure-button pure-button-primary" type="submit" value="Kopiëren" />
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
+</form>
+{% endblock %}

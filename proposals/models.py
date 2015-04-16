@@ -104,7 +104,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         related_name='applicants')
     parent = models.ForeignKey(
         'self',
-        null=True)
+        null=True, 
+        verbose_name='Te kopiëren aanvraag')
 
     def gross_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
@@ -156,7 +157,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             return reverse('proposals:submit', args=(self.id,))
 
     def __unicode__(self):
-        return 'Proposal %s' % self.title
+        return '%s (%s)' % (self.title, self.created_by)
 
 
 class Wmo(models.Model):

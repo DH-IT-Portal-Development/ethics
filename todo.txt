@@ -17,7 +17,7 @@ v TASKS: mooi maken
 v diacrieten
 v STUDY: tussenkopjes
 v STUDY: bij nee traits, namelijk weg
-- STUDY: noodzakelijkheid alleen als... 
+v STUDY: noodzakelijkheid alleen als... 
 v STUDY: setting -> ManyToManyField
 v TASKS: loopt iets fout bij vragen na alle taken
 v WMO: verschillende berichten op detail-pagina

@@ -5,7 +5,7 @@ from django.views import generic
 from django.core.urlresolvers import reverse
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
-from .forms import ProposalForm, WmoForm, StudyForm, TaskStartForm, TaskForm, TaskEndForm, UploadConsentForm, ProposalSubmitForm
+from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, TaskStartForm, TaskForm, TaskEndForm, UploadConsentForm, ProposalSubmitForm
 
 
 class LoginRequiredMixin(object):
@@ -102,6 +102,21 @@ class ProposalCreate(CreateView):
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True
         return context
+
+
+class ProposalCopy(CreateView):
+    model = Proposal
+    form_class = ProposalCopyForm
+    success_url = '/proposals/concepts/'
+    success_message = 'Aanvraag gekopieerd'
+    template_name = 'proposals/proposal_copy.html'
+
+    def form_valid(self, form):
+        form.instance = form.cleaned_data['parent']
+        form.instance.pk = None
+        form.instance.title = 'Kopie van %s' % form.instance.title
+        form.instance.created_by = self.request.user
+        return super(ProposalCopy, self).form_valid(form)
 
 
 class ProposalUpdate(UpdateView):

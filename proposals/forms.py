@@ -37,6 +37,12 @@ class ProposalForm(forms.ModelForm):
             self.add_error('supervisor_email', forms.ValidationError('U dient een eindverantwoordelijke op te geven.', code='required'))
 
 
+class ProposalCopyForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['parent']
+
+
 class WmoForm(forms.ModelForm):
     class Meta:
         model = Wmo
