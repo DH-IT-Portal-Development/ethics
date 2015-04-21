@@ -34,7 +34,8 @@ class ProposalForm(forms.ModelForm):
         supervisor_email = cleaned_data.get('supervisor_email')
 
         if relation and relation.needs_supervisor and not supervisor_email:
-            self.add_error('supervisor_email', forms.ValidationError('U dient een eindverantwoordelijke op te geven.', code='required'))
+            error = forms.ValidationError('U dient een eindverantwoordelijke op te geven.', code='required')
+            self.add_error('supervisor_email', error)
 
 
 class ProposalCopyForm(forms.ModelForm):
@@ -46,7 +47,8 @@ class ProposalCopyForm(forms.ModelForm):
 class WmoForm(forms.ModelForm):
     class Meta:
         model = Wmo
-        fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic', 'metc_application', 'metc_decision', 'metc_decision_pdf']
+        fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic',
+                  'metc_application', 'metc_decision', 'metc_decision_pdf']
         widgets = {
             'metc': forms.RadioSelect(choices=yes_no_doubt),
             'is_medical': forms.RadioSelect(choices=yes_no_doubt),
@@ -65,14 +67,20 @@ class WmoForm(forms.ModelForm):
         metc_institution = cleaned_data.get('metc_institution')
 
         if metc and not metc_institution:
-            self.add_error('metc_institution', forms.ValidationError('U dient een instelling op te geven.', code='required'))
+            error = forms.ValidationError('U dient een instelling op te geven.', code='required')
+            self.add_error('metc_institution', error)
 
 
 class StudyForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['age_groups', 'has_traits', 'traits', 'traits_details', 'necessity', 'necessity_reason', 'setting', 'setting_details',
-                  'risk_physical', 'risk_psychological', 'compensation', 'compensation_details', 'recruitment', 'recruitment_details']
+        fields = ['age_groups',
+                  'has_traits', 'traits', 'traits_details',
+                  'necessity', 'necessity_reason',
+                  'setting', 'setting_details',
+                  'risk_physical', 'risk_psychological',
+                  'compensation', 'compensation_details',
+                  'recruitment', 'recruitment_details']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
             'has_traits': forms.RadioSelect(choices=yes_no),
@@ -128,9 +136,12 @@ class TaskEndForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """Set the tasks_duration and tasks_stressful fields as required"""
         super(TaskEndForm, self).__init__(*args, **kwargs)
-        self.fields['tasks_duration'].required = True
-        label = self.fields['tasks_duration'].label % self.instance.gross_duration()
-        self.fields['tasks_duration'].label = mark_safe(label)
+
+        tasks_duration = self.fields['tasks_duration']
+        tasks_duration.required = True
+        label = tasks_duration.label % self.instance.gross_duration()
+        tasks_duration.label = mark_safe(label)
+
         self.fields['tasks_stressful'].required = True
 
 

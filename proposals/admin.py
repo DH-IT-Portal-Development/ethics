@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Relation, AgeGroup, Trait, Action, Registration, \
-                    Setting, Compensation, Recruitment, Faq, Member, Meeting
+    Setting, Compensation, Recruitment, Faq, Member, Meeting
 
 
 @admin.register(Relation)
