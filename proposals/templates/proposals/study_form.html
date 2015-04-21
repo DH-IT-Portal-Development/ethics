@@ -40,6 +40,7 @@ $(function() {
 <h3>Algemene kenmerken van de studie</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="Doorgaan" />
+    <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
+    <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
 </form>
 {% endblock %}

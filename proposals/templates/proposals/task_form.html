@@ -18,9 +18,11 @@ $(function() {
 <p><em>Aantal taken toegevoegd: {{ task_count }} / {{ proposal.tasks_number }}</em></p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" name="save" value="Taak opslaan" />
+    <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
     {% if save_add_button %}
-    <input class="pure-button pure-button-primary" type="submit" name="save_add" value="Taak opslaan en nog een taak aanmaken" />
+    <input class="pure-button pure-button-primary" type="submit" name="save_add" value="Opslaan en nog een taak aanmaken" />
+    {% else %}
+    <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
     {% endif %}
     <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
 </form>

@@ -10,7 +10,8 @@ Aanvraag indienen: fase 4 van 6
 <h3>Belasting voor de proefpersoon</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="Doorgaan" />
+    <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
+    <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
     <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
 </form>
 {% endblock %}

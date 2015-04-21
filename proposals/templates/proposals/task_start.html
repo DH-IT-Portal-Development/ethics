@@ -20,7 +20,8 @@ Aanvraag indienen: fase 4 van 6
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     <p>Voor elke taak stellen we in de komende schermen steeds dezelfde vragen.</p>
-    <input class="pure-button pure-button-primary" type="submit" value="Doorgaan" />
+    <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
+    <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
     <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
 </form>
 {% endblock %}
