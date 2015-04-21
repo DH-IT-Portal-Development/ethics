@@ -6,7 +6,7 @@ Aanvraag verwijderen
 
 {% block content %} 
 <form action="" method="post">{% csrf_token %}
-    <p>Weet je zeker dat je de aanvraag voor de studie "{{ object.title }}" wilt verwijderen?</p>
+    <p>Weet je zeker dat je de aanvraag voor de studie <em>{{ object.title }}</em> wilt verwijderen?</p>
     <input class="pure-button pure-button-primary" type="submit" value="Verwijderen" />
     <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
 </form>
