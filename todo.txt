@@ -28,10 +28,6 @@ ADHV EMLAR:
 v TASKS: 1/3 ipv 0/3
 v Stap n/n in titel
 v Knoppen terug naar hoofdmenu en gelijk verder
-- TEKSTUEEL: Wat is fysiek? Wat is psychisch? 
-- TEKSTUEEL: "Er komt later nog een vraag over netto duur"
-- TEKSTUEEL: Veel tekst in vragen
-- Woordenboek van definities? 
 
 NA EMLAR: 
 v check netto duur vs bruto duur
@@ -42,3 +38,11 @@ v check netto duur vs bruto duur
 - authorisatie: alleen eigen proposals aanpassen
 - WMO: afhandeling regelen (aparte flow)
 - WMO: success messages
+- STUDY: surveys toevoegen
+- Sessie-gedeelte inbouwen
+- Uitlijnen lange teksten 
+- Uitlijnen checkboxes
+- Inregelen e-mails
+- Solis-login
+- Annuleren-knop: "later verder" 
+- Woordenboek van definities? 

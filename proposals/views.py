@@ -122,10 +122,15 @@ class ProposalCopy(CreateView):
     template_name = 'proposals/proposal_copy.html'
 
     def form_valid(self, form):
-        form.instance = form.cleaned_data['parent']
+        """Create a copy of the selected Proposal"""
+        parent = form.cleaned_data['parent']
+        form.instance = parent
         form.instance.pk = None
         form.instance.title = 'Kopie van %s' % form.instance.title
+        form.instance.relation = parent.relation
         form.instance.created_by = self.request.user
+        #form.instance.applicants = parent.applicants TODO: why doesn't this work? maybe deepcopy?!
+        form.instance.parent = parent
         return super(ProposalCopy, self).form_valid(form)
 
 
