@@ -107,7 +107,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         null=True,
         verbose_name='Te kopiëren aanvraag')
 
-    def gross_duration(self):
+    def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
     def save(self, *args, **kwargs):

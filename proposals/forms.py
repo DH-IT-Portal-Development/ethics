@@ -118,7 +118,6 @@ class TaskForm(forms.ModelForm):
                   'feedback', 'feedback_details', 'stressful']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
-            # 'actions': forms.CheckboxSelectMultiple(),
             'registrations': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=yes_no),
             'stressful': forms.RadioSelect(choices=yes_no_doubt),
@@ -139,10 +138,22 @@ class TaskEndForm(forms.ModelForm):
 
         tasks_duration = self.fields['tasks_duration']
         tasks_duration.required = True
-        label = tasks_duration.label % self.instance.gross_duration()
+        label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
 
         self.fields['tasks_stressful'].required = True
+
+    def clean(self):
+        """
+        Check that the net duration is at least equal to the gross duration
+        """
+        cleaned_data = super(TaskEndForm, self).clean()
+
+        tasks_duration = cleaned_data.get('tasks_duration')
+        net_duration = self.instance.net_duration()
+        if tasks_duration < net_duration:
+            error = forms.ValidationError('Totale taakduur moet minstens gelijk zijn aan netto taakduur.', code='comparison')
+            self.add_error('tasks_duration', error)
 
 
 class UploadConsentForm(forms.ModelForm):

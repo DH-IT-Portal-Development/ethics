@@ -34,6 +34,7 @@ v Knoppen terug naar hoofdmenu en gelijk verder
 - Woordenboek van definities? 
 
 NA EMLAR: 
+v check netto duur vs bruto duur
 - kopieren bestaande aanvraag
 - opsplitsen website/proposals
 - testcases
