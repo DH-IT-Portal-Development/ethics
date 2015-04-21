@@ -104,7 +104,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         related_name='applicants')
     parent = models.ForeignKey(
         'self',
-        null=True, 
+        null=True,
         verbose_name='Te kopiëren aanvraag')
 
     def gross_duration(self):
@@ -192,7 +192,7 @@ class Wmo(models.Model):
         super(Wmo, self).save(*args, **kwargs)
         self.proposal.save()
 
-    def status(self): 
+    def status(self):
         if self.metc or (self.is_medical and self.is_behavioristic):
             if not self.metc_decision:
                 return 'In afwachting beslissing METC.'

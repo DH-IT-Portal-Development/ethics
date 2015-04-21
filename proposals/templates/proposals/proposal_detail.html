@@ -60,7 +60,7 @@ Aanvraag <em>{{ proposal.title }}</em>
     </tr>
     <tr>
         <th>Setting</th>
-        <td>{{ proposal.study.setting }}</td>
+        <td>{{ proposal.study.setting.all|unordered_list }}</td>
     </tr>
     <tr>
         <th>Vergoeding</th>

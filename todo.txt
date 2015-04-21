@@ -24,6 +24,15 @@ v WMO: verschillende berichten op detail-pagina
 v WMO: logica javascript checken
 v EMLAR users toevoegen
 
+ADHV EMLAR: 
+v TASKS: 1/3 ipv 0/3
+- Stap n/n in titel
+- Knoppen terug naar hoofdmenu en gelijk verder
+- TEKSTUEEL: Wat is fysiek? Wat is psychisch? 
+- TEKSTUEEL: "Er komt later nog een vraag over netto duur"
+- TEKSTUEEL: Veel tekst in vragen
+- Woordenboek van definities? 
+
 NA EMLAR: 
 - kopieren bestaande aanvraag
 - opsplitsen website/proposals

@@ -213,8 +213,10 @@ class TaskCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super(TaskCreate, self).get_context_data(**kwargs)
         proposal = Proposal.objects.get(pk=self.kwargs['pk'])
+        task_count = proposal.task_set.count() + 1
         context['proposal'] = proposal
-        context['save_add_button'] = proposal.task_set.count() + 1 < proposal.tasks_number
+        context['save_add_button'] = task_count < proposal.tasks_number
+        context['task_count'] = task_count
         return context
 
     def form_valid(self, form):
@@ -236,8 +238,10 @@ class TaskUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(TaskUpdate, self).get_context_data(**kwargs)
         proposal = Task.objects.get(pk=self.kwargs['pk']).proposal
+        task_count = proposal.task_set.count() + 1
         context['proposal'] = proposal
-        context['save_add_button'] = proposal.task_set.count() + 1 < proposal.tasks_number
+        context['save_add_button'] = task_count < proposal.tasks_number
+        context['task_count'] = task_count - 1
         return context
 
     def get_success_url(self):

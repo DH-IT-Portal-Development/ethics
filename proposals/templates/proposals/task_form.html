@@ -15,7 +15,7 @@ $(function() {
 });
 </script>
 <h3>Vragen per taak</h3>
-<p>Aantal taken toegevoegd: {{ proposal.task_set.count }} / {{ proposal.tasks_number }}</p>
+<p><em>Aantal taken toegevoegd: {{ task_count }} / {{ proposal.tasks_number }}</em></p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Taak opslaan" />
