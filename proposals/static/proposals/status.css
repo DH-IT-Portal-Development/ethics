@@ -1,0 +1,13 @@
+ul#proposal_status
+{
+    margin-left: 0;
+    padding-left: 0;
+    white-space: nowrap;
+}
+
+#proposal_status li
+{
+    display: inline;
+    list-style-type: none;
+    padding: .5em;
+}

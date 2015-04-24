@@ -115,7 +115,7 @@ from django_auth_ldap.config import LDAPSearch
 #AUTH_LDAP_ALWAYS_UPDATE_USER = False
 
 AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
+    #'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_LDAP_SERVER_URI = 'ldap://ldap.hum.uu.nl'
