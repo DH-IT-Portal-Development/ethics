@@ -41,7 +41,7 @@ v check netto duur vs bruto duur
 - STUDY: surveys toevoegen
 - Sessie-gedeelte inbouwen
 - Uitlijnen lange teksten 
-- Uitlijnen checkboxes
+- Uitlijnen checkboxes (gebeurt vrijwel nooit...)
 - Inregelen e-mails eindverantwoordelijke
 - AUTH: Solis-login
 - AUTH: selectie uit Solis-IDs

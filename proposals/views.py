@@ -4,7 +4,9 @@ from django.contrib import messages
 from django.views import generic
 from django.core.urlresolvers import reverse
 
-from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq
+from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
+
+from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq, Survey
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     TaskStartForm, TaskForm, TaskEndForm, UploadConsentForm, ProposalSubmitForm
 
@@ -32,6 +34,10 @@ class DeleteView(LoginRequiredMixin, generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(DeleteView, self).delete(request, *args, **kwargs)
+
+
+class SurveysInline(InlineFormSet):
+    model = Survey
 
 
 # List views
@@ -227,9 +233,10 @@ class StudyCreate(CreateView):
             return reverse('proposals:my_concepts')
 
 
-class StudyUpdate(UpdateView):
+class StudyUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateWithInlinesView):
     model = Study
     form_class = StudyForm
+    inlines = [SurveysInline]
     success_message = 'Algemene kenmerken bewerkt'
 
     def get_success_url(self):

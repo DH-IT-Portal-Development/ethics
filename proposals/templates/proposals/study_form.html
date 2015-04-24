@@ -38,8 +38,20 @@ $(function() {
 });
 </script>
 <h3>Algemene kenmerken van de studie</h3>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <table>{{ form.as_table }}</table>
+    <h4>Surveys</h4>
+    {% for formset in inlines %}
+    <div id="{{ formset.prefix }}">
+    {% for subform in formset.forms %}
+        <table>
+        {{ subform.as_ul }}
+        </table>
+    {% endfor %}
+    {{ formset.management_form }}
+    </div>
+    {% endfor %}
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
     <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
 </form>

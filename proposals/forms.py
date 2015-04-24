@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.models import inlineformset_factory
 from django.utils.safestring import mark_safe
 
 from .models import Proposal, Wmo, Study, Task
