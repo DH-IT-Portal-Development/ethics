@@ -10,8 +10,8 @@
 
 <form class="pure-form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
-{{ form.username }}
-{{ form.password }}
+<input id="id_username" maxlength="254" name="username" type="text" placeholder="Gebruikersnaam">
+<input id="id_password" name="password" type="password" placeholder="Wachtwoord">
 <input class="pure-button pure-button-primary" type="submit" value="Inloggen" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
