@@ -29,7 +29,7 @@ v TASKS: 1/3 ipv 0/3
 v Stap n/n in titel
 v Knoppen terug naar hoofdmenu en gelijk verder
 
-NA EMLAR: 
+TODO: 
 v check netto duur vs bruto duur
 - kopieren bestaande aanvraag
 - opsplitsen website/proposals
@@ -39,14 +39,17 @@ v AUTH: alleen eigen proposals aanpassen
 - WMO: afhandeling regelen (aparte flow)
 - WMO: success messages
 - STUDY: surveys toevoegen
-- TASKS: Sessie-gedeelte inbouwen
-- TASKS: Aan Sessie hangen
 - Uitlijnen lange teksten 
 - Uitlijnen checkboxes (gebeurt vrijwel nooit...)
-- Inregelen e-mails eindverantwoordelijke
 - AUTH: Solis-login
 - AUTH: selectie uit Solis-IDs
-- Annuleren-knop: "later verder" 
-- Woordenboek van definities? 
+v Annuleren-knop: "later verder" 
 - Referentienummer aanmaken
 - Uitvoer naar PDF
+- Status laten zien
+
+Input commissie nodig:
+- Woordenboek van definities? 
+- TASKS: Sessie-gedeelte inbouwen
+- TASKS: Aan Sessie hangen
+- Inregelen e-mails eindverantwoordelijke

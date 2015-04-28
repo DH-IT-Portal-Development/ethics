@@ -24,6 +24,6 @@ $(function() {
     {% else %}
     <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
     {% endif %}
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
+    <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>
 </form>
 {% endblock %}
