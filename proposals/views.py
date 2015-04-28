@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -9,6 +11,7 @@ from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesV
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq, Survey
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     TaskStartForm, TaskForm, TaskEndForm, UploadConsentForm, ProposalSubmitForm
+from .copy import copy_proposal
 
 
 class LoginRequiredMixin(object):
@@ -63,7 +66,7 @@ class IndexView(ArchiveView):
 class ConceptsView(ArchiveView):
     def get_queryset(self):
         """Return all the proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user)
+        return Proposal.objects.all()  # filter(applicants=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super(ConceptsView, self).get_context_data(**kwargs)
@@ -123,20 +126,13 @@ class ProposalCreate(CreateView):
 class ProposalCopy(CreateView):
     model = Proposal
     form_class = ProposalCopyForm
-    success_message = 'Aanvraag gekopieerd'
+    success_message = 'Aanvraag gekopiëerd'
     success_url = '/proposals/concepts/'
     template_name = 'proposals/proposal_copy.html'
 
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""
-        parent = form.cleaned_data['parent']
-        form.instance = parent
-        form.instance.pk = None
-        form.instance.title = 'Kopie van %s' % form.instance.title
-        form.instance.relation = parent.relation
-        form.instance.created_by = self.request.user
-        #form.instance.applicants = parent.applicants TODO: why doesn't this work? maybe deepcopy?!
-        form.instance.parent = parent
+        form.instance = copy_proposal(self, form)
         return super(ProposalCopy, self).form_valid(form)
 
 
