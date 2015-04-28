@@ -7,9 +7,13 @@ https://docs.djangoproject.com/en/1.7/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
+import os
+import logging
+
+import ldap
+from django_auth_ldap.config import LDAPSearch
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -36,7 +40,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'bootstrap3',
     'proposals',
     #'reviews',
     #'meetings',
@@ -77,15 +80,11 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
 LANGUAGE_CODE = 'nl-nl'
-
-TIME_ZONE = 'Europe/Amsterdam'
-
 USE_I18N = True
-
 USE_L10N = True
 
+TIME_ZONE = 'Europe/Amsterdam'
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -95,14 +94,6 @@ STATIC_URL = '/static/'
 # Authentication (via LDAP)
 
 LOGIN_REDIRECT_URL = '/proposals/'
-
-import ldap
-from django_auth_ldap.config import LDAPSearch
-
-#AUTHENTICATION_BACKENDS = (
-#    'django_auth_ldap.backend.LDAPBackend',
-#    'django.contrib.auth.backends.ModelBackend',
-#)
 
 #AUTH_LDAP_SERVER_URI = 'ldap://ldap.forumsys.com'
 #AUTH_LDAP_BIND_DN = 'cn=read-only-admin,dc=example,dc=com'
@@ -127,8 +118,6 @@ AUTH_LDAP_USER_ATTR_MAP = {
     'first_name': 'cn',
     'last_name': 'cn'
 }
-
-import logging
 
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
