@@ -36,8 +36,6 @@ v check netto duur vs bruto duur
 - testcases
 - AUTH: niet meer bewerken als verzonden
 v AUTH: alleen eigen proposals aanpassen
-- WMO: afhandeling regelen (aparte flow)
-- WMO: success messages
 - STUDY: surveys toevoegen
 - Uitlijnen lange teksten 
 - Uitlijnen checkboxes (gebeurt vrijwel nooit...)
@@ -53,3 +51,5 @@ Input commissie nodig:
 - TASKS: Sessie-gedeelte inbouwen
 - TASKS: Aan Sessie hangen
 - Inregelen e-mails eindverantwoordelijke
+- WMO: success messages
+- WMO: afhandeling regelen (aparte flow)
