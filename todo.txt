@@ -35,11 +35,12 @@ v check netto duur vs bruto duur
 - opsplitsen website/proposals
 - testcases
 - AUTH: niet meer bewerken als verzonden
-- AUTH: alleen eigen proposals aanpassen
+v AUTH: alleen eigen proposals aanpassen
 - WMO: afhandeling regelen (aparte flow)
 - WMO: success messages
 - STUDY: surveys toevoegen
-- Sessie-gedeelte inbouwen
+- TASKS: Sessie-gedeelte inbouwen
+- TASKS: Aan Sessie hangen
 - Uitlijnen lange teksten 
 - Uitlijnen checkboxes (gebeurt vrijwel nooit...)
 - Inregelen e-mails eindverantwoordelijke

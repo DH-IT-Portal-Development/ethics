@@ -3,8 +3,10 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views import generic
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied
+from django.views import generic
+from django.views.generic.detail import SingleObjectMixin
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
@@ -22,17 +24,32 @@ class LoginRequiredMixin(object):
         return login_required(view)
 
 
+class UserAllowedMixin(SingleObjectMixin):
+    def get_object(self, queryset=None):
+        obj = super(UserAllowedMixin, self).get_object(queryset)
+
+        applicants = []
+        if isinstance(obj, Proposal):
+            applicants = obj.applicants.all()
+        else:
+            applicants = obj.proposal.applicants.all()
+
+        if self.request.user not in applicants:
+            raise PermissionDenied
+        return obj
+
+
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     """Generic create view including success message and login required mixins"""
     pass
 
 
-class UpdateView(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
+class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     """Generic update view including success message and login required mixins"""
     pass
 
 
-class DeleteView(LoginRequiredMixin, generic.DeleteView):
+class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
     """Generic delete view including login required mixin and alternative for success message"""
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
@@ -90,7 +107,7 @@ class FaqsView(generic.ListView):
 
 
 # Proposal detail
-class DetailView(LoginRequiredMixin, generic.DetailView):
+class DetailView(LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
     model = Proposal
 
 
