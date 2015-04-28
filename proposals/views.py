@@ -66,7 +66,7 @@ class IndexView(ArchiveView):
 class ConceptsView(ArchiveView):
     def get_queryset(self):
         """Return all the proposals for the current user"""
-        return Proposal.objects.all()  # filter(applicants=self.request.user)
+        return Proposal.objects.filter(applicants=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super(ConceptsView, self).get_context_data(**kwargs)
