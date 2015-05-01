@@ -36,13 +36,13 @@ v check netto duur vs bruto duur
 - testcases
 - AUTH: niet meer bewerken als verzonden
 v AUTH: alleen eigen proposals aanpassen
-- STUDY: surveys toevoegen
+- STUDY: surveys-vraag toevoegen
 - Uitlijnen lange teksten 
 - Uitlijnen checkboxes (gebeurt vrijwel nooit...)
 - AUTH: Solis-login
 - AUTH: selectie uit Solis-IDs
 v Annuleren-knop: "later verder" 
-- Referentienummer aanmaken
+- Referentienummer aanmaken (USERID-nr-jaar, direct bij aanmaken)
 - Uitvoer naar PDF
 - Status laten zien
 
@@ -52,4 +52,4 @@ Input commissie nodig:
 - TASKS: Aan Sessie hangen
 - Inregelen e-mails eindverantwoordelijke
 - WMO: success messages
-- WMO: afhandeling regelen (aparte flow)
+- WMO: afhandeling regelen (aparte flow, niet langs commissie voor go/no-go)
