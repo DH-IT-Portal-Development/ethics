@@ -2,7 +2,7 @@ from django import forms
 from django.forms.models import inlineformset_factory
 from django.utils.safestring import mark_safe
 
-from .models import Proposal, Wmo, Study, Task
+from .models import Proposal, Wmo, Study, Session, Task
 
 yes_no = [(True, "ja"), (False, "nee")]
 yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
@@ -99,6 +99,17 @@ class StudyForm(forms.ModelForm):
         super(StudyForm, self).__init__(*args, **kwargs)
         self.fields['setting'].empty_label = None
         self.fields['compensation'].empty_label = None
+
+
+class SessionStartForm(forms.ModelForm):
+    class Meta:
+        model = Session
+        fields = ['sessions_number']
+
+    def __init__(self, *args, **kwargs):
+        """Set the sessions_number field as required"""
+        super(SessionStartForm, self).__init__(*args, **kwargs)
+        self.fields['sessions_number'].required = True
 
 
 class TaskStartForm(forms.ModelForm):

@@ -12,7 +12,8 @@ from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesV
 
 from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq, Survey
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
-    TaskStartForm, TaskForm, TaskEndForm, UploadConsentForm, ProposalSubmitForm
+    SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
+    UploadConsentForm, ProposalSubmitForm
 from .copy import copy_proposal
 
 
@@ -168,15 +169,15 @@ class ProposalUpdate(ProposalUpdateView):
     success_message = 'Conceptaanvraag %(title)s bewerkt'
 
 
-class ProposalTaskStart(ProposalUpdateView):
-    form_class = TaskStartForm
-    template_name = 'proposals/task_start.html'
+class ProposalSessionStart(ProposalUpdateView):
+    form_class = SessionStartForm
+    template_name = 'proposals/session_start.html'
     success_message = ''
 
 
-class ProposalTaskEnd(ProposalUpdateView):
-    form_class = TaskEndForm
-    template_name = 'proposals/task_end.html'
+class ProposalSessionEnd(ProposalUpdateView):
+    form_class = SessionEndForm
+    template_name = 'proposals/session_end.html'
     success_message = ''
 
 

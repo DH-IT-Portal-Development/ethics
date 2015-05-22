@@ -19,19 +19,23 @@ class Proposal(models.Model):
     WMO_AWAITING_DECISION = 2
     WMO_COMPLETED = 3
     STUDY_CREATED = 4
-    TASKS_STARTED = 5
-    TASKS_ADDED = 6
-    TASKS_ENDED = 7
-    INFORMED_CONSENT_UPLOADED = 8
-    SUBMITTED = 9
+    SESSIONS_STARTED = 5
+    TASKS_STARTED = 6
+    TASKS_ADDED = 7
+    TASKS_ENDED = 8
+    SESSIONS_ENDED = 9
+    INFORMED_CONSENT_UPLOADED = 10
+    SUBMITTED = 11
     STATUSES = (
         (DRAFT, 'Algemene informatie ingevuld'),
         (WMO_AWAITING_DECISION, 'WMO: in afwachting beslissing'),
         (WMO_COMPLETED, 'WMO: afgerond'),
         (STUDY_CREATED, 'Kenmerken studie toegevoegd'),
+        (SESSIONS_STARTED, 'Belasting proefpersoon: sessies toevoegen'),
         (TASKS_STARTED, 'Belasting proefpersoon: taken toevoegen'),
         (TASKS_ADDED, 'Belasting proefpersoon: alle taken toegevoegd'),
         (TASKS_ENDED, 'Belasting proefpersoon: afgerond'),
+        (SESSIONS_ENDED, 'Belasting proefpersoon: afgerond'),
         (INFORMED_CONSENT_UPLOADED, 'Informed consent geupload'),
         (SUBMITTED, 'Opgestuurd'),
     )
@@ -58,25 +62,34 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         'Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?',
         default=False)
     longitudinal = models.BooleanField(
-        'Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen aan een sessie deelnemen? \
+        'Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen deelnemen aan een sessie? \
 (bijvoorbeeld een longitudinale studie, of een kortlopende studie waar proefpersonen op twee of meer verschillende dagen getest worden)',
         default=False)
 
-    # Fields with respect to tasks
-    tasks_number = models.PositiveIntegerField(
-        'Hoeveel taken worden er binnen deze studie bij de proefpersoon afgenomen?',
+    # Fields with respect to session
+    sessions_number = models.PositiveIntegerField(
+        'Hoeveel sessies telt deze studie?',
         null=True,
-        help_text='Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
-Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
-    tasks_duration = models.PositiveIntegerField(
-        'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
-Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)',
-        null=True)
-    tasks_stressful = models.NullBooleanField(
-        'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
-ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
-Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. \
-Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.')
+        help_text='Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens \
+een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen om dezelfde taak/taken \
+of andere taak/taken te doen, dan spreken we van twee sessies. \
+Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.')
+    sessions_duration = models.PositiveIntegerField(
+        'Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.',
+        null=True,
+        help_text='Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.')
+    sessions_stressful = models.NullBooleanField(
+        'Is het totaal van sessies als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
+vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
+de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
+of bepaald gedrag, etcetera. \
+Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
+        default=False)
+    sessions_stressful_details = models.CharField(
+        'Waarom denkt u dat?',
+        max_length=200,
+        blank=True)
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
@@ -128,12 +141,16 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
                 status = self.WMO_COMPLETED
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
-        if self.tasks_number:
-            status = self.TASKS_STARTED
-        if self.task_set.count() == self.tasks_number:
-            status = self.TASKS_ADDED
-        if self.tasks_duration:
-            status = self.TASKS_ENDED
+        if self.sessions_number:
+            status = self.SESSIONS_STARTED
+
+        #if self.tasks_number:
+        #    status = self.TASKS_STARTED
+        #if self.session_set.count() == self.session_number:
+        #    status = self.TASKS_ADDED
+
+        if self.sessions_duration:
+            status = self.SESSIONS_ENDED
         if self.informed_consent_pdf:
             status = self.INFORMED_CONSENT_UPLOADED
         return status
@@ -286,10 +303,10 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         max_length=200,
         blank=True)
     risk_physical = models.NullBooleanField(
-        'Is de kans dat de proefpersoon fysiek letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?',
+        'Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen van het experiment groter dan de kans op fysieke schade in het dagelijks leven?',
         default=False)
     risk_psychological = models.NullBooleanField(
-        'Is de kans dat de proefpersoon psychisch letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?',
+        'Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen van het experiment groter dan de kans op psychische schade in het dagelijks leven?',
         default=False)
     compensation = models.ForeignKey(
         Compensation,
@@ -319,6 +336,41 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
         return 'Study details for proposal %s' % self.proposal.title
 
 
+class Session(models.Model):
+    stressful = models.NullBooleanField(
+        'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
+ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. \
+Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.')
+    stressful_details = models.CharField(
+        'Waarom denkt u dat?',
+        max_length=200,
+        blank=True)
+
+    # Fields with respect to tasks
+    tasks_number = models.PositiveIntegerField(
+        'Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?',
+        null=True,
+        help_text='Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
+Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
+    tasks_duration = models.PositiveIntegerField(
+        'De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
+Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)',
+        null=True)
+    tasks_stressful = models.NullBooleanField(
+        'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
+vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
+de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
+of bepaald gedrag, etcetera. \
+Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
+        default=False)
+    tasks_stressful_details = models.CharField(
+        'Waarom denkt u dat?',
+        max_length=200,
+        blank=True)
+
+
 class Survey(models.Model):
     name = models.CharField(max_length=200)
     minutes = models.PositiveIntegerField()
@@ -326,15 +378,6 @@ class Survey(models.Model):
 
     def __unicode__(self):
         return self.name
-
-
-class Action(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    info_text = models.TextField()
-
-    def __unicode__(self):
-        return self.description
 
 
 class Registration(models.Model):
@@ -353,13 +396,6 @@ class Task(models.Model):
     duration = models.PositiveIntegerField(
         'Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
 Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.')
-    actions = models.ManyToManyField(
-        Action,
-        verbose_name='Wat vraag je bij deze taak de proefpersoon te doen?')
-    actions_details = models.CharField(
-        'Namelijk',
-        max_length=200,
-        blank=True)
     registrations = models.ManyToManyField(
         Registration,
         verbose_name='Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?')
@@ -382,6 +418,10 @@ de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van 
 of bepaald gedrag, etcetera. \
 En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
         default=False)
+    stressful_details = models.CharField(
+        'Waarom denkt u dat?',
+        max_length=200,
+        blank=True)
 
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Task"""
