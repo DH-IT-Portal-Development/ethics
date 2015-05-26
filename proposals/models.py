@@ -121,7 +121,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         verbose_name='Te kopiëren aanvraag')
 
     def net_duration(self):
-        return self.session_set.aggregate(models.Sum('duration'))['tasks_duration__sum']
+        return self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
@@ -166,17 +166,24 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         if self.status == self.STUDY_CREATED:
             return reverse('proposals:session_start', args=(self.id,))
         if self.status == self.SESSIONS_STARTED:
-            return reverse('proposals:task_start', args=(self.id,))
+            return reverse('proposals:task_start', args=(self.current_session().id,))
         if self.status == self.TASKS_STARTED:
-            return reverse('proposals:task_create', args=(self.id,))
+            return reverse('proposals:task_create', args=(self.current_session().id,))
         if self.status == self.TASKS_ADDED:
-            return reverse('proposals:task_end', args=(self.id,))
+            return reverse('proposals:task_end', args=(self.current_session().id,))
         if self.status == self.TASKS_ENDED:
             return reverse('proposals:session_end', args=(self.id,))
         if self.status == self.SESSIONS_ENDED:
             return reverse('proposals:consent', args=(self.id,))
         if self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))
+
+    def current_session(self):
+        for session in self.session_set.all():
+            if session.task_set.count() == session.tasks_number:
+                continue
+            else:
+                return session
 
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)

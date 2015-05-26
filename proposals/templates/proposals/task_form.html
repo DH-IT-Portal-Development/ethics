@@ -14,7 +14,7 @@ $(function() {
     depends_on_value('feedback', 'True', 'feedback_details');
 });
 </script>
-<h3>Vragen per taak</h3>
+<h3>Vragen per taak voor sessie {{ session.order }}</h3>
 <p><em>Aantal taken toegevoegd: {{ task_count }} / {{ session.tasks_number }}</em></p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table>{{ form.as_table }}</table>

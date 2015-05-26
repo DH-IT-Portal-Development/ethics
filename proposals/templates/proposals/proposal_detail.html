@@ -6,144 +6,202 @@ Aanvraag <em>{{ proposal.title }}</em>
 {% endblock %} 
 
 {% block content %}
-<h3>Algemene informatie
-    <a href="{% url 'proposals:update' proposal.id %}">
-        <img src="{% static 'proposals/images/pencil.png' %}">
-    </a>
-</h3>
-<table class="pure-table">
-    <tr>
-        <th>Ingediend door</th>
-        <td>{{ proposal.created_by }} (<em>{{ proposal.relation }}</em>)</td>
-    </tr>
-    {% if proposal.relation.needs_supervisor %}
-    <tr>
-        <th>E-mailadres eindverantwoordelijke</th>
-        <td>{{ proposal.supervisor_email|urlize }}</td>
-    </tr>
-    {% endif %}
-    <tr>
-        <th>Longitudinale studie?</th>
-        <td>{{ proposal.longitudinal|yesno:"ja,nee" }}</td>
-    </tr>
-</table>
+<script>
+    $(function() {
+        $( "#tabs" ).tabs();
+        $( "#accordion" ).accordion({collapsible: true, heightStyle: "content"});
+    });
+</script>
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Algemene informatie</a></li>
+        <li><a href="#tabs-2">WMO-plichtigheid</a></li>
+        <li><a href="#tabs-3">Algemene kenmerken</a></li>
+        <li><a href="#tabs-4">Belasting proefpersoon</a></li>
+    </ul>
 
-{% if proposal.wmo %}
-<h3>WMO-plichtig of niet?
-    <a href="{% url 'proposals:wmo_update' proposal.id %}">
-        <img src="{% static 'proposals/images/pencil.png' %}">
-    </a>
-</h3>
-{{ proposal.wmo.status }}
-{% endif %}
+    <div id="tabs-1">
+        <h3>Algemene informatie
+            <a href="{% url 'proposals:update' proposal.id %}">
+                <img src="{% static 'proposals/images/pencil.png' %}">
+            </a>
+        </h3>
+        <table class="pure-table">
+            <tr>
+                <th>Ingediend door</th>
+                <td>{{ proposal.created_by }} (<em>{{ proposal.relation }}</em>)</td>
+            </tr>
+            {% if proposal.relation.needs_supervisor %}
+            <tr>
+                <th>E-mailadres eindverantwoordelijke</th>
+                <td>{{ proposal.supervisor_email|urlize }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Longitudinale studie?</th>
+                <td>{{ proposal.longitudinal|yesno:"ja,nee" }}</td>
+            </tr>
+        </table>
+    </div>
 
-{% if proposal.study %}
-<h3>Algemene kenmerken van de studie 
-    <a href="{% url 'proposals:study_update' proposal.id %}">
-        <img src="{% static 'proposals/images/pencil.png' %}">
-    </a>
-</h3>
-<table class="pure-table">
-    <tr>
-        <th>Leeftijdsgroepen</th>
-        <td>{{ proposal.study.age_groups.all|unordered_list }}</td>
-    </tr>
-    <tr>
-        <th>Bijzondere kenmerken</th>
-        <td>
-            {% if proposal.study.has_traits %}
-            {{ proposal.study.traits.all|unordered_list }}
+    <div id="tabs-2">
+        {% if proposal.wmo %}
+        <h3>WMO-plichtig of niet?
+            <a href="{% url 'proposals:wmo_update' proposal.id %}">
+                <img src="{% static 'proposals/images/pencil.png' %}">
+            </a>
+        </h3>
+        {{ proposal.wmo.status }}
+        {% endif %}
+    </div>
+
+    <div id="tabs-3">
+        {% if proposal.study %}
+        <h3>Algemene kenmerken van de studie 
+            <a href="{% url 'proposals:study_update' proposal.id %}">
+                <img src="{% static 'proposals/images/pencil.png' %}">
+            </a>
+        </h3>
+        <table class="pure-table">
+            <tr>
+                <th>Leeftijdsgroepen</th>
+                <td>{{ proposal.study.age_groups.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>Bijzondere kenmerken</th>
+                <td>
+                    {% if proposal.study.has_traits %}
+                    {{ proposal.study.traits.all|unordered_list }}
+                    {% else %}
+                    geen
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Setting</th>
+                <td>{{ proposal.study.setting.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>Vergoeding</th>
+                <td>{{ proposal.study.compensation }}</td>
+            </tr>
+            <tr>
+                <th>Werving via</th>
+                <td>{{ proposal.study.recruitment.all|unordered_list }}</td>
+            </tr>
+        </table>
+        {% endif %}
+    </div>
+
+    <div id="tabs-4">
+        {% if proposal.session_set.all %}
+        <h3>Belasting voor de proefpersoon</h3>
+        <table class="pure-table">
+            <tr>
+                <th>Aantal sessies</th>
+                <td>
+                    {{ proposal.sessions_number }} 
+                    <a href="{% url 'proposals:session_start' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                </td>
+            </tr>
+            <tr>
+                <th>Netto duur</th>
+                <td>{{ proposal.net_duration }} minuten</td>
+            </tr>
+            {% if proposal.sessions_duration %}
+            <tr>
+                <th>Bruto duur</th>
+                <td>
+                    {{ proposal.sessions_duration }} minuten
+                    <a href="{% url 'proposals:session_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                </td>
+            </tr>
+            <tr>
+                <th>Belastend als geheel?</th>
+                <td>
+                    {{ session.sessions_stressful|yesno:"ja,nee,twijfel" }}
+                    <a href="{% url 'proposals:session_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+        <div id="accordion">
+            {% for session in proposal.session_set.all %}
+            <h4>
+                Sessie {{ session.order }}
+                <a href="{% url 'proposals:session_delete' session.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
+            </h4>
+            <div>
+                {% if session.task_set.all %}
+                <table class="pure-table">
+                    <tr>
+                        <th>Aantal taken</th>
+                        <td>
+                            {{ session.task_set.count }} / {{ session.tasks_number }} 
+                            <a href="{% url 'proposals:task_start' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                            {% if session.task_set.count < session.tasks_number %}
+                            <a href="{% url 'proposals:task_create' session.id %}">Taak toevoegen</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Netto duur</th>
+                        <td>{{ session.net_duration }} minuten</td>
+                    </tr>
+                    {% if session.tasks_duration %}
+                    <tr>
+                        <th>Bruto duur</th>
+                        <td>
+                            {{ session.tasks_duration }} minuten
+                            <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Belastend als geheel?</th>
+                        <td>
+                            {{ session.tasks_stressful|yesno:"ja,nee,twijfel" }}
+                            <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </table>
+                <h5>Taken</h5>
+                <table class="dataTable display">
+                    <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Duur (in minuten)</th>
+                            <th>Registratie via</th>
+                            <th>Feedback?</th>
+                            <th>Belastend?</th>
+                            <th>Acties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in session.task_set.all %}
+                        <tr>
+                            <td>{{ task.name }}</td>
+                            <td>{{ task.duration }}</td>
+                            <td>{{ task.registrations.all|unordered_list }}</td>
+                            <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
+                            <td>{{ task.stressful|yesno:"ja,nee,twijfel" }}</td>
+                            <td>
+                                <a href="{% url 'proposals:task_update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                                <a href="{% url 'proposals:task_delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             {% else %}
-            geen
+            <p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'proposals:task_start' session.id %}">Starten</a></p>
             {% endif %}
-        </td>
-    </tr>
-    <tr>
-        <th>Setting</th>
-        <td>{{ proposal.study.setting.all|unordered_list }}</td>
-    </tr>
-    <tr>
-        <th>Vergoeding</th>
-        <td>{{ proposal.study.compensation }}</td>
-    </tr>
-    <tr>
-        <th>Werving via</th>
-        <td>{{ proposal.study.recruitment.all|unordered_list }}</td>
-    </tr>
-</table>
-{% endif %}
-
-{% if proposal.session_set.all %}
-<h3>Belasting voor de proefpersoon</h3>
-<p><a href="{% url 'proposals:session_start' proposal.id %}">Aantal sessies wijzigen</a></p>
-{% for session in proposal.session_set.all %}
-<h4>Sessie {{ session.order }}</h4>
-<a href="{% url 'proposals:session_delete' session.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
-{% if session.task_set.all %}
-<table class="pure-table">
-    <tr>
-        <th>Aantal taken</th>
-        <td>
-            {{ session.task_set.count }} / {{ session.tasks_number }} 
-            <a href="{% url 'proposals:task_start' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-            {% if session.task_set.count < session.tasks_number %}
-            <a href="{% url 'proposals:task_create' session.id %}">Taak toevoegen</a>
-            {% endif %}
-        </td>
-    </tr>
-    <tr>
-        <th>Netto duur</th>
-        <td>{{ session.net_duration }} minuten</td>
-    </tr>
-    {% if session.tasks_duration %}
-    <tr>
-        <th>Bruto duur</th>
-        <td>
-            {{ session.tasks_duration }} minuten
-            <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-        </td>
-    </tr>
-    <tr>
-        <th>Belastend?</th>
-        <td>
-            {{ session.tasks_stressful|yesno:"ja,nee,twijfel" }}
-            <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-        </td>
-    </tr>
-    {% endif %}
-</table>
-<h5>Taken</h5>
-<table class="dataTable display">
-    <thead>
-        <tr>
-            <th>Naam</th>
-            <th>Duur (in minuten)</th>
-            <th>Registratie via</th>
-            <th>Feedback?</th>
-            <th>Belastend?</th>
-            <th>Acties</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for task in session.task_set.all %}
-        <tr>
-            <td>{{ task.name }}</td>
-            <td>{{ task.duration }}</td>
-            <td>{{ task.registrations.all|unordered_list }}</td>
-            <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
-            <td>{{ task.stressful|yesno:"ja,nee,twijfel" }}</td>
-            <td>
-                <a href="{% url 'proposals:task_update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-                <a href="{% url 'proposals:task_delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
-            </td>
-        </tr>
         {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'proposals:task_start' session.id %}">Starten</a></p>
-{% endif %}
-{% endfor %}
-{% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
 
 {% endblock %}
