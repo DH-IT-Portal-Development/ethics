@@ -103,7 +103,7 @@ class StudyForm(forms.ModelForm):
 
 class SessionStartForm(forms.ModelForm):
     class Meta:
-        model = Session
+        model = Proposal
         fields = ['sessions_number']
 
     def __init__(self, *args, **kwargs):
@@ -114,7 +114,7 @@ class SessionStartForm(forms.ModelForm):
 
 class TaskStartForm(forms.ModelForm):
     class Meta:
-        model = Proposal
+        model = Session
         fields = ['tasks_number']
 
     def __init__(self, *args, **kwargs):
@@ -127,7 +127,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'duration', 'registrations', 'registrations_details',
-                  'feedback', 'feedback_details', 'stressful']
+                  'feedback', 'feedback_details', 'stressful', 'stressful_details']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'registrations': forms.CheckboxSelectMultiple(),
@@ -138,8 +138,8 @@ class TaskForm(forms.ModelForm):
 
 class TaskEndForm(forms.ModelForm):
     class Meta:
-        model = Proposal
-        fields = ['tasks_duration', 'tasks_stressful']
+        model = Session
+        fields = ['tasks_duration', 'tasks_stressful', 'tasks_stressful_details']
         widgets = {
             'tasks_stressful': forms.RadioSelect(choices=yes_no_doubt),
         }
@@ -166,6 +166,38 @@ class TaskEndForm(forms.ModelForm):
         if tasks_duration < net_duration:
             error = forms.ValidationError('Totale taakduur moet minstens gelijk zijn aan netto taakduur.', code='comparison')
             self.add_error('tasks_duration', error)
+
+
+class SessionEndForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['sessions_duration', 'sessions_stressful', 'sessions_stressful_details']
+        widgets = {
+            'sessions_stressful': forms.RadioSelect(choices=yes_no_doubt),
+        }
+
+    def __init__(self, *args, **kwargs):
+        """Set the sessions_duration and sessions_stressful fields as required"""
+        super(TaskEndForm, self).__init__(*args, **kwargs)
+
+        sessions_duration = self.fields['sessions_duration']
+        sessions_duration.required = True
+        label = sessions_duration.label % self.instance.net_duration()
+        sessions_duration.label = mark_safe(label)
+
+        self.fields['sessions_stressful'].required = True
+
+    def clean(self):
+        """
+        Check that the net duration is at least equal to the gross duration
+        """
+        cleaned_data = super(TaskEndForm, self).clean()
+
+        sessions_duration = cleaned_data.get('sessions_duration')
+        net_duration = self.instance.net_duration()
+        if sessions_duration < net_duration:
+            error = forms.ValidationError('Totale taakduur moet minstens gelijk zijn aan netto taakduur.', code='comparison')
+            self.add_error('sessions_duration', error)
 
 
 class UploadConsentForm(forms.ModelForm):

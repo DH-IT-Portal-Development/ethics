@@ -4,13 +4,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
-from .models import Proposal, Wmo, Study, Task, Member, Meeting, Faq, Survey
+from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
@@ -32,6 +32,8 @@ class UserAllowedMixin(SingleObjectMixin):
         applicants = []
         if isinstance(obj, Proposal):
             applicants = obj.applicants.all()
+        elif isinstance(obj, Task):
+            applicants = obj.session.proposal.applicants.all()
         else:
             applicants = obj.proposal.applicants.all()
 
@@ -169,18 +171,6 @@ class ProposalUpdate(ProposalUpdateView):
     success_message = 'Conceptaanvraag %(title)s bewerkt'
 
 
-class ProposalSessionStart(ProposalUpdateView):
-    form_class = SessionStartForm
-    template_name = 'proposals/session_start.html'
-    success_message = ''
-
-
-class ProposalSessionEnd(ProposalUpdateView):
-    form_class = SessionEndForm
-    template_name = 'proposals/session_end.html'
-    success_message = ''
-
-
 class ProposalUploadConsent(ProposalUpdateView):
     form_class = UploadConsentForm
     template_name = 'proposals/proposal_consent.html'
@@ -260,7 +250,70 @@ class StudyUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateWithInlinesView
             return reverse('proposals:my_concepts')
 
 
+# Actions on a Session
+class ProposalSessionStart(ProposalUpdateView):
+    form_class = SessionStartForm
+    template_name = 'proposals/session_start.html'
+    success_message = '%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt'
+
+    def form_valid(self, form):
+        # Create Sessions on save, if they don't exist
+        # TODO: what if sessions_number is less than existing sessions?
+        nr_sessions = form.cleaned_data['sessions_number']
+        proposal = form.instance
+        for n in xrange(nr_sessions):
+            order = n + 1
+            try:
+                session = Session.objects.get(proposal=proposal, order=order)
+            except ObjectDoesNotExist:
+                session = Session(proposal=proposal, order=order)
+                session.save()
+        return super(ProposalSessionStart, self).form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(cleaned_data, title=self.object.title)
+
+
+class ProposalSessionEnd(ProposalUpdateView):
+    form_class = SessionEndForm
+    template_name = 'proposals/session_end.html'
+    success_message = ''
+
+
+class SessionDelete(DeleteView):
+    model = Session
+    success_url = '/proposals/concepts/'
+    success_message = 'Sessie verwijderd'
+
+
 # CRUD actions on a Task
+class TaskStart(UpdateView):
+    model = Session
+    form_class = TaskStartForm
+    template_name = 'proposals/task_start.html'
+    success_message = ''
+
+    def get_success_url(self):
+        if 'save_continue' in self.request.POST:
+            # Go to the task creation for this session
+            return reverse('proposals:task_create', args=(self.object.id,))
+        else:
+            return reverse('proposals:my_concepts')
+
+
+class TaskEnd(UpdateView):
+    model = Session
+    form_class = TaskEndForm
+    template_name = 'proposals/task_end.html'
+    success_message = ''
+
+    def get_success_url(self):
+        if 'save_continue' in self.request.POST:
+            return self.object.proposal.continue_url()
+        else:
+            return reverse('proposals:my_concepts')
+
+
 class TaskCreate(CreateView):
     model = Task
     form_class = TaskForm
@@ -268,22 +321,22 @@ class TaskCreate(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(TaskCreate, self).get_context_data(**kwargs)
-        proposal = Proposal.objects.get(pk=self.kwargs['pk'])
-        task_count = proposal.task_set.count() + 1
-        context['proposal'] = proposal
-        context['save_add_button'] = task_count < proposal.tasks_number
+        session = Session.objects.get(pk=self.kwargs['pk'])
+        task_count = session.task_set.count() + 1
+        context['session'] = session
+        context['save_add_button'] = task_count < session.tasks_number
         context['task_count'] = task_count
         return context
 
     def form_valid(self, form):
-        form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
+        form.instance.session = Session.objects.get(pk=self.kwargs['pk'])
         return super(TaskCreate, self).form_valid(form)
 
     def get_success_url(self):
         if 'save_add' in self.request.POST:
             return reverse('proposals:task_create', args=(self.kwargs['pk'],))
         elif 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
+            return self.object.session.proposal.continue_url()
         else:
             return reverse('proposals:my_concepts')
 
@@ -295,19 +348,19 @@ class TaskUpdate(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(TaskUpdate, self).get_context_data(**kwargs)
-        proposal = Task.objects.get(pk=self.kwargs['pk']).proposal
-        task_count = proposal.task_set.count() + 1
-        context['proposal'] = proposal
-        context['save_add_button'] = task_count < proposal.tasks_number
+        session = Task.objects.get(pk=self.kwargs['pk']).session
+        task_count = session.task_set.count() + 1
+        context['session'] = session
+        context['save_add_button'] = task_count < session.tasks_number
         context['task_count'] = task_count - 1
         return context
 
     def get_success_url(self):
         task = Task.objects.get(pk=self.kwargs['pk'])
         if 'save_add' in self.request.POST:
-            return reverse('proposals:task_create', args=(task.proposal.id,))
+            return reverse('proposals:task_create', args=(task.session.id,))
         elif 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
+            return self.object.session.proposal.continue_url()
         else:
             return reverse('proposals:my_concepts')
 

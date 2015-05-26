@@ -73,39 +73,46 @@ Aanvraag <em>{{ proposal.title }}</em>
 </table>
 {% endif %}
 
-{% if proposal.task_set.all %}
+{% if proposal.session_set.all %}
 <h3>Belasting voor de proefpersoon</h3>
+<p><a href="{% url 'proposals:session_start' proposal.id %}">Aantal sessies wijzigen</a></p>
+{% for session in proposal.session_set.all %}
+<h4>Sessie {{ session.order }}</h4>
+<a href="{% url 'proposals:session_delete' session.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
+{% if session.task_set.all %}
 <table class="pure-table">
     <tr>
         <th>Aantal taken</th>
         <td>
-            {{ proposal.task_set.count }} / {{ proposal.tasks_number }} 
-            <a href="{% url 'proposals:task_start' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-            <a href="{% url 'proposals:task_create' proposal.id %}">Taak toevoegen</a>
+            {{ session.task_set.count }} / {{ session.tasks_number }} 
+            <a href="{% url 'proposals:task_start' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+            {% if session.task_set.count < session.tasks_number %}
+            <a href="{% url 'proposals:task_create' session.id %}">Taak toevoegen</a>
+            {% endif %}
         </td>
     </tr>
     <tr>
         <th>Netto duur</th>
-        <td>{{ proposal.net_duration }} minuten</td>
+        <td>{{ session.net_duration }} minuten</td>
     </tr>
-    {% if proposal.tasks_duration %}
+    {% if session.tasks_duration %}
     <tr>
         <th>Bruto duur</th>
         <td>
-            {{ proposal.tasks_duration }} minuten
-            <a href="{% url 'proposals:task_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+            {{ session.tasks_duration }} minuten
+            <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
         </td>
     </tr>
     <tr>
         <th>Belastend?</th>
         <td>
-            {{ proposal.tasks_stressful|yesno:"ja,nee,twijfel" }}
-            <a href="{% url 'proposals:task_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+            {{ session.tasks_stressful|yesno:"ja,nee,twijfel" }}
+            <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
         </td>
     </tr>
     {% endif %}
 </table>
-<h4>Taken</h4>
+<h5>Taken</h5>
 <table class="dataTable display">
     <thead>
         <tr>
@@ -118,7 +125,7 @@ Aanvraag <em>{{ proposal.title }}</em>
         </tr>
     </thead>
     <tbody>
-        {% for task in proposal.task_set.all %}
+        {% for task in session.task_set.all %}
         <tr>
             <td>{{ task.name }}</td>
             <td>{{ task.duration }}</td>
@@ -133,6 +140,10 @@ Aanvraag <em>{{ proposal.title }}</em>
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+<p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'proposals:task_start' session.id %}">Starten</a></p>
+{% endif %}
+{% endfor %}
 {% endif %}
 
 {% endblock %}

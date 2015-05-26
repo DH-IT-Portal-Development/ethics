@@ -13,18 +13,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Action',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('order', models.PositiveIntegerField(unique=True)),
-                ('description', models.CharField(max_length=200)),
-                ('info_text', models.TextField()),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
             name='AgeGroup',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -93,12 +81,13 @@ class Migration(migrations.Migration):
                 ('tech_summary', models.TextField(verbose_name=b'Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen, en (b) een korte beschrijving van de beoogde methode, d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over proefpersonen, materiaal (taken, stimuli), design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingredi\xc3\xabnten van de methode meer gedetailleerde informatie worden gevraagd.')),
                 ('supervisor_email', models.EmailField(help_text=b'Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.', max_length=75, verbose_name=b'E-mailadres eindverantwoordelijke', blank=True)),
                 ('other_applicants', models.BooleanField(default=False, verbose_name=b'Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?')),
-                ('longitudinal', models.BooleanField(default=False, verbose_name=b'Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen aan een sessie deelnemen? (bijvoorbeeld een longitudinale studie, of een kortlopende studie waar proefpersonen op twee of meer verschillende dagen getest worden)')),
-                ('tasks_number', models.PositiveIntegerField(help_text=b'Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.', null=True, verbose_name=b'Hoeveel taken worden er binnen deze studie bij de proefpersoon afgenomen?')),
-                ('tasks_duration', models.PositiveIntegerField(null=True, verbose_name=b'De totale geschatte netto taakduur van Uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)')),
-                ('tasks_stressful', models.NullBooleanField(verbose_name=b'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de proefpersonen zelf, bij derden)? Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.')),
+                ('longitudinal', models.BooleanField(default=False, verbose_name=b'Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen deelnemen aan een sessie? (bijvoorbeeld een longitudinale studie, of een kortlopende studie waar proefpersonen op twee of meer verschillende dagen getest worden)')),
+                ('sessions_number', models.PositiveIntegerField(help_text=b'Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als \xc3\xa9\xc3\xa9n sessie.', null=True, verbose_name=b'Hoeveel sessies telt deze studie?')),
+                ('sessions_duration', models.PositiveIntegerField(help_text=b'Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.', null=True, verbose_name=b'Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.')),
+                ('sessions_stressful', models.NullBooleanField(default=False, verbose_name=b'Is het totaal van sessies als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de proefpersonen zelf, bij derden)? Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.')),
+                ('sessions_stressful_details', models.CharField(max_length=200, verbose_name=b'Waarom denkt u dat?', blank=True)),
                 ('informed_consent_pdf', models.FileField(upload_to=b'', verbose_name=b'Upload hier de informed consent', blank=True)),
-                ('status', models.PositiveIntegerField(default=1, choices=[(1, b'Algemene informatie ingevuld'), (2, b'WMO: in afwachting beslissing'), (3, b'WMO: afgerond'), (4, b'Kenmerken studie toegevoegd'), (5, b'Belasting proefpersoon: taken toevoegen'), (6, b'Belasting proefpersoon: alle taken toegevoegd'), (7, b'Belasting proefpersoon: afgerond'), (8, b'Informed consent geupload'), (9, b'Opgestuurd')])),
+                ('status', models.PositiveIntegerField(default=1, choices=[(1, b'Algemene informatie ingevuld'), (2, b'WMO: in afwachting beslissing'), (3, b'WMO: afgerond'), (4, b'Kenmerken studie toegevoegd'), (5, b'Belasting proefpersoon: sessies toevoegen'), (6, b'Belasting proefpersoon: taken toevoegen'), (7, b'Belasting proefpersoon: alle taken toegevoegd'), (8, b'Belasting proefpersoon: afgerond'), (9, b'Belasting proefpersoon: afgerond'), (10, b'Informed consent geupload'), (11, b'Opgestuurd')])),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('date_modified', models.DateTimeField(auto_now=True)),
                 ('date_submitted', models.DateTimeField(null=True)),
@@ -144,6 +133,22 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
+            name='Session',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('order', models.PositiveIntegerField(unique=True)),
+                ('stressful', models.NullBooleanField(verbose_name=b'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de proefpersonen zelf, bij derden)? Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.')),
+                ('stressful_details', models.CharField(max_length=200, verbose_name=b'Waarom denkt u dat?', blank=True)),
+                ('tasks_number', models.PositiveIntegerField(help_text=b'Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.', null=True, verbose_name=b'Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?')),
+                ('tasks_duration', models.PositiveIntegerField(null=True, verbose_name=b'De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)')),
+                ('tasks_stressful', models.NullBooleanField(default=False, verbose_name=b'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de proefpersonen zelf, bij derden)? Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.')),
+                ('tasks_stressful_details', models.CharField(max_length=200, verbose_name=b'Waarom denkt u dat?', blank=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='Setting',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -160,11 +165,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('has_traits', models.BooleanField(default=False, verbose_name=b'Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale beledigingen; pati\xc3\xabnten met afasie die een gesprek moeten voeren, ook al gaat het gesprek over alledaagse dingen). Is dit in uw studie bij (een deel van) de proefpersonen het geval?')),
                 ('traits_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
-                ('necessity', models.NullBooleanField(default=True, help_text=b'Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?', verbose_name=b'Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type proefpersonen aan de studie te laten deelnemen?')),
+                ('necessity', models.NullBooleanField(help_text=b'Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?', verbose_name=b'Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type proefpersonen aan de studie te laten deelnemen?')),
                 ('necessity_reason', models.TextField(verbose_name=b'Leg uit waarom', blank=True)),
                 ('setting_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
-                ('risk_physical', models.NullBooleanField(default=False, verbose_name=b'Is de kans dat de proefpersoon fysiek letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?')),
-                ('risk_psychological', models.NullBooleanField(default=False, verbose_name=b'Is de kans dat de proefpersoon psychisch letsel oploopt tijdens het afnemen van het experiment groter dan de kans op letsel in het dagelijks leven?')),
+                ('risk_physical', models.NullBooleanField(default=False, verbose_name=b'Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen van het experiment groter dan de kans op fysieke schade in het dagelijks leven?')),
+                ('risk_psychological', models.NullBooleanField(default=False, verbose_name=b'Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen van het experiment groter dan de kans op psychische schade in het dagelijks leven?')),
                 ('compensation_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
                 ('recruitment_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
                 ('proposal', models.OneToOneField(primary_key=True, serialize=False, to='proposals.Proposal')),
@@ -195,12 +200,13 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=200, verbose_name=b'Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv "lexicale decisietaak")')),
                 ('duration', models.PositiveIntegerField(verbose_name=b'Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.')),
-                ('actions_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
                 ('registrations_details', models.CharField(max_length=200, verbose_name=b'Namelijk', blank=True)),
                 ('feedback', models.BooleanField(default=False, verbose_name=b'Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag of toestand?')),
                 ('feedback_details', models.CharField(max_length=200, verbose_name=b'Van welke aard is deze feedback?', blank=True)),
                 ('stressful', models.NullBooleanField(default=False, verbose_name=b'Is deze taak belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de proefpersonen zelf, bij derden)? Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.')),
-                ('actions', models.ManyToManyField(to='proposals.Action', verbose_name=b'Wat vraag je bij deze taak de proefpersoon te doen?')),
+                ('stressful_details', models.CharField(max_length=200, verbose_name=b'Waarom denkt u dat?', blank=True)),
+                ('registrations', models.ManyToManyField(to='proposals.Registration', verbose_name=b'Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?')),
+                ('session', models.ForeignKey(to='proposals.Session')),
             ],
             options={
             },
@@ -235,21 +241,15 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.AddField(
-            model_name='task',
-            name='proposal',
-            field=models.ForeignKey(to='proposals.Proposal'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
-            model_name='task',
-            name='registrations',
-            field=models.ManyToManyField(to='proposals.Registration', verbose_name=b'Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'),
-            preserve_default=True,
-        ),
-        migrations.AddField(
             model_name='study',
             name='traits',
             field=models.ManyToManyField(to='proposals.Trait', verbose_name=b'Selecteer de bijzondere kenmerken van uw proefpersonen', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='session',
+            name='proposal',
+            field=models.ForeignKey(to='proposals.Proposal'),
             preserve_default=True,
         ),
         migrations.AddField(
@@ -267,7 +267,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='proposal',
             name='parent',
-            field=models.ForeignKey(to='proposals.Proposal', null=True),
+            field=models.ForeignKey(verbose_name=b'Te kopi\xc3\xabren aanvraag', to='proposals.Proposal', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

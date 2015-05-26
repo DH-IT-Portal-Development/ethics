@@ -121,7 +121,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         verbose_name='Te kopiëren aanvraag')
 
     def net_duration(self):
-        return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
+        return self.session_set.aggregate(models.Sum('duration'))['tasks_duration__sum']
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
@@ -144,10 +144,11 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         if self.sessions_number:
             status = self.SESSIONS_STARTED
 
-        #if self.tasks_number:
-        #    status = self.TASKS_STARTED
-        #if self.session_set.count() == self.session_number:
-        #    status = self.TASKS_ADDED
+        for session in self.session_set.all():
+            if session.tasks_number:
+                status = self.TASKS_STARTED
+            if session.task_set.count() == session.tasks_number:
+                status = self.TASKS_ADDED
 
         if self.sessions_duration:
             status = self.SESSIONS_ENDED
@@ -163,12 +164,16 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         if self.status == self.WMO_COMPLETED:
             return reverse('proposals:study_create', args=(self.id,))
         if self.status == self.STUDY_CREATED:
+            return reverse('proposals:session_start', args=(self.id,))
+        if self.status == self.SESSIONS_STARTED:
             return reverse('proposals:task_start', args=(self.id,))
         if self.status == self.TASKS_STARTED:
             return reverse('proposals:task_create', args=(self.id,))
         if self.status == self.TASKS_ADDED:
             return reverse('proposals:task_end', args=(self.id,))
         if self.status == self.TASKS_ENDED:
+            return reverse('proposals:session_end', args=(self.id,))
+        if self.status == self.SESSIONS_ENDED:
             return reverse('proposals:consent', args=(self.id,))
         if self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))
@@ -337,6 +342,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
 
 
 class Session(models.Model):
+    order = models.PositiveIntegerField(unique=True)
     stressful = models.NullBooleanField(
         'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
 ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
@@ -369,6 +375,17 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         'Waarom denkt u dat?',
         max_length=200,
         blank=True)
+
+    # References
+    proposal = models.ForeignKey(Proposal)
+
+    def save(self, *args, **kwargs):
+        """Sets the correct status on Proposal on save of a Session"""
+        super(Session, self).save(*args, **kwargs)
+        self.proposal.save()
+
+    def net_duration(self):
+        return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
 
 class Survey(models.Model):
@@ -423,21 +440,22 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
         max_length=200,
         blank=True)
 
+    # References
+    session = models.ForeignKey(Session)
+
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Task"""
         super(Task, self).save(*args, **kwargs)
-        self.proposal.save()
+        self.session.proposal.save()
 
     def delete(self, *args, **kwargs):
-        """Sets the correct status on Proposal on deletion of a Task"""
-        proposal = self.proposal
-        proposal.tasks_duration = None
-        proposal.tasks_stressful = None
+        """Removes the totals on Session level on deletion of a Task"""
+        session = self.session
+        session.tasks_duration = None
+        session.tasks_stressful = None
+        session.tasks_stressful_details = None
         super(Task, self).delete(*args, **kwargs)
-        proposal.save()
-
-    # References
-    proposal = models.ForeignKey(Proposal)
+        session.save()
 
 
 class Faq(models.Model):

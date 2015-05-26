@@ -7,23 +7,11 @@ Aanvraag indienen: fase 4 van 6
 
 {% block content %} 
 {% include "proposals/form_styling.html" %}
-<script>
-$(function() {
-    depends_on_list_value('actions', '7', 'actions_details');
-    depends_on_list_value('registrations', ['6', '7'], 'registrations_details');
-    depends_on_value('feedback', 'True', 'feedback_details');
-});
-</script>
-<h3>Vragen per taak</h3>
-<p><em>Aantal taken toegevoegd: {{ task_count }} / {{ session.tasks_number }}</em></p>
+<h3>Belasting voor de proefpersoon</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-	<table>{{ form.as_table }}</table>
+    <table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
-    {% if save_add_button %}
-    <input class="pure-button pure-button-primary" type="submit" name="save_add" value="Opslaan en nog een taak aanmaken" />
-    {% else %}
     <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
-    {% endif %}
     <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>
 </form>
 {% endblock %}

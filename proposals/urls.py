@@ -18,8 +18,6 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
     url(r'^(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
 
-    url(r'^task_start/(?P<pk>\d+)/$', ProposalTaskStart.as_view(), name='task_start'),
-    url(r'^task_end/(?P<pk>\d+)/$', ProposalTaskEnd.as_view(), name='task_end'),
     url(r'^consent/(?P<pk>\d+)/$', ProposalUploadConsent.as_view(), name='consent'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
 
@@ -31,7 +29,14 @@ urlpatterns = [
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
     url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
 
+    # Session(s)
+    url(r'^session_start/(?P<pk>\d+)/$', ProposalSessionStart.as_view(), name='session_start'),
+    url(r'^session_end/(?P<pk>\d+)/$', ProposalSessionEnd.as_view(), name='session_end'),
+    url(r'^session/delete/(?P<pk>\d+)/$', SessionDelete.as_view(), name='session_delete'),
+
     # Task(s)
+    url(r'^task/start/(?P<pk>\d+)/$', TaskStart.as_view(), name='task_start'),
+    url(r'^task/end/(?P<pk>\d+)/$', TaskEnd.as_view(), name='task_end'),
     url(r'^task/create/(?P<pk>\d+)/$', TaskCreate.as_view(), name='task_create'),
     url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
     url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view(), name='task_delete'),
