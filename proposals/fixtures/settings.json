@@ -12,7 +12,7 @@
     "fields": {
         "needs_details": true,
         "order": 2,
-        "description": "zorginstelling (wat voor? METC?)"
+        "description": "zorginstelling"
     },
     "model": "proposals.setting",
     "pk": 2
