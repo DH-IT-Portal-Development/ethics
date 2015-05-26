@@ -179,11 +179,13 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             return reverse('proposals:submit', args=(self.id,))
 
     def current_session(self):
+        current_session = None
         for session in self.session_set.all():
             if session.task_set.count() == session.tasks_number:
-                continue
+                current_session = session
             else:
                 return session
+        return current_session
 
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)
@@ -349,7 +351,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?',
 
 
 class Session(models.Model):
-    order = models.PositiveIntegerField(unique=True)
+    order = models.PositiveIntegerField()
     stressful = models.NullBooleanField(
         'Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
 ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
@@ -385,6 +387,10 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     # References
     proposal = models.ForeignKey(Proposal)
+
+    class Meta:
+        ordering = ['order']
+        unique_together = ('proposal', 'order')
 
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Session"""
