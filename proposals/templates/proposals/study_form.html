@@ -32,7 +32,9 @@ $(function() {
         }).get();
         var check = $('input[name=has_traits]:checked').val() == 'True';
         check = check || intersect(values, ['1', '2', '3', '4', '6']).length > 0;
-        $('#id_necessity').parent().parent().toggle(check);
+        var necessity = $('#id_necessity').parent().parent();
+        necessity.toggle(check);
+        necessity.prev().toggle(check); // Toggles header as well 
     });
     $('input[name=has_traits], input[name=age_groups]').change();
 });
