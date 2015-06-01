@@ -3,6 +3,8 @@ def copy_proposal(self, form):
     relation = parent.relation
     applicants = parent.applicants.all()
     copy_wmo = parent.wmo
+    copy_study = parent.study
+    #copy_sessions = parent.session_set.all()
 
     # Create copy and save the this new model
     copy_proposal = parent
@@ -19,5 +21,12 @@ def copy_proposal(self, form):
     # Copy linked models TODO: finish this
     copy_wmo.pk = copy_proposal.pk
     copy_wmo.save()
+
+    copy_study.pk = copy_proposal.pk
+    copy_study.save()
+
+    #copy_proposal.session_set = copy_sessions
+
+    # TODO: copy tasks 
 
     return copy_proposal

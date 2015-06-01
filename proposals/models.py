@@ -181,10 +181,9 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     def current_session(self):
         current_session = None
         for session in self.session_set.all():
-            if session.task_set.count() == session.tasks_number:
-                current_session = session
-            else:
-                return session
+            current_session = session
+            if session.task_set.count() < session.tasks_number:
+                break
         return current_session
 
     def __unicode__(self):
