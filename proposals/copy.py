@@ -1,5 +1,4 @@
-from datetime import datetime
-from .models import Proposal
+from .utils import generate_ref_number
 
 
 def copy_proposal(self, form):
@@ -41,9 +40,3 @@ def copy_proposal(self, form):
     # TODO: copy tasks
 
     return copy_proposal
-
-
-def generate_ref_number(user):
-    current_year = datetime.now().year
-    proposals = Proposal.objects.filter(created_by=user).filter(date_created__year=current_year)
-    return '{}-{:02}-{}'.format(user.username, len(proposals) + 1, current_year)

@@ -16,6 +16,7 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
 from .copy import copy_proposal
+from .utils import generate_ref_number
 
 
 class LoginRequiredMixin(object):
@@ -143,12 +144,6 @@ class ProposalCreate(CreateView):
             return self.object.continue_url()
         else:
             return reverse('proposals:my_concepts')
-
-
-def generate_ref_number(user):
-    current_year = datetime.now().year
-    proposals = Proposal.objects.filter(created_by=user).filter(date_created__year=current_year)
-    return '{}-{:02}-{}'.format(user.username, len(proposals) + 1, current_year)
 
 
 class ProposalCopy(CreateView):
