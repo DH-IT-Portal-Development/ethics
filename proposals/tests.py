@@ -3,12 +3,12 @@ from datetime import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from .models import Proposal, Relation
+from .models import Proposal, Relation, Wmo, Study, Compensation, Session, Task
 from .utils import generate_ref_number
 
 
 class ProposalTestCase(TestCase):
-    fixtures = ['relations']
+    fixtures = ['relations', 'compensations']
 
     def setUp(self):
         self.user = User.objects.create_user(username='test0101', email='test@test.com', password='secret')
@@ -36,3 +36,39 @@ class ProposalTestCase(TestCase):
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
         p3 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2), created_by=user2, relation=self.relation)
         self.assertEqual(p3.reference_number, 'test0102-01-' + current_year)
+
+    def test_status(self):
+        proposal = self.p1
+        self.assertEqual(proposal.status, Proposal.DRAFT)
+
+        wmo = Wmo.objects.create(proposal=proposal, metc=True)
+        self.assertEqual(proposal.status, Proposal.WMO_AWAITING_DECISION)
+        wmo.metc = False
+        wmo.save()
+        self.assertEqual(proposal.status, Proposal.WMO_COMPLETED)
+
+        compensation = Compensation.objects.get(pk=1)
+        Study.objects.create(proposal=proposal, compensation=compensation)
+        self.assertEqual(proposal.status, Proposal.STUDY_CREATED)
+
+        proposal.sessions_number = 2
+        s1 = Session.objects.create(proposal=proposal, order=1)
+        s2 = Session.objects.create(proposal=proposal, order=2)
+        self.assertEqual(proposal.status, Proposal.SESSIONS_STARTED)
+
+        s1.tasks_number = 2
+        s1.save()
+        self.assertEqual(proposal.status, Proposal.TASKS_STARTED)
+
+        s1_t1 = Task.objects.create(session=s1)
+        s1_t2 = Task.objects.create(session=s1)
+        self.assertEqual(proposal.status, Proposal.TASKS_ADDED)
+
+        s1.tasks_duration = 45
+        s1.save()
+        self.assertEqual(proposal.current_session(), s2)
+        self.assertEqual(proposal.status, proposal.TASKS_STARTED)  # TODO: is this correct?
+
+        s1_t1.delete()
+        self.assertEqual(proposal.current_session(), s1)
+        self.assertEqual(proposal.status, proposal.TASKS_STARTED)

@@ -150,10 +150,9 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
         session = self.current_session()
         if session:
+            status = self.SESSIONS_STARTED
             if session.tasks_number:
                 status = self.TASKS_STARTED
-            else:
-                status = self.SESSIONS_STARTED
             if session.task_set.count() == session.tasks_number:
                 status = self.TASKS_ADDED
             if session.tasks_duration:

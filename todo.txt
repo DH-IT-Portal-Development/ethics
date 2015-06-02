@@ -33,7 +33,7 @@ TODO:
 v check netto duur vs bruto duur
 - kopieren bestaande aanvraag
 - opsplitsen website/proposals
-- testcases
+v testcases
 - AUTH: niet meer bewerken als verzonden
 v AUTH: alleen eigen proposals aanpassen
 - STUDY: surveys-vraag toevoegen
