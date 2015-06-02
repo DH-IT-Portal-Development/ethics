@@ -149,7 +149,6 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             status = self.SESSIONS_STARTED
 
         session = self.current_session()
-        print session
         if session:
             if session.tasks_number:
                 status = self.TASKS_STARTED
@@ -168,8 +167,6 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     def continue_url(self):
         session = self.current_session()
-        print session
-
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.id,))
         if self.status == self.WMO_AWAITING_DECISION:
