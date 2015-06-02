@@ -42,14 +42,14 @@ v AUTH: alleen eigen proposals aanpassen
 - AUTH: Solis-login
 - AUTH: selectie uit Solis-IDs
 v Annuleren-knop: "later verder" 
-- Referentienummer aanmaken (USERID-nr-jaar, direct bij aanmaken)
+v Referentienummer aanmaken (USERID-nr-jaar, direct bij aanmaken)
 - Uitvoer naar PDF
 - Status laten zien
+- TASKS: Aan Sessie hangen
+- TASKS: Sessie-gedeelte inbouwen
 
 Input commissie nodig:
 - Woordenboek van definities? 
-- TASKS: Sessie-gedeelte inbouwen
-- TASKS: Aan Sessie hangen
 - Inregelen e-mails eindverantwoordelijke
 - WMO: success messages
 - WMO: afhandeling regelen (aparte flow, niet langs commissie voor go/no-go)

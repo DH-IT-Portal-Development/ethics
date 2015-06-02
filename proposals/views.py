@@ -9,6 +9,7 @@ from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
+from datetime import datetime
 
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
@@ -127,6 +128,7 @@ class ProposalCreate(CreateView):
     def form_valid(self, form):
         """Set created_by to current user"""
         form.instance.created_by = self.request.user
+        form.instance.reference_number = generate_ref_number(self.request.user)
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -141,6 +143,12 @@ class ProposalCreate(CreateView):
             return self.object.continue_url()
         else:
             return reverse('proposals:my_concepts')
+
+
+def generate_ref_number(user):
+    current_year = datetime.now().year
+    proposals = Proposal.objects.filter(created_by=user).filter(date_created__year=current_year)
+    return '{}-{:02}-{}'.format(user.username, len(proposals) + 1, current_year)
 
 
 class ProposalCopy(CreateView):

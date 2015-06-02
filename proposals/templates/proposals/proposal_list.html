@@ -35,6 +35,7 @@
 <table class="dataTable display">
     <thead>
         <tr>
+            <th>Referentienummer</th>
             <th>Titel studie</th>
             <th>Status</th>
             <th>Laatst bijgewerkt</th>
@@ -44,6 +45,7 @@
     <tbody>
         {% for proposal in proposals %}
         <tr>
+            <td>{{ proposal.reference_number }}</td>
             <td>{{ proposal.title }}</td>
             <td>{{ proposal.get_status_display }}</td>
             <td>{{ proposal.date_modified|date:"j M Y, G:i" }}</td>

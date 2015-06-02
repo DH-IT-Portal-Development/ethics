@@ -42,6 +42,9 @@ class Proposal(models.Model):
     )
 
     # Fields of a proposal
+    reference_number = models.CharField(
+        max_length=16,
+        unique=True)
     title = models.CharField(
         'Wat is de titel van uw studie?',
         max_length=200,
