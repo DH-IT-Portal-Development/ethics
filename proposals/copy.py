@@ -1,14 +1,23 @@
+from datetime import datetime
+from .models import Proposal
+
+
 def copy_proposal(self, form):
     parent = form.cleaned_data['parent']
     relation = parent.relation
     applicants = parent.applicants.all()
-    copy_wmo = parent.wmo
-    copy_study = parent.study
+    copy_wmo = None
+    copy_study = None
+    if hasattr(self, 'wmo'):
+        copy_wmo = parent.wmo
+    if hasattr(self, 'study'):
+        copy_study = parent.study
     #copy_sessions = parent.session_set.all()
 
     # Create copy and save the this new model
     copy_proposal = parent
     copy_proposal.pk = None
+    copy_proposal.reference_number = generate_ref_number(self.request.user)
     copy_proposal.title = 'Kopie van %s' % copy_proposal.title
     copy_proposal.created_by = self.request.user
     copy_proposal.save()
@@ -19,14 +28,22 @@ def copy_proposal(self, form):
     copy_proposal.parent = parent
 
     # Copy linked models TODO: finish this
-    copy_wmo.pk = copy_proposal.pk
-    copy_wmo.save()
+    if copy_wmo:
+        copy_wmo.pk = copy_proposal.pk
+        copy_wmo.save()
 
-    copy_study.pk = copy_proposal.pk
-    copy_study.save()
+    if copy_study:
+        copy_study.pk = copy_proposal.pk
+        copy_study.save()
 
     #copy_proposal.session_set = copy_sessions
 
-    # TODO: copy tasks 
+    # TODO: copy tasks
 
     return copy_proposal
+
+
+def generate_ref_number(user):
+    current_year = datetime.now().year
+    proposals = Proposal.objects.filter(created_by=user).filter(date_created__year=current_year)
+    return '{}-{:02}-{}'.format(user.username, len(proposals) + 1, current_year)
