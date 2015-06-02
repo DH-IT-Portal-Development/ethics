@@ -13,6 +13,6 @@ Aanvraag ter beoordeling en registratie
     <table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
     <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Terug naar hoofdmenu</a>
+    <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>
 </form>
 {% endblock %}
