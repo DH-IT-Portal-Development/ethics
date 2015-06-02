@@ -148,11 +148,17 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         if self.sessions_number:
             status = self.SESSIONS_STARTED
 
-        for session in self.session_set.all():
+        session = self.current_session()
+        print session
+        if session:
             if session.tasks_number:
                 status = self.TASKS_STARTED
+            else:
+                status = self.SESSIONS_STARTED
             if session.task_set.count() == session.tasks_number:
                 status = self.TASKS_ADDED
+            if session.tasks_duration:
+                status = self.TASKS_ENDED
 
         if self.sessions_duration:
             status = self.SESSIONS_ENDED
@@ -162,6 +168,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     def continue_url(self):
         session = self.current_session()
+        print session
+
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.id,))
         if self.status == self.WMO_AWAITING_DECISION:
@@ -188,7 +196,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         current_session = None
         for session in self.session_set.all():
             current_session = session
-            if not session.tasks_number or session.task_set.count() < session.tasks_number:
+            if not session.tasks_duration:
                 break
         return current_session
 
@@ -394,7 +402,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     proposal = models.ForeignKey(Proposal)
 
     class Meta:
-        ordering = ['-order']
+        ordering = ['order']
         unique_together = ('proposal', 'order')
 
     def save(self, *args, **kwargs):
@@ -404,6 +412,9 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
+
+    def __unicode__(self):
+        return 'Sessie {}'.format(self.order)
 
 
 class Survey(models.Model):
@@ -473,7 +484,7 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
         session = self.session
         session.tasks_duration = None
         session.tasks_stressful = None
-        session.tasks_stressful_details = None
+        session.tasks_stressful_details = ''
         super(Task, self).delete(*args, **kwargs)
         session.save()
 

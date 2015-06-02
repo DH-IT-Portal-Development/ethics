@@ -164,7 +164,7 @@ class TaskEndForm(forms.ModelForm):
         tasks_duration = cleaned_data.get('tasks_duration')
         net_duration = self.instance.net_duration()
         if tasks_duration < net_duration:
-            error = forms.ValidationError('Totale taakduur moet minstens gelijk zijn aan netto taakduur.', code='comparison')
+            error = forms.ValidationError('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.', code='comparison')
             self.add_error('tasks_duration', error)
 
 
@@ -178,12 +178,12 @@ class SessionEndForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """Set the sessions_duration and sessions_stressful fields as required"""
-        super(TaskEndForm, self).__init__(*args, **kwargs)
+        super(SessionEndForm, self).__init__(*args, **kwargs)
 
         sessions_duration = self.fields['sessions_duration']
         sessions_duration.required = True
-        label = sessions_duration.label % self.instance.net_duration()
-        sessions_duration.label = mark_safe(label)
+        #label = sessions_duration.label % self.instance.net_duration()
+        #sessions_duration.label = mark_safe(label)
 
         self.fields['sessions_stressful'].required = True
 
@@ -191,12 +191,12 @@ class SessionEndForm(forms.ModelForm):
         """
         Check that the net duration is at least equal to the gross duration
         """
-        cleaned_data = super(TaskEndForm, self).clean()
+        cleaned_data = super(SessionEndForm, self).clean()
 
         sessions_duration = cleaned_data.get('sessions_duration')
         net_duration = self.instance.net_duration()
         if sessions_duration < net_duration:
-            error = forms.ValidationError('Totale taakduur moet minstens gelijk zijn aan netto taakduur.', code='comparison')
+            error = forms.ValidationError('Totale studieduur moet minstens gelijk zijn aan netto studieduur.', code='comparison')
             self.add_error('sessions_duration', error)
 
 
