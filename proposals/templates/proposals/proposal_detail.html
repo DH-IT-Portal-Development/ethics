@@ -127,10 +127,10 @@ Aanvraag <em>{{ proposal.title }}</em>
         </table>
         <div id="accordion">
             {% for session in proposal.session_set.all %}
-            <h4>
+            <h3>
                 Sessie {{ session.order }}
                 <a href="{% url 'proposals:session_delete' session.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
-            </h4>
+            </h3>
             <div>
                 {% if session.task_set.all %}
                 <table class="pure-table">
@@ -165,7 +165,7 @@ Aanvraag <em>{{ proposal.title }}</em>
                     </tr>
                     {% endif %}
                 </table>
-                <h5>Taken</h5>
+                <h4>Taken</h4>
                 <table class="dataTable display">
                     <thead>
                         <tr>
@@ -193,15 +193,13 @@ Aanvraag <em>{{ proposal.title }}</em>
                         {% endfor %}
                     </tbody>
                 </table>
+                {% else %}
+                <p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'proposals:task_start' session.id %}">Taak toevoegen</a></p>
+                {% endif %}
             </div>
-            {% else %}
-            <p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'proposals:task_start' session.id %}">Starten</a></p>
-            {% endif %}
         {% endfor %}
         </div>
         {% endif %}
     </div>
 </div>
-
-
 {% endblock %}

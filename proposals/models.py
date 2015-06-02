@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.core.validators import MinValueValidator
 
 
 class Relation(models.Model):
@@ -157,6 +158,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         return status
 
     def continue_url(self):
+        session = self.current_session()
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.id,))
         if self.status == self.WMO_AWAITING_DECISION:
@@ -165,12 +167,13 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             return reverse('proposals:study_create', args=(self.id,))
         if self.status == self.STUDY_CREATED:
             return reverse('proposals:session_start', args=(self.id,))
-        if self.status == self.SESSIONS_STARTED:
-            return reverse('proposals:task_start', args=(self.current_session().id,))
-        if self.status == self.TASKS_STARTED:
-            return reverse('proposals:task_create', args=(self.current_session().id,))
-        if self.status == self.TASKS_ADDED:
-            return reverse('proposals:task_end', args=(self.current_session().id,))
+        if session:
+            if self.status == self.SESSIONS_STARTED:
+                return reverse('proposals:task_start', args=(session.id,))
+            if self.status == self.TASKS_STARTED:
+                return reverse('proposals:task_create', args=(session.id,))
+            if self.status == self.TASKS_ADDED:
+                return reverse('proposals:task_end', args=(session.id,))
         if self.status == self.TASKS_ENDED:
             return reverse('proposals:session_end', args=(self.id,))
         if self.status == self.SESSIONS_ENDED:
@@ -182,7 +185,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         current_session = None
         for session in self.session_set.all():
             current_session = session
-            if session.task_set.count() < session.tasks_number:
+            if not session.tasks_number or session.task_set.count() < session.tasks_number:
                 break
         return current_session
 
@@ -388,7 +391,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     proposal = models.ForeignKey(Proposal)
 
     class Meta:
-        ordering = ['order']
+        ordering = ['-order']
         unique_together = ('proposal', 'order')
 
     def save(self, *args, **kwargs):
@@ -424,7 +427,9 @@ class Task(models.Model):
         max_length=200)
     duration = models.PositiveIntegerField(
         'Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
-Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.')
+Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.',
+        default=0,
+        validators=[MinValueValidator(1)])
     registrations = models.ManyToManyField(
         Registration,
         verbose_name='Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?')
