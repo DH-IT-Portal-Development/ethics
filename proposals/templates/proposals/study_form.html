@@ -10,9 +10,7 @@ Aanvraag ter beoordeling en registratie
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
-    depends_on_value('has_traits', 'True', 'traits_details');
     depends_on_list_value('traits', '10', 'traits_details');
-    depends_on_value('necessity', 'True', 'necessity_reason');
     depends_on_list_value('setting', '8', 'setting_details');
     depends_on_list_value('compensation', ['2', '3'], 'compensation_details');
     depends_on_list_value('recruitment', '7', 'recruitment_details');
@@ -35,6 +33,9 @@ $(function() {
         var necessity = $('#id_necessity').parent().parent();
         necessity.toggle(check);
         necessity.prev().toggle(check); // Toggles header as well 
+        var necessity_reason = $('#id_necessity_reason').parent().parent();
+        necessity_reason.toggle(check);
+        necessity_reason.prev().toggle(check); // Toggles header as well 
     });
     $('input[name=has_traits], input[name=age_groups]').change();
 });
