@@ -47,6 +47,7 @@ v Referentienummer aanmaken (USERID-nr-jaar, direct bij aanmaken)
 - Status laten zien
 v TASKS: Aan Sessie hangen
 v TASKS: Sessie-gedeelte inbouwen
+- Terug-knop in forms verhinderen of juist inbouwen
 
 Input commissie nodig:
 - Woordenboek van definities? 

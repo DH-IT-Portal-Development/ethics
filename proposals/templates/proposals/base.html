@@ -42,7 +42,9 @@
             </ul>
         {% endif %}
         </div>
+        {% block notitle %}
         <h2>{% block title %}{% endblock %}</h2>
+        {% endblock %}
         {% block content %}
         {% endblock %}
     </div>

@@ -1,11 +1,12 @@
 from django import forms
 from django.forms.models import inlineformset_factory
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from .models import Proposal, Wmo, Study, Session, Task
 
-yes_no = [(True, "ja"), (False, "nee")]
-yes_no_doubt = [(True, "ja"), (False, "nee"), (None, "twijfel")]
+yes_no = [(True, _('ja')), (False, _('nee'))]
+yes_no_doubt = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
 
 
 class ProposalForm(forms.ModelForm):
@@ -18,6 +19,11 @@ class ProposalForm(forms.ModelForm):
             'other_applicants': forms.RadioSelect(choices=yes_no),
             'longitudinal': forms.RadioSelect(choices=yes_no),
         }
+        error_messages = {
+            'title': {
+                'unique': _('Er bestaat al een studie met deze titel.'),
+            },
+        }
 
     def __init__(self, *args, **kwargs):
         """Remove empty label from relation field"""
@@ -29,14 +35,20 @@ class ProposalForm(forms.ModelForm):
         Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor_email is set
         - TODO: If other_applicants is checked, make sure applicants are set
+        - Maximum number of words for tech_summary (TODO: magic number)
         """
         cleaned_data = super(ProposalForm, self).clean()
         relation = cleaned_data.get('relation')
         supervisor_email = cleaned_data.get('supervisor_email')
+        tech_summary = cleaned_data.get('tech_summary')
 
         if relation and relation.needs_supervisor and not supervisor_email:
-            error = forms.ValidationError('U dient een eindverantwoordelijke op te geven.', code='required')
+            error = forms.ValidationError(_('U dient een eindverantwoordelijke op te geven.'), code='required')
             self.add_error('supervisor_email', error)
+
+        if len(tech_summary.split()) > 600:
+            error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
+            self.add_error('tech_summary', error)
 
 
 class ProposalCopyForm(forms.ModelForm):
@@ -68,7 +80,7 @@ class WmoForm(forms.ModelForm):
         metc_institution = cleaned_data.get('metc_institution')
 
         if metc and not metc_institution:
-            error = forms.ValidationError('U dient een instelling op te geven.', code='required')
+            error = forms.ValidationError(_('U dient een instelling op te geven.'), code='required')
             self.add_error('metc_institution', error)
 
 
@@ -164,7 +176,7 @@ class TaskEndForm(forms.ModelForm):
         tasks_duration = cleaned_data.get('tasks_duration')
         net_duration = self.instance.net_duration()
         if tasks_duration < net_duration:
-            error = forms.ValidationError('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.', code='comparison')
+            error = forms.ValidationError(_('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.'), code='comparison')
             self.add_error('tasks_duration', error)
 
 
@@ -196,7 +208,7 @@ class SessionEndForm(forms.ModelForm):
         sessions_duration = cleaned_data.get('sessions_duration')
         net_duration = self.instance.net_duration()
         if sessions_duration < net_duration:
-            error = forms.ValidationError('Totale studieduur moet minstens gelijk zijn aan netto studieduur.', code='comparison')
+            error = forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
             self.add_error('sessions_duration', error)
 
 

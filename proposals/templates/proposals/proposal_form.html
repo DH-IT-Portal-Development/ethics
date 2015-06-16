@@ -1,8 +1,7 @@
 {% extends "proposals/base.html" %}
 {% load staticfiles %}
 
-{% block title %} 
-Aanvraag ter beoordeling en registratie
+{% block notitle %} 
 {% endblock %} 
 
 {% block content %} 
@@ -24,7 +23,7 @@ $(function() {
     Onder de term <strong>sessie</strong> verstaat de ETCL het volgende: het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een proefpersoon vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de proefpersoon ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes.  
 </p>
 {% endif %}
-<h3>Algemene informatie</h3>
+<h3>Algemene vragen over de studie</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     <p>
