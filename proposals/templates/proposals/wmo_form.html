@@ -26,7 +26,7 @@ $(function() {
     });
     $("input[name=metc]").change();
 
-    depends_on_value('is_medical', 'True', 'is_behavioristic');
+    depends_on_list_value('is_medical', ['True', 'None'], 'is_behavioristic');
 
     $("#id_metc, #id_is_medical, #id_is_behavioristic").change(function() {
         var metc = $('#id_metc_0:checked').val() == "True";
