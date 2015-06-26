@@ -139,7 +139,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'duration', 'registrations', 'registrations_details',
-                  'feedback', 'feedback_details', 'stressful', 'stressful_details']
+                  'feedback', 'feedback_details', 'stressful']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'registrations': forms.CheckboxSelectMultiple(),
@@ -194,8 +194,8 @@ class SessionEndForm(forms.ModelForm):
 
         sessions_duration = self.fields['sessions_duration']
         sessions_duration.required = True
-        #label = sessions_duration.label % self.instance.net_duration()
-        #sessions_duration.label = mark_safe(label)
+        label = sessions_duration.label % self.instance.net_duration()
+        sessions_duration.label = mark_safe(label)
 
         self.fields['sessions_stressful'].required = True
 

@@ -79,7 +79,8 @@ een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen 
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.')
     sessions_duration = models.PositiveIntegerField(
-        'Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.',
+        'De totale geschatte netto studieduur van uw sessie komt op basis van uw opgave per sessie uit op <strong>%d minuten</strong>. \
+Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.',
         null=True,
         help_text='Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.')
     sessions_stressful = models.NullBooleanField(
@@ -201,6 +202,15 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
 
 class Wmo(models.Model):
+    NO_WMO = 0
+    WAITING = 1
+    JUDGED = 2
+    WMO_STATUSES = (
+        (NO_WMO, 'Geen beoordeling door METC noodzakelijk'),
+        (WAITING, 'In afwachting beslissing METC'),
+        (JUDGED, 'Beslissing METC geüpload'),
+    )
+
     metc = models.NullBooleanField(
         'Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?')
     metc_institution = models.CharField(
@@ -224,25 +234,29 @@ class Wmo(models.Model):
         'Upload hier de beslissing van het METC',
         blank=True)
 
+    # Status
+    status = models.PositiveIntegerField(choices=WMO_STATUSES, default=NO_WMO)
+
     # References
     proposal = models.OneToOneField(Proposal, primary_key=True)
 
     def save(self, *args, **kwargs):
-        """Sets the correct status on save of a Proposal"""
+        """Sets the correct status on save of a WMO"""
         super(Wmo, self).save(*args, **kwargs)
+        self.update_status()
         self.proposal.save()
 
-    def status(self):
+    def update_status(self):
         if self.metc or (self.is_medical and self.is_behavioristic):
             if not self.metc_decision:
-                return 'In afwachting beslissing METC.'
+                self.status = self.WAITING
             if self.metc_decision and self.metc_decision_pdf:
-                return 'Beslissing METC geüpload.'
+                self.status = self.JUDGED
         else:
-            return 'Geen beoordeling door METC noodzakelijk.'
+            self.status = self.NO_WMO
 
     def __unicode__(self):
-        return 'Wmo %s' % self.proposal.title
+        return 'WMO %s, status %s' % (self.proposal.title, self.status)
 
 
 class AgeGroup(models.Model):

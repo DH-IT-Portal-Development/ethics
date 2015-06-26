@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from .models import Proposal, Relation, Wmo, Study, Compensation, Session, Task
 from .utils import generate_ref_number
@@ -67,8 +68,32 @@ class ProposalTestCase(TestCase):
         s1.tasks_duration = 45
         s1.save()
         self.assertEqual(proposal.current_session(), s2)
-        self.assertEqual(proposal.status, proposal.TASKS_STARTED)  # TODO: is this correct?
+        self.assertEqual(proposal.status, proposal.SESSIONS_STARTED)
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)
         self.assertEqual(proposal.status, proposal.TASKS_STARTED)
+
+
+class WmoTestCase(ProposalTestCase):
+    def setUp(self):
+        super(WmoTestCase, self).setUp()
+        self.wmo = Wmo.objects.create(proposal=self.p1, metc=False)
+
+    def test_status(self):
+        self.assertEqual(self.wmo.status, Wmo.NO_WMO)
+
+        self.wmo.metc = True
+        self.wmo.save()
+
+        self.assertEqual(self.wmo.status, Wmo.WAITING)
+
+        self.wmo.metc_decision = True
+        self.wmo.save()
+
+        self.assertEqual(self.wmo.status, Wmo.WAITING)
+
+        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', 'contents')
+        self.wmo.save()
+
+        self.assertEqual(self.wmo.status, Wmo.JUDGED)
