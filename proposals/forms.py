@@ -18,6 +18,7 @@ class ProposalForm(forms.ModelForm):
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=yes_no),
             'longitudinal': forms.RadioSelect(choices=yes_no),
+            'tech_summary': forms.Textarea(attrs={'rows': 30, 'cols': 80})
         }
         error_messages = {
             'title': {

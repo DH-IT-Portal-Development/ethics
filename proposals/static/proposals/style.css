@@ -10,16 +10,21 @@ body {
 }
 
 #content {
-    margin: 5px;
-    padding: 10px;
+    margin: .5em;
+    padding: 1em;
     background: none repeat scroll 0% 0% rgb(255, 255, 255);
 }
 
 .pure-menu-custom { 
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4); 
-    margin-bottom: 10px;
+    box-shadow: 0 .25em .5em rgba(0, 0, 0, 0.4); 
+    margin-bottom: 2.5em;
 }
 
+#title {
+    color: gray;
+}
+
+/* Form specifics */
 .form-errors {
     color: red;
 }
@@ -40,7 +45,10 @@ form th {
     color: red;
 }
 
-.dataTable td { text-align: center; }
+/* Datatables */
+.dataTable td { 
+    text-align: center; 
+}
 
 /* No bullet for list items in tables */
 td li {

@@ -32,7 +32,6 @@ v Knoppen terug naar hoofdmenu en gelijk verder
 TODO: 
 v check netto duur vs bruto duur
 - kopieren bestaande aanvraag
-- opsplitsen website/proposals
 v testcases
 - AUTH: niet meer bewerken als verzonden
 v AUTH: alleen eigen proposals aanpassen
