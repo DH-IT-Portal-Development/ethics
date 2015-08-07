@@ -7,9 +7,9 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
+from django.utils.translation import ugettext_lazy as _
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
-from datetime import datetime
 
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
@@ -120,7 +120,7 @@ class DetailView(LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
 class ProposalCreate(CreateView):
     model = Proposal
     form_class = ProposalForm
-    success_message = 'Conceptaanvraag %(title)s aangemaakt'
+    success_message = _('Conceptaanvraag %(title)s aangemaakt')
 
     def get_initial(self):
         """Set initial applicant to current user"""
@@ -149,7 +149,7 @@ class ProposalCreate(CreateView):
 class ProposalCopy(CreateView):
     model = Proposal
     form_class = ProposalCopyForm
-    success_message = 'Aanvraag gekopiëerd'
+    success_message = _('Aanvraag gekopiëerd')
     success_url = '/proposals/concepts/'
     template_name = 'proposals/proposal_copy.html'
 
@@ -171,19 +171,19 @@ class ProposalUpdateView(UpdateView):
 
 class ProposalUpdate(ProposalUpdateView):
     form_class = ProposalForm
-    success_message = 'Conceptaanvraag %(title)s bewerkt'
+    success_message = _('Conceptaanvraag %(title)s bewerkt')
 
 
 class ProposalUploadConsent(ProposalUpdateView):
     form_class = UploadConsentForm
     template_name = 'proposals/proposal_consent.html'
-    success_message = 'Informed consent geupload'
+    success_message = _('Informed consent geupload')
 
 
 class ProposalSubmit(ProposalUpdateView):
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
-    success_message = 'Aanvraag verzonden'
+    success_message = _('Aanvraag verzonden')
     # TODO: set date_submitted on form submit
     # TODO: send e-mail to supervisor on form submit
 
@@ -191,14 +191,14 @@ class ProposalSubmit(ProposalUpdateView):
 class ProposalDelete(DeleteView):
     model = Proposal
     success_url = '/proposals/concepts/'
-    success_message = 'Aanvraag verwijderd'
+    success_message = _('Aanvraag verwijderd')
 
 
 # CRUD actions on Wmo
 class WmoCreate(CreateView):
     model = Wmo
     form_class = WmoForm
-    success_message = 'WMO-gegevens opgeslagen'
+    success_message = _('WMO-gegevens opgeslagen')
 
     def form_valid(self, form):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
@@ -214,7 +214,7 @@ class WmoCreate(CreateView):
 class WmoUpdate(UpdateView):
     model = Wmo
     form_class = WmoForm
-    success_message = 'WMO-gegevens bewerkt'
+    success_message = _('WMO-gegevens bewerkt')
 
     def get_success_url(self):
         if 'save_continue' in self.request.POST:
@@ -227,7 +227,7 @@ class WmoUpdate(UpdateView):
 class StudyCreate(CreateView):
     model = Study
     form_class = StudyForm
-    success_message = 'Algemene kenmerken opgeslagen'
+    success_message = _('Algemene kenmerken opgeslagen')
 
     def form_valid(self, form):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
@@ -244,7 +244,7 @@ class StudyUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateWithInlinesView
     model = Study
     form_class = StudyForm
     inlines = [SurveysInline]
-    success_message = 'Algemene kenmerken bewerkt'
+    success_message = _('Algemene kenmerken bewerkt')
 
     def get_success_url(self):
         if 'save_continue' in self.request.POST:
@@ -257,7 +257,7 @@ class StudyUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateWithInlinesView
 class ProposalSessionStart(ProposalUpdateView):
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
-    success_message = '%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt'
+    success_message = _('%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt')
 
     def form_valid(self, form):
         # Create Sessions on save, if they don't exist
@@ -286,7 +286,7 @@ class ProposalSessionEnd(ProposalUpdateView):
 class SessionDelete(DeleteView):
     model = Session
     success_url = '/proposals/concepts/'
-    success_message = 'Sessie verwijderd'
+    success_message = _('Sessie verwijderd')
 
 
 # CRUD actions on a Task
@@ -320,7 +320,7 @@ class TaskEnd(UpdateView):
 class TaskCreate(CreateView):
     model = Task
     form_class = TaskForm
-    success_message = 'Taak opgeslagen'
+    success_message = _('Taak opgeslagen')
 
     def get_context_data(self, **kwargs):
         context = super(TaskCreate, self).get_context_data(**kwargs)
@@ -347,7 +347,7 @@ class TaskCreate(CreateView):
 class TaskUpdate(UpdateView):
     model = Task
     form_class = TaskForm
-    success_message = 'Taak bewerkt'
+    success_message = _('Taak bewerkt')
 
     def get_context_data(self, **kwargs):
         context = super(TaskUpdate, self).get_context_data(**kwargs)
@@ -371,7 +371,7 @@ class TaskUpdate(UpdateView):
 class TaskDelete(DeleteView):
     model = Task
     success_url = '/proposals/concepts/'
-    success_message = 'Taak verwijderd'
+    success_message = _('Taak verwijderd')
 
 
 # Home view

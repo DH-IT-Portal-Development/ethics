@@ -34,19 +34,25 @@ class ProposalForm(forms.ModelForm):
         """
         Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor_email is set
-        - TODO: If other_applicants is checked, make sure applicants are set
+        - If other_applicants is checked, make sure applicants are set
         - Maximum number of words for tech_summary (TODO: magic number)
         """
         cleaned_data = super(ProposalForm, self).clean()
         relation = cleaned_data.get('relation')
         supervisor_email = cleaned_data.get('supervisor_email')
+        other_applicants = cleaned_data.get('other_applicants')
+        applicants = cleaned_data.get('applicants')
         tech_summary = cleaned_data.get('tech_summary')
 
         if relation and relation.needs_supervisor and not supervisor_email:
             error = forms.ValidationError(_('U dient een eindverantwoordelijke op te geven.'), code='required')
             self.add_error('supervisor_email', error)
 
-        if len(tech_summary.split()) > 600:
+        if other_applicants and len(applicants) == 1:
+            error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
+            self.add_error('applicants', error)
+
+        if tech_summary and len(tech_summary.split()) > 600:
             error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
             self.add_error('tech_summary', error)
 
