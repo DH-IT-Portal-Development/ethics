@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %} 
-Aanvraag ter beoordeling en registratie
+Vragen per taak per sessie
 {% endblock %} 
 
 {% block content %} 
@@ -14,8 +14,7 @@ $(function() {
     depends_on_value('feedback', 'True', 'feedback_details');
 });
 </script>
-<h3>Vragen per taak per sessie</h3>
-<h4>Sessie {{ session.order }}</h4>
+<h3>Sessie {{ session.order }}, taak {{ task_count }}</h3>
 <p><em>Aantal taken toegevoegd: {{ task_count }} / {{ session.tasks_number }}</em></p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table>{{ form.as_table }}</table>
