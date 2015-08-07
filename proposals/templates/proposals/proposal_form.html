@@ -11,15 +11,15 @@ $(function() {
     depends_on_list_value('relation', ['1', '2', '3', '4'], 'supervisor_email');
     depends_on_value('other_applicants', 'True', 'applicants');
 
-    // Adds a running wordcount to the technical summary
+    // Adds a running word count to the technical summary
     var summary = $("#id_tech_summary");
     summary.after("<span id='wordcount' />");
     summary[0].addEventListener("input", function() {
-        var wordcount = 0; 
+        var wordCount = 0; 
         if (this.value.trim()) {
-            wordcount = this.value.match(/\S+/g).length;
+            wordCount = this.value.match(/\S+/g).length;
         }
-        $("#wordcount").text(" Aantal woorden: " + wordcount); 
+        $("#wordcount").text(" Aantal woorden: " + wordCount); 
         }, false);
     });
 </script>
