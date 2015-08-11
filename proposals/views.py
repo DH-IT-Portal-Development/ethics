@@ -29,6 +29,7 @@ class LoginRequiredMixin(object):
 
 class UserAllowedMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
+        """Checks whether the current User is in the applicants of a Proposal."""
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
         applicants = []
@@ -41,6 +42,7 @@ class UserAllowedMixin(SingleObjectMixin):
 
         if self.request.user not in applicants:
             raise PermissionDenied
+
         return obj
 
 
@@ -50,12 +52,12 @@ class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
 
 
 class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
-    """Generic update view including success message and login required mixins"""
+    """Generic update view including success message, user allowed and login required mixins"""
     pass
 
 
 class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
-    """Generic delete view including login required mixin and alternative for success message"""
+    """Generic delete view including login required and user allowed mixin and alternative for success message"""
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(DeleteView, self).delete(request, *args, **kwargs)
@@ -227,13 +229,15 @@ class WmoUpdate(UpdateView):
 
 
 # CRUD actions on a Study
-class StudyCreate(SuccessMessageMixin, LoginRequiredMixin, CreateWithInlinesView):
+# TODO: no success message: https://github.com/AndrewIngram/django-extra-views/issues/59
+class StudyCreate(LoginRequiredMixin, CreateWithInlinesView):
+    """Creates a Study from a StudyForm, with Surveys inlined."""
     model = Study
     form_class = StudyForm
     inlines = [SurveysInline]
-    success_message = _('Algemene kenmerken opgeslagen')
 
     def forms_valid(self, form, inlines):
+        """Sets the Proposal on the Study before starting validation."""
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(StudyCreate, self).forms_valid(form, inlines)
 
@@ -244,11 +248,11 @@ class StudyCreate(SuccessMessageMixin, LoginRequiredMixin, CreateWithInlinesView
             return reverse('proposals:my_concepts')
 
 
-class StudyUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateWithInlinesView):
+class StudyUpdate(LoginRequiredMixin, UpdateWithInlinesView):
+    """Updates a Study from a StudyForm, with Surveys inlined."""
     model = Study
     form_class = StudyForm
     inlines = [SurveysInline]
-    success_message = _('Algemene kenmerken bewerkt')
 
     def get_success_url(self):
         if 'save_continue' in self.request.POST:
