@@ -17,8 +17,8 @@ class Relation(models.Model):
 
 class Proposal(models.Model):
     DRAFT = 1
-    WMO_AWAITING_DECISION = 2
-    WMO_COMPLETED = 3
+    WMO_DECISION_BY_ETCL = 2
+    WMO_DECISION_BY_METC = 3
     STUDY_CREATED = 4
     SESSIONS_STARTED = 5
     TASKS_STARTED = 6
@@ -26,19 +26,24 @@ class Proposal(models.Model):
     TASKS_ENDED = 8
     SESSIONS_ENDED = 9
     INFORMED_CONSENT_UPLOADED = 10
-    SUBMITTED = 11
+    SUBMITTED = 50
+    DECISION_MADE = 55
+    WMO_DECISION_MADE = 60
     STATUSES = (
         (DRAFT, 'Algemene informatie ingevuld'),
-        (WMO_AWAITING_DECISION, 'WMO: in afwachting beslissing'),
-        (WMO_COMPLETED, 'WMO: afgerond'),
+        (WMO_DECISION_BY_ETCL, 'WMO: geen beoordeling door METC noodzakelijk'),
+        (WMO_DECISION_BY_METC, 'WMO: wordt beoordeeld door METC'),
         (STUDY_CREATED, 'Kenmerken studie toegevoegd'),
         (SESSIONS_STARTED, 'Belasting proefpersoon: sessies toevoegen'),
         (TASKS_STARTED, 'Belasting proefpersoon: taken toevoegen'),
         (TASKS_ADDED, 'Belasting proefpersoon: alle taken toegevoegd'),
         (TASKS_ENDED, 'Belasting proefpersoon: afgerond'),
         (SESSIONS_ENDED, 'Belasting proefpersoon: afgerond'),
-        (INFORMED_CONSENT_UPLOADED, 'Informed consent geupload'),
-        (SUBMITTED, 'Opgestuurd'),
+        (INFORMED_CONSENT_UPLOADED, 'Informed consent geüpload'),
+
+        (SUBMITTED, 'Opgestuurd ter beoordeling naar ETCL'),
+        (DECISION_MADE, 'Aanvraag is beoordeeld naar ETCL'),
+        (WMO_DECISION_MADE, 'Aanvraag is beoordeeld door METC'),
     )
 
     # Fields of a proposal
@@ -137,13 +142,12 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         status = self.status
         if hasattr(self, 'wmo'):
             wmo = self.wmo
-            if wmo.metc or (wmo.is_medical and wmo.is_behavioristic):
-                if not wmo.metc_decision:
-                    return self.WMO_AWAITING_DECISION
-                if wmo.metc_decision and wmo.metc_decision_pdf:
-                    status = self.WMO_COMPLETED
+            if wmo.status == wmo.WAITING: 
+                status = self.WMO_DECISION_BY_METC
+            elif wmo.status == wmo.JUDGED:
+                status = self.WMO_DECISION_MADE
             else:
-                status = self.WMO_COMPLETED
+                status = self.WMO_DECISION_BY_ETCL
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
         if self.sessions_number:
@@ -169,25 +173,29 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         session = self.current_session()
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.id,))
-        if self.status == self.WMO_AWAITING_DECISION:
-            return reverse('proposals:wmo_update', args=(self.id,))
-        if self.status == self.WMO_COMPLETED:
+        elif self.status == self.WMO_DECISION_BY_ETCL:
             return reverse('proposals:study_create', args=(self.id,))
-        if self.status == self.STUDY_CREATED:
+        elif self.status == self.WMO_DECISION_BY_METC:
+            return reverse('proposals:wmo_update', args=(self.id,))
+        elif self.status == self.STUDY_CREATED:
             return reverse('proposals:session_start', args=(self.id,))
-        if session:
+        elif session:
             if self.status == self.SESSIONS_STARTED:
                 return reverse('proposals:task_start', args=(session.id,))
-            if self.status == self.TASKS_STARTED:
+            elif self.status == self.TASKS_STARTED:
                 return reverse('proposals:task_create', args=(session.id,))
-            if self.status == self.TASKS_ADDED:
+            elif self.status == self.TASKS_ADDED:
                 return reverse('proposals:task_end', args=(session.id,))
-        if self.status == self.TASKS_ENDED:
+        elif self.status == self.TASKS_ENDED:
             return reverse('proposals:session_end', args=(self.id,))
-        if self.status == self.SESSIONS_ENDED:
+        elif self.status == self.SESSIONS_ENDED:
             return reverse('proposals:consent', args=(self.id,))
-        if self.status == self.INFORMED_CONSENT_UPLOADED:
+        elif self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))
+
+        elif self.status == self.WMO_DECISION_MADE:
+            return reverse('proposals:my_archive')
+
 
     def current_session(self):
         current_session = None

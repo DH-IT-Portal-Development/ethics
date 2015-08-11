@@ -19,19 +19,15 @@ class ProposalTestCase(TestCase):
     def test_reference_number(self):
         current_year = str(datetime.now().year)
 
-        # Generate a new reference number
-        ref_number2 = generate_ref_number(self.user)
-        self.assertEqual(ref_number2, 'test0101-02-' + current_year)
-
-        # Add a proposal fot the same, check new reference number
-        p2 = Proposal.objects.create(title='p2', reference_number=ref_number2, created_by=self.user, relation=self.relation)
-        ref_number3 = generate_ref_number(self.user)
-        self.assertEqual(ref_number3, 'test0101-03-' + current_year)
+        # Add a proposal for the same user, check new reference number
+        ref_number = generate_ref_number(self.user)
+        p2 = Proposal.objects.create(title='p2', reference_number=ref_number, created_by=self.user, relation=self.relation)
+        self.assertEqual(ref_number, 'test0101-02-' + current_year)
 
         # Delete a proposal, check new reference number
         p2.delete()
-        ref_number4 = generate_ref_number(self.user)
-        self.assertEqual(ref_number4, 'test0101-02-' + current_year)
+        ref_number2 = generate_ref_number(self.user)
+        self.assertEqual(ref_number2, 'test0101-02-' + current_year)
 
         # Add a proposal for another user
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
@@ -43,10 +39,10 @@ class ProposalTestCase(TestCase):
         self.assertEqual(proposal.status, Proposal.DRAFT)
 
         wmo = Wmo.objects.create(proposal=proposal, metc=True)
-        self.assertEqual(proposal.status, Proposal.WMO_AWAITING_DECISION)
+        self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_METC)
         wmo.metc = False
         wmo.save()
-        self.assertEqual(proposal.status, Proposal.WMO_COMPLETED)
+        self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_ETCL)
 
         compensation = Compensation.objects.get(pk=1)
         Study.objects.create(proposal=proposal, compensation=compensation)

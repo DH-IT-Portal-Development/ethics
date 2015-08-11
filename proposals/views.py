@@ -78,13 +78,13 @@ class ArchiveView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Return all the proposals"""
-        return Proposal.objects.all().filter(status=9)
+        return Proposal.objects.all().filter(status__gte=Proposal.DECISION_MADE)
 
 
 class IndexView(ArchiveView):
     def get_queryset(self):
         """Return all the submitted proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status=9)
+        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED)
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -94,8 +94,8 @@ class IndexView(ArchiveView):
 
 class ConceptsView(ArchiveView):
     def get_queryset(self):
-        """Return all the proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user)
+        """Return all the non-submitted proposals for the current user"""
+        return Proposal.objects.filter(applicants=self.request.user).filter(status__lt=Proposal.SUBMITTED)
 
     def get_context_data(self, **kwargs):
         context = super(ConceptsView, self).get_context_data(**kwargs)
