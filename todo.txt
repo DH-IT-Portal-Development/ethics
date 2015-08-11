@@ -35,7 +35,7 @@ v check netto duur vs bruto duur
 v testcases
 - AUTH: niet meer bewerken als verzonden
 v AUTH: alleen eigen proposals aanpassen
-- STUDY: surveys-vraag toevoegen
+v STUDY: surveys-vraag toevoegen
 - Uitlijnen lange teksten 
 - Uitlijnen checkboxes (gebeurt vrijwel nooit...)
 - AUTH: Solis-login
