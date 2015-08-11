@@ -8,10 +8,12 @@ from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
-from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey
+from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
@@ -385,3 +387,10 @@ class TaskDelete(DeleteView):
 # Home view
 class HomeView(generic.TemplateView):
     template_name = 'proposals/index.html'
+
+@csrf_exempt
+def requires_supervisor(request):
+    value = map(int, request.POST.getlist('value[]'))
+    needs_supervisor = Relation.objects.filter(needs_supervisor=True).values_list('id', flat=True)
+    result = bool(set(needs_supervisor).intersection(value))
+    return JsonResponse({'result': result})

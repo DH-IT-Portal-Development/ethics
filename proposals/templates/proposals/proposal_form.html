@@ -8,7 +8,7 @@
 {% include "proposals/form_styling.html" %}
 <script>
 $(function() {
-    depends_on_list_value('relation', ['1', '2', '3', '4'], 'supervisor_email');
+    check_field_required('relation', 'supervisor_email', '/proposals/requires_supervisor/');
     depends_on_value('other_applicants', 'True', 'applicants');
 
     // Adds a running word count to the technical summary

@@ -44,4 +44,6 @@ urlpatterns = [
     url(r'^members/$', MembersView.as_view(), name='members'),
     url(r'^meetings/$', MeetingsView.as_view(), name='meetings'),
     url(r'^faq/$', FaqsView.as_view(), name='faq'),
+
+    url(r'^requires_supervisor/$', requires_supervisor, name='requires_supervisor'),
 ]
