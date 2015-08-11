@@ -90,6 +90,27 @@ Aanvraag <em>{{ proposal.title }}</em>
                 <td>{{ proposal.study.recruitment.all|unordered_list }}</td>
             </tr>
         </table>
+        <h4>Surveys</h4>
+        {% if proposal.study.survey_set.all %}
+        <table class="dataTable display">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Duur (in minuten)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for survey in proposal.study.survey_set.all %}
+                <tr>
+                    <td>{{ survey.name }}</td>
+                    <td>{{ survey.minutes }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Geen surveys toegevoegd</p>
+        {% endif %}
         {% endif %}
     </div>
 

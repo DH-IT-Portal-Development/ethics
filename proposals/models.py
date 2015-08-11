@@ -428,8 +428,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
 
 class Survey(models.Model):
-    name = models.CharField(max_length=200)
-    minutes = models.PositiveIntegerField()
+    name = models.CharField('Naam', max_length=200)
+    minutes = models.PositiveIntegerField('Duur (in minuten)')
     study = models.ForeignKey(Study)
 
     def __unicode__(self):

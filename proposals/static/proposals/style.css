@@ -45,6 +45,14 @@ form th {
     color: red;
 }
 
+.survey_set p {
+    display: inline;
+}
+
+form table {
+    margin-bottom: 2em;
+}
+
 /* Datatables */
 .dataTable td { 
     text-align: center; 

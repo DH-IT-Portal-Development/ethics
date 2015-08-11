@@ -63,6 +63,9 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
 
 class SurveysInline(InlineFormSet):
     model = Survey
+    fields = ['name', 'minutes']
+    can_delete = True
+    extra = 1
 
 
 # List views
@@ -224,14 +227,15 @@ class WmoUpdate(UpdateView):
 
 
 # CRUD actions on a Study
-class StudyCreate(CreateView):
+class StudyCreate(SuccessMessageMixin, LoginRequiredMixin, CreateWithInlinesView):
     model = Study
     form_class = StudyForm
+    inlines = [SurveysInline]
     success_message = _('Algemene kenmerken opgeslagen')
 
-    def form_valid(self, form):
+    def forms_valid(self, form, inlines):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
-        return super(StudyCreate, self).form_valid(form)
+        return super(StudyCreate, self).forms_valid(form, inlines)
 
     def get_success_url(self):
         if 'save_continue' in self.request.POST:
