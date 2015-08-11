@@ -21,7 +21,7 @@ Details aanvraag <em>{{ proposal.title }}</em>
         {% if proposal.wmo %}
         <li><a href="#tabs-2">WMO-plichtigheid</a></li>
         {% endif %}
-        {% if proposal.study.age_groups.all %}
+        {% if proposal.study %}
         <li><a href="#tabs-3">Algemene kenmerken</a></li>
         {% endif %}
         {% if proposal.session_set.all %}
@@ -57,7 +57,7 @@ Details aanvraag <em>{{ proposal.title }}</em>
     {% include "proposals/wmo_detail.html" %}
     {% endif %}
 
-    {% if proposal.study.age_groups.all %}
+    {% if proposal.study %}
     {% include "proposals/study_detail.html" %}
     {% endif %}
 

@@ -6,5 +6,5 @@
             <img src="{% static 'proposals/images/pencil.png' %}">
         </a>
     </h3>
-	{{ proposal.wmo.status }}
+	{{ proposal.wmo.get_status_display }}
 </div>

@@ -43,10 +43,12 @@ class ProposalTestCase(TestCase):
         wmo.metc = False
         wmo.save()
         self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_ETCL)
+        self.assertEqual(proposal.continue_url(), '/proposals/study/create/1/')
 
         compensation = Compensation.objects.get(pk=1)
         Study.objects.create(proposal=proposal, compensation=compensation)
         self.assertEqual(proposal.status, Proposal.STUDY_CREATED)
+        self.assertEqual(proposal.continue_url(), '/proposals/session_start/1/')
 
         proposal.sessions_number = 2
         s1 = Session.objects.create(proposal=proposal, order=1)
