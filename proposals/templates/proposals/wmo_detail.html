@@ -1,0 +1,10 @@
+{% load staticfiles %}
+
+<div id="tabs-2">
+    <h3>WMO-plichtig of niet?
+        <a href="{% url 'proposals:wmo_update' proposal.id %}">
+            <img src="{% static 'proposals/images/pencil.png' %}">
+        </a>
+    </h3>
+	{{ proposal.wmo.status }}
+</div>
