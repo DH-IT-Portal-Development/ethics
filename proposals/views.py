@@ -31,18 +31,25 @@ class LoginRequiredMixin(object):
 
 class UserAllowedMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
-        """Checks whether the current User is in the applicants of a Proposal."""
+        """
+        Checks whether the current User is in the applicants of a Proposal 
+        and whether the Proposal has not yet been submitted.
+        """
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
         applicants = []
+        status = None
         if isinstance(obj, Proposal):
             applicants = obj.applicants.all()
+            status = obj.status
         elif isinstance(obj, Task):
             applicants = obj.session.proposal.applicants.all()
+            status = obj.session.proposal.status
         else:
             applicants = obj.proposal.applicants.all()
+            status = obj.proposal.status
 
-        if self.request.user not in applicants:
+        if self.request.user not in applicants or status >= Proposal.SUBMITTED:
             raise PermissionDenied
 
         return obj
@@ -119,7 +126,7 @@ class FaqsView(generic.ListView):
 
 
 # Proposal detail
-class DetailView(LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Proposal
 
 
@@ -250,7 +257,7 @@ class StudyCreate(LoginRequiredMixin, CreateWithInlinesView):
             return reverse('proposals:my_concepts')
 
 
-class StudyUpdate(LoginRequiredMixin, UpdateWithInlinesView):
+class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Study from a StudyForm, with Surveys inlined."""
     model = Study
     form_class = StudyForm
