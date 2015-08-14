@@ -196,7 +196,6 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         elif self.status == self.WMO_DECISION_MADE:
             return reverse('proposals:my_archive')
 
-
     def current_session(self):
         current_session = None
         for session in self.session_set.all():
@@ -271,6 +270,7 @@ class AgeGroup(models.Model):
     age_min = models.PositiveIntegerField()
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
+    #needs_necessity = models.BooleanField(default=False)
 
     def __unicode__(self):
         if self.age_max:

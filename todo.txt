@@ -1,35 +1,4 @@
 TODO: 
-v refactor URLs 
-v editen WMO/Experiment
-v doorlopen applicatie
-v datatables Nederlands
-v titel voor pagina's in ander block
-v inregelen statussen
-v authorisatie: login required
-v bij taken: nog een taak toevoegen of klaar
-v pagina met informed consent toevoegen
-v icons voor inzien, bewerken, verwijderen
-v verplicht maken velden bij bepaalde waarden selectie-velden
-v PROPOSAL: detail-pagina proposal mooi maken
-v PROPOSAL: pagina met submitten proposal
-v PROPOSAL/TASKS: stap met bruto tijd
-v TASKS: mooi maken
-v diacrieten
-v STUDY: tussenkopjes
-v STUDY: bij nee traits, namelijk weg
-v STUDY: noodzakelijkheid alleen als... 
-v STUDY: setting -> ManyToManyField
-v TASKS: loopt iets fout bij vragen na alle taken
-v WMO: verschillende berichten op detail-pagina
-v WMO: logica javascript checken
-v EMLAR users toevoegen
-
-ADHV EMLAR: 
-v TASKS: 1/3 ipv 0/3
-v Stap n/n in titel
-v Knoppen terug naar hoofdmenu en gelijk verder
-
-TODO: 
 v check netto duur vs bruto duur
 - kopieren bestaande aanvraag
 v testcases
@@ -52,4 +21,4 @@ Input commissie nodig:
 - Woordenboek van definities? 
 - Inregelen e-mails eindverantwoordelijke
 - WMO: success messages
-- WMO: afhandeling regelen (aparte flow, niet langs commissie voor go/no-go)
+v WMO: afhandeling regelen (aparte flow, niet langs commissie voor go/no-go)
