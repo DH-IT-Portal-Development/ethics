@@ -197,14 +197,27 @@ class TaskStartForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'duration', 'registrations', 'registrations_details',
-                  'feedback', 'feedback_details', 'stressful']
+        fields = ['name', 'duration',
+                  'registrations', 'registrations_details',
+                  'feedback', 'feedback_details',
+                  'stressful']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'registrations': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=yes_no),
             'stressful': forms.RadioSelect(choices=yes_no_doubt),
         }
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If a registration which needs details has been checked, make sure the details are filled
+        - If feedback is set to yes, make sure feedback_details has been filled out
+        """
+        cleaned_data = super(TaskForm, self).clean()
+
+        check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_details', 'registrations_details')
+        check_dependency(self, cleaned_data, 'feedback', 'feedback_details')
 
 
 class TaskEndForm(forms.ModelForm):
