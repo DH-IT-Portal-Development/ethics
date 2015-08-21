@@ -63,6 +63,16 @@ td li {
     list-style-type: none;
 }
 
+/* Wrap auround of labels for checkboxes and radio buttons */
+.pure-form li label {
+    display: block;
+    margin-left: 1.25em;
+}
+.pure-form li label input[type='checkbox'],
+.pure-form li label input[type='radio'] {
+    margin-left: -1.25em;
+}
+
 /* Bootstrap-like contextual boxes */
 .success {
     text-align: center;
