@@ -270,7 +270,7 @@ class AgeGroup(models.Model):
     age_min = models.PositiveIntegerField()
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
-    #needs_necessity = models.BooleanField(default=False)
+    needs_details = models.BooleanField(default=False)
 
     def __unicode__(self):
         if self.age_max:

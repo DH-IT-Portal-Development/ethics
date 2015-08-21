@@ -122,17 +122,25 @@ class StudyForm(forms.ModelForm):
     def clean(self):
         """
         Check for conditional requirements:
+        - If an age group which needs details has been checked, make sure necessity/necessity_reason has been filled out
+        - If has_traits is checked, make sure necessity/necessity_reason has been filled out
         - If has_traits is checked, make sure there is at least one trait selected
         - If a trait which needs details has been checked, make sure the details are filled
+        - If a setting which needs details has been checked, make sure the details are filled
+        - If a compensation which needs details has been checked, make sure the details are filled
+        - If a recruitment which needs details has been checked, make sure the details are filled
         """
         cleaned_data = super(StudyForm, self).clean()
 
+        age_group_needs_details = check_dependency_multiple(self, cleaned_data, 'age_groups', 'needs_details', 'necessity')
+        check_dependency_multiple(self, cleaned_data, 'age_groups', 'needs_details', 'necessity_reason')
+        if not age_group_needs_details:
+            check_dependency(self, cleaned_data, 'has_traits', 'necessity')
+            check_dependency(self, cleaned_data, 'has_traits', 'necessity_reason')
         check_dependency(self, cleaned_data, 'has_traits', 'traits', 'U dient minimaal een bijzonder kenmerk te selecteren.')
-        check_dependency(self, cleaned_data, 'has_traits', 'necessity')
-        check_dependency(self, cleaned_data, 'has_traits', 'necessity_reason')
         check_dependency_multiple(self, cleaned_data, 'traits', 'needs_details', 'traits_details')
         check_dependency_multiple(self, cleaned_data, 'setting', 'needs_details', 'setting_details')
-        #check_dependency_multiple(self, cleaned_data, 'compensation', 'needs_details', 'compensation_details')
+        check_dependency_singular(self, cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         check_dependency_multiple(self, cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
 
 
@@ -143,13 +151,25 @@ def check_dependency(form, cleaned_data, f1, f2, error_message=''):
         form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
 
 
+def check_dependency_singular(form, cleaned_data, f1, f1_field, f2, error_message=''):
+    if not error_message:
+        error_message = 'Dit veld is verplicht.'
+    if cleaned_data.get(f1):
+        if getattr(cleaned_data.get(f1), f1_field) and not cleaned_data.get(f2):
+            form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
+
+
 def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_message=''):
+    is_required = False
     if not error_message:
         error_message = 'Dit veld is verplicht.'
     if cleaned_data.get(f1):
         for item in cleaned_data.get(f1):
             if getattr(item, f1_field) and not cleaned_data.get(f2):
+                is_required = True
                 form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
+                break
+    return is_required
 
 
 class SessionStartForm(forms.ModelForm):
