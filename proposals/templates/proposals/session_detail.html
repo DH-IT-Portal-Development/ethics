@@ -10,11 +10,11 @@
                 <a href="{% url 'proposals:session_start' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
             </td>
         </tr>
+        {% if proposal.sessions_duration %}
         <tr>
             <th>Netto duur</th>
             <td>{{ proposal.net_duration }} minuten</td>
         </tr>
-        {% if proposal.sessions_duration %}
         <tr>
             <th>Bruto duur</th>
             <td>

@@ -32,7 +32,7 @@ class LoginRequiredMixin(object):
 class UserAllowedMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
         """
-        Checks whether the current User is in the applicants of a Proposal 
+        Checks whether the current User is in the applicants of a Proposal
         and whether the Proposal has not yet been submitted.
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
@@ -315,8 +315,7 @@ class TaskStart(UpdateView):
 
     def get_success_url(self):
         if 'save_continue' in self.request.POST:
-            # Go to the task creation for this session
-            return reverse('proposals:task_create', args=(self.object.id,))
+            return self.object.proposal.continue_url()
         else:
             return reverse('proposals:my_concepts')
 
