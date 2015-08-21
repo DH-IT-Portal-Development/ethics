@@ -257,7 +257,7 @@ class SessionEndForm(forms.ModelForm):
         model = Proposal
         fields = ['sessions_duration', 'sessions_stressful', 'sessions_stressful_details']
         widgets = {
-            'sessions_stressful': forms.RadioSelect(choices=yes_no_doubt),
+            'sessions_stressful': forms.RadioSelect(choices=yes_no_doubt)
         }
 
     def __init__(self, *args, **kwargs):

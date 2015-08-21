@@ -96,9 +96,8 @@ de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van 
 of bepaald gedrag, etcetera. \
 Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
         default=False)
-    sessions_stressful_details = models.CharField(
+    sessions_stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # Fields with respect to informed consent
@@ -388,9 +387,8 @@ class Session(models.Model):
 ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
 Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. \
 Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.')
-    stressful_details = models.CharField(
+    stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # Fields with respect to tasks
@@ -411,9 +409,8 @@ de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van 
 of bepaald gedrag, etcetera. \
 Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
         default=False)
-    tasks_stressful_details = models.CharField(
+    tasks_stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # References
@@ -484,9 +481,8 @@ de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van 
 of bepaald gedrag, etcetera. \
 En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
         default=False)
-    stressful_details = models.CharField(
+    stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # References
