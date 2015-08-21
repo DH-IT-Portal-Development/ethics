@@ -10,7 +10,7 @@ Aanvraag ter beoordeling en registratie
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
-    depends_on_list_value('traits', '10', 'traits_details');
+    depends_on_list_value('traits', ['10'], 'traits_details');
     depends_on_list_value('setting', '8', 'setting_details');
     depends_on_list_value('compensation', ['2', '3'], 'compensation_details');
     depends_on_list_value('recruitment', '7', 'recruitment_details');
