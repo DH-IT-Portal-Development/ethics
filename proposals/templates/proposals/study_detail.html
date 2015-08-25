@@ -1,10 +1,12 @@
 {% load staticfiles %}
 
 <div id="tabs-3">
-    <h3>Algemene kenmerken van de studie 
+    <h3>Algemene kenmerken van de studie
+        {% if proposal.status < proposal.SUBMITTED %}
         <a href="{% url 'proposals:study_update' proposal.id %}">
             <img src="{% static 'proposals/images/pencil.png' %}">
         </a>
+        {% endif %}
     </h3>
     <table class="pure-table">
         <tr>

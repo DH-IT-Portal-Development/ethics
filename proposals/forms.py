@@ -297,6 +297,4 @@ class UploadConsentForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['date_submitted']
-
-    approved = forms.BooleanField()
+        fields = []

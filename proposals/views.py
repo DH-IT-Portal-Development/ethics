@@ -13,6 +13,8 @@ from django.http import JsonResponse
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
+from datetime import datetime
+
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
@@ -198,8 +200,14 @@ class ProposalSubmit(ProposalUpdateView):
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
     success_message = _('Aanvraag verzonden')
-    # TODO: set date_submitted on form submit
-    # TODO: send e-mail to supervisor on form submit
+
+    def form_valid(self, form):
+        """
+        Set date_submitted to current date/time
+        TODO: send e-mail to supervisor
+        """
+        form.instance.date_submitted = datetime.now()
+        return super(ProposalSubmit, self).form_valid(form)
 
 
 class ProposalDelete(DeleteView):

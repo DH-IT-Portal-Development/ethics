@@ -141,7 +141,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         status = self.status
         if hasattr(self, 'wmo'):
             wmo = self.wmo
-            if wmo.status == wmo.WAITING: 
+            if wmo.status == wmo.WAITING:
                 status = self.WMO_DECISION_BY_METC
             elif wmo.status == wmo.JUDGED:
                 status = self.WMO_DECISION_MADE
@@ -166,6 +166,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             status = self.SESSIONS_ENDED
         if self.informed_consent_pdf:
             status = self.INFORMED_CONSENT_UPLOADED
+        if self.date_submitted:
+            status = self.SUBMITTED
         return status
 
     def continue_url(self):
@@ -178,13 +180,12 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             return reverse('proposals:wmo_update', args=(self.id,))
         elif self.status == self.STUDY_CREATED:
             return reverse('proposals:session_start', args=(self.id,))
-        elif session:
-            if self.status == self.SESSIONS_STARTED:
-                return reverse('proposals:task_start', args=(session.id,))
-            elif self.status == self.TASKS_STARTED:
-                return reverse('proposals:task_create', args=(session.id,))
-            elif self.status == self.TASKS_ADDED:
-                return reverse('proposals:task_end', args=(session.id,))
+        elif self.status == self.SESSIONS_STARTED:
+            return reverse('proposals:task_start', args=(session.id,))
+        elif self.status == self.TASKS_STARTED:
+            return reverse('proposals:task_create', args=(session.id,))
+        elif self.status == self.TASKS_ADDED:
+            return reverse('proposals:task_end', args=(session.id,))
         elif self.status == self.TASKS_ENDED:
             return reverse('proposals:session_end', args=(self.id,))
         elif self.status == self.SESSIONS_ENDED:

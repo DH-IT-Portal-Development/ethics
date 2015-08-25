@@ -31,9 +31,11 @@ Details aanvraag <em>{{ proposal.title }}</em>
 
     <div id="tabs-1">
         <h3>Algemene informatie
+            {% if proposal.status < proposal.SUBMITTED %}
             <a href="{% url 'proposals:update' proposal.id %}">
                 <img src="{% static 'proposals/images/pencil.png' %}">
             </a>
+            {% endif %}
         </h3>
         <table class="pure-table">
             <tr>
