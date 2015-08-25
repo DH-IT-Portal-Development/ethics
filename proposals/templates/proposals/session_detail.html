@@ -8,7 +8,7 @@
             <td>
                 {{ proposal.sessions_number }} 
                 {% if proposal.status < proposal.SUBMITTED %}
-                <a href="{% url 'proposals:session_start' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
+                <a href="{% url 'proposals:session_add' proposal.id %}"><img src="{% static 'proposals/images/add.png' %}"></a>
                 {% endif %}
             </td>
         </tr>

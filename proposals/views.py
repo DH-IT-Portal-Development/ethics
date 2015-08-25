@@ -4,12 +4,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.core.exceptions import PermissionDenied
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
@@ -285,21 +286,31 @@ class ProposalSessionStart(ProposalUpdateView):
     success_message = _('%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt')
 
     def form_valid(self, form):
-        # Create Sessions on save, if they don't exist
-        # TODO: what if sessions_number is less than existing sessions?
+        # Create Sessions on save. TODO: don't allow coming here later...
         nr_sessions = form.cleaned_data['sessions_number']
         proposal = form.instance
         for n in xrange(nr_sessions):
             order = n + 1
-            try:
-                session = Session.objects.get(proposal=proposal, order=order)
-            except ObjectDoesNotExist:
-                session = Session(proposal=proposal, order=order)
-                session.save()
+            session = Session(proposal=proposal, order=order)
+            session.save()
         return super(ProposalSessionStart, self).form_valid(form)
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, title=self.object.title)
+
+
+def add_session(request, pk):
+    """Adds a session to the given proposal"""
+    proposal = get_object_or_404(Proposal, pk=pk)
+    new_session_number = proposal.sessions_number + 1
+
+    proposal.sessions_number = new_session_number
+    proposal.save()
+
+    session = Session(proposal=proposal, order=new_session_number)
+    session.save()
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class ProposalSessionEnd(ProposalUpdateView):
@@ -310,8 +321,34 @@ class ProposalSessionEnd(ProposalUpdateView):
 
 class SessionDelete(DeleteView):
     model = Session
-    success_url = '/proposals/concepts/'
     success_message = _('Sessie verwijderd')
+
+    def get_success_url(self):
+        return reverse('proposals:detail', args=(self.object.proposal.id,))
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Deletes the Session and updates the Proposal and other Sessions.
+        Completely overrides the default delete function (as that calls delete too late for us).
+        TODO: maybe save the HttpResponseRedirect and then perform the other actions?
+        """
+        self.object = self.get_object()
+        order = self.object.order
+        proposal = self.object.proposal
+        success_url = self.get_success_url()
+        self.object.delete()
+
+        # If the session number is lower than the total number of sessions (e.g. 3 of 4),
+        # set the other session numbers one lower
+        for s in Session.objects.filter(proposal=proposal, order__gt=order):
+            s.order -= 1
+            s.save()
+
+        # Set the number of sessions on Proposal
+        proposal.sessions_number -= 1
+        proposal.save()
+
+        return HttpResponseRedirect(success_url)
 
 
 # CRUD actions on a Task
@@ -401,6 +438,7 @@ class TaskDelete(DeleteView):
 # Home view
 class HomeView(generic.TemplateView):
     template_name = 'proposals/index.html'
+
 
 @csrf_exempt
 def requires_supervisor(request):
