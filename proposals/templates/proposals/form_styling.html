@@ -53,19 +53,23 @@ function add_title(field, title)
 
 $(function() {
     // Will put help texts as a tooltip on an information image
-	$("[id^=id]").each(function() { 
-		var help = $(this).next().next(); 
-		if (help.html()) 
-		{
-			$(this).after('<img src="{% static 'proposals/images/information.png' %}">');
-			$(this).next().attr('title', help.html());
-			help.hide();
-		}
-	});
+    $("[id^=id]").each(function() { 
+        var help = $(this).nextAll('.helptext'); 
+        if (help.html()) 
+        {
+            $(this).after('<img src="{% static 'proposals/images/information.png' %}">');
+            $(this).next().qtip({
+                content: {
+                    text: help.html()
+                }
+            });
+            help.hide();
+        }
+    });
 
     // Will make every table a pure-table
-	$("form table").addClass("pure-table pure-table-horizontal");
+    $("form table").addClass("pure-table pure-table-horizontal");
     // Will make evey form a pure-form
-	$("form").addClass("pure-form");
+    $("form").addClass("pure-form");
 });
 </script>
