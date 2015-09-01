@@ -8,13 +8,12 @@ from django.core.exceptions import PermissionDenied
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
-
-from datetime import datetime
 
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
@@ -207,8 +206,11 @@ class ProposalSubmit(ProposalUpdateView):
         Set date_submitted to current date/time
         TODO: send e-mail to supervisor
         """
-        form.instance.date_submitted = datetime.now()
+        form.instance.date_submitted = timezone.now()
         return super(ProposalSubmit, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('proposals:my_archive')
 
 
 class ProposalDelete(DeleteView):
