@@ -1,12 +1,12 @@
 TODO: 
 v check netto duur vs bruto duur
-- kopieren bestaande aanvraag
+v kopieren bestaande aanvraag
 v testcases
 v AUTH: niet meer bewerken als verzonden
 v AUTH: alleen eigen proposals aanpassen
 v STUDY: surveys-vraag toevoegen
 - Uitlijnen lange teksten 
-- Uitlijnen checkboxes (gebeurt vrijwel nooit...)
+v Uitlijnen checkboxes (gebeurt vrijwel nooit...)
 - AUTH: Solis-login
 - AUTH: selectie uit Solis-IDs
 v Annuleren-knop: "later verder" 

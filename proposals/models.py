@@ -430,7 +430,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
     def __unicode__(self):
-        return 'Sessie {}'.format(self.order)
+        return 'Session {} at proposal {}'.format(self.order, self.proposal)
 
 
 class Survey(models.Model):
@@ -502,6 +502,9 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
         session.tasks_stressful_details = ''
         super(Task, self).delete(*args, **kwargs)
         session.save()
+
+    def __unicode__(self):
+        return 'Task at {}'.format(self.session)
 
 
 class Faq(models.Model):

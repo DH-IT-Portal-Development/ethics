@@ -166,7 +166,7 @@ class ProposalCreate(CreateView):
 class ProposalCopy(CreateView):
     model = Proposal
     form_class = ProposalCopyForm
-    success_message = _('Aanvraag gekopiëerd')
+    success_message = _('Aanvraag gekopieerd')
     success_url = '/proposals/concepts/'
     template_name = 'proposals/proposal_copy.html'
 
