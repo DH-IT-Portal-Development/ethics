@@ -50,8 +50,8 @@
                     <th>Aantal taken</th>
                     <td>
                         {{ session.task_set.count }} / {{ session.tasks_number }} 
-                        {% if session.task_set.count < session.tasks_number %}
-                        <a href="{% url 'proposals:task_create' session.id %}">Taak toevoegen</a>
+                        {% if proposal.status < proposal.SUBMITTED %}
+                        <a href="{% url 'proposals:task_add' session.id %}"><img src="{% static 'proposals/images/add.png' %}"></a>
                         {% endif %}
                     </td>
                 </tr>
@@ -118,7 +118,6 @@
             {% if proposal.status < proposal.SUBMITTED %}
             <h4>Acties op sessie</h4>
             <ul>
-                <li><a href="{% url 'proposals:task_start' session.id %}">Aantal taken wijzigen</a></li>
                 <li><a href="{% url 'proposals:session_delete' session.id %}">Sessie verwijderen</a></li>
             </ul>
             {% endif %}
