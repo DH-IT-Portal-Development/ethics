@@ -162,13 +162,15 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
                 status = self.TASKS_ADDED
             if session.tasks_duration:
                 status = self.TASKS_ENDED
-        elif self.session_set.count() > 1:
+
+        if session.tasks_duration:
             if self.sessions_duration:
                 status = self.SESSIONS_ENDED
             if self.informed_consent_pdf:
                 status = self.INFORMED_CONSENT_UPLOADED
             if self.date_submitted:
                 status = self.SUBMITTED
+
         return status
 
     def continue_url(self):
