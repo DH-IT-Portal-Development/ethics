@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from .models import Proposal, Relation, Wmo, Study, Compensation, Session, Task
 from .utils import generate_ref_number
@@ -18,19 +19,15 @@ class ProposalTestCase(TestCase):
     def test_reference_number(self):
         current_year = str(datetime.now().year)
 
-        # Generate a new reference number
-        ref_number2 = generate_ref_number(self.user)
-        self.assertEqual(ref_number2, 'test0101-02-' + current_year)
-
-        # Add a proposal fot the same, check new reference number
-        p2 = Proposal.objects.create(title='p2', reference_number=ref_number2, created_by=self.user, relation=self.relation)
-        ref_number3 = generate_ref_number(self.user)
-        self.assertEqual(ref_number3, 'test0101-03-' + current_year)
+        # Add a proposal for the same user, check new reference number
+        ref_number = generate_ref_number(self.user)
+        p2 = Proposal.objects.create(title='p2', reference_number=ref_number, created_by=self.user, relation=self.relation)
+        self.assertEqual(ref_number, 'test0101-02-' + current_year)
 
         # Delete a proposal, check new reference number
         p2.delete()
-        ref_number4 = generate_ref_number(self.user)
-        self.assertEqual(ref_number4, 'test0101-02-' + current_year)
+        ref_number2 = generate_ref_number(self.user)
+        self.assertEqual(ref_number2, 'test0101-02-' + current_year)
 
         # Add a proposal for another user
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
@@ -42,14 +39,16 @@ class ProposalTestCase(TestCase):
         self.assertEqual(proposal.status, Proposal.DRAFT)
 
         wmo = Wmo.objects.create(proposal=proposal, metc=True)
-        self.assertEqual(proposal.status, Proposal.WMO_AWAITING_DECISION)
+        self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_METC)
         wmo.metc = False
         wmo.save()
-        self.assertEqual(proposal.status, Proposal.WMO_COMPLETED)
+        self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_ETCL)
+        self.assertEqual(proposal.continue_url(), '/proposals/study/create/1/')
 
         compensation = Compensation.objects.get(pk=1)
         Study.objects.create(proposal=proposal, compensation=compensation)
         self.assertEqual(proposal.status, Proposal.STUDY_CREATED)
+        self.assertEqual(proposal.continue_url(), '/proposals/session_start/1/')
 
         proposal.sessions_number = 2
         s1 = Session.objects.create(proposal=proposal, order=1)
@@ -67,8 +66,32 @@ class ProposalTestCase(TestCase):
         s1.tasks_duration = 45
         s1.save()
         self.assertEqual(proposal.current_session(), s2)
-        self.assertEqual(proposal.status, proposal.TASKS_STARTED)  # TODO: is this correct?
+        self.assertEqual(proposal.status, proposal.SESSIONS_STARTED)
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)
         self.assertEqual(proposal.status, proposal.TASKS_STARTED)
+
+
+class WmoTestCase(ProposalTestCase):
+    def setUp(self):
+        super(WmoTestCase, self).setUp()
+        self.wmo = Wmo.objects.create(proposal=self.p1, metc=False)
+
+    def test_status(self):
+        self.assertEqual(self.wmo.status, Wmo.NO_WMO)
+
+        self.wmo.metc = True
+        self.wmo.save()
+
+        self.assertEqual(self.wmo.status, Wmo.WAITING)
+
+        self.wmo.metc_decision = True
+        self.wmo.save()
+
+        self.assertEqual(self.wmo.status, Wmo.WAITING)
+
+        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', 'contents')
+        self.wmo.save()
+
+        self.assertEqual(self.wmo.status, Wmo.JUDGED)

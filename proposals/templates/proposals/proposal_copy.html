@@ -7,11 +7,6 @@ Aanvraag kopiëren
 
 {% block content %} 
 {% include "proposals/form_styling.html" %}
-<script> 
-$(function() {
-    $("#id_parent").chosen();
-});
-</script>
 <p>U kunt hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren aangepast worden.</p>
 <form action="" method="post">{% csrf_token %}
     <table>{{ form.as_table }}</table>

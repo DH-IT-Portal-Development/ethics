@@ -1,0 +1,16 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles %}
+
+{% block title %} 
+Feedback versturen
+{% endblock %} 
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <p>
+        <input class="pure-button pure-button-primary" type="submit" value="Feedback versturen" />
+        <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">Terug naar vorige pagina</a>
+    </p>
+</form>
+{% endblock %}

@@ -10,9 +10,7 @@ Aanvraag ter beoordeling en registratie
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
-    depends_on_value('has_traits', 'True', 'traits_details');
-    depends_on_list_value('traits', '10', 'traits_details');
-    depends_on_value('necessity', 'True', 'necessity_reason');
+    depends_on_list_value('traits', ['10'], 'traits_details');
     depends_on_list_value('setting', '8', 'setting_details');
     depends_on_list_value('compensation', ['2', '3'], 'compensation_details');
     depends_on_list_value('recruitment', '7', 'recruitment_details');
@@ -21,7 +19,7 @@ $(function() {
     add_title('has_traits', 'Bijzondere kenmerken van de proefpersonen');
     add_title('necessity', 'Noodzakelijkheid');
     add_title('setting', 'Setting');
-    add_title('risk_physical', 'Risico op letsel');
+    add_title('risk_physical', 'Risico op schade');
     add_title('compensation', 'Vergoeding');
     add_title('recruitment', 'Werving');
 
@@ -35,25 +33,37 @@ $(function() {
         var necessity = $('#id_necessity').parent().parent();
         necessity.toggle(check);
         necessity.prev().toggle(check); // Toggles header as well 
+        var necessity_reason = $('#id_necessity_reason').parent().parent();
+        necessity_reason.toggle(check);
+        necessity_reason.prev().toggle(check); // Toggles header as well 
     });
     $('input[name=has_traits], input[name=age_groups]').change();
+
+    $('.survey_set').formset({
+        prefix: 'survey_set',
+        addText: 'Voeg survey toe',
+        deleteText: 'Verwijder'
+    });
 });
 </script>
 <h3>Algemene kenmerken van de studie</h3>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <h4>Surveys</h4>
-    {% for formset in inlines %}
-    <div id="{{ formset.prefix }}">
-    {% for subform in formset.forms %}
-        <table>
-        {{ subform.as_ul }}
-        </table>
-    {% endfor %}
-    {{ formset.management_form }}
-    </div>
-    {% endfor %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <th><strong>Surveys</strong></th>
+            <td></td>
+        </tr>
+        {% for formset in inlines %}
+        {% for subform in formset.forms %}
+        <tr class="{{ formset.prefix }}">
+            <td colspan="2">{{ subform.as_p }}</td>
+        </tr>
+        {% endfor %}
+        {{ formset.management_form }}
+        {% endfor %}
+    </table>
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
     <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
     <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>

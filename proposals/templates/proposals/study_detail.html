@@ -1,0 +1,60 @@
+{% load staticfiles %}
+
+<div id="tabs-3">
+    <h3>Algemene kenmerken van de studie
+        {% if proposal.status < proposal.SUBMITTED %}
+        <a href="{% url 'proposals:study_update' proposal.id %}">
+            <img src="{% static 'proposals/images/pencil.png' %}">
+        </a>
+        {% endif %}
+    </h3>
+    <table class="pure-table">
+        <tr>
+            <th>Leeftijdsgroepen</th>
+            <td>{{ proposal.study.age_groups.all|unordered_list }}</td>
+        </tr>
+        <tr>
+            <th>Bijzondere kenmerken</th>
+            <td>
+                {% if proposal.study.has_traits %}
+                {{ proposal.study.traits.all|unordered_list }}
+                {% else %}
+                geen
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Setting</th>
+            <td>{{ proposal.study.setting.all|unordered_list }}</td>
+        </tr>
+        <tr>
+            <th>Vergoeding</th>
+            <td>{{ proposal.study.compensation }}</td>
+        </tr>
+        <tr>
+            <th>Werving via</th>
+            <td>{{ proposal.study.recruitment.all|unordered_list }}</td>
+        </tr>
+    </table>
+    <h4>Surveys</h4>
+    {% if proposal.study.survey_set.all %}
+    <table class="dataTable display">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Duur (in minuten)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for survey in proposal.study.survey_set.all %}
+            <tr>
+                <td>{{ survey.name }}</td>
+                <td>{{ survey.minutes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Geen surveys toegevoegd</p>
+    {% endif %}
+</div>

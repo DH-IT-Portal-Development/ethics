@@ -29,7 +29,7 @@
     {% elif submitted %}
     Dit overzicht toont al uw verstuurde aanvragen.
     {% else %}
-    Dit overzicht toont alle verstuurde aanvragen.
+    Dit overzicht toont alle beoordeelde aanvragen.
     {% endif %}
 </p>
 <table class="dataTable display">
@@ -51,8 +51,10 @@
             <td>{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
             	<a href="{% url 'proposals:detail' proposal.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="Inzien"></a>
+                {% if concepts %}
                 <a href="{{ proposal.continue_url }}"><img src="{% static 'proposals/images/page_white_go.png' %}" title="Naar volgende stap"></a>
             	<a href="{% url 'proposals:delete' proposal.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="Verwijderen"></a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

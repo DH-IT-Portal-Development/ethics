@@ -17,8 +17,8 @@ class Relation(models.Model):
 
 class Proposal(models.Model):
     DRAFT = 1
-    WMO_AWAITING_DECISION = 2
-    WMO_COMPLETED = 3
+    WMO_DECISION_BY_ETCL = 2
+    WMO_DECISION_BY_METC = 3
     STUDY_CREATED = 4
     SESSIONS_STARTED = 5
     TASKS_STARTED = 6
@@ -26,19 +26,24 @@ class Proposal(models.Model):
     TASKS_ENDED = 8
     SESSIONS_ENDED = 9
     INFORMED_CONSENT_UPLOADED = 10
-    SUBMITTED = 11
+    SUBMITTED = 50
+    DECISION_MADE = 55
+    WMO_DECISION_MADE = 60
     STATUSES = (
         (DRAFT, 'Algemene informatie ingevuld'),
-        (WMO_AWAITING_DECISION, 'WMO: in afwachting beslissing'),
-        (WMO_COMPLETED, 'WMO: afgerond'),
+        (WMO_DECISION_BY_ETCL, 'WMO: geen beoordeling door METC noodzakelijk'),
+        (WMO_DECISION_BY_METC, 'WMO: wordt beoordeeld door METC'),
         (STUDY_CREATED, 'Kenmerken studie toegevoegd'),
         (SESSIONS_STARTED, 'Belasting proefpersoon: sessies toevoegen'),
         (TASKS_STARTED, 'Belasting proefpersoon: taken toevoegen'),
         (TASKS_ADDED, 'Belasting proefpersoon: alle taken toegevoegd'),
         (TASKS_ENDED, 'Belasting proefpersoon: afgerond'),
         (SESSIONS_ENDED, 'Belasting proefpersoon: afgerond'),
-        (INFORMED_CONSENT_UPLOADED, 'Informed consent geupload'),
-        (SUBMITTED, 'Opgestuurd'),
+        (INFORMED_CONSENT_UPLOADED, 'Informed consent geüpload'),
+
+        (SUBMITTED, 'Opgestuurd ter beoordeling naar ETCL'),
+        (DECISION_MADE, 'Aanvraag is beoordeeld naar ETCL'),
+        (WMO_DECISION_MADE, 'Aanvraag is beoordeeld door METC'),
     )
 
     # Fields of a proposal
@@ -74,12 +79,14 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     sessions_number = models.PositiveIntegerField(
         'Hoeveel sessies telt deze studie?',
         null=True,
+        validators=[MinValueValidator(1)],
         help_text='Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens \
 een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.')
     sessions_duration = models.PositiveIntegerField(
-        'Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.',
+        'De totale geschatte netto studieduur van uw sessie komt op basis van uw opgave per sessie uit op <strong>%d minuten</strong>. \
+Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.',
         null=True,
         help_text='Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.')
     sessions_stressful = models.NullBooleanField(
@@ -90,9 +97,8 @@ de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van 
 of bepaald gedrag, etcetera. \
 Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
         default=False)
-    sessions_stressful_details = models.CharField(
+    sessions_stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # Fields with respect to informed consent
@@ -136,13 +142,12 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         status = self.status
         if hasattr(self, 'wmo'):
             wmo = self.wmo
-            if wmo.metc or (wmo.is_medical and wmo.is_behavioristic):
-                if not wmo.metc_decision:
-                    return self.WMO_AWAITING_DECISION
-                if wmo.metc_decision and wmo.metc_decision_pdf:
-                    status = self.WMO_COMPLETED
+            if wmo.status == wmo.WAITING:
+                status = self.WMO_DECISION_BY_METC
+            elif wmo.status == wmo.JUDGED:
+                status = self.WMO_DECISION_MADE
             else:
-                status = self.WMO_COMPLETED
+                status = self.WMO_DECISION_BY_ETCL
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
         if self.sessions_number:
@@ -158,35 +163,41 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             if session.tasks_duration:
                 status = self.TASKS_ENDED
 
-        if self.sessions_duration:
-            status = self.SESSIONS_ENDED
-        if self.informed_consent_pdf:
-            status = self.INFORMED_CONSENT_UPLOADED
+        if session.tasks_duration:
+            if self.sessions_duration:
+                status = self.SESSIONS_ENDED
+            if self.informed_consent_pdf:
+                status = self.INFORMED_CONSENT_UPLOADED
+            if self.date_submitted:
+                status = self.SUBMITTED
+
         return status
 
     def continue_url(self):
         session = self.current_session()
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.id,))
-        if self.status == self.WMO_AWAITING_DECISION:
-            return reverse('proposals:wmo_update', args=(self.id,))
-        if self.status == self.WMO_COMPLETED:
+        elif self.status == self.WMO_DECISION_BY_ETCL:
             return reverse('proposals:study_create', args=(self.id,))
-        if self.status == self.STUDY_CREATED:
+        elif self.status == self.WMO_DECISION_BY_METC:
+            return reverse('proposals:wmo_update', args=(self.id,))
+        elif self.status == self.STUDY_CREATED:
             return reverse('proposals:session_start', args=(self.id,))
-        if session:
-            if self.status == self.SESSIONS_STARTED:
-                return reverse('proposals:task_start', args=(session.id,))
-            if self.status == self.TASKS_STARTED:
-                return reverse('proposals:task_create', args=(session.id,))
-            if self.status == self.TASKS_ADDED:
-                return reverse('proposals:task_end', args=(session.id,))
-        if self.status == self.TASKS_ENDED:
+        elif self.status == self.SESSIONS_STARTED:
+            return reverse('proposals:task_start', args=(session.id,))
+        elif self.status == self.TASKS_STARTED:
+            return reverse('proposals:task_create', args=(session.id,))
+        elif self.status == self.TASKS_ADDED:
+            return reverse('proposals:task_end', args=(session.id,))
+        elif self.status == self.TASKS_ENDED:
             return reverse('proposals:session_end', args=(self.id,))
-        if self.status == self.SESSIONS_ENDED:
+        elif self.status == self.SESSIONS_ENDED:
             return reverse('proposals:consent', args=(self.id,))
-        if self.status == self.INFORMED_CONSENT_UPLOADED:
+        elif self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))
+
+        elif self.status == self.WMO_DECISION_MADE:
+            return reverse('proposals:my_archive')
 
     def current_session(self):
         current_session = None
@@ -201,6 +212,15 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
 
 class Wmo(models.Model):
+    NO_WMO = 0
+    WAITING = 1
+    JUDGED = 2
+    WMO_STATUSES = (
+        (NO_WMO, 'Geen beoordeling door METC noodzakelijk'),
+        (WAITING, 'In afwachting beslissing METC'),
+        (JUDGED, 'Beslissing METC geüpload'),
+    )
+
     metc = models.NullBooleanField(
         'Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?')
     metc_institution = models.CharField(
@@ -224,31 +244,36 @@ class Wmo(models.Model):
         'Upload hier de beslissing van het METC',
         blank=True)
 
+    # Status
+    status = models.PositiveIntegerField(choices=WMO_STATUSES, default=NO_WMO)
+
     # References
     proposal = models.OneToOneField(Proposal, primary_key=True)
 
     def save(self, *args, **kwargs):
-        """Sets the correct status on save of a Proposal"""
+        """Sets the correct status on save of a WMO"""
         super(Wmo, self).save(*args, **kwargs)
+        self.update_status()
         self.proposal.save()
 
-    def status(self):
+    def update_status(self):
         if self.metc or (self.is_medical and self.is_behavioristic):
             if not self.metc_decision:
-                return 'In afwachting beslissing METC.'
+                self.status = self.WAITING
             if self.metc_decision and self.metc_decision_pdf:
-                return 'Beslissing METC geüpload.'
+                self.status = self.JUDGED
         else:
-            return 'Geen beoordeling door METC noodzakelijk.'
+            self.status = self.NO_WMO
 
     def __unicode__(self):
-        return 'Wmo %s' % self.proposal.title
+        return 'WMO %s, status %s' % (self.proposal.title, self.status)
 
 
 class AgeGroup(models.Model):
     age_min = models.PositiveIntegerField()
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
 
     def __unicode__(self):
         if self.age_max:
@@ -366,15 +391,15 @@ class Session(models.Model):
 ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
 Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. \
 Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.')
-    stressful_details = models.CharField(
+    stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # Fields with respect to tasks
     tasks_number = models.PositiveIntegerField(
         'Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?',
         null=True,
+        validators=[MinValueValidator(1)],
         help_text='Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
     tasks_duration = models.PositiveIntegerField(
@@ -389,9 +414,8 @@ de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van 
 of bepaald gedrag, etcetera. \
 Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
         default=False)
-    tasks_stressful_details = models.CharField(
+    tasks_stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # References
@@ -410,12 +434,12 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
     def __unicode__(self):
-        return 'Sessie {}'.format(self.order)
+        return 'Session {} at proposal {}'.format(self.order, self.proposal)
 
 
 class Survey(models.Model):
-    name = models.CharField(max_length=200)
-    minutes = models.PositiveIntegerField()
+    name = models.CharField('Naam', max_length=200)
+    minutes = models.PositiveIntegerField('Duur (in minuten)')
     study = models.ForeignKey(Study)
 
     def __unicode__(self):
@@ -462,9 +486,8 @@ de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van 
 of bepaald gedrag, etcetera. \
 En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.',
         default=False)
-    stressful_details = models.CharField(
+    stressful_details = models.TextField(
         'Waarom denkt u dat?',
-        max_length=200,
         blank=True)
 
     # References
@@ -476,13 +499,19 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
         self.session.proposal.save()
 
     def delete(self, *args, **kwargs):
-        """Removes the totals on Session level on deletion of a Task"""
+        """
+        Removes the totals on Session level on deletion of a Task
+        TODO: if this was the only Task in the only Session, clear up the Proposal details as well
+        """
         session = self.session
         session.tasks_duration = None
         session.tasks_stressful = None
         session.tasks_stressful_details = ''
         super(Task, self).delete(*args, **kwargs)
         session.save()
+
+    def __unicode__(self):
+        return 'Task at {}'.format(self.session)
 
 
 class Faq(models.Model):
