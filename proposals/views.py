@@ -281,6 +281,7 @@ class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
 
 # Actions on a Session
 class ProposalSessionStart(ProposalUpdateView):
+    """Initial creation of Sessions"""
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
     success_message = _('%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt')
@@ -300,7 +301,7 @@ class ProposalSessionStart(ProposalUpdateView):
 
 
 def add_session(request, pk):
-    """Adds a session to the given proposal"""
+    """Adds a session to the given Proposal"""
     proposal = get_object_or_404(Proposal, pk=pk)
     new_session_number = proposal.sessions_number + 1
 
