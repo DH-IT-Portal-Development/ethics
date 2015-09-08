@@ -8,13 +8,12 @@ from django.core.exceptions import PermissionDenied
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
-
-from datetime import datetime
 
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
@@ -207,8 +206,11 @@ class ProposalSubmit(ProposalUpdateView):
         Set date_submitted to current date/time
         TODO: send e-mail to supervisor
         """
-        form.instance.date_submitted = datetime.now()
+        form.instance.date_submitted = timezone.now()
         return super(ProposalSubmit, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('proposals:my_archive')
 
 
 class ProposalDelete(DeleteView):
@@ -301,7 +303,7 @@ class ProposalSessionStart(ProposalUpdateView):
 
 
 def add_session(request, pk):
-    """Adds a session to the given Proposal"""
+    """Adds a Session to the given Proposal"""
     proposal = get_object_or_404(Proposal, pk=pk)
     new_session_number = proposal.sessions_number + 1
 
@@ -311,7 +313,7 @@ def add_session(request, pk):
     session = Session(proposal=proposal, order=new_session_number)
     session.save()
 
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('proposals:task_start', args=(session.id,)))
 
 
 class ProposalSessionEnd(ProposalUpdateView):
@@ -352,8 +354,8 @@ class SessionDelete(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-# CRUD actions on a Task
 class TaskStart(UpdateView):
+    """Initially sets the total number of Tasks for a Session"""
     model = Session
     form_class = TaskStartForm
     template_name = 'proposals/task_start.html'
@@ -366,7 +368,17 @@ class TaskStart(UpdateView):
             return reverse('proposals:my_concepts')
 
 
+def add_task(request, pk):
+    """Updates the tasks_number on a Session"""
+    session = get_object_or_404(Session, pk=pk)
+    session.tasks_number += 1
+    session.save()
+
+    return HttpResponseRedirect(reverse('proposals:task_create', args=(session.id,)))
+
+
 class TaskEnd(UpdateView):
+    """Completes the Session"""
     model = Session
     form_class = TaskEndForm
     template_name = 'proposals/task_end.html'
@@ -379,7 +391,9 @@ class TaskEnd(UpdateView):
             return reverse('proposals:my_concepts')
 
 
+# CRUD actions on a Task
 class TaskCreate(CreateView):
+    """Creates a Task"""
     model = Task
     form_class = TaskForm
     success_message = _('Taak opgeslagen')
@@ -407,6 +421,7 @@ class TaskCreate(CreateView):
 
 
 class TaskUpdate(UpdateView):
+    """Updates a Task"""
     model = Task
     form_class = TaskForm
     success_message = _('Taak bewerkt')
@@ -431,9 +446,12 @@ class TaskUpdate(UpdateView):
 
 
 class TaskDelete(DeleteView):
+    """Deletes a Task"""
     model = Task
-    success_url = '/proposals/concepts/'
     success_message = _('Taak verwijderd')
+
+    def get_success_url(self):
+        return reverse('proposals:detail', args=(self.object.session.proposal.id,))
 
 
 # Home view

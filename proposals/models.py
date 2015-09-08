@@ -79,6 +79,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     sessions_number = models.PositiveIntegerField(
         'Hoeveel sessies telt deze studie?',
         null=True,
+        validators=[MinValueValidator(1)],
         help_text='Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens \
 een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
@@ -161,13 +162,15 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
                 status = self.TASKS_ADDED
             if session.tasks_duration:
                 status = self.TASKS_ENDED
-        else:
+
+        if session.tasks_duration:
             if self.sessions_duration:
                 status = self.SESSIONS_ENDED
             if self.informed_consent_pdf:
                 status = self.INFORMED_CONSENT_UPLOADED
             if self.date_submitted:
                 status = self.SUBMITTED
+
         return status
 
     def continue_url(self):
@@ -396,6 +399,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     tasks_number = models.PositiveIntegerField(
         'Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?',
         null=True,
+        validators=[MinValueValidator(1)],
         help_text='Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
     tasks_duration = models.PositiveIntegerField(
@@ -495,7 +499,10 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
         self.session.proposal.save()
 
     def delete(self, *args, **kwargs):
-        """Removes the totals on Session level on deletion of a Task"""
+        """
+        Removes the totals on Session level on deletion of a Task
+        TODO: if this was the only Task in the only Session, clear up the Proposal details as well
+        """
         session = self.session
         session.tasks_duration = None
         session.tasks_stressful = None
