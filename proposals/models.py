@@ -131,6 +131,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         verbose_name='Te kopiëren aanvraag')
 
     def net_duration(self):
+        """Returns the duration of all Tasks in this Proposal"""
         return self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
 
     def save(self, *args, **kwargs):
@@ -139,6 +140,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         super(Proposal, self).save(*args, **kwargs)
 
     def get_status(self):
+        """Retrieves the current status for a Proposal"""
         status = self.status
         if hasattr(self, 'wmo'):
             wmo = self.wmo
@@ -163,7 +165,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             if session.tasks_duration:
                 status = self.TASKS_ENDED
 
-        if session.tasks_duration:
+        if session and session.tasks_duration:
             if self.sessions_duration:
                 status = self.SESSIONS_ENDED
             if self.informed_consent_pdf:
@@ -200,6 +202,11 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
             return reverse('proposals:my_archive')
 
     def current_session(self):
+        """
+        Returns the current (imcomplete) session.
+        If all sessions are completed, the last session is returned.
+        If no sessions have yet been created, None is returned.
+        """
         current_session = None
         for session in self.session_set.all():
             current_session = session

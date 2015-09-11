@@ -283,6 +283,7 @@ class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
 
 # Actions on a Session
 class ProposalSessionStart(ProposalUpdateView):
+    """Initial creation of Sessions"""
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
     success_message = _('%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt')
