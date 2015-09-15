@@ -50,20 +50,20 @@ def copy_proposal(self, form):
         copy_study.setting = copy_setting
         copy_study.compensation = copy_compensation
         copy_study.recruitment = copy_recruitment
-        for survey in copy_surveys: 
+        for survey in copy_surveys:
             copy_survey = survey
             copy_survey.pk = None
             copy_survey.study = copy_study
-            copy_survey.save() 
+            copy_survey.save()
         copy_study.save()
 
-    for session in copy_sessions: 
+    for session in copy_sessions:
         copy_session = session
         copy_session.pk = None
-        copy_session.proposal = copy_proposal 
+        copy_session.proposal = copy_proposal
         copy_session.save()
         for task in copy_tasks:
-            copy_registrations = task.registrations.all() 
+            copy_registrations = task.registrations.all()
             copy_task = task
             copy_task.pk = None
             copy_task.session = copy_session
@@ -71,6 +71,6 @@ def copy_proposal(self, form):
             copy_task.registrations = copy_registrations
             copy_task.save()
 
-    copy_proposal.save() 
+    copy_proposal.save()
 
     return copy_proposal
