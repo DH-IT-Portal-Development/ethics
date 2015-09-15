@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^session_start/(?P<pk>\d+)/$', ProposalSessionStart.as_view(), name='session_start'),
     url(r'^session_end/(?P<pk>\d+)/$', ProposalSessionEnd.as_view(), name='session_end'),
     url(r'^session_add/(?P<pk>\d+)/$', add_session, name='session_add'),
-    
+
     url(r'^session/delete/(?P<pk>\d+)/$', SessionDelete.as_view(), name='session_delete'),
     url(r'^task_start/(?P<pk>\d+)/$', TaskStart.as_view(), name='task_start'),
     url(r'^task_end/(?P<pk>\d+)/$', TaskEnd.as_view(), name='task_end'),

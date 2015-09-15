@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+
 from .models import Task
 from .utils import generate_ref_number
 
@@ -28,7 +30,7 @@ def copy_proposal(self, form):
     copy_proposal = parent
     copy_proposal.pk = None
     copy_proposal.reference_number = generate_ref_number(self.request.user)
-    copy_proposal.title = '%s (kopie)' % copy_proposal.title
+    copy_proposal.title = _('%s (kopie)') % copy_proposal.title
     copy_proposal.created_by = self.request.user
     copy_proposal.date_submitted = None
     copy_proposal.save()

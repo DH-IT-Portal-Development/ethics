@@ -4,12 +4,14 @@ from django.contrib import admin
 urlpatterns = patterns('',
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name='logout',
-    	kwargs={'next_page': '/proposals/'}),
+        kwargs={'next_page': '/proposals/'}),
 
     url(r'^proposals/', include('proposals.urls', namespace='proposals')),
     url(r'^feedback/', include('feedback.urls', namespace='feedback')),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 )
 
 admin.site.site_header = 'ETCL'

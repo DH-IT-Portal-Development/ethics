@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 import os
 import logging
-
 import ldap
+
+from django.utils.translation import ugettext_lazy as _
+
 from django_auth_ldap.config import LDAPSearch, MemberDNGroupType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -48,6 +50,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,9 +83,16 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'nl-nl'
+LANGUAGE_CODE = 'nl'
+LANGUAGES = (
+    ('nl', _('Nederlands')),
+    ('en', _('Engels')),
+)
 USE_I18N = True
 USE_L10N = True
+LOCALE_PATHS = (
+    'locale',
+)
 
 TIME_ZONE = 'Europe/Amsterdam'
 USE_TZ = True

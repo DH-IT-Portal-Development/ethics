@@ -1,0 +1,666 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-15 16:26+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ethics/settings.py:88
+msgid "Nederlands"
+msgstr "Dutch"
+
+#: ethics/settings.py:89
+msgid "Engels"
+msgstr "English"
+
+#: feedback/models.py:6
+msgid "Open"
+msgstr ""
+
+#: feedback/models.py:7
+msgid "Working"
+msgstr ""
+
+#: feedback/models.py:8
+msgid "Closed"
+msgstr ""
+
+#: feedback/models.py:12
+msgid "Low"
+msgstr ""
+
+#: feedback/models.py:13
+msgid "Medium"
+msgstr ""
+
+#: feedback/models.py:14
+msgid "High"
+msgstr ""
+
+#: proposals/copy.py:33
+#, python-format
+msgid "%s (kopie)"
+msgstr ""
+
+#: proposals/forms.py:7 proposals/forms.py:8
+msgid "ja"
+msgstr ""
+
+#: proposals/forms.py:7 proposals/forms.py:8
+msgid "nee"
+msgstr ""
+
+#: proposals/forms.py:8
+msgid "twijfel"
+msgstr ""
+
+#: proposals/forms.py:24
+msgid "Er bestaat al een studie met deze titel."
+msgstr ""
+
+#: proposals/forms.py:48
+msgid "U dient een eindverantwoordelijke op te geven."
+msgstr ""
+
+#: proposals/forms.py:52
+msgid "U heeft geen andere onderzoekers geselecteerd."
+msgstr ""
+
+#: proposals/forms.py:56
+msgid "De samenvatting bestaat uit teveel woorden."
+msgstr ""
+
+#: proposals/forms.py:89
+msgid "U dient een instelling op te geven."
+msgstr ""
+
+#: proposals/forms.py:250
+msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
+msgstr ""
+
+#: proposals/forms.py:282
+msgid "Totale studieduur moet minstens gelijk zijn aan netto studieduur."
+msgstr ""
+
+#: proposals/models.py:34
+msgid "Algemene informatie ingevuld"
+msgstr ""
+
+#: proposals/models.py:35
+msgid "WMO: geen beoordeling door METC noodzakelijk"
+msgstr ""
+
+#: proposals/models.py:36
+msgid "WMO: wordt beoordeeld door METC"
+msgstr ""
+
+#: proposals/models.py:37
+msgid "Kenmerken studie toegevoegd"
+msgstr ""
+
+#: proposals/models.py:38
+msgid "Belasting proefpersoon: sessies toevoegen"
+msgstr ""
+
+#: proposals/models.py:39
+msgid "Belasting proefpersoon: taken toevoegen"
+msgstr ""
+
+#: proposals/models.py:40
+msgid "Belasting proefpersoon: alle taken toegevoegd"
+msgstr ""
+
+#: proposals/models.py:41 proposals/models.py:42
+msgid "Belasting proefpersoon: afgerond"
+msgstr ""
+
+#: proposals/models.py:43
+msgid "Informed consent geüpload"
+msgstr ""
+
+#: proposals/models.py:45
+msgid "Opgestuurd ter beoordeling naar ETCL"
+msgstr ""
+
+#: proposals/models.py:46
+msgid "Aanvraag is beoordeeld naar ETCL"
+msgstr ""
+
+#: proposals/models.py:47
+msgid "Aanvraag is beoordeeld door METC"
+msgstr ""
+
+#: proposals/models.py:55
+msgid "Wat is de titel van uw studie?"
+msgstr ""
+
+#: proposals/models.py:58
+msgid ""
+"Kies s.v.p. een titel die niet volledig identiek is aan die van eerder "
+"ingediende studies."
+msgstr ""
+
+#: proposals/models.py:60
+msgid ""
+"Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een "
+"duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen, en (b) "
+"een korte beschrijving van de beoogde methode, d.w.z. een mini-versie van de "
+"toekomstige Methode-sectie, met informatie over proefpersonen, materiaal "
+"(taken, stimuli), design, en procedure. Het gaat er hier vooral om dat de "
+"relatie tussen de onderzoeksvraag of -vragen en de beoogde methode voldoende "
+"helder is; verderop in deze aanmelding zal voor specifieke ingrediënten van "
+"de methode meer gedetailleerde informatie worden gevraagd."
+msgstr ""
+
+#: proposals/models.py:67
+msgid "E-mailadres eindverantwoordelijke"
+msgstr ""
+
+#: proposals/models.py:69
+msgid ""
+"Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw "
+"eindverantwoordelijke sturen. Wanneer de verificatie binnen is, krijgt u een "
+"e-mail zodat u deze aanvraag kunt afronden."
+msgstr ""
+
+#: proposals/models.py:72
+msgid "Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?"
+msgstr ""
+
+#: proposals/models.py:75
+msgid ""
+"Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen deelnemen "
+"aan een sessie? (bijvoorbeeld een longitudinale studie, of een kortlopende "
+"studie waar proefpersonen op twee of meer verschillende dagen getest worden)"
+msgstr ""
+
+#: proposals/models.py:81
+msgid "Hoeveel sessies telt deze studie?"
+msgstr ""
+
+#: proposals/models.py:84
+msgid ""
+"Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen "
+"tijdens een eerste bezoek aan het lab en u laat de proefpersoon nog een keer "
+"terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken "
+"we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met "
+"pauzes daartussen, dan geldt dat toch als één sessie."
+msgstr ""
+
+#: proposals/models.py:89
+#, python-format
+msgid ""
+"De totale geschatte netto studieduur van uw sessie komt op basis van uw "
+"opgave per sessie uit op <strong>%d minuten</strong>. Schat de totale tijd "
+"die uw proefpersonen aan de gehele studie zullen besteden."
+msgstr ""
+
+#: proposals/models.py:92
+msgid ""
+"Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle "
+"sessie bij elkaar opgeteld, exclusief reistijd."
+msgstr ""
+
+#: proposals/models.py:94
+msgid ""
+"Is het totaal van sessies als geheel belastend voor de proefpersoon op een "
+"manier die, ondanks de verkregen informed consent, vragen zou kunnen "
+"oproepen (bijvoorbeeld bij collegas, bij de proefpersonen zelf, bij derden)? "
+"Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of "
+"(mentale/fysieke) veeleisendheid van de taak, de mate waarin proefpersonen "
+"zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden "
+"(bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga bij het "
+"beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de "
+"voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep."
+msgstr ""
+
+#: proposals/models.py:102 proposals/models.py:426 proposals/models.py:498
+msgid "Waarom denkt u dat?"
+msgstr ""
+
+#: proposals/models.py:107
+msgid "Upload hier de informed consent"
+msgstr ""
+
+#: proposals/models.py:121
+msgid "Wat is uw relatie tot het UiL OTS?"
+msgstr ""
+
+#: proposals/models.py:127
+msgid "Uitvoerende(n)"
+msgstr ""
+
+#: proposals/models.py:132
+msgid "Te kopiëren aanvraag"
+msgstr ""
+
+#: proposals/models.py:227
+msgid "Geen beoordeling door METC noodzakelijk"
+msgstr ""
+
+#: proposals/models.py:228
+msgid "In afwachting beslissing METC"
+msgstr ""
+
+#: proposals/models.py:229
+msgid "Beslissing METC geüpload"
+msgstr ""
+
+#: proposals/models.py:233
+msgid ""
+"Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
+"waar toetsing door een METC verplicht is gesteld?"
+msgstr ""
+
+#: proposals/models.py:235
+msgid "Welke instelling?"
+msgstr ""
+
+#: proposals/models.py:239
+msgid ""
+"Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
+"door de WMO)?"
+msgstr ""
+
+#: proposals/models.py:242
+msgid ""
+"Worden de proefpersonen aan een handeling onderworpen of worden hen "
+"gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
+msgstr ""
+
+#: proposals/models.py:243
+msgid ""
+"Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
+"weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten "
+"drukken."
+msgstr ""
+
+#: proposals/models.py:246
+msgid ""
+"Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
+"ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag "
+"ingediend?"
+msgstr ""
+
+#: proposals/models.py:249
+msgid "Is de METC al tot een beslissing gekomen?"
+msgstr ""
+
+#: proposals/models.py:252
+msgid "Upload hier de beslissing van het METC"
+msgstr ""
+
+#: proposals/models.py:277
+#, python-format
+msgid "WMO %s, status %s"
+msgstr ""
+
+#: proposals/models.py:288
+#, python-format
+msgid "%d-%d jaar"
+msgstr ""
+
+#: proposals/models.py:290
+#, python-format
+msgid "%d+ jaar"
+msgstr ""
+
+#: proposals/models.py:332
+msgid ""
+"Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, "
+"er zijn meerdere antwoorden mogelijk"
+msgstr ""
+
+#: proposals/models.py:335
+msgid ""
+"Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken "
+"die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde "
+"belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: kinderen "
+"die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale "
+"beledigingen; patiënten met afasie die een gesprek moeten voeren, ook al "
+"gaat het gesprek over alledaagse dingen). Is dit in uw studie bij (een deel "
+"van) de proefpersonen het geval?"
+msgstr ""
+
+#: proposals/models.py:343
+msgid "Selecteer de bijzondere kenmerken van uw proefpersonen"
+msgstr ""
+
+#: proposals/models.py:345 proposals/models.py:358 proposals/models.py:372
+#: proposals/models.py:379
+msgid "Namelijk"
+msgstr ""
+
+#: proposals/models.py:349
+msgid ""
+"Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het "
+"geselecteerde type proefpersonen aan de studie te laten deelnemen?"
+msgstr ""
+
+#: proposals/models.py:350
+msgid ""
+"Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag "
+"ook kunnen beantwoorden door volwassen proefpersonen te testen?"
+msgstr ""
+
+#: proposals/models.py:352
+msgid "Leg uit waarom"
+msgstr ""
+
+#: proposals/models.py:356
+msgid "Geef aan waar de dataverzameling plaatsvindt"
+msgstr ""
+
+#: proposals/models.py:362
+msgid ""
+"Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen "
+"van het experiment groter dan de kans op fysieke schade in het dagelijks "
+"leven?"
+msgstr ""
+
+#: proposals/models.py:365
+msgid ""
+"Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen "
+"van het experiment groter dan de kans op psychische schade in het dagelijks "
+"leven?"
+msgstr ""
+
+#: proposals/models.py:369
+msgid ""
+"Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze "
+"studie?"
+msgstr ""
+
+#: proposals/models.py:370
+msgid ""
+"tekst over dat vergoeding in redelijke verhouding moet zijn met belasting "
+"pp. En kinderen geen geld"
+msgstr ""
+
+#: proposals/models.py:377
+msgid "Hoe worden de proefpersonen geworven?"
+msgstr ""
+
+#: proposals/models.py:392
+#, python-format
+msgid "Study details for proposal %s"
+msgstr ""
+
+#: proposals/models.py:398
+msgid ""
+"Is het geheel van taken en overige activiteiten in de sessie als geheel "
+"belastend voor de proefpersoon op een manier die, ondanks de verkregen "
+"informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij "
+"de proefpersonen zelf, bij derden)? Denk hierbij bijvoorbeeld aan de totale "
+"duur, vermoeidheid, etc. Ga bij het beantwoorden van de vraag uit van wat u "
+"als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare "
+"proefpersonengroep."
+msgstr ""
+
+#: proposals/models.py:408
+msgid ""
+"Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?"
+msgstr ""
+
+#: proposals/models.py:411
+msgid ""
+"Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon "
+"vervolgens een vragenlijst afneemt, dan vult u hierboven \"2\" in. "
+"Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview "
+"gelden niet als een taak."
+msgstr ""
+
+#: proposals/models.py:414
+#, python-format
+msgid ""
+"De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave "
+"per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de totale "
+"sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, "
+"en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)"
+msgstr ""
+
+#: proposals/models.py:418
+msgid ""
+"Is het geheel van taken en overige activiteiten in de sessie als geheel "
+"belastend voor de proefpersoon op een manier die, ondanks de verkregen "
+"informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij "
+"de proefpersonen zelf, bij derden)? Denk hierbij aan zaken als de aard van "
+"de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de "
+"taak, de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het "
+"geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald "
+"gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van wat u als "
+"onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst "
+"belastbare proefpersonengroep."
+msgstr ""
+
+#: proposals/models.py:445
+msgid "Session {} at proposal {}"
+msgstr ""
+
+#: proposals/models.py:449
+msgid "Naam"
+msgstr ""
+
+#: proposals/models.py:450
+msgid "Duur (in minuten)"
+msgstr ""
+
+#: proposals/models.py:468
+msgid ""
+"Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als "
+"daarmee volledig duidelijk is waar het om gaat, bijv \"lexicale decisietaak"
+"\")"
+msgstr ""
+
+#: proposals/models.py:471
+msgid ""
+"Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het "
+"moment dat de taak van start gaat tot en met het einde van de taak "
+"(exclusief instructie maar inclusief oefensessie)? Indien de taakduur per "
+"proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het "
+"redelijkerwijs te verwachten maximum op."
+msgstr ""
+
+#: proposals/models.py:477
+msgid ""
+"Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak "
+"vastgelegd?"
+msgstr ""
+
+#: proposals/models.py:483
+msgid ""
+"Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag "
+"of toestand?"
+msgstr ""
+
+#: proposals/models.py:486
+msgid "Van welke aard is deze feedback?"
+msgstr ""
+
+#: proposals/models.py:490
+msgid ""
+"Is deze taak belastend voor de proefpersoon op een manier die, ondanks de "
+"verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij "
+"collegas, bij de proefpersonen zelf, bij derden)? Denk hierbij aan zaken als "
+"de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) "
+"veeleisendheid van de taak, de mate waarin proefpersonen zich ongemakkelijk "
+"kunnen voelen bij het geven van bepaalde antwoorden (bijv. "
+"depressievragenlijst) of bepaald gedrag, etcetera. En ga bij het "
+"beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de "
+"voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep."
+msgstr ""
+
+#: proposals/models.py:531 proposals/templates/proposals/menu.html:19
+#: proposals/templates/proposals/menu.html:38
+msgid "FAQ"
+msgstr ""
+
+#: proposals/templates/proposals/base.html:37
+msgid "ETCL UiL OTS"
+msgstr ""
+
+#: proposals/templates/proposals/faq_list.html:6
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: proposals/templates/proposals/faq_list.html:10
+msgid "Nog geen..."
+msgstr ""
+
+#: proposals/templates/proposals/index.html:6
+#: proposals/templates/proposals/menu.html:6
+msgid "Home"
+msgstr ""
+
+#: proposals/templates/proposals/index.html:12
+#, python-format
+msgid "Welkom %(first)s %(last)s!"
+msgstr ""
+
+#: proposals/templates/proposals/index.html:17
+msgid "Nieuwe aanvraag indienen"
+msgstr ""
+
+#: proposals/templates/proposals/index.html:18
+msgid "Bestaande aanvraag kopiëren"
+msgstr ""
+
+#: proposals/templates/proposals/index.html:23
+#, python-format
+msgid ""
+"\n"
+"\tWelkom bij het webportal van de ETCL. U kunt <a href=\"%(the_url)s\">hier</"
+"a> inloggen.\n"
+"\t"
+msgstr ""
+
+#: proposals/templates/proposals/menu.html:10
+msgid "Mijn conceptaanvragen"
+msgstr "My concept proposals"
+
+#: proposals/templates/proposals/menu.html:13
+msgid "Mijn aanvraagarchief"
+msgstr "My proposal archive"
+
+#: proposals/templates/proposals/menu.html:16
+msgid "Publiek aanvraagarchief"
+msgstr "Public proposal archive"
+
+#: proposals/templates/proposals/menu.html:22
+msgid "Feedback"
+msgstr "Feedback"
+
+#: proposals/templates/proposals/menu.html:25
+msgid "Uitloggen"
+msgstr "Log out"
+
+#: proposals/templates/proposals/menu.html:29
+msgid "Voorbeelddocumenten"
+msgstr ""
+
+#: proposals/templates/proposals/menu.html:32
+msgid "Leden"
+msgstr ""
+
+#: proposals/templates/proposals/menu.html:35
+msgid "Vergaderdata"
+msgstr ""
+
+#: proposals/templates/proposals/menu.html:41
+msgid "Inloggen"
+msgstr ""
+
+#: proposals/templates/proposals/menu.html:58
+msgid "Ga"
+msgstr "Go"
+
+#: proposals/templates/proposals/proposal_confirm_delete.html:6
+msgid "Aanvraag verwijderen"
+msgstr ""
+
+#: proposals/templates/proposals/proposal_confirm_delete.html:12
+#: proposals/templates/proposals/session_confirm_delete.html:12
+#: proposals/templates/proposals/task_confirm_delete.html:12
+msgid "Verwijderen"
+msgstr "Delete"
+
+#: proposals/templates/proposals/proposal_confirm_delete.html:13
+#: proposals/templates/proposals/session_confirm_delete.html:13
+#: proposals/templates/proposals/task_confirm_delete.html:13
+msgid "Annuleren"
+msgstr "Cancel"
+
+#: proposals/templates/proposals/session_confirm_delete.html:6
+msgid "Sessie verwijderen"
+msgstr ""
+
+#: proposals/templates/proposals/task_confirm_delete.html:6
+msgid "Taak verwijderen"
+msgstr ""
+
+#: proposals/views.py:139
+#, python-format
+msgid "Conceptaanvraag %(title)s aangemaakt"
+msgstr ""
+
+#: proposals/views.py:168
+msgid "Aanvraag gekopieerd"
+msgstr ""
+
+#: proposals/views.py:190
+#, python-format
+msgid "Conceptaanvraag %(title)s bewerkt"
+msgstr ""
+
+#: proposals/views.py:196
+msgid "Informed consent geupload"
+msgstr ""
+
+#: proposals/views.py:202
+msgid "Aanvraag verzonden"
+msgstr ""
+
+#: proposals/views.py:219
+msgid "Aanvraag verwijderd"
+msgstr ""
+
+#: proposals/views.py:226
+msgid "WMO-gegevens opgeslagen"
+msgstr ""
+
+#: proposals/views.py:242
+msgid "WMO-gegevens bewerkt"
+msgstr ""
+
+#: proposals/views.py:289
+#, python-format
+msgid "%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt"
+msgstr ""
+
+#: proposals/views.py:327
+msgid "Sessie verwijderd"
+msgstr ""
+
+#: proposals/views.py:399
+msgid "Taak opgeslagen"
+msgstr ""
+
+#: proposals/views.py:427
+msgid "Taak bewerkt"
+msgstr ""
+
+#: proposals/views.py:451
+msgid "Taak verwijderd"
+msgstr ""
