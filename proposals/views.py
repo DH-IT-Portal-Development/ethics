@@ -248,6 +248,11 @@ class WmoUpdate(UpdateView):
             return reverse('proposals:my_concepts')
 
 
+class WmoCheck(generic.FormView):
+    form_class = WmoForm
+    template_name = 'proposals/wmo_form.html'
+
+
 # CRUD actions on a Study
 # TODO: no success message: https://github.com/AndrewIngram/django-extra-views/issues/59
 class StudyCreate(LoginRequiredMixin, CreateWithInlinesView):

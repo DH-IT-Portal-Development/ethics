@@ -24,6 +24,7 @@ urlpatterns = [
     # WMO
     url(r'^wmo/create/(?P<pk>\d+)/$', WmoCreate.as_view(), name='wmo_create'),
     url(r'^wmo/update/(?P<pk>\d+)/$', WmoUpdate.as_view(), name='wmo_update'),
+    url(r'^wmo/check/$', WmoCheck.as_view(), name='wmo_check'),
 
     # Study
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
