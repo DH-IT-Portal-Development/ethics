@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-15 16:26+0200\n"
+"POT-Creation-Date: 2015-10-06 11:11+0200\n"
 "PO-Revision-Date: 2015-09-21 15:19+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 1.8.4\n"
 
 #: ethics/settings.py:88
@@ -222,10 +222,10 @@ msgid ""
 msgstr ""
 "We consider an experiment to consist of two sessions when the participant is "
 "asked to perform a task/multiple tasks during a first visit at the lab and "
-"the participant is asked to return on a later day to perform the same "
-"task(s) or a different task/multiple different tasks. In case multiple tasks "
-"are executed on the same day, with breaks in between, this is still "
-"considered as one session."
+"the participant is asked to return on a later day to perform the same task"
+"(s) or a different task/multiple different tasks. In case multiple tasks are "
+"executed on the same day, with breaks in between, this is still considered "
+"as one session."
 
 #: proposals/models.py:89
 #, python-format
@@ -270,7 +270,7 @@ msgstr ""
 "a researcher consider as the most vulnerable or that can carry the least "
 "amount of pressure/burden."
 
-#: proposals/models.py:102 proposals/models.py:426 proposals/models.py:498
+#: proposals/models.py:102 proposals/models.py:426 proposals/models.py:514
 msgid "Waarom denkt u dat?"
 msgstr "Why do you think that is the case?"
 
@@ -403,7 +403,7 @@ msgid "Selecteer de bijzondere kenmerken van uw proefpersonen"
 msgstr "Select the special characteristics of your participants"
 
 #: proposals/models.py:345 proposals/models.py:358 proposals/models.py:372
-#: proposals/models.py:379
+#: proposals/models.py:379 proposals/models.py:492 proposals/models.py:495
 msgid "Namelijk"
 msgstr "That is to say"
 
@@ -560,7 +560,15 @@ msgstr "Name"
 msgid "Duur (in minuten)"
 msgstr "Duration (in minutes)"
 
-#: proposals/models.py:468
+#: proposals/models.py:451
+msgid "URL"
+msgstr ""
+
+#: proposals/models.py:452
+msgid "Bestand"
+msgstr ""
+
+#: proposals/models.py:480
 msgid ""
 "Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als "
 "daarmee volledig duidelijk is waar het om gaat, bijv \"lexicale decisietaak"
@@ -570,7 +578,7 @@ msgstr ""
 "this name makes it completely clear what the task is about, for example "
 "'lexical decision task')"
 
-#: proposals/models.py:471
+#: proposals/models.py:483
 msgid ""
 "Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het "
 "moment dat de taak van start gaat tot en met het einde van de taak "
@@ -584,7 +592,7 @@ msgstr ""
 "duration of the task varies between participants (self paced task of task-to-"
 "criterion), indicate the maximum duration that can reasonably be expected."
 
-#: proposals/models.py:477
+#: proposals/models.py:489
 msgid ""
 "Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak "
 "vastgelegd?"
@@ -592,7 +600,7 @@ msgstr ""
 "How will the behavior or the state of the participant be recorded in this "
 "task?"
 
-#: proposals/models.py:483
+#: proposals/models.py:499
 msgid ""
 "Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag "
 "of toestand?"
@@ -600,11 +608,11 @@ msgstr ""
 "Will the participant receive feedback on his/her behavior or state during or "
 "after this task?"
 
-#: proposals/models.py:486
+#: proposals/models.py:502
 msgid "Van welke aard is deze feedback?"
 msgstr "What is the nature of this feedback?"
 
-#: proposals/models.py:490
+#: proposals/models.py:506
 msgid ""
 "Is deze taak belastend voor de proefpersoon op een manier die, ondanks de "
 "verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij "
@@ -627,7 +635,7 @@ msgstr ""
 "group of participants that you as a researcher consider as the most "
 "vulnerable or that can carry the least amount of pressure/burden."
 
-#: proposals/models.py:531 proposals/templates/proposals/menu.html:19
+#: proposals/models.py:547 proposals/templates/proposals/menu.html:19
 #: proposals/templates/proposals/menu.html:38
 msgid "FAQ"
 msgstr "FAQ"
@@ -773,23 +781,23 @@ msgstr "WMO information saved"
 msgid "WMO-gegevens bewerkt"
 msgstr "WMO information edited"
 
-#: proposals/views.py:289
+#: proposals/views.py:294
 #, python-format
 msgid "%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt"
 msgstr "%(sessions_number)s sessions for applicaiton %(title)s created"
 
-#: proposals/views.py:327
+#: proposals/views.py:332
 msgid "Sessie verwijderd"
 msgstr "Session deleted"
 
-#: proposals/views.py:399
+#: proposals/views.py:404
 msgid "Taak opgeslagen"
 msgstr "Task saved"
 
-#: proposals/views.py:427
+#: proposals/views.py:432
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: proposals/views.py:451
+#: proposals/views.py:456
 msgid "Taak verwijderd"
 msgstr "Task deleted"
