@@ -1,7 +1,6 @@
 from django import forms
-from django.forms.models import inlineformset_factory
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from .models import Proposal, Wmo, Study, Session, Task
 
@@ -238,6 +237,7 @@ class TaskEndForm(forms.ModelForm):
         tasks_duration.label = mark_safe(label)
 
         self.fields['tasks_stressful'].required = True
+        self.fields['tasks_stressful_details'].required = True
 
     def clean(self):
         """
@@ -270,6 +270,7 @@ class SessionEndForm(forms.ModelForm):
         sessions_duration.label = mark_safe(label)
 
         self.fields['sessions_stressful'].required = True
+        self.fields['sessions_stressful_details'].required = True
 
     def clean(self):
         """
@@ -297,4 +298,4 @@ class UploadConsentForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = []
+        fields = ['comments']

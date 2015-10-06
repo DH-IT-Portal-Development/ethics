@@ -1,0 +1,816 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-06 12:49+0200\n"
+"PO-Revision-Date: 2015-09-21 15:19+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+
+#: ethics/settings.py:88
+msgid "Nederlands"
+msgstr "Dutch"
+
+#: ethics/settings.py:89
+msgid "Engels"
+msgstr "English"
+
+#: feedback/models.py:6
+msgid "Open"
+msgstr "Open"
+
+#: feedback/models.py:7
+msgid "Working"
+msgstr "Working"
+
+#: feedback/models.py:8
+msgid "Closed"
+msgstr "Closed"
+
+#: feedback/models.py:12
+msgid "Low"
+msgstr "Low"
+
+#: feedback/models.py:13
+msgid "Medium"
+msgstr "Medium"
+
+#: feedback/models.py:14
+msgid "High"
+msgstr "High"
+
+#: proposals/copy.py:33
+#, python-format
+msgid "%s (kopie)"
+msgstr "%s (copy)"
+
+#: proposals/forms.py:7 proposals/forms.py:8
+msgid "ja"
+msgstr "yes"
+
+#: proposals/forms.py:7 proposals/forms.py:8
+msgid "nee"
+msgstr "no"
+
+#: proposals/forms.py:8
+msgid "twijfel"
+msgstr "doubt"
+
+#: proposals/forms.py:24
+msgid "Er bestaat al een studie met deze titel."
+msgstr "There is already an existing study that has this title. "
+
+#: proposals/forms.py:48
+msgid "U dient een eindverantwoordelijke op te geven."
+msgstr "You are required to specify the person with final responsibility,"
+
+#: proposals/forms.py:52
+msgid "U heeft geen andere onderzoekers geselecteerd."
+msgstr "You haven't selected any other researchers."
+
+#: proposals/forms.py:56
+msgid "De samenvatting bestaat uit teveel woorden."
+msgstr "The number of words of the summary is too high."
+
+#: proposals/forms.py:89
+msgid "U dient een instelling op te geven."
+msgstr "You are required to specify an institute."
+
+#: proposals/forms.py:250
+msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
+msgstr ""
+"The total duration of the session has to be at least as long as the netto "
+"duration of the session. "
+
+#: proposals/forms.py:282
+msgid "Totale studieduur moet minstens gelijk zijn aan netto studieduur."
+msgstr ""
+"The total duration of the study has to be at least as long as the netto "
+"duration of the study."
+
+#: proposals/models.py:34
+msgid "Algemene informatie ingevuld"
+msgstr "General information filled in"
+
+#: proposals/models.py:35
+msgid "WMO: geen beoordeling door METC noodzakelijk"
+msgstr "WMO: no assessment by METC needed"
+
+#: proposals/models.py:36
+msgid "WMO: wordt beoordeeld door METC"
+msgstr "WMO: METC will make an assessment"
+
+#: proposals/models.py:37
+msgid "Kenmerken studie toegevoegd"
+msgstr "Features of study added"
+
+#: proposals/models.py:38
+msgid "Belasting proefpersoon: sessies toevoegen"
+msgstr "Burden of participant: add session"
+
+#: proposals/models.py:39
+msgid "Belasting proefpersoon: taken toevoegen"
+msgstr "Burden of participant: add tasks"
+
+#: proposals/models.py:40
+msgid "Belasting proefpersoon: alle taken toegevoegd"
+msgstr "Burden of participant: all tasks added"
+
+#: proposals/models.py:41 proposals/models.py:42
+msgid "Belasting proefpersoon: afgerond"
+msgstr "Burden of participant: completed"
+
+#: proposals/models.py:43
+msgid "Informed consent geüpload"
+msgstr "Informed consent uploaded"
+
+#: proposals/models.py:45
+msgid "Opgestuurd ter beoordeling naar ETCL"
+msgstr "Sent for assessment for ETCL"
+
+#: proposals/models.py:46
+msgid "Aanvraag is beoordeeld naar ETCL"
+msgstr "Application is assessed for ETCL"
+
+#: proposals/models.py:47
+msgid "Aanvraag is beoordeeld door METC"
+msgstr "Application is assessed by METC"
+
+#: proposals/models.py:55
+msgid "Wat is de titel van uw studie?"
+msgstr "What is the title of your study?"
+
+#: proposals/models.py:58
+msgid ""
+"Kies s.v.p. een titel die niet volledig identiek is aan die van eerder "
+"ingediende studies."
+msgstr ""
+"Please choose a titled that is not completely identical to that of "
+"previously submitted studies."
+
+#: proposals/models.py:60
+msgid ""
+"Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een "
+"duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen, en (b) "
+"een korte beschrijving van de beoogde methode, d.w.z. een mini-versie van de "
+"toekomstige Methode-sectie, met informatie over proefpersonen, materiaal "
+"(taken, stimuli), design, en procedure. Het gaat er hier vooral om dat de "
+"relatie tussen de onderzoeksvraag of -vragen en de beoogde methode voldoende "
+"helder is; verderop in deze aanmelding zal voor specifieke ingrediënten van "
+"de methode meer gedetailleerde informatie worden gevraagd."
+msgstr ""
+"Please write down a summary of 200-300 words, which includes (a) a clear and "
+"concise description of the research question(s), and (b) a short description "
+"of the intended methodology, that is, a (very) short version of the future "
+"methodology section, including information on participants, material (tasks, "
+"stimuli), design and procedure. Specifically, the relationship between the "
+"research question(s) and the intended methodology must be sufficiently "
+"clear. More information about the specifics of the methodology will be "
+"requested later on in this application."
+
+#: proposals/models.py:67
+msgid "E-mailadres eindverantwoordelijke"
+msgstr "E-mail adress person of final responsibility"
+
+#: proposals/models.py:69
+msgid ""
+"Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw "
+"eindverantwoordelijke sturen. Wanneer de verificatie binnen is, krijgt u een "
+"e-mail zodat u deze aanvraag kunt afronden."
+msgstr ""
+"At the end of the procedure, it is possible to send this application to the "
+"person of final responsibility of the study for verification. When we have "
+"received the verification, you will receive an e-mail with which you can "
+"complete this application. "
+
+#: proposals/models.py:72
+msgid "Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?"
+msgstr "Are there any other UiL-OTS researchers involved in this study?"
+
+#: proposals/models.py:75
+msgid ""
+"Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen deelnemen "
+"aan een sessie? (bijvoorbeeld een longitudinale studie, of een kortlopende "
+"studie waar proefpersonen op twee of meer verschillende dagen getest worden)"
+msgstr ""
+"Is this a study in which the same participants have to participate in a "
+"session on multiple days? (For example a longitudinal study, or a short-term "
+"study in which participants need to be tested on different (two or more) "
+"days)"
+
+#: proposals/models.py:81
+msgid "Hoeveel sessies telt deze studie?"
+msgstr "How many sessions comprises this study?"
+
+#: proposals/models.py:84
+msgid ""
+"Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen "
+"tijdens een eerste bezoek aan het lab en u laat de proefpersoon nog een keer "
+"terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken "
+"we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met "
+"pauzes daartussen, dan geldt dat toch als één sessie."
+msgstr ""
+"We consider an experiment to consist of two sessions when the participant is "
+"asked to perform a task/multiple tasks during a first visit at the lab and "
+"the participant is asked to return on a later day to perform the same task"
+"(s) or a different task/multiple different tasks. In case multiple tasks are "
+"executed on the same day, with breaks in between, this is still considered "
+"as one session."
+
+#: proposals/models.py:89
+#, fuzzy, python-format
+#| msgid ""
+#| "De totale geschatte netto studieduur van uw sessie komt op basis van uw "
+#| "opgave per sessie uit op <strong>X minuten</strong>. Schat de totale tijd "
+#| "die uw proefpersonen aan de gehele studie zullen besteden."
+msgid ""
+"De totale geschatte netto studieduur van uw sessie komt op basis van uw "
+"opgave per sessie uit op <strong>%d minuten</strong>. Schat de totale tijd "
+"die uw proefpersonen aan de gehele studie zullen besteden."
+msgstr ""
+"Based on  the duration that you have specified per session, the estimated "
+"total netto duration of the session of your study is: <strong>X minuten</"
+"strong>. Give an estimation of the total amount of time that your "
+"participants will need to complete the study."
+
+#: proposals/models.py:92
+msgid ""
+"Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle "
+"sessie bij elkaar opgeteld, exclusief reistijd."
+msgstr ""
+"This is the estimated total bruto time the participant needs for all "
+"culminated sessions, traveling time excluded."
+
+#: proposals/models.py:94
+msgid ""
+"Is het totaal van sessies als geheel belastend voor de proefpersoon op een "
+"manier die, ondanks de verkregen informed consent, vragen zou kunnen "
+"oproepen (bijvoorbeeld bij collegas, bij de proefpersonen zelf, bij derden)? "
+"Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of "
+"(mentale/fysieke) veeleisendheid van de taak, de mate waarin proefpersonen "
+"zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden "
+"(bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga bij het "
+"beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de "
+"voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep."
+msgstr ""
+"Is the total of sessions as a whole a burden for the participants in such a "
+"way that it could raise questions (for example from colleagues, from the "
+"participants, a third party)? Examples are the nature of the stimuli, the "
+"duration of the task, whether performing the task is tedious or asks for a "
+"great amount of mental/physical effort, the degree in which the participants "
+"might feel uncomfortable at giving certain answers (for example in the case "
+"of a questionnaire concerning depression) or certain behavior, et cetera. In "
+"answering this question, keep in mind the group of participants that you as "
+"a researcher consider as the most vulnerable or that can carry the least "
+"amount of pressure/burden."
+
+#: proposals/models.py:102 proposals/models.py:426 proposals/models.py:514
+msgid "Waarom denkt u dat?"
+msgstr "Why do you think that is the case?"
+
+#: proposals/models.py:107
+msgid "Upload hier de informed consent"
+msgstr "Please upload the informed consent here"
+
+#: proposals/models.py:121
+msgid "Wat is uw relatie tot het UiL OTS?"
+msgstr "What is your relationship with UiL OTS?"
+
+#: proposals/models.py:127
+msgid "Uitvoerende(n)"
+msgstr "Executor(s)"
+
+#: proposals/models.py:132
+msgid "Te kopiëren aanvraag"
+msgstr "Application to be copied"
+
+#: proposals/models.py:227
+msgid "Geen beoordeling door METC noodzakelijk"
+msgstr "No assessment by METC needed"
+
+#: proposals/models.py:228
+msgid "In afwachting beslissing METC"
+msgstr "Pending on the assessment METC"
+
+#: proposals/models.py:229
+msgid "Beslissing METC geüpload"
+msgstr "Pending on the assessment METC"
+
+#: proposals/models.py:233
+msgid ""
+"Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
+"waar toetsing door een METC verplicht is gesteld?"
+msgstr ""
+"Is the collecting of data taking place at UMC Utrecht or another institution "
+"for which an assessment of METC is required?"
+
+#: proposals/models.py:235
+msgid "Welke instelling?"
+msgstr "Which institution?"
+
+#: proposals/models.py:239
+msgid ""
+"Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
+"door de WMO)?"
+msgstr ""
+"Is the nature of the research question medical-scientific (as defined by "
+"WMO)?"
+
+#: proposals/models.py:242
+msgid ""
+"Worden de proefpersonen aan een handeling onderworpen of worden hen "
+"gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
+msgstr ""
+"Are the participants being submitted to an act or are they imposed to rules "
+"of conduct (as defined by WMO)?"
+
+#: proposals/models.py:243
+msgid ""
+"Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
+"weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten "
+"drukken."
+msgstr ""
+"An act or a rule of conduct varies from collecting tissue of a participant "
+"to requiring the participant to press a button/key."
+
+#: proposals/models.py:246
+msgid ""
+"Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
+"ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag "
+"ingediend?"
+msgstr ""
+"Your study has to be assessed by METC, however, it still needs to be "
+"registered at ETCL. Has an application for this study already been submitted "
+"at METC?"
+
+#: proposals/models.py:249
+msgid "Is de METC al tot een beslissing gekomen?"
+msgstr "Has the METC already come to a decision concering your application?"
+
+#: proposals/models.py:252
+msgid "Upload hier de beslissing van het METC"
+msgstr "Please upload the decision of METC here"
+
+#: proposals/models.py:277
+#, python-format
+msgid "WMO %s, status %s"
+msgstr "WM %s, status %s"
+
+#: proposals/models.py:288
+#, python-format
+msgid "%d-%d jaar"
+msgstr "%d- %d year"
+
+#: proposals/models.py:290
+#, python-format
+msgid "%d+ jaar"
+msgstr "%d+ year"
+
+#: proposals/models.py:332
+msgid ""
+"Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, "
+"er zijn meerdere antwoorden mogelijk"
+msgstr ""
+"Indicate below to which age categories the participants belong; it is "
+"possible to select multiple answers"
+
+#: proposals/models.py:335
+msgid ""
+"Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken "
+"die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde "
+"belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: kinderen "
+"die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale "
+"beledigingen; patiënten met afasie die een gesprek moeten voeren, ook al "
+"gaat het gesprek over alledaagse dingen). Is dit in uw studie bij (een deel "
+"van) de proefpersonen het geval?"
+msgstr ""
+"It may be the case that participants are selected based on certain deviating/"
+"special characteristics that possibly go with a increased risk on "
+"vulnerability or reduced capacity with respect to aspects of the proposed "
+"study (e.g. children that are bullied in the past in a study on the neural "
+"response on verbal insults; patients with aphasia that have to engage in an "
+"conversation, even if the topics are everyday matters). Is this the case in "
+"your study with (a part of) the participants?"
+
+#: proposals/models.py:343
+msgid "Selecteer de bijzondere kenmerken van uw proefpersonen"
+msgstr "Select the special characteristics of your participants"
+
+#: proposals/models.py:345 proposals/models.py:358 proposals/models.py:372
+#: proposals/models.py:379 proposals/models.py:492 proposals/models.py:495
+msgid "Namelijk"
+msgstr "That is to say"
+
+#: proposals/models.py:349
+msgid ""
+"Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het "
+"geselecteerde type proefpersonen aan de studie te laten deelnemen?"
+msgstr ""
+"In order to answer the research question, is it necessary for the selected "
+"type of participants to participate in the study?"
+
+#: proposals/models.py:350
+msgid ""
+"Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag "
+"ook kunnen beantwoorden door volwassen proefpersonen te testen?"
+msgstr ""
+"For example, is it necessary to test children, or would it be possible to "
+"answer the research question by testing adults?"
+
+#: proposals/models.py:352
+msgid "Leg uit waarom"
+msgstr "Eplain why"
+
+#: proposals/models.py:356
+msgid "Geef aan waar de dataverzameling plaatsvindt"
+msgstr ""
+"Specify the location at which the gathering of the data will take place"
+
+#: proposals/models.py:362
+msgid ""
+"Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen "
+"van het experiment groter dan de kans op fysieke schade in het dagelijks "
+"leven?"
+msgstr ""
+"Is the chance on physical damage for the participant higher during the "
+"experiment than in daily life?"
+
+#: proposals/models.py:365
+msgid ""
+"Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen "
+"van het experiment groter dan de kans op psychische schade in het dagelijks "
+"leven?"
+msgstr ""
+"Is the chance on psychological damage for the participant higher during the "
+"experiment than in daily life?"
+
+#: proposals/models.py:369
+msgid ""
+"Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze "
+"studie?"
+msgstr ""
+"What is the compensation the participants receive for participating in this "
+"study?"
+
+#: proposals/models.py:370
+msgid ""
+"tekst over dat vergoeding in redelijke verhouding moet zijn met belasting "
+"pp. En kinderen geen geld"
+msgstr "-"
+
+#: proposals/models.py:377
+msgid "Hoe worden de proefpersonen geworven?"
+msgstr "How will the participants be recruited?"
+
+#: proposals/models.py:392
+#, python-format
+msgid "Study details for proposal %s"
+msgstr "Study details for proposal %s"
+
+#: proposals/models.py:398
+msgid ""
+"Is het geheel van taken en overige activiteiten in de sessie als geheel "
+"belastend voor de proefpersoon op een manier die, ondanks de verkregen "
+"informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij "
+"de proefpersonen zelf, bij derden)? Denk hierbij bijvoorbeeld aan de totale "
+"duur, vermoeidheid, etc. Ga bij het beantwoorden van de vraag uit van wat u "
+"als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare "
+"proefpersonengroep."
+msgstr ""
+"Is the total of tasks and further activities in the session as a whole a "
+"burden for the participants in such a way that it could raise questions, in "
+"spite of the obtained informed consent (for example from colleagues, from "
+"the participants, a third party)? Examples are the total duration, "
+"exaustion, et cetera. In answering this question, keep in mind the group of "
+"participants that you as a researcher consider as the most vulnerable or "
+"that can carry the least amount of pressure/burden."
+
+#: proposals/models.py:408
+msgid ""
+"Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?"
+msgstr ""
+"How many tasks will each participant have to carry out in this session?"
+
+#: proposals/models.py:411
+msgid ""
+"Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon "
+"vervolgens een vragenlijst afneemt, dan vult u hierboven \"2\" in. "
+"Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview "
+"gelden niet als een taak."
+msgstr ""
+"For example, when you first observe the participant and then let the "
+"participant complete a questionnaire, please fill in '2' above. Putting on "
+"electrodes, session-debriefing and a short (< 3 minutes) exit-interview are "
+"not counted as tasks. "
+
+#: proposals/models.py:414
+#, fuzzy, python-format
+#| msgid ""
+#| "De totale geschatte netto taakduur van uw sessie komt op basis van uw "
+#| "opgave per taak uit op <strong>X minuten</strong>. Hoe lang duurt <em>de "
+#| "totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes "
+#| "tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot "
+#| "vertrek)"
+msgid ""
+"De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave "
+"per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de totale "
+"sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, "
+"en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)"
+msgstr ""
+"The estimated total netto task duration of your session equals, based on "
+"your specification per task, <strong>X minutes </strong>. How long takes "
+"<em> the total session </em>, including intake, instructions per task, "
+"breaks in between the tasks, and debriefing? (so, in case of a lab visit "
+"from entering the lab until leaving)"
+
+#: proposals/models.py:418
+msgid ""
+"Is het geheel van taken en overige activiteiten in de sessie als geheel "
+"belastend voor de proefpersoon op een manier die, ondanks de verkregen "
+"informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij "
+"de proefpersonen zelf, bij derden)? Denk hierbij aan zaken als de aard van "
+"de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de "
+"taak, de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het "
+"geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald "
+"gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van wat u als "
+"onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst "
+"belastbare proefpersonengroep."
+msgstr ""
+"Is the total of tasks and further activities during the session as a whole a "
+"burden for the participants in such a way that it could raise questions, in "
+"spite of the obtained informed consent (for example from colleagues, from "
+"the participants, a third party)? Examples are the nature of the stimuli, "
+"the duration of the task, whether performing the task is tedious or asks for "
+"a great amount of mental/physical effort, the degree in which the "
+"participants might feel uncomfortable at giving certain answers (for example "
+"in the case of a questionnaire concerning depression) or certain behavior, "
+"et cetera. In answering this question, keep in mind the group of "
+"participants that you as a researcher consider as the most vulnerable or "
+"that can carry the least amount of pressure/burden."
+
+#: proposals/models.py:445
+msgid "Session {} at proposal {}"
+msgstr "Session {} at proposal {}"
+
+#: proposals/models.py:449
+msgid "Naam"
+msgstr "Name"
+
+#: proposals/models.py:450
+msgid "Duur (in minuten)"
+msgstr "Duration (in minutes)"
+
+#: proposals/models.py:451
+msgid "URL"
+msgstr ""
+
+#: proposals/models.py:452
+msgid "Bestand"
+msgstr ""
+
+#: proposals/models.py:480
+msgid ""
+"Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als "
+"daarmee volledig duidelijk is waar het om gaat, bijv \"lexicale decisietaak"
+"\")"
+msgstr ""
+"What is the name or short description of the taks? (only give up a name if "
+"this name makes it completely clear what the task is about, for example "
+"'lexical decision task')"
+
+#: proposals/models.py:483
+msgid ""
+"Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het "
+"moment dat de taak van start gaat tot en met het einde van de taak "
+"(exclusief instructie maar inclusief oefensessie)? Indien de taakduur per "
+"proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het "
+"redelijkerwijs te verwachten maximum op."
+msgstr ""
+"What is the duration of this task from beginning until end in minutes, so "
+"from the moment the carrying out of the task starts until the end of the "
+"task (note: the instruction excluded, trial session included)? In case the "
+"duration of the task varies between participants (self paced task of task-to-"
+"criterion), indicate the maximum duration that can reasonably be expected."
+
+#: proposals/models.py:489
+msgid ""
+"Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak "
+"vastgelegd?"
+msgstr ""
+"How will the behavior or the state of the participant be recorded in this "
+"task?"
+
+#: proposals/models.py:499
+msgid ""
+"Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag "
+"of toestand?"
+msgstr ""
+"Will the participant receive feedback on his/her behavior or state during or "
+"after this task?"
+
+#: proposals/models.py:502
+msgid "Beschrijf hoe de feedback wordt gegeven."
+msgstr "Describe how the feedback is given."
+
+#: proposals/models.py:506
+msgid ""
+"Is deze taak belastend voor de proefpersoon op een manier die, ondanks de "
+"verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij "
+"collegas, bij de proefpersonen zelf, bij derden)? Denk hierbij aan zaken als "
+"de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) "
+"veeleisendheid van de taak, de mate waarin proefpersonen zich ongemakkelijk "
+"kunnen voelen bij het geven van bepaalde antwoorden (bijv. "
+"depressievragenlijst) of bepaald gedrag, etcetera. En ga bij het "
+"beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de "
+"voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep."
+msgstr ""
+"Is this task a burden for the participants in such a way that it could raise "
+"questions, in spite of the obtained informed consent (for example from "
+"colleagues, from the participants, a third party)? Examples are the nature "
+"of the stimuli, the duration of the task, whether performing the task is "
+"tedious or asks for a great amount of mental/physical effort, the degree in "
+"which the participants might feel uncomfortable at giving certain answers "
+"(for example in the case of a questionnaire concerning depression) or "
+"certain behavior, et cetera. In answering this question, keep in mind the "
+"group of participants that you as a researcher consider as the most "
+"vulnerable or that can carry the least amount of pressure/burden."
+
+#: proposals/models.py:547 proposals/templates/proposals/menu.html:19
+#: proposals/templates/proposals/menu.html:38
+msgid "FAQ"
+msgstr "FAQ"
+
+#: proposals/templates/proposals/base.html:37
+msgid "ETCL UiL OTS"
+msgstr "ETC UiL OTS"
+
+#: proposals/templates/proposals/faq_list.html:6
+msgid "Frequently Asked Questions"
+msgstr "Frequently Asked Questions"
+
+#: proposals/templates/proposals/faq_list.html:10
+msgid "Nog geen..."
+msgstr "Not yet a..."
+
+#: proposals/templates/proposals/index.html:6
+#: proposals/templates/proposals/menu.html:6
+msgid "Home"
+msgstr "Home"
+
+#: proposals/templates/proposals/index.html:12
+#, python-format
+msgid "Welkom %(first)s %(last)s!"
+msgstr "Welcome %(first)s %(last)s!"
+
+#: proposals/templates/proposals/index.html:17
+msgid "Nieuwe aanvraag indienen"
+msgstr "Hand in new application"
+
+#: proposals/templates/proposals/index.html:18
+msgid "Bestaande aanvraag kopiëren"
+msgstr "Copy created application"
+
+#: proposals/templates/proposals/index.html:23
+#, python-format
+msgid ""
+"\n"
+"\tWelkom bij het webportal van de ETCL. U kunt <a href=\"%(the_url)s\">hier</"
+"a> inloggen.\n"
+"\t"
+msgstr ""
+"\n"
+"\t Welcome to the web portal of the ETCL. U can sign in <a href=\"%(the_url)s"
+"\">here</a>.\n"
+"\t"
+
+#: proposals/templates/proposals/menu.html:10
+msgid "Mijn conceptaanvragen"
+msgstr "My concept proposals"
+
+#: proposals/templates/proposals/menu.html:13
+msgid "Mijn aanvraagarchief"
+msgstr "My proposal archive"
+
+#: proposals/templates/proposals/menu.html:16
+msgid "Publiek aanvraagarchief"
+msgstr "Public proposal archive"
+
+#: proposals/templates/proposals/menu.html:22
+msgid "Feedback"
+msgstr "Feedback"
+
+#: proposals/templates/proposals/menu.html:25
+msgid "Uitloggen"
+msgstr "Log out"
+
+#: proposals/templates/proposals/menu.html:29
+msgid "Voorbeelddocumenten"
+msgstr "Example documents"
+
+#: proposals/templates/proposals/menu.html:32
+msgid "Leden"
+msgstr "Members"
+
+#: proposals/templates/proposals/menu.html:35
+msgid "Vergaderdata"
+msgstr "Dates of meetings"
+
+#: proposals/templates/proposals/menu.html:41
+msgid "Inloggen"
+msgstr "Log in"
+
+#: proposals/templates/proposals/menu.html:58
+msgid "Ga"
+msgstr "Go"
+
+#: proposals/templates/proposals/proposal_confirm_delete.html:6
+msgid "Aanvraag verwijderen"
+msgstr "Delete application"
+
+#: proposals/templates/proposals/proposal_confirm_delete.html:12
+#: proposals/templates/proposals/session_confirm_delete.html:12
+#: proposals/templates/proposals/task_confirm_delete.html:12
+msgid "Verwijderen"
+msgstr "Delete"
+
+#: proposals/templates/proposals/proposal_confirm_delete.html:13
+#: proposals/templates/proposals/session_confirm_delete.html:13
+#: proposals/templates/proposals/task_confirm_delete.html:13
+msgid "Annuleren"
+msgstr "Cancel"
+
+#: proposals/templates/proposals/session_confirm_delete.html:6
+msgid "Sessie verwijderen"
+msgstr "Delete session"
+
+#: proposals/templates/proposals/task_confirm_delete.html:6
+msgid "Taak verwijderen"
+msgstr "Delete task"
+
+#: proposals/views.py:139
+#, python-format
+msgid "Conceptaanvraag %(title)s aangemaakt"
+msgstr "Concept application %(title)s created"
+
+#: proposals/views.py:168
+msgid "Aanvraag gekopieerd"
+msgstr "Application copied"
+
+#: proposals/views.py:190
+#, python-format
+msgid "Conceptaanvraag %(title)s bewerkt"
+msgstr "Concept application %(title)s edited"
+
+#: proposals/views.py:196
+msgid "Informed consent geupload"
+msgstr "Informed consent uploaded"
+
+#: proposals/views.py:202
+msgid "Aanvraag verzonden"
+msgstr "Application sent"
+
+#: proposals/views.py:219
+msgid "Aanvraag verwijderd"
+msgstr "Application deleted"
+
+#: proposals/views.py:226
+msgid "WMO-gegevens opgeslagen"
+msgstr "WMO information saved"
+
+#: proposals/views.py:242
+msgid "WMO-gegevens bewerkt"
+msgstr "WMO information edited"
+
+#: proposals/views.py:294
+#, python-format
+msgid "%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt"
+msgstr "%(sessions_number)s sessions for applicaiton %(title)s created"
+
+#: proposals/views.py:332
+msgid "Sessie verwijderd"
+msgstr "Session deleted"
+
+#: proposals/views.py:404
+msgid "Taak opgeslagen"
+msgstr "Task saved"
+
+#: proposals/views.py:432
+msgid "Taak bewerkt"
+msgstr "Task edited"
+
+#: proposals/views.py:456
+msgid "Taak verwijderd"
+msgstr "Task deleted"
+
+#~ msgid "Van welke aard is deze feedback?"
+#~ msgstr "What is the nature of this feedback?"

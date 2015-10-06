@@ -5,8 +5,7 @@
 Aanvraag ter beoordeling en registratie
 {% endblock %} 
 
-{% block content %} 
-{% include "proposals/form_styling.html" %}
+{% block content %}
 <h3>Belasting voor de proefpersoon</h3>
 <p>U heeft aangegeven dat u gebruik maakt van proefpersonen binnen de leeftijdsgroepen:</p>
 <ul>{{ proposal.study.age_groups.all|unordered_list }}</ul>

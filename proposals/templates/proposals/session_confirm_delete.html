@@ -1,13 +1,15 @@
 {% extends "proposals/base.html" %}
 
-{% block title %} 
-Sessie verwijderen
+{% load i18n %}
+
+{% block title %}
+{% trans "Sessie verwijderen" %}
 {% endblock %} 
 
 {% block content %} 
 <form action="" method="post">{% csrf_token %}
     <p>Weet je zeker dat je deze sessie van de studie <em>{{ object.proposal.title }}</em> wilt verwijderen?</p>
-    <input class="pure-button pure-button-primary" type="submit" value="Verwijderen" />
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">Annuleren</a>
+    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Verwijderen' %}" />
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
 </form>
 {% endblock %}

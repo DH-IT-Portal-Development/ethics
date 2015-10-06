@@ -1,12 +1,12 @@
 {% extends "proposals/base.html" %}
+
 {% load staticfiles %}
 
 {% block title %} 
 Aanvraag ter beoordeling en registratie
 {% endblock %} 
 
-{% block content %} 
-{% include "proposals/form_styling.html" %}
+{% block content %}
 <script>
 $(function() {
     $("input[name=metc]").change(function() {

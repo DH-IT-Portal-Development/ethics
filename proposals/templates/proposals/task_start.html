@@ -5,8 +5,7 @@
 Aanvraag ter beoordeling en registratie
 {% endblock %} 
 
-{% block content %} 
-{% include "proposals/form_styling.html" %}
+{% block content %}
 <h3>Belasting voor de proefpersoon</h3>
 <h4>Sessie {{ object.order }}</h4>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}

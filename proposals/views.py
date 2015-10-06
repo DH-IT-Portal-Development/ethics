@@ -1,60 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
-from django.core.exceptions import PermissionDenied
-from django.views import generic
-from django.views.generic.detail import SingleObjectMixin
-from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext as _
+from django.utils import timezone
+from django.views import generic
+from django.views.decorators.csrf import csrf_exempt
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
-from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
+from .copy import copy_proposal
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
-from .copy import copy_proposal
+from .mixins import LoginRequiredMixin, UserAllowedMixin
+from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .utils import generate_ref_number
-
-
-class LoginRequiredMixin(object):
-    """Mixin for generic views to retun to login view if not logged in"""
-    @classmethod
-    def as_view(cls, **initkwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
-        return login_required(view)
-
-
-class UserAllowedMixin(SingleObjectMixin):
-    def get_object(self, queryset=None):
-        """
-        Checks whether the current User is in the applicants of a Proposal
-        and whether the Proposal has not yet been submitted.
-        """
-        obj = super(UserAllowedMixin, self).get_object(queryset)
-
-        applicants = []
-        status = None
-        if isinstance(obj, Proposal):
-            applicants = obj.applicants.all()
-            status = obj.status
-        elif isinstance(obj, Task):
-            applicants = obj.session.proposal.applicants.all()
-            status = obj.session.proposal.status
-        else:
-            applicants = obj.proposal.applicants.all()
-            status = obj.proposal.status
-
-        if self.request.user not in applicants or status >= Proposal.SUBMITTED:
-            raise PermissionDenied
-
-        return obj
 
 
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
@@ -76,7 +40,7 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
 
 class SurveysInline(InlineFormSet):
     model = Survey
-    fields = ['name', 'minutes']
+    fields = ['name', 'minutes', 'survey_url', 'survey_file']
     can_delete = True
     extra = 1
 
@@ -246,6 +210,11 @@ class WmoUpdate(UpdateView):
             return self.object.proposal.continue_url()
         else:
             return reverse('proposals:my_concepts')
+
+
+class WmoCheck(generic.FormView):
+    form_class = WmoForm
+    template_name = 'proposals/wmo_form.html'
 
 
 # CRUD actions on a Study

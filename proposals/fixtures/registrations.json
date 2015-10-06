@@ -2,6 +2,7 @@
 {
     "fields": {
         "needs_details": false,
+        "needs_kind": false,
         "order": 1,
         "description": "audio-opname"
     },
@@ -11,6 +12,7 @@
 {
     "fields": {
         "needs_details": false,
+        "needs_kind": false,
         "order": 2,
         "description": "video-opname"
     },
@@ -20,8 +22,9 @@
 {
     "fields": {
         "needs_details": false,
+        "needs_kind": false,
         "order": 3,
-        "description": "'live' gedragsscoring (bijv. wat wordt aangewezen, waar wordt gekeken)"
+        "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)"
     },
     "model": "proposals.registration",
     "pk": 3
@@ -29,6 +32,7 @@
 {
     "fields": {
         "needs_details": false,
+        "needs_kind": false,
         "order": 4,
         "description": "RT-registratie via Zep, Presentation, E-prime, etc"
     },
@@ -38,28 +42,41 @@
 {
     "fields": {
         "needs_details": false,
+        "needs_kind": false,
         "order": 5,
-        "description": "oogbewegingsregistratie via eye-trackers"
+        "description": "oogbewegingsregistratie via een eye-tracker"
     },
     "model": "proposals.registration",
     "pk": 5
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
+        "needs_kind": true,
         "order": 6,
-        "description": "psychofysiologische meting (aangeven welk: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling, vingertemperatuur)"
+        "description": "psychofysiologische meting (bijvoorbeeld: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling, vingertemperatuur)"
     },
     "model": "proposals.registration",
     "pk": 6
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
+        "needs_kind": false,
         "order": 7,
-        "description": "anders, namelijk"
+        "description": "registratie gegevens d.m.v. een (online) vragenlijst"
     },
     "model": "proposals.registration",
     "pk": 7
+},
+{
+    "fields": {
+        "needs_details": true,
+        "needs_kind": false,
+        "order": 8,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.registration",
+    "pk": 8
 }
 ]
