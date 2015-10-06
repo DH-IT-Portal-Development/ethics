@@ -64,7 +64,7 @@ design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderz
 en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingrediënten \
 van de methode meer gedetailleerde informatie worden gevraagd.'))
     supervisor_email = models.EmailField(
-        _('E-mailadres eindverantwoordelijke'),
+        _('E-mailadres eindverantwoordelijke onderzoeker'),
         blank=True,
         help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))
@@ -240,6 +240,11 @@ class Wmo(models.Model):
         blank=True)
     is_medical = models.NullBooleanField(
         _('Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?'),
+        help_text=_('De definitie van medisch-wetenschappelijk onderzoek is: \
+Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid \
+(etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. \
+Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. \
+(CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)'),
         default=False)
     is_behavioristic = models.NullBooleanField(
         _('Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
@@ -335,9 +340,7 @@ class Study(models.Model):
         verbose_name=_('Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
 er zijn meerdere antwoorden mogelijk'))
     has_traits = models.BooleanField(
-        _(u'Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie \
-(bijvoorbeeld: kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale beledigingen; \
-patiënten met afasie die een gesprek moeten voeren, ook al gaat het gesprek over alledaagse dingen). \
+        _(u'Proefpersonen kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
         default=False)
     traits = models.ManyToManyField(
@@ -362,10 +365,10 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
         max_length=200,
         blank=True)
     risk_physical = models.NullBooleanField(
-        _('Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen van het experiment groter dan de kans op fysieke schade in het dagelijks leven?'),
+        _('Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen van de taak groter dan de kans op fysieke schade in het dagelijks leven?'),
         default=False)
     risk_psychological = models.NullBooleanField(
-        _('Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen van het experiment groter dan de kans op psychische schade in het dagelijks leven?'),
+        _('Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen van de taak groter dan de kans op psychische schade in het dagelijks leven?'),
         default=False)
     compensation = models.ForeignKey(
         Compensation,
