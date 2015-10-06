@@ -296,4 +296,4 @@ class UploadConsentForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = []
+        fields = ['comments']

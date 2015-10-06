@@ -75,6 +75,9 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         _('Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen deelnemen aan een sessie? \
 (bijvoorbeeld een longitudinale studie, of een kortlopende studie waar proefpersonen op twee of meer verschillende dagen getest worden)'),
         default=False)
+    comments = models.TextField(
+        _('Ruimte voor eventuele opmerkingen'),
+        blank=True)
 
     # Fields with respect to session
     sessions_number = models.PositiveIntegerField(
