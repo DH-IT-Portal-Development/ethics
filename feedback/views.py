@@ -21,7 +21,7 @@ class FeedbackCreate(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
     def form_valid(self, form):
         """Fill default fields"""
         form.instance.url = self.request.META.get('HTTP_REFERER')
-        form.instance.created_by = self.request.user
+        form.instance.submitter = self.request.user
         return super(FeedbackCreate, self).form_valid(form)
 
     def get_success_url(self):

@@ -20,7 +20,7 @@ Feedbackoverzicht
         <tr>
             <td>{{ feedback.url }}</td>
             <td>{{ feedback.comment }}</td>
-            <td>{{ feedback.created_by }}</td>
+            <td>{{ feedback.submitter }}</td>
             <td>{{ feedback.date_created|date:"j M Y, G:i" }}</td>
         </tr>
         {% endfor %}
