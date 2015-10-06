@@ -43,6 +43,8 @@
             <tr>
                 <th>Naam</th>
                 <th>Duur (in minuten)</th>
+                <th>URL</th>
+                <th>Bestand</th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +52,8 @@
             <tr>
                 <td>{{ survey.name }}</td>
                 <td>{{ survey.minutes }}</td>
+                <td><a href="{{ survey.survey_url }}" target="_blank">{{ survey.survey_url }}</a></td>
+                <td>{{ survey.survey_file }} (TODO: link)</td>
             </tr>
             {% endfor %}
         </tbody>
