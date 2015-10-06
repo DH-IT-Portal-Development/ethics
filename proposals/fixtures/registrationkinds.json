@@ -1,0 +1,74 @@
+[
+{
+    "fields": {
+        "registration": 6,
+        "order": 1,
+        "description": "EEG"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 1
+},
+{
+    "fields": {
+        "registration": 6,
+        "order": 2,
+        "description": "ECG"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 2
+},
+{
+    "fields": {
+        "registration": 6,
+        "order": 3,
+        "description": "fEMG"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 3
+},
+{
+    "fields": {
+        "registration": 6,
+        "order": 4,
+        "description": "fMRI"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 4
+},
+{
+    "fields": {
+        "registration": 6,
+        "order": 5,
+        "description": "BVP"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 5
+},
+{
+    "fields": {
+        "registration": 6,
+        "order": 6,
+        "description": "EMA"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 6
+},
+{
+    "fields": {
+        "registration": 6,
+        "order": 7,
+        "description": "ademhaling"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 7
+},
+{
+    "fields": {
+        "registration": 6,
+        "order": 8,
+        "description": "vingertemperatuur"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 8
+}
+]

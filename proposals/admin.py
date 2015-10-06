@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Relation, AgeGroup, Trait, Registration, \
+from .models import Relation, AgeGroup, Trait, Registration, RegistrationKind, \
     Setting, Compensation, Recruitment, Faq, Member, Meeting
 
 
@@ -23,8 +23,14 @@ class TraitAdmin(admin.ModelAdmin):
 
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
-    list_display = ('order', 'description', 'needs_details', )
+    list_display = ('order', 'description', 'needs_details', 'needs_kind', )
     ordering = ['order']
+
+
+@admin.register(RegistrationKind)
+class RegistrationKindAdmin(admin.ModelAdmin):
+    list_display = ('registration', 'order', 'description', )
+    ordering = ['registration', 'order']
 
 
 @admin.register(Setting)
