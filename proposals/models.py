@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 from django.conf import settings
 from django.db import models
@@ -40,7 +40,7 @@ class Proposal(models.Model):
         (TASKS_ADDED, _('Belasting proefpersoon: alle taken toegevoegd')),
         (TASKS_ENDED, _('Belasting proefpersoon: afgerond')),
         (SESSIONS_ENDED, _('Belasting proefpersoon: afgerond')),
-        (INFORMED_CONSENT_UPLOADED, _('Informed consent geüpload')),
+        (INFORMED_CONSENT_UPLOADED, _(u'Informed consent geüpload')),
 
         (SUBMITTED, _('Opgestuurd ter beoordeling naar ETCL')),
         (DECISION_MADE, _('Aanvraag is beoordeeld naar ETCL')),
@@ -57,7 +57,7 @@ class Proposal(models.Model):
         unique=True,
         help_text=_('Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies.'))
     tech_summary = models.TextField(
-        _('Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een duidelijke, \
+        _(u'Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een duidelijke, \
 bondige beschrijving van de onderzoeksvraag of -vragen, en (b) een korte beschrijving van de beoogde methode, \
 d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over proefpersonen, materiaal (taken, stimuli), \
 design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen \
@@ -81,7 +81,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         _('Hoeveel sessies telt deze studie?'),
         null=True,
         validators=[MinValueValidator(1)],
-        help_text=_('Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens \
+        help_text=_(u'Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens \
 een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
@@ -129,7 +129,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     parent = models.ForeignKey(
         'self',
         null=True,
-        verbose_name=_('Te kopiëren aanvraag'))
+        verbose_name=_(u'Te kopiëren aanvraag'))
 
     def net_duration(self):
         """Returns the duration of all Tasks in this Proposal"""
@@ -226,7 +226,7 @@ class Wmo(models.Model):
     WMO_STATUSES = (
         (NO_WMO, _('Geen beoordeling door METC noodzakelijk')),
         (WAITING, _('In afwachting beslissing METC')),
-        (JUDGED, _('Beslissing METC geüpload')),
+        (JUDGED, _(u'Beslissing METC geüpload')),
     )
 
     metc = models.NullBooleanField(
@@ -332,7 +332,7 @@ class Study(models.Model):
         verbose_name=_('Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
 er zijn meerdere antwoorden mogelijk'))
     has_traits = models.BooleanField(
-        _('Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie \
+        _(u'Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie \
 (bijvoorbeeld: kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale beledigingen; \
 patiënten met afasie die een gesprek moeten voeren, ook al gaat het gesprek over alledaagse dingen). \
 Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
@@ -448,6 +448,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 class Survey(models.Model):
     name = models.CharField(_('Naam'), max_length=200)
     minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
+    survey_url = models.URLField(_('URL'), blank=True)
+    survey_file = models.FileField(_('Bestand'), null=True)
     study = models.ForeignKey(Study)
 
     def __unicode__(self):
@@ -458,6 +460,16 @@ class Registration(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    needs_kind = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.description
+
+
+class RegistrationKind(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    registration = models.ForeignKey(Registration)
 
     def __unicode__(self):
         return self.description
@@ -475,8 +487,12 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'))
+    registration_kind = models.ForeignKey(
+        RegistrationKind,
+        verbose_name=_('Namelijk'),
+        null=True)
     registrations_details = models.CharField(
-        'Namelijk',
+        _('Namelijk'),
         max_length=200,
         blank=True)
     feedback = models.BooleanField(

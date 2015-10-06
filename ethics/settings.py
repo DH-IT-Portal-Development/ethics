@@ -8,12 +8,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 import os
-import logging
-import ldap
+#import logging
+#import ldap
 
 from django.utils.translation import ugettext_lazy as _
 
-from django_auth_ldap.config import LDAPSearch, MemberDNGroupType
+#from django_auth_ldap.config import LDAPSearch, MemberDNGroupType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -120,25 +120,27 @@ AUTHENTICATION_BACKENDS = (
     # 'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-AUTH_LDAP_SERVER_URI = 'ldap://ldap.hum.uu.nl'
-AUTH_LDAP_START_TLS = True
-AUTH_LDAP_BIND_DN = ''
-AUTH_LDAP_BIND_PASSWORD = ''
+#AUTH_LDAP_SERVER_URI = 'ldap://ldap.hum.uu.nl'
+#AUTH_LDAP_START_TLS = True
+#AUTH_LDAP_BIND_DN = ''
+#AUTH_LDAP_BIND_PASSWORD = ''
 
+# Group search; doesn't seem to work 
 #AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=groups,dc=uu,dc=nl', ldap.SCOPE_SUBTREE)
 #AUTH_LDAP_GROUP_TYPE = MemberDNGroupType('memberuid')
 #AUTH_LDAP_REQUIRE_GROUP = 'cn=GG_GW_UiL-OTS_Labs_AllUsers,ou=groups,dc=uu,dc=nl'
 
-AUTH_LDAP_USER_SEARCH = LDAPSearch('dc=uu,dc=nl', ldap.SCOPE_SUBTREE, '(uid=%(user)s)')
-AUTH_LDAP_USER_ATTR_MAP = {
-    'first_name': 'givenName',
-    'last_name': 'humAchternaam',
-    'email': 'mail'
-}
+#AUTH_LDAP_USER_SEARCH = LDAPSearch('dc=uu,dc=nl', ldap.SCOPE_SUBTREE, '(uid=%(user)s)')
+#AUTH_LDAP_USER_ATTR_MAP = {
+#    'first_name': 'givenName',
+#    'last_name': 'humAchternaam',
+#    'email': 'mail'
+#}
 
-logger = logging.getLogger('django_auth_ldap')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
+# LDAP logging
+#logger = logging.getLogger('django_auth_ldap')
+#logger.addHandler(logging.StreamHandler())
+#logger.setLevel(logging.DEBUG)
 
 # File handling
 MEDIA_ROOT = 'media'

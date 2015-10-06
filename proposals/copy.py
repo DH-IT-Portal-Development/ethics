@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 from .models import Task
 from .utils import generate_ref_number
