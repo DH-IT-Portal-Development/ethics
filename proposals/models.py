@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -80,7 +80,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies telt deze studie?'),
         null=True,
-        validators=[MinValueValidator(1)],
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
         help_text=_(u'Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens \
 een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
@@ -407,7 +407,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     tasks_number = models.PositiveIntegerField(
         _('Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?'),
         null=True,
-        validators=[MinValueValidator(1)],
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
         help_text=_('Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.'))
     tasks_duration = models.PositiveIntegerField(
@@ -483,7 +483,7 @@ class Task(models.Model):
         _('Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
 Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.'),
         default=0,
-        validators=[MinValueValidator(1)])
+        validators=[MinValueValidator(1), MaxValueValidator(45)])
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'))
@@ -499,7 +499,7 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         _('Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'),
         default=False)
     feedback_details = models.CharField(
-        _('Van welke aard is deze feedback?'),
+        _('Beschrijf hoe de feedback wordt gegeven.'),
         max_length=200,
         blank=True)
     stressful = models.NullBooleanField(

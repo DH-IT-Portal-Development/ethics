@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-06 11:57+0200\n"
+"POT-Creation-Date: 2015-10-06 12:49+0200\n"
 "PO-Revision-Date: 2015-09-21 15:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -619,8 +619,8 @@ msgstr ""
 "after this task?"
 
 #: proposals/models.py:502
-msgid "Van welke aard is deze feedback?"
-msgstr "What is the nature of this feedback?"
+msgid "Beschrijf hoe de feedback wordt gegeven."
+msgstr "Describe how the feedback is given."
 
 #: proposals/models.py:506
 msgid ""
@@ -811,3 +811,6 @@ msgstr "Task edited"
 #: proposals/views.py:456
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Van welke aard is deze feedback?"
+#~ msgstr "What is the nature of this feedback?"
