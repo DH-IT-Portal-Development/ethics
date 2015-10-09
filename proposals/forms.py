@@ -207,6 +207,10 @@ class TaskForm(forms.ModelForm):
             'stressful': forms.RadioSelect(choices=yes_no_doubt),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        self.fields['duration'].label = mark_safe(self.fields['duration'].label)
+
     def clean(self):
         """
         Check for conditional requirements:
