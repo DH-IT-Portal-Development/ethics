@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
+from django.contrib.auth import get_user_model
 
 from proposals.models import Proposal
 
@@ -25,3 +27,29 @@ class Decision(models.Model):
 
     def __unicode__(self):
         return 'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
+
+
+def start_review(proposal):
+    """
+    If the proposal has a supervisor:
+    - Set date_submitted_supervisor to current date/time
+    - Start a Review for this Proposal
+    - (TODO) Send an e-mail to the supervisor
+
+    """
+    review = Review.objects.create(proposal=proposal, date_start=timezone.now())
+    review.save()
+
+    if proposal.supervisor:
+        proposal.date_submitted_supervisor = timezone.now()
+        proposal.save()
+
+        decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
+        decision.save()
+    else:
+        proposal.date_submitted = timezone.now()
+        proposal.save()
+
+        for user in get_user_model().objects.filter(is_staff=True):
+            decision = Decision.objects.create(review=review, reviewer=user)
+            decision.save()
