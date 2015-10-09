@@ -2,9 +2,15 @@
 
 from django.conf import settings
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
+
+
+def validate_pdf(value):
+    if value.file.content_type != 'application/pdf':
+        raise ValidationError(_('Alleen PDF-bestanden zijn toegestaan.'))
 
 
 class Relation(models.Model):
@@ -106,7 +112,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
         _('Upload hier de informed consent'),
-        blank=True)
+        blank=True,
+        validators=[validate_pdf])
 
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
@@ -265,7 +272,8 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
         default=False)
     metc_decision_pdf = models.FileField(
         _('Upload hier de beslissing van het METC'),
-        blank=True)
+        blank=True,
+        validators=[validate_pdf])
 
     # Status
     status = models.PositiveIntegerField(choices=WMO_STATUSES, default=NO_WMO)
@@ -462,7 +470,7 @@ class Survey(models.Model):
     name = models.CharField(_('Naam'), max_length=200)
     minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
     survey_url = models.URLField(_('URL'), blank=True)
-    survey_file = models.FileField(_('Bestand'), blank=True)
+    survey_file = models.FileField(_('Bestand'), blank=True, validators=[validate_pdf])
     study = models.ForeignKey(Study)
 
     def __unicode__(self):
