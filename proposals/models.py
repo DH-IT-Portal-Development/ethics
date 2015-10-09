@@ -510,8 +510,9 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         verbose_name=_('Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'))
     registration_kind = models.ForeignKey(
         RegistrationKind,
-        verbose_name=_('Namelijk'),
-        null=True)
+        verbose_name=_('Kies het soort meting:'),
+        null=True,
+        blank=True)
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,

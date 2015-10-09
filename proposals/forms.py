@@ -197,7 +197,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'duration',
-                  'registrations', 'registrations_details',
+                  'registrations', 'registration_kind', 'registrations_details',
                   'feedback', 'feedback_details',
                   'stressful']
         widgets = {
@@ -214,11 +214,13 @@ class TaskForm(forms.ModelForm):
     def clean(self):
         """
         Check for conditional requirements:
+        - If a registration which needs a kind has been checked, make sure the kind is selected
         - If a registration which needs details has been checked, make sure the details are filled
         - If feedback is set to yes, make sure feedback_details has been filled out
         """
         cleaned_data = super(TaskForm, self).clean()
 
+        check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_kind', 'registration_kind')
         check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_details', 'registrations_details')
         check_dependency(self, cleaned_data, 'feedback', 'feedback_details')
 
@@ -265,7 +267,7 @@ class SessionEndForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        """Set the sessions_duration and sessions_stressful fields as required"""
+        """Set all fields as required, update the sessions_duration label"""
         super(SessionEndForm, self).__init__(*args, **kwargs)
 
         sessions_duration = self.fields['sessions_duration']
