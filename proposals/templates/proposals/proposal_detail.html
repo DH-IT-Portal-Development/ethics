@@ -45,7 +45,7 @@ Details aanvraag <em>{{ proposal.title }}</em>
             {% if proposal.relation.needs_supervisor %}
             <tr>
                 <th>E-mailadres eindverantwoordelijke</th>
-                <td>{{ proposal.supervisor_email|urlize }}</td>
+                <td>{{ proposal.supervisor.email }}</td>
             </tr>
             {% endif %}
             <tr>

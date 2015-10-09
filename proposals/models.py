@@ -27,6 +27,7 @@ class Proposal(models.Model):
     TASKS_ENDED = 8
     SESSIONS_ENDED = 9
     INFORMED_CONSENT_UPLOADED = 10
+    SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
     DECISION_MADE = 55
     WMO_DECISION_MADE = 60
@@ -42,8 +43,10 @@ class Proposal(models.Model):
         (SESSIONS_ENDED, _('Belasting proefpersoon: afgerond')),
         (INFORMED_CONSENT_UPLOADED, _(u'Informed consent geüpload')),
 
+        (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
+
         (SUBMITTED, _('Opgestuurd ter beoordeling naar ETCL')),
-        (DECISION_MADE, _('Aanvraag is beoordeeld naar ETCL')),
+        (DECISION_MADE, _('Aanvraag is beoordeeld door ETCL')),
         (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door METC')),
     )
 
@@ -63,11 +66,6 @@ d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over pr
 design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen \
 en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingrediënten \
 van de methode meer gedetailleerde informatie worden gevraagd.'))
-    supervisor_email = models.EmailField(
-        _('E-mailadres eindverantwoordelijke onderzoeker'),
-        blank=True,
-        help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
-Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))
     other_applicants = models.BooleanField(
         _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
         default=False)
@@ -116,6 +114,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     # Dates for bookkeeping
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    date_submitted_supervisor = models.DateTimeField(null=True)
     date_submitted = models.DateTimeField(null=True)
 
     # References to other models
@@ -129,6 +128,12 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         settings.AUTH_USER_MODEL,
         verbose_name=_('Uitvoerende(n)'),
         related_name='applicants')
+    supervisor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Eindverantwoordelijke onderzoeker'),
+        null=True,
+        help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
+Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))
     parent = models.ForeignKey(
         'self',
         null=True,
@@ -174,6 +179,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
                 status = self.SESSIONS_ENDED
             if self.informed_consent_pdf:
                 status = self.INFORMED_CONSENT_UPLOADED
+            if self.date_submitted_supervisor:
+                status = self.SUBMITTED_TO_SUPERVISOR
             if self.date_submitted:
                 status = self.SUBMITTED
 

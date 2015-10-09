@@ -11,7 +11,7 @@ yes_no_doubt = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
 class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['relation', 'supervisor_email', 'other_applicants',
+        fields = ['relation', 'supervisor', 'other_applicants',
                   'applicants', 'title', 'tech_summary', 'longitudinal']
         widgets = {
             'relation': forms.RadioSelect(),
@@ -33,20 +33,20 @@ class ProposalForm(forms.ModelForm):
     def clean(self):
         """
         Check for conditional requirements:
-        - If relation needs supervisor, make sure supervisor_email is set
+        - If relation needs supervisor, make sure supervisor is set
         - If other_applicants is checked, make sure applicants are set
         - Maximum number of words for tech_summary (TODO: magic number)
         """
         cleaned_data = super(ProposalForm, self).clean()
         relation = cleaned_data.get('relation')
-        supervisor_email = cleaned_data.get('supervisor_email')
+        supervisor = cleaned_data.get('supervisor')
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
         tech_summary = cleaned_data.get('tech_summary')
 
-        if relation and relation.needs_supervisor and not supervisor_email:
+        if relation and relation.needs_supervisor and not supervisor:
             error = forms.ValidationError(_('U dient een eindverantwoordelijke op te geven.'), code='required')
-            self.add_error('supervisor_email', error)
+            self.add_error('supervisor', error)
 
         if other_applicants and len(applicants) == 1:
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')

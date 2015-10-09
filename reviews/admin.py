@@ -1,8 +1,10 @@
 from django.contrib import admin
 from reviews.models import Review, Decision
 
+
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('proposal', 'status')
+    list_display = ('proposal', 'date_start', 'date_end', 'go')
+
 
 class DecisionAdmin(admin.ModelAdmin):
     list_display = ('review', 'reviewer', 'go')
