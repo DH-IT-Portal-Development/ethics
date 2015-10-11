@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <div id="tabs-4">
-    <h3>Belasting voor de proefpersoon</h3>
+    <h3><a href="{% url 'proposals:session_end' proposal.id %}">Belasting voor de proefpersoon</a></h3>
     <table class="pure-table">
         <tr>
             <th>Aantal sessies</th>
@@ -21,18 +21,12 @@
             <th>Bruto duur</th>
             <td>
                 {{ proposal.sessions_duration }} minuten
-                {% if proposal.status < proposal.SUBMITTED %}
-                <a href="{% url 'proposals:session_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-                {% endif %}
             </td>
         </tr>
         <tr>
             <th>Belastend als geheel?</th>
             <td>
                 {{ session.sessions_stressful|yesno:"ja,nee,twijfel" }}
-                {% if proposal.status < proposal.SUBMITTED %}
-                <a href="{% url 'proposals:session_end' proposal.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-                {% endif %}
             </td>
         </tr>
         {% endif %}

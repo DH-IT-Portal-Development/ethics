@@ -8,63 +8,24 @@ Details aanvraag <em>{{ proposal.title }}</em>
 {% block content %}
 <script>
     $(function() {
-        $("#tabs").tabs();
         $("#accordion").accordion({
-            collapsible: true, 
+            collapsible: true,
             heightStyle: "content"
         });
     });
 </script>
-<div id="tabs">
-    <ul>
-        <li><a href="#tabs-1">Algemene informatie</a></li>
-        {% if proposal.wmo %}
-        <li><a href="#tabs-2">WMO-plichtigheid</a></li>
-        {% endif %}
-        {% if proposal.study %}
-        <li><a href="#tabs-3">Algemene kenmerken</a></li>
-        {% endif %}
-        {% if proposal.session_set.all %}
-        <li><a href="#tabs-4">Belasting proefpersoon</a></li>
-        {% endif %}
-    </ul>
-
-    <div id="tabs-1">
-        <h3>Algemene informatie
-            {% if proposal.status < proposal.SUBMITTED %}
-            <a href="{% url 'proposals:update' proposal.id %}">
-                <img src="{% static 'proposals/images/pencil.png' %}">
-            </a>
-            {% endif %}
-        </h3>
-        <table class="pure-table">
-            <tr>
-                <th>Ingediend door</th>
-                <td>{{ proposal.created_by }} (<em>{{ proposal.relation }}</em>)</td>
-            </tr>
-            {% if proposal.relation.needs_supervisor %}
-            <tr>
-                <th>E-mailadres eindverantwoordelijke</th>
-                <td>{{ proposal.supervisor.email }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>Longitudinale studie?</th>
-                <td>{{ proposal.longitudinal|yesno:"ja,nee" }}</td>
-            </tr>
-        </table>
-    </div>
-
-    {% if proposal.wmo %}
-    {% include "proposals/wmo_detail.html" %}
-    {% endif %}
-
-    {% if proposal.study %}
-    {% include "proposals/study_detail.html" %}
-    {% endif %}
-
-    {% if proposal.session_set.all %}
-    {% include "proposals/session_detail.html" %}
-    {% endif %}
-</div>
+Klik op de onderstaande onderdelen om wijzigingen aan te brengen.
+<h3><a href="{% url 'proposals:update' proposal.id %}">Algemene informatie</a></h3>
+{% if proposal.wmo %}
+<h3><a href="{% url 'proposals:wmo_update' proposal.id %}">WMO-plichtigheid</a></h3>
+{% endif %}
+{% if proposal.study %}
+<h3><a href="{% url 'proposals:study_update' proposal.id %}">Algemene kenmerken van de studie</a></h3>
+{% endif %}
+{% if proposal.session_set.all %}
+{% include "proposals/session_detail.html" %}
+{% endif %}
+{% if proposal.status > proposal.SESSIONS_ENDED %}
+<h3><a href="{% url 'proposals:consent' proposal.id %}">Informed consent</a></h3>
+{% endif %}
 {% endblock %}
