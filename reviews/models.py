@@ -8,6 +8,13 @@ from proposals.models import Proposal
 
 
 class Review(models.Model):
+    SUPERVISOR = 0
+    COMMISSION = 1
+    STAGES = (
+        (SUPERVISOR, _('Beoordeling door supervisor')),
+        (COMMISSION, _('Beoordeling door ethische commissie')),
+    )
+    stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
     go = models.NullBooleanField()
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(null=True)
@@ -38,15 +45,20 @@ def start_review(proposal):
 
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.save()
 
     if proposal.supervisor:
+        review.stage = Review.SUPERVISOR
+        review.save()
+
         proposal.date_submitted_supervisor = timezone.now()
         proposal.save()
 
         decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
         decision.save()
     else:
+        review.stage = Review.SUPERVISOR
+        review.save()
+
         proposal.date_submitted = timezone.now()
         proposal.save()
 
