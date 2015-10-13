@@ -17,7 +17,7 @@ class Review(models.Model):
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
     go = models.NullBooleanField()
     date_start = models.DateTimeField()
-    date_end = models.DateTimeField(null=True)
+    date_end = models.DateTimeField(blank=True, null=True)
     proposal = models.ForeignKey(Proposal)
 
     def __unicode__(self):
@@ -31,6 +31,9 @@ class Decision(models.Model):
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
+
+    class Meta:
+        unique_together = ('review', 'reviewer',)
 
     def __unicode__(self):
         return 'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
@@ -46,7 +49,7 @@ def start_review(proposal):
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
 
-    if proposal.supervisor:
+    if proposal.relation.needs_supervisor:
         review.stage = Review.SUPERVISOR
         review.save()
 
@@ -56,7 +59,7 @@ def start_review(proposal):
         decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
         decision.save()
     else:
-        review.stage = Review.SUPERVISOR
+        review.stage = Review.COMMISSION
         review.save()
 
         proposal.date_submitted = timezone.now()

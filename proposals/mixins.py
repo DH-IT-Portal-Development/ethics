@@ -33,7 +33,7 @@ class UserAllowedMixin(SingleObjectMixin):
             applicants = obj.proposal.applicants.all()
             status = obj.proposal.status
 
-        if self.request.user not in applicants or status >= Proposal.SUBMITTED:
+        if self.request.user not in applicants or status >= Proposal.SUBMITTED_TO_SUPERVISOR:
             raise PermissionDenied
 
         return obj

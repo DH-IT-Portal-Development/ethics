@@ -2,7 +2,7 @@
 
 <div id="tabs-3">
     <h3>Algemene kenmerken van de studie
-        {% if proposal.status < proposal.SUBMITTED %}
+        {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
         <a href="{% url 'proposals:study_update' proposal.id %}">
             <img src="{% static 'proposals/images/pencil.png' %}">
         </a>

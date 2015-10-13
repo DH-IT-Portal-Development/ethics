@@ -51,7 +51,7 @@ class Proposal(models.Model):
 
         (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
 
-        (SUBMITTED, _('Opgestuurd ter beoordeling naar ETCL')),
+        (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
         (DECISION_MADE, _('Aanvraag is beoordeeld door ETCL')),
         (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door METC')),
     )
@@ -180,7 +180,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
                 status = self.TASKS_ADDED
             if session.tasks_duration:
                 status = self.TASKS_ENDED
-
+        print self.date_submitted_supervisor
         if session and session.tasks_duration:
             if self.sessions_duration:
                 status = self.SESSIONS_ENDED
