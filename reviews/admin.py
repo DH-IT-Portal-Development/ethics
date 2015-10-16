@@ -1,5 +1,6 @@
 from django.contrib import admin
-from reviews.models import Review, Decision
+
+from .models import Review, Decision
 
 
 class ReviewAdmin(admin.ModelAdmin):

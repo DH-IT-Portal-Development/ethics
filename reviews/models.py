@@ -15,7 +15,7 @@ class Review(models.Model):
         (COMMISSION, _('Beoordeling door ethische commissie')),
     )
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
-    go = models.NullBooleanField()
+    go = models.NullBooleanField(_('Beslissing'))
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(blank=True, null=True)
     proposal = models.ForeignKey(Proposal)
@@ -25,15 +25,22 @@ class Review(models.Model):
 
 
 class Decision(models.Model):
-    go = models.BooleanField(default=False)
-    review = models.ForeignKey(Review)
-    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL)
+    go = models.NullBooleanField(
+        _('Beslissing'))
+    date_decision = models.DateTimeField(blank=True, null=True)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
 
+    review = models.ForeignKey(Review)
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL)
+
     class Meta:
         unique_together = ('review', 'reviewer',)
+
+    def save(self, *args, **kwargs):
+        """Sets the correct status of the Review on save of a Decision"""
+        super(Decision, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return 'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
