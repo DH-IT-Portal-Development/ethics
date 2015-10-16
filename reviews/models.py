@@ -20,6 +20,24 @@ class Review(models.Model):
     date_end = models.DateTimeField(blank=True, null=True)
     proposal = models.ForeignKey(Proposal)
 
+    def save(self, *args, **kwargs):
+        """Check all decisions: if all are finished, set the final decision and date_end."""
+        decisions = self.decision_set
+
+        all_decisions = len(decisions)
+        closed_decisions = 0
+        final_go = True
+        for decision in decisions:
+            if decision.go:
+                closed_decisions += 1
+                final_go &= decision.go
+
+        if all_decisions == closed_decisions:
+            self.date_end = timezone.now()
+            self.go = final_go
+
+        super(Review, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return 'Review of %s' % self.proposal
 
@@ -40,6 +58,7 @@ class Decision(models.Model):
 
     def save(self, *args, **kwargs):
         """Sets the correct status of the Review on save of a Decision"""
+        self.review.save()
         super(Decision, self).save(*args, **kwargs)
 
     def __unicode__(self):
