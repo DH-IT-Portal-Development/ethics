@@ -10,57 +10,54 @@ class ReviewTestCase(TestCase):
     fixtures = ['relations']
 
     def setUp(self):
-        self.user = User.objects.create_user(username='test0101', email='test@test.com', password='secret', is_staff=True)
-        self.supervisor = User.objects.create_user(username='supervisor', email='test@test.com', password='secret', is_staff=True)
+        self.user = User.objects.create_superuser('test0101', 'test@test.com', 'secret')
+        self.supervisor = User.objects.create_superuser('supervisor', 'test@test.com', 'secret')
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
-            created_by=self.user, supervisor=supervisor, relation=Relation.objects.get(pk=4))
-        self.p1 = Proposal.objects.create(title='p2', reference_number=generate_ref_number(self.user),
-            created_by=self.user, supervisor=supervisor, relation=Relation.objects.get(pk=5))
+            created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=4))
+        self.p2 = Proposal.objects.create(title='p2', reference_number=generate_ref_number(self.user),
+            created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=5))
 
-    def startReviewTest(self):
-        start_review(self.p1)
-        review = Review.objects.filter(proposal=self.p1)[0]
+    def test_start_review(self):        
+        review = start_review(self.p1)
         self.assertEqual(review.stage, Review.SUPERVISOR)
-        self.assertEqual(Decision.objects.filter(reviewer=self.supervisor), 1)
-        self.assertEqual(Decision.objects.filter(review=review), 1)
+        self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)
+        self.assertEqual(Decision.objects.filter(review=review).count(), 1)
+        self.assertEqual(review.decision_set.count(), 1)
 
-        start_review(self.p2)
-        review = Review.objects.filter(proposal=self.p2)[0]
+        review = start_review(self.p2)
         self.assertEqual(review.stage, Review.COMMISSION)
-        self.assertEqual(Decision.objects.filter(reviewer=self.user), 1)
-        self.assertEqual(Decision.objects.filter(reviewer=self.supervisor), 1)
-        self.assertEqual(Decision.objects.filter(review=review), 2)
+        self.assertEqual(Decision.objects.filter(reviewer=self.user).count(), 1)
+        self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 2)
+        self.assertEqual(Decision.objects.filter(review=review).count(), 2)
 
-    def decisionSupervisorTest(self):
-        start_review(self.p1)
-        review = Review.objects.filter(proposal=self.p1)[0]
+    def test_decision_supervisor(self):
+        review = start_review(self.p1)
         self.assertEqual(review.go, None)
 
         decision = Decision.objects.filter(review=review)[0]
         decision.go = True
         decision.save()
-
+        review.refresh_from_db()
         self.assertEqual(review.go, True)
 
-    def decisionCommissionTest(self):
-        start_review(self.p2)
-        review = Review.objects.filter(proposal=self.p2)[0]
+    def test_decision_commission(self):
+        review = start_review(self.p2)
         self.assertEqual(review.go, None)
 
         decisions = Decision.objects.filter(review=review)
-        self.assertEqual(decisions, 2)
+        self.assertEqual(len(decisions), 2)
 
         decisions[0].go = True
         decisions[0].save()
-
+        review.refresh_from_db()
         self.assertEqual(review.go, None)  # undecided
 
         decisions[1].go = False
         decisions[1].save()
-
+        review.refresh_from_db()
         self.assertEqual(review.go, False)  # no go
 
         decisions[1].go = True
         decisions[1].save()
-
+        review.refresh_from_db()
         self.assertEqual(review.go, True)  # go

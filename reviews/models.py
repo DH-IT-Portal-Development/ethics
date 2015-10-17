@@ -15,36 +15,32 @@ class Review(models.Model):
         (COMMISSION, _('Beoordeling door ethische commissie')),
     )
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
-    go = models.NullBooleanField(_('Beslissing'))
+    go = models.NullBooleanField(_('Beslissing'), default=None)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(blank=True, null=True)
     proposal = models.ForeignKey(Proposal)
 
-    def save(self, *args, **kwargs):
+    def update_go(self):
         """Check all decisions: if all are finished, set the final decision and date_end."""
-        decisions = self.decision_set
-
-        all_decisions = len(decisions)
+        all_decisions = self.decision_set.count()
         closed_decisions = 0
         final_go = True
-        for decision in decisions:
-            if decision.go:
+        for decision in self.decision_set.all():
+            if decision.go != None:
                 closed_decisions += 1
                 final_go &= decision.go
 
         if all_decisions == closed_decisions:
             self.date_end = timezone.now()
             self.go = final_go
-
-        super(Review, self).save(*args, **kwargs)
+            self.save()
 
     def __unicode__(self):
         return 'Review of %s' % self.proposal
 
 
 class Decision(models.Model):
-    go = models.NullBooleanField(
-        _('Beslissing'))
+    go = models.NullBooleanField(_('Beslissing'), default=None)
     date_decision = models.DateTimeField(blank=True, null=True)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
@@ -58,8 +54,8 @@ class Decision(models.Model):
 
     def save(self, *args, **kwargs):
         """Sets the correct status of the Review on save of a Decision"""
-        self.review.save()
         super(Decision, self).save(*args, **kwargs)
+        self.review.update_go()
 
     def __unicode__(self):
         return 'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
@@ -94,3 +90,5 @@ def start_review(proposal):
         for user in get_user_model().objects.filter(is_staff=True):
             decision = Decision.objects.create(review=review, reviewer=user)
             decision.save()
+
+    return review
