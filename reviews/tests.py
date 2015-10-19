@@ -17,7 +17,7 @@ class ReviewTestCase(TestCase):
         self.p2 = Proposal.objects.create(title='p2', reference_number=generate_ref_number(self.user),
             created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=5))
 
-    def test_start_review(self):        
+    def test_start_review(self):
         review = start_review(self.p1)
         self.assertEqual(review.stage, Review.SUPERVISOR)
         self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)

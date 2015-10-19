@@ -63,8 +63,10 @@ $(function() {
         {{ formset.management_form }}
         {% endfor %}
     </table>
+    {% if study.proposal.status < study.proposal.SUBMITTED_TO_SUPERVISOR %}
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
     <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
     <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>
+    {% endif %}
 </form>
 {% endblock %}

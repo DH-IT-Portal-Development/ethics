@@ -27,7 +27,7 @@
             <td>{{ decision.review.proposal.title }}</td>
             <td>{{ decision.review.get_stage_display }}</td>
             <td>{{ decision.review.start_date|date:"j M Y" }}</td>
-            <td>{{ decision.go|yesno:"go,no go" }}</td>
+            <td>{{ decision.go|yesno:"go,no go,open" }}</td>
             <td>
                 <a href="{% url 'proposals:detail' decision.review.proposal.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Aanvraag inzien' %}"></a>
                 <a href="{% url 'reviews:decide' decision.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Beslissen' %}"></a>

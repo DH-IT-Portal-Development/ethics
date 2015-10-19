@@ -6,14 +6,6 @@ Details aanvraag <em>{{ proposal.title }}</em>
 {% endblock %} 
 
 {% block content %}
-<script>
-    $(function() {
-        $("#accordion").accordion({
-            collapsible: true,
-            heightStyle: "content"
-        });
-    });
-</script>
 Klik op de onderstaande onderdelen om wijzigingen aan te brengen.
 <h3><a href="{% url 'proposals:update' proposal.id %}">Algemene informatie</a></h3>
 {% if proposal.wmo %}
@@ -23,7 +15,7 @@ Klik op de onderstaande onderdelen om wijzigingen aan te brengen.
 <h3><a href="{% url 'proposals:study_update' proposal.id %}">Algemene kenmerken van de studie</a></h3>
 {% endif %}
 {% if proposal.session_set.all %}
-{% include "proposals/session_detail.html" %}
+<h3><a href="{% url 'proposals:session_end' proposal.id %}">Belasting voor de proefpersoon</a></h3>
 {% endif %}
 {% if proposal.status > proposal.SESSIONS_ENDED %}
 <h3><a href="{% url 'proposals:consent' proposal.id %}">Informed consent</a></h3>

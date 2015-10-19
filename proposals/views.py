@@ -18,7 +18,7 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
 from .mixins import LoginRequiredMixin, UserAllowedMixin
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .utils import generate_ref_number
-#from reviews.models import Review, start_review
+from reviews.models import start_review
 
 
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
@@ -168,7 +168,7 @@ class ProposalSubmit(ProposalUpdateView):
     def form_valid(self, form):
         """Start the review process on submission"""
         success_url = super(ProposalSubmit, self).form_valid(form)
-        #start_review(self.get_object())
+        start_review(self.get_object())
         return success_url
 
     def get_success_url(self):
