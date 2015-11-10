@@ -7,7 +7,7 @@ Aanvraag ter beoordeling en registratie
 
 {% block content %}
 <h3>Afronden aanvraag</h3>
-<p>Uw aanvraag is compleet. U kunt nu uw aanvraag versturen. Als u deze aanvraag nog wil wijzigen, kan dat via het hoofdmenu.</p>
+<p>Uw aanvraag is compleet. U kunt nu uw aanvraag ter beoordeling naar uw supervisor versturen. Als u deze aanvraag nog wil wijzigen, kan dat via het hoofdmenu.</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" value="Aanvraag versturen" />

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-06 12:49+0200\n"
+"POT-Creation-Date: 2015-10-13 11:53+0200\n"
 "PO-Revision-Date: 2015-09-21 15:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -86,71 +86,83 @@ msgstr "The number of words of the summary is too high."
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institute."
 
-#: proposals/forms.py:250
+#: proposals/forms.py:257
 msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
 msgstr ""
 "The total duration of the session has to be at least as long as the netto "
 "duration of the session. "
 
-#: proposals/forms.py:282
+#: proposals/forms.py:290
 msgid "Totale studieduur moet minstens gelijk zijn aan netto studieduur."
 msgstr ""
 "The total duration of the study has to be at least as long as the netto "
 "duration of the study."
 
-#: proposals/models.py:34
+#: proposals/models.py:13
+msgid "Alleen PDF-bestanden zijn toegestaan."
+msgstr "Only PDF files are allowed."
+
+#: proposals/models.py:41
 msgid "Algemene informatie ingevuld"
 msgstr "General information filled in"
 
-#: proposals/models.py:35
+#: proposals/models.py:42
 msgid "WMO: geen beoordeling door METC noodzakelijk"
 msgstr "WMO: no assessment by METC needed"
 
-#: proposals/models.py:36
+#: proposals/models.py:43
 msgid "WMO: wordt beoordeeld door METC"
 msgstr "WMO: METC will make an assessment"
 
-#: proposals/models.py:37
+#: proposals/models.py:44
 msgid "Kenmerken studie toegevoegd"
 msgstr "Features of study added"
 
-#: proposals/models.py:38
+#: proposals/models.py:45
 msgid "Belasting proefpersoon: sessies toevoegen"
 msgstr "Burden of participant: add session"
 
-#: proposals/models.py:39
+#: proposals/models.py:46
 msgid "Belasting proefpersoon: taken toevoegen"
 msgstr "Burden of participant: add tasks"
 
-#: proposals/models.py:40
+#: proposals/models.py:47
 msgid "Belasting proefpersoon: alle taken toegevoegd"
 msgstr "Burden of participant: all tasks added"
 
-#: proposals/models.py:41 proposals/models.py:42
+#: proposals/models.py:48 proposals/models.py:49
 msgid "Belasting proefpersoon: afgerond"
 msgstr "Burden of participant: completed"
 
-#: proposals/models.py:43
+#: proposals/models.py:50
 msgid "Informed consent geüpload"
 msgstr "Informed consent uploaded"
 
-#: proposals/models.py:45
+#: proposals/models.py:52
+#, fuzzy
+#| msgid "Opgestuurd ter beoordeling naar ETCL"
+msgid "Opgestuurd ter beoordeling door eindverantwoordelijke"
+msgstr "Sent for assessment for ETCL"
+
+#: proposals/models.py:54
 msgid "Opgestuurd ter beoordeling naar ETCL"
 msgstr "Sent for assessment for ETCL"
 
-#: proposals/models.py:46
-msgid "Aanvraag is beoordeeld naar ETCL"
-msgstr "Application is assessed for ETCL"
+#: proposals/models.py:55
+#, fuzzy
+#| msgid "Aanvraag is beoordeeld door METC"
+msgid "Aanvraag is beoordeeld door ETCL"
+msgstr "Application is assessed by METC"
 
-#: proposals/models.py:47
+#: proposals/models.py:56
 msgid "Aanvraag is beoordeeld door METC"
 msgstr "Application is assessed by METC"
 
-#: proposals/models.py:55
+#: proposals/models.py:64
 msgid "Wat is de titel van uw studie?"
 msgstr "What is the title of your study?"
 
-#: proposals/models.py:58
+#: proposals/models.py:67
 msgid ""
 "Kies s.v.p. een titel die niet volledig identiek is aan die van eerder "
 "ingediende studies."
@@ -158,7 +170,7 @@ msgstr ""
 "Please choose a titled that is not completely identical to that of "
 "previously submitted studies."
 
-#: proposals/models.py:60
+#: proposals/models.py:69
 msgid ""
 "Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een "
 "duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen, en (b) "
@@ -178,26 +190,11 @@ msgstr ""
 "clear. More information about the specifics of the methodology will be "
 "requested later on in this application."
 
-#: proposals/models.py:67
-msgid "E-mailadres eindverantwoordelijke"
-msgstr "E-mail adress person of final responsibility"
-
-#: proposals/models.py:69
-msgid ""
-"Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw "
-"eindverantwoordelijke sturen. Wanneer de verificatie binnen is, krijgt u een "
-"e-mail zodat u deze aanvraag kunt afronden."
-msgstr ""
-"At the end of the procedure, it is possible to send this application to the "
-"person of final responsibility of the study for verification. When we have "
-"received the verification, you will receive an e-mail with which you can "
-"complete this application. "
-
-#: proposals/models.py:72
+#: proposals/models.py:76
 msgid "Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?"
 msgstr "Are there any other UiL-OTS researchers involved in this study?"
 
-#: proposals/models.py:75
+#: proposals/models.py:79
 msgid ""
 "Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen deelnemen "
 "aan een sessie? (bijvoorbeeld een longitudinale studie, of een kortlopende "
@@ -208,11 +205,15 @@ msgstr ""
 "study in which participants need to be tested on different (two or more) "
 "days)"
 
-#: proposals/models.py:81
+#: proposals/models.py:83 reviews/models.py:32
+msgid "Ruimte voor eventuele opmerkingen"
+msgstr "Room for possible comments"
+
+#: proposals/models.py:88
 msgid "Hoeveel sessies telt deze studie?"
 msgstr "How many sessions comprises this study?"
 
-#: proposals/models.py:84
+#: proposals/models.py:91
 msgid ""
 "Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen "
 "tijdens een eerste bezoek aan het lab en u laat de proefpersoon nog een keer "
@@ -227,7 +228,7 @@ msgstr ""
 "executed on the same day, with breaks in between, this is still considered "
 "as one session."
 
-#: proposals/models.py:89
+#: proposals/models.py:96
 #, fuzzy, python-format
 #| msgid ""
 #| "De totale geschatte netto studieduur van uw sessie komt op basis van uw "
@@ -243,7 +244,7 @@ msgstr ""
 "strong>. Give an estimation of the total amount of time that your "
 "participants will need to complete the study."
 
-#: proposals/models.py:92
+#: proposals/models.py:99
 msgid ""
 "Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle "
 "sessie bij elkaar opgeteld, exclusief reistijd."
@@ -251,7 +252,7 @@ msgstr ""
 "This is the estimated total bruto time the participant needs for all "
 "culminated sessions, traveling time excluded."
 
-#: proposals/models.py:94
+#: proposals/models.py:101
 msgid ""
 "Is het totaal van sessies als geheel belastend voor de proefpersoon op een "
 "manier die, ondanks de verkregen informed consent, vragen zou kunnen "
@@ -274,39 +275,56 @@ msgstr ""
 "a researcher consider as the most vulnerable or that can carry the least "
 "amount of pressure/burden."
 
-#: proposals/models.py:102 proposals/models.py:426 proposals/models.py:514
+#: proposals/models.py:109 proposals/models.py:447 proposals/models.py:536
 msgid "Waarom denkt u dat?"
 msgstr "Why do you think that is the case?"
 
-#: proposals/models.py:107
+#: proposals/models.py:114
 msgid "Upload hier de informed consent"
 msgstr "Please upload the informed consent here"
 
-#: proposals/models.py:121
+#: proposals/models.py:130
 msgid "Wat is uw relatie tot het UiL OTS?"
 msgstr "What is your relationship with UiL OTS?"
 
-#: proposals/models.py:127
+#: proposals/models.py:136
 msgid "Uitvoerende(n)"
 msgstr "Executor(s)"
 
-#: proposals/models.py:132
+#: proposals/models.py:140
+#, fuzzy
+#| msgid "E-mailadres eindverantwoordelijke"
+msgid "Eindverantwoordelijke onderzoeker"
+msgstr "E-mail adress person of final responsibility"
+
+#: proposals/models.py:142
+msgid ""
+"Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw "
+"eindverantwoordelijke sturen. Wanneer de verificatie binnen is, krijgt u een "
+"e-mail zodat u deze aanvraag kunt afronden."
+msgstr ""
+"At the end of the procedure, it is possible to send this application to the "
+"person of final responsibility of the study for verification. When we have "
+"received the verification, you will receive an e-mail with which you can "
+"complete this application. "
+
+#: proposals/models.py:147
 msgid "Te kopiëren aanvraag"
 msgstr "Application to be copied"
 
-#: proposals/models.py:227
+#: proposals/models.py:244
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "No assessment by METC needed"
 
-#: proposals/models.py:228
+#: proposals/models.py:245
 msgid "In afwachting beslissing METC"
 msgstr "Pending on the assessment METC"
 
-#: proposals/models.py:229
+#: proposals/models.py:246
 msgid "Beslissing METC geüpload"
 msgstr "Pending on the assessment METC"
 
-#: proposals/models.py:233
+#: proposals/models.py:250
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -314,11 +332,11 @@ msgstr ""
 "Is the collecting of data taking place at UMC Utrecht or another institution "
 "for which an assessment of METC is required?"
 
-#: proposals/models.py:235
+#: proposals/models.py:252
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:239
+#: proposals/models.py:256
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -326,7 +344,20 @@ msgstr ""
 "Is the nature of the research question medical-scientific (as defined by "
 "WMO)?"
 
-#: proposals/models.py:242
+#: proposals/models.py:257
+msgid ""
+"De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
+"wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
+"van een vraag op het gebied van ziekte en gezondheid (etiologie, "
+"pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of "
+"behandeling van ziekte), door het op systematische wijze vergaren en "
+"bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische "
+"kennis die ook geldend is voor populaties buiten de directe "
+"onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk "
+"onderzoek, 2005, ccmo.nl)"
+msgstr ""
+
+#: proposals/models.py:264
 msgid ""
 "Worden de proefpersonen aan een handeling onderworpen of worden hen "
 "gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
@@ -334,7 +365,7 @@ msgstr ""
 "Are the participants being submitted to an act or are they imposed to rules "
 "of conduct (as defined by WMO)?"
 
-#: proposals/models.py:243
+#: proposals/models.py:265
 msgid ""
 "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
 "weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten "
@@ -343,7 +374,7 @@ msgstr ""
 "An act or a rule of conduct varies from collecting tissue of a participant "
 "to requiring the participant to press a button/key."
 
-#: proposals/models.py:246
+#: proposals/models.py:268
 msgid ""
 "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
 "ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag "
@@ -353,30 +384,30 @@ msgstr ""
 "registered at ETCL. Has an application for this study already been submitted "
 "at METC?"
 
-#: proposals/models.py:249
+#: proposals/models.py:271
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision concering your application?"
 
-#: proposals/models.py:252
+#: proposals/models.py:274
 msgid "Upload hier de beslissing van het METC"
 msgstr "Please upload the decision of METC here"
 
-#: proposals/models.py:277
+#: proposals/models.py:300
 #, python-format
 msgid "WMO %s, status %s"
 msgstr "WM %s, status %s"
 
-#: proposals/models.py:288
+#: proposals/models.py:311
 #, python-format
 msgid "%d-%d jaar"
 msgstr "%d- %d year"
 
-#: proposals/models.py:290
+#: proposals/models.py:313
 #, python-format
 msgid "%d+ jaar"
 msgstr "%d+ year"
 
-#: proposals/models.py:332
+#: proposals/models.py:355
 msgid ""
 "Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, "
 "er zijn meerdere antwoorden mogelijk"
@@ -384,34 +415,22 @@ msgstr ""
 "Indicate below to which age categories the participants belong; it is "
 "possible to select multiple answers"
 
-#: proposals/models.py:335
+#: proposals/models.py:358
 msgid ""
-"Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken "
-"die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde "
-"belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: kinderen "
-"die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale "
-"beledigingen; patiënten met afasie die een gesprek moeten voeren, ook al "
-"gaat het gesprek over alledaagse dingen). Is dit in uw studie bij (een deel "
-"van) de proefpersonen het geval?"
+"Proefpersonen kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. "
+"Is dit in uw studie bij (een deel van) de proefpersonen het geval?"
 msgstr ""
-"It may be the case that participants are selected based on certain deviating/"
-"special characteristics that possibly go with a increased risk on "
-"vulnerability or reduced capacity with respect to aspects of the proposed "
-"study (e.g. children that are bullied in the past in a study on the neural "
-"response on verbal insults; patients with aphasia that have to engage in an "
-"conversation, even if the topics are everyday matters). Is this the case in "
-"your study with (a part of) the participants?"
 
-#: proposals/models.py:343
+#: proposals/models.py:364
 msgid "Selecteer de bijzondere kenmerken van uw proefpersonen"
 msgstr "Select the special characteristics of your participants"
 
-#: proposals/models.py:345 proposals/models.py:358 proposals/models.py:372
-#: proposals/models.py:379 proposals/models.py:492 proposals/models.py:495
+#: proposals/models.py:366 proposals/models.py:379 proposals/models.py:393
+#: proposals/models.py:400 proposals/models.py:517
 msgid "Namelijk"
 msgstr "That is to say"
 
-#: proposals/models.py:349
+#: proposals/models.py:370
 msgid ""
 "Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het "
 "geselecteerde type proefpersonen aan de studie te laten deelnemen?"
@@ -419,7 +438,7 @@ msgstr ""
 "In order to answer the research question, is it necessary for the selected "
 "type of participants to participate in the study?"
 
-#: proposals/models.py:350
+#: proposals/models.py:371
 msgid ""
 "Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag "
 "ook kunnen beantwoorden door volwassen proefpersonen te testen?"
@@ -427,34 +446,42 @@ msgstr ""
 "For example, is it necessary to test children, or would it be possible to "
 "answer the research question by testing adults?"
 
-#: proposals/models.py:352
+#: proposals/models.py:373
 msgid "Leg uit waarom"
 msgstr "Eplain why"
 
-#: proposals/models.py:356
+#: proposals/models.py:377
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr ""
 "Specify the location at which the gathering of the data will take place"
 
-#: proposals/models.py:362
+#: proposals/models.py:383
+#, fuzzy
+#| msgid ""
+#| "Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen "
+#| "van het experiment groter dan de kans op fysieke schade in het dagelijks "
+#| "leven?"
 msgid ""
 "Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen "
-"van het experiment groter dan de kans op fysieke schade in het dagelijks "
-"leven?"
+"van de taak groter dan de kans op fysieke schade in het dagelijks leven?"
 msgstr ""
 "Is the chance on physical damage for the participant higher during the "
 "experiment than in daily life?"
 
-#: proposals/models.py:365
+#: proposals/models.py:386
+#, fuzzy
+#| msgid ""
+#| "Is de kans dat de proefpersoon psychische schade oploopt tijdens het "
+#| "afnemen van het experiment groter dan de kans op psychische schade in het "
+#| "dagelijks leven?"
 msgid ""
 "Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen "
-"van het experiment groter dan de kans op psychische schade in het dagelijks "
-"leven?"
+"van de taak groter dan de kans op psychische schade in het dagelijks leven?"
 msgstr ""
 "Is the chance on psychological damage for the participant higher during the "
 "experiment than in daily life?"
 
-#: proposals/models.py:369
+#: proposals/models.py:390
 msgid ""
 "Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze "
 "studie?"
@@ -462,22 +489,22 @@ msgstr ""
 "What is the compensation the participants receive for participating in this "
 "study?"
 
-#: proposals/models.py:370
+#: proposals/models.py:391
 msgid ""
 "tekst over dat vergoeding in redelijke verhouding moet zijn met belasting "
 "pp. En kinderen geen geld"
 msgstr "-"
 
-#: proposals/models.py:377
+#: proposals/models.py:398
 msgid "Hoe worden de proefpersonen geworven?"
 msgstr "How will the participants be recruited?"
 
-#: proposals/models.py:392
+#: proposals/models.py:413
 #, python-format
 msgid "Study details for proposal %s"
 msgstr "Study details for proposal %s"
 
-#: proposals/models.py:398
+#: proposals/models.py:419
 msgid ""
 "Is het geheel van taken en overige activiteiten in de sessie als geheel "
 "belastend voor de proefpersoon op een manier die, ondanks de verkregen "
@@ -495,13 +522,13 @@ msgstr ""
 "participants that you as a researcher consider as the most vulnerable or "
 "that can carry the least amount of pressure/burden."
 
-#: proposals/models.py:408
+#: proposals/models.py:429
 msgid ""
 "Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?"
 msgstr ""
 "How many tasks will each participant have to carry out in this session?"
 
-#: proposals/models.py:411
+#: proposals/models.py:432
 msgid ""
 "Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon "
 "vervolgens een vragenlijst afneemt, dan vult u hierboven \"2\" in. "
@@ -513,7 +540,7 @@ msgstr ""
 "electrodes, session-debriefing and a short (< 3 minutes) exit-interview are "
 "not counted as tasks. "
 
-#: proposals/models.py:414
+#: proposals/models.py:435
 #, fuzzy, python-format
 #| msgid ""
 #| "De totale geschatte netto taakduur van uw sessie komt op basis van uw "
@@ -533,7 +560,7 @@ msgstr ""
 "breaks in between the tasks, and debriefing? (so, in case of a lab visit "
 "from entering the lab until leaving)"
 
-#: proposals/models.py:418
+#: proposals/models.py:439
 msgid ""
 "Is het geheel van taken en overige activiteiten in de sessie als geheel "
 "belastend voor de proefpersoon op een manier die, ondanks de verkregen "
@@ -558,27 +585,27 @@ msgstr ""
 "participants that you as a researcher consider as the most vulnerable or "
 "that can carry the least amount of pressure/burden."
 
-#: proposals/models.py:445
+#: proposals/models.py:466
 msgid "Session {} at proposal {}"
 msgstr "Session {} at proposal {}"
 
-#: proposals/models.py:449
+#: proposals/models.py:470
 msgid "Naam"
 msgstr "Name"
 
-#: proposals/models.py:450
+#: proposals/models.py:471
 msgid "Duur (in minuten)"
 msgstr "Duration (in minutes)"
 
-#: proposals/models.py:451
+#: proposals/models.py:472
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
-#: proposals/models.py:452
+#: proposals/models.py:473
 msgid "Bestand"
-msgstr ""
+msgstr "File"
 
-#: proposals/models.py:480
+#: proposals/models.py:501
 msgid ""
 "Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als "
 "daarmee volledig duidelijk is waar het om gaat, bijv \"lexicale decisietaak"
@@ -588,13 +615,20 @@ msgstr ""
 "this name makes it completely clear what the task is about, for example "
 "'lexical decision task')"
 
-#: proposals/models.py:483
+#: proposals/models.py:504
+#, fuzzy
+#| msgid ""
+#| "Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het "
+#| "moment dat de taak van start gaat tot en met het einde van de taak "
+#| "(exclusief instructie maar inclusief oefensessie)? Indien de taakduur per "
+#| "proefpersoon varieert (self-paced taak of task-to-criterion), geef dan "
+#| "het redelijkerwijs te verwachten maximum op."
 msgid ""
-"Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het "
-"moment dat de taak van start gaat tot en met het einde van de taak "
-"(exclusief instructie maar inclusief oefensessie)? Indien de taakduur per "
-"proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het "
-"redelijkerwijs te verwachten maximum op."
+"Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, "
+"dus vanaf het moment dat de taak van start gaat tot en met het einde van de "
+"taak (exclusief instructie maar inclusief oefensessie)? Indien de taakduur "
+"per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan "
+"het redelijkerwijs te verwachten maximum op."
 msgstr ""
 "What is the duration of this task from beginning until end in minutes, so "
 "from the moment the carrying out of the task starts until the end of the "
@@ -602,7 +636,7 @@ msgstr ""
 "duration of the task varies between participants (self paced task of task-to-"
 "criterion), indicate the maximum duration that can reasonably be expected."
 
-#: proposals/models.py:489
+#: proposals/models.py:510
 msgid ""
 "Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak "
 "vastgelegd?"
@@ -610,7 +644,11 @@ msgstr ""
 "How will the behavior or the state of the participant be recorded in this "
 "task?"
 
-#: proposals/models.py:499
+#: proposals/models.py:513
+msgid "Kies het soort meting:"
+msgstr ""
+
+#: proposals/models.py:521
 msgid ""
 "Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag "
 "of toestand?"
@@ -618,11 +656,11 @@ msgstr ""
 "Will the participant receive feedback on his/her behavior or state during or "
 "after this task?"
 
-#: proposals/models.py:502
+#: proposals/models.py:524
 msgid "Beschrijf hoe de feedback wordt gegeven."
 msgstr "Describe how the feedback is given."
 
-#: proposals/models.py:506
+#: proposals/models.py:528
 msgid ""
 "Is deze taak belastend voor de proefpersoon op een manier die, ondanks de "
 "verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij "
@@ -645,12 +683,12 @@ msgstr ""
 "group of participants that you as a researcher consider as the most "
 "vulnerable or that can carry the least amount of pressure/burden."
 
-#: proposals/models.py:547 proposals/templates/proposals/menu.html:19
-#: proposals/templates/proposals/menu.html:38
+#: proposals/models.py:569 proposals/templates/proposals/menu.html:19
 msgid "FAQ"
 msgstr "FAQ"
 
-#: proposals/templates/proposals/base.html:37
+#: proposals/templates/proposals/base.html:8
+#: proposals/templates/proposals/base.html:40
 msgid "ETCL UiL OTS"
 msgstr "ETC UiL OTS"
 
@@ -693,15 +731,26 @@ msgstr ""
 "\">here</a>.\n"
 "\t"
 
+#: proposals/templates/proposals/index.html:28
+msgid ""
+"\n"
+"\tKlik <a href=\"http://etcl.wp.hum.uu.nl\" target=\"_blank\">hier</a> om "
+"terug te keren naar de ETCL-website.\n"
+"\t"
+msgstr ""
+
 #: proposals/templates/proposals/menu.html:10
+#: proposals/templates/proposals/proposal_list.html:7
 msgid "Mijn conceptaanvragen"
 msgstr "My concept proposals"
 
 #: proposals/templates/proposals/menu.html:13
+#: proposals/templates/proposals/proposal_list.html:9
 msgid "Mijn aanvraagarchief"
 msgstr "My proposal archive"
 
 #: proposals/templates/proposals/menu.html:16
+#: proposals/templates/proposals/proposal_list.html:11
 msgid "Publiek aanvraagarchief"
 msgstr "Public proposal archive"
 
@@ -714,22 +763,14 @@ msgid "Uitloggen"
 msgstr "Log out"
 
 #: proposals/templates/proposals/menu.html:29
-msgid "Voorbeelddocumenten"
-msgstr "Example documents"
+msgid "ETCL-website"
+msgstr "ETCL website"
 
 #: proposals/templates/proposals/menu.html:32
-msgid "Leden"
-msgstr "Members"
-
-#: proposals/templates/proposals/menu.html:35
-msgid "Vergaderdata"
-msgstr "Dates of meetings"
-
-#: proposals/templates/proposals/menu.html:41
 msgid "Inloggen"
 msgstr "Log in"
 
-#: proposals/templates/proposals/menu.html:58
+#: proposals/templates/proposals/menu.html:49
 msgid "Ga"
 msgstr "Go"
 
@@ -738,6 +779,7 @@ msgid "Aanvraag verwijderen"
 msgstr "Delete application"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:12
+#: proposals/templates/proposals/proposal_list.html:57
 #: proposals/templates/proposals/session_confirm_delete.html:12
 #: proposals/templates/proposals/task_confirm_delete.html:12
 msgid "Verwijderen"
@@ -749,6 +791,48 @@ msgstr "Delete"
 msgid "Annuleren"
 msgstr "Cancel"
 
+#: proposals/templates/proposals/proposal_list.html:18
+msgid "Dit overzicht toont al uw nog niet verstuurde aanvragen."
+msgstr ""
+
+#: proposals/templates/proposals/proposal_list.html:31
+msgid "Dit overzicht toont al uw verstuurde aanvragen."
+msgstr ""
+
+#: proposals/templates/proposals/proposal_list.html:33
+msgid "Dit overzicht toont alle beoordeelde aanvragen."
+msgstr ""
+
+#: proposals/templates/proposals/proposal_list.html:39
+msgid "Referentienummer"
+msgstr "Reference number"
+
+#: proposals/templates/proposals/proposal_list.html:40
+msgid "Titel studie"
+msgstr "Title of study"
+
+#: proposals/templates/proposals/proposal_list.html:41
+msgid "Status"
+msgstr "State"
+
+#: proposals/templates/proposals/proposal_list.html:42
+#, fuzzy
+#| msgid "Taak bewerkt"
+msgid "Laatst bijgewerkt"
+msgstr "Task edited"
+
+#: proposals/templates/proposals/proposal_list.html:43
+msgid "Acties"
+msgstr "Actions"
+
+#: proposals/templates/proposals/proposal_list.html:54
+msgid "Inzien"
+msgstr "Show"
+
+#: proposals/templates/proposals/proposal_list.html:56
+msgid "Naar volgende stap"
+msgstr "To next step"
+
 #: proposals/templates/proposals/session_confirm_delete.html:6
 msgid "Sessie verwijderen"
 msgstr "Delete session"
@@ -757,60 +841,97 @@ msgstr "Delete session"
 msgid "Taak verwijderen"
 msgstr "Delete task"
 
-#: proposals/views.py:139
+#: proposals/views.py:103
 #, python-format
 msgid "Conceptaanvraag %(title)s aangemaakt"
 msgstr "Concept application %(title)s created"
 
-#: proposals/views.py:168
+#: proposals/views.py:132
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
-#: proposals/views.py:190
+#: proposals/views.py:154
 #, python-format
 msgid "Conceptaanvraag %(title)s bewerkt"
 msgstr "Concept application %(title)s edited"
 
-#: proposals/views.py:196
+#: proposals/views.py:160
 msgid "Informed consent geupload"
 msgstr "Informed consent uploaded"
 
-#: proposals/views.py:202
+#: proposals/views.py:166
 msgid "Aanvraag verzonden"
 msgstr "Application sent"
 
-#: proposals/views.py:219
+#: proposals/views.py:179
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views.py:226
+#: proposals/views.py:186
 msgid "WMO-gegevens opgeslagen"
 msgstr "WMO information saved"
 
-#: proposals/views.py:242
+#: proposals/views.py:202
 msgid "WMO-gegevens bewerkt"
 msgstr "WMO information edited"
 
-#: proposals/views.py:294
+#: proposals/views.py:254
 #, python-format
 msgid "%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt"
 msgstr "%(sessions_number)s sessions for applicaiton %(title)s created"
 
-#: proposals/views.py:332
+#: proposals/views.py:292
 msgid "Sessie verwijderd"
 msgstr "Session deleted"
 
-#: proposals/views.py:404
+#: proposals/views.py:364
 msgid "Taak opgeslagen"
 msgstr "Task saved"
 
-#: proposals/views.py:432
+#: proposals/views.py:392
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: proposals/views.py:456
+#: proposals/views.py:416
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#: reviews/models.py:14
+msgid "Beoordeling door supervisor"
+msgstr ""
+
+#: reviews/models.py:15
+msgid "Beoordeling door ethische commissie"
+msgstr ""
+
+#~ msgid "Aanvraag is beoordeeld naar ETCL"
+#~ msgstr "Application is assessed for ETCL"
+
+#~ msgid ""
+#~ "Proefpersonen kunnen geselecteerd worden op bepaalde bijzondere kenmerken "
+#~ "die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde "
+#~ "belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: "
+#~ "kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie "
+#~ "op verbale beledigingen; patiënten met afasie die een gesprek moeten "
+#~ "voeren, ook al gaat het gesprek over alledaagse dingen). Is dit in uw "
+#~ "studie bij (een deel van) de proefpersonen het geval?"
+#~ msgstr ""
+#~ "It may be the case that participants are selected based on certain "
+#~ "deviating/special characteristics that possibly go with a increased risk "
+#~ "on vulnerability or reduced capacity with respect to aspects of the "
+#~ "proposed study (e.g. children that are bullied in the past in a study on "
+#~ "the neural response on verbal insults; patients with aphasia that have to "
+#~ "engage in an conversation, even if the topics are everyday matters). Is "
+#~ "this the case in your study with (a part of) the participants?"
+
+#~ msgid "Voorbeelddocumenten"
+#~ msgstr "Example documents"
+
+#~ msgid "Leden"
+#~ msgstr "Members"
+
+#~ msgid "Vergaderdata"
+#~ msgstr "Dates of meetings"
 
 #~ msgid "Van welke aard is deze feedback?"
 #~ msgstr "What is the nature of this feedback?"

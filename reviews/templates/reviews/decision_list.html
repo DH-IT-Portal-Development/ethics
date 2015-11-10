@@ -1,0 +1,39 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+    {% trans "Mijn besluiten" %}
+{% endblock %} 
+
+{% block content %}
+<p>
+</p>
+<table class="dataTable display">
+    <thead>
+        <tr>
+            <th>{% trans "Referentienummer" %}</th>
+            <th>{% trans "Titel studie" %}</th>
+            <th>{% trans "Fase" %}</th>
+            <th>{% trans "Startdatum review" %}</th>
+            <th>{% trans "Mijn besluit" %}</th>
+            <th>{% trans "Acties" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for decision in decisions %}
+        <tr>
+            <td>{{ decision.review.proposal.reference_number }}</td>
+            <td>{{ decision.review.proposal.title }}</td>
+            <td>{{ decision.review.get_stage_display }}</td>
+            <td>{{ decision.review.start_date|date:"j M Y" }}</td>
+            <td>{{ decision.go|yesno:"go,no go,open" }}</td>
+            <td>
+                <a href="{% url 'proposals:detail' decision.review.proposal.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Aanvraag inzien' %}"></a>
+                <a href="{% url 'reviews:decide' decision.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Beslissen' %}"></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

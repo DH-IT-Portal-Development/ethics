@@ -17,6 +17,13 @@ v TASKS: Aan Sessie hangen
 v TASKS: Sessie-gedeelte inbouwen
 - Terug-knop in forms verhinderen of juist inbouwen
 
+- belasting op sessieniveau
+- dimensies, machine geeft oordeel (maar is niet bindend)
+- e-mail naar aanvragers/eindverantwoordelijke (geen problemen (binnen twee weken bericht)/besproken bij eerstkomende vergadering)
+- commissielid review wordt door Maartje gekozen
+- zien wie de reviewers waren van een decision (evt. statistiekje)
+- 
+
 Input commissie nodig:
 - Woordenboek van definities? 
 - Inregelen e-mails eindverantwoordelijke

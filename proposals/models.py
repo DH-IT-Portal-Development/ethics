@@ -2,9 +2,15 @@
 
 from django.conf import settings
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
+
+
+def validate_pdf(value):
+    if value.file.content_type != 'application/pdf':
+        raise ValidationError(_('Alleen PDF-bestanden zijn toegestaan.'))
 
 
 class Relation(models.Model):
@@ -27,6 +33,7 @@ class Proposal(models.Model):
     TASKS_ENDED = 8
     SESSIONS_ENDED = 9
     INFORMED_CONSENT_UPLOADED = 10
+    SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
     DECISION_MADE = 55
     WMO_DECISION_MADE = 60
@@ -42,8 +49,10 @@ class Proposal(models.Model):
         (SESSIONS_ENDED, _('Belasting proefpersoon: afgerond')),
         (INFORMED_CONSENT_UPLOADED, _(u'Informed consent geüpload')),
 
-        (SUBMITTED, _('Opgestuurd ter beoordeling naar ETCL')),
-        (DECISION_MADE, _('Aanvraag is beoordeeld naar ETCL')),
+        (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
+
+        (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
+        (DECISION_MADE, _('Aanvraag is beoordeeld door ETCL')),
         (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door METC')),
     )
 
@@ -63,11 +72,6 @@ d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over pr
 design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen \
 en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingrediënten \
 van de methode meer gedetailleerde informatie worden gevraagd.'))
-    supervisor_email = models.EmailField(
-        _('E-mailadres eindverantwoordelijke onderzoeker'),
-        blank=True,
-        help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
-Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))
     other_applicants = models.BooleanField(
         _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
         default=False)
@@ -108,7 +112,8 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
         _('Upload hier de informed consent'),
-        blank=True)
+        blank=True,
+        validators=[validate_pdf])
 
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
@@ -116,6 +121,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     # Dates for bookkeeping
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+    date_submitted_supervisor = models.DateTimeField(null=True)
     date_submitted = models.DateTimeField(null=True)
 
     # References to other models
@@ -129,6 +135,12 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         settings.AUTH_USER_MODEL,
         verbose_name=_('Uitvoerende(n)'),
         related_name='applicants')
+    supervisor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Eindverantwoordelijke onderzoeker'),
+        null=True,
+        help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
+Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))
     parent = models.ForeignKey(
         'self',
         null=True,
@@ -168,12 +180,13 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
                 status = self.TASKS_ADDED
             if session.tasks_duration:
                 status = self.TASKS_ENDED
-
         if session and session.tasks_duration:
             if self.sessions_duration:
                 status = self.SESSIONS_ENDED
             if self.informed_consent_pdf:
                 status = self.INFORMED_CONSENT_UPLOADED
+            if self.date_submitted_supervisor:
+                status = self.SUBMITTED_TO_SUPERVISOR
             if self.date_submitted:
                 status = self.SUBMITTED
 
@@ -258,7 +271,8 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
         default=False)
     metc_decision_pdf = models.FileField(
         _('Upload hier de beslissing van het METC'),
-        blank=True)
+        blank=True,
+        validators=[validate_pdf])
 
     # Status
     status = models.PositiveIntegerField(choices=WMO_STATUSES, default=NO_WMO)
@@ -455,7 +469,7 @@ class Survey(models.Model):
     name = models.CharField(_('Naam'), max_length=200)
     minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
     survey_url = models.URLField(_('URL'), blank=True)
-    survey_file = models.FileField(_('Bestand'), blank=True)
+    survey_file = models.FileField(_('Bestand'), blank=True, validators=[validate_pdf])
     study = models.ForeignKey(Study)
 
     def __unicode__(self):
@@ -486,7 +500,7 @@ class Task(models.Model):
         _('Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv "lexicale decisietaak")'),
         max_length=200)
     duration = models.PositiveIntegerField(
-        _('Wat is de duur van deze taak van begin tot eind in minuten, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
+        _('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
 Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.'),
         default=0,
         validators=[MinValueValidator(1), MaxValueValidator(45)])
@@ -495,8 +509,9 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         verbose_name=_('Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'))
     registration_kind = models.ForeignKey(
         RegistrationKind,
-        verbose_name=_('Namelijk'),
-        null=True)
+        verbose_name=_('Kies het soort meting:'),
+        null=True,
+        blank=True)
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,

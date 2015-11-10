@@ -43,8 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'proposals',
+    'reviews',
     'feedback',
-    #'reviews',
     #'meetings',
 )
 

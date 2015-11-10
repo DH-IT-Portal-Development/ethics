@@ -16,6 +16,12 @@
 <ul>
 	<li><a href="{% url 'proposals:create' %}">{% trans "Nieuwe aanvraag indienen" %}</a></li>
 	<li><a href="{% url 'proposals:copy' %}">{% trans "Bestaande aanvraag kopiëren" %}</a></li>
+	{% if reviews_supervisor %}
+	<li><a href="{% url 'reviews:supervisor' %}">Aanvragen beoordelen als supervisor ({{ reviews_supervisor.count }})</a></li>
+	{% endif %}
+	{% if reviews_commission %}
+	<li><a href="{% url 'reviews:commission' %}">Aanvragen beoordelen als commissielid ({{ reviews_commission.count }})</a></li>
+	{% endif %}
 </ul>
 {% else %}
 <p>

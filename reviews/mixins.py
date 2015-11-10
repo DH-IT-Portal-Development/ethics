@@ -2,11 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic.detail import SingleObjectMixin
 
-from .models import Proposal, Task
-
 
 class LoginRequiredMixin(object):
-    """Mixin for generic views to retun to login view if not logged in"""
+    """
+    Mixin for generic views to retun to login view if not logged in
+    TODO: this is the same as that in the proposals application.
+    """
     @classmethod
     def as_view(cls, **initkwargs):
         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
@@ -16,19 +17,15 @@ class LoginRequiredMixin(object):
 class UserAllowedMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
         """
-        Checks whether the current User is in the applicants of a Proposal.
+        Checks whether the current User is a reviewer in this Review,
+        as well as whether the Review is still open.
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
-        applicants = []
-        if isinstance(obj, Proposal):
-            applicants = obj.applicants.all()
-        elif isinstance(obj, Task):
-            applicants = obj.session.proposal.applicants.all()
-        else:
-            applicants = obj.proposal.applicants.all()
+        reviewer = obj.reviewer
+        date_end = obj.review.date_end
 
-        if self.request.user not in applicants:
+        if self.request.user != reviewer or date_end:
             raise PermissionDenied
 
         return obj

@@ -7,6 +7,7 @@ urlpatterns = patterns('',
         kwargs={'next_page': '/proposals/'}),
 
     url(r'^proposals/', include('proposals.urls', namespace='proposals')),
+    url(r'^reviews/', include('reviews.urls', namespace='reviews')),
     url(r'^feedback/', include('feedback.urls', namespace='feedback')),
 
     url(r'^admin/', include(admin.site.urls)),

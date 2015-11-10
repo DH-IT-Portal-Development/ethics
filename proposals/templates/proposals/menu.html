@@ -1,19 +1,34 @@
 {% load i18n %}
-
 <div class="pure-menu pure-menu-horizontal pure-menu-custom">
     <ul class="pure-menu-list">
         <li class="pure-menu-item">
             <a class="pure-menu-link" href="{% url 'proposals:home' %}">{% trans "Home" %}</a>
         </li>
         {% if user.is_authenticated %}
-        <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptaanvragen" %}</a>
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">Aanvragen</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptaanvragen" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:my_archive' %}">{% trans "Mijn aanvraagarchief" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Publiek aanvraagarchief" %}</a>
+                </li>
+            </ul>
         </li>
-        <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'proposals:my_archive' %}">{% trans "Mijn aanvraagarchief" %}</a>
-        </li>
-        <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Publiek aanvraagarchief" %}</a>
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">Besluiten</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:home' %}">{% trans "Mijn besluiten" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:supervisor' %}">{% trans "Openstaande besluiten" %}</a>
+                </li>
+            </ul>
         </li>
         <li class="pure-menu-item">
             <a class="pure-menu-link" href="{% url 'proposals:faq' %}">{% trans "FAQ" %}</a>

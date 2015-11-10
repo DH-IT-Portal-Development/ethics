@@ -6,7 +6,6 @@ from django.core.urlresolvers import reverse
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
-from django.utils import timezone
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
@@ -19,6 +18,7 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
 from .mixins import LoginRequiredMixin, UserAllowedMixin
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .utils import generate_ref_number
+from reviews.models import start_review
 
 
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
@@ -57,7 +57,7 @@ class ArchiveView(LoginRequiredMixin, generic.ListView):
 class IndexView(ArchiveView):
     def get_queryset(self):
         """Return all the submitted proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED)
+        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR)
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
@@ -68,7 +68,7 @@ class IndexView(ArchiveView):
 class ConceptsView(ArchiveView):
     def get_queryset(self):
         """Return all the non-submitted proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status__lt=Proposal.SUBMITTED)
+        return Proposal.objects.filter(applicants=self.request.user).filter(status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
     def get_context_data(self, **kwargs):
         context = super(ConceptsView, self).get_context_data(**kwargs)
@@ -166,12 +166,10 @@ class ProposalSubmit(ProposalUpdateView):
     success_message = _('Aanvraag verzonden')
 
     def form_valid(self, form):
-        """
-        Set date_submitted to current date/time
-        TODO: send e-mail to supervisor
-        """
-        form.instance.date_submitted = timezone.now()
-        return super(ProposalSubmit, self).form_valid(form)
+        """Start the review process on submission"""
+        success_url = super(ProposalSubmit, self).form_valid(form)
+        start_review(self.get_object())
+        return success_url
 
     def get_success_url(self):
         return reverse('proposals:my_archive')
@@ -426,6 +424,12 @@ class TaskDelete(DeleteView):
 # Home view
 class HomeView(generic.TemplateView):
     template_name = 'proposals/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        #context['reviews_supervisor'] = Review.objects.filter(date_end=None, stage=Review.SUPERVISOR, decision__reviewer=self.request.user)
+        #context['reviews_commission'] = Review.objects.filter(date_end=None, stage=Review.COMMISSION, decision__reviewer=self.request.user)
+        return context
 
 
 @csrf_exempt

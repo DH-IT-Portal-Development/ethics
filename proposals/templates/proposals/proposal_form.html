@@ -7,7 +7,7 @@
 {% block content %}
 <script>
 $(function() {
-    check_field_required('relation', 'supervisor_email', '/proposals/requires_supervisor/');
+    check_field_required('relation', 'supervisor', '/proposals/requires_supervisor/');
     depends_on_value('other_applicants', 'True', 'applicants');
 
     // Adds a running word count to the technical summary
@@ -36,10 +36,12 @@ $(function() {
 <h3>Algemene vragen over de studie</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
+    {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
     <p>
         <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
         <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
         <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>
     </p>
+    {% endif %}
 </form>
 {% endblock %}
