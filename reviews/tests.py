@@ -1,13 +1,14 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from .models import Review, Decision, start_review
-from proposals.models import Proposal, Relation
+from .models import Review, Decision
+from .utils import start_review, auto_review
+from proposals.models import Proposal, Study, Relation, Compensation
 from proposals.utils import generate_ref_number
 
 
 class ReviewTestCase(TestCase):
-    fixtures = ['relations']
+    fixtures = ['relations', 'compensations']
 
     def setUp(self):
         self.user = User.objects.create_superuser('test0101', 'test@test.com', 'secret')
@@ -61,3 +62,18 @@ class ReviewTestCase(TestCase):
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
+
+    def test_auto_review(self):
+        compensation = Compensation.objects.get(pk=1)
+        Study.objects.create(proposal=self.p2, compensation=compensation)
+
+        go, reasons = auto_review(self.p2)
+        self.assertTrue(go)
+
+        self.p2.study.risk_physical = True
+        self.p2.study.save()
+
+        go, reasons = auto_review(self.p2)
+        self.assertFalse(go)
+        self.assertEqual(len(reasons), 1)
+

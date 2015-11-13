@@ -18,7 +18,7 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
 from .mixins import LoginRequiredMixin, UserAllowedMixin
 from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
 from .utils import generate_ref_number
-from reviews.models import start_review
+from reviews.utils import start_review
 
 
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):

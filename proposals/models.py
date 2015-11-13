@@ -304,6 +304,7 @@ class AgeGroup(models.Model):
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    max_net_duration = models.PositiveIntegerField()
 
     def __unicode__(self):
         if self.age_max:
@@ -325,6 +326,7 @@ class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description
@@ -334,6 +336,7 @@ class Compensation(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description
@@ -481,6 +484,7 @@ class Registration(models.Model):
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
     needs_kind = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description

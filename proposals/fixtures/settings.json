@@ -3,7 +3,8 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "thuis bij de proefpersoon"
+        "description": "thuis bij de proefpersoon",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 1
@@ -12,7 +13,8 @@
     "fields": {
         "needs_details": true,
         "order": 2,
-        "description": "zorginstelling"
+        "description": "zorginstelling",
+        "requires_review": true
     },
     "model": "proposals.setting",
     "pk": 2
@@ -21,7 +23,8 @@
     "fields": {
         "needs_details": false,
         "order": 3,
-        "description": "school/onderwijsinstelling"
+        "description": "school/onderwijsinstelling",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 3
@@ -30,7 +33,8 @@
     "fields": {
         "needs_details": false,
         "order": 4,
-        "description": "dagopvang"
+        "description": "dagopvang",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 4
@@ -39,7 +43,8 @@
     "fields": {
         "needs_details": false,
         "order": 5,
-        "description": "peuterspeelzaal"
+        "description": "peuterspeelzaal",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 5
@@ -48,7 +53,8 @@
     "fields": {
         "needs_details": false,
         "order": 6,
-        "description": "buitenschoolse opvang"
+        "description": "buitenschoolse opvang",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 6
@@ -57,7 +63,8 @@
     "fields": {
         "needs_details": false,
         "order": 7,
-        "description": "het UiL OTS lab"
+        "description": "het UiL OTS lab",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 7
@@ -66,7 +73,8 @@
     "fields": {
         "needs_details": true,
         "order": 8,
-        "description": "anders, namelijk"
+        "description": "anders, namelijk",
+        "requires_review": true
     },
     "model": "proposals.setting",
     "pk": 8

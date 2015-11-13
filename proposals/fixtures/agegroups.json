@@ -4,7 +4,8 @@
         "needs_details": true,
         "age_max": 3,
         "description": "Baby",
-        "age_min": 0
+        "age_min": 0,
+        "max_net_duration": 20
     },
     "model": "proposals.agegroup",
     "pk": 1
@@ -14,7 +15,8 @@
         "needs_details": true,
         "age_max": 5,
         "description": "Peuter",
-        "age_min": 4
+        "age_min": 4,
+        "max_net_duration": 40
     },
     "model": "proposals.agegroup",
     "pk": 2
@@ -24,7 +26,8 @@
         "needs_details": true,
         "age_max": 11,
         "description": "Kind",
-        "age_min": 6
+        "age_min": 6,
+        "max_net_duration": 60
     },
     "model": "proposals.agegroup",
     "pk": 3
@@ -34,7 +37,8 @@
         "needs_details": true,
         "age_max": 17,
         "description": "Adolescent",
-        "age_min": 12
+        "age_min": 12,
+        "max_net_duration": 90
     },
     "model": "proposals.agegroup",
     "pk": 4
@@ -44,7 +48,8 @@
         "needs_details": false,
         "age_max": 69,
         "description": "Volwassene",
-        "age_min": 18
+        "age_min": 18,
+        "max_net_duration": 120
     },
     "model": "proposals.agegroup",
     "pk": 5
@@ -54,7 +59,8 @@
         "needs_details": true,
         "age_max": null,
         "description": "70-plusser",
-        "age_min": 70
+        "age_min": 70,
+        "max_net_duration": 60
     },
     "model": "proposals.agegroup",
     "pk": 6

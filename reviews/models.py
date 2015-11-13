@@ -59,36 +59,3 @@ class Decision(models.Model):
 
     def __unicode__(self):
         return 'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
-
-
-def start_review(proposal):
-    """
-    If the proposal has a supervisor:
-    - Set date_submitted_supervisor to current date/time
-    - Start a Review for this Proposal
-    - (TODO) Send an e-mail to the supervisor
-
-    """
-    review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-
-    if proposal.relation.needs_supervisor:
-        review.stage = Review.SUPERVISOR
-        review.save()
-
-        proposal.date_submitted_supervisor = timezone.now()
-        proposal.save()
-
-        decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
-        decision.save()
-    else:
-        review.stage = Review.COMMISSION
-        review.save()
-
-        proposal.date_submitted = timezone.now()
-        proposal.save()
-
-        for user in get_user_model().objects.filter(is_staff=True):
-            decision = Decision.objects.create(review=review, reviewer=user)
-            decision.save()
-
-    return review

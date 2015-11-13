@@ -3,7 +3,8 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "geen"
+        "description": "geen",
+        "requires_review": false
     },
     "model": "proposals.compensation",
     "pk": 1
@@ -12,7 +13,8 @@
     "fields": {
         "needs_details": true,
         "order": 2,
-        "description": "geld"
+        "description": "geld",
+        "requires_review": true
     },
     "model": "proposals.compensation",
     "pk": 2
@@ -21,7 +23,8 @@
     "fields": {
         "needs_details": true,
         "order": 3,
-        "description": "cadeautje"
+        "description": "cadeautje",
+        "requires_review": false
     },
     "model": "proposals.compensation",
     "pk": 3
