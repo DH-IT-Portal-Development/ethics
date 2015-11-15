@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext as _
+from django.contrib.auth import get_user_model
 
 from .models import Review, Decision
 from proposals.models import Task
@@ -6,11 +7,17 @@ from proposals.models import Task
 
 def start_review(proposal):
     """
+    Starts a Review for the given Proposal.
+
     If the proposal has a supervisor:
+    - Set the review status to SUPERVISOR
     - Set date_submitted_supervisor to current date/time
-    - Start a Review for this Proposal
     - (TODO) Send an e-mail to the supervisor
 
+    If the proposal has no supervisor: 
+    - Set the review status to ASSIGNMENT
+    - Set date_submitted to current date/time
+    - (TODO) Send an e-mail to the superusers
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
 
@@ -21,17 +28,17 @@ def start_review(proposal):
         proposal.date_submitted_supervisor = timezone.now()
         proposal.save()
 
-        decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
+        decision = Decision(review=review, reviewer=proposal.supervisor)
         decision.save()
     else:
-        review.stage = Review.COMMISSION
+        review.stage = Review.ASSIGNMENT
         review.save()
 
         proposal.date_submitted = timezone.now()
         proposal.save()
 
-        for user in get_user_model().objects.filter(is_staff=True):
-            decision = Decision.objects.create(review=review, reviewer=user)
+        for user in get_user_model().objects.filter(is_superuser=True):
+            decision = Decision(review=review, reviewer=user)
             decision.save()
 
     return review

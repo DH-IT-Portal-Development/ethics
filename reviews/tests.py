@@ -76,4 +76,3 @@ class ReviewTestCase(TestCase):
         go, reasons = auto_review(self.p2)
         self.assertFalse(go)
         self.assertEqual(len(reasons), 1)
-

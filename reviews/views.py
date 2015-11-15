@@ -3,7 +3,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Review, Decision
-from .forms import DecisionForm
+from .forms import ReviewForm, DecisionForm
 from .mixins import LoginRequiredMixin, UserAllowedMixin
 
 
@@ -29,6 +29,25 @@ class CommissionView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """Return all the current open decisions for the current user"""
         return Decision.objects.all()  # filter(review__date_end=None, review__stage=Review.COMMISSION, reviewer=self.request.user)
+
+
+class ReviewAssignView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+    """
+    Allows a superuser to assign reviewers. 
+    """
+    model = Review
+    form_class = ReviewForm
+
+    def get_success_url(self):
+        return reverse('reviews:home')
+
+    def form_valid(self, form):
+        """Update the review status, create Decisions and (TODO) send e-mail to reviewers."""
+        form.instance.stage = Review.COMMISSION
+        for user in form.cleaned_data['reviewers']:
+            decision = Decision(review=form.instance, reviewer=user)
+            decision.save()
+        return super(ReviewAssignView, self).form_valid(form)
 
 
 class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):

@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic.detail import SingleObjectMixin
 
+from .models import Review, Decision
+
 
 class LoginRequiredMixin(object):
     """
@@ -22,10 +24,16 @@ class UserAllowedMixin(SingleObjectMixin):
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
-        reviewer = obj.reviewer
-        date_end = obj.review.date_end
+        if isinstance(obj, Review):
+            # TODO: check if user in reviewers for this Review
+            if obj.date_end:
+                raise PermissionDenied
 
-        if self.request.user != reviewer or date_end:
-            raise PermissionDenied
+        if isinstance(obj, Decision):
+            reviewer = obj.reviewer
+            date_end = obj.review.date_end
+
+            if self.request.user != reviewer or date_end:
+                raise PermissionDenied
 
         return obj

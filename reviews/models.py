@@ -9,9 +9,11 @@ from proposals.models import Proposal
 
 class Review(models.Model):
     SUPERVISOR = 0
-    COMMISSION = 1
+    ASSIGNMENT = 1
+    COMMISSION = 2
     STAGES = (
         (SUPERVISOR, _('Beoordeling door supervisor')),
+        (ASSIGNMENT, _('Aanstelling commissieleden')),
         (COMMISSION, _('Beoordeling door ethische commissie')),
     )
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
