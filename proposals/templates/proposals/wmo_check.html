@@ -11,38 +11,56 @@
 <script>
 $(function() {
     $("input[name=metc]").change(function() {
-        var metc_undef = typeof $('input[name=metc]:checked').val() == "undefined";
+        var metc_undef = $('input[name=metc]:checked').val() === undefined;
         var metc_true = $('input[name=metc]:checked').val() == "True";
 
-        if (metc_undef) {
-            $("#id_is_medical, #id_is_behavioristic").parent().parent().hide();
+        if (metc_undef || metc_true) {
+            $("#id_is_medical").parent().parent().hide();
+            $("#id_is_behavioristic").parent().parent().hide();
         }
         else {
-            $("#id_is_medical").parent().parent().toggle(!metc_true);
+            $("#id_is_medical").parent().parent().show();
+            $("#id_is_behavioristic").parent().parent().hide();
+            $('input[name=is_medical]').prop('checked', false);
+            $('input[name=is_behavioristic]').prop('checked', false);
         }
+
+        $('#metc_status').empty().removeClass();
     });
     $("input[name=metc]").change();
 
-    depends_on_list_value('is_medical', ['True', 'None'], 'is_behavioristic');
+    $("input[name=is_medical]").change(function() {
+        var is_medical_undef = $('input[name=is_medical]:checked').val() === undefined;
 
-    $("#id_metc, #id_is_medical, #id_is_behavioristic").change(function() {
-        var metc = $('input[name=metc]:checked').val() == "True";
-        var medical = $('#id_is_medical_0:checked').val() == "True";
-        var behavioristic = $('#id_is_behavioristic_0:checked').val() == "True";
-
-        if ($('input[name=metc]:checked').val() !== undefined) {
-            var needs_metc = metc || (medical && behavioristic);
-            var metc_message = "{% trans 'Uw aanvraag zal moeten worden beoordeeld door de METC.' %}";
-            var no_metc_message = "{% trans 'Uw aanvraag hoeft niet te worden beoordeeld door de METC.' %}";
-            $('#metc_status').html(needs_metc ? metc_message : no_metc_message);
-            $('#metc_status').attr('class', needs_metc ? 'warning' : 'info');
+        if (is_medical_undef) {
+            $("#id_is_behavioristic").parent().parent().hide();
+        }
+        else {
+            $("#id_is_behavioristic").parent().parent().show();
         }
     });
-    $("#id_metc, #id_is_medical, #id_is_behavioristic").change();
+    $("input[name=is_medical]").change();
+
+    $('input[name=metc], input[name=is_medical], input[name=is_behavioristic]').change(function() {
+        var metc_val = $('input[name=metc]:checked').val();
+        var medical_val = $('input[name=is_medical]:checked').val();
+        var behavioristic_val = $('input[name=is_behavioristic]:checked').val();
+
+        if (metc_val == "True" || (medical_val !== undefined && behavioristic_val !== undefined)) {
+            var url = "{% url 'proposals:check_wmo' %}";
+            var params = {'metc': metc_val, 'medical': medical_val, 'behavioristic': behavioristic_val};
+            $.post(url, params, function(data) {
+                $('#metc_status').html(data.message);
+                $('#metc_status').attr('class', data.message_class);
+            });
+        }
+    });
+    $('input[name=metc], input[name=is_medical], input[name=is_behavioristic]').change();
 });
 </script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
+    <div id="metc_status"></div>
+    <input class="pure-button pure-button-primary" type="button" onclick="javascript:location.reload();" value="{% trans 'Opnieuw beginnen' %}" />
 </form>
-<div id="metc_status"></div>
 {% endblock %}

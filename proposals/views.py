@@ -18,7 +18,7 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyF
 from .mixins import LoginRequiredMixin, UserAllowedMixin
 from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey, Relation, \
     Trait, Setting, Compensation, Recruitment
-from .utils import generate_ref_number
+from .utils import generate_ref_number, string_to_bool
 from reviews.utils import start_review
 
 
@@ -461,3 +461,23 @@ def requires_recruitment_details(request):
     requires_recruitment_details = Recruitment.objects.filter(needs_details=True).values_list('id', flat=True)
     result = bool(set(requires_recruitment_details).intersection(value))
     return JsonResponse({'result': result})
+
+
+@csrf_exempt
+def check_wmo(request):
+    is_metc = string_to_bool(request.POST.get('metc'))
+    is_medical = string_to_bool(request.POST.get('medical'))
+    is_behavioristic = string_to_bool(request.POST.get('behavioristic'))
+
+    # Default message: OK.
+    message = _('Uw aanvraag hoeft niet te worden beoordeeld door de METC.')
+    message_class = 'info'
+
+    if is_metc is None or (not is_metc and is_medical is None):
+        message = _('Neem contact op met Maartje de Klerk om de twijfels weg te nemen.')
+        message_class = 'warning'
+    elif is_metc or (is_medical and is_behavioristic):
+        message = _('Uw aanvraag zal moeten worden beoordeeld door de METC.')
+        message_class = 'warning'
+
+    return JsonResponse({'message': message, 'message_class': message_class})
