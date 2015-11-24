@@ -48,4 +48,8 @@ urlpatterns = [
     url(r'^faq/$', FaqsView.as_view(), name='faq'),
 
     url(r'^requires_supervisor/$', requires_supervisor, name='requires_supervisor'),
+    url(r'^requires_traits_details/$', requires_traits_details, name='requires_traits_details'),
+    url(r'^requires_settings_details/$', requires_settings_details, name='requires_settings_details'),
+    url(r'^requires_compensation_details/$', requires_compensation_details, name='requires_compensation_details'),
+    url(r'^requires_recruitment_details/$', requires_recruitment_details, name='requires_recruitment_details'),
 ]

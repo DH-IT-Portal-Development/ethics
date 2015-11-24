@@ -138,6 +138,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
+        blank=True,
         null=True,
         help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))

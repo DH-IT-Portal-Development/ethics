@@ -1,5 +1,7 @@
 {% extends "proposals/base.html" %}
+
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} 
 Aanvraag ter beoordeling en registratie
@@ -9,18 +11,18 @@ Aanvraag ter beoordeling en registratie
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
-    depends_on_list_value('traits', ['10'], 'traits_details');
-    depends_on_list_value('setting', '8', 'setting_details');
-    depends_on_list_value('compensation', ['2', '3'], 'compensation_details');
-    depends_on_list_value('recruitment', '7', 'recruitment_details');
+    check_field_required('traits', 'traits_details', "{% url 'proposals:requires_traits_details' %}");
+    check_field_required('setting', 'setting_details', "{% url 'proposals:requires_settings_details' %}");
+    check_field_required('compensation', 'compensation_details', "{% url 'proposals:requires_compensation_details' %}");
+    check_field_required('recruitment', 'recruitment_details', "{% url 'proposals:requires_recruitment_details' %}");
 
-    add_title('age_groups', 'De leeftijdsgroep van uw proefpersonen');
-    add_title('has_traits', 'Bijzondere kenmerken van de proefpersonen');
-    add_title('necessity', 'Noodzakelijkheid');
-    add_title('setting', 'Setting');
-    add_title('risk_physical', 'Risico op schade');
-    add_title('compensation', 'Vergoeding');
-    add_title('recruitment', 'Werving');
+    add_title('age_groups', "{% trans 'De leeftijdsgroep van uw proefpersonen' %}");
+    add_title('has_traits', "{% trans 'Bijzondere kenmerken van de proefpersonen' %}");
+    add_title('necessity', "{% trans 'Noodzakelijkheid' %}");
+    add_title('setting', "{% trans 'Setting' %}");
+    add_title('risk_physical', "{% trans 'Risico op schade' %}");
+    add_title('compensation', "{% trans 'Vergoeding' %}");
+    add_title('recruitment', "{% trans 'Werving' %}");
 
     // Logic for necessity display. TODO: change into AJAX call, solve this on model level
     $('input[name=has_traits], input[name=age_groups]').change(function() {
@@ -40,18 +42,18 @@ $(function() {
 
     $('.survey_set').formset({
         prefix: 'survey_set',
-        addText: 'Voeg vragenlijst toe',
-        deleteText: 'Verwijder'
+        addText: "{% trans 'Voeg vragenlijst toe' %}",
+        deleteText: "{% trans 'Verwijder' %}"
     });
 });
 </script>
-<h3>Algemene kenmerken van de studie</h3>
+<h3>{% trans 'Algemene kenmerken van de studie' %}</h3>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
         {{ form.as_table }}
         <tr>
-            <th><strong>Flankerende vragenlijsten</strong></th>
+            <th><strong>{% trans 'Flankerende vragenlijsten' %}</strong></th>
             <td></td>
         </tr>
         {% for formset in inlines %}
@@ -63,7 +65,7 @@ $(function() {
         {{ formset.management_form }}
         {% endfor %}
     </table>
-    {% if study.proposal.status < study.proposal.SUBMITTED_TO_SUPERVISOR %}
+    {% if not study or study.proposal.status < study.proposal.SUBMITTED_TO_SUPERVISOR %}
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
     <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
     <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>

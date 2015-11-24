@@ -16,7 +16,8 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
 from .mixins import LoginRequiredMixin, UserAllowedMixin
-from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey, Relation
+from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey, Relation, \
+    Trait, Setting, Compensation, Recruitment
 from .utils import generate_ref_number
 from reviews.utils import start_review
 
@@ -93,23 +94,23 @@ class ProposalCreate(CreateView):
     success_message = _('Conceptaanvraag %(title)s aangemaakt')
 
     def get_initial(self):
-        """Set initial applicant to current user"""
+        """Sets initial applicant to current user"""
         return {'applicants': [self.request.user]}
 
     def form_valid(self, form):
-        """Set created_by to current user"""
+        """Sets created_by to current user and generate a reference number"""
         form.instance.created_by = self.request.user
         form.instance.reference_number = generate_ref_number(self.request.user)
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        """Add 'create' parameter to form"""
+        """Adds 'create' parameter to form"""
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True
         return context
 
     def get_success_url(self):
-        """Set the success_url based on the submit button pressed"""
+        """Sets the success_url based on the submit button pressed"""
         if 'save_continue' in self.request.POST:
             return self.object.continue_url()
         else:
@@ -427,4 +428,36 @@ def requires_supervisor(request):
     value = map(int, request.POST.getlist('value[]'))
     needs_supervisor = Relation.objects.filter(needs_supervisor=True).values_list('id', flat=True)
     result = bool(set(needs_supervisor).intersection(value))
+    return JsonResponse({'result': result})
+
+
+@csrf_exempt
+def requires_traits_details(request):
+    value = map(int, request.POST.getlist('value[]'))
+    requires_traits_details = Trait.objects.filter(needs_details=True).values_list('id', flat=True)
+    result = bool(set(requires_traits_details).intersection(value))
+    return JsonResponse({'result': result})
+
+
+@csrf_exempt
+def requires_settings_details(request):
+    value = map(int, request.POST.getlist('value[]'))
+    requires_settings_details = Setting.objects.filter(needs_details=True).values_list('id', flat=True)
+    result = bool(set(requires_settings_details).intersection(value))
+    return JsonResponse({'result': result})
+
+
+@csrf_exempt
+def requires_compensation_details(request):
+    value = map(int, request.POST.getlist('value[]'))
+    requires_compensation_details = Compensation.objects.filter(needs_details=True).values_list('id', flat=True)
+    result = bool(set(requires_compensation_details).intersection(value))
+    return JsonResponse({'result': result})
+
+
+@csrf_exempt
+def requires_recruitment_details(request):
+    value = map(int, request.POST.getlist('value[]'))
+    requires_recruitment_details = Recruitment.objects.filter(needs_details=True).values_list('id', flat=True)
+    result = bool(set(requires_recruitment_details).intersection(value))
     return JsonResponse({'result': result})
