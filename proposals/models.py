@@ -573,21 +573,3 @@ class Faq(models.Model):
 
     def __unicode__(self):
         return self.question
-
-
-class Member(models.Model):
-    title = models.CharField(max_length=200, blank=True)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    role = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return '%s %s' % (self.first_name, self.last_name)
-
-
-class Meeting(models.Model):
-    date = models.DateField()
-    deadline = models.DateField()
-
-    def __unicode__(self):
-        return '%s' % (self.date)

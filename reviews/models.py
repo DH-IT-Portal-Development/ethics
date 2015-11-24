@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django.contrib.auth import get_user_model
 
 from proposals.models import Proposal
 
@@ -28,7 +27,7 @@ class Review(models.Model):
         closed_decisions = 0
         final_go = True
         for decision in self.decision_set.all():
-            if decision.go != None:
+            if decision.go is not None:
                 closed_decisions += 1
                 final_go &= decision.go
 

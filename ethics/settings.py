@@ -45,7 +45,6 @@ INSTALLED_APPS = (
     'proposals',
     'reviews',
     'feedback',
-    #'meetings',
 )
 
 MIDDLEWARE_CLASSES = (

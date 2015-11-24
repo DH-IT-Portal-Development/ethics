@@ -45,8 +45,6 @@ urlpatterns = [
     url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
     url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view(), name='task_delete'),
 
-    url(r'^members/$', MembersView.as_view(), name='members'),
-    url(r'^meetings/$', MeetingsView.as_view(), name='meetings'),
     url(r'^faq/$', FaqsView.as_view(), name='faq'),
 
     url(r'^requires_supervisor/$', requires_supervisor, name='requires_supervisor'),

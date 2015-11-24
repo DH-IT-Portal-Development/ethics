@@ -1,5 +1,6 @@
-from django.utils.translation import ugettext as _
 from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext as _
+from django.utils import timezone
 
 from .models import Review, Decision
 from proposals.models import Task
@@ -14,7 +15,7 @@ def start_review(proposal):
     - Set date_submitted_supervisor to current date/time
     - (TODO) Send an e-mail to the supervisor
 
-    If the proposal has no supervisor: 
+    If the proposal has no supervisor:
     - Set the review status to ASSIGNMENT
     - Set date_submitted to current date/time
     - (TODO) Send an e-mail to the superusers
@@ -43,24 +44,25 @@ def start_review(proposal):
 
     return review
 
+
 def auto_review(proposal):
     go = True
     reasons = []
 
-    if proposal.sessions_stressful or proposal.sessions_stressful is None: 
+    if proposal.sessions_stressful or proposal.sessions_stressful is None:
         go = False
         reasons.append(_('Een onderdeel van de procedure kan belastend worden ervaren.'))
 
-    for age_group in proposal.study.age_groups.all(): 
+    for age_group in proposal.study.age_groups.all():
         if age_group.needs_details and not proposal.study.necessity:
             go = False
             reasons.append(_('Het is niet noodzakelijk deze groep proefpersonen te gebruiken'))
 
-        if proposal.net_duration() > age_group.max_net_duration: 
+        if proposal.net_duration() > age_group.max_net_duration:
             go = False
             reasons.append(_('Overschrijdt maximale duratie voor leeftijdsgroep {}'.format(age_group)))
 
-    for setting in proposal.study.setting.all(): 
+    for setting in proposal.study.setting.all():
         if setting.needs_details:
             go = False
             reasons.append(_('De dataverzameling vindt op een ongebruikelijke plek plaats: {}').format(proposal.study.setting_details))
@@ -79,7 +81,7 @@ def auto_review(proposal):
         go = False
         reasons.append(_('Verhoogd risico op psychische schade'))
 
-    if proposal.study.compensation.requires_review: 
+    if proposal.study.compensation.requires_review:
         go = False
         reasons.append(_('Afwijkende vorm van compensatie'))
 
