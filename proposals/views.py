@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
 from .copy import copy_proposal
-from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
+from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
 from .mixins import LoginRequiredMixin, UserAllowedMixin
@@ -202,8 +202,8 @@ class WmoUpdate(UpdateView):
 
 
 class WmoCheck(generic.FormView):
-    form_class = WmoForm
-    template_name = 'proposals/wmo_form.html'
+    form_class = WmoCheckForm
+    template_name = 'proposals/wmo_check.html'
 
 
 # CRUD actions on a Study

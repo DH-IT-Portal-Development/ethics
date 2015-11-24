@@ -1,0 +1,48 @@
+{% extends "proposals/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+{% trans 'WMO-check' %}
+{% endblock %} 
+
+{% block content %}
+<script>
+$(function() {
+    $("input[name=metc]").change(function() {
+        var metc_undef = typeof $('input[name=metc]:checked').val() == "undefined";
+        var metc_true = $('input[name=metc]:checked').val() == "True";
+
+        if (metc_undef) {
+            $("#id_is_medical, #id_is_behavioristic").parent().parent().hide();
+        }
+        else {
+            $("#id_is_medical").parent().parent().toggle(!metc_true);
+        }
+    });
+    $("input[name=metc]").change();
+
+    depends_on_list_value('is_medical', ['True', 'None'], 'is_behavioristic');
+
+    $("#id_metc, #id_is_medical, #id_is_behavioristic").change(function() {
+        var metc = $('input[name=metc]:checked').val() == "True";
+        var medical = $('#id_is_medical_0:checked').val() == "True";
+        var behavioristic = $('#id_is_behavioristic_0:checked').val() == "True";
+
+        if ($('input[name=metc]:checked').val() !== undefined) {
+            var needs_metc = metc || (medical && behavioristic);
+            var metc_message = "{% trans 'Uw aanvraag zal moeten worden beoordeeld door de METC.' %}";
+            var no_metc_message = "{% trans 'Uw aanvraag hoeft niet te worden beoordeeld door de METC.' %}";
+            $('#metc_status').html(needs_metc ? metc_message : no_metc_message);
+            $('#metc_status').attr('class', needs_metc ? 'warning' : 'info');
+        }
+    });
+    $("#id_metc, #id_is_medical, #id_is_behavioristic").change();
+});
+</script>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+</form>
+<div id="metc_status"></div>
+{% endblock %}

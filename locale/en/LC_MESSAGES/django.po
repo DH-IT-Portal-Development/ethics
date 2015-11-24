@@ -727,7 +727,7 @@ msgid ""
 "\t"
 msgstr ""
 "\n"
-"\t Welcome to the web portal of the ETCL. U can sign in <a href=\"%(the_url)s"
+"\t Welcome to the ETCL web portal. You can sign in <a href=\"%(the_url)s"
 "\">here</a>.\n"
 "\t"
 

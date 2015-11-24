@@ -103,7 +103,7 @@ STATIC_URL = '/static/'
 
 # Authentication (via LDAP)
 
-LOGIN_REDIRECT_URL = '/proposals/'
+LOGIN_REDIRECT_URL = '/'
 
 #AUTH_LDAP_SERVER_URI = 'ldap://ldap.forumsys.com'
 #AUTH_LDAP_BIND_DN = 'cn=read-only-admin,dc=example,dc=com'
