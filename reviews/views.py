@@ -31,6 +31,12 @@ class CommissionView(LoginRequiredMixin, generic.ListView):
         return Decision.objects.all()  # filter(review__date_end=None, review__stage=Review.COMMISSION, reviewer=self.request.user)
 
 
+class ReviewDetailView(LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
+    """
+    Shows the Decisions for a Review
+    """
+    model = Review
+
 class ReviewAssignView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     """
     Allows a superuser to assign reviewers. 

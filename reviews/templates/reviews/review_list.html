@@ -26,7 +26,7 @@
             <td>{{ review.proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
                 <a href="{% url 'proposals:detail' review.proposal.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Aanvraag inzien' %}"></a>
-                <a href="{% url 'reviews:decide' review.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Beslissen' %}"></a>
+                <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Review inzien' %}"></a>
             </td>
         </tr>
         {% endfor %}

@@ -25,8 +25,7 @@ class UserAllowedMixin(SingleObjectMixin):
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
         if isinstance(obj, Review):
-            # TODO: check if user in reviewers for this Review
-            if obj.date_end:
+            if not obj.decision_set.filter(reviewer=self.request.user) or obj.date_end:
                 raise PermissionDenied
 
         if isinstance(obj, Decision):

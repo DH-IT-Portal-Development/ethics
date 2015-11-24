@@ -5,6 +5,8 @@ from django.utils import timezone
 from .models import Review, Decision
 from proposals.models import Task
 
+SECRETARY = 'Secretaris'
+
 
 def start_review(proposal):
     """
@@ -38,7 +40,7 @@ def start_review(proposal):
         proposal.date_submitted = timezone.now()
         proposal.save()
 
-        for user in get_user_model().objects.filter(is_superuser=True):
+        for user in get_user_model().objects.filter(groups__name=SECRETARY):
             decision = Decision(review=review, reviewer=user)
             decision.save()
 

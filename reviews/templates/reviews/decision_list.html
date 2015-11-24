@@ -34,6 +34,7 @@
                 {% if review.stage == review.ASSIGNMENT %}
                     <a href="{% url 'reviews:assign' review.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Aanstellen' %}"></a>
                 {% elif not review.date_end %}
+                    <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
                     <a href="{% url 'reviews:decide' decision.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Beslissen' %}"></a>
                 {% endif %}
             </td>

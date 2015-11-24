@@ -244,7 +244,7 @@ class ProposalSessionStart(ProposalUpdateView):
     """Initial creation of Sessions"""
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
-    success_message = _('%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt')
+    success_message = _('%(sessions_number)s sessie(s) voor aanvraag %(title)s aangemaakt')
 
     def form_valid(self, form):
         # Create Sessions on save. TODO: don't allow coming here later...
