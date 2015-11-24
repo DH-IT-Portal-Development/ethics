@@ -16,7 +16,7 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
 from .mixins import LoginRequiredMixin, UserAllowedMixin
-from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
+from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey, Relation
 from .utils import generate_ref_number
 from reviews.utils import start_review
 
@@ -74,16 +74,6 @@ class ConceptsView(ArchiveView):
         context = super(ConceptsView, self).get_context_data(**kwargs)
         context['concepts'] = True
         return context
-
-
-class MembersView(generic.ListView):
-    context_object_name = 'members'
-    model = Member
-
-
-class MeetingsView(generic.ListView):
-    context_object_name = 'meetings'
-    model = Meeting
 
 
 class FaqsView(generic.ListView):
