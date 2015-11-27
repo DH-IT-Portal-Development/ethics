@@ -121,13 +121,15 @@ class ProposalCopy(CreateView):
     model = Proposal
     form_class = ProposalCopyForm
     success_message = _('Aanvraag gekopieerd')
-    success_url = '/proposals/concepts/'
     template_name = 'proposals/proposal_copy.html'
 
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""
         form.instance = copy_proposal(self, form)
         return super(ProposalCopy, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('proposals:my_concepts')
 
 
 class ProposalUpdateView(UpdateView):
@@ -168,8 +170,10 @@ class ProposalSubmit(ProposalUpdateView):
 
 class ProposalDelete(DeleteView):
     model = Proposal
-    success_url = '/proposals/concepts/'
     success_message = _('Aanvraag verwijderd')
+
+    def get_success_url(self):
+        return reverse('proposals:my_concepts')
 
 
 # CRUD actions on Wmo
