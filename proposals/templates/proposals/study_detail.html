@@ -36,7 +36,7 @@
             <td>{{ proposal.study.recruitment.all|unordered_list }}</td>
         </tr>
     </table>
-    <h4>Surveys</h4>
+    <h4>Flankerende vragenlijsten</h4>
     {% if proposal.study.survey_set.all %}
     <table class="dataTable display">
         <thead>
@@ -59,6 +59,6 @@
         </tbody>
     </table>
     {% else %}
-    <p>Geen surveys toegevoegd</p>
+    <p>Geen flankerende vragenlijsten toegevoegd</p>
     {% endif %}
 </div>

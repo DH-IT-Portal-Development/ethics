@@ -90,6 +90,17 @@ class WmoForm(forms.ModelForm):
             self.add_error('metc_institution', error)
 
 
+class WmoCheckForm(forms.ModelForm):
+    class Meta:
+        model = Wmo
+        fields = ['metc', 'is_medical', 'is_behavioristic']
+        widgets = {
+            'metc': forms.RadioSelect(choices=yes_no_doubt),
+            'is_medical': forms.RadioSelect(choices=yes_no_doubt),
+            'is_behavioristic': forms.RadioSelect(choices=yes_no_doubt),
+        }
+
+
 class StudyForm(forms.ModelForm):
     class Meta:
         model = Study

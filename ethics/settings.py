@@ -45,7 +45,6 @@ INSTALLED_APPS = (
     'proposals',
     'reviews',
     'feedback',
-    #'meetings',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,7 +82,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'nl'
+LANGUAGE_CODE = 'nl-NL'
 LANGUAGES = (
     ('nl', _('Nederlands')),
     ('en', _('Engels')),
@@ -104,7 +103,7 @@ STATIC_URL = '/static/'
 
 # Authentication (via LDAP)
 
-LOGIN_REDIRECT_URL = '/proposals/'
+LOGIN_REDIRECT_URL = '/'
 
 #AUTH_LDAP_SERVER_URI = 'ldap://ldap.forumsys.com'
 #AUTH_LDAP_BIND_DN = 'cn=read-only-admin,dc=example,dc=com'
@@ -125,7 +124,7 @@ AUTHENTICATION_BACKENDS = (
 #AUTH_LDAP_BIND_DN = ''
 #AUTH_LDAP_BIND_PASSWORD = ''
 
-# Group search; doesn't seem to work 
+# Group search; doesn't seem to work
 #AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=groups,dc=uu,dc=nl', ldap.SCOPE_SUBTREE)
 #AUTH_LDAP_GROUP_TYPE = MemberDNGroupType('memberuid')
 #AUTH_LDAP_REQUIRE_GROUP = 'cn=GG_GW_UiL-OTS_Labs_AllUsers,ou=groups,dc=uu,dc=nl'

@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
-    url(r'^(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
+    url(r'^show/(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
 
     url(r'^consent/(?P<pk>\d+)/$', ProposalUploadConsent.as_view(), name='consent'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^wmo/create/(?P<pk>\d+)/$', WmoCreate.as_view(), name='wmo_create'),
     url(r'^wmo/update/(?P<pk>\d+)/$', WmoUpdate.as_view(), name='wmo_update'),
     url(r'^wmo/check/$', WmoCheck.as_view(), name='wmo_check'),
+    url(r'^wmo/check_js/$', check_wmo, name='check_wmo'),
 
     # Study
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
@@ -45,9 +46,7 @@ urlpatterns = [
     url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
     url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view(), name='task_delete'),
 
-    url(r'^members/$', MembersView.as_view(), name='members'),
-    url(r'^meetings/$', MeetingsView.as_view(), name='meetings'),
     url(r'^faq/$', FaqsView.as_view(), name='faq'),
 
-    url(r'^requires_supervisor/$', requires_supervisor, name='requires_supervisor'),
+    url(r'^check_requires/$', check_requires, name='check_requires'),
 ]

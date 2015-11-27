@@ -2,16 +2,17 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django.contrib.auth import get_user_model
 
 from proposals.models import Proposal
 
 
 class Review(models.Model):
     SUPERVISOR = 0
-    COMMISSION = 1
+    ASSIGNMENT = 1
+    COMMISSION = 2
     STAGES = (
         (SUPERVISOR, _('Beoordeling door supervisor')),
+        (ASSIGNMENT, _('Aanstelling commissieleden')),
         (COMMISSION, _('Beoordeling door ethische commissie')),
     )
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
@@ -26,7 +27,7 @@ class Review(models.Model):
         closed_decisions = 0
         final_go = True
         for decision in self.decision_set.all():
-            if decision.go != None:
+            if decision.go is not None:
                 closed_decisions += 1
                 final_go &= decision.go
 
@@ -59,36 +60,3 @@ class Decision(models.Model):
 
     def __unicode__(self):
         return 'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
-
-
-def start_review(proposal):
-    """
-    If the proposal has a supervisor:
-    - Set date_submitted_supervisor to current date/time
-    - Start a Review for this Proposal
-    - (TODO) Send an e-mail to the supervisor
-
-    """
-    review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-
-    if proposal.relation.needs_supervisor:
-        review.stage = Review.SUPERVISOR
-        review.save()
-
-        proposal.date_submitted_supervisor = timezone.now()
-        proposal.save()
-
-        decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
-        decision.save()
-    else:
-        review.stage = Review.COMMISSION
-        review.save()
-
-        proposal.date_submitted = timezone.now()
-        proposal.save()
-
-        for user in get_user_model().objects.filter(is_staff=True):
-            decision = Decision.objects.create(review=review, reviewer=user)
-            decision.save()
-
-    return review

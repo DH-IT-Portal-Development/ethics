@@ -138,6 +138,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
+        blank=True,
         null=True,
         help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
 Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))
@@ -257,12 +258,10 @@ class Wmo(models.Model):
 Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid \
 (etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. \
 Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. \
-(CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)'),
-        default=False)
+(CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)'))
     is_behavioristic = models.NullBooleanField(
         _('Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
-        help_text=_('Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten drukken.'),
-        default=False)
+        help_text=_('Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten drukken.'))
     metc_application = models.BooleanField(
         _('Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag ingediend?'),
         default=False)
@@ -304,6 +303,7 @@ class AgeGroup(models.Model):
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    max_net_duration = models.PositiveIntegerField()
 
     def __unicode__(self):
         if self.age_max:
@@ -325,6 +325,7 @@ class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description
@@ -334,6 +335,7 @@ class Compensation(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description
@@ -481,6 +483,7 @@ class Registration(models.Model):
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
     needs_kind = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.description
@@ -569,21 +572,3 @@ class Faq(models.Model):
 
     def __unicode__(self):
         return self.question
-
-
-class Member(models.Model):
-    title = models.CharField(max_length=200, blank=True)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    role = models.CharField(max_length=200)
-
-    def __unicode__(self):
-        return '%s %s' % (self.first_name, self.last_name)
-
-
-class Meeting(models.Model):
-    date = models.DateField()
-    deadline = models.DateField()
-
-    def __unicode__(self):
-        return '%s' % (self.date)

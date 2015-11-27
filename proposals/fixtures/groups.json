@@ -1,0 +1,18 @@
+[
+{
+    "fields": {
+        "name": "Commissie",
+        "permissions": []
+    },
+    "model": "auth.group",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Secretaris",
+        "permissions": []
+    },
+    "model": "auth.group",
+    "pk": 2
+}
+]

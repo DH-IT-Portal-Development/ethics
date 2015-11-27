@@ -8,9 +8,8 @@ Vragen per taak per sessie
 {% block content %}
 <script>
 $(function() {
-    depends_on_list_value('actions', '7', 'actions_details');
-    depends_on_list_value('registrations', '6', 'registration_kind');
-    depends_on_list_value('registrations', '8', 'registrations_details');
+    check_field_required('registrations', 'needs_kind', 'registration_kind', 'Registration');
+    check_field_required('registrations', 'needs_details', 'registrations_details', 'Registration');
     depends_on_value('feedback', 'True', 'feedback_details');
 });
 </script>

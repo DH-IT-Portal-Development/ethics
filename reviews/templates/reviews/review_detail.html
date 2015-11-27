@@ -1,0 +1,36 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+Beslissingen bij voorstel {{ review.proposal.title }}
+{% endblock %} 
+
+{% block content %}
+<p>
+    Reviewronde gestart op {{ review.date_start }}.
+    {% if review.date_end %}
+    Reviewronde beeindigd op {{ review.date_end }}.
+    {% endif %}
+</p>
+<table class="dataTable display">
+    <thead>
+        <tr>
+            <th>{% trans "Reviewer" %}</th>
+            <th>{% trans "Beslissing" %}</th>
+            <th>{% trans "Genomen op" %}</th>
+            <th>{% trans "Commentaar" %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for decision in review.decision_set.all %}
+        <tr>
+            <td>{{ decision.reviewer }}</td>
+            <td>{{ decision.go|yesno:"go,no go,open" }}</td>
+            <td>{{ decision.date_decision }}</td>
+            <td>{{ decision.comments }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

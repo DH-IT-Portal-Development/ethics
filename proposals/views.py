@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.apps import apps
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
@@ -12,13 +13,13 @@ from django.views.decorators.csrf import csrf_exempt
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
 
 from .copy import copy_proposal
-from .forms import ProposalForm, ProposalCopyForm, WmoForm, StudyForm, \
+from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
 from .mixins import LoginRequiredMixin, UserAllowedMixin
-from .models import Proposal, Wmo, Study, Session, Task, Member, Meeting, Faq, Survey, Relation
-from .utils import generate_ref_number
-from reviews.models import start_review
+from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey
+from .utils import generate_ref_number, string_to_bool
+from reviews.utils import start_review
 
 
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
@@ -76,16 +77,6 @@ class ConceptsView(ArchiveView):
         return context
 
 
-class MembersView(generic.ListView):
-    context_object_name = 'members'
-    model = Member
-
-
-class MeetingsView(generic.ListView):
-    context_object_name = 'meetings'
-    model = Meeting
-
-
 class FaqsView(generic.ListView):
     context_object_name = 'faqs'
     model = Faq
@@ -103,23 +94,23 @@ class ProposalCreate(CreateView):
     success_message = _('Conceptaanvraag %(title)s aangemaakt')
 
     def get_initial(self):
-        """Set initial applicant to current user"""
+        """Sets initial applicant to current user"""
         return {'applicants': [self.request.user]}
 
     def form_valid(self, form):
-        """Set created_by to current user"""
+        """Sets created_by to current user and generate a reference number"""
         form.instance.created_by = self.request.user
         form.instance.reference_number = generate_ref_number(self.request.user)
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        """Add 'create' parameter to form"""
+        """Adds 'create' parameter to form"""
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True
         return context
 
     def get_success_url(self):
-        """Set the success_url based on the submit button pressed"""
+        """Sets the success_url based on the submit button pressed"""
         if 'save_continue' in self.request.POST:
             return self.object.continue_url()
         else:
@@ -130,13 +121,15 @@ class ProposalCopy(CreateView):
     model = Proposal
     form_class = ProposalCopyForm
     success_message = _('Aanvraag gekopieerd')
-    success_url = '/proposals/concepts/'
     template_name = 'proposals/proposal_copy.html'
 
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""
         form.instance = copy_proposal(self, form)
         return super(ProposalCopy, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('proposals:my_concepts')
 
 
 class ProposalUpdateView(UpdateView):
@@ -177,8 +170,10 @@ class ProposalSubmit(ProposalUpdateView):
 
 class ProposalDelete(DeleteView):
     model = Proposal
-    success_url = '/proposals/concepts/'
     success_message = _('Aanvraag verwijderd')
+
+    def get_success_url(self):
+        return reverse('proposals:my_concepts')
 
 
 # CRUD actions on Wmo
@@ -211,8 +206,8 @@ class WmoUpdate(UpdateView):
 
 
 class WmoCheck(generic.FormView):
-    form_class = WmoForm
-    template_name = 'proposals/wmo_form.html'
+    form_class = WmoCheckForm
+    template_name = 'proposals/wmo_check.html'
 
 
 # CRUD actions on a Study
@@ -253,7 +248,7 @@ class ProposalSessionStart(ProposalUpdateView):
     """Initial creation of Sessions"""
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
-    success_message = _('%(sessions_number)s sessies voor aanvraag %(title)s aangemaakt')
+    success_message = _('%(sessions_number)s sessie(s) voor aanvraag %(title)s aangemaakt')
 
     def form_valid(self, form):
         # Create Sessions on save. TODO: don't allow coming here later...
@@ -433,8 +428,32 @@ class HomeView(generic.TemplateView):
 
 
 @csrf_exempt
-def requires_supervisor(request):
-    value = map(int, request.POST.getlist('value[]'))
-    needs_supervisor = Relation.objects.filter(needs_supervisor=True).values_list('id', flat=True)
-    result = bool(set(needs_supervisor).intersection(value))
+def check_requires(request):
+    """
+    This call checks whether a certain value requires another input to be filled.
+    """
+    values = map(int, request.POST.getlist('value[]'))
+    model = apps.get_model('proposals', request.POST.get('model'))
+    required_values = model.objects.filter(**{request.POST.get('field'): True}).values_list('id', flat=True)
+    result = bool(set(required_values).intersection(values))
     return JsonResponse({'result': result})
+
+
+@csrf_exempt
+def check_wmo(request):
+    is_metc = string_to_bool(request.POST.get('metc'))
+    is_medical = string_to_bool(request.POST.get('medical'))
+    is_behavioristic = string_to_bool(request.POST.get('behavioristic'))
+
+    # Default message: OK.
+    message = _('Uw aanvraag hoeft niet te worden beoordeeld door de METC.')
+    message_class = 'info'
+
+    if is_metc is None or (not is_metc and is_medical is None):
+        message = _('Neem contact op met Maartje de Klerk om de twijfels weg te nemen.')
+        message_class = 'warning'
+    elif is_metc or (is_medical and is_behavioristic):
+        message = _('Uw aanvraag zal moeten worden beoordeeld door de METC.')
+        message_class = 'warning'
+
+    return JsonResponse({'message': message, 'message_class': message_class})

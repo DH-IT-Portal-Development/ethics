@@ -4,7 +4,8 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 1,
-        "description": "audio-opname"
+        "description": "audio-opname",
+        "requires_review": true
     },
     "model": "proposals.registration",
     "pk": 1
@@ -14,7 +15,8 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 2,
-        "description": "video-opname"
+        "description": "video-opname",
+        "requires_review": true
     },
     "model": "proposals.registration",
     "pk": 2
@@ -24,7 +26,8 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 3,
-        "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)"
+        "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
+        "requires_review": false
     },
     "model": "proposals.registration",
     "pk": 3
@@ -34,7 +37,8 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 4,
-        "description": "RT-registratie via Zep, Presentation, E-prime, etc"
+        "description": "RT-registratie via Zep, Presentation, E-prime, etc",
+        "requires_review": false
     },
     "model": "proposals.registration",
     "pk": 4
@@ -44,7 +48,8 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 5,
-        "description": "oogbewegingsregistratie via een eye-tracker"
+        "description": "oogbewegingsregistratie via een eye-tracker",
+        "requires_review": false
     },
     "model": "proposals.registration",
     "pk": 5
@@ -54,7 +59,8 @@
         "needs_details": false,
         "needs_kind": true,
         "order": 6,
-        "description": "psychofysiologische meting (bijvoorbeeld: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling, vingertemperatuur)"
+        "description": "psychofysiologische meting (bijvoorbeeld: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling, vingertemperatuur)",
+        "requires_review": true
     },
     "model": "proposals.registration",
     "pk": 6
@@ -64,7 +70,8 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 7,
-        "description": "registratie gegevens d.m.v. een (online) vragenlijst"
+        "description": "registratie gegevens d.m.v. een (online) vragenlijst",
+        "requires_review": false
     },
     "model": "proposals.registration",
     "pk": 7
@@ -74,7 +81,8 @@
         "needs_details": true,
         "needs_kind": false,
         "order": 8,
-        "description": "anders, namelijk"
+        "description": "anders, namelijk",
+        "requires_review": true
     },
     "model": "proposals.registration",
     "pk": 8
