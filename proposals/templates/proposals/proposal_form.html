@@ -7,7 +7,7 @@
 {% block content %}
 <script>
 $(function() {
-    check_field_required('relation', 'supervisor', "{% url 'proposals:requires_supervisor' %}");
+    check_field_required('relation', 'needs_supervisor', 'supervisor');
     depends_on_value('other_applicants', 'True', 'applicants');
 
     // Adds a running word count to the technical summary

@@ -5,20 +5,25 @@ function depends_on_value(a, a_value, b)
 {
     $('input[name=' + a + ']').change(function() {
         var check = $('input[name=' + a + ']:checked').val() == a_value;
-        $('#id_' + b).parent().parent().toggle(check);
+        $('#id_' + b).parents('tr').toggle(check);
     });
     $('input[name=' + a + ']').change();
 }
 
 // Checks whether a field is required given the selected inputs
-function check_field_required(input_name, required_field, url)
+function check_field_required(input_name, field_name, required_input, model_name)
 {
+    model_name = typeof model_name !== 'undefined' ? model_name : input_name;
+
     $('input[name=' + input_name + ']').change(function() {
         var checked_inputs = $('input[name=' + input_name + ']:checked').map(function() {
             return this.value;
         }).get();
-        $.post(url, {'value': checked_inputs}, function(data) {
-            $('#id_' + required_field).parent().parent().toggle(data.result);
+
+        var url = "{% url 'proposals:check_requires' %}";
+        var params = {'value': checked_inputs, 'model': model_name, 'field': field_name};
+        $.post(url, params, function(data) {
+            $('#id_' + required_input).parents('tr').toggle(data.result);
         });
     });
     $('input[name=' + input_name + ']').change();

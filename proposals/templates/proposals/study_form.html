@@ -11,10 +11,10 @@ Aanvraag ter beoordeling en registratie
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
-    check_field_required('traits', 'traits_details', "{% url 'proposals:requires_traits_details' %}");
-    check_field_required('setting', 'setting_details', "{% url 'proposals:requires_settings_details' %}");
-    check_field_required('compensation', 'compensation_details', "{% url 'proposals:requires_compensation_details' %}");
-    check_field_required('recruitment', 'recruitment_details', "{% url 'proposals:requires_recruitment_details' %}");
+    check_field_required('traits', 'needs_details', 'traits_details', 'Trait');
+    check_field_required('setting', 'needs_details', 'setting_details');
+    check_field_required('compensation', 'needs_details', 'compensation_details');
+    check_field_required('recruitment', 'needs_details', 'recruitment_details');
 
     add_title('age_groups', "{% trans 'De leeftijdsgroep van uw proefpersonen' %}");
     add_title('has_traits', "{% trans 'Bijzondere kenmerken van de proefpersonen' %}");
@@ -42,7 +42,7 @@ $(function() {
 
     $('.survey_set').formset({
         prefix: 'survey_set',
-        addText: "{% trans 'Voeg vragenlijst toe' %}",
+        addText: "{% trans 'Voeg flankerende vragenlijst toe' %}",
         deleteText: "{% trans 'Verwijder' %}"
     });
 });

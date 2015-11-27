@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.apps import apps
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
@@ -16,8 +17,7 @@ from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyF
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm
 from .mixins import LoginRequiredMixin, UserAllowedMixin
-from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey, Relation, \
-    Trait, Setting, Compensation, Recruitment
+from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey
 from .utils import generate_ref_number, string_to_bool
 from reviews.utils import start_review
 
@@ -424,42 +424,14 @@ class HomeView(generic.TemplateView):
 
 
 @csrf_exempt
-def requires_supervisor(request):
-    value = map(int, request.POST.getlist('value[]'))
-    needs_supervisor = Relation.objects.filter(needs_supervisor=True).values_list('id', flat=True)
-    result = bool(set(needs_supervisor).intersection(value))
-    return JsonResponse({'result': result})
-
-
-@csrf_exempt
-def requires_traits_details(request):
-    value = map(int, request.POST.getlist('value[]'))
-    requires_traits_details = Trait.objects.filter(needs_details=True).values_list('id', flat=True)
-    result = bool(set(requires_traits_details).intersection(value))
-    return JsonResponse({'result': result})
-
-
-@csrf_exempt
-def requires_settings_details(request):
-    value = map(int, request.POST.getlist('value[]'))
-    requires_settings_details = Setting.objects.filter(needs_details=True).values_list('id', flat=True)
-    result = bool(set(requires_settings_details).intersection(value))
-    return JsonResponse({'result': result})
-
-
-@csrf_exempt
-def requires_compensation_details(request):
-    value = map(int, request.POST.getlist('value[]'))
-    requires_compensation_details = Compensation.objects.filter(needs_details=True).values_list('id', flat=True)
-    result = bool(set(requires_compensation_details).intersection(value))
-    return JsonResponse({'result': result})
-
-
-@csrf_exempt
-def requires_recruitment_details(request):
-    value = map(int, request.POST.getlist('value[]'))
-    requires_recruitment_details = Recruitment.objects.filter(needs_details=True).values_list('id', flat=True)
-    result = bool(set(requires_recruitment_details).intersection(value))
+def check_requires(request):
+    """
+    This call checks whether a certain value requires another input to be filled.
+    """
+    values = map(int, request.POST.getlist('value[]'))
+    model = apps.get_model('proposals', request.POST.get('model'))
+    required_values = model.objects.filter(**{request.POST.get('field'): True}).values_list('id', flat=True)
+    result = bool(set(required_values).intersection(values))
     return JsonResponse({'result': result})
 
 
