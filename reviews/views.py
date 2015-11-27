@@ -37,9 +37,10 @@ class ReviewDetailView(LoginRequiredMixin, UserAllowedMixin, generic.DetailView)
     """
     model = Review
 
+
 class ReviewAssignView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     """
-    Allows a superuser to assign reviewers. 
+    Allows a superuser to assign reviewers.
     """
     model = Review
     form_class = ReviewForm

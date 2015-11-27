@@ -26,7 +26,7 @@ class ReviewTestCase(TestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         review = start_review(self.p2)
-        self.assertEqual(review.stage, Review.COMMISSION)
+        self.assertEqual(review.stage, Review.ASSIGNMENT)
         self.assertEqual(Decision.objects.filter(reviewer=self.user).count(), 1)
         self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 2)
         self.assertEqual(Decision.objects.filter(review=review).count(), 2)

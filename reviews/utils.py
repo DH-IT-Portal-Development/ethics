@@ -12,37 +12,55 @@ def start_review(proposal):
     """
     Starts a Review for the given Proposal.
 
-    If the proposal has a supervisor:
-    - Set the review status to SUPERVISOR
-    - Set date_submitted_supervisor to current date/time
-    - (TODO) Send an e-mail to the supervisor
+    If the proposal needs a supervisor, start the supervisor phase. Otherwise, start the assignment phase.
+    """
+    if proposal.relation.needs_supervisor:
+        review = start_supervisor_phase(proposal)
+    else:
+        review = start_assignment_phase(proposal)
 
-    If the proposal has no supervisor:
-    - Set the review status to ASSIGNMENT
-    - Set date_submitted to current date/time
-    - (TODO) Send an e-mail to the superusers
+    return review
+
+
+def start_supervisor_phase(proposal):
+    """
+    Starts the supervisor phase:
+    - Set the Review status to SUPERVISOR
+    - Set date_submitted_supervisor to current date/time
+    - Create a Decision for the supervisor
+    - (TODO) Send an e-mail to the supervisor
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
+    review.stage = Review.SUPERVISOR
+    review.save()
 
-    if proposal.relation.needs_supervisor:
-        review.stage = Review.SUPERVISOR
-        review.save()
+    proposal.date_submitted_supervisor = timezone.now()
+    proposal.save()
 
-        proposal.date_submitted_supervisor = timezone.now()
-        proposal.save()
+    decision = Decision(review=review, reviewer=proposal.supervisor)
+    decision.save()
 
-        decision = Decision(review=review, reviewer=proposal.supervisor)
+    return review
+
+
+def start_assignment_phase(proposal):
+    """
+    Starts the assignment phase:
+    - Set the Review status to ASSIGNMENT
+    - Set date_submitted to current date/time
+    - Create a Decision for all Users in the 'Secretaris' Group
+    - (TODO) Send an e-mail to these Users.
+    """
+    review = Review.objects.create(proposal=proposal, date_start=timezone.now())
+    review.stage = Review.ASSIGNMENT
+    review.save()
+
+    proposal.date_submitted = timezone.now()
+    proposal.save()
+
+    for user in get_user_model().objects.filter(groups__name=SECRETARY):
+        decision = Decision(review=review, reviewer=user)
         decision.save()
-    else:
-        review.stage = Review.ASSIGNMENT
-        review.save()
-
-        proposal.date_submitted = timezone.now()
-        proposal.save()
-
-        for user in get_user_model().objects.filter(groups__name=SECRETARY):
-            decision = Decision(review=review, reviewer=user)
-            decision.save()
 
     return review
 

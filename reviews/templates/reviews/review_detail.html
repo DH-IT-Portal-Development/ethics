@@ -9,6 +9,9 @@ Beslissingen bij voorstel {{ review.proposal.title }}
 {% block content %}
 <p>
     Reviewronde gestart op {{ review.date_start }}.
+    {% if review.date_end %}
+    Reviewronde beeindigd op {{ review.date_end }}.
+    {% endif %}
 </p>
 <table class="dataTable display">
     <thead>
