@@ -8,9 +8,13 @@ Beslissingen bij voorstel {{ review.proposal.title }}
 
 {% block content %}
 <p>
-    Reviewronde gestart op {{ review.date_start }}.
+    {% blocktrans with date_start=review.date_start|date:"j F Y, G:i" %}
+    Reviewronde gestart op {{ date_start }}.
+    {% endblocktrans %}
     {% if review.date_end %}
-    Reviewronde beeindigd op {{ review.date_end }}.
+    {% blocktrans with date_end=review.date_end|date:"j F Y, G:i" %}
+    Reviewronde beeindigd op {{ date_end }}.
+    {% endblocktrans %}
     {% endif %}
 </p>
 <table class="dataTable display">
@@ -27,10 +31,29 @@ Beslissingen bij voorstel {{ review.proposal.title }}
         <tr>
             <td>{{ decision.reviewer }}</td>
             <td>{{ decision.go|yesno:"go,no go,open" }}</td>
-            <td>{{ decision.date_decision }}</td>
+            <td>{{ decision.date_decision|date:"j F Y, G:i" }}</td>
             <td>{{ decision.comments }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<h2>{% trans "Uitkomst automatische review" %}</h2>
+<p>
+    <div class="{{ auto_review_go|yesno:"success,warning" }}">
+        {% if auto_review_go %}
+        {% trans "Volgens de automatische review krijgt dit voorstel een <em>go</em>." %}
+        {% else %}
+        {% trans "Volgens de automatische review moet dit voorstel nader worden bekeken." %}
+        {% endif %}
+    </div>
+    {% if not auto_review_go %}
+    <h3>{% trans "Redenen" %}</h3>
+    <ul>
+        {% for reason in auto_review_reasons %}
+        <li>{{ reason }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</p>
+
 {% endblock %}

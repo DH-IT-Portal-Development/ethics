@@ -2,9 +2,10 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Review, Decision
 from .forms import ReviewForm, DecisionForm
 from .mixins import LoginRequiredMixin, UserAllowedMixin
+from .models import Review, Decision
+from .utils import auto_review
 
 
 class DecisionListView(LoginRequiredMixin, generic.ListView):
@@ -36,6 +37,13 @@ class ReviewDetailView(LoginRequiredMixin, UserAllowedMixin, generic.DetailView)
     Shows the Decisions for a Review
     """
     model = Review
+
+    def get_context_data(self, **kwargs):
+        context = super(ReviewDetailView, self).get_context_data(**kwargs)
+        go, reasons = auto_review(self.get_object().proposal)
+        context['auto_review_go'] = go
+        context['auto_review_reasons'] = reasons
+        return context
 
 
 class ReviewAssignView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):

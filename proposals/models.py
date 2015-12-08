@@ -541,6 +541,11 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
     # References
     session = models.ForeignKey(Session)
 
+    def get_registration_desc(self):
+        desc = self.registrations_details if registration.needs_details else registration.description
+        desc = self.registration_kind if registration.needs_kind else desc
+        return desc
+
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Task"""
         super(Task, self).save(*args, **kwargs)

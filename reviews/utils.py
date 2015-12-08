@@ -66,6 +66,9 @@ def start_assignment_phase(proposal):
 
 
 def auto_review(proposal):
+    """
+    Reviews a Proposal machine-wise.
+    """
     go = True
     reasons = []
 
@@ -80,7 +83,7 @@ def auto_review(proposal):
 
         if proposal.net_duration() > age_group.max_net_duration:
             go = False
-            reasons.append(_('Overschrijdt maximale duratie voor leeftijdsgroep {}'.format(age_group)))
+            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten'.format(age_group, proposal.net_duration())))
 
     for setting in proposal.study.setting.all():
         if setting.needs_details:
@@ -91,7 +94,9 @@ def auto_review(proposal):
         for registration in task.registrations.all():
             if registration.requires_review:
                 go = False
-                reasons.append(_('Taak {} in sessie {} legt gegevens vast via {}').format(task.name, task.session.order, registration.description))
+                desc = task.registrations_details if registration.needs_details else registration.description
+                desc = task.registration_kind if registration.needs_kind else desc
+                reasons.append(_('Taak {} in sessie {} legt gegevens vast via {}').format(task.name, task.session.order, desc))
 
     if proposal.study.risk_physical:
         go = False
