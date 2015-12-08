@@ -1,8 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Proposal, Task
+
+SECRETARY = 'Secretaris'
+COMMISSION = 'Commissie'
 
 
 class LoginRequiredMixin(object):
@@ -16,19 +20,27 @@ class LoginRequiredMixin(object):
 class UserAllowedMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
         """
-        Checks whether the current User is in the applicants of a Proposal.
+        Checks whether the current User is:
+        - in the 'COMMISSION' group
+        - an applicant of this proposal
+        - a supervisor of this proposal
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
-        applicants = []
         if isinstance(obj, Proposal):
-            applicants = obj.applicants.all()
+            proposal = obj
         elif isinstance(obj, Task):
-            applicants = obj.session.proposal.applicants.all()
+            proposal = obj.session.proposal
         else:
-            applicants = obj.proposal.applicants.all()
+            proposal = obj.proposal
 
-        if self.request.user not in applicants:
+        allowed_users = get_user_model().objects.filter(groups__name=SECRETARY)
+        allowed_users |= get_user_model().objects.filter(groups__name=COMMISSION)
+        allowed_users |= proposal.applicants.all()
+        allowed_users |= get_user_model().objects.filter(pk=proposal.supervisor)
+        print allowed_users
+
+        if self.request.user not in allowed_users:
             raise PermissionDenied
 
         return obj
