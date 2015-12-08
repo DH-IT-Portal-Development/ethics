@@ -22,7 +22,9 @@ class Review(models.Model):
     proposal = models.ForeignKey(Proposal)
 
     def update_go(self):
-        """Check all decisions: if all are finished, set the final decision and date_end."""
+        """
+        Check all decisions: if all are finished, set the final decision and date_end.
+        """
         all_decisions = self.decision_set.count()
         closed_decisions = 0
         final_go = True
@@ -35,6 +37,14 @@ class Review(models.Model):
             self.date_end = timezone.now()
             self.go = final_go
             self.save()
+
+            # Update the status of the Proposal
+            if self.stage == self.SUPERVISOR:
+                self.proposal.date_reviewed_supervisor = self.date_end
+                self.proposal.save()
+            else:
+                self.proposal.date_reviewed = self.date_end
+                self.proposal.save()
 
     def __unicode__(self):
         return 'Review of %s' % self.proposal
@@ -54,7 +64,9 @@ class Decision(models.Model):
         unique_together = ('review', 'reviewer',)
 
     def save(self, *args, **kwargs):
-        """Sets the correct status of the Review on save of a Decision"""
+        """
+        Sets the correct status of the Review on save of a Decision.
+        """
         super(Decision, self).save(*args, **kwargs)
         self.review.update_go()
 

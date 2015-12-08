@@ -122,7 +122,9 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     date_submitted_supervisor = models.DateTimeField(null=True)
+    date_reviewed_supervisor = models.DateTimeField(null=True)
     date_submitted = models.DateTimeField(null=True)
+    date_reviewed = models.DateTimeField(null=True)
 
     # References to other models
     relation = models.ForeignKey(
@@ -184,12 +186,15 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         if session and session.tasks_duration:
             if self.sessions_duration:
                 status = self.SESSIONS_ENDED
-            if self.informed_consent_pdf:
-                status = self.INFORMED_CONSENT_UPLOADED
-            if self.date_submitted_supervisor:
-                status = self.SUBMITTED_TO_SUPERVISOR
-            if self.date_submitted:
-                status = self.SUBMITTED
+
+        if self.informed_consent_pdf:
+            status = self.INFORMED_CONSENT_UPLOADED
+        if self.date_submitted_supervisor:
+            status = self.SUBMITTED_TO_SUPERVISOR
+        if self.date_submitted:
+            status = self.SUBMITTED
+        if self.date_reviewed:
+            status = self.DECISION_MADE
 
         return status
 
