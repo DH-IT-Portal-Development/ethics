@@ -21,9 +21,10 @@ class UserAllowedMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
         """
         Checks whether the current User is:
-        - in the 'COMMISSION' group
+        - in the 'SECRETARY' or 'COMMISSION' group
         - an applicant of this proposal
         - a supervisor of this proposal
+        If not, a PermissionDenied is raised.
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
