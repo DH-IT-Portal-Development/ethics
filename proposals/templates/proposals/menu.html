@@ -2,11 +2,11 @@
 <div class="pure-menu pure-menu-horizontal pure-menu-custom">
     <ul class="pure-menu-list">
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="{% url 'proposals:home' %}">{% trans "Home" %}</a>
+            <a class="pure-menu-link" href="{% url 'proposals:home' %}">{% trans "Startpagina" %}</a>
         </li>
         {% if user.is_authenticated %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">Aanvragen</a>
+            <a href="#" class="pure-menu-link">{% trans "Aanvragen" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptaanvragen" %}</a>
@@ -20,7 +20,7 @@
             </ul>
         </li>
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">Besluiten</a>
+            <a href="#" class="pure-menu-link">{% trans "Besluiten" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'reviews:home' %}">{% trans "Mijn besluiten" %}</a>
@@ -61,8 +61,15 @@
                         </option>
                     {% endfor %}
                 </select>
-                <input type="submit" value="{% trans 'Ga' %}" />
             </form>
         </li>
     </ul>
 </div>
+
+<script>
+    $(function() {
+        $('select[name="language"]').change(function() {
+            this.form.submit();
+        });
+    });
+</script>
