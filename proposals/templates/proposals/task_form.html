@@ -14,7 +14,6 @@ $(function() {
 });
 </script>
 <h3>Sessie {{ session.order }}, taak {{ task_count }}</h3>
-<p><em>Aantal taken toegevoegd: {{ task_count }} / {{ session.tasks_number }}</em></p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
