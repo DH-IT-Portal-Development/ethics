@@ -22,14 +22,31 @@ from .utils import generate_ref_number, string_to_bool
 from reviews.utils import start_review
 
 
+def success_url(self):
+    if 'save_continue' in self.request.POST:
+        if isinstance(self.object, Proposal):
+            proposal = self.object
+        elif isinstance(self.object, Task):
+            proposal = self.object.session.proposal
+        else:
+            proposal = self.object.proposal
+        return proposal.continue_url()
+    else:
+        return reverse('proposals:my_concepts')
+
+
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     """Generic create view including success message and login required mixins"""
-    pass
+    def get_success_url(self):
+        """Sets the success_url based on the submit button pressed"""
+        return success_url(self)
 
 
 class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     """Generic update view including success message, user allowed and login required mixins"""
-    pass
+    def get_success_url(self):
+        """Sets the success_url based on the submit button pressed"""
+        return success_url(self)
 
 
 class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
@@ -147,13 +164,6 @@ class ProposalCreate(CreateView):
         context['create'] = True
         return context
 
-    def get_success_url(self):
-        """Sets the success_url based on the submit button pressed"""
-        if 'save_continue' in self.request.POST:
-            return self.object.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
-
 
 class ProposalCopy(CreateView):
     model = Proposal
@@ -166,18 +176,9 @@ class ProposalCopy(CreateView):
         form.instance = copy_proposal(self, form)
         return super(ProposalCopy, self).form_valid(form)
 
-    def get_success_url(self):
-        return reverse('proposals:my_concepts')
-
 
 class ProposalUpdateView(UpdateView):
     model = Proposal
-
-    def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
 
 
 class ProposalUpdate(ProposalUpdateView):
@@ -224,23 +225,11 @@ class WmoCreate(CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(WmoCreate, self).form_valid(form)
 
-    def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
-
 
 class WmoUpdate(UpdateView):
     model = Wmo
     form_class = WmoForm
     success_message = _('WMO-gegevens bewerkt')
-
-    def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
 
 
 class WmoCheck(generic.FormView):
@@ -262,10 +251,7 @@ class StudyCreate(LoginRequiredMixin, CreateWithInlinesView):
         return super(StudyCreate, self).forms_valid(form, inlines)
 
     def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
+        return success_url(self)
 
 
 class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
@@ -275,10 +261,7 @@ class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     inlines = [SurveysInline]
 
     def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
+        return success_url(self)
 
 
 # Actions on a Session
@@ -361,12 +344,6 @@ class TaskStart(UpdateView):
     template_name = 'proposals/task_start.html'
     success_message = ''
 
-    def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
-
 
 def add_task(request, pk):
     """Updates the tasks_number on a Session"""
@@ -383,12 +360,6 @@ class TaskEnd(UpdateView):
     form_class = TaskEndForm
     template_name = 'proposals/task_end.html'
     success_message = ''
-
-    def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
 
 
 # CRUD actions on a Task
@@ -410,12 +381,6 @@ class TaskCreate(CreateView):
         form.instance.session = Session.objects.get(pk=self.kwargs['pk'])
         return super(TaskCreate, self).form_valid(form)
 
-    def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.session.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
-
 
 class TaskUpdate(UpdateView):
     """Updates a Task"""
@@ -430,12 +395,6 @@ class TaskUpdate(UpdateView):
         context['session'] = session
         context['task_count'] = task_count - 1
         return context
-
-    def get_success_url(self):
-        if 'save_continue' in self.request.POST:
-            return self.object.session.proposal.continue_url()
-        else:
-            return reverse('proposals:my_concepts')
 
 
 class TaskDelete(DeleteView):
