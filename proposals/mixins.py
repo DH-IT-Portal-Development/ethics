@@ -38,8 +38,8 @@ class UserAllowedMixin(SingleObjectMixin):
         allowed_users = get_user_model().objects.filter(groups__name=SECRETARY)
         allowed_users |= get_user_model().objects.filter(groups__name=COMMISSION)
         allowed_users |= proposal.applicants.all()
-        allowed_users |= get_user_model().objects.filter(pk=proposal.supervisor)
-        print allowed_users
+        if proposal.supervisor:
+            allowed_users |= get_user_model().objects.filter(pk=proposal.supervisor.id)
 
         if self.request.user not in allowed_users:
             raise PermissionDenied
