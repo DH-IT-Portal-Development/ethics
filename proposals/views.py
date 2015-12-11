@@ -41,7 +41,7 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
 
 class SurveysInline(InlineFormSet):
     model = Survey
-    fields = ['name', 'minutes', 'survey_url', 'survey_file']
+    fields = ['name', 'minutes', 'survey_url']
     can_delete = True
     extra = 1
 

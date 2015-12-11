@@ -476,7 +476,6 @@ class Survey(models.Model):
     name = models.CharField(_('Naam'), max_length=200)
     minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
     survey_url = models.URLField(_('URL'), blank=True)
-    survey_file = models.FileField(_('Bestand'), blank=True, validators=[validate_pdf])
     study = models.ForeignKey(Study)
 
     def __unicode__(self):
