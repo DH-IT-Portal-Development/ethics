@@ -72,10 +72,11 @@ $(function() {
         }
     });
 
-    // Will set select boxes to use Chosen, except for the language element
+    // Will set select boxes to use Chosen and set a width, except for the language element
     $('select').chosen({
-        width: '120%'
+        width: '20em'
     });
+    $('select[name="language"] + .chosen-container').width('100%');
 
     // Will make every table a pure-table
     $('form table').addClass('pure-table pure-table-horizontal');
