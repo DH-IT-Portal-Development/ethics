@@ -20,4 +20,7 @@ Klik op de onderstaande onderdelen om wijzigingen aan te brengen.
 {% if proposal.informed_consent_pdf %}
 <h3><a href="{% url 'proposals:consent' proposal.id %}">Informed consent</a></h3>
 {% endif %}
+<p>
+	<a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">Terug naar de vorige pagina</a>
+</p>
 {% endblock %}

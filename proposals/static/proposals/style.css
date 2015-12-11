@@ -25,7 +25,7 @@ body {
 }
 
 /* Form specifics */
-input[type=text] {
+input[name=title] {
     width: 20em;
 }
 
