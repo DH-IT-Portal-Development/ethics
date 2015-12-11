@@ -25,6 +25,10 @@ body {
 }
 
 /* Form specifics */
+input[type=text] {
+    width: 20em;
+}
+
 .form-errors {
     color: red;
 }

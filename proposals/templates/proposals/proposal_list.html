@@ -2,37 +2,26 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %} 
-    {% if concepts %}
-    {% trans "Mijn conceptaanvragen" %}
-    {% elif submitted %}
-    {% trans "Mijn aanvraagarchief" %}
-    {% else %}
-    {% trans "Publiek aanvraagarchief" %}
-    {% endif %}
-{% endblock %} 
+{% block title %}
+{{ title }}
+{% endblock %}
 
 {% block content %}
 <p>
-    {% if concepts %}
-    {% trans "Dit overzicht toont al uw nog niet verstuurde aanvragen." %}
-    <ul>
-        <li>
-            Klik op <img src="{% static 'proposals/images/zoom.png' %}" title="Inzien"> om uw aanvraag in te zien en eventueel vorige stappen bewerken. 
-        </li>
-        <li>
-            Klik op <img src="{% static 'proposals/images/page_white_go.png' %}" title="Naar volgende stap"> om naar de volgende stap in het aanvraagproces te gaan. 
-        </li>
-        <li>
-            Klik op <img src="{% static 'proposals/images/delete.png' %}" title="Verwijderen"> om uw aanvraag te verwijderen.
-        </li>
-    </ul>
-    {% elif submitted %}
-    {% trans "Dit overzicht toont al uw verstuurde aanvragen." %}
-    {% else %}
-    {% trans "Dit overzicht toont alle beoordeelde aanvragen." %}
-    {% endif %}
+    {{ body }}
 </p>
+<h3>{% trans "Uitleg" %}</h3>
+<ul>
+    <li>
+        Klik op <img src="{% static 'proposals/images/zoom.png' %}" title="Inzien"> om uw aanvraag in te zien en eventueel vorige stappen bewerken. 
+    </li>
+    <li>
+        Klik op <img src="{% static 'proposals/images/page_white_go.png' %}" title="Naar volgende stap"> om naar de volgende stap in het aanvraagproces te gaan. 
+    </li>
+    <li>
+        Klik op <img src="{% static 'proposals/images/delete.png' %}" title="Verwijderen"> om uw aanvraag te verwijderen.
+    </li>
+</ul>
 <table class="dataTable display">
     <thead>
         <tr>
@@ -52,7 +41,7 @@
             <td>{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
                 <a href="{% url 'proposals:detail' proposal.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Inzien' %}"></a>
-                {% if concepts %}
+                {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
                 <a href="{{ proposal.continue_url }}"><img src="{% static 'proposals/images/page_white_go.png' %}" title="{% trans 'Naar volgende stap' %}"></a>
                 <a href="{% url 'proposals:delete' proposal.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Verwijderen' %}"></a>
                 {% endif %}

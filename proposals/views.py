@@ -47,34 +47,72 @@ class SurveysInline(InlineFormSet):
 
 
 # List views
-class ArchiveView(LoginRequiredMixin, generic.ListView):
+class ProposalsView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
 
     def get_queryset(self):
-        """Return all the proposals"""
-        return Proposal.objects.all().filter(status__gte=Proposal.DECISION_MADE)
-
-
-class IndexView(ArchiveView):
-    def get_queryset(self):
-        """Return all the submitted proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR)
+        """Returns all the proposals that have been decided upon"""
+        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE)
 
     def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context['submitted'] = True
+        context = super(ProposalsView, self).get_context_data(**kwargs)
+        context['title'] = self.get_title()
+        context['body'] = self.get_body()
         return context
 
+    def get_title(self):
+        return _('Publiek aanvraagarchief')
 
-class ConceptsView(ArchiveView):
+    def get_body(self):
+        return _('Dit overzicht toont alle beoordeelde aanvragen.')
+
+
+class MyConceptsView(ProposalsView):
     def get_queryset(self):
-        """Return all the non-submitted proposals for the current user"""
+        """Returns all non-submitted proposals for the current user"""
         return Proposal.objects.filter(applicants=self.request.user).filter(status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
-    def get_context_data(self, **kwargs):
-        context = super(ConceptsView, self).get_context_data(**kwargs)
-        context['concepts'] = True
-        return context
+    def get_title(self):
+        return _('Mijn conceptaanvragen')
+
+    def get_body(self):
+        return _('Dit overzicht toont al uw nog niet ingediende aanvragen.')
+
+
+class MySubmittedView(ProposalsView):
+    def get_queryset(self):
+        """Returns all submitted proposals for the current user"""
+        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR, status__lt=Proposal.DECISION_MADE)
+
+    def get_title(self):
+        return _('Mijn ingediende aanvragen')
+
+    def get_body(self):
+        return _('Dit overzicht toont al uw ingediende aanvragen.')
+
+
+class MyCompletedView(ProposalsView):
+    def get_queryset(self):
+        """Returns all completed proposals for the current user"""
+        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.DECISION_MADE)
+
+    def get_title(self):
+        return _('Mijn afgeronde aanvragen')
+
+    def get_body(self):
+        return _('Dit overzicht toont al uw beoordeelde aanvragen.')
+
+
+class MyProposalsView(ProposalsView):
+    def get_queryset(self):
+        """Returns all proposals for the current user"""
+        return Proposal.objects.filter(applicants=self.request.user)
+
+    def get_title(self):
+        return _('Mijn aanvragen')
+
+    def get_body(self):
+        return _('Dit overzicht toont al uw aanvragen.')
 
 
 class FaqsView(generic.ListView):

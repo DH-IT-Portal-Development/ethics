@@ -50,8 +50,8 @@ class Proposal(models.Model):
         (INFORMED_CONSENT_UPLOADED, _(u'Informed consent geüpload')),
 
         (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
-
         (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
+
         (DECISION_MADE, _('Aanvraag is beoordeeld door ETCL')),
         (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door METC')),
     )

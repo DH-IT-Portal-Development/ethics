@@ -7,9 +7,11 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
 
     # Lists
-    url(r'^archive/$', ArchiveView.as_view(), name='archive'),
-    url(r'^applications/$', IndexView.as_view(), name='my_archive'),
-    url(r'^concepts/$', ConceptsView.as_view(), name='my_concepts'),
+    url(r'^proposals-all/$', ProposalsView.as_view(), name='archive'),
+    url(r'^concepts/$', MyConceptsView.as_view(), name='my_concepts'),
+    url(r'^submitted/$', MySubmittedView.as_view(), name='my_submitted'),
+    url(r'^completed/$', MyCompletedView.as_view(), name='my_completed'),
+    url(r'^proposals/$', MyProposalsView.as_view(), name='my_archive'),
 
     # Proposal
     url(r'^create/$', ProposalCreate.as_view(), name='create'),
