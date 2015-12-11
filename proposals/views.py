@@ -403,7 +403,6 @@ class TaskCreate(CreateView):
         session = Session.objects.get(pk=self.kwargs['pk'])
         task_count = session.task_set.count() + 1
         context['session'] = session
-        context['save_add_button'] = task_count < session.tasks_number
         context['task_count'] = task_count
         return context
 
@@ -412,9 +411,7 @@ class TaskCreate(CreateView):
         return super(TaskCreate, self).form_valid(form)
 
     def get_success_url(self):
-        if 'save_add' in self.request.POST:
-            return reverse('proposals:task_create', args=(self.kwargs['pk'],))
-        elif 'save_continue' in self.request.POST:
+        if 'save_continue' in self.request.POST:
             return self.object.session.proposal.continue_url()
         else:
             return reverse('proposals:my_concepts')
@@ -431,15 +428,11 @@ class TaskUpdate(UpdateView):
         session = Task.objects.get(pk=self.kwargs['pk']).session
         task_count = session.task_set.count() + 1
         context['session'] = session
-        context['save_add_button'] = task_count < session.tasks_number
         context['task_count'] = task_count - 1
         return context
 
     def get_success_url(self):
-        task = Task.objects.get(pk=self.kwargs['pk'])
-        if 'save_add' in self.request.POST:
-            return reverse('proposals:task_create', args=(task.session.id,))
-        elif 'save_continue' in self.request.POST:
+        if 'save_continue' in self.request.POST:
             return self.object.session.proposal.continue_url()
         else:
             return reverse('proposals:my_concepts')
