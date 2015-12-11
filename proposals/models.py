@@ -111,7 +111,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
-        _('Upload hier de informed consent'),
+        _('Upload hier de informed consent (in PDF-formaat)'),
         blank=True,
         validators=[validate_pdf])
 
@@ -274,7 +274,7 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
         _('Is de METC al tot een beslissing gekomen?'),
         default=False)
     metc_decision_pdf = models.FileField(
-        _('Upload hier de beslissing van het METC'),
+        _('Upload hier de beslissing van het METC (in PDF-formaat)'),
         blank=True,
         validators=[validate_pdf])
 
