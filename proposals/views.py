@@ -37,28 +37,12 @@ class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
-    def get_next_url(self):
-        """Returns the next page"""
-        return reverse('proposals:my_concepts')
-
-    def get_back_url(self):
-        """Returns the previous page"""
-        return reverse('proposals:my_concepts')
-
 
 class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     """Generic update view including success message, user allowed and login required mixins"""
     def get_success_url(self):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
-
-    def get_next_url(self):
-        """Returns the next page"""
-        return reverse('proposals:my_concepts')
-
-    def get_back_url(self):
-        """Returns the previous page"""
-        return reverse('proposals:my_concepts')
 
 
 class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
@@ -149,12 +133,12 @@ class FaqsView(generic.ListView):
     model = Faq
 
 
-# Proposal detail
+##########################
+# CRUD actions on Proposal
+##########################
 class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Proposal
 
-
-# CRUD actions on Proposal
 class ProposalCreate(CreateView):
     model = Proposal
     form_class = ProposalForm
@@ -179,22 +163,7 @@ class ProposalCreate(CreateView):
 
     def get_next_url(self):
         proposal = self.object
-        if hasattr(proposal, 'wmo'):
-            return reverse('proposals:wmo_update', args=(proposal.id,))
-        else:
-            return reverse('proposals:wmo_create', args=(proposal.id,))
-
-
-class ProposalCopy(CreateView):
-    model = Proposal
-    form_class = ProposalCopyForm
-    success_message = _('Aanvraag gekopieerd')
-    template_name = 'proposals/proposal_copy.html'
-
-    def form_valid(self, form):
-        """Create a copy of the selected Proposal"""
-        form.instance = copy_proposal(self, form)
-        return super(ProposalCopy, self).form_valid(form)
+        return reverse('proposals:wmo_create', args=(proposal.id,))
 
 
 class ProposalUpdate(UpdateView):
@@ -215,6 +184,29 @@ class ProposalUpdate(UpdateView):
             return reverse('proposals:wmo_update', args=(proposal.id,))
         else:
             return reverse('proposals:wmo_create', args=(proposal.id,))
+
+
+class ProposalDelete(DeleteView):
+    model = Proposal
+    success_message = _('Aanvraag verwijderd')
+
+    def get_success_url(self):
+        return reverse('proposals:my_concepts')
+
+
+###########################
+# Other actions on Proposal
+###########################
+class ProposalCopy(CreateView):
+    model = Proposal
+    form_class = ProposalCopyForm
+    success_message = _('Aanvraag gekopieerd')
+    template_name = 'proposals/proposal_copy.html'
+
+    def form_valid(self, form):
+        """Create a copy of the selected Proposal"""
+        form.instance = copy_proposal(self, form)
+        return super(ProposalCopy, self).form_valid(form)
 
 
 class ProposalUploadConsent(UpdateView):
@@ -243,49 +235,64 @@ class ProposalSubmit(UpdateView):
         return reverse('proposals:consent')
 
 
-class ProposalDelete(DeleteView):
-    model = Proposal
-    success_message = _('Aanvraag verwijderd')
-
-    def get_success_url(self):
-        return reverse('proposals:my_concepts')
-
-
-# CRUD actions on Wmo
-class WmoCreate(CreateView):
+#####################
+# CRUD actions on WMO
+#####################
+class WmoMixin(object):
     model = Wmo
     form_class = WmoForm
+
+    def get_next_url(self):
+        proposal = self.object.proposal
+        if hasattr(proposal, 'study'):
+            return reverse('proposals:study_update', args=(proposal.id,))
+        else:
+            return reverse('proposals:study_create', args=(proposal.id,))
+
+    def get_back_url(self):
+        return reverse('proposals:update', args=(self.object.proposal.id,))
+
+
+class WmoCreate(WmoMixin, CreateView):
     success_message = _('WMO-gegevens opgeslagen')
 
     def form_valid(self, form):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(WmoCreate, self).form_valid(form)
 
-    def get_back_url(self):
-        return reverse('proposals:update', kwargs={'pk': self.kwargs['pk']})
 
-
-class WmoUpdate(UpdateView):
-    model = Wmo
-    form_class = WmoForm
+class WmoUpdate(WmoMixin, UpdateView):
     success_message = _('WMO-gegevens bewerkt')
 
-    def get_back_url(self):
-        return reverse('proposals:update', kwargs={'pk': self.object.proposal.id})
 
-
+######################
+# Other actions on WMO
+######################
 class WmoCheck(generic.FormView):
     form_class = WmoCheckForm
     template_name = 'proposals/wmo_check.html'
 
 
-# CRUD actions on a Study
-# TODO: no success message: https://github.com/AndrewIngram/django-extra-views/issues/59
-class StudyCreate(LoginRequiredMixin, CreateWithInlinesView):
-    """Creates a Study from a StudyForm, with Surveys inlined."""
+#######################
+# CRUD actions on Study
+#######################
+class StudyMixin(object):
     model = Study
     form_class = StudyForm
     inlines = [SurveysInline]
+
+    def get_success_url(self):
+        return success_url(self)
+
+    def get_next_url(self):
+        return reverse('proposals:session_start', args=(self.object.proposal.id,))
+
+    def get_back_url(self):
+        return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
+
+# NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
+class StudyCreate(StudyMixin, LoginRequiredMixin, CreateWithInlinesView):
+    """Creates a Study from a StudyForm, with Surveys inlined."""
 
     def forms_valid(self, form, inlines):
         """Sets the Proposal on the Study before starting validation."""
@@ -299,24 +306,9 @@ class StudyCreate(LoginRequiredMixin, CreateWithInlinesView):
         else:
             return super(StudyCreate, self).forms_invalid(form, inlines)
 
-    def get_success_url(self):
-        return success_url(self)
 
-    def get_back_url(self):
-        return reverse('proposals:wmo_update', kwargs={'pk': self.kwargs['pk']})
-
-
-class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
+class StudyUpdate(StudyMixin, LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Study from a StudyForm, with Surveys inlined."""
-    model = Study
-    form_class = StudyForm
-    inlines = [SurveysInline]
-
-    def get_success_url(self):
-        return success_url(self)
-
-    def get_back_url(self):
-        return reverse('proposals:wmo_update', kwargs={'pk': self.object.proposal.id})
 
 
 # Actions on a Session
