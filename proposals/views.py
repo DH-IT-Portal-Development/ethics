@@ -24,13 +24,7 @@ from reviews.utils import start_review
 
 def success_url(self):
     if 'save_continue' in self.request.POST:
-        if isinstance(self.object, Proposal):
-            proposal = self.object
-        elif isinstance(self.object, Task):
-            proposal = self.object.session.proposal
-        else:
-            proposal = self.object.proposal
-        return proposal.continue_url()
+        return self.get_next_url()
     if 'save_back' in self.request.POST:
         return self.get_back_url()
     else:
@@ -43,8 +37,12 @@ class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
+    def get_next_url(self):
+        """Returns the next page"""
+        return reverse('proposals:my_concepts')
+
     def get_back_url(self):
-        """Sets the success_url based on the submit button pressed"""
+        """Returns the previous page"""
         return reverse('proposals:my_concepts')
 
 
@@ -54,8 +52,12 @@ class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, gene
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
+    def get_next_url(self):
+        """Returns the next page"""
+        return reverse('proposals:my_concepts')
+
     def get_back_url(self):
-        """Sets the previous page based on the submit button pressed"""
+        """Returns the previous page"""
         return reverse('proposals:my_concepts')
 
 
@@ -172,7 +174,15 @@ class ProposalCreate(CreateView):
         """Adds 'create' parameter to form"""
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True
+        context['no_back'] = True
         return context
+
+    def get_next_url(self):
+        proposal = self.object
+        if hasattr(proposal, 'wmo'):
+            return reverse('proposals:wmo_update', args=(proposal.id,))
+        else:
+            return reverse('proposals:wmo_create', args=(proposal.id,))
 
 
 class ProposalCopy(CreateView):
@@ -187,22 +197,35 @@ class ProposalCopy(CreateView):
         return super(ProposalCopy, self).form_valid(form)
 
 
-class ProposalUpdateView(UpdateView):
+class ProposalUpdate(UpdateView):
     model = Proposal
-
-
-class ProposalUpdate(ProposalUpdateView):
     form_class = ProposalForm
     success_message = _('Conceptaanvraag %(title)s bewerkt')
 
+    def get_context_data(self, **kwargs):
+        """Adds 'create'/'save_back' to form context"""
+        context = super(ProposalUpdate, self).get_context_data(**kwargs)
+        context['create'] = False
+        context['no_back'] = True
+        return context
 
-class ProposalUploadConsent(ProposalUpdateView):
+    def get_next_url(self):
+        proposal = self.object
+        if hasattr(proposal, 'wmo'):
+            return reverse('proposals:wmo_update', args=(proposal.id,))
+        else:
+            return reverse('proposals:wmo_create', args=(proposal.id,))
+
+
+class ProposalUploadConsent(UpdateView):
+    model = Proposal
     form_class = UploadConsentForm
     template_name = 'proposals/proposal_consent.html'
     success_message = _('Informed consent geupload')
 
 
-class ProposalSubmit(ProposalUpdateView):
+class ProposalSubmit(UpdateView):
+    model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
     success_message = _('Aanvraag verzonden')
@@ -297,8 +320,9 @@ class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
 
 
 # Actions on a Session
-class ProposalSessionStart(ProposalUpdateView):
+class ProposalSessionStart(UpdateView):
     """Initial creation of Sessions"""
+    model = Proposal
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
     success_message = _('%(sessions_number)s sessie(s) voor aanvraag %(title)s aangemaakt')
@@ -341,7 +365,8 @@ def add_session(request, pk):
     return HttpResponseRedirect(reverse('proposals:task_start', args=(session.id,)))
 
 
-class ProposalSessionEnd(ProposalUpdateView):
+class ProposalSessionEnd(UpdateView):
+    model = Proposal
     form_class = SessionEndForm
     template_name = 'proposals/session_end.html'
     success_message = ''
