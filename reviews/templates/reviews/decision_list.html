@@ -13,6 +13,7 @@
     <thead>
         <tr>
             <th>{% trans "Referentienummer" %}</th>
+            <th>{% trans "Eindverantwoordelijke" %}</th>
             <th>{% trans "Titel studie" %}</th>
             <th>{% trans "Fase" %}</th>
             <th>{% trans "Startdatum review" %}</th>
@@ -25,6 +26,7 @@
         {% with review=decision.review %}
         <tr>
             <td>{{ review.proposal.reference_number }}</td>
+            <td>{{ review.proposal.supervisor|default_if_none:review.proposal.created_by }}</td>
             <td>{{ review.proposal.title }}</td>
             <td>{{ review.get_stage_display }}</td>
             <td>{{ review.date_start|date:"j M Y" }}</td>
