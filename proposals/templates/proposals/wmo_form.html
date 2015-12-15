@@ -46,9 +46,7 @@ $(function() {
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% if not wmo or wmo.proposal.status < wmo.proposal.SUBMITTED_TO_SUPERVISOR %}
-    <input class="pure-button pure-button-primary" type="submit" name="save" value="Opslaan en terug naar hoofdmenu" />
-    <input class="pure-button pure-button-primary" type="submit" name="save_continue" value="Opslaan en naar volgende stap" />
-    <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>
+        {% include "proposals/form_buttons.html" %}
     {% endif %}
 </form>
 {% endblock %}

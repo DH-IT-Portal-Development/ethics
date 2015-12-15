@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 from django.apps import apps
 from django.contrib import messages
@@ -31,6 +31,8 @@ def success_url(self):
         else:
             proposal = self.object.proposal
         return proposal.continue_url()
+    if 'save_back' in self.request.POST:
+        return self.get_back_url()
     else:
         return reverse('proposals:my_concepts')
 
@@ -41,12 +43,20 @@ class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
+    def get_back_url(self):
+        """Sets the success_url based on the submit button pressed"""
+        return reverse('proposals:my_concepts')
+
 
 class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     """Generic update view including success message, user allowed and login required mixins"""
     def get_success_url(self):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
+
+    def get_back_url(self):
+        """Sets the previous page based on the submit button pressed"""
+        return reverse('proposals:my_concepts')
 
 
 class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
@@ -206,6 +216,9 @@ class ProposalSubmit(ProposalUpdateView):
     def get_success_url(self):
         return reverse('proposals:my_archive')
 
+    def get_back_url(self):
+        return reverse('proposals:consent')
+
 
 class ProposalDelete(DeleteView):
     model = Proposal
@@ -225,11 +238,17 @@ class WmoCreate(CreateView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(WmoCreate, self).form_valid(form)
 
+    def get_back_url(self):
+        return reverse('proposals:update', kwargs={'pk': self.kwargs['pk']})
+
 
 class WmoUpdate(UpdateView):
     model = Wmo
     form_class = WmoForm
     success_message = _('WMO-gegevens bewerkt')
+
+    def get_back_url(self):
+        return reverse('proposals:update', kwargs={'pk': self.object.proposal.id})
 
 
 class WmoCheck(generic.FormView):
@@ -250,8 +269,18 @@ class StudyCreate(LoginRequiredMixin, CreateWithInlinesView):
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         return super(StudyCreate, self).forms_valid(form, inlines)
 
+    def forms_invalid(self, form, inlines):
+        """On back button, allow form to have errors."""
+        if 'save_back' in self.request.POST:
+            return HttpResponseRedirect(self.get_back_url())
+        else:
+            return super(StudyCreate, self).forms_invalid(form, inlines)
+
     def get_success_url(self):
         return success_url(self)
+
+    def get_back_url(self):
+        return reverse('proposals:wmo_update', kwargs={'pk': self.kwargs['pk']})
 
 
 class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
@@ -262,6 +291,9 @@ class StudyUpdate(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
 
     def get_success_url(self):
         return success_url(self)
+
+    def get_back_url(self):
+        return reverse('proposals:wmo_update', kwargs={'pk': self.object.proposal.id})
 
 
 # Actions on a Session
@@ -280,6 +312,16 @@ class ProposalSessionStart(ProposalUpdateView):
             session = Session(proposal=proposal, order=order)
             session.save()
         return super(ProposalSessionStart, self).form_valid(form)
+
+    def form_invalid(self, form):
+        """On back button, allow form to have errors."""
+        if 'save_back' in self.request.POST:
+            return HttpResponseRedirect(self.get_back_url())
+        else:
+            return super(ProposalSessionStart, self).form_invalid(form)
+
+    def get_back_url(self):
+        return reverse('proposals:study_update', kwargs={'pk': self.object.id})
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, title=self.object.title)
