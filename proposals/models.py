@@ -99,7 +99,7 @@ Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.'
         help_text=_('Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.'))
     sessions_stressful = models.NullBooleanField(
         _('Is het totaal van sessies als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
-vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
 Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
 de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
 of bepaald gedrag, etcetera. \
@@ -423,7 +423,7 @@ class Session(models.Model):
     order = models.PositiveIntegerField()
     stressful = models.NullBooleanField(
         _('Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
-ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
 Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. \
 Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.'))
     stressful_details = models.TextField(
@@ -443,7 +443,7 @@ Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per t
         null=True)
     tasks_stressful = models.NullBooleanField(
         _('Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
-vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
 Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
 de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
 of bepaald gedrag, etcetera. \
@@ -532,7 +532,7 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         blank=True)
     stressful = models.NullBooleanField(
         _('Is deze taak belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
-vragen zou kunnen oproepen (bijvoorbeeld bij collega''s, bij de proefpersonen zelf, bij derden)? \
+vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
 Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
 de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
 of bepaald gedrag, etcetera. \
@@ -544,11 +544,6 @@ En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt 
 
     # References
     session = models.ForeignKey(Session)
-
-    def get_registration_desc(self):
-        desc = self.registrations_details if registration.needs_details else registration.description
-        desc = self.registration_kind if registration.needs_kind else desc
-        return desc
 
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Task"""
