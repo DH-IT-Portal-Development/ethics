@@ -145,3 +145,5 @@ AUTHENTICATION_BACKENDS = (
 
 # File handling
 MEDIA_ROOT = 'media'
+
+INTERNAL_IPS = ['127.0.0.1']

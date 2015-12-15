@@ -40,6 +40,7 @@
         <img id="header-img" src="{% static 'proposals/images/uu-header.png' %}">
         <h1 id="title">{% trans "ETCL UiL OTS" %}</h1>
         {% include "proposals/menu.html" %}
+        {% if debug %}
         <div id="messages">
         {% if messages %}
             <ul class="messages">
@@ -49,6 +50,7 @@
             </ul>
         {% endif %}
         </div>
+        {% endif %}
         {% block notitle %}
         <h2>{% block title %}{% endblock %}</h2>
         {% endblock %}
