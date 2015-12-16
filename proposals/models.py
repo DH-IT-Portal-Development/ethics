@@ -237,6 +237,9 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
                 break
         return current_session
 
+    def first_session(self):
+        return self.session_set.get(order=1)
+
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)
 
@@ -467,6 +470,9 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
+
+    def last_task(self):
+        return self.task_set.order_by('-id')[0]
 
     def __unicode__(self):
         return _('Session {} at proposal {}').format(self.order, self.proposal)

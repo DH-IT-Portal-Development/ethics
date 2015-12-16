@@ -22,6 +22,15 @@ from .utils import generate_ref_number, string_to_bool
 from reviews.utils import start_review
 
 
+class AllowErrorsMixin(object):
+    def form_invalid(self, form):
+        """On back button, allow form to have errors."""
+        if 'save_back' in self.request.POST:
+            return HttpResponseRedirect(self.get_back_url())
+        else:
+            return super(AllowErrorsMixin, self).form_invalid(form)
+
+
 def success_url(self):
     if 'save_continue' in self.request.POST:
         return self.get_next_url()
@@ -50,13 +59,6 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(DeleteView, self).delete(request, *args, **kwargs)
-
-
-class SurveysInline(InlineFormSet):
-    model = Survey
-    fields = ['name', 'minutes', 'survey_url']
-    can_delete = True
-    extra = 1
 
 
 # List views
@@ -149,13 +151,13 @@ class ProposalCreate(CreateView):
         return {'applicants': [self.request.user]}
 
     def form_valid(self, form):
-        """Sets created_by to current user and generate a reference number"""
+        """Sets created_by to current user and generates a reference number"""
         form.instance.created_by = self.request.user
         form.instance.reference_number = generate_ref_number(self.request.user)
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        """Adds 'create' parameter to form"""
+        """Adds 'create'/'no_back' to template context"""
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True
         context['no_back'] = True
@@ -172,7 +174,7 @@ class ProposalUpdate(UpdateView):
     success_message = _('Conceptaanvraag %(title)s bewerkt')
 
     def get_context_data(self, **kwargs):
-        """Adds 'create'/'save_back' to form context"""
+        """Adds 'create'/'no_back' to template context"""
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
         context['create'] = False
         context['no_back'] = True
@@ -276,6 +278,14 @@ class WmoCheck(generic.FormView):
 #######################
 # CRUD actions on Study
 #######################
+class SurveysInline(InlineFormSet):
+    """Creates an InlineFormSet for Surveys"""
+    model = Survey
+    fields = ['name', 'minutes', 'survey_url']
+    can_delete = True
+    extra = 1
+
+
 class StudyMixin(object):
     model = Study
     form_class = StudyForm
@@ -290,6 +300,7 @@ class StudyMixin(object):
     def get_back_url(self):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
 
+# NOTE: below two views are non-standard, as they include inlines
 # NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
 class StudyCreate(StudyMixin, LoginRequiredMixin, CreateWithInlinesView):
     """Creates a Study from a StudyForm, with Surveys inlined."""
@@ -311,33 +322,32 @@ class StudyUpdate(StudyMixin, LoginRequiredMixin, UserAllowedMixin, UpdateWithIn
     """Updates a Study from a StudyForm, with Surveys inlined."""
 
 
+######################
 # Actions on a Session
-class ProposalSessionStart(UpdateView):
-    """Initial creation of Sessions"""
+######################
+class ProposalSessionStart(AllowErrorsMixin, UpdateView):
+    """Initial creation of Sessions TODO: create updateview when sessions_number has been set"""
     model = Proposal
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
     success_message = _('%(sessions_number)s sessie(s) voor aanvraag %(title)s aangemaakt')
 
     def form_valid(self, form):
-        # Create Sessions on save. TODO: don't allow coming here later...
+        """Creates or deletes (TODO) Sessions on save"""
         nr_sessions = form.cleaned_data['sessions_number']
         proposal = form.instance
-        for n in xrange(nr_sessions):
+        current = proposal.sessions_number or 0
+        for n in xrange(current, nr_sessions):
             order = n + 1
             session = Session(proposal=proposal, order=order)
             session.save()
         return super(ProposalSessionStart, self).form_valid(form)
 
-    def form_invalid(self, form):
-        """On back button, allow form to have errors."""
-        if 'save_back' in self.request.POST:
-            return HttpResponseRedirect(self.get_back_url())
-        else:
-            return super(ProposalSessionStart, self).form_invalid(form)
+    def get_next_url(self):
+        return reverse('proposals:task_start', args=(self.object.first_session().id,))
 
     def get_back_url(self):
-        return reverse('proposals:study_update', kwargs={'pk': self.object.id})
+        return reverse('proposals:study_update', args=(self.object.id,))
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, title=self.object.title)
@@ -357,11 +367,14 @@ def add_session(request, pk):
     return HttpResponseRedirect(reverse('proposals:task_start', args=(session.id,)))
 
 
-class ProposalSessionEnd(UpdateView):
+class ProposalSessionEnd(AllowErrorsMixin, UpdateView):
+    """
+    Completes the creation of Sessions
+    """
     model = Proposal
     form_class = SessionEndForm
     template_name = 'proposals/session_end.html'
-    success_message = ''
+    success_message = _(u'Sessies toevoegen beëindigd')
 
 
 class SessionDelete(DeleteView):
@@ -396,12 +409,18 @@ class SessionDelete(DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-class TaskStart(UpdateView):
+class TaskStart(AllowErrorsMixin, UpdateView):
     """Initially sets the total number of Tasks for a Session"""
     model = Session
     form_class = TaskStartForm
     template_name = 'proposals/task_start.html'
     success_message = ''
+
+    def get_next_url(self):
+        return reverse('proposals:task_create', args=(self.object.id,))
+
+    def get_back_url(self):
+        return reverse('proposals:session_start', args=(self.object.proposal.id,))
 
 
 def add_task(request, pk):
@@ -413,47 +432,55 @@ def add_task(request, pk):
     return HttpResponseRedirect(reverse('proposals:task_create', args=(session.id,)))
 
 
-class TaskEnd(UpdateView):
-    """Completes the Session"""
+class TaskEnd(AllowErrorsMixin, UpdateView):
+    """Completes a Session"""
     model = Session
     form_class = TaskEndForm
     template_name = 'proposals/task_end.html'
-    success_message = ''
+    success_message = _(u'Taken toevoegen beëindigd')
+
+    def get_next_url(self):
+        return reverse('proposals:session_end', args=(self.object.proposal.id,))
+
+    def get_back_url(self):
+        return reverse('proposals:task_update', args=(self.object.last_task().id,))
 
 
 # CRUD actions on a Task
-class TaskCreate(CreateView):
-    """Creates a Task"""
+class TaskMixin(object):
     model = Task
     form_class = TaskForm
-    success_message = _('Taak opgeslagen')
 
     def get_context_data(self, **kwargs):
-        context = super(TaskCreate, self).get_context_data(**kwargs)
+        context = super(TaskMixin, self).get_context_data(**kwargs)
         session = Session.objects.get(pk=self.kwargs['pk'])
         task_count = session.task_set.count() + 1
         context['session'] = session
         context['task_count'] = task_count
         return context
 
+    def get_next_url(self):
+        # TODO: only send to task end if number_tasks equals set number
+        return reverse('proposals:task_end', args=(self.object.session.id,))
+
+    def get_back_url(self):
+        # TODO: only send to task start if this is the first task
+        return reverse('proposals:task_start', args=(self.kwargs['pk'],))
+
+
+class TaskCreate(TaskMixin, AllowErrorsMixin, CreateView):
+    """Creates a Task"""
+    success_message = _('Taak opgeslagen')
+
     def form_valid(self, form):
+        """Set the Session of a Task"""
         form.instance.session = Session.objects.get(pk=self.kwargs['pk'])
         return super(TaskCreate, self).form_valid(form)
 
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(TaskMixin, UpdateView):
     """Updates a Task"""
-    model = Task
-    form_class = TaskForm
     success_message = _('Taak bewerkt')
-
-    def get_context_data(self, **kwargs):
-        context = super(TaskUpdate, self).get_context_data(**kwargs)
-        session = Task.objects.get(pk=self.kwargs['pk']).session
-        task_count = session.task_set.count() + 1
-        context['session'] = session
-        context['task_count'] = task_count - 1
-        return context
 
 
 class TaskDelete(DeleteView):
