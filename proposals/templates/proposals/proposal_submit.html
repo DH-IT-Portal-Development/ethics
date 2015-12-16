@@ -18,7 +18,6 @@ Aanvraag ter beoordeling en registratie
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="Aanvraag versturen" />
-    <a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>
+    {% include "proposals/form_buttons.html" %}
 </form>
 {% endblock %}

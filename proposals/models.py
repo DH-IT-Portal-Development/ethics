@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 def validate_pdf(value):
+    # TODO: doesn't seem to work if you want to edit an uploaded file?
     if value.file.content_type != 'application/pdf':
         raise ValidationError(_('Alleen PDF-bestanden zijn toegestaan.'))
 
@@ -238,7 +239,10 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         return current_session
 
     def first_session(self):
-        return self.session_set.get(order=1)
+        return self.session_set.order_by('order')[0]
+
+    def last_session(self):
+        return self.session_set.order_by('-order')[0]
 
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)

@@ -211,11 +211,17 @@ class ProposalCopy(CreateView):
         return super(ProposalCopy, self).form_valid(form)
 
 
-class ProposalUploadConsent(UpdateView):
+class ProposalUploadConsent(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = UploadConsentForm
     template_name = 'proposals/proposal_consent.html'
     success_message = _('Informed consent geupload')
+
+    def get_next_url(self):
+        return reverse('proposals:submit', args=(self.object.id,))
+
+    def get_back_url(self):
+        return reverse('proposals:session_end', args=(self.object.id,))
 
 
 class ProposalSubmit(UpdateView):
@@ -227,14 +233,15 @@ class ProposalSubmit(UpdateView):
     def form_valid(self, form):
         """Start the review process on submission"""
         success_url = super(ProposalSubmit, self).form_valid(form)
-        start_review(self.get_object())
+        if not 'save_back' in self.request.POST:
+            start_review(self.get_object())
         return success_url
 
-    def get_success_url(self):
-        return reverse('proposals:my_archive')
+    def get_next_url(self):
+        return reverse('proposals:my_submitted')
 
     def get_back_url(self):
-        return reverse('proposals:consent')
+        return reverse('proposals:consent', args=(self.object.id,))
 
 
 #####################
@@ -375,6 +382,12 @@ class ProposalSessionEnd(AllowErrorsMixin, UpdateView):
     form_class = SessionEndForm
     template_name = 'proposals/session_end.html'
     success_message = _(u'Sessies toevoegen beëindigd')
+
+    def get_next_url(self):
+        return reverse('proposals:consent', args=(self.object.id,))
+
+    def get_back_url(self):
+        return reverse('proposals:task_end', args=(self.object.last_session().id,))
 
 
 class SessionDelete(DeleteView):
