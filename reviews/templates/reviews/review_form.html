@@ -6,10 +6,12 @@ Commissieleden aanstellen
 {% endblock %} 
 
 {% block content %}
-Kies hier de commissieleden voor de aanvraag <em>{{ object.proposal.title }}</em>.
+<p>
+	Kies hier de commissieleden voor de aanvraag <em>{{ object.proposal.title }}</em>.
+</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" value="Commissieleden aanstellen" />
-    <a class="pure-button pure-button-secondary" href="{% url 'reviews:home' %}">Terug naar hoofdmenu</a>
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">Terug naar de vorige pagina</a>
 </form>
 {% endblock %}

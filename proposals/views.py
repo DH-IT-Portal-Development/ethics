@@ -459,7 +459,9 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
         return reverse('proposals:task_update', args=(self.object.last_task().id,))
 
 
-# CRUD actions on a Task
+######################
+# CRUD actions on Task
+######################
 class TaskMixin(object):
     model = Task
     form_class = TaskForm
@@ -478,7 +480,10 @@ class TaskMixin(object):
 
     def get_back_url(self):
         # TODO: only send to task start if this is the first task
-        return reverse('proposals:task_start', args=(self.kwargs['pk'],))
+        if session.task_set.count() == 0:
+            return reverse('proposals:task_start', args=(self.kwargs['pk'],))
+        else:
+            return reverse('proposals:task_start', args=(self.kwargs['pk'],))
 
 
 class TaskCreate(TaskMixin, AllowErrorsMixin, CreateView):
@@ -511,11 +516,12 @@ class HomeView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        #context['reviews_supervisor'] = Review.objects.filter(date_end=None, stage=Review.SUPERVISOR, decision__reviewer=self.request.user)
-        #context['reviews_commission'] = Review.objects.filter(date_end=None, stage=Review.COMMISSION, decision__reviewer=self.request.user)
         return context
 
 
+################
+# AJAX callbacks
+################
 @csrf_exempt
 def check_requires(request):
     """
@@ -530,6 +536,9 @@ def check_requires(request):
 
 @csrf_exempt
 def check_wmo(request):
+    """
+    This call checks which WMO message should be generated.
+    """
     is_metc = string_to_bool(request.POST.get('metc'))
     is_medical = string_to_bool(request.POST.get('medical'))
     is_behavioristic = string_to_bool(request.POST.get('behavioristic'))

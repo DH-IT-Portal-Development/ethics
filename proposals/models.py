@@ -3,14 +3,15 @@
 from django.conf import settings
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import UploadedFile
 from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 
 
 def validate_pdf(value):
-    # TODO: doesn't seem to work if you want to edit an uploaded file?
-    if value.file.content_type != 'application/pdf':
+    f = value.file
+    if isinstance(f, UploadedFile) and f.content_type != 'application/pdf':
         raise ValidationError(_('Alleen PDF-bestanden zijn toegestaan.'))
 
 

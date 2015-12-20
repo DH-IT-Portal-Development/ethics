@@ -6,10 +6,16 @@ Aanvraag beoordelen
 {% endblock %} 
 
 {% block content %}
-U kunt nu een go of no-go geven voor de aanvraag <em>{{ object.review.proposal.title }}</em>.
+<p>
+    U kunt nu een go of no-go geven voor de aanvraag <em>{{ object.review.proposal.title }}</em>. 
+    De aanvraag is <a href="TODO">hier</a> in te zien. 
+    {% if decision.review.stage == review.SUPERVISOR %}
+    Als u akkoord gaat met de aanvraag, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie.
+    {% endif %}
+</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" value="Beslissing opslaan" />
-    <a class="pure-button pure-button-secondary" href="{% url 'reviews:supervisor' %}">Terug naar hoofdmenu</a>
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">Terug naar de vorige pagina</a>
 </form>
 {% endblock %}

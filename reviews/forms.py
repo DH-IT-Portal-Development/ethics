@@ -17,7 +17,8 @@ class ReviewForm(forms.ModelForm):
         """Adds a field to select reviewers for this Proposal"""
         super(ReviewForm, self).__init__(*args, **kwargs)
         reviewers = get_user_model().objects.filter(groups__name=COMMISSION)
-        self.fields['reviewers'] = forms.ModelMultipleChoiceField(queryset=reviewers)
+        self.fields['reviewers'] = forms.ModelMultipleChoiceField(queryset=reviewers, 
+            widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}))
 
 
 class DecisionForm(forms.ModelForm):

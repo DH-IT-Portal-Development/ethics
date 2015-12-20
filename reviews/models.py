@@ -38,10 +38,14 @@ class Review(models.Model):
             self.go = final_go
             self.save()
 
-            # Update the status of the Proposal
+            # Update the status of the Proposal with the end dates
             if self.stage == self.SUPERVISOR:
                 self.proposal.date_reviewed_supervisor = self.date_end
                 self.proposal.save()
+                # On GO, start the assignment phase
+                if self.go:
+                    from .utils import start_assignment_phase
+                    start_assignment_phase(self.proposal)
             else:
                 self.proposal.date_reviewed = self.date_end
                 self.proposal.save()
