@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'reviews',
     'feedback',
 
+    'easy_pdf',
+
     'django.contrib.admin',
 )
 

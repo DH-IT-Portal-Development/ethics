@@ -11,6 +11,7 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
+from easy_pdf.views import PDFTemplateView
 
 from .copy import copy_proposal
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyForm, \
@@ -242,6 +243,10 @@ class ProposalSubmit(UpdateView):
 
     def get_back_url(self):
         return reverse('proposals:consent', args=(self.object.id,))
+
+
+class ProposalAsPdf(PDFTemplateView):
+    template_name = 'proposals/proposal_pdf.html'
 
 
 #####################
