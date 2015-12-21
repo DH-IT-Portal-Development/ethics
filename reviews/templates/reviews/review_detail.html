@@ -3,7 +3,9 @@
 {% load i18n %}
 
 {% block title %} 
-Beslissingen bij voorstel {{ review.proposal.title }}
+{% blocktrans with proposal=review.proposal.title %}
+Beslissingen bij voorstel {{ proposal }}
+{% endblocktrans %}
 {% endblock %} 
 
 {% block content %}
