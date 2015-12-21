@@ -343,7 +343,7 @@ class ProposalSessionStart(AllowErrorsMixin, UpdateView):
         """Creates or deletes (TODO) Sessions on save"""
         nr_sessions = form.cleaned_data['sessions_number']
         proposal = form.instance
-        current = proposal.sessions_number or 0
+        current = proposal.session_set.count() or 0
         for n in xrange(current, nr_sessions):
             order = n + 1
             session = Session(proposal=proposal, order=order)
@@ -480,10 +480,7 @@ class TaskMixin(object):
 
     def get_back_url(self):
         # TODO: only send to task start if this is the first task
-        if session.task_set.count() == 0:
-            return reverse('proposals:task_start', args=(self.kwargs['pk'],))
-        else:
-            return reverse('proposals:task_start', args=(self.kwargs['pk'],))
+        return reverse('proposals:task_start', args=(self.kwargs['pk'],))
 
 
 class TaskCreate(TaskMixin, AllowErrorsMixin, CreateView):
@@ -491,8 +488,10 @@ class TaskCreate(TaskMixin, AllowErrorsMixin, CreateView):
     success_message = _('Taak opgeslagen')
 
     def form_valid(self, form):
-        """Set the Session of a Task"""
-        form.instance.session = Session.objects.get(pk=self.kwargs['pk'])
+        """Set the Session and order of a Task"""
+        session = Session.objects.get(pk=self.kwargs['pk'])
+        form.instance.session = session
+        form.instance.order = session.task_set.count() + 1
         return super(TaskCreate, self).form_valid(form)
 
 

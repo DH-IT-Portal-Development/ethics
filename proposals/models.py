@@ -477,7 +477,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
     def last_task(self):
-        return self.task_set.order_by('-id')[0]
+        return self.task_set.order_by('-order')[0]
 
     def __unicode__(self):
         return _('Session {} at proposal {}').format(self.order, self.proposal)
@@ -514,9 +514,12 @@ class RegistrationKind(models.Model):
 
 
 class Task(models.Model):
+    order = models.PositiveIntegerField()
     name = models.CharField(
-        _('Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv "lexicale decisietaak")'),
+        _('Wat is de naam van de taak?'),
         max_length=200)
+    description = models.TextField(
+        _('Wat is de beschrijving van de taak?'))
     duration = models.PositiveIntegerField(
         _('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
 Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.'),
@@ -525,11 +528,9 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'))
-    registration_kind = models.ForeignKey(
+    registration_kind = models.ManyToManyField(
         RegistrationKind,
-        verbose_name=_('Kies het soort meting:'),
-        null=True,
-        blank=True)
+        verbose_name=_('Kies het soort meting:'))
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,

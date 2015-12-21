@@ -207,7 +207,7 @@ class TaskStartForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'duration',
+        fields = ['name', 'description', 'duration',
                   'registrations', 'registration_kind', 'registrations_details',
                   'feedback', 'feedback_details',
                   'stressful']
