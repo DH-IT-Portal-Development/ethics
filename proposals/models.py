@@ -213,7 +213,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         elif self.status == self.SESSIONS_STARTED:
             return reverse('proposals:task_start', args=(session.id,))
         elif self.status == self.TASKS_STARTED:
-            return reverse('proposals:task_create', args=(session.id,))
+            return reverse('proposals:task_update', args=(session.first_task().id,))
         elif self.status == self.TASKS_ADDED:
             return reverse('proposals:task_end', args=(session.id,))
         elif self.status == self.TASKS_ENDED:
@@ -476,8 +476,13 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
+    def first_task(self):
+        tasks = self.task_set.order_by('order')
+        return tasks[0] if tasks else None
+
     def last_task(self):
-        return self.task_set.order_by('-order')[0]
+        tasks = self.task_set.order_by('-order')[0]
+        return tasks[0] if tasks else None
 
     def __unicode__(self):
         return _('Session {} at proposal {}').format(self.order, self.proposal)
