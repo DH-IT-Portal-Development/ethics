@@ -20,11 +20,13 @@ class LoginRequiredMixin(object):
 class UserAllowedMixin(SingleObjectMixin):
     def get_object(self, queryset=None):
         """
-        Checks whether the current User is:
+        Allows access to a proposal based on the status of a Proposal
+        and the position of the User. He can be:
         - in the 'SECRETARY' or 'COMMISSION' group
-        - an applicant of this proposal
-        - a supervisor of this proposal
-        If not, a PermissionDenied is raised.
+        - an applicant of this Proposal
+        - a supervisor of this Proposal
+        If the status of the Proposal is not in line with the status of the User,
+        a PermissionDenied is raised.
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
 
@@ -35,13 +37,20 @@ class UserAllowedMixin(SingleObjectMixin):
         else:
             proposal = obj.proposal
 
-        allowed_users = get_user_model().objects.filter(groups__name=SECRETARY)
-        allowed_users |= get_user_model().objects.filter(groups__name=COMMISSION)
-        allowed_users |= proposal.applicants.all()
+        applicants = proposal.applicants.all()
         if proposal.supervisor:
-            allowed_users |= get_user_model().objects.filter(pk=proposal.supervisor.id)
+            supervisor = get_user_model().objects.filter(pk=proposal.supervisor.id)
+        commission = get_user_model().objects.filter(groups__name=SECRETARY)
+        commission |= get_user_model().objects.filter(groups__name=COMMISSION)
 
-        if self.request.user not in allowed_users:
-            raise PermissionDenied
+        if proposal.status >= Proposal.SUBMITTED:
+            if self.request.user not in commission:
+                raise PermissionDenied
+        elif proposal.status >= Proposal.SUBMITTED_TO_SUPERVISOR:
+            if self.request.user not in supervisor:
+                raise PermissionDenied
+        else:
+            if self.request.user not in applicants | supervisor:
+                raise PermissionDenied
 
         return obj
