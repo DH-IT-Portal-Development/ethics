@@ -481,7 +481,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         return tasks[0] if tasks else None
 
     def last_task(self):
-        tasks = self.task_set.order_by('-order')[0]
+        tasks = self.task_set.order_by('-order')
         return tasks[0] if tasks else None
 
     def __unicode__(self):
@@ -535,7 +535,9 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         verbose_name=_('Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'))
     registration_kind = models.ManyToManyField(
         RegistrationKind,
-        verbose_name=_('Kies het soort meting:'))
+        verbose_name=_('Kies het soort meting:'),
+        blank=True,
+        null=True)
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,

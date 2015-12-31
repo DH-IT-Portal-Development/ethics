@@ -59,8 +59,8 @@ class ProposalTestCase(TestCase):
         s1.save()
         self.assertEqual(proposal.status, Proposal.TASKS_STARTED)
 
-        s1_t1 = Task.objects.create(session=s1)
-        s1_t2 = Task.objects.create(session=s1)
+        s1_t1 = Task.objects.create(session=s1, order=1)
+        s1_t2 = Task.objects.create(session=s1, order=2)
         self.assertEqual(proposal.status, Proposal.TASKS_ADDED)
 
         s1.tasks_duration = 45

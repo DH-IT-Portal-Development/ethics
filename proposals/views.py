@@ -314,6 +314,7 @@ class StudyMixin(object):
     def get_back_url(self):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
 
+
 # NOTE: below two views are non-standard, as they include inlines
 # NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
 class StudyCreate(StudyMixin, LoginRequiredMixin, CreateWithInlinesView):
@@ -347,14 +348,23 @@ class ProposalSessionStart(AllowErrorsMixin, UpdateView):
     success_message = _('%(sessions_number)s sessie(s) voor aanvraag %(title)s aangemaakt')
 
     def form_valid(self, form):
-        """Creates or deletes (TODO) Sessions on save"""
+        """Creates or deletes Sessions on save"""
         nr_sessions = form.cleaned_data['sessions_number']
         proposal = form.instance
         current = proposal.session_set.count() or 0
+
+        # Create sessions
         for n in xrange(current, nr_sessions):
             order = n + 1
             session = Session(proposal=proposal, order=order)
             session.save()
+
+        # Delete sessions
+        for n in xrange(nr_sessions, current):
+            order = n + 1
+            session = Session.objects.get(proposal=proposal, order=order)
+            session.delete()
+
         return super(ProposalSessionStart, self).form_valid(form)
 
     def get_next_url(self):
@@ -436,8 +446,28 @@ class TaskStart(AllowErrorsMixin, UpdateView):
     template_name = 'proposals/task_start.html'
     success_message = ''
 
+    def form_valid(self, form):
+        """Creates or deletes Tasks on save"""
+        nr_tasks = form.cleaned_data['tasks_number']
+        session = form.instance
+        current = session.task_set.count() or 0
+
+        # Create Tasks
+        for n in xrange(current, nr_tasks):
+            order = n + 1
+            task = Task(session=session, order=order)
+            task.save()
+
+        # Delete Tasks
+        for n in xrange(nr_tasks, current):
+            order = n + 1
+            session = Task.objects.get(session=session, order=order)
+            session.delete()
+
+        return super(TaskStart, self).form_valid(form)
+
     def get_next_url(self):
-        return reverse('proposals:task_create', args=(self.object.id,))
+        return reverse('proposals:task_update', args=(self.object.first_task().id,))
 
     def get_back_url(self):
         return reverse('proposals:session_start', args=(self.object.proposal.id,))
@@ -445,6 +475,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
 
 def add_task(request, pk):
     """Updates the tasks_number on a Session"""
+    # TODO: fix this or delete functionality.
     session = get_object_or_404(Session, pk=pk)
     session.tasks_number += 1
     session.save()
@@ -469,42 +500,29 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
 ######################
 # CRUD actions on Task
 ######################
-class TaskMixin(object):
+class TaskUpdate(AllowErrorsMixin, UpdateView):
+    """Updates a Task"""
     model = Task
     form_class = TaskForm
-
-    def get_context_data(self, **kwargs):
-        context = super(TaskMixin, self).get_context_data(**kwargs)
-        session = Session.objects.get(pk=self.kwargs['pk'])
-        task_count = session.task_set.count() + 1
-        context['session'] = session
-        context['task_count'] = task_count
-        return context
+    success_message = _('Taak bewerkt')
 
     def get_next_url(self):
-        # TODO: only send to task end if number_tasks equals set number
-        return reverse('proposals:task_end', args=(self.object.session.id,))
+        try:
+            # Try to continue to next task
+            next_task = Task.objects.get(session=self.object.session, order=self.object.order+1)
+            return reverse('proposals:task_update', args=(next_task.id,))
+        except Task.DoesNotExist:
+            # If this is the last task, continue to task_end
+            return reverse('proposals:task_end', args=(self.object.session.id,))
 
     def get_back_url(self):
-        # TODO: only send to task start if this is the first task
-        return reverse('proposals:task_start', args=(self.kwargs['pk'],))
-
-
-class TaskCreate(TaskMixin, AllowErrorsMixin, CreateView):
-    """Creates a Task"""
-    success_message = _('Taak opgeslagen')
-
-    def form_valid(self, form):
-        """Set the Session and order of a Task"""
-        session = Session.objects.get(pk=self.kwargs['pk'])
-        form.instance.session = session
-        form.instance.order = session.task_set.count() + 1
-        return super(TaskCreate, self).form_valid(form)
-
-
-class TaskUpdate(TaskMixin, UpdateView):
-    """Updates a Task"""
-    success_message = _('Taak bewerkt')
+        try:
+            # Try to go back to previous task
+            previous_task = Task.objects.get(session=self.object.session, order=self.object.order-1)
+            return reverse('proposals:task_update', args=(previous_task.id,))
+        except Task.DoesNotExist:
+            # If this is the first task, continue to task_start
+            return reverse('proposals:task_start', args=(self.object.session.id,))
 
 
 class TaskDelete(DeleteView):
@@ -513,6 +531,7 @@ class TaskDelete(DeleteView):
     success_message = _('Taak verwijderd')
 
     def get_success_url(self):
+        # TODO: fix task order just like sessions above
         return reverse('proposals:detail', args=(self.object.session.proposal.id,))
 
 

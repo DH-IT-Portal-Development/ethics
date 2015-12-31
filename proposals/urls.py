@@ -45,7 +45,6 @@ urlpatterns = [
     url(r'^task_add/(?P<pk>\d+)/$', add_task, name='task_add'),
 
     # Task(s)
-    url(r'^task/create/(?P<pk>\d+)/$', TaskCreate.as_view(), name='task_create'),
     url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
     url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view(), name='task_delete'),
 
