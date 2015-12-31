@@ -1,5 +1,6 @@
 TODO:
 - informed consent+toestemmingsverklaring, link terug naar website
+- linken van werving aan leeftijden (maar klopt overzicht Maartje?)
 - Uitvoer naar PDF
 - AUTH: Solis-login
 - e-mails
