@@ -14,10 +14,10 @@ Aanvraag ter beoordeling en registratie
 	{% else %}
 	U kunt nu uw aanvraag ter beoordeling naar de ethische commissie versturen.
 	{% endif %}
-	Als u deze aanvraag nog wil wijzigen, kan dat via het hoofdmenu.
+	Als u deze aanvraag nog wil wijzigen, kan dat via de 'vorige'-knop.
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% include "proposals/form_buttons.html" %}
+    {% include "proposals/form_buttons.html" with next_text="Aanvraag versturen" %}
 </form>
 {% endblock %}
