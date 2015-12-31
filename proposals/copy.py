@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils import timezone
 
 from .models import Task
 from .utils import generate_ref_number
@@ -6,10 +6,11 @@ from .utils import generate_ref_number
 
 def copy_proposal(self, form):
     parent = form.cleaned_data['parent']
+    title = form.cleaned_data['title']
 
     # Save relationships
     relation = parent.relation
-    applicants = parent.applicants.all()
+    applicants = parent.applicants.all()  # TODO: what if current user not in applicants?
     copy_wmo = None
     copy_study = None
     if hasattr(parent, 'wmo'):
@@ -24,15 +25,19 @@ def copy_proposal(self, form):
         copy_surveys = parent.study.survey_set.all()
 
     copy_sessions = parent.session_set.all()
-    copy_tasks = Task.objects.filter(session__proposal=parent).prefetch_related('registrations')
 
     # Create copy and save the this new model, set it to not-submitted
     copy_proposal = parent
     copy_proposal.pk = None
     copy_proposal.reference_number = generate_ref_number(self.request.user)
-    copy_proposal.title = _('%s (kopie)') % copy_proposal.title
+    copy_proposal.title = title
     copy_proposal.created_by = self.request.user
+    copy_proposal.date_created = timezone.now()
+    copy_proposal.date_modified = timezone.now()
+    copy_proposal.date_submitted_supervisor = None
+    copy_proposal.date_reviewed_supervisor = None
     copy_proposal.date_submitted = None
+    copy_proposal.date_reviewed = None
     copy_proposal.save()
 
     # Copy references
@@ -64,7 +69,7 @@ def copy_proposal(self, form):
         copy_session.pk = None
         copy_session.proposal = copy_proposal
         copy_session.save()
-        for task in copy_tasks:
+        for task in Task.objects.filter(session__proposal=parent).prefetch_related('registrations'):  # TODO: this does not seem to work.
             copy_registrations = task.registrations.all()
             copy_task = task
             copy_task.pk = None

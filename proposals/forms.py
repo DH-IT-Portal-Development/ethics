@@ -60,7 +60,7 @@ class ProposalForm(forms.ModelForm):
 class ProposalCopyForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['parent']
+        fields = ['parent', 'title']
 
 
 class WmoForm(forms.ModelForm):
