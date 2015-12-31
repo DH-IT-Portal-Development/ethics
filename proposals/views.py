@@ -341,7 +341,7 @@ class StudyUpdate(StudyMixin, LoginRequiredMixin, UserAllowedMixin, UpdateWithIn
 # Actions on a Session
 ######################
 class ProposalSessionStart(AllowErrorsMixin, UpdateView):
-    """Initial creation of Sessions TODO: create updateview when sessions_number has been set"""
+    """Initial creation of Sessions"""
     model = Proposal
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
@@ -444,7 +444,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
     model = Session
     form_class = TaskStartForm
     template_name = 'proposals/task_start.html'
-    success_message = ''
+    success_message = _('%(tasks_number)s ta(a)k(en) aangemaakt')
 
     def form_valid(self, form):
         """Creates or deletes Tasks on save"""
@@ -470,7 +470,13 @@ class TaskStart(AllowErrorsMixin, UpdateView):
         return reverse('proposals:task_update', args=(self.object.first_task().id,))
 
     def get_back_url(self):
-        return reverse('proposals:session_start', args=(self.object.proposal.id,))
+        try:
+            # Try to return to task_end of the previous Session
+            prev_session = Session.objects.get(proposal=self.object.proposal, order=self.object.order - 1)
+            return reverse('proposals:task_end', args=(prev_session.id,))
+        except Session.DoesNotExist:
+            # If this is the first Session, return to session_start
+            return reverse('proposals:session_start', args=(self.object.proposal.id,))
 
 
 def add_task(request, pk):
@@ -491,7 +497,13 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
     success_message = _(u'Taken toevoegen beëindigd')
 
     def get_next_url(self):
-        return reverse('proposals:session_end', args=(self.object.proposal.id,))
+        try:
+            # Try to continue to next Session
+            next_session = Session.objects.get(proposal=self.object.proposal, order=self.object.order + 1)
+            return reverse('proposals:task_start', args=(next_session.id,))
+        except Session.DoesNotExist:
+            # If this is the last Session, continue to session_end
+            return reverse('proposals:session_end', args=(self.object.proposal.id,))
 
     def get_back_url(self):
         return reverse('proposals:task_update', args=(self.object.last_task().id,))
@@ -508,20 +520,20 @@ class TaskUpdate(AllowErrorsMixin, UpdateView):
 
     def get_next_url(self):
         try:
-            # Try to continue to next task
-            next_task = Task.objects.get(session=self.object.session, order=self.object.order+1)
+            # Try to continue to next Task
+            next_task = Task.objects.get(session=self.object.session, order=self.object.order + 1)
             return reverse('proposals:task_update', args=(next_task.id,))
         except Task.DoesNotExist:
-            # If this is the last task, continue to task_end
+            # If this is the last Task, continue to task_end
             return reverse('proposals:task_end', args=(self.object.session.id,))
 
     def get_back_url(self):
         try:
-            # Try to go back to previous task
-            previous_task = Task.objects.get(session=self.object.session, order=self.object.order-1)
-            return reverse('proposals:task_update', args=(previous_task.id,))
+            # Try to return to previous Task
+            prev_task = Task.objects.get(session=self.object.session, order=self.object.order - 1)
+            return reverse('proposals:task_update', args=(prev_task.id,))
         except Task.DoesNotExist:
-            # If this is the first task, continue to task_start
+            # If this is the first Task, return to task_start
             return reverse('proposals:task_start', args=(self.object.session.id,))
 
 
