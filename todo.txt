@@ -1,4 +1,9 @@
-TODO: 
+TODO:
+- informed consent+toestemmingsverklaring, link terug naar website
+- Uitvoer naar PDF
+- AUTH: Solis-login
+- e-mails
+
 v check netto duur vs bruto duur
 v kopieren bestaande aanvraag
 v testcases
@@ -7,11 +12,8 @@ v AUTH: alleen eigen proposals aanpassen
 v STUDY: surveys-vraag toevoegen
 - Uitlijnen lange teksten 
 v Uitlijnen checkboxes (gebeurt vrijwel nooit...)
-- AUTH: Solis-login
-- AUTH: selectie uit Solis-IDs
 v Annuleren-knop: "later verder" 
 v Referentienummer aanmaken (USERID-nr-jaar, direct bij aanmaken)
-- Uitvoer naar PDF
 - Status laten zien
 v TASKS: Aan Sessie hangen
 v TASKS: Sessie-gedeelte inbouwen
