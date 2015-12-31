@@ -8,9 +8,7 @@
             <th>Registratie via</th>
             <th>Feedback?</th>
             <th>Belastend?</th>
-            {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
             <th>Acties</th>
-            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -21,12 +19,10 @@
             <td>{{ task.registrations.all|unordered_list }}</td>
             <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
             <td>{{ task.stressful|yesno:"ja,nee,twijfel" }}</td>
-            {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
             <td>
                 <a href="{% url 'proposals:task_update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
                 <a href="{% url 'proposals:task_delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>
             </td>
-            {% endif %}
         </tr>
         {% endfor %}
     </tbody>
