@@ -11,7 +11,7 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
 from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
-from easy_pdf.views import PDFTemplateView
+from easy_pdf.views import PDFTemplateResponseMixin
 
 from .copy import copy_proposal
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyForm, \
@@ -140,7 +140,9 @@ class FaqsView(generic.ListView):
 # CRUD actions on Proposal
 ##########################
 class DetailView(LoginRequiredMixin, generic.DetailView):
+    # TODO: limit access to applicants, supervisor and commission
     model = Proposal
+
 
 class ProposalCreate(CreateView):
     model = Proposal
@@ -245,7 +247,7 @@ class ProposalSubmit(UpdateView):
         return reverse('proposals:consent', args=(self.object.id,))
 
 
-class ProposalAsPdf(PDFTemplateView):
+class ProposalAsPdf(ProposalUpdate, PDFTemplateResponseMixin):
     template_name = 'proposals/proposal_pdf.html'
 
 

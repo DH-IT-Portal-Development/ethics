@@ -1,7 +1,24 @@
 {% extends "easy_pdf/base.html" %}
 
+{% load proposal_filters %}
+
 {% block content %}
     <div id="content">
-        <h1>Hi there! {{ pk }}</h1>
+        <div class="main">
+            <table>
+            {% for field in form.visible_fields %}
+                <tr>
+                    <th>{{ field.label_tag }}</th>
+                    {% if field.html_name == 'applicants' %}
+                    {% for label in form|selected_labels:field.html_name %}
+                        <td>{{ label }}</td>
+                    {% endfor %}
+                    {% else %}
+                        <td>{{ field.value }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
     </div>
 {% endblock %}
