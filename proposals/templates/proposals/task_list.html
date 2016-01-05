@@ -7,7 +7,6 @@
             <th>Duur (in minuten)</th>
             <th>Registratie via</th>
             <th>Feedback?</th>
-            <th>Belastend?</th>
             <th>Acties</th>
         </tr>
     </thead>
@@ -18,7 +17,6 @@
             <td>{{ task.duration }}</td>
             <td>{{ task.registrations.all|unordered_list }}</td>
             <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
-            <td>{{ task.stressful|yesno:"ja,nee,twijfel" }}</td>
             <td>
                 <a href="{% url 'proposals:task_update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
                 <a href="{% url 'proposals:task_delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}"></a>

@@ -100,7 +100,7 @@ Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.'
         null=True,
         help_text=_('Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.'))
     sessions_stressful = models.NullBooleanField(
-        _('Is het totaal van sessies als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
+        _('Is het totaal van de sessie(s) als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
 vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
 Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
 de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
@@ -547,17 +547,6 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
     feedback_details = models.CharField(
         _('Beschrijf hoe de feedback wordt gegeven.'),
         max_length=200,
-        blank=True)
-    stressful = models.NullBooleanField(
-        _('Is deze taak belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
-vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
-Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
-de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
-of bepaald gedrag, etcetera. \
-En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.'),
-        default=False)
-    stressful_details = models.TextField(
-        _('Waarom denkt u dat?'),
         blank=True)
 
     # References

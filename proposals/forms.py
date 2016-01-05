@@ -209,13 +209,11 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['name', 'description', 'duration',
                   'registrations', 'registration_kind', 'registrations_details',
-                  'feedback', 'feedback_details',
-                  'stressful']
+                  'feedback', 'feedback_details']
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'registrations': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=yes_no),
-            'stressful': forms.RadioSelect(choices=yes_no_doubt),
         }
 
     def __init__(self, *args, **kwargs):
