@@ -284,6 +284,11 @@ class SessionEndForm(forms.ModelForm):
         label = sessions_duration.label % self.instance.net_duration()
         sessions_duration.label = mark_safe(label)
 
+        # If there is only one session, make the inputs hidden
+        if self.instance.sessions_number == 1:
+            self.fields['sessions_stressful'].widget = forms.HiddenInput()
+            self.fields['sessions_stressful_details'].widget = forms.HiddenInput()
+
         self.fields['sessions_stressful'].required = True
         self.fields['sessions_stressful_details'].required = True
 

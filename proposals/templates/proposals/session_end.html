@@ -10,7 +10,9 @@ Aanvraag ter beoordeling en registratie
 <p>
 <i>Deze aanvraag bestaat uit de volgende sessies:</i>
 {% for session in proposal.session_set.all %}
-<h4>Sessie {{ session.order }} (totale duur: {{ session.tasks_duration }} minuten)</h4>
+<h4>
+	Sessie {{ session.order }} (totale duur: {{ session.tasks_duration }} minuten, belastend: {{ session.tasks_stressful|yesno:"ja,nee,twijfel" }})
+</h4>
 <p>
 <i>Deze sessie bestaat uit de volgende taken:</i>
 {% include "proposals/task_list.html" %}

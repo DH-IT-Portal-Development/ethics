@@ -40,6 +40,8 @@ class UserAllowedMixin(SingleObjectMixin):
         applicants = proposal.applicants.all()
         if proposal.supervisor:
             supervisor = get_user_model().objects.filter(pk=proposal.supervisor.id)
+        else:
+            supervisor = get_user_model().objects.none()
         commission = get_user_model().objects.filter(groups__name=SECRETARY)
         commission |= get_user_model().objects.filter(groups__name=COMMISSION)
 
