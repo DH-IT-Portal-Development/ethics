@@ -370,7 +370,7 @@ class Recruitment(models.Model):
 class Study(models.Model):
     age_groups = models.ManyToManyField(
         AgeGroup,
-        verbose_name=_('Geef hieronder aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
+        verbose_name=_('Geef aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
 er zijn meerdere antwoorden mogelijk'))
     has_traits = models.BooleanField(
         _(u'Proefpersonen kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
@@ -442,7 +442,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         'Waarom denkt u dat?',
         blank=True)
 
-    # Fields with respect to tasks
+    # Fields with respect to Tasks
     tasks_number = models.PositiveIntegerField(
         _('Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?'),
         null=True,

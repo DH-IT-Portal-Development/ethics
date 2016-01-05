@@ -2,23 +2,206 @@
 
 {% load proposal_filters %}
 
+{% block extra_style %}
+    <style type="text/css">
+        #content table {
+            border-top-width: .5px;
+            border-top-style: solid;
+            border-top-color: #cbcbcb;
+            border-right-width: .5px;
+            border-right-style: solid;
+            border-right-color: #cbcbcb;
+            border-bottom-width: .5px;
+            border-bottom-style: solid;
+            border-bottom-color: #cbcbcb;
+            border-left-width: .5px;
+            border-left-style: solid;
+            border-left-color: #cbcbcb;
+        }
+
+        #content th, td {
+            font-weight: normal;
+            text-align: left;
+            padding-top: 3px;
+            padding-right: 3px;
+            padding-bottom: 3px;
+            padding-left: 3px;
+        }
+
+        #content th {
+            font-weight: normal;
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <div id="content">
-        <div class="main">
-            <table>
-            {% for field in form.visible_fields %}
-                <tr>
-                    <th>{{ field.label_tag }}</th>
-                    {% if field.html_name == 'applicants' %}
-                    {% for label in form|selected_labels:field.html_name %}
-                        <td>{{ label }}</td>
-                    {% endfor %}
-                    {% else %}
-                        <td>{{ field.value }}</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-            </table>
-        </div>
+<div id="content">
+    <div class="main">
+        <h1>Referentienummer {{ proposal.reference_number }}</h1>
+        <h2>Algemene vragen over de studie</h2>
+        <table id="test">
+            <tr>
+                <th>{% get_verbose_field_name proposal "relation" %}</th><td>{{ proposal.relation }}</td>
+            </tr>
+            {% if proposal.relation.needs_supervisor %}
+            <tr>
+                <th>{% get_verbose_field_name proposal "supervisor" %}</th><td>{{ proposal.supervisor }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name proposal "other_applicants" %}</th><td>{{ proposal.other_applicants|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if proposal.other_applicants %}
+            <tr>
+                <th>{% get_verbose_field_name proposal "applicants" %}</th><td>{{ proposal.applicants }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name proposal "title" %}</th><td>{{ proposal.title }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name proposal "tech_summary" %}</th><td>{{ proposal.tech_summary }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name proposal "longitudinal" %}</th><td>{{ proposal.longitudinal|yesno:"ja,nee" }}</td>
+            </tr>
+        </table>
+
+        {% with wmo=proposal.wmo %}
+        <h2>WMO-plichtig of niet?</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name wmo "metc" %}</th><td>{{ wmo.metc|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+            {% if wmo.metc %}
+            <tr>
+                <th>{% get_verbose_field_name wmo "metc_institution" %}</th><td>{{ wmo.metc_institution }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name wmo "is_medical" %}</th><td>{{ wmo.is_medical|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name wmo "is_behavioristic" %}</th><td>{{ wmo.is_behavioristic|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+        </table>
+        {% endwith %}
+
+        {% with study=proposal.study %}
+        <h2>Algemene kenmerken van de studie</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name study "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "has_traits" %}</th><td>{{ study.has_traits|yesno:"ja,nee" }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "traits_details" %}</th><td>{{ study.traits_details }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "necessity" %}</th><td>{{ study.necessity|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "necessity_reason" %}</th><td>{{ study.necessity_reason }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "setting" %}</th><td>{{ study.setting.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "setting_details" %}</th><td>{{ study.setting_details }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "risk_physical" %}</th><td>{{ study.risk_physical|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "risk_psychological" %}</th><td>{{ study.risk_psychological|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "compensation" %}</th><td>{{ study.compensation }}</td>
+            </tr>
+            {% if study.compensation.needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name study "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name study "recruitment" %}</th><td>{{ study.recruitment.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
+            </tr>
+        </table>
+        {% endwith %}
+
+        <h2>Vragen per sessie</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name proposal "sessions_number" %}</th><td>{{ proposal.sessions_number }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name proposal "sessions_duration" %}</th><td>{{ proposal.sessions_duration }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name proposal "sessions_stressful" %}</th><td>{{ proposal.sessions_stressful|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name proposal "sessions_stressful_details" %}</th><td>{{ proposal.sessions_stressful_details }}</td>
+            </tr>
+        </table>
+
+        {% for session in proposal.session_set.all %}
+        <h2>Sessie {{ session.order }}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name session "tasks_number" %}</th><td>{{ session.tasks_number }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name session "tasks_duration" %}</th><td>{{ session.tasks_duration }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name session "tasks_stressful" %}</th><td>{{ session.tasks_stressful|yesno:"ja,nee,twijfel" }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name session "tasks_stressful_details" %}</th><td>{{ session.tasks_stressful_details }}</td>
+            </tr>
+        </table>
+        {% for task in session.task_set.all %}
+        <h3>Taak {{ task.order }}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name task "name" %}</th><td>{{ task.name }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name task "description" %}</th><td>{{ task.description }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name task "duration" %}</th><td>{{ task.duration }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name task "registrations" %}</th><td>{{ task.registrations.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name task "registration_kind" %}</th><td>{{ task.registration_kind.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name task "registrations_details" %}</th><td>{{ task.registrations_details }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name task "feedback" %}</th><td>{{ task.feedback|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if study.compensation.feedback %}
+            <tr>
+                <th>{% get_verbose_field_name task "feedback_details" %}</th><td>{{ task.feedback_details }}</td>
+            </tr>
+            {% endif %}
+        </table>
+        {% endfor %}
+        {% endfor %}
     </div>
+</div>
 {% endblock %}

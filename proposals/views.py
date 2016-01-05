@@ -247,7 +247,8 @@ class ProposalSubmit(UpdateView):
         return reverse('proposals:consent', args=(self.object.id,))
 
 
-class ProposalAsPdf(ProposalUpdate, PDFTemplateResponseMixin):
+class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):
+    model = Proposal
     template_name = 'proposals/proposal_pdf.html'
 
 

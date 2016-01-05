@@ -3,6 +3,9 @@ from django import template
 register = template.Library()
 
 
-@register.filter
-def selected_labels(form, field):
-    return [label for value, label in form.fields[field].choices if value in form[field].value()]
+@register.simple_tag
+def get_verbose_field_name(instance, field_name):
+    """
+    Returns verbose_name for a field.
+    """
+    return instance._meta.get_field(field_name).verbose_name
