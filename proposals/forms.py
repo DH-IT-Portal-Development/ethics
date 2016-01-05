@@ -303,7 +303,7 @@ class SessionEndForm(forms.ModelForm):
 class UploadConsentForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['informed_consent_pdf']
+        fields = ['informed_consent_pdf', 'briefing_pdf']
 
     def __init__(self, *args, **kwargs):
         super(UploadConsentForm, self).__init__(*args, **kwargs)

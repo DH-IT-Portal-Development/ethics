@@ -113,7 +113,11 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
-        _('Upload hier de informed consent (in PDF-formaat)'),
+        _('Upload hier de toestemmingsverklaring (in PDF-formaat)'),
+        blank=True,
+        validators=[validate_pdf])
+    briefing_pdf = models.FileField(
+        _('Upload hier de informatiebrief (in PDF-formaat)'),
         blank=True,
         validators=[validate_pdf])
 
