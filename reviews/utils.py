@@ -83,7 +83,7 @@ def auto_review(proposal):
 
         if proposal.net_duration() > age_group.max_net_duration:
             go = False
-            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten'.format(age_group, proposal.net_duration())))
+            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten, maximum voor deze leeftijdsgroep is {} minuten'.format(age_group, proposal.net_duration(), age_group.max_net_duration)))
 
     for setting in proposal.study.setting.all():
         if setting.needs_details:
@@ -95,8 +95,9 @@ def auto_review(proposal):
             if registration.requires_review:
                 go = False
                 desc = task.registrations_details if registration.needs_details else registration.description
-                desc = task.registration_kind if registration.needs_kind else desc
-                reasons.append(_('Taak {} in sessie {} legt gegevens vast via {}').format(task.name, task.session.order, desc))
+                if registration.needs_kind:
+                    desc = ','.join([r.description for r in task.registration_kind.all()])
+                reasons.append(_('Taak "{}" in sessie {} legt gegevens vast via {}').format(task.name, task.session.order, desc))
 
     if proposal.study.risk_physical:
         go = False

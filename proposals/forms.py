@@ -213,6 +213,7 @@ class TaskForm(forms.ModelForm):
         widgets = {
             'procedure': forms.RadioSelect(choices=yes_no_doubt),
             'registrations': forms.CheckboxSelectMultiple(),
+            'registration_kind': forms.SelectMultiple(attrs={'data-placeholder': _('Kies het soort meting')}),
             'feedback': forms.RadioSelect(choices=yes_no),
         }
 
