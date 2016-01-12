@@ -103,7 +103,7 @@ class WmoCheckForm(forms.ModelForm):
 class StudyForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['age_groups',
+        fields = ['age_groups', 'legally_incapable',
                   'has_traits', 'traits', 'traits_details',
                   'necessity', 'necessity_reason',
                   'setting', 'setting_details',
@@ -112,6 +112,7 @@ class StudyForm(forms.ModelForm):
                   'recruitment', 'recruitment_details']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
+            'legally_incapable': forms.RadioSelect(choices=yes_no),
             'has_traits': forms.RadioSelect(choices=yes_no),
             'traits': forms.CheckboxSelectMultiple(),
             'necessity': forms.RadioSelect(choices=yes_no_doubt),

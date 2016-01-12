@@ -368,6 +368,9 @@ class Study(models.Model):
         AgeGroup,
         verbose_name=_('Geef aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
 er zijn meerdere antwoorden mogelijk'))
+    legally_incapable = models.BooleanField(
+        _(' Maakt uw studie gebruik van wilsonbekwame proefpersonen?'),
+        default=False)
     has_traits = models.BooleanField(
         _(u'Proefpersonen kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),

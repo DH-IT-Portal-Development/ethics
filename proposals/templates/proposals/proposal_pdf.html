@@ -92,6 +92,9 @@
                 <th>{% get_verbose_field_name study "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name study "legally_incapable" %}</th><td>{{ study.legally_incapable|yesno:"ja,nee" }}</td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name study "has_traits" %}</th><td>{{ study.has_traits|yesno:"ja,nee" }}</td>
             </tr>
             <tr>
