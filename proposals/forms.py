@@ -12,11 +12,10 @@ class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['relation', 'supervisor', 'other_applicants',
-                  'applicants', 'title', 'tech_summary', 'longitudinal']
+                  'applicants', 'title', 'tech_summary']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=yes_no),
-            'longitudinal': forms.RadioSelect(choices=yes_no),
             'tech_summary': forms.Textarea(attrs={'rows': 30, 'cols': 80})
         }
         error_messages = {

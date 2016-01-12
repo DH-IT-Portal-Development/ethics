@@ -63,9 +63,6 @@
             <tr>
                 <th>{% get_verbose_field_name proposal "tech_summary" %}</th><td>{{ proposal.tech_summary }}</td>
             </tr>
-            <tr>
-                <th>{% get_verbose_field_name proposal "longitudinal" %}</th><td>{{ proposal.longitudinal|yesno:"ja,nee" }}</td>
-            </tr>
         </table>
 
         {% with wmo=proposal.wmo %}

@@ -77,10 +77,6 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
     other_applicants = models.BooleanField(
         _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
         default=False)
-    longitudinal = models.BooleanField(
-        _('Is dit een studie waarbij dezelfde proefpersonen op meerdere dagen deelnemen aan een sessie? \
-(bijvoorbeeld een longitudinale studie, of een kortlopende studie waar proefpersonen op twee of meer verschillende dagen getest worden)'),
-        default=False)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
