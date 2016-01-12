@@ -444,6 +444,15 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
     stressful_details = models.TextField(
         'Waarom denkt u dat?',
         blank=True)
+    deception = models.NullBooleanField(
+        _('Is er binnen deze sessie sprake van misleiding van de proefpersoon, \
+d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie? \
+Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
+het ten onrechte suggereren dat er met andere proefpersonen wordt samengewerkt; \
+het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'))
+    deception_details = models.TextField(
+        'Geef een toelichting en beschrijf hoe en wanneer de proefpersoon zal worden gedebrieft.',
+        blank=True)
 
     # Fields with respect to Tasks
     tasks_number = models.PositiveIntegerField(

@@ -6,6 +6,11 @@ Aanvraag ter beoordeling en registratie
 {% endblock %} 
 
 {% block content %}
+<script>
+$(function() {
+    depends_on_value('deception', 'True', 'deception_details');
+});
+</script>
 <h3>Belasting voor de proefpersoon, sessie {{ session.order }}</h3>
 <p>
 <i>Deze sessie bestaat uit de volgende taken:</i>

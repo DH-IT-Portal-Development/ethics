@@ -250,9 +250,12 @@ class TaskForm(forms.ModelForm):
 class TaskEndForm(forms.ModelForm):
     class Meta:
         model = Session
-        fields = ['tasks_duration', 'tasks_stressful', 'tasks_stressful_details']
+        fields = ['tasks_duration',
+                  'tasks_stressful', 'tasks_stressful_details',
+                  'deception', 'deception_details']
         widgets = {
             'tasks_stressful': forms.RadioSelect(choices=yes_no_doubt),
+            'deception': forms.RadioSelect(choices=yes_no),
         }
 
     def __init__(self, *args, **kwargs):
@@ -266,10 +269,13 @@ class TaskEndForm(forms.ModelForm):
 
         self.fields['tasks_stressful'].required = True
         self.fields['tasks_stressful_details'].required = True
+        self.fields['deception'].required = True
 
     def clean(self):
         """
-        Check that the net duration is at least equal to the gross duration
+        Check for conditional requirements:
+        - Check that the net duration is at least equal to the gross duration
+        - If deception is set to yes, make sure deception_details has been filled out
         """
         cleaned_data = super(TaskEndForm, self).clean()
 
@@ -278,6 +284,8 @@ class TaskEndForm(forms.ModelForm):
         if tasks_duration < net_duration:
             error = forms.ValidationError(_('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.'), code='comparison')
             self.add_error('tasks_duration', error)
+
+        check_dependency(self, cleaned_data, 'deception', 'deception_details')
 
 
 class SessionEndForm(forms.ModelForm):
