@@ -2,7 +2,9 @@ from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from .models import Proposal, Wmo, Study, Session, Task
+from extra_views import InlineFormSet
+
+from .models import Proposal, Wmo, Study, Session, Task, Survey
 
 yes_no = [(True, _('ja')), (False, _('nee'))]
 yes_no_doubt = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
@@ -180,6 +182,14 @@ def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_messag
                 form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
                 break
     return is_required
+
+
+class SurveysInline(InlineFormSet):
+    """Creates an InlineFormSet for Surveys"""
+    model = Survey
+    fields = ['name', 'minutes', 'survey_url', 'description']
+    can_delete = True
+    extra = 1
 
 
 class SessionStartForm(forms.ModelForm):

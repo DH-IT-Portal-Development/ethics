@@ -10,15 +10,15 @@ from django.utils.translation import ugettext as _
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
-from extra_views import InlineFormSet, CreateWithInlinesView, UpdateWithInlinesView
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 from easy_pdf.views import PDFTemplateResponseMixin
 
 from .copy import copy_proposal
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
-    UploadConsentForm, ProposalSubmitForm
+    UploadConsentForm, ProposalSubmitForm, SurveysInline
 from .mixins import LoginRequiredMixin, UserAllowedMixin
-from .models import Proposal, Wmo, Study, Session, Task, Faq, Survey
+from .models import Proposal, Wmo, Study, Session, Task, Faq
 from .utils import generate_ref_number, string_to_bool
 from reviews.utils import start_review
 
@@ -293,14 +293,6 @@ class WmoCheck(generic.FormView):
 #######################
 # CRUD actions on Study
 #######################
-class SurveysInline(InlineFormSet):
-    """Creates an InlineFormSet for Surveys"""
-    model = Survey
-    fields = ['name', 'minutes', 'survey_url']
-    can_delete = True
-    extra = 1
-
-
 class StudyMixin(object):
     model = Study
     form_class = StudyForm

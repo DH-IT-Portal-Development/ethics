@@ -8,6 +8,11 @@ Aanvraag ter beoordeling en registratie
 {% endblock %} 
 
 {% block content %}
+<style>
+.survey_set textarea {
+    height: 3em;
+}
+</style>
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
@@ -46,6 +51,13 @@ $(function() {
         addText: "{% trans 'Voeg flankerende vragenlijst toe' %}",
         deleteText: "{% trans 'Verwijder' %}"
     });
+
+    $('.survey_set textarea').focus(function() {
+        $(this).css('height', '6em');
+    }).blur(function() {
+        $(this).css('height', '3em');
+    });
+
 });
 </script>
 <h3>{% trans 'Algemene kenmerken van de studie' %}</h3>

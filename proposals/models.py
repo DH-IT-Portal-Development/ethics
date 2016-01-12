@@ -495,6 +495,7 @@ class Survey(models.Model):
     name = models.CharField(_('Naam vragenlijst'), max_length=200)
     minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
     survey_url = models.URLField(_('URL'), blank=True)
+    description = models.TextField(_('Korte beschrijving'))
     study = models.ForeignKey(Study)
 
     def __unicode__(self):
