@@ -78,8 +78,6 @@ $(function() {
         {{ formset.management_form }}
         {% endfor %}
     </table>
-    {% if not study or study.proposal.status < study.proposal.SUBMITTED_TO_SUPERVISOR %}
-        {% include "proposals/form_buttons.html" %}
-    {% endif %}
+    {% include "proposals/form_buttons.html" %}
 </form>
 {% endblock %}

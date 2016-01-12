@@ -54,7 +54,7 @@
             </tr>
             {% if proposal.other_applicants %}
             <tr>
-                <th>{% get_verbose_field_name proposal "applicants" %}</th><td>{{ proposal.applicants }}</td>
+                <th>{% get_verbose_field_name proposal "applicants" %}</th><td>{{ proposal.applicants.all|unordered_list }}</td>
             </tr>
             {% endif %}
             <tr>
@@ -103,12 +103,14 @@
             <tr>
                 <th>{% get_verbose_field_name study "has_traits" %}</th><td>{{ study.has_traits|yesno:"ja,nee" }}</td>
             </tr>
+            {% if study.has_traits %}
             <tr>
                 <th>{% get_verbose_field_name study "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name study "traits_details" %}</th><td>{{ study.traits_details }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>{% get_verbose_field_name study "necessity" %}</th><td>{{ study.necessity|yesno:"ja,nee,twijfel" }}</td>
             </tr>

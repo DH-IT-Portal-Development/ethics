@@ -8,16 +8,16 @@ Aanvraag ter beoordeling en registratie
 {% block content %}
 <h3>Afronden aanvraag</h3>
 <p>
-	Uw aanvraag is compleet. 
-	{% if proposal.relation.needs_supervisor %} 
-	U kunt nu uw aanvraag ter beoordeling naar uw supervisor versturen.
+	Uw concept-aanmelding is compleet.
+	{% if proposal.relation.needs_supervisor %}
+	U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen.
 	{% else %}
-	U kunt nu uw aanvraag ter beoordeling naar de ethische commissie versturen.
+	U kunt nu uw concept-aanmelding ter beoordeling naar de ethische commissie versturen.
 	{% endif %}
 	Als u deze aanvraag nog wil wijzigen, kan dat via de 'vorige'-knop.
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% include "proposals/form_buttons.html" with next_text="Aanvraag versturen" %}
+    {% include "proposals/form_buttons.html" with next_text="Concept-aanmelding versturen" %}
 </form>
 {% endblock %}
