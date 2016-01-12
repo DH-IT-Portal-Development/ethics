@@ -53,7 +53,7 @@ $(function() {
     <table>
         {{ form.as_table }}
         <tr>
-            <th><strong>{% trans 'Zijn er vragenlijsten die niet door de proefpersoon zelf worden ingevuld maar door een ouder/leraar/etc. (flankerende vragenlijsten)?' %}</strong></th>
+            <th><strong>{% trans 'Worden er vragenlijsten afgenomen bij <em>een ander dan de proefpersoon</em>? Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.' %}</strong></th>
             <td></td>
         </tr>
         {% for formset in inlines %}

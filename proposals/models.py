@@ -489,7 +489,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
 
 
 class Survey(models.Model):
-    name = models.CharField(_('Naam'), max_length=200)
+    name = models.CharField(_('Naam vragenlijst'), max_length=200)
     minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
     survey_url = models.URLField(_('URL'), blank=True)
     study = models.ForeignKey(Study)
