@@ -13,8 +13,10 @@ yes_no_doubt = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
 class ProposalForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['relation', 'supervisor', 'other_applicants',
-                  'applicants', 'title', 'tech_summary']
+        fields = ['relation', 'supervisor',
+                  'other_applicants', 'applicants',
+                  'date_start', 'date_end',
+                  'title', 'tech_summary']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=yes_no),

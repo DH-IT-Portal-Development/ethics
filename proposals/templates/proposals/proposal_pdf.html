@@ -58,6 +58,12 @@
             </tr>
             {% endif %}
             <tr>
+                <th>{% get_verbose_field_name proposal "date_start" %}</th><td>{{ proposal.date_start }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name proposal "date_end" %}</th><td>{{ proposal.date_end }}</td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name proposal "title" %}</th><td>{{ proposal.title }}</td>
             </tr>
             <tr>

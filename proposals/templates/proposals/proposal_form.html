@@ -10,6 +10,9 @@ $(function() {
     check_field_required('relation', 'needs_supervisor', 'supervisor');
     depends_on_value('other_applicants', 'True', 'applicants');
 
+    $("#id_date_start").datepicker({dateFormat: 'dd-mm-yy'});
+    $("#id_date_end").datepicker({dateFormat: 'dd-mm-yy'});
+
     // Adds a running word count to the technical summary
     var summary = $("#id_tech_summary");
     summary.after("<span id='wordcount' />");
