@@ -14,14 +14,18 @@ class ProposalTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='test0101', email='test@test.com', password='secret')
         self.relation = Relation.objects.get(pk=4)
-        self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user), created_by=self.user, relation=self.relation)
+        self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
+                                          date_start=datetime.now(), date_end=datetime.now(),
+                                          created_by=self.user, relation=self.relation)
 
     def test_reference_number(self):
         current_year = str(datetime.now().year)
 
         # Add a proposal for the same user, check new reference number
         ref_number = generate_ref_number(self.user)
-        p2 = Proposal.objects.create(title='p2', reference_number=ref_number, created_by=self.user, relation=self.relation)
+        p2 = Proposal.objects.create(title='p2', reference_number=ref_number,
+                                     date_start=datetime.now(), date_end=datetime.now(),
+                                     created_by=self.user, relation=self.relation)
         self.assertEqual(ref_number, 'test0101-02-' + current_year)
 
         # Delete a proposal, check new reference number
@@ -31,7 +35,9 @@ class ProposalTestCase(TestCase):
 
         # Add a proposal for another user
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
-        p3 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2), created_by=user2, relation=self.relation)
+        p3 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2),
+                                     date_start=datetime.now(), date_end=datetime.now(),
+                                     created_by=user2, relation=self.relation)
         self.assertEqual(p3.reference_number, 'test0102-01-' + current_year)
 
     def test_status(self):

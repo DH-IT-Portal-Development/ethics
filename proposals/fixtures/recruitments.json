@@ -2,6 +2,7 @@
 {
     "fields": {
         "needs_details": false,
+        "requires_review": false,
         "order": 1,
         "description": "volwassen databestand UiL OTS"
     },
@@ -11,6 +12,7 @@
 {
     "fields": {
         "needs_details": false,
+        "requires_review": false,
         "order": 2,
         "description": "databestand babylab UiL OTS"
     },
@@ -20,6 +22,7 @@
 {
     "fields": {
         "needs_details": false,
+        "requires_review": true,
         "order": 3,
         "description": "eigen netwerk"
     },
@@ -29,6 +32,7 @@
 {
     "fields": {
         "needs_details": false,
+        "requires_review": true,
         "order": 4,
         "description": "verloskundige praktijken"
     },
@@ -38,6 +42,7 @@
 {
     "fields": {
         "needs_details": false,
+        "requires_review": true,
         "order": 5,
         "description": "scholen"
     },
@@ -47,6 +52,7 @@
 {
     "fields": {
         "needs_details": false,
+        "requires_review": true,
         "order": 6,
         "description": "KDV, BSO"
     },
@@ -56,6 +62,7 @@
 {
     "fields": {
         "needs_details": true,
+        "requires_review": true,
         "order": 7,
         "description": "anders, namelijk"
     },

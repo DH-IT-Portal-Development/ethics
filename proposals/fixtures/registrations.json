@@ -5,7 +5,7 @@
         "needs_kind": false,
         "order": 1,
         "description": "audio-opname",
-        "requires_review": true
+        "requires_review": false
     },
     "model": "proposals.registration",
     "pk": 1
@@ -16,7 +16,7 @@
         "needs_kind": false,
         "order": 2,
         "description": "video-opname",
-        "requires_review": true
+        "requires_review": false
     },
     "model": "proposals.registration",
     "pk": 2
@@ -82,7 +82,7 @@
         "needs_kind": false,
         "order": 8,
         "description": "anders, namelijk",
-        "requires_review": true
+        "requires_review": false
     },
     "model": "proposals.registration",
     "pk": 8

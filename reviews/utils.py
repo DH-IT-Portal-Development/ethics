@@ -67,48 +67,58 @@ def start_assignment_phase(proposal):
 
 def auto_review(proposal):
     """
-    Reviews a Proposal machine-wise.
+    Reviews a Proposal machine-wise. Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
     """
     go = True
     reasons = []
+
+    if proposal.study.legally_incapable:
+        go = False
+        reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
+
+    # TODO: is this correct?
+    if proposal.study.has_traits:
+        go = False
+        reasons.append(_('De studie selecteert proefpersonen op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
+
+    for task in Task.objects.filter(session__proposal=proposal):
+        for registration in task.registrations.all():
+            if registration.requires_review:
+                for age_group in proposal.study.age_groups.all():
+                    if age_group.age_max < 12:
+                        go = False
+                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de 12 jaar.'))
+
+    for recruitment in proposal.study.recruitment.all():
+        if recruitment.requires_review:
+            go = False
+            reasons.append(_('De proefpersonen worden op een niet-standaard manier geworven.'))
+
+    for session in proposal.session_set.all():
+        if session.deception:
+            go = False
+            reasons.append(_('De studie maakt gebruik van misleiding.'))
+
+    if proposal.session_set.count() > 1:
+        go = False
+        reasons.append(_('De studie bevat meerdere sessies, d.w.z. de proefpersoon neemt op meerdere dagen deel.'))
+
+    # TODO: is this correct?
+    if proposal.study.compensation.requires_review:
+        go = False
+        reasons.append(_('De beloning van proefpersonen wijkt af van de UiL OTS standaardregeling.'))
 
     if proposal.sessions_stressful or proposal.sessions_stressful is None:
         go = False
         reasons.append(_('Een onderdeel van de procedure kan belastend worden ervaren.'))
 
-    for age_group in proposal.study.age_groups.all():
-        if age_group.needs_details and not proposal.study.necessity:
-            go = False
-            reasons.append(_('Het is niet noodzakelijk deze groep proefpersonen te gebruiken'))
+    if proposal.study.risk_physical or proposal.study.risk_psychological:
+        go = False
+        reasons.append(_('Er is een verhoogd risico op fysieke of psychische schade.'))
 
+    for age_group in proposal.study.age_groups.all():
         if proposal.net_duration() > age_group.max_net_duration:
             go = False
-            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten, maximum voor deze leeftijdsgroep is {} minuten'.format(age_group, proposal.net_duration(), age_group.max_net_duration)))
-
-    for setting in proposal.study.setting.all():
-        if setting.needs_details:
-            go = False
-            reasons.append(_('De dataverzameling vindt op een ongebruikelijke plek plaats: {}').format(proposal.study.setting_details))
-
-    for task in Task.objects.filter(session__proposal=proposal):
-        for registration in task.registrations.all():
-            if registration.requires_review:
-                go = False
-                desc = task.registrations_details if registration.needs_details else registration.description
-                if registration.needs_kind:
-                    desc = ','.join([r.description for r in task.registration_kind.all()])
-                reasons.append(_('Taak "{}" in sessie {} legt gegevens vast via {}').format(task.name, task.session.order, desc))
-
-    if proposal.study.risk_physical:
-        go = False
-        reasons.append(_('Verhoogd risico op fysieke schade'))
-
-    if proposal.study.risk_psychological:
-        go = False
-        reasons.append(_('Verhoogd risico op psychische schade'))
-
-    if proposal.study.compensation.requires_review:
-        go = False
-        reasons.append(_('Afwijkende vorm van compensatie'))
+            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten, streefmaximum voor deze leeftijdsgroep is {} minuten.'.format(age_group, proposal.net_duration(), age_group.max_net_duration)))
 
     return go, reasons

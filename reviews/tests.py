@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.test import TestCase
 from django.contrib.auth.models import User
 
@@ -14,9 +16,11 @@ class ReviewTestCase(TestCase):
         self.user = User.objects.create_superuser('test0101', 'test@test.com', 'secret')
         self.supervisor = User.objects.create_superuser('supervisor', 'test@test.com', 'secret')
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
-            created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=4))
+                                          date_start=datetime.now(), date_end=datetime.now(),
+                                          created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=4))
         self.p2 = Proposal.objects.create(title='p2', reference_number=generate_ref_number(self.user),
-            created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=5))
+                                          date_start=datetime.now(), date_end=datetime.now(),
+                                          created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=5))
 
     def test_start_review(self):
         review = start_review(self.p1)
