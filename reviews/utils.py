@@ -85,9 +85,9 @@ def auto_review(proposal):
         for registration in task.registrations.all():
             if registration.requires_review:
                 for age_group in proposal.study.age_groups.all():
-                    if age_group.age_max < 12:
+                    if age_group.age_max < 18:
                         go = False
-                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de 12 jaar.'))
+                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de 18 jaar.'))
 
     for recruitment in proposal.study.recruitment.all():
         if recruitment.requires_review:

@@ -1,12 +1,12 @@
 TODO:
 - informed consent+toestemmingsverklaring, link terug naar website
-- linken van werving aan leeftijden (maar klopt overzicht Maartje?)
-- Uitvoer naar PDF
+- Uitvoer naar PDF, paginanummers
 - AUTH: Solis-login
 - e-mails
 - korte en verlengde procedure, secretaris beslist
-- percentage
+v percentage
 - tabben door velden
+- alle sessies identiek aan elkaar?
 
 v check netto duur vs bruto duur
 v kopieren bestaande aanvraag
