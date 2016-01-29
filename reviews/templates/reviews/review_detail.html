@@ -6,7 +6,9 @@
 {% blocktrans with proposal=review.proposal.title %}
 Beslissingen bij voorstel {{ proposal }}
 {% endblocktrans %}
-{% endblock %} 
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
 
 {% block content %}
 <p>

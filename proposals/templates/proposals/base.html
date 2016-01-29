@@ -41,18 +41,30 @@
         <h1 id="title">{% trans "ETCL UiL OTS" %}</h1>
         {% include "proposals/menu.html" %}
         {% if debug %}
-        <div id="messages">
-        {% if messages %}
-            <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-        </div>
+            <div id="messages">
+            {% if messages %}
+                <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
         {% endif %}
         {% block notitle %}
-        <h2>{% block title %}{% endblock %}</h2>
+            <h2>{% block title %}{% endblock %}</h2>
+        {% endblock %}
+        {% block noprogressbar %}
+            <script>
+            $(function() {
+                var val = {% block progress %}{% endblock %};
+                $("#progressbar").progressbar({
+                    value: val
+                });
+                $(".progress-label").text(val + "%");
+            });
+            </script>
+            <div id="progressbar"><div class="progress-label"></div></div>
         {% endblock %}
         {% block content %}
         {% endblock %}

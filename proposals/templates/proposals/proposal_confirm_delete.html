@@ -6,6 +6,8 @@
 {% trans "Aanvraag verwijderen" %}
 {% endblock %}
 
+{% block noprogressbar %}{% endblock %}
+
 {% block content %} 
 <form action="" method="post">{% csrf_token %}
     <p>Weet je zeker dat je de aanvraag voor de studie <em>{{ object.title }}</em> wilt verwijderen?</p>

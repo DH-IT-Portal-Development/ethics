@@ -5,6 +5,8 @@ TODO:
 - AUTH: Solis-login
 - e-mails
 - korte en verlengde procedure, secretaris beslist
+- percentage
+- tabben door velden
 
 v check netto duur vs bruto duur
 v kopieren bestaande aanvraag

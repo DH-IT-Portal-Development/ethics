@@ -22,6 +22,10 @@ from .models import Proposal, Wmo, Study, Session, Task, Faq
 from .utils import generate_ref_number, string_to_bool
 from reviews.utils import start_review
 
+SESSION_PROGRESS_START = 20
+SESSION_PROGRESS_TOTAL = 60
+SESSION_PROGRESS_EPSILON = 5
+
 
 class AllowErrorsMixin(object):
     def form_invalid(self, form):
@@ -455,6 +459,11 @@ class TaskStart(AllowErrorsMixin, UpdateView):
     template_name = 'proposals/task_start.html'
     success_message = _('%(tasks_number)s ta(a)k(en) aangemaakt')
 
+    def get_context_data(self, **kwargs):
+        context = super(TaskStart, self).get_context_data(**kwargs)
+        context['progress'] = get_session_progress(self.object)
+        return context
+
     def form_valid(self, form):
         """Creates or deletes Tasks on save"""
         nr_tasks = form.cleaned_data['tasks_number']
@@ -518,6 +527,11 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
     template_name = 'proposals/task_end.html'
     success_message = _(u'Taken toevoegen beëindigd')
 
+    def get_context_data(self, **kwargs):
+        context = super(TaskEnd, self).get_context_data(**kwargs)
+        context['progress'] = get_session_progress(self.object, True)
+        return context
+
     def get_next_url(self):
         try:
             # Try to continue to next Session
@@ -534,11 +548,28 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
 ######################
 # CRUD actions on Task
 ######################
+def get_session_progress(session, is_end=False):
+    progress = SESSION_PROGRESS_TOTAL / session.proposal.sessions_number
+    if not is_end:
+        progress *= (session.order - 1)
+    else:
+        progress *= session.order
+    return SESSION_PROGRESS_START + progress
+
+
 class TaskUpdate(AllowErrorsMixin, UpdateView):
     """Updates a Task"""
     model = Task
     form_class = TaskForm
     success_message = _('Taak bewerkt')
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskUpdate, self).get_context_data(**kwargs)
+        session = self.object.session
+        session_progress = get_session_progress(session)
+        task_progress = self.object.order / float(session.tasks_number)
+        context['progress'] = int(session_progress + (SESSION_PROGRESS_TOTAL / session.proposal.sessions_number) * task_progress - SESSION_PROGRESS_EPSILON)
+        return context
 
     def get_next_url(self):
         try:

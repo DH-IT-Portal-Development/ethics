@@ -4,7 +4,9 @@
 
 {% block title %}
 {% trans "Sessie verwijderen" %}
-{% endblock %} 
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
 
 {% block content %} 
 <form action="" method="post">{% csrf_token %}
