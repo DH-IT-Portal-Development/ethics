@@ -58,6 +58,9 @@ $(function() {
         $(this).css('height', '3em');
     });
 
+    // Move surveys_stressful after dynamic-form-add
+    var surveys_stressful = $('input[name=surveys_stressful]').parents('tr');
+    surveys_stressful.insertAfter('.dynamic-form-add');
 });
 </script>
 <h3>{% trans 'Algemene kenmerken van de studie' %}</h3>

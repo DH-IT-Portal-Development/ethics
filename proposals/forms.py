@@ -113,7 +113,8 @@ class StudyForm(forms.ModelForm):
                   'setting', 'setting_details',
                   'risk_physical', 'risk_psychological',
                   'compensation', 'compensation_details',
-                  'recruitment', 'recruitment_details']
+                  'recruitment', 'recruitment_details',
+                  'surveys_stressful']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
             'legally_incapable': forms.RadioSelect(choices=yes_no),
@@ -125,6 +126,7 @@ class StudyForm(forms.ModelForm):
             'risk_psychological': forms.RadioSelect(choices=yes_no_doubt),
             'compensation': forms.RadioSelect(),
             'recruitment': forms.CheckboxSelectMultiple(),
+            'surveys_stressful': forms.RadioSelect(choices=yes_no_doubt),
         }
 
     def __init__(self, *args, **kwargs):

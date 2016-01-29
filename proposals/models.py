@@ -422,6 +422,10 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
         _('Namelijk'),
         max_length=200,
         blank=True)
+    surveys_stressful = models.NullBooleanField(
+        _('Is het invullen van deze vragenlijsten belastend? \
+Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
+        default=False)
 
     # References
     proposal = models.OneToOneField(Proposal, primary_key=True)
