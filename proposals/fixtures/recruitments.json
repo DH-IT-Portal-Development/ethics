@@ -61,12 +61,22 @@
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
         "requires_review": true,
         "order": 7,
-        "description": "anders, namelijk"
+        "description": "online"
     },
     "model": "proposals.recruitment",
     "pk": 7
+},
+{
+    "fields": {
+        "needs_details": true,
+        "requires_review": true,
+        "order": 8,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.recruitment",
+    "pk": 8
 }
 ]
