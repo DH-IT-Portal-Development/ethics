@@ -350,4 +350,7 @@ class UploadConsentForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['comments']
+        fields = ['comments', 'allow_in_archive']
+        widgets = {
+            'allow_in_archive': forms.RadioSelect(choices=YES_NO)
+        }

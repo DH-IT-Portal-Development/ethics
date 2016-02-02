@@ -84,6 +84,11 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
+    allow_in_archive = models.BooleanField(
+        _('Mag deze aanvraag ter goedkeuring in het semi-publiekelijk archief?'),
+        default=True,
+        help_text=_('Dit archief is alleen toegankelijk voor mensen die aan het UiL OTS geaffilieerd zijn.')
+    )
 
     # Fields with respect to session
     sessions_number = models.PositiveIntegerField(

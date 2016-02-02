@@ -21,7 +21,7 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all the proposals that have been decided upon"""
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE)
+        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE, allow_in_archive=True)
 
     def get_context_data(self, **kwargs):
         context = super(ProposalsView, self).get_context_data(**kwargs)
