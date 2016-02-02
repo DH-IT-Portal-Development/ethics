@@ -23,8 +23,8 @@
     "fields": {
         "needs_details": false,
         "order": 3,
-        "description": "school/onderwijsinstelling",
-        "requires_review": false
+        "description": "collegezaal",
+        "requires_review": true
     },
     "model": "proposals.setting",
     "pk": 3
@@ -33,7 +33,7 @@
     "fields": {
         "needs_details": false,
         "order": 4,
-        "description": "dagopvang",
+        "description": "school/onderwijsinstelling",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -43,7 +43,7 @@
     "fields": {
         "needs_details": false,
         "order": 5,
-        "description": "peuterspeelzaal",
+        "description": "dagopvang",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -53,7 +53,7 @@
     "fields": {
         "needs_details": false,
         "order": 6,
-        "description": "buitenschoolse opvang",
+        "description": "peuterspeelzaal",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -63,7 +63,7 @@
     "fields": {
         "needs_details": false,
         "order": 7,
-        "description": "het UiL OTS lab",
+        "description": "buitenschoolse opvang",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -71,12 +71,22 @@
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
         "order": 8,
+        "description": "het UiL OTS lab",
+        "requires_review": false
+    },
+    "model": "proposals.setting",
+    "pk": 8
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 9,
         "description": "anders, namelijk",
         "requires_review": true
     },
     "model": "proposals.setting",
-    "pk": 8
+    "pk": 9
 }
 ]
