@@ -153,7 +153,8 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     parent = models.ForeignKey(
         'self',
         null=True,
-        verbose_name=_(u'Te kopiëren aanvraag'))
+        verbose_name=_(u'Te kopiëren aanvraag'),
+        help_text=_('Dit veld toont enkel aanvragen waar u zelf een medeaanvrager bent.'))
 
     def net_duration(self):
         """Returns the duration of all Tasks in this Proposal"""

@@ -65,6 +65,14 @@ class ProposalCopyForm(forms.ModelForm):
         model = Proposal
         fields = ['parent', 'title']
 
+    def __init__(self, *args, **kwargs):
+        """
+        Filters the Proposals to only show those where the current User is an applicant.
+        """
+        user = kwargs.pop('user', None)
+        super(ProposalCopyForm, self).__init__(*args, **kwargs)
+        self.fields['parent'].queryset = Proposal.objects.filter(applicants=user)
+
 
 class WmoForm(forms.ModelForm):
     class Meta:

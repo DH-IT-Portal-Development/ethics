@@ -10,7 +10,7 @@ def copy_proposal(self, form):
 
     # Save relationships
     relation = parent.relation
-    applicants = parent.applicants.all()  # TODO: what if current user not in applicants?
+    applicants = parent.applicants.all()
     copy_wmo = None
     copy_study = None
     if hasattr(parent, 'wmo'):

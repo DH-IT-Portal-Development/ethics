@@ -212,6 +212,11 @@ class ProposalCopy(CreateView):
     success_message = _('Aanvraag gekopieerd')
     template_name = 'proposals/proposal_copy.html'
 
+    def get_form_kwargs(self):
+        kwargs = super(ProposalCopy, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""
         form.instance = copy_proposal(self, form)
