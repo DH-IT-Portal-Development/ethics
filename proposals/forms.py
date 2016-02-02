@@ -119,10 +119,10 @@ class StudyForm(forms.ModelForm):
         fields = ['age_groups', 'legally_incapable',
                   'has_traits', 'traits', 'traits_details',
                   'necessity', 'necessity_reason',
-                  'setting', 'setting_details',
                   'risk_physical', 'risk_psychological',
-                  'compensation', 'compensation_details',
                   'recruitment', 'recruitment_details',
+                  'setting', 'setting_details',
+                  'compensation', 'compensation_details',
                   'surveys_stressful']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),

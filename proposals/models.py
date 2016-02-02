@@ -400,6 +400,19 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
     necessity_reason = models.TextField(
         _('Leg uit waarom'),
         blank=True)
+    risk_physical = models.NullBooleanField(
+        _('Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen van de taak groter dan de kans op fysieke schade in het dagelijks leven?'),
+        default=False)
+    risk_psychological = models.NullBooleanField(
+        _('Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen van de taak groter dan de kans op psychische schade in het dagelijks leven?'),
+        default=False)
+    recruitment = models.ManyToManyField(
+        Recruitment,
+        verbose_name=_('Hoe worden de proefpersonen geworven?'))
+    recruitment_details = models.CharField(
+        _('Namelijk'),
+        max_length=200,
+        blank=True)
     setting = models.ManyToManyField(
         Setting,
         verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'))
@@ -407,24 +420,11 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
         _('Namelijk'),
         max_length=200,
         blank=True)
-    risk_physical = models.NullBooleanField(
-        _('Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen van de taak groter dan de kans op fysieke schade in het dagelijks leven?'),
-        default=False)
-    risk_psychological = models.NullBooleanField(
-        _('Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen van de taak groter dan de kans op psychische schade in het dagelijks leven?'),
-        default=False)
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze studie?'),
         help_text=_('tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld'))
     compensation_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-    recruitment = models.ManyToManyField(
-        Recruitment,
-        verbose_name=_('Hoe worden de proefpersonen geworven?'))
-    recruitment_details = models.CharField(
         _('Namelijk'),
         max_length=200,
         blank=True)
