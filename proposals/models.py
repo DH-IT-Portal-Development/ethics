@@ -95,8 +95,8 @@ een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen 
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
     sessions_duration = models.PositiveIntegerField(
-        _('De totale geschatte netto studieduur van uw sessie komt op basis van uw opgave per sessie uit op <strong>%d minuten</strong>. \
-Schat de totale tijd die uw proefpersonen aan de gehele studie zullen besteden.'),
+        _('De totale geschatte nettoduur komt op basis van uw opgave per sessie uit op <strong>%d minuten</strong>. \
+Wat is de totale duur van de studie? Dus hoeveel tijd zijn de proefpersonen in totaal kwijt door mee te doen aan deze studie?'),
         null=True,
         help_text=_('Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.'))
     sessions_stressful = models.NullBooleanField(
