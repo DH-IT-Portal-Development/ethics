@@ -17,7 +17,7 @@ from .copy import copy_proposal
 from .forms import ProposalForm, ProposalCopyForm, WmoForm, WmoCheckForm, StudyForm, \
     SessionStartForm, TaskStartForm, TaskForm, TaskEndForm, SessionEndForm, \
     UploadConsentForm, ProposalSubmitForm, SurveysInline
-from .mixins import LoginRequiredMixin, UserAllowedMixin
+from .mixins import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin
 from .models import Proposal, Wmo, Study, Session, Task, Faq
 from .utils import generate_ref_number, string_to_bool
 from reviews.utils import start_review
@@ -25,24 +25,6 @@ from reviews.utils import start_review
 SESSION_PROGRESS_START = 20
 SESSION_PROGRESS_TOTAL = 60
 SESSION_PROGRESS_EPSILON = 5
-
-
-class AllowErrorsMixin(object):
-    def form_invalid(self, form):
-        """On back button, allow form to have errors."""
-        if 'save_back' in self.request.POST:
-            return HttpResponseRedirect(self.get_back_url())
-        else:
-            return super(AllowErrorsMixin, self).form_invalid(form)
-
-
-def success_url(self):
-    if 'save_continue' in self.request.POST:
-        return self.get_next_url()
-    if 'save_back' in self.request.POST:
-        return self.get_back_url()
-    else:
-        return reverse('proposals:my_concepts')
 
 
 class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
@@ -650,3 +632,15 @@ def check_wmo(request):
         message_class = 'warning'
 
     return JsonResponse({'message': message, 'message_class': message_class})
+
+
+#########
+# Helpers
+#########
+def success_url(self):
+    if 'save_continue' in self.request.POST:
+        return self.get_next_url()
+    if 'save_back' in self.request.POST:
+        return self.get_back_url()
+    else:
+        return reverse('proposals:my_concepts')

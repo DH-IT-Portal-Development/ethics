@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Proposal, Task
@@ -15,6 +16,15 @@ class LoginRequiredMixin(object):
     def as_view(cls, **initkwargs):
         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
         return login_required(view)
+
+
+class AllowErrorsMixin(object):
+    def form_invalid(self, form):
+        """On back button, allow form to have errors."""
+        if 'save_back' in self.request.POST:
+            return HttpResponseRedirect(self.get_back_url())
+        else:
+            return super(AllowErrorsMixin, self).form_invalid(form)
 
 
 class UserAllowedMixin(SingleObjectMixin):
