@@ -6,7 +6,7 @@
 #
 django-easy-pdf==0.1.0
 django-extra-views==0.7.1
-django==1.8.5
+django==1.8.9
 html5lib==0.9999999       # via xhtml2pdf
 mysql-python==1.2.5
 pillow==3.1.0             # via reportlab, xhtml2pdf
