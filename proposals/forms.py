@@ -6,8 +6,9 @@ from extra_views import InlineFormSet
 
 from .models import Proposal, Wmo, Study, Session, Task, Survey
 
-yes_no = [(True, _('ja')), (False, _('nee'))]
-yes_no_doubt = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
+YES_NO = [(True, _('ja')), (False, _('nee'))]
+YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
+SUMMARY_MAX_WORDS = 600
 
 
 class ProposalForm(forms.ModelForm):
@@ -19,7 +20,7 @@ class ProposalForm(forms.ModelForm):
                   'title', 'tech_summary']
         widgets = {
             'relation': forms.RadioSelect(),
-            'other_applicants': forms.RadioSelect(choices=yes_no),
+            'other_applicants': forms.RadioSelect(choices=YES_NO),
             'tech_summary': forms.Textarea(attrs={'rows': 30, 'cols': 80})
         }
         error_messages = {
@@ -38,7 +39,7 @@ class ProposalForm(forms.ModelForm):
         Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor is set
         - If other_applicants is checked, make sure applicants are set
-        - Maximum number of words for tech_summary (TODO: magic number)
+        - Maximum number of words for tech_summary
         """
         cleaned_data = super(ProposalForm, self).clean()
         relation = cleaned_data.get('relation')
@@ -55,7 +56,7 @@ class ProposalForm(forms.ModelForm):
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
             self.add_error('applicants', error)
 
-        if tech_summary and len(tech_summary.split()) > 600:
+        if tech_summary and len(tech_summary.split()) > SUMMARY_MAX_WORDS:
             error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
             self.add_error('tech_summary', error)
 
@@ -80,11 +81,11 @@ class WmoForm(forms.ModelForm):
         fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic',
                   'metc_application', 'metc_decision', 'metc_decision_pdf']
         widgets = {
-            'metc': forms.RadioSelect(choices=yes_no_doubt),
-            'is_medical': forms.RadioSelect(choices=yes_no_doubt),
-            'is_behavioristic': forms.RadioSelect(choices=yes_no_doubt),
-            'metc_application': forms.RadioSelect(choices=yes_no),
-            'metc_decision': forms.RadioSelect(choices=yes_no),
+            'metc': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'is_medical': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'is_behavioristic': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'metc_application': forms.RadioSelect(choices=YES_NO),
+            'metc_decision': forms.RadioSelect(choices=YES_NO),
         }
 
     def clean(self):
@@ -106,9 +107,9 @@ class WmoCheckForm(forms.ModelForm):
         model = Wmo
         fields = ['metc', 'is_medical', 'is_behavioristic']
         widgets = {
-            'metc': forms.RadioSelect(choices=yes_no_doubt),
-            'is_medical': forms.RadioSelect(choices=yes_no_doubt),
-            'is_behavioristic': forms.RadioSelect(choices=yes_no_doubt),
+            'metc': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'is_medical': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'is_behavioristic': forms.RadioSelect(choices=YES_NO_DOUBT),
         }
 
 
@@ -125,16 +126,16 @@ class StudyForm(forms.ModelForm):
                   'surveys_stressful']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
-            'legally_incapable': forms.RadioSelect(choices=yes_no),
-            'has_traits': forms.RadioSelect(choices=yes_no),
+            'legally_incapable': forms.RadioSelect(choices=YES_NO),
+            'has_traits': forms.RadioSelect(choices=YES_NO),
             'traits': forms.CheckboxSelectMultiple(),
-            'necessity': forms.RadioSelect(choices=yes_no_doubt),
-            'risk_physical': forms.RadioSelect(choices=yes_no_doubt),
+            'necessity': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'risk_physical': forms.RadioSelect(choices=YES_NO_DOUBT),
             'setting': forms.CheckboxSelectMultiple(),
-            'risk_psychological': forms.RadioSelect(choices=yes_no_doubt),
+            'risk_psychological': forms.RadioSelect(choices=YES_NO_DOUBT),
             'compensation': forms.RadioSelect(),
             'recruitment': forms.CheckboxSelectMultiple(),
-            'surveys_stressful': forms.RadioSelect(choices=yes_no_doubt),
+            'surveys_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
         }
 
     def __init__(self, *args, **kwargs):
@@ -233,10 +234,10 @@ class TaskForm(forms.ModelForm):
                   'registrations', 'registration_kind', 'registrations_details',
                   'feedback', 'feedback_details']
         widgets = {
-            'procedure': forms.RadioSelect(choices=yes_no_doubt),
+            'procedure': forms.RadioSelect(choices=YES_NO_DOUBT),
             'registrations': forms.CheckboxSelectMultiple(),
             'registration_kind': forms.SelectMultiple(attrs={'data-placeholder': _('Kies het soort meting')}),
-            'feedback': forms.RadioSelect(choices=yes_no),
+            'feedback': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -264,8 +265,8 @@ class TaskEndForm(forms.ModelForm):
                   'tasks_stressful', 'tasks_stressful_details',
                   'deception', 'deception_details']
         widgets = {
-            'tasks_stressful': forms.RadioSelect(choices=yes_no_doubt),
-            'deception': forms.RadioSelect(choices=yes_no),
+            'tasks_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'deception': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -303,7 +304,7 @@ class SessionEndForm(forms.ModelForm):
         model = Proposal
         fields = ['sessions_duration', 'sessions_stressful', 'sessions_stressful_details']
         widgets = {
-            'sessions_stressful': forms.RadioSelect(choices=yes_no_doubt)
+            'sessions_stressful': forms.RadioSelect(choices=YES_NO_DOUBT)
         }
 
     def __init__(self, *args, **kwargs):
