@@ -11,6 +11,7 @@ $(function() {
     check_field_required('relation', 'needs_supervisor', 'supervisor');
     depends_on_value('other_applicants', 'True', 'applicants');
 
+    // Add datepickers for date_start and date_end, set locale to current language
     $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
     $("#id_date_start").datepicker({
