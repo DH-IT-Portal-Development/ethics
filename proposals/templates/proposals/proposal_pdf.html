@@ -35,6 +35,16 @@
     </style>
 {% endblock %}
 
+{% block page_header %}
+<div id="page-header">
+ETCL - Referentienummer {{ proposal.reference_number }}
+</div>
+{% endblock %}
+
+{% block page_foot %}
+Pagina <pdf:pagenumber> van <pdf:pagecount>
+{% endblock %}
+
 {% block content %}
 <div id="content">
     <div class="main">
@@ -46,7 +56,7 @@
             </tr>
             {% if proposal.relation.needs_supervisor %}
             <tr>
-                <th>{% get_verbose_field_name proposal "supervisor" %}</th><td>{{ proposal.supervisor }}</td>
+                <th>{% get_verbose_field_name proposal "supervisor" %}</th><td>{{ proposal.supervisor.get_full_name }}</td>
             </tr>
             {% endif %}
             <tr>
