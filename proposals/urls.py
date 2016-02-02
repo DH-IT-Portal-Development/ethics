@@ -1,6 +1,11 @@
 from django.conf.urls import url
 
-from .views import *
+from .views.base_views import *
+from .views.proposal_views import *
+from .views.wmo_views import *
+from .views.study_views import *
+from .views.session_views import *
+from .views.task_views import *
 
 urlpatterns = [
     # Home

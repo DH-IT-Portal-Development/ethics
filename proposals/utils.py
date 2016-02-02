@@ -15,7 +15,6 @@ def generate_ref_number(user):
 
 
 def string_to_bool(s):
-    print 'value is ', s
     if s == 'None':
         return None
     elif s in ['False', 'false', '0', 0]:
