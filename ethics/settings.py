@@ -149,3 +149,7 @@ AUTHENTICATION_BACKENDS = (
 MEDIA_ROOT = 'media'
 
 INTERNAL_IPS = ['127.0.0.1']
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_FROM = 'M.H.vanderKlis@uu.nl'

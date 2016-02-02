@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from django.utils.translation import ugettext as _
 from django.utils import timezone
 
@@ -28,7 +30,7 @@ def start_supervisor_phase(proposal):
     - Set the Review status to SUPERVISOR
     - Set date_submitted_supervisor to current date/time
     - Create a Decision for the supervisor
-    - (TODO) Send an e-mail to the supervisor
+    - Send an e-mail to the supervisor
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.SUPERVISOR
@@ -40,6 +42,10 @@ def start_supervisor_phase(proposal):
     decision = Decision(review=review, reviewer=proposal.supervisor)
     decision.save()
 
+    subject = 'ETCL: beoordelen als eindverantwoordelijke'
+    message = 'Zie hier'
+    send_mail(subject, message, settings.EMAIL_FROM, [proposal.supervisor.email])
+
     return review
 
 
@@ -49,7 +55,7 @@ def start_assignment_phase(proposal):
     - Set the Review status to ASSIGNMENT
     - Set date_submitted to current date/time
     - Create a Decision for all Users in the 'Secretaris' Group
-    - (TODO) Send an e-mail to these Users.
+    - Send an e-mail to these Users.
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.ASSIGNMENT
@@ -58,9 +64,15 @@ def start_assignment_phase(proposal):
     proposal.date_submitted = timezone.now()
     proposal.save()
 
+    emails = []
     for user in get_user_model().objects.filter(groups__name=SECRETARY):
         decision = Decision(review=review, reviewer=user)
         decision.save()
+        emails.append(user.email)
+
+    subject = 'ETCL: aanstellen commissieleden'
+    message = 'Zie hier'
+    send_mail(subject, message, settings.EMAIL_FROM, [emails])
 
     return review
 
