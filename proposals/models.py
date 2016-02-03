@@ -125,6 +125,10 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         _('Upload hier de informatiebrief (in PDF-formaat)'),
         blank=True,
         validators=[validate_pdf])
+    passive_consent = models.BooleanField(
+        _('Maakt uw studie gebruik van passieve informed consent?'),
+        default=False
+    )
 
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)

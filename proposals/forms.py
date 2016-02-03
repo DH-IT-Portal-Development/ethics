@@ -335,7 +335,10 @@ class SessionEndForm(forms.ModelForm):
 class UploadConsentForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['informed_consent_pdf', 'briefing_pdf']
+        fields = ['informed_consent_pdf', 'passive_consent', 'briefing_pdf']
+        widgets = {
+            'passive_consent': forms.RadioSelect(choices=YES_NO)
+        }
 
     def __init__(self, *args, **kwargs):
         super(UploadConsentForm, self).__init__(*args, **kwargs)
