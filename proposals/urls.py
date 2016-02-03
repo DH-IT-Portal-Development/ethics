@@ -56,4 +56,5 @@ urlpatterns = [
     url(r'^faq/$', FaqsView.as_view(), name='faq'),
 
     url(r'^check_requires/$', check_requires, name='check_requires'),
+    url(r'^check_necessity_required/$', check_necessity_required, name='check_necessity_required'),
 ]

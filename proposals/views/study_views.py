@@ -1,14 +1,16 @@
 # -*- encoding: utf-8 -*-
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
 
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
 from .base_views import success_url
 from ..mixins import LoginRequiredMixin, UserAllowedMixin
 from ..forms import StudyForm, SurveysInline
-from ..models import Proposal, Study
+from ..models import Proposal, Study, AgeGroup
+from ..utils import string_to_bool
 
 
 #######################
@@ -50,3 +52,19 @@ class StudyCreate(StudyMixin, LoginRequiredMixin, CreateWithInlinesView):
 
 class StudyUpdate(StudyMixin, LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Study from a StudyForm, with Surveys inlined."""
+
+
+################
+# AJAX callbacks
+################
+@csrf_exempt
+def check_necessity_required(request):
+    """
+    This call checks whether a certain value requires another input to be filled.
+    """
+    age_groups = map(int, request.POST.getlist('age_groups[]'))
+    required_values = AgeGroup.objects.filter(needs_details=True).values_list('id', flat=True)
+    result = bool(set(required_values).intersection(age_groups))
+    result |= string_to_bool(request.POST.get('has_traits'))
+
+    return JsonResponse({'result': result})
