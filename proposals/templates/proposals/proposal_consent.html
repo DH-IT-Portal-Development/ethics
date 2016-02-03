@@ -12,7 +12,7 @@ Aanvraag ter beoordeling en registratie
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-        {% include "proposals/form_buttons.html" %}
+    {% include "proposals/form_buttons.html" %}
     {% endif %}
 </form>
 {% endblock %}
