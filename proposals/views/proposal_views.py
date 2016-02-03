@@ -176,7 +176,7 @@ class ProposalUploadConsent(AllowErrorsMixin, UpdateView):
         return reverse('proposals:submit', args=(self.object.id,))
 
     def get_back_url(self):
-        return reverse('proposals:session_end', args=(self.object.id,))
+        return reverse('proposals:study_survey', args=(self.object.id,))
 
 
 class ProposalSubmit(UpdateView):

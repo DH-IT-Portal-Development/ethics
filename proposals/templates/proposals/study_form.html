@@ -10,11 +10,6 @@ Aanvraag ter beoordeling en registratie
 {% block progress %}10{% endblock %}
 
 {% block content %}
-<style>
-.survey_set textarea {
-    height: 3em;
-}
-</style>
 <script>
 $(function() {
     check_field_required('setting', 'needs_details', 'setting_details');
@@ -45,22 +40,6 @@ $(function() {
         });
     });
     $('input[name=has_traits], input[name=age_groups]').change();
-
-    $('.survey_set').formset({
-        prefix: 'survey_set',
-        addText: "{% trans 'Voeg vragenlijst toe' %}",
-        deleteText: "{% trans 'Verwijder' %}"
-    });
-
-    $('.survey_set textarea').focus(function() {
-        $(this).css('height', '6em');
-    }).blur(function() {
-        $(this).css('height', '3em');
-    });
-
-    // Move surveys_stressful after dynamic-form-add
-    var surveys_stressful = $('input[name=surveys_stressful]').parents('tr');
-    surveys_stressful.insertAfter('.dynamic-form-add');
 });
 </script>
 <h3>{% trans 'Algemene kenmerken van de studie' %}</h3>
@@ -68,18 +47,6 @@ $(function() {
     {% csrf_token %}
     <table>
         {{ form.as_table }}
-        <tr>
-            <th><strong>{% trans 'Worden er vragenlijsten afgenomen bij <em>een ander dan de proefpersoon</em>? Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.' %}</strong></th>
-            <td></td>
-        </tr>
-        {% for formset in inlines %}
-        {% for subform in formset.forms %}
-        <tr class="{{ formset.prefix }}">
-            <td colspan="2">{{ subform.as_p }}</td>
-        </tr>
-        {% endfor %}
-        {{ formset.management_form }}
-        {% endfor %}
     </table>
     {% include "proposals/form_buttons.html" %}
 </form>

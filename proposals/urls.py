@@ -38,6 +38,7 @@ urlpatterns = [
     # Study
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
     url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
+    url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
 
     # Session(s)
     url(r'^session_start/(?P<pk>\d+)/$', ProposalSessionStart.as_view(), name='session_start'),

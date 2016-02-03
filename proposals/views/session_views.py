@@ -91,7 +91,7 @@ class ProposalSessionEnd(AllowErrorsMixin, UpdateView):
             return super(ProposalSessionEnd, self).get_initial()
 
     def get_next_url(self):
-        return reverse('proposals:consent', args=(self.object.id,))
+        return reverse('proposals:study_survey', args=(self.object.id,))
 
     def get_back_url(self):
         return reverse('proposals:task_end', args=(self.object.last_session().id,))

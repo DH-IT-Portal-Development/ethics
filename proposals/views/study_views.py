@@ -3,12 +3,13 @@
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.translation import ugettext as _
 
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView
+from extra_views import UpdateWithInlinesView
 
-from .base_views import success_url
+from .base_views import CreateView, UpdateView, success_url
 from ..mixins import LoginRequiredMixin, UserAllowedMixin
-from ..forms import StudyForm, SurveysInline
+from ..forms import StudyForm, StudySurveyForm, SurveysInline
 from ..models import Proposal, Study, AgeGroup
 from ..utils import string_to_bool
 
@@ -20,10 +21,7 @@ class StudyMixin(object):
     """Mixin for a Study, to use in both StudyCreate and StudyUpdate below"""
     model = Study
     form_class = StudyForm
-    inlines = [SurveysInline]
-
-    def get_success_url(self):
-        return success_url(self)
+    success_message = _('Studie opgeslagen')
 
     def get_next_url(self):
         return reverse('proposals:session_start', args=(self.object.proposal.id,))
@@ -32,10 +30,8 @@ class StudyMixin(object):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
 
 
-# NOTE: below two views are non-standard, as they include inlines
-# NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
-class StudyCreate(StudyMixin, LoginRequiredMixin, CreateWithInlinesView):
-    """Creates a Study from a StudyForm, with Surveys inlined."""
+class StudyCreate(CreateView):
+    """Creates a Study from a StudyForm"""
 
     def forms_valid(self, form, inlines):
         """Sets the Proposal on the Study before starting validation."""
@@ -50,9 +46,26 @@ class StudyCreate(StudyMixin, LoginRequiredMixin, CreateWithInlinesView):
             return super(StudyCreate, self).forms_invalid(form, inlines)
 
 
-class StudyUpdate(StudyMixin, LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
-    """Updates a Study from a StudyForm, with Surveys inlined."""
+class StudyUpdate(StudyMixin, UpdateView):
+    """Updates a Study from a StudyForm"""
 
+
+# NOTE: below view is non-standard, as it include inlines
+# NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
+class StudySurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
+    model = Study
+    form_class = StudySurveyForm
+    inlines = [SurveysInline]
+    template_name = 'proposals/study_survey_form.html'
+
+    def get_success_url(self):
+        return success_url(self)
+
+    def get_next_url(self):
+        return reverse('proposals:consent', args=(self.object.proposal.id,))
+
+    def get_back_url(self):
+        return reverse('proposals:session_end', args=(self.object.proposal.id,))
 
 ################
 # AJAX callbacks

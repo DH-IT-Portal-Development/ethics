@@ -122,8 +122,7 @@ class StudyForm(forms.ModelForm):
                   'risk_physical', 'risk_psychological',
                   'recruitment', 'recruitment_details',
                   'setting', 'setting_details',
-                  'compensation', 'compensation_details',
-                  'surveys_stressful']
+                  'compensation', 'compensation_details']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
@@ -134,7 +133,6 @@ class StudyForm(forms.ModelForm):
             'risk_psychological': forms.RadioSelect(choices=YES_NO_DOUBT),
             'compensation': forms.RadioSelect(),
             'recruitment': forms.CheckboxSelectMultiple(),
-            'surveys_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
         }
 
     def __init__(self, *args, **kwargs):
@@ -190,6 +188,15 @@ def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_messag
                 form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
                 break
     return is_required
+
+
+class StudySurveyForm(forms.ModelForm):
+    class Meta:
+        model = Study
+        fields = ['surveys_stressful',]
+        widgets = {
+            'surveys_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
+        }
 
 
 class SurveysInline(InlineFormSet):
