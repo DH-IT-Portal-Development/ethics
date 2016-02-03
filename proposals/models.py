@@ -335,15 +335,6 @@ class AgeGroup(models.Model):
             return _('%d+ jaar') % (self.age_min)
 
 
-class Trait(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-
-    def __unicode__(self):
-        return self.description
-
-
 class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -386,14 +377,6 @@ er zijn meerdere antwoorden mogelijk'))
         _(u'Proefpersonen kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
         default=False)
-    traits = models.ManyToManyField(
-        Trait,
-        blank=True,
-        verbose_name=_('Selecteer de bijzondere kenmerken van uw proefpersonen'))
-    traits_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
     necessity = models.NullBooleanField(
         _('Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type proefpersonen aan de studie te laten deelnemen?'),
         help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?'))

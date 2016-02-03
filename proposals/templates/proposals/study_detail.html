@@ -16,11 +16,7 @@
         <tr>
             <th>Bijzondere kenmerken</th>
             <td>
-                {% if proposal.study.has_traits %}
-                {{ proposal.study.traits.all|unordered_list }}
-                {% else %}
-                geen
-                {% endif %}
+                {{ study.has_traits|yesno:"ja,nee" }}
             </td>
         </tr>
         <tr>

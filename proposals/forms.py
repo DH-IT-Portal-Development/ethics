@@ -117,7 +117,7 @@ class StudyForm(forms.ModelForm):
     class Meta:
         model = Study
         fields = ['age_groups', 'legally_incapable',
-                  'has_traits', 'traits', 'traits_details',
+                  'has_traits',
                   'necessity', 'necessity_reason',
                   'risk_physical', 'risk_psychological',
                   'recruitment', 'recruitment_details',
@@ -128,7 +128,6 @@ class StudyForm(forms.ModelForm):
             'age_groups': forms.CheckboxSelectMultiple(),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
             'has_traits': forms.RadioSelect(choices=YES_NO),
-            'traits': forms.CheckboxSelectMultiple(),
             'necessity': forms.RadioSelect(choices=YES_NO_DOUBT),
             'risk_physical': forms.RadioSelect(choices=YES_NO_DOUBT),
             'setting': forms.CheckboxSelectMultiple(),
@@ -149,8 +148,6 @@ class StudyForm(forms.ModelForm):
         Check for conditional requirements:
         - If an age group which needs details has been checked, make sure necessity/necessity_reason has been filled out
         - If has_traits is checked, make sure necessity/necessity_reason has been filled out
-        - If has_traits is checked, make sure there is at least one trait selected
-        - If a trait which needs details has been checked, make sure the details are filled
         - If a setting which needs details has been checked, make sure the details are filled
         - If a compensation which needs details has been checked, make sure the details are filled
         - If a recruitment which needs details has been checked, make sure the details are filled
@@ -162,8 +159,6 @@ class StudyForm(forms.ModelForm):
         if not age_group_needs_details:
             check_dependency(self, cleaned_data, 'has_traits', 'necessity')
             check_dependency(self, cleaned_data, 'has_traits', 'necessity_reason')
-        check_dependency(self, cleaned_data, 'has_traits', 'traits', 'U dient minimaal een bijzonder kenmerk te selecteren.')
-        check_dependency_multiple(self, cleaned_data, 'traits', 'needs_details', 'traits_details')
         check_dependency_multiple(self, cleaned_data, 'setting', 'needs_details', 'setting_details')
         check_dependency_singular(self, cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         check_dependency_multiple(self, cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')

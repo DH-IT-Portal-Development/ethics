@@ -88,7 +88,6 @@ def auto_review(proposal):
         go = False
         reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
 
-    # TODO: is this correct?
     if proposal.study.has_traits:
         go = False
         reasons.append(_('De studie selecteert proefpersonen op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))

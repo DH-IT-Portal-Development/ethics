@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Relation, AgeGroup, Trait, Registration, RegistrationKind, \
+from .models import Relation, AgeGroup, Registration, RegistrationKind, \
     Setting, Compensation, Recruitment, Faq
 
 
@@ -14,12 +14,6 @@ class RelationAdmin(admin.ModelAdmin):
 class AgeGroupAdmin(admin.ModelAdmin):
     list_display = ('description', 'age_min', 'age_max', )
     ordering = ['age_min']
-
-
-@admin.register(Trait)
-class TraitAdmin(admin.ModelAdmin):
-    list_display = ('order', 'description', 'needs_details', )
-    ordering = ['order']
 
 
 @admin.register(Registration)
