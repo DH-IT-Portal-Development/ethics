@@ -500,7 +500,7 @@ Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als
         return tasks[0] if tasks else None
 
     def __unicode__(self):
-        return _('Session {} at proposal {}').format(self.order, self.proposal)
+        return _('Sessie {}').format(self.order)
 
 
 class Survey(models.Model):

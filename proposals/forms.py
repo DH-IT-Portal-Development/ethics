@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
@@ -164,28 +166,28 @@ class StudyForm(forms.ModelForm):
 
 def check_dependency(form, cleaned_data, f1, f2, error_message=''):
     if not error_message:
-        error_message = 'Dit veld is verplicht.'
+        error_message = _('Dit veld is verplicht.')
     if cleaned_data.get(f1) and not cleaned_data.get(f2):
-        form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
+        form.add_error(f2, forms.ValidationError(error_message, code='required'))
 
 
 def check_dependency_singular(form, cleaned_data, f1, f1_field, f2, error_message=''):
     if not error_message:
-        error_message = 'Dit veld is verplicht.'
+        error_message = _('Dit veld is verplicht.')
     if cleaned_data.get(f1):
         if getattr(cleaned_data.get(f1), f1_field) and not cleaned_data.get(f2):
-            form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
+            form.add_error(f2, forms.ValidationError(error_message, code='required'))
 
 
 def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_message=''):
     is_required = False
     if not error_message:
-        error_message = 'Dit veld is verplicht.'
+        error_message = _('Dit veld is verplicht.')
     if cleaned_data.get(f1):
         for item in cleaned_data.get(f1):
             if getattr(item, f1_field) and not cleaned_data.get(f2):
                 is_required = True
-                form.add_error(f2, forms.ValidationError(_(error_message), code='required'))
+                form.add_error(f2, forms.ValidationError(error_message, code='required'))
                 break
     return is_required
 
@@ -219,14 +221,45 @@ class SessionStartForm(forms.ModelForm):
 
 
 class TaskStartForm(forms.ModelForm):
+    is_copy = forms.BooleanField(label=_('Is deze sessie een kopie van een voorgaande sessie?'),
+                                 help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar'),
+                                 widget=forms.RadioSelect(choices=YES_NO),
+                                 initial=False,
+                                 required=False)
+    parent_session = forms.ModelChoiceField(label=_(u'Te kopiëren sessie'),
+                                            queryset=Session.objects.all(),
+                                            required=False)
+
     class Meta:
         model = Session
         fields = ['tasks_number']
 
     def __init__(self, *args, **kwargs):
-        """Set the tasks_number field as required"""
+        """
+        - The field tasks_number is not required by default (only is is_copy is set to False)
+        - Only allow to choose earlier Sessions
+        - Remove option to copy altogether from first Session
+        """
         super(TaskStartForm, self).__init__(*args, **kwargs)
-        self.fields['tasks_number'].required = True
+        self.fields['tasks_number'].required = False
+        self.fields['parent_session'].queryset = Session.objects.filter(proposal=self.instance.proposal.pk,
+                                                                        order__lt=self.instance.order)
+
+        if self.instance.order == 1:
+            del self.fields['is_copy']
+            del self.fields['parent_session']
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If is_copy is True, parent_session is required
+        - If is_copy is False, tasks_number is required
+        """
+        cleaned_data = super(TaskStartForm, self).clean()
+
+        check_dependency(self, cleaned_data, 'is_copy', 'parent_session')
+        if not cleaned_data.get('is_copy') and not cleaned_data.get('tasks_number'):
+            self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht'), code='required'))
 
 
 class TaskForm(forms.ModelForm):
