@@ -123,7 +123,7 @@ def auto_review(proposal):
         go = False
         reasons.append(_('Een onderdeel van de procedure kan belastend worden ervaren.'))
 
-    if proposal.study.risk_physical or proposal.study.risk_psychological:
+    if proposal.study.risk:
         go = False
         reasons.append(_('Er is een verhoogd risico op fysieke of psychische schade.'))
 

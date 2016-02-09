@@ -74,7 +74,7 @@ class ReviewTestCase(TestCase):
         go, reasons = auto_review(self.p2)
         self.assertTrue(go)
 
-        self.p2.study.risk_physical = True
+        self.p2.study.risk = True
         self.p2.study.save()
 
         go, reasons = auto_review(self.p2)

@@ -387,12 +387,23 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
     necessity_reason = models.TextField(
         _('Leg uit waarom'),
         blank=True)
-    risk_physical = models.NullBooleanField(
-        _('Is de kans dat de proefpersoon fysieke schade oploopt tijdens het afnemen van de taak groter dan de kans op fysieke schade in het dagelijks leven?'),
+    risk = models.NullBooleanField(
+        _('Zijn de risico\'s van deelname aan de studie meer dan minimaal? \
+D.w.z. ligt de kans op en/of omvang van mogelijke fysieke of psychische schade bij de deelnemers duidelijk \
+boven het "achtergrondrisico", datgene dat gezonde burgers in de relevante leeftijdscategorie normaalgesproken \
+in het dagelijks leven ten deel valt? Ga bij het beantwoorden van deze vraag uit van de volgens u meest kwetsbare c.q. \
+minst belastbare deelnemersgroep in uw studie, maar bepaal het achtergrondrisico op basis van de gemiddelde bevolking.'),
+        help_text='Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van \
+bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, et cetera. \
+Het achtergrondrisico omvat ook de risico\'s van \'routine\'-tests, -onderzoeken of -procedures die in alledaagse \
+didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een \
+stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na \
+fysieke inspanning; dit alles waar relevant onder begeleiding van adequaat geschoolde specialisten).',
         default=False)
-    risk_psychological = models.NullBooleanField(
-        _('Is de kans dat de proefpersoon psychische schade oploopt tijdens het afnemen van de taak groter dan de kans op psychische schade in het dagelijks leven?'),
-        default=False)
+    risk_details = models.CharField(
+        _('Licht toe'),
+        max_length=200,
+        blank=True)
     recruitment = models.ManyToManyField(
         Recruitment,
         verbose_name=_('Hoe worden de proefpersonen geworven?'))

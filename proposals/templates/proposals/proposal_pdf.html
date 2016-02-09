@@ -126,12 +126,6 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name study "setting_details" %}</th><td>{{ study.setting_details }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name study "risk_physical" %}</th><td>{{ study.risk_physical|yesno:"ja,nee,twijfel" }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name study "risk_psychological" %}</th><td>{{ study.risk_psychological|yesno:"ja,nee,twijfel" }}</td>
-            </tr>
-            <tr>
                 <th>{% get_verbose_field_name study "compensation" %}</th><td>{{ study.compensation }}</td>
             </tr>
             {% if study.compensation.needs_details %}
