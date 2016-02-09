@@ -104,17 +104,6 @@ Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan gel
 Wat is de totale duur van de studie? Dus hoeveel tijd zijn de proefpersonen in totaal kwijt door mee te doen aan deze studie?'),
         null=True,
         help_text=_('Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.'))
-    sessions_stressful = models.NullBooleanField(
-        _('Is het totaal van de sessie(s) als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
-vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
-Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
-de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
-of bepaald gedrag, etcetera. \
-Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.'),
-        default=False)
-    sessions_stressful_details = models.TextField(
-        _('Waarom denkt u dat?'),
-        blank=True)
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
@@ -387,23 +376,6 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
     necessity_reason = models.TextField(
         _('Leg uit waarom'),
         blank=True)
-    risk = models.NullBooleanField(
-        _('Zijn de risico\'s van deelname aan de studie meer dan minimaal? \
-D.w.z. ligt de kans op en/of omvang van mogelijke fysieke of psychische schade bij de deelnemers duidelijk \
-boven het "achtergrondrisico", datgene dat gezonde burgers in de relevante leeftijdscategorie normaalgesproken \
-in het dagelijks leven ten deel valt? Ga bij het beantwoorden van deze vraag uit van de volgens u meest kwetsbare c.q. \
-minst belastbare deelnemersgroep in uw studie, maar bepaal het achtergrondrisico op basis van de gemiddelde bevolking.'),
-        help_text='Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van \
-bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, et cetera. \
-Het achtergrondrisico omvat ook de risico\'s van \'routine\'-tests, -onderzoeken of -procedures die in alledaagse \
-didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een \
-stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na \
-fysieke inspanning; dit alles waar relevant onder begeleiding van adequaat geschoolde specialisten).',
-        default=False)
-    risk_details = models.CharField(
-        _('Licht toe'),
-        max_length=200,
-        blank=True)
     recruitment = models.ManyToManyField(
         Recruitment,
         verbose_name=_('Hoe worden de proefpersonen geworven?'))
@@ -426,6 +398,35 @@ fysieke inspanning; dit alles waar relevant onder begeleiding van adequaat gesch
         _('Namelijk'),
         max_length=200,
         blank=True)
+    stressful = models.NullBooleanField(
+        _('Is de studie op onderdelen of als geheel zodanig belastend dat deze ondanks de verkregen informed consent \
+vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
+zelf, of bij ouders of andere vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit van de volgens u \
+meest kwetsbare c.q. minst belastbare deelnemersgroep.'),
+        help_text=_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
+een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de \
+ privacy, of een ander ervaren gebrek aan respect.'),
+        default=False)
+    stressful_details = models.TextField(
+        _('Licht toe'),
+        blank=True)
+    risk = models.NullBooleanField(
+        _('Zijn de risico\'s van deelname aan de studie meer dan minimaal? \
+D.w.z. ligt de kans op en/of omvang van mogelijke fysieke of psychische schade bij de deelnemers duidelijk \
+boven het "achtergrondrisico", datgene dat gezonde burgers in de relevante leeftijdscategorie normaalgesproken \
+in het dagelijks leven ten deel valt? Ga bij het beantwoorden van deze vraag uit van de volgens u meest kwetsbare c.q. \
+minst belastbare deelnemersgroep in uw studie, maar bepaal het achtergrondrisico op basis van de gemiddelde bevolking.'),
+        help_text='Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van \
+bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, et cetera. \
+Het achtergrondrisico omvat ook de risico\'s van \'routine\'-tests, -onderzoeken of -procedures die in alledaagse \
+didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een \
+stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na \
+fysieke inspanning; dit alles waar relevant onder begeleiding van adequaat geschoolde specialisten).',
+        default=False)
+    risk_details = models.CharField(
+        _('Licht toe'),
+        max_length=200,
+        blank=True)
     surveys_stressful = models.NullBooleanField(
         _('Is het invullen van deze vragenlijsten belastend? \
 Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
@@ -445,14 +446,6 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
 
 class Session(models.Model):
     order = models.PositiveIntegerField()
-    stressful = models.NullBooleanField(
-        _('Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, \
-ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
-Denk hierbij bijvoorbeeld aan de totale duur, vermoeidheid, etc. \
-Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de meest kwetsbare c.q. minst belastbare proefpersonengroep.'))
-    stressful_details = models.TextField(
-        'Waarom denkt u dat?',
-        blank=True)
     deception = models.NullBooleanField(
         _('Is er binnen deze sessie sprake van misleiding van de proefpersoon, \
 d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie? \
@@ -475,17 +468,6 @@ Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelde
         _('De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
 Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)'),
         null=True)
-    tasks_stressful = models.NullBooleanField(
-        _('Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de proefpersoon op een manier die, ondanks de verkregen informed consent, \
-vragen zou kunnen oproepen (bijvoorbeeld bij collega\'s, bij de proefpersonen zelf, bij derden)? \
-Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, \
-de mate waarin proefpersonen zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) \
-of bepaald gedrag, etcetera. \
-Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare proefpersonengroep.'),
-        default=False)
-    tasks_stressful_details = models.TextField(
-        _('Waarom denkt u dat?'),
-        blank=True)
 
     # References
     proposal = models.ForeignKey(Proposal)
@@ -591,8 +573,6 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         """
         session = self.session
         session.tasks_duration = None
-        session.tasks_stressful = None
-        session.tasks_stressful_details = ''
         super(Task, self).delete(*args, **kwargs)
         session.save()
 

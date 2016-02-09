@@ -119,7 +119,7 @@ def auto_review(proposal):
         go = False
         reasons.append(_('De beloning van proefpersonen wijkt af van de UiL OTS standaardregeling.'))
 
-    if proposal.sessions_stressful or proposal.sessions_stressful is None:
+    if proposal.study.stressful:
         go = False
         reasons.append(_('Een onderdeel van de procedure kan belastend worden ervaren.'))
 

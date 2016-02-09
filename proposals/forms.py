@@ -293,16 +293,16 @@ class TaskForm(forms.ModelForm):
 class TaskEndForm(forms.ModelForm):
     class Meta:
         model = Session
-        fields = ['tasks_duration',
-                  'tasks_stressful', 'tasks_stressful_details',
-                  'deception', 'deception_details']
+        fields = ['tasks_duration', 'deception', 'deception_details']
         widgets = {
-            'tasks_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
             'deception': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
-        """Set the tasks_duration and tasks_stressful fields as required"""
+        """
+        - Set the tasks_duration label
+        - Set the tasks_duration and deception field as required
+        """
         super(TaskEndForm, self).__init__(*args, **kwargs)
 
         tasks_duration = self.fields['tasks_duration']
@@ -310,8 +310,6 @@ class TaskEndForm(forms.ModelForm):
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
 
-        self.fields['tasks_stressful'].required = True
-        self.fields['tasks_stressful_details'].required = True
         self.fields['deception'].required = True
 
     def clean(self):
@@ -334,10 +332,7 @@ class TaskEndForm(forms.ModelForm):
 class SessionEndForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['sessions_duration', 'sessions_stressful', 'sessions_stressful_details']
-        widgets = {
-            'sessions_stressful': forms.RadioSelect(choices=YES_NO_DOUBT)
-        }
+        fields = ['sessions_duration']
 
     def __init__(self, *args, **kwargs):
         """Set all fields as required, update the sessions_duration label"""
@@ -347,14 +342,6 @@ class SessionEndForm(forms.ModelForm):
         sessions_duration.required = True
         label = sessions_duration.label % self.instance.net_duration()
         sessions_duration.label = mark_safe(label)
-
-        # If there is only one session, make the inputs hidden
-        if self.instance.sessions_number == 1:
-            self.fields['sessions_stressful'].widget = forms.HiddenInput()
-            self.fields['sessions_stressful_details'].widget = forms.HiddenInput()
-
-        self.fields['sessions_stressful'].required = True
-        self.fields['sessions_stressful_details'].required = True
 
     def clean(self):
         """

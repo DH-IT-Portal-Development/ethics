@@ -42,8 +42,6 @@ class ProposalSessionStart(AllowErrorsMixin, UpdateView):
         # If the number of Sessions has changed, invalidate the Proposal fields
         if current != nr_sessions:
             proposal.sessions_duration = None
-            proposal.sessions_stressful = None
-            proposal.sessions_stressful_details = ''
             proposal.save()
 
         return super(ProposalSessionStart, self).form_valid(form)
@@ -80,15 +78,6 @@ class ProposalSessionEnd(AllowErrorsMixin, UpdateView):
     form_class = SessionEndForm
     template_name = 'proposals/session_end.html'
     success_message = _(u'Sessies toevoegen beëindigd')
-
-    def get_initial(self):
-        """If there is only one Session, transfer the data to Proposal level"""
-        if self.object.sessions_number == 1:
-            session = self.object.first_session()
-            return {'sessions_stressful': session.tasks_stressful,
-                    'sessions_stressful_details': session.tasks_stressful_details}
-        else:
-            return super(ProposalSessionEnd, self).get_initial()
 
     def get_next_url(self):
         return reverse('proposals:study_survey', args=(self.object.id,))
@@ -159,17 +148,13 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             task = Task.objects.get(session=session, order=order)
             task.delete()
 
-        # If the number of Tasks has changed, invalidate the Session and Proposal fields
+        # If the number of Tasks has changed, invalidate the Session and Proposal duration
         if current != nr_tasks:
             session.tasks_duration = None
-            session.tasks_stressful = None
-            session.tasks_stressful_details = ''
             session.save()
 
             proposal = session.proposal
             proposal.sessions_duration = None
-            proposal.sessions_stressful = None
-            proposal.sessions_stressful_details = ''
             proposal.save()
 
         return super(TaskStart, self).form_valid(form)

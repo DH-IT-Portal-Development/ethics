@@ -23,12 +23,6 @@
                 {{ proposal.sessions_duration }} minuten
             </td>
         </tr>
-        <tr>
-            <th>Belastend als geheel?</th>
-            <td>
-                {{ session.sessions_stressful|yesno:"ja,nee,twijfel" }}
-            </td>
-        </tr>
         {% endif %}
     </table>
     <h3>Sessies</h3>
@@ -58,15 +52,6 @@
                     <th>Bruto duur</th>
                     <td>
                         {{ session.tasks_duration }} minuten
-                        {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-                        <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Belastend als geheel?</th>
-                    <td>
-                        {{ session.tasks_stressful|yesno:"ja,nee,twijfel" }}
                         {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
                         <a href="{% url 'proposals:task_end' session.id %}"><img src="{% static 'proposals/images/pencil.png' %}"></a>
                         {% endif %}

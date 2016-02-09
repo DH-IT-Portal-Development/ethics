@@ -150,12 +150,6 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             <tr>
                 <th>{% get_verbose_field_name proposal "sessions_duration" %}</th><td>{{ proposal.sessions_duration }}</td>
             </tr>
-            <tr>
-                <th>{% get_verbose_field_name proposal "sessions_stressful" %}</th><td>{{ proposal.sessions_stressful|yesno:"ja,nee,twijfel" }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name proposal "sessions_stressful_details" %}</th><td>{{ proposal.sessions_stressful_details }}</td>
-            </tr>
         </table>
 
         {% for session in proposal.session_set.all %}
@@ -166,12 +160,6 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name session "tasks_duration" %}</th><td>{{ session.tasks_duration }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name session "tasks_stressful" %}</th><td>{{ session.tasks_stressful|yesno:"ja,nee,twijfel" }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name session "tasks_stressful_details" %}</th><td>{{ session.tasks_stressful_details }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name session "deception" %}</th><td>{{ session.deception|yesno:"ja,nee" }}</td>
