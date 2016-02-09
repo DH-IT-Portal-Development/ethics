@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from extra_views import UpdateWithInlinesView
 
 from .base_views import CreateView, UpdateView, success_url
-from ..mixins import LoginRequiredMixin, UserAllowedMixin
+from ..mixins import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin
 from ..forms import StudyForm, StudySurveyForm, SurveysInline
 from ..models import Proposal, Study, AgeGroup
 from ..utils import string_to_bool
@@ -30,23 +30,16 @@ class StudyMixin(object):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
 
 
-class StudyCreate(CreateView):
+class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):
     """Creates a Study from a StudyForm"""
 
-    def forms_valid(self, form, inlines):
+    def form_valid(self, form):
         """Sets the Proposal on the Study before starting validation."""
         form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
-        return super(StudyCreate, self).forms_valid(form, inlines)
-
-    def forms_invalid(self, form, inlines):
-        """On back button, allow form to have errors."""
-        if 'save_back' in self.request.POST:
-            return HttpResponseRedirect(self.get_back_url())
-        else:
-            return super(StudyCreate, self).forms_invalid(form, inlines)
+        return super(StudyCreate, self).form_valid(form)
 
 
-class StudyUpdate(StudyMixin, UpdateView):
+class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
     """Updates a Study from a StudyForm"""
 
 
