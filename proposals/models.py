@@ -448,7 +448,7 @@ d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of 
 Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
 het ten onrechte suggereren dat er met andere proefpersonen wordt samengewerkt; \
 het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
-        help_text=_('Misleiding volgens de definitie van... TODO'))
+        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'))
     deception_details = models.TextField(
         'Geef een toelichting en beschrijf hoe en wanneer de proefpersoon zal worden gedebrieft.',
         blank=True)
