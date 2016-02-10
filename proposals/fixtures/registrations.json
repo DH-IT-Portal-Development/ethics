@@ -37,7 +37,7 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 4,
-        "description": "RT-registratie via Zep, Presentation, E-prime, etc",
+        "description": "Registratie van reactietijd via Zep, Presentation, E-prime, etc",
         "requires_review": false
     },
     "model": "proposals.registration",
