@@ -71,6 +71,7 @@ def check_necessity_required(request):
     age_groups = map(int, request.POST.getlist('age_groups[]'))
     required_values = AgeGroup.objects.filter(needs_details=True).values_list('id', flat=True)
     result = bool(set(required_values).intersection(age_groups))
+    result |= string_to_bool(request.POST.get('legally_incapable'))
     result |= string_to_bool(request.POST.get('has_traits'))
 
     return JsonResponse({'result': result})

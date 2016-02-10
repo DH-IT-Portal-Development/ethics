@@ -147,6 +147,7 @@ class StudyForm(forms.ModelForm):
         Check for conditional requirements:
         - If an age group which needs details has been checked, make sure necessity/necessity_reason has been filled out
         - If has_traits is checked, make sure necessity/necessity_reason has been filled out
+        - If legally_incapable is checked, make sure necessity/necessity_reason has been filled out
         - If a setting which needs details has been checked, make sure the details are filled
         - If a compensation which needs details has been checked, make sure the details are filled
         - If a recruitment which needs details has been checked, make sure the details are filled
@@ -156,26 +157,35 @@ class StudyForm(forms.ModelForm):
         age_group_needs_details = check_dependency_multiple(self, cleaned_data, 'age_groups', 'needs_details', 'necessity')
         check_dependency_multiple(self, cleaned_data, 'age_groups', 'needs_details', 'necessity_reason')
         if not age_group_needs_details:
-            check_dependency(self, cleaned_data, 'has_traits', 'necessity')
+            has_traits = check_dependency(self, cleaned_data, 'has_traits', 'necessity')
             check_dependency(self, cleaned_data, 'has_traits', 'necessity_reason')
+            if not has_traits:
+                check_dependency(self, cleaned_data, 'legally_incapable', 'necessity')
+                check_dependency(self, cleaned_data, 'legally_incapable', 'necessity_reason')
         check_dependency_multiple(self, cleaned_data, 'setting', 'needs_details', 'setting_details')
         check_dependency_singular(self, cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         check_dependency_multiple(self, cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
 
 
 def check_dependency(form, cleaned_data, f1, f2, error_message=''):
+    is_required = False
     if not error_message:
         error_message = _('Dit veld is verplicht.')
     if cleaned_data.get(f1) and not cleaned_data.get(f2):
+        is_required = True
         form.add_error(f2, forms.ValidationError(error_message, code='required'))
+    return is_required
 
 
 def check_dependency_singular(form, cleaned_data, f1, f1_field, f2, error_message=''):
+    is_required = False
     if not error_message:
         error_message = _('Dit veld is verplicht.')
     if cleaned_data.get(f1):
         if getattr(cleaned_data.get(f1), f1_field) and not cleaned_data.get(f2):
+            is_required = True
             form.add_error(f2, forms.ValidationError(error_message, code='required'))
+    return is_required
 
 
 def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_message=''):
