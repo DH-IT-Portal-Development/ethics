@@ -371,8 +371,10 @@ er zijn meerdere antwoorden mogelijk'))
 Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
         default=False)
     necessity = models.NullBooleanField(
-        _('Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type deelnemers aan de studie te laten deelnemen?'),
-        help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers te testen?'))
+        _('Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het geselecteerde type \
+deelnemer aan de studie te laten meedoen?'),
+        help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen \
+beantwoorden door volwassen deelnemers te testen?'))
     necessity_reason = models.TextField(
         _('Leg uit waarom'),
         blank=True)
