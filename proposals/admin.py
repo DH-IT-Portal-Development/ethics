@@ -24,7 +24,7 @@ class RegistrationAdmin(admin.ModelAdmin):
 
 @admin.register(RegistrationKind)
 class RegistrationKindAdmin(admin.ModelAdmin):
-    list_display = ('registration', 'order', 'description', )
+    list_display = ('registration', 'order', 'description', 'needs_details', )
     ordering = ['registration', 'order']
 
 

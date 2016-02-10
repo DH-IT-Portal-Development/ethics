@@ -186,7 +186,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name task "registrations" %}</th><td>{{ task.registrations.all|unordered_list }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name task "registration_kind" %}</th><td>{{ task.registration_kind.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name task "registration_kinds" %}</th><td>{{ task.registration_kinds.all|unordered_list }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name task "registrations_details" %}</th><td>{{ task.registrations_details }}</td>

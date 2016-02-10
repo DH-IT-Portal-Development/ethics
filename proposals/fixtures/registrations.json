@@ -59,7 +59,7 @@
         "needs_details": false,
         "needs_kind": true,
         "order": 6,
-        "description": "psychofysiologische meting (bijvoorbeeld: EEG, ECG, fEMG, fMRI, BVP, EMA, ademhaling, vingertemperatuur)",
+        "description": "psychofysiologische meting (bijvoorbeeld: EEG, fMRI, EMA, NIRS)",
         "requires_review": true
     },
     "model": "proposals.registration",

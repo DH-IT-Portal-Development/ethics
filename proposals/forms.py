@@ -265,12 +265,12 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'description', 'duration',
-                  'registrations', 'registration_kind', 'registrations_details',
+                  'registrations', 'registration_kinds', 'registrations_details',
                   'feedback', 'feedback_details']
         widgets = {
             'procedure': forms.RadioSelect(choices=YES_NO_DOUBT),
             'registrations': forms.CheckboxSelectMultiple(),
-            'registration_kind': forms.SelectMultiple(attrs={'data-placeholder': _('Kies het soort meting')}),
+            'registration_kinds': forms.SelectMultiple(attrs={'data-placeholder': _('Kies het soort meting')}),
             'feedback': forms.RadioSelect(choices=YES_NO),
         }
 
@@ -287,7 +287,7 @@ class TaskForm(forms.ModelForm):
         """
         cleaned_data = super(TaskForm, self).clean()
 
-        check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_kind', 'registration_kind')
+        check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_kind', 'registration_kinds')
         check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_details', 'registrations_details')
         check_dependency(self, cleaned_data, 'feedback', 'feedback_details')
 

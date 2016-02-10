@@ -527,6 +527,7 @@ class Registration(models.Model):
 class RegistrationKind(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
     registration = models.ForeignKey(Registration)
 
     def __unicode__(self):
@@ -548,11 +549,15 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'))
-    registration_kind = models.ManyToManyField(
+    registration_kinds = models.ManyToManyField(
         RegistrationKind,
         verbose_name=_('Kies het soort meting:'),
         blank=True)
     registrations_details = models.CharField(
+        _('Namelijk'),
+        max_length=200,
+        blank=True)
+    registration_kinds_details = models.CharField(
         _('Namelijk'),
         max_length=200,
         blank=True)
