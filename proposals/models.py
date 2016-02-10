@@ -116,7 +116,10 @@ Wat is de totale duur van de studie? Dus hoeveel tijd zijn de deelnemers in tota
         validators=[validate_pdf])
     passive_consent = models.BooleanField(
         _('Maakt uw studie gebruik van passieve informed consent?'),
-        default=False
+        default=False,
+        help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
+ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
+U kunt de templates vinden op <link website?>')
     )
 
     # Status
