@@ -44,11 +44,11 @@ class Proposal(models.Model):
         (WMO_DECISION_BY_ETCL, _('WMO: geen beoordeling door METC noodzakelijk')),
         (WMO_DECISION_BY_METC, _('WMO: wordt beoordeeld door METC')),
         (STUDY_CREATED, _('Kenmerken studie toegevoegd')),
-        (SESSIONS_STARTED, _('Belasting proefpersoon: sessies toevoegen')),
-        (TASKS_STARTED, _('Belasting proefpersoon: taken toevoegen')),
-        (TASKS_ADDED, _('Belasting proefpersoon: alle taken toegevoegd')),
-        (TASKS_ENDED, _('Belasting proefpersoon: afgerond')),
-        (SESSIONS_ENDED, _('Belasting proefpersoon: afgerond')),
+        (SESSIONS_STARTED, _('Belasting deelnemer: sessies toevoegen')),
+        (TASKS_STARTED, _('Belasting deelnemer: taken toevoegen')),
+        (TASKS_ADDED, _('Belasting deelnemer: alle taken toegevoegd')),
+        (TASKS_ENDED, _('Belasting deelnemer: afgerond')),
+        (SESSIONS_ENDED, _('Belasting deelnemer: afgerond')),
         (INFORMED_CONSENT_UPLOADED, _(u'Informed consent geüpload')),
 
         (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
@@ -74,7 +74,7 @@ class Proposal(models.Model):
     tech_summary = models.TextField(
         _(u'Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een duidelijke, \
 bondige beschrijving van de onderzoeksvraag of -vragen, en (b) een korte beschrijving van de beoogde methode, \
-d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over proefpersonen, materiaal (taken, stimuli), \
+d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over deelnemers, materiaal (taken, stimuli), \
 design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen \
 en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingrediënten \
 van de methode meer gedetailleerde informatie worden gevraagd.'))
@@ -95,15 +95,15 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
         _('Hoeveel sessies telt deze studie?'),
         null=True,
         validators=[MinValueValidator(1), MaxValueValidator(5)],
-        help_text=_(u'Wanneer u bijvoorbeeld eerst de proefpersoon een taak/aantal taken laat doen tijdens \
-een eerste bezoek aan het lab en u laat de proefpersoon nog een keer terugkomen om dezelfde taak/taken \
+        help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens \
+een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
     sessions_duration = models.PositiveIntegerField(
         _('De totale geschatte nettoduur komt op basis van uw opgave per sessie uit op <strong>%d minuten</strong>. \
-Wat is de totale duur van de studie? Dus hoeveel tijd zijn de proefpersonen in totaal kwijt door mee te doen aan deze studie?'),
+Wat is de totale duur van de studie? Dus hoeveel tijd zijn de deelnemers in totaal kwijt door mee te doen aan deze studie?'),
         null=True,
-        help_text=_('Dit is de geschatte totale bruto tijd die de proefpersoon kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.'))
+        help_text=_('Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.'))
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
@@ -276,8 +276,8 @@ Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoor
 Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. \
 (CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)'))
     is_behavioristic = models.NullBooleanField(
-        _('Worden de proefpersonen aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
-        help_text=_('Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een proefpersoon tot de proefpersoon een knop/toets in laten drukken.'))
+        _('Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
+        help_text=_('Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken.'))
     metc_application = models.BooleanField(
         _('Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag ingediend?'),
         default=False)
@@ -361,24 +361,24 @@ class Recruitment(models.Model):
 class Study(models.Model):
     age_groups = models.ManyToManyField(
         AgeGroup,
-        verbose_name=_('Geef aan binnen welke leeftijdscategorie uw proefpersonen vallen, \
+        verbose_name=_('Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, \
 er zijn meerdere antwoorden mogelijk'))
     legally_incapable = models.BooleanField(
-        _(' Maakt uw studie gebruik van wilsonbekwame proefpersonen?'),
+        _(' Maakt uw studie gebruik van wilsonbekwame deelnemers?'),
         default=False)
     has_traits = models.BooleanField(
-        _(u'Proefpersonen kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
-Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
+        _(u'deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
+Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
         default=False)
     necessity = models.NullBooleanField(
-        _('Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type proefpersonen aan de studie te laten deelnemen?'),
-        help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen proefpersonen te testen?'))
+        _('Is het om de onderzoeksvraag beantwoord te krijgen noodzakelijk om het geselecteerde type deelnemers aan de studie te laten deelnemen?'),
+        help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers te testen?'))
     necessity_reason = models.TextField(
         _('Leg uit waarom'),
         blank=True)
     recruitment = models.ManyToManyField(
         Recruitment,
-        verbose_name=_('Hoe worden de proefpersonen geworven?'))
+        verbose_name=_('Hoe worden de deelnemers geworven?'))
     recruitment_details = models.CharField(
         _('Namelijk'),
         max_length=200,
@@ -392,7 +392,7 @@ Is dit in uw studie bij (een deel van) de proefpersonen het geval?'),
         blank=True)
     compensation = models.ForeignKey(
         Compensation,
-        verbose_name=_('Welke vergoeding krijgt de proefpersoon voor zijn/haar deelname aan deze studie?'),
+        verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname aan deze studie?'),
         help_text=_('tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld'))
     compensation_details = models.CharField(
         _('Namelijk'),
@@ -447,22 +447,22 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
 class Session(models.Model):
     order = models.PositiveIntegerField()
     deception = models.NullBooleanField(
-        _('Is er binnen deze sessie sprake van misleiding van de proefpersoon, \
+        _('Is er binnen deze sessie sprake van misleiding van de deelnemer, \
 d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie? \
 Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
-het ten onrechte suggereren dat er met andere proefpersonen wordt samengewerkt; \
+het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; \
 het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
         help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'))
     deception_details = models.TextField(
-        'Geef een toelichting en beschrijf hoe en wanneer de proefpersoon zal worden gedebrieft.',
+        'Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.',
         blank=True)
 
     # Fields with respect to Tasks
     tasks_number = models.PositiveIntegerField(
-        _('Hoeveel taken worden er binnen deze sessie bij de proefpersoon afgenomen?'),
+        _('Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?'),
         null=True,
         validators=[MinValueValidator(1), MaxValueValidator(5)],
-        help_text=_('Wanneer u bijvoorbeeld eerst de proefpersoon observeert en de proefpersoon vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
+        help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer observeert en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.'))
     tasks_duration = models.PositiveIntegerField(
         _('De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
@@ -536,12 +536,12 @@ class Task(models.Model):
         _('Wat is de beschrijving van de taak?'))
     duration = models.PositiveIntegerField(
         _('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
-Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.'),
+Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.'),
         default=0,
         validators=[MinValueValidator(1), MaxValueValidator(45)])
     registrations = models.ManyToManyField(
         Registration,
-        verbose_name=_('Hoe wordt het gedrag of de toestand van de proefpersoon bij deze taak vastgelegd?'))
+        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'))
     registration_kind = models.ManyToManyField(
         RegistrationKind,
         verbose_name=_('Kies het soort meting:'),
@@ -551,7 +551,7 @@ Indien de taakduur per proefpersoon varieert (self-paced taak of task-to-criteri
         max_length=200,
         blank=True)
     feedback = models.BooleanField(
-        _('Krijgt de proefpersoon tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'),
+        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'),
         default=False)
     feedback_details = models.CharField(
         _('Beschrijf hoe de feedback wordt gegeven.'),

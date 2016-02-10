@@ -90,7 +90,7 @@ def auto_review(proposal):
 
     if proposal.study.has_traits:
         go = False
-        reasons.append(_('De studie selecteert proefpersonen op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
+        reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
 
     for task in Task.objects.filter(session__proposal=proposal):
         for registration in task.registrations.all():
@@ -103,7 +103,7 @@ def auto_review(proposal):
     for recruitment in proposal.study.recruitment.all():
         if recruitment.requires_review:
             go = False
-            reasons.append(_('De proefpersonen worden op een niet-standaard manier geworven.'))
+            reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
 
     for session in proposal.session_set.all():
         if session.deception:
@@ -112,12 +112,12 @@ def auto_review(proposal):
 
     if proposal.session_set.count() > 1:
         go = False
-        reasons.append(_('De studie bevat meerdere sessies, d.w.z. de proefpersoon neemt op meerdere dagen deel.'))
+        reasons.append(_('De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel.'))
 
     # TODO: is this correct?
     if proposal.study.compensation.requires_review:
         go = False
-        reasons.append(_('De beloning van proefpersonen wijkt af van de UiL OTS standaardregeling.'))
+        reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
 
     if proposal.study.stressful:
         go = False

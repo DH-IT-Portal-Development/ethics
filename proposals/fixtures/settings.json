@@ -3,7 +3,7 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "thuis bij de proefpersoon",
+        "description": "thuis bij de deelnemer",
         "requires_review": false
     },
     "model": "proposals.setting",

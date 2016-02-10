@@ -17,7 +17,7 @@ Klik op de onderstaande onderdelen om wijzigingen aan te brengen.
 <h3><a href="{% url 'proposals:study_update' proposal.id %}">Algemene kenmerken van de studie</a></h3>
 {% endif %}
 {% if proposal.session_set.all %}
-<h3><a href="{% url 'proposals:session_end' proposal.id %}">Belasting voor de proefpersoon</a></h3>
+<h3><a href="{% url 'proposals:session_end' proposal.id %}">Belasting voor de deelnemer</a></h3>
 {% endif %}
 {% if proposal.informed_consent_pdf %}
 <h3><a href="{% url 'proposals:consent' proposal.id %}">Informed consent</a></h3>
