@@ -19,11 +19,13 @@ class ProposalForm(forms.ModelForm):
         fields = ['relation', 'supervisor',
                   'other_applicants', 'applicants',
                   'date_start', 'date_end',
-                  'title', 'tech_summary']
+                  'title', 'tech_summary',
+                  'allow_in_archive']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
-            'tech_summary': forms.Textarea(attrs={'rows': 30, 'cols': 80})
+            'tech_summary': forms.Textarea(attrs={'rows': 30, 'cols': 80}),
+            'allow_in_archive': forms.RadioSelect(choices=YES_NO)
         }
         error_messages = {
             'title': {
@@ -372,7 +374,4 @@ class UploadConsentForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['comments', 'allow_in_archive']
-        widgets = {
-            'allow_in_archive': forms.RadioSelect(choices=YES_NO)
-        }
+        fields = ['comments']
