@@ -540,7 +540,7 @@ class Task(models.Model):
         _('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? \
 Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op.'),
         default=0,
-        validators=[MinValueValidator(1), MaxValueValidator(45)])
+        validators=[MinValueValidator(1)])
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'))
