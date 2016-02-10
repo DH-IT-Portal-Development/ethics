@@ -44,7 +44,7 @@
         "needs_details": false,
         "registration": 6,
         "order": 5,
-        "description": "BVP (blood volume pressure)"
+        "description": "BVP (blood volume pulse)"
     },
     "model": "proposals.registrationkind",
     "pk": 5
