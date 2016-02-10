@@ -90,7 +90,7 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
         help_text=_('Dit archief is alleen toegankelijk voor mensen die aan het UiL OTS geaffilieerd zijn.')
     )
 
-    # Fields with respect to session
+    # Fields with respect to sessions
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies telt deze studie?'),
         null=True,
@@ -100,10 +100,11 @@ een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om 
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
     sessions_duration = models.PositiveIntegerField(
-        _('De totale geschatte nettoduur komt op basis van uw opgave per sessie uit op <strong>%d minuten</strong>. \
-Wat is de totale duur van de studie? Dus hoeveel tijd zijn de deelnemers in totaal kwijt door mee te doen aan deze studie?'),
+        _('De netto duur van uw studie komt op basis van uw opgegeven tijd, uit op <strong>%d minuten</strong>. \
+Wat is de totale duur van de gehele studie? Schat de totale tijd die de deelnemers kwijt zijn aan de studie.'),
         null=True,
-        help_text=_('Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd.'))
+        help_text=_('Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessies \
+bij elkaar opgeteld, exclusief reistijd.'))
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
