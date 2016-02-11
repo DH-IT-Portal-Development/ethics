@@ -519,6 +519,7 @@ class Registration(models.Model):
     needs_details = models.BooleanField(default=False)
     needs_kind = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
+    age_min = models.PositiveIntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return self.description

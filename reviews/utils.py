@@ -72,7 +72,7 @@ def start_assignment_phase(proposal):
 
     subject = 'ETCL: aanstellen commissieleden'
     message = 'Zie hier'
-    send_mail(subject, message, settings.EMAIL_FROM, [emails])
+    send_mail(subject, message, settings.EMAIL_FROM, emails)
 
     return review
 
@@ -95,10 +95,15 @@ def auto_review(proposal):
     for task in Task.objects.filter(session__proposal=proposal):
         for registration in task.registrations.all():
             if registration.requires_review:
-                for age_group in proposal.study.age_groups.all():
-                    if age_group.age_max < 18:
-                        go = False
-                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de 18 jaar.'))
+                if registration.age_min:
+                    for age_group in proposal.study.age_groups.all():
+                        if age_group.age_max < registration.age_min:
+                            go = False
+                            reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
+                            break
+                else:
+                    go = False
+                    reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
 
     for recruitment in proposal.study.recruitment.all():
         if recruitment.requires_review:

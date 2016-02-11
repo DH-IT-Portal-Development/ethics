@@ -2,10 +2,11 @@
 {
     "fields": {
         "needs_details": false,
-        "needs_kind": false,
-        "order": 1,
         "description": "audio-opname",
-        "requires_review": false
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
+        "order": 1
     },
     "model": "proposals.registration",
     "pk": 1
@@ -13,10 +14,11 @@
 {
     "fields": {
         "needs_details": false,
-        "needs_kind": false,
-        "order": 2,
         "description": "video-opname",
-        "requires_review": false
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
+        "order": 2
     },
     "model": "proposals.registration",
     "pk": 2
@@ -24,10 +26,11 @@
 {
     "fields": {
         "needs_details": false,
-        "needs_kind": false,
-        "order": 3,
         "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
-        "requires_review": false
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
+        "order": 3
     },
     "model": "proposals.registration",
     "pk": 3
@@ -35,10 +38,11 @@
 {
     "fields": {
         "needs_details": false,
-        "needs_kind": false,
-        "order": 4,
         "description": "registratie van reactietijd via Zep, Presentation, E-prime, etc",
-        "requires_review": false
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
+        "order": 4
     },
     "model": "proposals.registration",
     "pk": 4
@@ -46,10 +50,11 @@
 {
     "fields": {
         "needs_details": false,
-        "needs_kind": false,
-        "order": 5,
         "description": "oogbewegingsregistratie via een eye-tracker",
-        "requires_review": false
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
+        "order": 5
     },
     "model": "proposals.registration",
     "pk": 5
@@ -57,10 +62,11 @@
 {
     "fields": {
         "needs_details": false,
-        "needs_kind": true,
-        "order": 6,
         "description": "psychofysiologische meting (bijvoorbeeld: EEG, fMRI, EMA, NIRS)",
-        "requires_review": true
+        "needs_kind": true,
+        "age_min": 18,
+        "requires_review": true,
+        "order": 6
     },
     "model": "proposals.registration",
     "pk": 6
@@ -68,10 +74,11 @@
 {
     "fields": {
         "needs_details": false,
-        "needs_kind": false,
-        "order": 7,
         "description": "registratie gegevens d.m.v. een (online) vragenlijst",
-        "requires_review": false
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
+        "order": 7
     },
     "model": "proposals.registration",
     "pk": 7
@@ -79,10 +86,11 @@
 {
     "fields": {
         "needs_details": true,
-        "needs_kind": false,
-        "order": 8,
         "description": "anders, namelijk",
-        "requires_review": true
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": true,
+        "order": 8
     },
     "model": "proposals.registration",
     "pk": 8

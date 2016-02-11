@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 
 from .models import Review, Decision
 from .utils import start_review, auto_review
-from proposals.models import Proposal, Study, Relation, Compensation
+from proposals.models import Proposal, Study, Session, Task, Relation, Compensation, Registration, AgeGroup
 from proposals.utils import generate_ref_number
 
 
 class ReviewTestCase(TestCase):
-    fixtures = ['relations', 'compensations']
+    fixtures = ['relations', 'compensations', 'registrations', 'agegroups']
 
     def setUp(self):
         self.user = User.objects.create_superuser('test0101', 'test@test.com', 'secret')
@@ -68,15 +68,33 @@ class ReviewTestCase(TestCase):
         self.assertEqual(review.go, True)  # go
 
     def test_auto_review(self):
-        compensation = Compensation.objects.get(pk=1)
-        Study.objects.create(proposal=self.p2, compensation=compensation)
+        s = Study.objects.create(proposal=self.p2, compensation=Compensation.objects.get(pk=1))
+        s.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
+        s.save()
 
         go, reasons = auto_review(self.p2)
         self.assertTrue(go)
 
-        self.p2.study.risk = True
-        self.p2.study.save()
+        s1 = Session.objects.create(proposal=self.p2, order=1, tasks_number=1)
+
+        s1_t1 = Task.objects.create(session=s1, order=1)
+        s1_t1.registrations = Registration.objects.filter(pk=6)  # psychofysiological measurements
+        s1_t1.save()
 
         go, reasons = auto_review(self.p2)
         self.assertFalse(go)
         self.assertEqual(len(reasons), 1)
+
+        s1_t1.registrations = Registration.objects.filter(requires_review=True)  # psychofysiological measurements / other
+        s1_t1.save()
+
+        go, reasons = auto_review(self.p2)
+        self.assertFalse(go)
+        self.assertEqual(len(reasons), 2)
+
+        s.risk = True
+        s.save()
+
+        go, reasons = auto_review(self.p2)
+        self.assertFalse(go)
+        self.assertEqual(len(reasons), 3)

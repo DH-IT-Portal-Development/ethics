@@ -18,7 +18,7 @@ class AgeGroupAdmin(admin.ModelAdmin):
 
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
-    list_display = ('order', 'description', 'needs_details', 'needs_kind', )
+    list_display = ('order', 'description', 'needs_details', 'needs_kind', 'requires_review', 'age_min', )
     ordering = ['order']
 
 

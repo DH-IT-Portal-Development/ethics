@@ -70,7 +70,7 @@ class ReviewAssignView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView)
 
         subject = 'ETCL: aanstellen commissieleden'
         message = 'Zie hier'
-        send_mail(subject, message, settings.EMAIL_FROM, [emails])
+        send_mail(subject, message, settings.EMAIL_FROM, emails)
 
         return super(ReviewAssignView, self).form_valid(form)
 
