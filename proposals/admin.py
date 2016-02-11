@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Relation, AgeGroup, Registration, RegistrationKind, \
-    Setting, Compensation, Recruitment, Faq
+    Setting, Compensation, Recruitment
 
 
 @admin.register(Relation)
@@ -43,10 +43,4 @@ class CompensationAdmin(admin.ModelAdmin):
 @admin.register(Recruitment)
 class RecruitmentAdmin(admin.ModelAdmin):
     list_display = ('order', 'description', 'needs_details', )
-    ordering = ['order']
-
-
-@admin.register(Faq)
-class FaqAdmin(admin.ModelAdmin):
-    list_display = ('order', 'question', )
     ordering = ['order']

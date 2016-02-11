@@ -6,28 +6,28 @@
         <tr>
             <th>Aantal sessies</th>
             <td>
-                {{ proposal.sessions_number }} 
+                {{ proposal.study.sessions_number }} 
                 {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
                 <a href="{% url 'proposals:session_add' proposal.id %}"><img src="{% static 'proposals/images/add.png' %}"></a>
                 {% endif %}
             </td>
         </tr>
-        {% if proposal.sessions_duration %}
+        {% if proposal.study.sessions_duration %}
         <tr>
             <th>Netto duur</th>
-            <td>{{ proposal.net_duration }} minuten</td>
+            <td>{{ proposal.study.net_duration }} minuten</td>
         </tr>
         <tr>
             <th>Bruto duur</th>
             <td>
-                {{ proposal.sessions_duration }} minuten
+                {{ proposal.study.sessions_duration }} minuten
             </td>
         </tr>
         {% endif %}
     </table>
     <h3>Sessies</h3>
     <div id="accordion">
-        {% for session in proposal.session_set.all %}
+        {% for session in proposal.study.session_set.all %}
         <h3>
             Sessie {{ session.order }}
         </h3>

@@ -41,10 +41,9 @@ urlpatterns = [
     url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
 
     # Session(s)
-    url(r'^session_start/(?P<pk>\d+)/$', ProposalSessionStart.as_view(), name='session_start'),
-    url(r'^session_end/(?P<pk>\d+)/$', ProposalSessionEnd.as_view(), name='session_end'),
+    url(r'^session_start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),
+    url(r'^session_end/(?P<pk>\d+)/$', SessionEnd.as_view(), name='session_end'),
     url(r'^session_add/(?P<pk>\d+)/$', add_session, name='session_add'),
-
     url(r'^session/delete/(?P<pk>\d+)/$', SessionDelete.as_view(), name='session_delete'),
     url(r'^task_start/(?P<pk>\d+)/$', TaskStart.as_view(), name='task_start'),
     url(r'^task_end/(?P<pk>\d+)/$', TaskEnd.as_view(), name='task_end'),
@@ -53,8 +52,6 @@ urlpatterns = [
     # Task(s)
     url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
     url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view(), name='task_delete'),
-
-    url(r'^faq/$', FaqsView.as_view(), name='faq'),
 
     url(r'^check_requires/$', check_requires, name='check_requires'),
     url(r'^check_necessity_required/$', check_necessity_required, name='check_necessity_required'),

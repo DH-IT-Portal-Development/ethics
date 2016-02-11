@@ -75,7 +75,7 @@ class ReviewTestCase(TestCase):
         go, reasons = auto_review(self.p2)
         self.assertTrue(go)
 
-        s1 = Session.objects.create(proposal=self.p2, order=1, tasks_number=1)
+        s1 = Session.objects.create(study=s, order=1, tasks_number=1)
 
         s1_t1 = Task.objects.create(session=s1, order=1)
         s1_t1.registrations = Registration.objects.filter(pk=6)  # psychofysiological measurements

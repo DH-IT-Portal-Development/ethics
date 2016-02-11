@@ -224,7 +224,7 @@ class SurveysInline(InlineFormSet):
 
 class SessionStartForm(forms.ModelForm):
     class Meta:
-        model = Proposal
+        model = Study
         fields = ['sessions_number']
 
     def __init__(self, *args, **kwargs):
@@ -235,7 +235,7 @@ class SessionStartForm(forms.ModelForm):
 
 class TaskStartForm(forms.ModelForm):
     is_copy = forms.BooleanField(label=_('Is deze sessie een kopie van een voorgaande sessie?'),
-                                 help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar'),
+                                 help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar.'),
                                  widget=forms.RadioSelect(choices=YES_NO),
                                  initial=False,
                                  required=False)
@@ -255,7 +255,7 @@ class TaskStartForm(forms.ModelForm):
         """
         super(TaskStartForm, self).__init__(*args, **kwargs)
         self.fields['tasks_number'].required = False
-        self.fields['parent_session'].queryset = Session.objects.filter(proposal=self.instance.proposal.pk,
+        self.fields['parent_session'].queryset = Session.objects.filter(study=self.instance.study.pk,
                                                                         order__lt=self.instance.order)
 
         if self.instance.order == 1:
@@ -350,11 +350,20 @@ class TaskEndForm(forms.ModelForm):
 
 class SessionEndForm(forms.ModelForm):
     class Meta:
-        model = Proposal
-        fields = ['sessions_duration']
+        model = Study
+        fields = ['sessions_duration',
+                  'stressful', 'stressful_details',
+                  'risk', 'risk_details']
+        widgets = {
+            'stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'risk': forms.RadioSelect(choices=YES_NO_DOUBT),
+        }
 
     def __init__(self, *args, **kwargs):
-        """Set all fields as required, update the sessions_duration label"""
+        """
+        - Set sessions_duration as required, update the sessions_duration label
+        - Set stressful and risk as required
+        """
         super(SessionEndForm, self).__init__(*args, **kwargs)
 
         sessions_duration = self.fields['sessions_duration']
@@ -362,9 +371,15 @@ class SessionEndForm(forms.ModelForm):
         label = sessions_duration.label % self.instance.net_duration()
         sessions_duration.label = mark_safe(label)
 
+        self.fields['stressful'].required = True
+        self.fields['risk'].required = True
+
     def clean(self):
         """
-        Check that the net duration is at least equal to the gross duration
+        Check for conditional requirements:
+        - Check that the net duration is at least equal to the gross duration
+        - If stressful is set to yes, make sure stressful_details has been filled out
+        - If risk is set to yes, make sure risk_details has been filled out
         """
         cleaned_data = super(SessionEndForm, self).clean()
 
@@ -373,6 +388,9 @@ class SessionEndForm(forms.ModelForm):
         if sessions_duration < net_duration:
             error = forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
             self.add_error('sessions_duration', error)
+
+        check_dependency(self, cleaned_data, 'stressful', 'stressful_details')
+        check_dependency(self, cleaned_data, 'risk', 'risk_details')
 
 
 class UploadConsentForm(forms.ModelForm):

@@ -9,9 +9,15 @@ Aanvraag ter beoordeling en registratie
 
 {% block content %}
 <h3>Belasting voor de deelnemer</h3>
+<script>
+$(function() {
+    depends_on_value('stressful', 'True', 'stressful_details');
+    depends_on_value('risk', 'True', 'risk_details');
+});
+</script>
 <p>
 <i>Deze aanvraag bestaat uit de volgende sessies:</i>
-{% for session in proposal.session_set.all %}
+{% for session in study.session_set.all %}
 <h4>
 	Sessie {{ session.order }} (totale duur: {{ session.tasks_duration }} minuten)
 </h4>
@@ -24,8 +30,6 @@ Aanvraag ter beoordeling en registratie
 <p>Beantwoord op basis van dit overzicht de volgende vragen:</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-        {% include "proposals/form_buttons.html" %}
-    {% endif %}
+    {% include "proposals/form_buttons.html" %}
 </form>
 {% endblock %}

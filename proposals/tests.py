@@ -52,13 +52,14 @@ class ProposalTestCase(TestCase):
         self.assertEqual(proposal.continue_url(), '/study/create/1/')
 
         compensation = Compensation.objects.get(pk=1)
-        Study.objects.create(proposal=proposal, compensation=compensation)
+        s = Study.objects.create(proposal=proposal, compensation=compensation)
         self.assertEqual(proposal.status, Proposal.STUDY_CREATED)
         self.assertEqual(proposal.continue_url(), '/session_start/1/')
 
-        proposal.sessions_number = 2
-        s1 = Session.objects.create(proposal=proposal, order=1)
-        s2 = Session.objects.create(proposal=proposal, order=2)
+        s.sessions_number = 2
+        s.save()
+        s1 = Session.objects.create(study=s, order=1)
+        s2 = Session.objects.create(study=s, order=2)
         self.assertEqual(proposal.status, Proposal.SESSIONS_STARTED)
 
         s1.tasks_number = 2

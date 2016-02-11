@@ -9,7 +9,6 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
 from ..mixins import LoginRequiredMixin, UserAllowedMixin
-from ..models import Faq
 
 SESSION_PROGRESS_START = 20
 SESSION_PROGRESS_TOTAL = 60
@@ -46,12 +45,6 @@ class HomeView(generic.TemplateView):
         return context
 
 
-# TODO: move to feedback app
-class FaqsView(generic.ListView):
-    context_object_name = 'faqs'
-    model = Faq
-
-
 ################
 # AJAX callbacks
 ################
@@ -81,7 +74,7 @@ def success_url(self):
 
 
 def get_session_progress(session, is_end=False):
-    progress = SESSION_PROGRESS_TOTAL / session.proposal.sessions_number
+    progress = SESSION_PROGRESS_TOTAL / session.study.sessions_number
     if not is_end:
         progress *= (session.order - 1)
     else:
@@ -93,4 +86,4 @@ def get_task_progress(task):
     session = task.session
     session_progress = get_session_progress(session)
     task_progress = task.order / float(session.tasks_number)
-    return int(session_progress + (SESSION_PROGRESS_TOTAL / session.proposal.sessions_number) * task_progress - SESSION_PROGRESS_EPSILON)
+    return int(session_progress + (SESSION_PROGRESS_TOTAL / session.study.sessions_number) * task_progress - SESSION_PROGRESS_EPSILON)

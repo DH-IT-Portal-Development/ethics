@@ -22,8 +22,7 @@ def copy_proposal(self, form):
         copy_compensation = parent.study.compensation
         copy_recruitment = parent.study.recruitment.all()
         copy_surveys = parent.study.survey_set.all()
-
-    copy_sessions = parent.session_set.all()
+        copy_sessions = parent.study.session_set.all()
 
     # Create copy and save the this new model, set it to not-submitted
     copy_proposal = parent
@@ -65,9 +64,9 @@ def copy_proposal(self, form):
     for session in copy_sessions:
         copy_session = session
         copy_session.pk = None
-        copy_session.proposal = copy_proposal
+        copy_session.study = copy_study
         copy_session.save()
-        for task in Task.objects.filter(session__proposal=parent).prefetch_related('registrations'):  # TODO: this does not seem to work.
+        for task in Task.objects.filter(session__study__proposal=parent).prefetch_related('registrations'):  # TODO: this does not seem to work.
             copy_registrations = task.registrations.all()
             copy_task = task
             copy_task.pk = None

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.core.urlresolvers import reverse
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
@@ -59,6 +59,7 @@ class StudySurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
 
     def get_back_url(self):
         return reverse('proposals:session_end', args=(self.object.proposal.id,))
+
 
 ################
 # AJAX callbacks

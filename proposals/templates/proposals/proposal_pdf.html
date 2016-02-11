@@ -140,19 +140,18 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name study "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
             </tr>
         </table>
-        {% endwith %}
 
         <h2>Vragen per sessie</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name proposal "sessions_number" %}</th><td>{{ proposal.sessions_number }}</td>
+                <th>{% get_verbose_field_name study "sessions_number" %}</th><td>{{ study.sessions_number }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name proposal "sessions_duration" %}</th><td>{{ proposal.sessions_duration }}</td>
+                <th>{% get_verbose_field_name study "sessions_duration" %}</th><td>{{ study.sessions_duration }}</td>
             </tr>
         </table>
 
-        {% for session in proposal.session_set.all %}
+        {% for session in study.session_set.all %}
         <h2>Sessie {{ session.order }}</h2>
         <table>
             <tr>
@@ -202,6 +201,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
         </table>
         {% endfor %}
         {% endfor %}
+        {% endwith %}
     </div>
 </div>
 {% endblock %}

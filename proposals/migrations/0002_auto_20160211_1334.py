@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('proposals', '0009_auto_20160112_1115'),
+        ('proposals', '0001_initial'),
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='recruitment',
-            name='requires_review',
-            field=models.BooleanField(default=False),
+        migrations.AlterField(
+            model_name='study',
+            name='risk_details',
+            field=models.TextField(verbose_name='Licht toe', blank=True),
         ),
     ]

@@ -8,15 +8,15 @@ from django.utils.translation import ugettext as _
 from .base_views import UpdateView, DeleteView, get_session_progress
 from ..forms import SessionStartForm, TaskStartForm, TaskEndForm, SessionEndForm
 from ..mixins import AllowErrorsMixin
-from ..models import Proposal, Session, Task
+from ..models import Study, Session, Task
 
 
 ######################
 # Actions on a Session
 ######################
-class ProposalSessionStart(AllowErrorsMixin, UpdateView):
+class SessionStart(AllowErrorsMixin, UpdateView):
     """Initial creation of Sessions"""
-    model = Proposal
+    model = Study
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
     success_message = _('%(sessions_number)s sessie(s) voor aanvraag %(title)s aangemaakt')
@@ -24,66 +24,66 @@ class ProposalSessionStart(AllowErrorsMixin, UpdateView):
     def form_valid(self, form):
         """Creates or deletes Sessions on save"""
         nr_sessions = form.cleaned_data['sessions_number']
-        proposal = form.instance
-        current = proposal.session_set.count() or 0
+        study = form.instance
+        current = study.session_set.count() or 0
 
         # Create sessions
         for n in xrange(current, nr_sessions):
             order = n + 1
-            session = Session(proposal=proposal, order=order)
+            session = Session(study=study, order=order)
             session.save()
 
         # Delete sessions
         for n in xrange(nr_sessions, current):
             order = n + 1
-            session = Session.objects.get(proposal=proposal, order=order)
+            session = Session.objects.get(study=study, order=order)
             session.delete()
 
-        # If the number of Sessions has changed, invalidate the Proposal fields
+        # If the number of Sessions has changed, invalidate the Study fields
         if current != nr_sessions:
-            proposal.sessions_duration = None
-            proposal.save()
+            study.sessions_duration = None
+            study.save()
 
-        return super(ProposalSessionStart, self).form_valid(form)
+        return super(SessionStart, self).form_valid(form)
 
     def get_next_url(self):
-        return reverse('proposals:task_start', args=(self.object.first_session().id,))
+        return reverse('proposals:task_start', args=(self.object.first_session().pk,))
 
     def get_back_url(self):
-        return reverse('proposals:study_update', args=(self.object.id,))
+        return reverse('proposals:study_update', args=(self.object.pk,))
 
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(cleaned_data, title=self.object.title)
+        return self.success_message % dict(cleaned_data, title=self.object.proposal.title)
 
 
 def add_session(request, pk):
     """Adds a Session to the given Proposal"""
-    proposal = get_object_or_404(Proposal, pk=pk)
-    new_session_number = proposal.sessions_number + 1
+    study = get_object_or_404(Study, pk=pk)
+    new_session_number = study.sessions_number + 1
 
-    proposal.sessions_number = new_session_number
-    proposal.save()
+    study.sessions_number = new_session_number
+    study.save()
 
-    session = Session(proposal=proposal, order=new_session_number)
+    session = Session(study=study, order=new_session_number)
     session.save()
 
-    return HttpResponseRedirect(reverse('proposals:task_start', args=(session.id,)))
+    return HttpResponseRedirect(reverse('proposals:task_start', args=(session.pk,)))
 
 
-class ProposalSessionEnd(AllowErrorsMixin, UpdateView):
+class SessionEnd(AllowErrorsMixin, UpdateView):
     """
     Completes the creation of Sessions
     """
-    model = Proposal
+    model = Study
     form_class = SessionEndForm
     template_name = 'proposals/session_end.html'
     success_message = _(u'Sessies toevoegen beëindigd')
 
     def get_next_url(self):
-        return reverse('proposals:study_survey', args=(self.object.id,))
+        return reverse('proposals:study_survey', args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:task_end', args=(self.object.last_session().id,))
+        return reverse('proposals:task_end', args=(self.object.last_session().pk,))
 
 
 class SessionDelete(DeleteView):
@@ -91,7 +91,7 @@ class SessionDelete(DeleteView):
     success_message = _('Sessie verwijderd')
 
     def get_success_url(self):
-        return reverse('proposals:detail', args=(self.object.proposal.id,))
+        return reverse('proposals:detail', args=(self.object.study.proposal.pk,))
 
     def delete(self, request, *args, **kwargs):
         """
@@ -101,19 +101,19 @@ class SessionDelete(DeleteView):
         """
         self.object = self.get_object()
         order = self.object.order
-        proposal = self.object.proposal
+        study = self.object.study
         success_url = self.get_success_url()
         self.object.delete()
 
         # If the session number is lower than the total number of sessions (e.g. 3 of 4),
         # set the other session numbers one lower
-        for s in Session.objects.filter(proposal=proposal, order__gt=order):
+        for s in Session.objects.filter(study=study, order__gt=order):
             s.order -= 1
             s.save()
 
-        # Set the number of sessions on Proposal
-        proposal.sessions_number -= 1
-        proposal.save()
+        # Set the number of sessions on Study
+        study.sessions_number -= 1
+        study.save()
 
         return HttpResponseRedirect(success_url)
 
@@ -148,28 +148,28 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             task = Task.objects.get(session=session, order=order)
             task.delete()
 
-        # If the number of Tasks has changed, invalidate the Session and Proposal duration
+        # If the number of Tasks has changed, invalidate the Session and Study duration
         if current != nr_tasks:
             session.tasks_duration = None
             session.save()
 
-            proposal = session.proposal
-            proposal.sessions_duration = None
-            proposal.save()
+            study = session.study
+            study.sessions_duration = None
+            study.save()
 
         return super(TaskStart, self).form_valid(form)
 
     def get_next_url(self):
-        return reverse('proposals:task_update', args=(self.object.first_task().id,))
+        return reverse('proposals:task_update', args=(self.object.first_task().pk,))
 
     def get_back_url(self):
         try:
             # Try to return to task_end of the previous Session
-            prev_session = Session.objects.get(proposal=self.object.proposal, order=self.object.order - 1)
-            return reverse('proposals:task_end', args=(prev_session.id,))
+            prev_session = Session.objects.get(study=self.object.study, order=self.object.order - 1)
+            return reverse('proposals:task_end', args=(prev_session.pk,))
         except Session.DoesNotExist:
             # If this is the first Session, return to session_start
-            return reverse('proposals:session_start', args=(self.object.proposal.id,))
+            return reverse('proposals:session_start', args=(self.object.study.pk,))
 
 
 def add_task(request, pk):
@@ -179,7 +179,7 @@ def add_task(request, pk):
     session.tasks_number += 1
     session.save()
 
-    return HttpResponseRedirect(reverse('proposals:task_create', args=(session.id,)))
+    return HttpResponseRedirect(reverse('proposals:task_create', args=(session.pk,)))
 
 
 class TaskEnd(AllowErrorsMixin, UpdateView):
@@ -197,11 +197,11 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
     def get_next_url(self):
         try:
             # Try to continue to next Session
-            next_session = Session.objects.get(proposal=self.object.proposal, order=self.object.order + 1)
-            return reverse('proposals:task_start', args=(next_session.id,))
+            next_session = Session.objects.get(study=self.object.study, order=self.object.order + 1)
+            return reverse('proposals:task_start', args=(next_session.pk,))
         except Session.DoesNotExist:
             # If this is the last Session, continue to session_end
-            return reverse('proposals:session_end', args=(self.object.proposal.id,))
+            return reverse('proposals:session_end', args=(self.object.study.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:task_update', args=(self.object.last_task().id,))
+        return reverse('proposals:task_update', args=(self.object.last_task().pk,))

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .models import Feedback
+from .models import Feedback, Faq
 
 
 class LoginRequiredMixin(object):
@@ -30,3 +30,8 @@ class FeedbackCreate(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView
 
 class FeedbackListing(LoginRequiredMixin, generic.ListView):
     model = Feedback
+
+
+class FaqsView(generic.ListView):
+    context_object_name = 'faqs'
+    model = Faq

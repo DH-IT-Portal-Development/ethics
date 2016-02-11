@@ -90,22 +90,6 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
         help_text=_('Dit archief is alleen toegankelijk voor mensen die aan het UiL OTS geaffilieerd zijn.')
     )
 
-    # Fields with respect to sessions
-    sessions_number = models.PositiveIntegerField(
-        _('Hoeveel sessies telt deze studie?'),
-        null=True,
-        validators=[MinValueValidator(1), MaxValueValidator(5)],
-        help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens \
-een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
-of andere taak/taken te doen, dan spreken we van twee sessies. \
-Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
-    sessions_duration = models.PositiveIntegerField(
-        _('De netto duur van uw studie komt op basis van uw opgegeven tijd, uit op <strong>%d minuten</strong>. \
-Wat is de totale duur van de gehele studie? Schat de totale tijd die de deelnemers kwijt zijn aan de studie.'),
-        null=True,
-        help_text=_('Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessies \
-bij elkaar opgeteld, exclusief reistijd.'))
-
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
         _('Upload hier de toestemmingsverklaring (in PDF-formaat)'),
@@ -158,10 +142,6 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         verbose_name=_(u'Te kopiëren aanvraag'),
         help_text=_('Dit veld toont enkel aanvragen waar u zelf een medeaanvrager bent.'))
 
-    def net_duration(self):
-        """Returns the duration of all Tasks in this Proposal"""
-        return self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
-
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
         self.status = self.get_status()
@@ -180,8 +160,8 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
                 status = self.WMO_DECISION_BY_ETCL
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
-        if self.sessions_number:
-            status = self.SESSIONS_STARTED
+            if self.study.sessions_number:
+                status = self.SESSIONS_STARTED
 
         session = self.current_session()
         if session:
@@ -193,7 +173,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
             if session.tasks_duration:
                 status = self.TASKS_ENDED
         if session and session.tasks_duration:
-            if self.sessions_duration:
+            if self.study.sessions_duration:
                 status = self.SESSIONS_ENDED
 
         if self.informed_consent_pdf:
@@ -236,21 +216,16 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
     def current_session(self):
         """
         Returns the current (imcomplete) session.
-        If all sessions are completed, the last session is returned.
-        If no sessions have yet been created, None is returned.
+        - If all sessions are completed, the last session is returned.
+        - If no sessions have yet been created, None is returned.
         """
         current_session = None
-        for session in self.session_set.all():
-            current_session = session
-            if not session.tasks_duration:
-                break
+        if hasattr(self, 'study'):
+            for session in self.study.session_set.all():
+                current_session = session
+                if not session.tasks_duration:
+                    break
         return current_session
-
-    def first_session(self):
-        return self.session_set.order_by('order')[0]
-
-    def last_session(self):
-        return self.session_set.order_by('-order')[0]
 
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)
@@ -404,6 +379,22 @@ beantwoorden door volwassen deelnemers te testen?'))
         _('Namelijk'),
         max_length=200,
         blank=True)
+
+    # Fields with respect to Sessions
+    sessions_number = models.PositiveIntegerField(
+        _('Hoeveel sessies telt deze studie?'),
+        null=True,
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens \
+een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
+of andere taak/taken te doen, dan spreken we van twee sessies. \
+Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
+    sessions_duration = models.PositiveIntegerField(
+        _('De netto duur van uw studie komt op basis van uw opgegeven tijd, uit op <strong>%d minuten</strong>. \
+Wat is de totale duur van de gehele studie? Schat de totale tijd die de deelnemers kwijt zijn aan de studie.'),
+        null=True,
+        help_text=_('Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessies \
+bij elkaar opgeteld, exclusief reistijd.'))
     stressful = models.NullBooleanField(
         _('Is de studie op onderdelen of als geheel zodanig belastend dat deze ondanks de verkregen informed consent \
 vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
@@ -429,10 +420,11 @@ didactische, psychologische of medische contexten plaatsvinden (zoals een eindex
 stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na \
 fysieke inspanning; dit alles waar relevant onder begeleiding van adequaat geschoolde specialisten).',
         default=False)
-    risk_details = models.CharField(
+    risk_details = models.TextField(
         _('Licht toe'),
-        max_length=200,
         blank=True)
+
+    # Fields with respect to Surveys
     surveys_stressful = models.NullBooleanField(
         _('Is het invullen van deze vragenlijsten belastend? \
 Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
@@ -442,9 +434,21 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
     proposal = models.OneToOneField(Proposal, primary_key=True)
 
     def save(self, *args, **kwargs):
-        """Sets the correct status on save of a Proposal"""
+        """Sets the correct status on Proposal on save of a Study"""
         super(Study, self).save(*args, **kwargs)
         self.proposal.save()
+
+    def net_duration(self):
+        """Returns the duration of all Tasks in this Study"""
+        return self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
+
+    def first_session(self):
+        """Returns the first Session in this Study"""
+        return self.session_set.order_by('order')[0]
+
+    def last_session(self):
+        """Returns the last Session in this Study"""
+        return self.session_set.order_by('-order')[0]
 
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title
@@ -476,16 +480,16 @@ Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per t
         null=True)
 
     # References
-    proposal = models.ForeignKey(Proposal)
+    study = models.ForeignKey(Study)
 
     class Meta:
         ordering = ['order']
-        unique_together = ('proposal', 'order')
+        unique_together = ('study', 'order')
 
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Session"""
         super(Session, self).save(*args, **kwargs)
-        self.proposal.save()
+        self.study.proposal.save()
 
     def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
@@ -576,7 +580,7 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Task"""
         super(Task, self).save(*args, **kwargs)
-        self.session.proposal.save()
+        self.session.study.proposal.save()
 
     def delete(self, *args, **kwargs):
         """
@@ -590,15 +594,3 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
 
     def __unicode__(self):
         return 'Task at {}'.format(self.session)
-
-
-class Faq(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    question = models.TextField()
-    answer = models.TextField()
-
-    class Meta:
-        verbose_name = _('FAQ')
-
-    def __unicode__(self):
-        return self.question

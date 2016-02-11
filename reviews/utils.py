@@ -81,22 +81,24 @@ def auto_review(proposal):
     """
     Reviews a Proposal machine-wise. Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
     """
+    study = proposal.study
+
     go = True
     reasons = []
 
-    if proposal.study.legally_incapable:
+    if study.legally_incapable:
         go = False
         reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
 
-    if proposal.study.has_traits:
+    if study.has_traits:
         go = False
         reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
 
-    for task in Task.objects.filter(session__proposal=proposal):
+    for task in Task.objects.filter(session__study=study):
         for registration in task.registrations.all():
             if registration.requires_review:
                 if registration.age_min:
-                    for age_group in proposal.study.age_groups.all():
+                    for age_group in study.age_groups.all():
                         if age_group.age_max < registration.age_min:
                             go = False
                             reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
@@ -105,36 +107,36 @@ def auto_review(proposal):
                     go = False
                     reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
 
-    for recruitment in proposal.study.recruitment.all():
+    for recruitment in study.recruitment.all():
         if recruitment.requires_review:
             go = False
             reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
 
-    for session in proposal.session_set.all():
+    for session in study.session_set.all():
         if session.deception:
             go = False
             reasons.append(_('De studie maakt gebruik van misleiding.'))
 
-    if proposal.session_set.count() > 1:
+    if study.session_set.count() > 1:
         go = False
         reasons.append(_('De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel.'))
 
     # TODO: is this correct?
-    if proposal.study.compensation.requires_review:
+    if study.compensation.requires_review:
         go = False
         reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
 
-    if proposal.study.stressful:
+    if study.stressful:
         go = False
         reasons.append(_('Een onderdeel van de procedure kan belastend worden ervaren.'))
 
-    if proposal.study.risk:
+    if study.risk:
         go = False
         reasons.append(_('Er is een verhoogd risico op fysieke of psychische schade.'))
 
-    for age_group in proposal.study.age_groups.all():
-        if proposal.net_duration() > age_group.max_net_duration:
+    for age_group in study.age_groups.all():
+        if study.net_duration() > age_group.max_net_duration:
             go = False
-            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten, streefmaximum voor deze leeftijdsgroep is {} minuten.'.format(age_group, proposal.net_duration(), age_group.max_net_duration)))
+            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten, streefmaximum voor deze leeftijdsgroep is {} minuten.'.format(age_group, study.net_duration(), age_group.max_net_duration)))
 
     return go, reasons
