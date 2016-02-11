@@ -14,10 +14,14 @@ $(function() {
 });
 </script>
 <h3>Belasting voor de deelnemer, sessie {{ session.order }}</h3>
-<p>
-<i>Deze sessie bestaat uit de volgende taken:</i>
-{% include "proposals/task_list.html" %}
-</p>
+
+<div class="task_list">
+	<p>
+		<em>Deze sessie bestaat uit de volgende taken:</em>
+	</p>
+	{% include "proposals/task_list.html" %}
+</div>
+
 <p>Beantwoord op basis van dit overzicht de volgende vragen:</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>

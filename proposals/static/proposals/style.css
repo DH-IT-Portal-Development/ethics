@@ -24,6 +24,15 @@ body {
     color: gray;
 }
 
+.session_list, .task_list {
+    border: 1px solid #eee;
+    padding: 0em 1em 1em 1em;
+}
+
+.task_list {
+    background: rgb(250, 250, 250);
+}
+
 /* Form specifics */
 input[name=title] {
     width: 20em;
