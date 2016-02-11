@@ -37,7 +37,7 @@
         "needs_details": false,
         "needs_kind": false,
         "order": 4,
-        "description": "Registratie van reactietijd via Zep, Presentation, E-prime, etc",
+        "description": "registratie van reactietijd via Zep, Presentation, E-prime, etc",
         "requires_review": false
     },
     "model": "proposals.registration",
@@ -82,7 +82,7 @@
         "needs_kind": false,
         "order": 8,
         "description": "anders, namelijk",
-        "requires_review": false
+        "requires_review": true
     },
     "model": "proposals.registration",
     "pk": 8
