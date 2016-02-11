@@ -1,36 +1,19 @@
 TODO:
+- Kopiëren complete aanvraag
+- WMO (alles correct?)
+- Taken herordenen
+
 - informed consent+toestemmingsverklaring, link terug naar website
 - Uitvoer naar PDF, paginanummers
 - AUTH: Solis-login
 - e-mails
 - korte en verlengde procedure, secretaris beslist
-v percentage
 - tabben door velden
-- alle sessies identiek aan elkaar?
-
-v check netto duur vs bruto duur
-v kopieren bestaande aanvraag
-v testcases
-v AUTH: niet meer bewerken als verzonden
-v AUTH: alleen eigen proposals aanpassen
-v STUDY: surveys-vraag toevoegen
-- Uitlijnen lange teksten 
-v Uitlijnen checkboxes (gebeurt vrijwel nooit...)
-v Annuleren-knop: "later verder" 
-v Referentienummer aanmaken (USERID-nr-jaar, direct bij aanmaken)
-- Status laten zien
-v TASKS: Aan Sessie hangen
-v TASKS: Sessie-gedeelte inbouwen
-v Terug-knop in forms verhinderen of juist inbouwen
-
-v belasting op sessieniveau
-v dimensies, machine geeft oordeel (maar is niet bindend)
+- Uitlijnen lange teksten
 - e-mail naar aanvragers/eindverantwoordelijke (geen problemen (binnen twee weken bericht)/besproken bij eerstkomende vergadering)
-v commissielid review wordt door Maartje gekozen
-v zien wie de reviewers waren van een decision (evt. statistiekje)
+- Inregelen e-mails eindverantwoordelijke
 
 Input commissie nodig:
-- Woordenboek van definities? 
-- Inregelen e-mails eindverantwoordelijke
+- Woordenboek van definities?
 - WMO: success messages
 v WMO: afhandeling regelen (aparte flow, niet langs commissie voor go/no-go)

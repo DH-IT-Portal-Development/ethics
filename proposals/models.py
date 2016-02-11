@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import UploadedFile
 from django.core.urlresolvers import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -396,29 +397,34 @@ Wat is de totale duur van de gehele studie? Schat de totale tijd die de deelneme
         help_text=_('Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessies \
 bij elkaar opgeteld, exclusief reistijd.'))
     stressful = models.NullBooleanField(
-        _('Is de studie op onderdelen of als geheel zodanig belastend dat deze ondanks de verkregen informed consent \
-vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
-zelf, of bij ouders of andere vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit van de volgens u \
-meest kwetsbare c.q. minst belastbare deelnemersgroep.'),
-        help_text=_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
+        _('Is de studie op onderdelen of als geheel zodanig belastend dat deze <em>ondanks de verkregen informed \
+consent </em> vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, \
+bij de deelnemers zelf, of bij ouders of andere vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit \
+van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep, en neem ook de leeftijd van de deelnemers \
+in deze inschatting mee.'),
+        help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
 een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de \
- privacy, of een ander ervaren gebrek aan respect.'),
+privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren \
+belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.')),
         default=False)
     stressful_details = models.TextField(
-        _('Licht toe'),
+        _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante aspecten van uw studie \
+(bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, \
+of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.'),
         blank=True)
     risk = models.NullBooleanField(
-        _('Zijn de risico\'s van deelname aan de studie meer dan minimaal? \
+        _('Zijn de risico\'s op psychische of fysieke schade bij deelname aan de studie <em>meer dan</em> minimaal? \
 D.w.z. ligt de kans op en/of omvang van mogelijke fysieke of psychische schade bij de deelnemers duidelijk \
-boven het "achtergrondrisico", datgene dat gezonde burgers in de relevante leeftijdscategorie normaalgesproken \
-in het dagelijks leven ten deel valt? Ga bij het beantwoorden van deze vraag uit van de volgens u meest kwetsbare c.q. \
-minst belastbare deelnemersgroep in uw studie, maar bepaal het achtergrondrisico op basis van de gemiddelde bevolking.'),
-        help_text='Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van \
-bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, et cetera. \
-Het achtergrondrisico omvat ook de risico\'s van \'routine\'-tests, -onderzoeken of -procedures die in alledaagse \
-didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een \
-stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na \
-fysieke inspanning; dit alles waar relevant onder begeleiding van adequaat geschoolde specialisten).',
+<em>boven</em> het "achtergrondrisico"? Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante \
+leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Ga bij het beantwoorden van deze \
+vraag uit van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep in uw studie.'),
+        help_text=mark_safe(_('Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen \
+van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, et cetera. \
+Het achtergrondrisico omvat bijvoorbeeld ook de risico\'s van \"routine\"-tests, -onderzoeken of -procedures \
+die in alledaagse didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een \
+rijexamen, een stressbestendigheids-<em>assessment</em>, een intelligentie- of persoonlijkheidstest, of een \
+hartslagmeting na fysieke inspanning; dit alles, waar relevant, onder begeleiding van adequaat geschoolde \
+specialisten).')),
         default=False)
     risk_details = models.TextField(
         _('Licht toe'),
