@@ -140,30 +140,62 @@ class TaskStart(AllowErrorsMixin, UpdateView):
 
     def form_valid(self, form):
         """Creates or deletes Tasks on save"""
-        nr_tasks = form.cleaned_data['tasks_number']
-        session = form.instance
-        current = session.task_set.count() or 0
+        if 'is_copy' in form.cleaned_data and form.cleaned_data['is_copy']:
+            session = form.instance
 
-        # Create Tasks
-        for n in xrange(current, nr_tasks):
-            order = n + 1
-            task = Task(session=session, order=order)
-            task.save()
+            # Delete all existing Tasks
+            for task in session.task_set.all():
+                task.delete()
 
-        # Delete Tasks
-        for n in xrange(nr_tasks, current):
-            order = n + 1
-            task = Task.objects.get(session=session, order=order)
-            task.delete()
-
-        # If the number of Tasks has changed, invalidate the Session and Study duration
-        if current != nr_tasks:
-            session.tasks_duration = None
+            # Copy fields from the parent Session
+            s = form.cleaned_data['parent_session']
+            session.deception = s.deception
+            session.deception_details = s.deception_details
+            session.tasks_number = s.tasks_number
+            session.tasks_duration = s.tasks_duration
             session.save()
 
-            study = session.study
-            study.sessions_duration = None
-            study.save()
+            # Update cleaned_data as well, to make sure this isn't overridden on the super call below
+            form.cleaned_data['tasks_number'] = s.tasks_number
+
+            # Copy Tasks from the parent Session
+            for t in s.task_set.all():
+                r = t.registrations.all()
+                rk = t.registration_kinds.all()
+
+                task = t
+                task.pk = None
+                task.session = session
+                task.save()
+
+                task.registrations = r
+                task.registration_kinds = rk
+                task.save()
+        else:
+            nr_tasks = form.cleaned_data['tasks_number']
+            session = form.instance
+            current = session.task_set.count() or 0
+
+            # Create Tasks
+            for n in xrange(current, nr_tasks):
+                order = n + 1
+                task = Task(session=session, order=order)
+                task.save()
+
+            # Delete Tasks
+            for n in xrange(nr_tasks, current):
+                order = n + 1
+                task = Task.objects.get(session=session, order=order)
+                task.delete()
+
+            # If the number of Tasks has changed, invalidate the Session and Study duration
+            if current != nr_tasks:
+                session.tasks_duration = None
+                session.save()
+
+                study = session.study
+                study.sessions_duration = None
+                study.save()
 
         return super(TaskStart, self).form_valid(form)
 
