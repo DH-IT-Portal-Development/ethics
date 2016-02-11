@@ -112,6 +112,11 @@ def auto_review(proposal):
             go = False
             reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
 
+    for setting in study.setting.all():
+        if setting.requires_review:
+            go = False
+            reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
+
     for session in study.session_set.all():
         if session.deception:
             go = False
