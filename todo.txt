@@ -2,11 +2,11 @@ TODO:
 - Kopiëren complete aanvraag
 - WMO (alles correct?)
 - Taken herordenen
+- Aan het einde een knop opslaan, naar hoofdmenu toevoegen (wan IC hoeft nog niet klaar te zijn, nu kun je dan niet verder
 
-- informed consent+toestemmingsverklaring, link terug naar website
+- links naar website vanuit teksten
 - Uitvoer naar PDF, paginanummers
 - AUTH: Solis-login
-- e-mails
 - korte en verlengde procedure, secretaris beslist
 - tabben door velden
 - Uitlijnen lange teksten
