@@ -574,9 +574,8 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
     feedback = models.BooleanField(
         _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'),
         default=False)
-    feedback_details = models.CharField(
+    feedback_details = models.TextField(
         _('Beschrijf hoe de feedback wordt gegeven.'),
-        max_length=200,
         blank=True)
 
     # References
