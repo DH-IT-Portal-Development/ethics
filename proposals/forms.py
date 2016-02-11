@@ -279,12 +279,13 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'description', 'duration',
-                  'registrations', 'registration_kinds', 'registrations_details',
+                  'registrations', 'registrations_details',
+                  'registration_kinds', 'registration_kinds_details',
                   'feedback', 'feedback_details']
         widgets = {
             'procedure': forms.RadioSelect(choices=YES_NO_DOUBT),
             'registrations': forms.CheckboxSelectMultiple(),
-            'registration_kinds': forms.SelectMultiple(attrs={'data-placeholder': _('Kies het soort meting')}),
+            'registration_kinds': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=YES_NO),
         }
 
@@ -297,12 +298,14 @@ class TaskForm(forms.ModelForm):
         Check for conditional requirements:
         - If a registration which needs a kind has been checked, make sure the kind is selected
         - If a registration which needs details has been checked, make sure the details are filled
+        - If a registration_kind which needs details has been checked, make sure the details are filled
         - If feedback is set to yes, make sure feedback_details has been filled out
         """
         cleaned_data = super(TaskForm, self).clean()
 
         check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_kind', 'registration_kinds')
         check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_details', 'registrations_details')
+        check_dependency_multiple(self, cleaned_data, 'registration_kinds', 'needs_details', 'registration_kinds_details')
         check_dependency(self, cleaned_data, 'feedback', 'feedback_details')
 
 

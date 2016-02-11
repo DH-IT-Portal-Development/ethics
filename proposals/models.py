@@ -549,13 +549,13 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'))
-    registration_kinds = models.ManyToManyField(
-        RegistrationKind,
-        verbose_name=_('Kies het soort meting:'),
-        blank=True)
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,
+        blank=True)
+    registration_kinds = models.ManyToManyField(
+        RegistrationKind,
+        verbose_name=_('Kies het soort meting:'),
         blank=True)
     registration_kinds_details = models.CharField(
         _('Namelijk'),

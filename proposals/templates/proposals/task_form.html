@@ -12,6 +12,7 @@ Vragen per taak per sessie
 $(function() {
     check_field_required('registrations', 'needs_kind', 'registration_kinds', 'Registration');
     check_field_required('registrations', 'needs_details', 'registrations_details', 'Registration');
+    check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'RegistrationKind');
     depends_on_value('feedback', 'True', 'feedback_details');
 });
 </script>
