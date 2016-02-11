@@ -335,7 +335,7 @@ class TaskEndForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the tasks_duration label
-        - Set the tasks_duration and deception field as required
+        - Set the tasks_duration as required
         """
         super(TaskEndForm, self).__init__(*args, **kwargs)
 
@@ -343,8 +343,6 @@ class TaskEndForm(forms.ModelForm):
         tasks_duration.required = True
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
-
-        self.fields['deception'].required = True
 
     def clean(self):
         """
