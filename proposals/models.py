@@ -425,6 +425,10 @@ fysieke inspanning; dit alles waar relevant onder begeleiding van adequaat gesch
         blank=True)
 
     # Fields with respect to Surveys
+    has_surveys = models.BooleanField(
+        _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
+Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'),
+        default=False)
     surveys_stressful = models.NullBooleanField(
         _('Is het invullen van deze vragenlijsten belastend? \
 Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),

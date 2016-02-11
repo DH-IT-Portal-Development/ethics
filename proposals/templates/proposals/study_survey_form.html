@@ -29,6 +29,13 @@ $(function() {
         $(this).css('height', '3em');
     });
 
+    depends_on_value('has_surveys', 'True', 'surveys_stressful');
+    $('input[name="has_surveys"]').change(function() {
+        var check = $('input[name="has_surveys"]:checked').val() == 'True';
+        $('#survey_set_title, .survey_set, .dynamic-form-add').toggle(check);
+    });
+    $('input[name="has_surveys"]').change();
+
     // Move surveys_stressful after dynamic-form-add
     var surveys_stressful = $('input[name=surveys_stressful]').parents('tr');
     surveys_stressful.insertAfter('.dynamic-form-add');
@@ -39,8 +46,8 @@ $(function() {
     {% csrf_token %}
     <table>
         {{ form.as_table }}
-        <tr>
-            <th><strong>{% trans 'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.' %}</strong></th>
+        <tr id="survey_set_title">
+            <th><strong>{% trans 'Voeg hieronder de vragenlijsten toe' %}</strong></th>
             <td></td>
         </tr>
         {% for formset in inlines %}

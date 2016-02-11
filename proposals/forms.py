@@ -208,10 +208,24 @@ def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_messag
 class StudySurveyForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['surveys_stressful']
+        fields = ['has_surveys', 'surveys_stressful']
         widgets = {
+            'has_surveys': forms.RadioSelect(choices=YES_NO),
             'surveys_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(StudySurveyForm, self).__init__(*args, **kwargs)
+        self.fields['has_surveys'].label = mark_safe(self.fields['has_surveys'].label)
+
+
+class SurveyInlineFormSet(forms.BaseInlineFormSet):
+    """BaseInlineFormSet for Surveys, handles validation"""
+    def clean(self):
+        cleaned_data = super(SurveyInlineFormSet, self).clean()
+        # TODO: add error if no Survey has been provided
+        #print cleaned_data
+        #raise self.add_error('has_surveys', forms.ValidationError('Foobar'))
 
 
 class SurveysInline(InlineFormSet):
@@ -220,6 +234,7 @@ class SurveysInline(InlineFormSet):
     fields = ['name', 'minutes', 'survey_url', 'description']
     can_delete = True
     extra = 1
+    formset_class = SurveyInlineFormSet
 
 
 class SessionStartForm(forms.ModelForm):
