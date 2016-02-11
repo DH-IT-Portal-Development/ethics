@@ -27,19 +27,19 @@ class TaskUpdate(AllowErrorsMixin, UpdateView):
         try:
             # Try to continue to next Task
             next_task = Task.objects.get(session=self.object.session, order=self.object.order + 1)
-            return reverse('proposals:task_update', args=(next_task.id,))
+            return reverse('proposals:task_update', args=(next_task.pk,))
         except Task.DoesNotExist:
             # If this is the last Task, continue to task_end
-            return reverse('proposals:task_end', args=(self.object.session.id,))
+            return reverse('proposals:task_end', args=(self.object.session.pk,))
 
     def get_back_url(self):
         try:
             # Try to return to previous Task
             prev_task = Task.objects.get(session=self.object.session, order=self.object.order - 1)
-            return reverse('proposals:task_update', args=(prev_task.id,))
+            return reverse('proposals:task_update', args=(prev_task.pk,))
         except Task.DoesNotExist:
             # If this is the first Task, return to task_start
-            return reverse('proposals:task_start', args=(self.object.session.id,))
+            return reverse('proposals:task_start', args=(self.object.session.pk,))
 
 
 class TaskDelete(DeleteView):
@@ -49,4 +49,4 @@ class TaskDelete(DeleteView):
 
     def get_success_url(self):
         # TODO: fix task order just like sessions above
-        return reverse('proposals:detail', args=(self.object.session.proposal.id,))
+        return reverse('proposals:detail', args=(self.object.session.study.proposal.pk,))
