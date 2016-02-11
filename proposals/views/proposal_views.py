@@ -83,6 +83,7 @@ class MyProposalsView(ProposalsView):
     def get_body(self):
         return _('Dit overzicht toont al uw aanvragen.')
 
+
 ##########################
 # CRUD actions on Proposal
 ##########################
@@ -98,7 +99,9 @@ class ProposalCreate(CreateView):
 
     def get_initial(self):
         """Sets initial applicant to current user"""
-        return {'applicants': [self.request.user]}
+        initial = super(ProposalCreate, self).get_initial()
+        initial['applicants'] = [self.request.user]
+        return initial
 
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""

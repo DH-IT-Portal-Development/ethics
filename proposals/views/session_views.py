@@ -79,6 +79,14 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
     template_name = 'proposals/session_end.html'
     success_message = _(u'Sessies toevoegen beëindigd')
 
+    def get_initial(self):
+        """If there is only one Session, transfer the duration to Study level"""
+        initial = super(SessionEnd, self).get_initial()
+        if self.object.sessions_number == 1:
+            session = self.object.first_session()
+            initial['sessions_duration'] = session.tasks_duration
+        return initial
+
     def get_next_url(self):
         return reverse('proposals:study_survey', args=(self.object.pk,))
 

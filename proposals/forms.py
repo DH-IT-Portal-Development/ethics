@@ -363,6 +363,7 @@ class SessionEndForm(forms.ModelForm):
         """
         - Set sessions_duration as required, update the sessions_duration label
         - Set stressful and risk as required
+        - If there is only one session, make the sessions_duration input hidden
         """
         super(SessionEndForm, self).__init__(*args, **kwargs)
 
@@ -373,6 +374,9 @@ class SessionEndForm(forms.ModelForm):
 
         self.fields['stressful'].required = True
         self.fields['risk'].required = True
+
+        if self.instance.sessions_number == 1:
+            self.fields['sessions_duration'].widget = forms.HiddenInput()
 
     def clean(self):
         """
