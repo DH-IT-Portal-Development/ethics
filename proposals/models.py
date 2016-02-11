@@ -368,7 +368,7 @@ class Study(models.Model):
         verbose_name=_('Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, \
 er zijn meerdere antwoorden mogelijk'))
     legally_incapable = models.BooleanField(
-        _('Maakt uw studie gebruik van volwassen wilsonbekwame deelnemers?'),
+        _('Maakt uw studie gebruik van <strong>volwassen</strong> wilsonbekwame deelnemers?'),
         default=False)
     has_traits = models.BooleanField(
         _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \

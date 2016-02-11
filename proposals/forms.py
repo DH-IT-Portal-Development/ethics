@@ -137,8 +137,12 @@ class StudyForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        """Remove empty label from setting field"""
+        """
+        - Allow legally_incapable to have HTML in its label
+        - Remove empty label from setting/compensation field
+        """
         super(StudyForm, self).__init__(*args, **kwargs)
+        self.fields['legally_incapable'].label = mark_safe(self.fields['legally_incapable'].label)
         self.fields['setting'].empty_label = None
         self.fields['compensation'].empty_label = None
 
@@ -204,7 +208,7 @@ def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_messag
 class StudySurveyForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['surveys_stressful',]
+        fields = ['surveys_stressful']
         widgets = {
             'surveys_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
         }
