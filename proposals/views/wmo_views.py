@@ -20,14 +20,20 @@ class WmoMixin(object):
     form_class = WmoForm
 
     def get_next_url(self):
-        proposal = self.object.proposal
-        if hasattr(proposal, 'study'):
-            return reverse('proposals:study_update', args=(proposal.id,))
+        wmo = self.object
+        if wmo.status == Wmo.NO_WMO:
+            proposal = wmo.proposal
+            if hasattr(proposal, 'study'):
+                return reverse('proposals:study_update', args=(proposal.pk,))
+            else:
+                return reverse('proposals:study_create', args=(proposal.pk,))
+        elif wmo.status == Wmo.WAITING:
+            return reverse('proposals:wmo_update', args=(wmo.pk,))
         else:
-            return reverse('proposals:study_create', args=(proposal.id,))
+            return reverse('proposals:my_archive')
 
     def get_back_url(self):
-        return reverse('proposals:update', args=(self.object.proposal.id,))
+        return reverse('proposals:update', args=(self.object.proposal.pk,))
 
 
 class WmoCreate(WmoMixin, CreateView):

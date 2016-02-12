@@ -277,15 +277,15 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a WMO"""
-        super(Wmo, self).save(*args, **kwargs)
         self.update_status()
+        super(Wmo, self).save(*args, **kwargs)
         self.proposal.save()
 
     def update_status(self):
         if self.metc or (self.is_medical and self.is_behavioristic):
             if not self.metc_decision:
                 self.status = self.WAITING
-            if self.metc_decision and self.metc_decision_pdf:
+            if self.metc_decision:
                 self.status = self.JUDGED
         else:
             self.status = self.NO_WMO

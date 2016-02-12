@@ -101,6 +101,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
         </table>
         {% endwith %}
 
+        {% if proposal.study %}
         {% with study=proposal.study %}
         <h2>Algemene kenmerken van de studie</h2>
         <table>
@@ -202,6 +203,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
         {% endfor %}
         {% endfor %}
         {% endwith %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
