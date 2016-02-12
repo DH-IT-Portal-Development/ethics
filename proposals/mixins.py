@@ -11,7 +11,9 @@ COMMISSION = 'Commissie'
 
 
 class LoginRequiredMixin(object):
-    """Mixin for generic views to retun to login view if not logged in"""
+    """
+    Mixin for generic views to retun to login view if not logged in.
+    """
     @classmethod
     def as_view(cls, **initkwargs):
         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)

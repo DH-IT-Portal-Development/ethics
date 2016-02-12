@@ -57,7 +57,7 @@ class SessionStart(AllowErrorsMixin, UpdateView):
 
 
 def add_session(request, pk):
-    """Adds a Session to the given Proposal"""
+    """Adds a Session to the given Study"""
     study = get_object_or_404(Study, pk=pk)
     new_session_number = study.sessions_number + 1
 
@@ -105,7 +105,6 @@ class SessionDelete(DeleteView):
         """
         Deletes the Session and updates the Proposal and other Sessions.
         Completely overrides the default delete function (as that calls delete too late for us).
-        TODO: maybe save the HttpResponseRedirect and then perform the other actions?
         """
         self.object = self.get_object()
         order = self.object.order
@@ -127,7 +126,7 @@ class SessionDelete(DeleteView):
 
 
 class TaskStart(AllowErrorsMixin, UpdateView):
-    """Initially sets the total number of Tasks for a Session"""
+    """Initial creation of Tasks for a Session"""
     model = Session
     form_class = TaskStartForm
     template_name = 'proposals/task_start.html'
@@ -139,7 +138,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        """Creates or deletes Tasks on save"""
+        """Copies, creates or deletes Tasks on save"""
         if 'is_copy' in form.cleaned_data and form.cleaned_data['is_copy']:
             session = form.instance
 

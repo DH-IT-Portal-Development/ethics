@@ -529,7 +529,7 @@ Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per t
     def all_tasks_completed(self):
         result = True
         for task in self.task_set.all():
-            result &= task.name is not None
+            result &= task.name != ''
         return result
 
     def __unicode__(self):
@@ -590,7 +590,7 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
         blank=True)
     registration_kinds = models.ManyToManyField(
         RegistrationKind,
-        verbose_name=_('Kies het soort meting:'),
+        verbose_name=_('Kies het soort meting'),
         blank=True)
     registration_kinds_details = models.CharField(
         _('Namelijk'),
@@ -611,19 +611,23 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
         unique_together = ('session', 'order')
 
     def save(self, *args, **kwargs):
-        """Sets the correct status on Proposal on save of a Task"""
+        """
+        Sets the correct status on Proposal on save of a Task.
+        """
         super(Task, self).save(*args, **kwargs)
         self.session.study.proposal.save()
 
     def delete(self, *args, **kwargs):
         """
-        Removes the totals on Session level on deletion of a Task
-        TODO: if this was the only Task in the only Session, clear up the Proposal details as well
+        Invalidate the totals on Session/Study level on deletion of a Task.
         """
         session = self.session
         session.tasks_duration = None
+        study = self.session.study
+        study.sessions_duration = None
         super(Task, self).delete(*args, **kwargs)
         session.save()
+        study.save()
 
     def __unicode__(self):
         return 'Task at {}'.format(self.session)

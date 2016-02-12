@@ -2,13 +2,11 @@ TODO:
 - Kopiëren complete aanvraag
 - WMO (alles correct?)
 - Taken herordenen
-- Aan het einde een knop opslaan, naar hoofdmenu toevoegen (wan IC hoeft nog niet klaar te zijn, nu kun je dan niet verder
 
 - links naar website vanuit teksten
 - Uitvoer naar PDF, paginanummers
 - AUTH: Solis-login
 - korte en verlengde procedure, secretaris beslist
-- tabben door velden
 - Uitlijnen lange teksten
 - e-mail naar aanvragers/eindverantwoordelijke (geen problemen (binnen twee weken bericht)/besproken bij eerstkomende vergadering)
 - Inregelen e-mails eindverantwoordelijke

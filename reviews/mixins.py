@@ -7,8 +7,7 @@ from .models import Review, Decision
 
 class LoginRequiredMixin(object):
     """
-    Mixin for generic views to retun to login view if not logged in
-    TODO: this is the same as that in the proposals application.
+    Mixin for generic views to retun to login view if not logged in.
     """
     @classmethod
     def as_view(cls, **initkwargs):
