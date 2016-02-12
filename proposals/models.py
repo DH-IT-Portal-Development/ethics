@@ -413,18 +413,19 @@ belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke scha
 of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.'),
         blank=True)
     risk = models.NullBooleanField(
-        _('Zijn de risico\'s op psychische of fysieke schade bij deelname aan de studie <em>meer dan</em> minimaal? \
-D.w.z. ligt de kans op en/of omvang van mogelijke fysieke of psychische schade bij de deelnemers duidelijk \
-<em>boven</em> het "achtergrondrisico"? Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante \
-leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Ga bij het beantwoorden van deze \
-vraag uit van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep in uw studie.'),
-        help_text=mark_safe(_('Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen \
-van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, et cetera. \
-Het achtergrondrisico omvat bijvoorbeeld ook de risico\'s van \"routine\"-tests, -onderzoeken of -procedures \
-die in alledaagse didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een \
-rijexamen, een stressbestendigheids-<em>assessment</em>, een intelligentie- of persoonlijkheidstest, of een \
-hartslagmeting na fysieke inspanning; dit alles, waar relevant, onder begeleiding van adequaat geschoolde \
-specialisten).')),
+        _('Zijn de risico\'s op psychische, fysieke, of andere (bijv. economische, juridische) schade door deelname \
+aan de studie <em>meer dan</em> minimaal? minimaal? D.w.z. ligt de kans op en/of omvang van mogelijke schade bij de \
+deelnemers duidelijk <em>boven</em> het "achtergrondrisico"? Achtergrondrisico is datgene dat gezonde, gemiddelde \
+burgers in de relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Ga bij het \
+beantwoorden van deze vraag uit van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep in uw studie. \
+En denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van bepaalde informatie \
+kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, economische schade door data-koppeling, \
+et cetera.'),
+        help_text=mark_safe(_('Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de \
+risico\'s van "routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische \
+contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
+intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, \
+onder begeleiding van adequaat geschoolde specialisten).')),
         default=False)
     risk_details = models.TextField(
         _('Licht toe'),
