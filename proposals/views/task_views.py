@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
 from .base_views import UpdateView, DeleteView, get_task_progress
 from ..forms import TaskForm
-from ..mixins import AllowErrorsMixin
+from ..mixins import AllowErrorsMixin, DeletionAllowedMixin
 from ..models import Task
 
 
@@ -42,11 +43,32 @@ class TaskUpdate(AllowErrorsMixin, UpdateView):
             return reverse('proposals:task_start', args=(self.object.session.pk,))
 
 
-class TaskDelete(DeleteView):
+class TaskDelete(DeletionAllowedMixin, DeleteView):
     """Deletes a Task"""
     model = Task
     success_message = _('Taak verwijderd')
 
     def get_success_url(self):
-        # TODO: fix task order just like sessions above
-        return reverse('proposals:detail', args=(self.object.session.study.proposal.pk,))
+        return reverse('proposals:task_end', args=(self.object.session.pk,))
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Deletes the Task and updates the Session.
+        Completely overrides the default delete function (as that calls delete too late for us).
+        """
+        self.object = self.get_object()
+        order = self.object.order
+        session = self.object.session
+        success_url = self.get_success_url()
+        self.object.delete()
+
+        # If the order is lower than the total number of Tasks (e.g. 3 of 4), set the other orders one lower
+        for t in Task.objects.filter(session=session, order__gt=order):
+            t.order -= 1
+            t.save()
+
+        # Set the number of Tasks on Session
+        session.tasks_number -= 1
+        session.save()
+
+        return HttpResponseRedirect(success_url)

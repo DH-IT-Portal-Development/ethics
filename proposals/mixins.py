@@ -22,11 +22,30 @@ class LoginRequiredMixin(object):
 
 class AllowErrorsMixin(object):
     def form_invalid(self, form):
-        """On back button, allow form to have errors."""
+        """
+        On back button, allow form to have errors.
+        """
         if 'save_back' in self.request.POST:
             return HttpResponseRedirect(self.get_back_url())
         else:
             return super(AllowErrorsMixin, self).form_invalid(form)
+
+
+class DeletionAllowedMixin(object):
+    def get_object(self, queryset=None):
+        """
+        Prevent deletion of a single Task/Session in a Session/Study.
+        """
+        obj = super(DeletionAllowedMixin, self).get_object(queryset)
+
+        if isinstance(obj, Session):
+            if obj.study.sessions_number == 1:
+                raise PermissionDenied
+        elif isinstance(obj, Task):
+            if obj.session.tasks_number == 1:
+                raise PermissionDenied
+
+        return obj
 
 
 class UserAllowedMixin(SingleObjectMixin):

@@ -24,6 +24,9 @@ $(function() {
 	<div class="task_list">
 	<h4>
 		Sessie {{ session.order }} (totale duur: {{ session.tasks_duration }} minuten)
+		{% if study.sessions_number > 1 %}
+		<a href="{% url 'proposals:session_delete' session.pk %}"><img src="{% static 'proposals/images/delete.png' %}" title="Sessie verwijderen"></a>
+		{% endif %}
 	</h4>
 		<p>
 			<em>Deze sessie bestaat uit de volgende taken:</em>

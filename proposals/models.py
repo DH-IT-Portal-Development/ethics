@@ -502,6 +502,15 @@ Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per t
         super(Session, self).save(*args, **kwargs)
         self.study.proposal.save()
 
+    def delete(self, *args, **kwargs):
+        """
+        Invalidate the totals on Study level on deletion of a Session.
+        """
+        study = self.study
+        study.sessions_duration = None
+        super(Session, self).delete(*args, **kwargs)
+        study.save()
+
     def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 

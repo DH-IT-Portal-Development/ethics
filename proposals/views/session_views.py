@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 from .base_views import UpdateView, DeleteView, get_session_progress
 from ..forms import SessionStartForm, TaskStartForm, TaskEndForm, SessionEndForm
-from ..mixins import AllowErrorsMixin
+from ..mixins import AllowErrorsMixin, DeletionAllowedMixin
 from ..models import Study, Session, Task
 
 
@@ -94,16 +94,16 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
         return reverse('proposals:task_end', args=(self.object.last_session().pk,))
 
 
-class SessionDelete(DeleteView):
+class SessionDelete(DeletionAllowedMixin, DeleteView):
     model = Session
     success_message = _('Sessie verwijderd')
 
     def get_success_url(self):
-        return reverse('proposals:detail', args=(self.object.study.proposal.pk,))
+        return reverse('proposals:session_end', args=(self.object.study.pk,))
 
     def delete(self, request, *args, **kwargs):
         """
-        Deletes the Session and updates the Proposal and other Sessions.
+        Deletes the Session and updates the Study and other Sessions.
         Completely overrides the default delete function (as that calls delete too late for us).
         """
         self.object = self.get_object()
@@ -112,13 +112,12 @@ class SessionDelete(DeleteView):
         success_url = self.get_success_url()
         self.object.delete()
 
-        # If the session number is lower than the total number of sessions (e.g. 3 of 4),
-        # set the other session numbers one lower
+        # If the order is lower than the total number of Sessions (e.g. 3 of 4), set the other orders one lower
         for s in Session.objects.filter(study=study, order__gt=order):
             s.order -= 1
             s.save()
 
-        # Set the number of sessions on Study
+        # Set the number of Sessions on Study
         study.sessions_number -= 1
         study.save()
 
