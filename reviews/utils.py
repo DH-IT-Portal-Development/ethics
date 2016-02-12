@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
@@ -90,6 +92,28 @@ def auto_review(proposal):
         go = False
         reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
 
+    if proposal.passive_consent:
+        go = False
+        reasons.append(_('De studie werkt met passieve informed consent.'))
+
+    # TODO: is this correct?
+    for setting in study.setting.all():
+        if setting.requires_review:
+            go = False
+            reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
+            break
+
+    for task in Task.objects.filter(session__study=study):
+        if task.deception:
+            go = False
+            reasons.append(_('De studie maakt gebruik van misleiding.'))
+            break
+
+    # TODO: is this correct?
+    if study.compensation.requires_review:
+        go = False
+        reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
+
     if study.has_traits:
         go = False
         reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
@@ -104,48 +128,37 @@ def auto_review(proposal):
                             reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
                             break
                 else:
+                    # TODO: not necessary?
                     go = False
                     reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
                     break
+        for registration_kind in task.registration_kinds.all():
+            if registration_kind.requires_review:
+                go = False
+                reasons.append(_('De studie maakt gebruik van {}'.format(registration_kind.description)))
 
-    for task in Task.objects.filter(session__study=study):
-        if task.deception:
-            go = False
-            reasons.append(_('De studie maakt gebruik van misleiding.'))
-            break
-
+    # TODO: not necessary?
     for recruitment in study.recruitment.all():
         if recruitment.requires_review:
             go = False
             reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
             break
 
-    for setting in study.setting.all():
-        if setting.requires_review:
-            go = False
-            reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
-            break
-
-    if study.session_set.count() > 1:
+    if study.stressful or study.stressful is None:
         go = False
-        reasons.append(_('De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel.'))
+        reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of \
+als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
-    # TODO: is this correct?
-    if study.compensation.requires_review:
+    if study.risk or study.risk is None:
         go = False
-        reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
-
-    if study.stressful:
-        go = False
-        reasons.append(_('Een onderdeel van de procedure kan belastend worden ervaren.'))
-
-    if study.risk:
-        go = False
-        reasons.append(_('Er is een verhoogd risico op fysieke of psychische schade.'))
+        reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
+fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
 
     for age_group in study.age_groups.all():
         if study.net_duration() > age_group.max_net_duration:
             go = False
-            reasons.append(_('De procedure overschrijdt maximale duur voor leeftijdsgroep {}; totale nettoduur is {} minuten, streefmaximum voor deze leeftijdsgroep is {} minuten.'.format(age_group, study.net_duration(), age_group.max_net_duration)))
+            reasons.append(_('De totale duur van de taken in de sessie ({d} minuten), exclusief pauzes \
+en andere niet-taak elementen, is groter dan het streefmaximum ({max_d} minuten) \
+voor de leeftijdsgroep {ag}.'.format(ag=age_group, d=study.net_duration(), max_d=age_group.max_net_duration)))
 
     return go, reasons

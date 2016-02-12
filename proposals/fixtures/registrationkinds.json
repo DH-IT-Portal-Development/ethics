@@ -1,6 +1,7 @@
 [
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 1,
@@ -11,6 +12,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 2,
@@ -21,6 +23,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 3,
@@ -31,6 +34,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 4,
@@ -41,6 +45,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 5,
@@ -51,6 +56,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 6,
@@ -61,6 +67,7 @@
 },
 {
     "fields": {
+        "requires_review": true,
         "needs_details": false,
         "registration": 6,
         "order": 7,
@@ -71,6 +78,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 8,
@@ -81,6 +89,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 9,
@@ -91,6 +100,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": true,
         "registration": 6,
         "order": 10,
