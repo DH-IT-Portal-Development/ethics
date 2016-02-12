@@ -27,7 +27,7 @@ SECRET_KEY = 'j8dwfg6kvg=fnfs33s0x(t&0pfe)p9$3dm943)6hvurj6@=+4j'
 DEBUG = True
 ALLOWED_HOSTS = []
 INTERNAL_IPS = ['127.0.0.1']
-WSGI_APPLICATION = 'ethics.wsgi.application'
+WSGI_APPLICATION = 'etcl.wsgi.application'
 
 
 # Application definition
@@ -76,7 +76,7 @@ TEMPLATES = [
     },
 ]
 
-ROOT_URLCONF = 'ethics.urls'
+ROOT_URLCONF = 'etcl.urls'
 
 
 # Database
