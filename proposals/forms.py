@@ -296,12 +296,14 @@ class TaskForm(forms.ModelForm):
         fields = ['name', 'description', 'duration',
                   'registrations', 'registrations_details',
                   'registration_kinds', 'registration_kinds_details',
-                  'feedback', 'feedback_details']
+                  'feedback', 'feedback_details',
+                  'deception', 'deception_details']
         widgets = {
             'procedure': forms.RadioSelect(choices=YES_NO_DOUBT),
             'registrations': forms.CheckboxSelectMultiple(),
             'registration_kinds': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=YES_NO),
+            'deception': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -315,6 +317,7 @@ class TaskForm(forms.ModelForm):
         - If a registration which needs details has been checked, make sure the details are filled
         - If a registration_kind which needs details has been checked, make sure the details are filled
         - If feedback is set to yes, make sure feedback_details has been filled out
+        - If deception is set to yes, make sure deception_details has been filled out
         """
         cleaned_data = super(TaskForm, self).clean()
 
@@ -322,15 +325,13 @@ class TaskForm(forms.ModelForm):
         check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_details', 'registrations_details')
         check_dependency_multiple(self, cleaned_data, 'registration_kinds', 'needs_details', 'registration_kinds_details')
         check_dependency(self, cleaned_data, 'feedback', 'feedback_details')
+        check_dependency(self, cleaned_data, 'deception', 'deception_details')
 
 
 class TaskEndForm(forms.ModelForm):
     class Meta:
         model = Session
-        fields = ['tasks_duration', 'deception', 'deception_details']
-        widgets = {
-            'deception': forms.RadioSelect(choices=YES_NO),
-        }
+        fields = ['tasks_duration']
 
     def __init__(self, *args, **kwargs):
         """
@@ -348,7 +349,6 @@ class TaskEndForm(forms.ModelForm):
         """
         Check for conditional requirements:
         - Check that the net duration is at least equal to the gross duration
-        - If deception is set to yes, make sure deception_details has been filled out
         """
         cleaned_data = super(TaskEndForm, self).clean()
 
@@ -357,8 +357,6 @@ class TaskEndForm(forms.ModelForm):
         if tasks_duration < net_duration:
             error = forms.ValidationError(_('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.'), code='comparison')
             self.add_error('tasks_duration', error)
-
-        check_dependency(self, cleaned_data, 'deception', 'deception_details')
 
 
 class SessionEndForm(forms.ModelForm):

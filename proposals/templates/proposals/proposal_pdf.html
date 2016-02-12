@@ -160,14 +160,6 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             <tr>
                 <th>{% get_verbose_field_name session "tasks_duration" %}</th><td>{{ session.tasks_duration }}</td>
             </tr>
-            <tr>
-                <th>{% get_verbose_field_name session "deception" %}</th><td>{{ session.deception|yesno:"ja,nee" }}</td>
-            </tr>
-            {% if session.deception %}
-            <tr>
-                <th>{% get_verbose_field_name session "deception_details" %}</th><td>{{ session.deception_details }}</td>
-            </tr>
-            {% endif %}
         </table>
         {% for task in session.task_set.all %}
         <h3>Taak {{ task.order }}</h2>
@@ -196,6 +188,14 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             {% if task.feedback %}
             <tr>
                 <th>{% get_verbose_field_name task "feedback_details" %}</th><td>{{ task.feedback_details }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name task "deception" %}</th><td>{{ task.deception|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if task.deception %}
+            <tr>
+                <th>{% get_verbose_field_name task "deception_details" %}</th><td>{{ task.deception_details }}</td>
             </tr>
             {% endif %}
         </table>

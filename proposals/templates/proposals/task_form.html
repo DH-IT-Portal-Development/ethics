@@ -16,6 +16,7 @@ $(function() {
     check_field_required('registrations', 'needs_details', 'registrations_details', 'Registration');
     check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'RegistrationKind');
     depends_on_value('feedback', 'True', 'feedback_details');
+    depends_on_value('deception', 'True', 'deception_details');
 });
 </script>
 <h3>Sessie {{ task.session.order }}, taak {{ task.order }}</h3>

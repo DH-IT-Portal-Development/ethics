@@ -106,21 +106,25 @@ def auto_review(proposal):
                 else:
                     go = False
                     reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
+                    break
+
+    for task in Task.objects.filter(session__study=study):
+        if task.deception:
+            go = False
+            reasons.append(_('De studie maakt gebruik van misleiding.'))
+            break
 
     for recruitment in study.recruitment.all():
         if recruitment.requires_review:
             go = False
             reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
+            break
 
     for setting in study.setting.all():
         if setting.requires_review:
             go = False
             reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
-
-    for session in study.session_set.all():
-        if session.deception:
-            go = False
-            reasons.append(_('De studie maakt gebruik van misleiding.'))
+            break
 
     if study.session_set.count() > 1:
         go = False

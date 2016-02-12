@@ -466,17 +466,6 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
 
 class Session(models.Model):
     order = models.PositiveIntegerField()
-    deception = models.BooleanField(
-        _('Is er binnen deze sessie sprake van misleiding van de deelnemer, \
-d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie? \
-Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
-het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; \
-het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
-        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'),
-        default=False)
-    deception_details = models.TextField(
-        'Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.',
-        blank=True)
 
     # Fields with respect to Tasks
     tasks_number = models.PositiveIntegerField(
@@ -610,6 +599,17 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
         default=False)
     feedback_details = models.TextField(
         _('Beschrijf hoe de feedback wordt gegeven.'),
+        blank=True)
+    deception = models.BooleanField(
+        _('Is er binnen deze sessie sprake van misleiding van de deelnemer, \
+d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie? \
+Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
+het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; \
+het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
+        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'),
+        default=False)
+    deception_details = models.TextField(
+        'Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.',
         blank=True)
 
     # References

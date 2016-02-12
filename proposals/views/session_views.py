@@ -147,8 +147,6 @@ class TaskStart(AllowErrorsMixin, UpdateView):
 
             # Copy fields from the parent Session
             s = form.cleaned_data['parent_session']
-            session.deception = s.deception
-            session.deception_details = s.deception_details
             session.tasks_number = s.tasks_number
             session.tasks_duration = s.tasks_duration
             session.save()

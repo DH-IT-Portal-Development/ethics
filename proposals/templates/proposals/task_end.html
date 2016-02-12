@@ -10,11 +10,6 @@
 {% block progress %}{{ progress }}{% endblock %}
 
 {% block content %}
-<script>
-$(function() {
-    depends_on_value('deception', 'True', 'deception_details');
-});
-</script>
 <h3>Belasting voor de deelnemer, sessie {{ session.order }}</h3>
 
 <div class="task_list">
