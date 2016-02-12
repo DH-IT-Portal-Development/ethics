@@ -1,8 +1,10 @@
 {% extends "proposals/base.html" %}
+
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} 
-Aanvraag ter beoordeling en registratie
+{% trans "Aanvraag ter beoordeling en registratie" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -25,6 +27,8 @@ $(function() {
 <p>Beantwoord op basis van dit overzicht de volgende vragen:</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-        {% include "proposals/form_buttons.html" %}
+    {% with proposal=session.study.proposal %}
+    {% include "proposals/form_buttons.html" %}
+    {% endwith %}
 </form>
 {% endblock %}

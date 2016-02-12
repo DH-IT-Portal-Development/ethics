@@ -59,6 +59,8 @@ $(function() {
         {{ formset.management_form }}
         {% endfor %}
     </table>
+    {% with proposal=study.proposal %}
     {% include "proposals/form_buttons.html" %}
+    {% endwith %}
 </form>
 {% endblock %}

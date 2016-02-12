@@ -1,7 +1,20 @@
 {% load i18n %}
 
+<nav id="form_buttons">
+	{% if not no_back %}
+	<input class="pure-button pure-button-secondary" type="submit" name="save_back" value="{% trans '<< Vorige stap' %}" />
+	{% endif %}
+	<input class="pure-button pure-button-primary" type="submit" name="save_continue" value="{{ next_text|default:'Volgende stap >>' }}" />
+</nav>
+
 {% if not no_back %}
-<input class="pure-button pure-button-secondary" type="submit" name="save_back" value="{% trans '<< Vorige stap' %}" />
+<nav id="form_buttons_extra">
+	<a class="pure-button pure-button-secondary" href="{% url 'proposals:home' %}">{% trans "Terug naar startpagina" %}</a>
+	{% if proposal %}
+	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update' proposal.pk %}">{% trans "Terug naar begin studie" %}</a>
+	{% endif %}
+	{% if session %}
+	<a class="pure-button pure-button-secondary" href="{% url 'proposals:task_start' session.pk %}">{% trans "Terug naar begin sessie" %}</a>
+	{% endif %}
+</nav>
 {% endif %}
-<input class="pure-button pure-button-primary" type="submit" name="save_continue" value="{{ next_text|default:'Volgende stap >>' }}" />
-<!--<a class="pure-button pure-button-secondary" href="{% url 'proposals:my_concepts' %}">Terug naar hoofdmenu</a>-->

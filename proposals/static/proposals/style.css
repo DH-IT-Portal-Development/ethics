@@ -33,6 +33,10 @@ body {
     background: rgb(250, 250, 250);
 }
 
+#form_buttons {
+    margin-bottom: 1em;
+}
+
 /* Form specifics */
 input[name=title] {
     width: 20em;

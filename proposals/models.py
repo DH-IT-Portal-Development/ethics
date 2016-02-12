@@ -169,7 +169,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
             status = self.SESSIONS_STARTED
             if session.tasks_number:
                 status = self.TASKS_STARTED
-            if session.task_set.count() == session.tasks_number:
+            if session.all_tasks_completed():
                 status = self.TASKS_ADDED
             if session.tasks_duration:
                 status = self.TASKS_ENDED
@@ -201,7 +201,7 @@ Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt
         elif self.status == self.SESSIONS_STARTED:
             return reverse('proposals:task_start', args=(session.id,))
         elif self.status == self.TASKS_STARTED:
-            return reverse('proposals:task_update', args=(session.first_task().id,))
+            return reverse('proposals:task_update', args=(session.current_task().id,))
         elif self.status == self.TASKS_ADDED:
             return reverse('proposals:task_end', args=(session.id,))
         elif self.status == self.TASKS_ENDED:
@@ -513,6 +513,25 @@ Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per t
         tasks = self.task_set.order_by('-order')
         return tasks[0] if tasks else None
 
+    def current_task(self):
+        """
+        Returns the current (imcomplete) Task.
+        - If all Tasks are completed, the last Task is returned.
+        - If no Tasks have yet been created, None is returned.
+        """
+        current_task = None
+        for task in self.task_set.all():
+            current_task = task
+            if not task.name:
+                break
+        return current_task
+
+    def all_tasks_completed(self):
+        result = True
+        for task in self.task_set.all():
+            result &= task.name is not None
+        return result
+
     def __unicode__(self):
         return _('Sessie {}').format(self.order)
 
@@ -586,6 +605,10 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
 
     # References
     session = models.ForeignKey(Session)
+
+    class Meta:
+        ordering = ['order']
+        unique_together = ('session', 'order')
 
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Task"""

@@ -36,6 +36,8 @@ $(function() {
 <p>Beantwoord op basis van dit overzicht de volgende vragen:</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
+    {% with proposal=study.proposal %}
     {% include "proposals/form_buttons.html" %}
+    {% endwith %}
 </form>
 {% endblock %}
