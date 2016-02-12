@@ -72,6 +72,11 @@ $(function() {
         }
     });
 
+    // Will automatically create tabindices
+    $('select[name!=language], input[type!=hidden], textarea, .pure-button').each(function(index) {
+        $(this).attr('tabindex', index + 1)
+    });
+
     // Will set select boxes to use Chosen and set a width, except for the language element
     $('select').chosen({
         width: '20em'
@@ -80,6 +85,7 @@ $(function() {
 
     // Will make every form table a pure-table
     $('form table').addClass('pure-table pure-table-horizontal');
+
     // Will make every form a pure-form
     $('form').addClass('pure-form');
 });
