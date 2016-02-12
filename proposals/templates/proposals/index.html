@@ -15,31 +15,31 @@
 	Welkom {{ first }} {{ last }}! In dit portal kan je het volgende doen: 
 	{% endblocktrans %}
 </p>
-<h3>Mijn aanvragen</h3>
+<h3>Mijn studie</h3>
 <ul>
 	<li>
-		<a href="{% url 'proposals:create' %}">{% trans "Een nieuwe aanvraag indienen (je studie vanuit een leeg formulier aanmelden voor toetsing)" %}</a>
+		<a href="{% url 'proposals:create' %}">{% trans "Een nieuwe studie opstellen (je studie vanuit een leeg formulier aanmelden voor toetsing)" %}</a>
 	</li>
 	<li>
-		<a href="{% url 'proposals:copy' %}">{% trans "Een bestaande aanvraag kopiëren (om een vergelijkbare studie sneller te kunnen aanmelden)" %}</a>
+		<a href="{% url 'proposals:copy' %}">{% trans "Een bestaande studie kopiëren (om een vergelijkbare studie sneller te kunnen aanmelden)" %}</a>
 	</li>
 	<li>
-		<a href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptaanvragen bekijken" %}</a>
+		<a href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptstudies bekijken" %}</a>
 	</li>
 	<li>
-		<a href="{% url 'proposals:my_submitted' %}">{% trans "Mijn ingediende aanvragen bekijken" %}</a>
+		<a href="{% url 'proposals:my_submitted' %}">{% trans "Mijn ingediende studies bekijken" %}</a>
 	</li>
 	<li>
-		<a href="{% url 'proposals:my_completed' %}">{% trans "Mijn afgeronde aanvragen bekijken" %}</a>
+		<a href="{% url 'proposals:my_completed' %}">{% trans "Mijn afgeronde studies bekijken" %}</a>
 	</li>
 	<li>
-		<a href="{% url 'proposals:my_archive' %}">{% trans "Al mijn aanvragen bekijken" %}</a>
+		<a href="{% url 'proposals:my_archive' %}">{% trans "Al mijn studies bekijken" %}</a>
 	</li>
 </ul>
 <h3>UiL OTS archief</h3>
 <ul>
 	<li>
-		<a href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS aanvragen bekijken" %}</a>
+		<a href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS-studies bekijken" %}</a>
 	</li>
 </ul>
 <h3>Help</h3>

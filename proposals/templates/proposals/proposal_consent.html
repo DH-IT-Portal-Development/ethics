@@ -2,13 +2,12 @@
 {% load staticfiles %}
 
 {% block title %} 
-Aanvraag ter beoordeling en registratie
+Informed consent
 {% endblock %}
 
 {% block progress %}95{% endblock %}
 
 {% block content %}
-<h3>Informed consent</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}

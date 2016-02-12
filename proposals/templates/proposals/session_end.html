@@ -2,13 +2,12 @@
 {% load staticfiles %}
 
 {% block title %} 
-Aanvraag ter beoordeling en registratie
+Belasting voor de deelnemer
 {% endblock %}
 
 {% block progress %}85{% endblock %}
 
 {% block content %}
-<h3>Belasting voor de deelnemer</h3>
 <script>
 $(function() {
     depends_on_value('stressful', 'True', 'stressful_details');
@@ -18,7 +17,7 @@ $(function() {
 
 <div class="session_list">
 	<p>
-		<em>Deze aanvraag bestaat uit de volgende sessies:</em>
+		<em>Deze studie bestaat uit de volgende sessies:</em>
 	</p>
 	{% for session in study.session_set.all %}
 	<div class="task_list">

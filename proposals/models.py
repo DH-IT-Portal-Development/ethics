@@ -55,8 +55,8 @@ class Proposal(models.Model):
         (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
         (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
 
-        (DECISION_MADE, _('Aanvraag is beoordeeld door ETCL')),
-        (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door METC')),
+        (DECISION_MADE, _('Studie is beoordeeld door ETCL')),
+        (WMO_DECISION_MADE, _('Studie is beoordeeld door METC')),
     )
 
     # Fields of a proposal
@@ -86,7 +86,7 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
     allow_in_archive = models.BooleanField(
-        _('Mag deze aanvraag ter goedkeuring in het semi-publiekelijk archief?'),
+        _('Mag deze studie ter goedkeuring in het semi-publiekelijk archief?'),
         default=True,
         help_text=_('Dit archief is alleen toegankelijk voor mensen die aan het UiL OTS geaffilieerd zijn.')
     )
@@ -135,13 +135,13 @@ U kunt de templates vinden op <link website?>')
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
         blank=True,
         null=True,
-        help_text=_('Aan het einde van de procedure kunt u deze aanvraag ter verificatie naar uw eindverantwoordelijke sturen. \
-Wanneer de verificatie binnen is, krijgt u een e-mail zodat u deze aanvraag kunt afronden.'))
+        help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. \
+De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'))
     parent = models.ForeignKey(
         'self',
         null=True,
-        verbose_name=_(u'Te kopiëren aanvraag'),
-        help_text=_('Dit veld toont enkel aanvragen waar u zelf een medeaanvrager bent.'))
+        verbose_name=_(u'Te kopiëren studie'),
+        help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'))
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a Proposal"""
@@ -259,7 +259,7 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
         _('Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
         help_text=_('Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken.'))
     metc_application = models.BooleanField(
-        _('Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al een METC aanvraag ingediend?'),
+        _('Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al aangemeld bij een METC?'),
         default=False)
     metc_decision = models.BooleanField(
         _('Is de METC al tot een beslissing gekomen?'),

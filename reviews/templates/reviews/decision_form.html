@@ -3,17 +3,17 @@
 {% load i18n %}
 
 {% block title %} 
-	{% trans "Aanvraag beoordelen" %}
+{% trans "Studie beoordelen" %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
 <p>
-    U kunt nu een go of no-go geven voor de aanvraag <em>{{ decision.review.proposal.title }}</em>.
-    De aanvraag is <a href="{% url 'proposals:pdf' decision.review.proposal.id %}" target="_blank">hier</a> in te zien.
+    U kunt nu een go of no-go geven voor de studie <em>{{ decision.review.proposal.title }}</em>.
+    De studie is <a href="{% url 'proposals:pdf' decision.review.proposal.id %}" target="_blank">hier</a> in te zien.
     {% if decision.review.stage == review.SUPERVISOR %}
-    {% trans "Als u akkoord gaat met de aanvraag, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
+    {% trans "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
     {% endif %}
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}

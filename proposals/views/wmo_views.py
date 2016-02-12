@@ -63,14 +63,14 @@ def check_wmo(request):
     is_behavioristic = string_to_bool(request.POST.get('behavioristic'))
 
     # Default message: OK.
-    message = _('Uw aanvraag hoeft niet te worden beoordeeld door de METC.')
+    message = _('Uw studie hoeft niet te worden beoordeeld door de METC.')
     message_class = 'info'
 
     if is_metc is None or (not is_metc and is_medical is None):
         message = _('Neem contact op met Maartje de Klerk om de twijfels weg te nemen.')
         message_class = 'warning'
     elif is_metc or (is_medical and is_behavioristic):
-        message = _('Uw aanvraag zal moeten worden beoordeeld door de METC.')
+        message = _('Uw studie zal moeten worden beoordeeld door de METC.')
         message_class = 'warning'
 
     return JsonResponse({'message': message, 'message_class': message_class})

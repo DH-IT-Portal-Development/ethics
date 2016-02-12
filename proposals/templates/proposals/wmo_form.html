@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block title %} 
-Aanvraag ter beoordeling en registratie
+WMO-plichtig of niet?
 {% endblock %}
 
 {% block progress %}5{% endblock %}
@@ -43,7 +43,6 @@ $(function() {
     depends_on_value('metc_decision', 'True', 'metc_decision_pdf');
 });
 </script>
-<h3>WMO-plichtig of niet?</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% with proposal=wmo.proposal %}

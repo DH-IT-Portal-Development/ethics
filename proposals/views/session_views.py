@@ -19,7 +19,7 @@ class SessionStart(AllowErrorsMixin, UpdateView):
     model = Study
     form_class = SessionStartForm
     template_name = 'proposals/session_start.html'
-    success_message = _('%(sessions_number)s sessie(s) voor aanvraag %(title)s aangemaakt')
+    success_message = _('%(sessions_number)s sessie(s) voor studie %(title)s aangemaakt')
 
     def form_valid(self, form):
         """Creates or deletes Sessions on save"""

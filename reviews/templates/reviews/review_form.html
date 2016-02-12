@@ -9,7 +9,7 @@ Commissieleden aanstellen
 
 {% block content %}
 <p>
-	Kies hier de commissieleden voor de aanvraag <em>{{ object.proposal.title }}</em>.
+	Kies hier de commissieleden voor de studie <em>{{ object.proposal.title }}</em>.
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>

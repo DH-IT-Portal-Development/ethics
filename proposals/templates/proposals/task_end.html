@@ -4,14 +4,12 @@
 {% load i18n %}
 
 {% block title %} 
-{% trans "Aanvraag ter beoordeling en registratie" %}
+Belasting voor de deelnemer, sessie {{ session.order }}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
 
 {% block content %}
-<h3>Belasting voor de deelnemer, sessie {{ session.order }}</h3>
-
 <div class="task_list">
 	<p>
 		<em>Deze sessie bestaat uit de volgende taken:</em>

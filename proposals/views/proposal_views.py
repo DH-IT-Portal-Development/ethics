@@ -30,10 +30,10 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_title(self):
-        return _('Publiek aanvraagarchief')
+        return _('Publiek archief')
 
     def get_body(self):
-        return _('Dit overzicht toont alle beoordeelde aanvragen.')
+        return _('Dit overzicht toont alle beoordeelde studies.')
 
 
 class MyConceptsView(ProposalsView):
@@ -42,10 +42,10 @@ class MyConceptsView(ProposalsView):
         return Proposal.objects.filter(applicants=self.request.user).filter(status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
     def get_title(self):
-        return _('Mijn conceptaanvragen')
+        return _('Mijn conceptstudies')
 
     def get_body(self):
-        return _('Dit overzicht toont al uw nog niet ingediende aanvragen.')
+        return _('Dit overzicht toont al uw nog niet ingediende studies.')
 
 
 class MySubmittedView(ProposalsView):
@@ -54,10 +54,10 @@ class MySubmittedView(ProposalsView):
         return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR, status__lt=Proposal.DECISION_MADE)
 
     def get_title(self):
-        return _('Mijn ingediende aanvragen')
+        return _('Mijn ingediende studies')
 
     def get_body(self):
-        return _('Dit overzicht toont al uw ingediende aanvragen.')
+        return _('Dit overzicht toont al uw ingediende studies.')
 
 
 class MyCompletedView(ProposalsView):
@@ -66,10 +66,10 @@ class MyCompletedView(ProposalsView):
         return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.DECISION_MADE)
 
     def get_title(self):
-        return _('Mijn afgeronde aanvragen')
+        return _('Mijn afgeronde studies')
 
     def get_body(self):
-        return _('Dit overzicht toont al uw beoordeelde aanvragen.')
+        return _('Dit overzicht toont al uw beoordeelde studies.')
 
 
 class MyProposalsView(ProposalsView):
@@ -78,10 +78,10 @@ class MyProposalsView(ProposalsView):
         return Proposal.objects.filter(applicants=self.request.user)
 
     def get_title(self):
-        return _('Mijn aanvragen')
+        return _('Mijn studies')
 
     def get_body(self):
-        return _('Dit overzicht toont al uw aanvragen.')
+        return _('Dit overzicht toont al uw studies.')
 
 
 ##########################
@@ -95,7 +95,7 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 class ProposalCreate(CreateView):
     model = Proposal
     form_class = ProposalForm
-    success_message = _('Conceptaanvraag %(title)s aangemaakt')
+    success_message = _('Studie %(title)s aangemaakt')
 
     def get_initial(self):
         """Sets initial applicant to current user"""
@@ -124,7 +124,7 @@ class ProposalCreate(CreateView):
 class ProposalUpdate(UpdateView):
     model = Proposal
     form_class = ProposalForm
-    success_message = _('Conceptaanvraag %(title)s bewerkt')
+    success_message = _('Studie %(title)s bewerkt')
 
     def get_context_data(self, **kwargs):
         """Adds 'create'/'no_back' to template context"""
@@ -143,7 +143,7 @@ class ProposalUpdate(UpdateView):
 
 class ProposalDelete(DeleteView):
     model = Proposal
-    success_message = _('Aanvraag verwijderd')
+    success_message = _('Studie verwijderd')
 
     def get_success_url(self):
         return reverse('proposals:my_concepts')
@@ -155,7 +155,7 @@ class ProposalDelete(DeleteView):
 class ProposalCopy(CreateView):
     model = Proposal
     form_class = ProposalCopyForm
-    success_message = _('Aanvraag gekopieerd')
+    success_message = _('Studie gekopieerd')
     template_name = 'proposals/proposal_copy.html'
 
     def get_form_kwargs(self):
@@ -186,7 +186,7 @@ class ProposalSubmit(UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
-    success_message = _('Aanvraag verzonden')
+    success_message = _('Studie verzonden')
 
     def form_valid(self, form):
         """Start the review process on submission"""

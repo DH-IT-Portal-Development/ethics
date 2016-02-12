@@ -2,13 +2,12 @@
 {% load staticfiles %}
 
 {% block title %} 
-Aanvraag ter beoordeling en registratie
+Belasting voor de deelnemer
 {% endblock %}
 
 {% block progress %}15{% endblock %}
 
 {% block content %}
-<h3>Belasting voor de deelnemer</h3>
 <p>U heeft aangegeven dat u gebruik maakt van deelnemers binnen de leeftijdsgroepen:</p>
 <ul>{{ proposal.study.age_groups.all|unordered_list }}</ul>
 <p>In de volgende vragen gaan we nader in op wat u in een sessie van uw deelnemers zal verlangen (d.w.z. welke taak of taken), en hoe belastend de binnen die sessie gevolgde procedure voor de deelnemers zou kunnen zijn. Daarbij gelden de volgende definities (aansluitend bij hoe een en ander in een onderzoeksartikel zal worden beschreven):</p>

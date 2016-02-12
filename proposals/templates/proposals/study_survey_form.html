@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %} 
-Aanvraag ter beoordeling en registratie
+{% trans 'Dataverzameling direct betrokkenen' %}
 {% endblock %}
 
 {% block progress %}90{% endblock %}
@@ -41,7 +41,6 @@ $(function() {
     surveys_stressful.insertAfter('.dynamic-form-add');
 });
 </script>
-<h3>{% trans 'Dataverzameling direct betrokkenen' %}</h3>
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table>
