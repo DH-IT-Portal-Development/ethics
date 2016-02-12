@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
+from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
@@ -34,9 +35,14 @@ class ProposalForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        """Remove empty label from relation field"""
+        """
+        - Remove empty label from relation field
+        - Don't allow to pick yourself as supervisor
+        """
+        user = kwargs.pop('user', None)
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
+        self.fields['supervisor'].queryset = get_user_model().objects.exclude(pk=user.pk)
 
     def clean(self):
         """

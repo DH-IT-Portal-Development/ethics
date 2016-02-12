@@ -103,6 +103,11 @@ class ProposalCreate(CreateView):
         initial['applicants'] = [self.request.user]
         return initial
 
+    def get_form_kwargs(self):
+        kwargs = super(ProposalCreate, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""
         form.instance.created_by = self.request.user
@@ -132,6 +137,11 @@ class ProposalUpdate(UpdateView):
         context['create'] = False
         context['no_back'] = True
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super(ProposalUpdate, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
     def get_next_url(self):
         proposal = self.object
