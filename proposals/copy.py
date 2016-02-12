@@ -23,6 +23,7 @@ def copy_proposal(self, form):
         copy_recruitment = parent.study.recruitment.all()
         copy_surveys = parent.study.survey_set.all()
         copy_sessions = parent.study.session_set.all()
+        copy_tasks = Task.objects.filter(session__study__proposal=parent)
 
     # Create copy and save the this new model, set it to not-submitted
     copy_proposal = parent
@@ -66,15 +67,23 @@ def copy_proposal(self, form):
         copy_session.pk = None
         copy_session.study = copy_study
         copy_session.save()
-        for task in Task.objects.filter(session__study__proposal=parent).prefetch_related('registrations'):  # TODO: this does not seem to work.
-            copy_registrations = task.registrations.all()
-            copy_task = task
-            copy_task.pk = None
-            copy_task.session = copy_session
-            copy_task.save()
-            copy_task.registrations = copy_registrations
-            copy_task.save()
+        copy_tasks_to_session(copy_session, copy_tasks)
 
     copy_proposal.save()
 
     return copy_proposal
+
+
+def copy_tasks_to_session(session, tasks):
+    for t in tasks:
+        r = t.registrations.all()
+        rk = t.registration_kinds.all()
+
+        task = t
+        task.pk = None
+        task.session = session
+        task.save()
+
+        task.registrations = r
+        task.registration_kinds = rk
+        task.save()

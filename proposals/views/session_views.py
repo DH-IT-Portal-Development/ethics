@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
 from .base_views import UpdateView, DeleteView, get_session_progress
+from ..copy import copy_tasks_to_session
 from ..forms import SessionStartForm, TaskStartForm, TaskEndForm, SessionEndForm
 from ..mixins import AllowErrorsMixin, DeletionAllowedMixin
 from ..models import Study, Session, Task
@@ -155,18 +156,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             form.cleaned_data['tasks_number'] = s.tasks_number
 
             # Copy Tasks from the parent Session
-            for t in s.task_set.all():
-                r = t.registrations.all()
-                rk = t.registration_kinds.all()
-
-                task = t
-                task.pk = None
-                task.session = session
-                task.save()
-
-                task.registrations = r
-                task.registration_kinds = rk
-                task.save()
+            copy_tasks_to_session(session, s.task_set.all())
         else:
             nr_tasks = form.cleaned_data['tasks_number']
             session = form.instance
