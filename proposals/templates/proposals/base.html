@@ -59,10 +59,10 @@
             <script>
             $(function() {
                 var val = {% block progress %}{% endblock %};
-                $("#progressbar").progressbar({
+                $('#progressbar').progressbar({
                     value: val
                 });
-                $(".progress-label").text(val + "%");
+                $('.progress-label').text(val + "%");
             });
             </script>
             <div id="progressbar"><div class="progress-label"></div></div>

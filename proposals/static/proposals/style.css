@@ -24,6 +24,10 @@ body {
     color: gray;
 }
 
+#progressbar {
+    margin-bottom: 1em;
+}
+
 .session_list, .task_list {
     border: 1px solid #eee;
     padding: 0em 1em 1em 1em;

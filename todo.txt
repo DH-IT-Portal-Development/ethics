@@ -1,7 +1,6 @@
 TODO:
 - Kopiëren complete aanvraag
 - WMO (alles correct?)
-- Taken herordenen
 
 - links naar website vanuit teksten
 - Uitvoer naar PDF, paginanummers
