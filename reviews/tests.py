@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 from .models import Review, Decision
 from .utils import start_review, auto_review
@@ -9,34 +9,55 @@ from proposals.models import Proposal, Study, Session, Task, Relation, Compensat
 from proposals.utils import generate_ref_number
 
 
-class ReviewTestCase(TestCase):
-    fixtures = ['relations', 'compensations', 'registrations', 'agegroups']
+class BaseReviewTestCase(TestCase):
+    fixtures = ['relations', 'compensations', 'registrations', 'agegroups', 'groups']
 
     def setUp(self):
-        self.user = User.objects.create_superuser('test0101', 'test@test.com', 'secret')
-        self.supervisor = User.objects.create_superuser('supervisor', 'test@test.com', 'secret')
-        self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
-                                          date_start=datetime.now(), date_end=datetime.now(),
-                                          created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=4))
-        self.p2 = Proposal.objects.create(title='p2', reference_number=generate_ref_number(self.user),
-                                          date_start=datetime.now(), date_end=datetime.now(),
-                                          created_by=self.user, supervisor=self.supervisor, relation=Relation.objects.get(pk=5))
+        """
+        Sets up the Users and a default Proposal to use in the tests below.
+        """
+        self.secretary = User.objects.create_user('secretary', 'test@test.com', 'secret')
+        self.c1 = User.objects.create_user('c1', 'test@test.com', 'secret')
+        self.c2 = User.objects.create_user('c2', 'test@test.com', 'secret')
+        self.user = User.objects.create_user('user', 'test@test.com', 'secret')
+        self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret')
 
+        self.secretary.groups.add(Group.objects.get(name='Secretaris'))
+        self.c1.groups.add(Group.objects.get(name='Commissie'))
+        self.c2.groups.add(Group.objects.get(name='Commissie'))
+
+        self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
+                                                date_start=datetime.now(), date_end=datetime.now(),
+                                                created_by=self.user, supervisor=self.supervisor,
+                                                relation=Relation.objects.get(pk=4))
+
+
+class ReviewTestCase(BaseReviewTestCase):
     def test_start_review(self):
-        review = start_review(self.p1)
+        """
+        Tests starting of a Review from a submitted Proposal.
+        """
+        # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
+        review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.SUPERVISOR)
         self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
 
-        review = start_review(self.p2)
+        # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
+        self.proposal.relation = Relation.objects.get(pk=5)
+        self.proposal.save()
+        review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.ASSIGNMENT)
-        self.assertEqual(Decision.objects.filter(reviewer=self.user).count(), 1)
-        self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 2)
-        self.assertEqual(Decision.objects.filter(review=review).count(), 2)
+        self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
+        self.assertEqual(Decision.objects.filter(review=review).count(), 1)
+        self.assertEqual(review.decision_set.count(), 1)
 
     def test_decision_supervisor(self):
-        review = start_review(self.p1)
+        """
+        Tests whether a Decision from the supervisor leads to a change in the Review.
+        """
+        review = start_review(self.proposal)
         self.assertEqual(review.go, None)
 
         decision = Decision.objects.filter(review=review)[0]
@@ -46,8 +67,20 @@ class ReviewTestCase(TestCase):
         self.assertEqual(review.go, True)
 
     def test_decision_commission(self):
-        review = start_review(self.p2)
+        """
+        Tests whether the commission phase in a Review works correctly.
+        """
+        # Set the relation to a supervisor so we can skip the first phase
+        self.proposal.relation = Relation.objects.get(pk=5)
+        self.proposal.save()
+        review = start_review(self.proposal)
+        self.assertEqual(review.stage, Review.ASSIGNMENT)
         self.assertEqual(review.go, None)
+
+        # Create a Decision for a member of the commission group
+        Decision.objects.create(review=review, reviewer=self.c1)
+        review.stage = Review.COMMISSION
+        review.refresh_from_db()
 
         decisions = Decision.objects.filter(review=review)
         self.assertEqual(len(decisions), 2)
@@ -67,12 +100,14 @@ class ReviewTestCase(TestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
 
+
+class AutoReviewTests(BaseReviewTestCase):
     def test_auto_review(self):
-        s = Study.objects.create(proposal=self.p2, compensation=Compensation.objects.get(pk=1))
+        s = Study.objects.create(proposal=self.proposal, compensation=Compensation.objects.get(pk=1))
         s.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
         s.save()
 
-        go, reasons = auto_review(self.p2)
+        go, reasons = auto_review(self.proposal)
         self.assertTrue(go)
 
         s1 = Session.objects.create(study=s, order=1, tasks_number=1)
@@ -81,20 +116,20 @@ class ReviewTestCase(TestCase):
         s1_t1.registrations = Registration.objects.filter(pk=6)  # psychofysiological measurements
         s1_t1.save()
 
-        go, reasons = auto_review(self.p2)
+        go, reasons = auto_review(self.proposal)
         self.assertFalse(go)
         self.assertEqual(len(reasons), 1)
 
         s1_t1.registrations = Registration.objects.filter(requires_review=True)  # psychofysiological measurements / other
         s1_t1.save()
 
-        go, reasons = auto_review(self.p2)
+        go, reasons = auto_review(self.proposal)
         self.assertFalse(go)
         self.assertEqual(len(reasons), 2)
 
         s.risk = True
         s.save()
 
-        go, reasons = auto_review(self.p2)
+        go, reasons = auto_review(self.proposal)
         self.assertFalse(go)
         self.assertEqual(len(reasons), 3)

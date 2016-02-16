@@ -283,10 +283,10 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
 
     def update_status(self):
         if self.metc or (self.is_medical and self.is_behavioristic):
-            if not self.metc_decision:
-                self.status = self.WAITING
-            if self.metc_decision:
+            if self.metc_decision and self.metc_decision_pdf:
                 self.status = self.JUDGED
+            else:
+                self.status = self.WAITING
         else:
             self.status = self.NO_WMO
 
@@ -527,6 +527,8 @@ Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per t
 
     def all_tasks_completed(self):
         result = True
+        if self.task_set.count() == 0:
+            result = False
         for task in self.task_set.all():
             result &= task.name != ''
         return result

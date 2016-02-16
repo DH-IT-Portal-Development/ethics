@@ -7,8 +7,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Proposal, Relation, Wmo, Study, Compensation, Session, Task
 from .utils import generate_ref_number
 
-
-class ProposalTestCase(TestCase):
+class BaseProposalTestCase(TestCase):
     fixtures = ['relations', 'compensations']
 
     def setUp(self):
@@ -18,6 +17,8 @@ class ProposalTestCase(TestCase):
                                           date_start=datetime.now(), date_end=datetime.now(),
                                           created_by=self.user, relation=self.relation)
 
+
+class ProposalTestCase(BaseProposalTestCase):
     def test_reference_number(self):
         current_year = str(datetime.now().year)
 
@@ -66,8 +67,8 @@ class ProposalTestCase(TestCase):
         s1.save()
         self.assertEqual(proposal.status, Proposal.TASKS_STARTED)
 
-        s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t2 = Task.objects.create(session=s1, order=2)
+        s1_t1 = Task.objects.create(session=s1, order=1, name='t1')
+        s1_t2 = Task.objects.create(session=s1, order=2, name='t2')
         self.assertEqual(proposal.status, Proposal.TASKS_ADDED)
 
         s1.tasks_duration = 45
@@ -77,10 +78,10 @@ class ProposalTestCase(TestCase):
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)
-        self.assertEqual(proposal.status, proposal.TASKS_STARTED)
+        self.assertEqual(proposal.status, proposal.TASKS_ADDED)
 
 
-class WmoTestCase(ProposalTestCase):
+class WmoTestCase(BaseProposalTestCase):
     def setUp(self):
         super(WmoTestCase, self).setUp()
         self.wmo = Wmo.objects.create(proposal=self.p1, metc=False)
