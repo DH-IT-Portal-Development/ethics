@@ -98,7 +98,7 @@ class ProposalCreate(CreateView):
     success_message = _('Studie %(title)s aangemaakt')
 
     def get_initial(self):
-        """Sets initial applicant to current user"""
+        """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
         initial['applicants'] = [self.request.user]
         return initial

@@ -1,0 +1,12 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+Bedankt voor je feedback!
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
+
+{% block content %}
+Klik <a href="{{ feedback.url }}">hier</a> om terug te keren naar de vorige pagina.
+{% endblock %}

@@ -11,19 +11,19 @@ Feedbackoverzicht
 <table class="dataTable display">
     <thead>
         <tr>
+            <th>Toegevoegd op</th>
             <th>URL</th>
             <th>Feedback</th>
             <th>Gegeven door</th>
-            <th>Toegevoegd op</th>
         </tr>
     </thead>
     <tbody>
         {% for feedback in feedback_list %}
         <tr>
+            <td>{{ feedback.date_created|date:"j M Y, G:i" }}</td>
             <td>{{ feedback.url }}</td>
             <td>{{ feedback.comment }}</td>
             <td>{{ feedback.submitter }}</td>
-            <td>{{ feedback.date_created|date:"j M Y, G:i" }}</td>
         </tr>
         {% endfor %}
     </tbody>
