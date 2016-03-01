@@ -1,0 +1,10 @@
+{% extends "mails/base.html" %}
+
+{% block content %}
+Beste collega,
+
+{{ creator }} heeft binnen de ETCL-webportal een concept-aanmelding opgesteld
+voor een studie waarbij u als de eindverantwoordelijke onderzoeker bent aangewezen.
+U kunt deze concept-aanmelding hier {{ proposal_url }} bekijken en, eventueel na aanpassingen,
+formeel ter toetsing bij de ETCL indienen.
+{% endblock %}

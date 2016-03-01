@@ -1,0 +1,6 @@
+{% extends "mails/base.html" %}
+
+{% block content %}
+Er is een nieuwe studie ingediend.
+Deze studie zou volgens de automatische screening de {{ review.short_route|yesno:"korte,lange" }} route moeten doorlopen.
+{% endblock %}

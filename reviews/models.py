@@ -11,11 +11,12 @@ class Review(models.Model):
     ASSIGNMENT = 1
     COMMISSION = 2
     STAGES = (
-        (SUPERVISOR, _('Beoordeling door supervisor')),
+        (SUPERVISOR, _('Beoordeling door eindverantwoordelijke')),
         (ASSIGNMENT, _('Aanstelling commissieleden')),
         (COMMISSION, _('Beoordeling door ethische commissie')),
     )
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
+    short_route = models.BooleanField(_('Route'), default=True)
     go = models.NullBooleanField(_('Beslissing'), default=None)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(blank=True, null=True)

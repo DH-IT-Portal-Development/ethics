@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.utils import timezone
 
@@ -33,6 +34,7 @@ def start_supervisor_phase(proposal):
     - Set date_submitted_supervisor to current date/time
     - Create a Decision for the supervisor
     - Send an e-mail to the supervisor
+    - Send an e-mail to the creator
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.SUPERVISOR
@@ -44,9 +46,15 @@ def start_supervisor_phase(proposal):
     decision = Decision(review=review, reviewer=proposal.supervisor)
     decision.save()
 
-    subject = 'ETCL: beoordelen als eindverantwoordelijke'
-    message = 'Zie hier'
-    send_mail(subject, message, settings.EMAIL_FROM, [proposal.supervisor.email])
+    subject = _('ETCL: bevestiging indienen concept-aanmelding')
+    params = {'secretary': 'Maartje de Klerk'}
+    msg_plain = render_to_string('templates/mail/concept_creator.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
+
+    subject = _('ETCL: beoordelen als eindverantwoordelijke')
+    params = {'creator': proposal.created_by, 'proposal_url': 'test', 'secretary': 'Maartje de Klerk'}
+    msg_plain = render_to_string('templates/mail/concept_supervisor.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email])
 
     return review
 
@@ -55,12 +63,16 @@ def start_assignment_phase(proposal):
     """
     Starts the assignment phase:
     - Set the Review status to ASSIGNMENT
-    - Set date_submitted to current date/time
+    - Do an automatic review to determine whether this Review can follow the short route
+    - Set date_submitted on Proposal to current date/time
     - Create a Decision for all Users in the 'Secretaris' Group
-    - Send an e-mail to these Users.
+    - Send an e-mail to these Users
+    - Send an e-mail to the supervisor
     """
+    auto_go = auto_review(proposal)[0]
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.ASSIGNMENT
+    review.short_route = auto_go
     review.save()
 
     proposal.date_submitted = timezone.now()
@@ -72,9 +84,20 @@ def start_assignment_phase(proposal):
         decision.save()
         emails.append(user.email)
 
-    subject = 'ETCL: aanstellen commissieleden'
-    message = 'Zie hier'
-    send_mail(subject, message, settings.EMAIL_FROM, emails)
+    subject = _('ETCL: nieuwe studie ingediend')
+    params = {'review': review, 'secretary': 'Maartje de Klerk'}
+    msg_plain = render_to_string('templates/mail/submitted.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, emails)
+
+    responsible = proposal.supervisor if proposal.relation.needs_supervisor else proposal.created_by
+
+    subject = _('ETCL: aanmelding ontvangen')
+    params = {'review': review, 'secretary': 'Maartje de Klerk'}
+    if review.short_route:
+        msg_plain = render_to_string('templates/mail/submitted_shortroute.txt', params)
+    else:
+        msg_plain = render_to_string('templates/mail/submitted_longroute.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, responsible.email)
 
     return review
 
