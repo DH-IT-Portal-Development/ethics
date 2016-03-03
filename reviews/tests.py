@@ -30,6 +30,7 @@ class BaseReviewTestCase(TestCase):
                                                 date_start=datetime.now(), date_end=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4))
+        self.study = Study.objects.create(proposal=self.proposal, compensation=Compensation.objects.get(pk=1))
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -53,6 +54,8 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
 
+
+class SupervisorTestCase(BaseReviewTestCase):
     def test_decision_supervisor(self):
         """
         Tests whether a Decision from the supervisor leads to a change in the Review.
@@ -66,6 +69,16 @@ class ReviewTestCase(BaseReviewTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, True)
 
+
+class AssignmentTestCase(BaseReviewTestCase):
+    def test_assignment(self):
+        """
+        Tests whether the assignment works correctly.
+        """
+        pass
+
+
+class CommissionTestCase(BaseReviewTestCase):
     def test_decision_commission(self):
         """
         Tests whether the commission phase in a Review works correctly.
@@ -103,14 +116,13 @@ class ReviewTestCase(BaseReviewTestCase):
 
 class AutoReviewTests(BaseReviewTestCase):
     def test_auto_review(self):
-        s = Study.objects.create(proposal=self.proposal, compensation=Compensation.objects.get(pk=1))
-        s.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
-        s.save()
+        self.study.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
+        self.study.save()
 
         go, reasons = auto_review(self.proposal)
         self.assertTrue(go)
 
-        s1 = Session.objects.create(study=s, order=1, tasks_number=1)
+        s1 = Session.objects.create(study=self.study, order=1, tasks_number=1)
 
         s1_t1 = Task.objects.create(session=s1, order=1)
         s1_t1.registrations = Registration.objects.filter(pk=6)  # psychofysiological measurements
@@ -127,8 +139,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertFalse(go)
         self.assertEqual(len(reasons), 2)
 
-        s.risk = True
-        s.save()
+        self.study.risk = True
+        self.study.save()
 
         go, reasons = auto_review(self.proposal)
         self.assertFalse(go)

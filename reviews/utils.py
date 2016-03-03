@@ -48,12 +48,12 @@ def start_supervisor_phase(proposal):
 
     subject = _('ETCL: bevestiging indienen concept-aanmelding')
     params = {'secretary': 'Maartje de Klerk'}
-    msg_plain = render_to_string('templates/mail/concept_creator.txt', params)
+    msg_plain = render_to_string('mail/concept_creator.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
 
     subject = _('ETCL: beoordelen als eindverantwoordelijke')
     params = {'creator': proposal.created_by, 'proposal_url': 'test', 'secretary': 'Maartje de Klerk'}
-    msg_plain = render_to_string('templates/mail/concept_supervisor.txt', params)
+    msg_plain = render_to_string('mail/concept_supervisor.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email])
 
     return review
@@ -86,7 +86,7 @@ def start_assignment_phase(proposal):
 
     subject = _('ETCL: nieuwe studie ingediend')
     params = {'review': review, 'secretary': 'Maartje de Klerk'}
-    msg_plain = render_to_string('templates/mail/submitted.txt', params)
+    msg_plain = render_to_string('mail/submitted.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, emails)
 
     responsible = proposal.supervisor if proposal.relation.needs_supervisor else proposal.created_by
@@ -94,10 +94,10 @@ def start_assignment_phase(proposal):
     subject = _('ETCL: aanmelding ontvangen')
     params = {'review': review, 'secretary': 'Maartje de Klerk'}
     if review.short_route:
-        msg_plain = render_to_string('templates/mail/submitted_shortroute.txt', params)
+        msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
     else:
-        msg_plain = render_to_string('templates/mail/submitted_longroute.txt', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, responsible.email)
+        msg_plain = render_to_string('mail/submitted_longroute.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [responsible.email])
 
     return review
 
