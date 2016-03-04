@@ -1,0 +1,22 @@
+{% extends "proposals/base.html" %}
+{% load staticfiles %}
+
+{% block title %} 
+Review afsluiten
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
+
+{% block content %}
+<p>
+	Sluit hier de review voor de studie <em>{{ object.proposal.title }}</em> af. Hieronder volgen de individuele beslissingen.
+</p>
+<h2>Individuele beslissingen</h2>
+{% include "reviews/review_table.html" %}
+<h2>Uiteindelijk besluit</h2>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <input class="pure-button pure-button-primary" type="submit" value="Review afsluiten" />
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">Terug naar de vorige pagina</a>
+</form>
+{% endblock %}

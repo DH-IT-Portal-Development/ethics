@@ -13,6 +13,13 @@ from proposals.models import Task
 SECRETARY = 'Secretaris'
 
 
+def get_secretary():
+    """
+    Returns the Secretary. We limit this to one user.
+    """
+    return get_user_model().objects.filter(groups__name=SECRETARY)[0]
+
+
 def start_review(proposal):
     """
     Starts a Review for the given Proposal.
@@ -47,12 +54,12 @@ def start_supervisor_phase(proposal):
     decision.save()
 
     subject = _('ETCL: bevestiging indienen concept-aanmelding')
-    params = {'secretary': 'Maartje de Klerk'}
+    params = {'secretary': get_secretary().get_full_name()}
     msg_plain = render_to_string('mail/concept_creator.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
 
     subject = _('ETCL: beoordelen als eindverantwoordelijke')
-    params = {'creator': proposal.created_by, 'proposal_url': 'test', 'secretary': 'Maartje de Klerk'}
+    params = {'creator': proposal.created_by, 'proposal_url': 'test', 'secretary': get_secretary().get_full_name()}
     msg_plain = render_to_string('mail/concept_supervisor.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email])
 
@@ -69,6 +76,7 @@ def start_assignment_phase(proposal):
     - Send an e-mail to these Users
     - Send an e-mail to the supervisor
     """
+    secretary = get_secretary()
     auto_go = auto_review(proposal)[0]
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.ASSIGNMENT
@@ -78,21 +86,18 @@ def start_assignment_phase(proposal):
     proposal.date_submitted = timezone.now()
     proposal.save()
 
-    emails = []
-    for user in get_user_model().objects.filter(groups__name=SECRETARY):
-        decision = Decision(review=review, reviewer=user)
-        decision.save()
-        emails.append(user.email)
+    decision = Decision(review=review, reviewer=secretary)
+    decision.save()
 
     subject = _('ETCL: nieuwe studie ingediend')
-    params = {'review': review, 'secretary': 'Maartje de Klerk'}
+    params = {'review': review, 'secretary': secretary.get_full_name()}
     msg_plain = render_to_string('mail/submitted.txt', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, emails)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
     responsible = proposal.supervisor if proposal.relation.needs_supervisor else proposal.created_by
 
     subject = _('ETCL: aanmelding ontvangen')
-    params = {'review': review, 'secretary': 'Maartje de Klerk'}
+    params = {'review': review, 'secretary': secretary.get_full_name()}
     if review.short_route:
         msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
     else:
