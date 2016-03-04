@@ -6,12 +6,16 @@ from .models import Review, Decision
 
 COMMISSION = 'Commissie'
 YES_NO = [(True, _('akkoord')), (False, _('niet akkoord'))]
+SHORT_LONG = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route'))]
 
 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = []
+        fields = ['short_route']
+        widgets = {
+            'short_route': forms.RadioSelect(choices=SHORT_LONG),
+        }
 
     def __init__(self, *args, **kwargs):
         """Adds a field to select reviewers for this Proposal"""

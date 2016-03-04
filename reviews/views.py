@@ -1,13 +1,14 @@
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.views import generic
+from django.template.loader import render_to_string
 from django.utils import timezone
+from django.utils.translation import ugettext as _
+from django.views import generic
 
 from .forms import ReviewForm, DecisionForm
-from .mixins import LoginRequiredMixin, UserAllowedMixin
+from .mixins import LoginRequiredMixin, UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
-from .utils import auto_review
 
 
 class DecisionListView(LoginRequiredMixin, generic.ListView):
@@ -34,22 +35,14 @@ class CommissionView(LoginRequiredMixin, generic.ListView):
         return Decision.objects.all()  # filter(review__date_end=None, review__stage=Review.COMMISSION, reviewer=self.request.user)
 
 
-class ReviewDetailView(LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
+class ReviewDetailView(AutoReviewMixin, LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
     """
     Shows the Decisions for a Review
     """
     model = Review
 
-    def get_context_data(self, **kwargs):
-        """Adds the results of the machine-wise review to the context."""
-        context = super(ReviewDetailView, self).get_context_data(**kwargs)
-        go, reasons = auto_review(self.get_object().proposal)
-        context['auto_review_go'] = go
-        context['auto_review_reasons'] = reasons
-        return context
 
-
-class ReviewAssignView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class ReviewAssignView(AutoReviewMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """
@@ -60,17 +53,19 @@ class ReviewAssignView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView)
         return reverse('reviews:home')
 
     def form_valid(self, form):
-        """Updates the review status, creates Decisions and sends e-mail to reviewers."""
+        """Updates the review stage, creates Decisions and sends e-mail to reviewers."""
         form.instance.stage = Review.COMMISSION
-        emails = []
+
         for user in form.cleaned_data['reviewers']:
             decision = Decision(review=form.instance, reviewer=user)
             decision.save()
-            emails.append(user.email)
 
-        subject = 'ETCL: aanstellen commissieleden'
-        message = 'Zie hier'
-        send_mail(subject, message, settings.EMAIL_FROM, emails)
+            template = 'mail/assignment_shortroute.txt' if form.instance.short_route else 'mail/assignment_longroute.txt'
+
+            subject = _('ETCL: nieuwe studie')
+            params = {'reviewer': user.get_full_name(), 'secretary': 'Maartje de Klerk'}
+            msg_plain = render_to_string(template, params)
+            send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
 
         return super(ReviewAssignView, self).form_valid(form)
 

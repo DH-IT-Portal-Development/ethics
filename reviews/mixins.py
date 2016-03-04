@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Review, Decision
+from .utils import auto_review
 
 
 class LoginRequiredMixin(object):
@@ -35,3 +36,13 @@ class UserAllowedMixin(SingleObjectMixin):
                 raise PermissionDenied
 
         return obj
+
+
+class AutoReviewMixin(object):
+    def get_context_data(self, **kwargs):
+        """Adds the results of the machine-wise review to the context."""
+        context = super(AutoReviewMixin, self).get_context_data(**kwargs)
+        go, reasons = auto_review(self.get_object().proposal)
+        context['auto_review_go'] = go
+        context['auto_review_reasons'] = reasons
+        return context

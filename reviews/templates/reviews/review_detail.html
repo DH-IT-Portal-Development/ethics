@@ -41,23 +41,5 @@ Beslissingen bij voorstel {{ proposal }}
         {% endfor %}
     </tbody>
 </table>
-<h2>{% trans "Uitkomst automatische review" %}</h2>
-<p>
-    <div class="{{ auto_review_go|yesno:"success,warning" }}">
-        {% if auto_review_go %}
-        {% trans "Volgens de automatische review krijgt dit voorstel een <em>go</em>." %}
-        {% else %}
-        {% trans "Volgens de automatische review moet dit voorstel nader worden bekeken." %}
-        {% endif %}
-    </div>
-    {% if not auto_review_go %}
-    <h3>{% trans "Redenen" %}</h3>
-    <ul>
-        {% for reason in auto_review_reasons %}
-        <li>{{ reason }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-</p>
-
+{% include "reviews/auto_review.html" %}
 {% endblock %}
