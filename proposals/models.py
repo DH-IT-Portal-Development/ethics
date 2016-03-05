@@ -216,7 +216,7 @@ De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen b
 
     def current_session(self):
         """
-        Returns the current (imcomplete) session.
+        Returns the current (incomplete) session.
         - If all sessions are completed, the last session is returned.
         - If no sessions have yet been created, None is returned.
         """

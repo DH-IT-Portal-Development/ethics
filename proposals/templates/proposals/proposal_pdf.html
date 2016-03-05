@@ -37,7 +37,7 @@
 
 {% block page_header %}
 <div id="page-header">
-ETCL - Referentienummer {{ proposal.reference_number }}
+ETCL - <em>{{ proposal.title }}</em> (referentienummer {{ proposal.reference_number }})
 </div>
 {% endblock %}
 
@@ -79,6 +79,9 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             <tr>
                 <th>{% get_verbose_field_name proposal "tech_summary" %}</th><td>{{ proposal.tech_summary }}</td>
             </tr>
+            <tr>
+                <th>{% get_verbose_field_name proposal "allow_in_archive" %}</th><td>{{ proposal.allow_in_archive|yesno:"ja,nee" }}</td>
+            </tr>
         </table>
 
         {% with wmo=proposal.wmo %}
@@ -101,7 +104,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
         </table>
         {% endwith %}
 
-        {% if proposal.study %}
+        {% if proposal.study and proposal.wmo.status == proposal.wmo.NO_WMO %}
         {% with study=proposal.study %}
         <h2>Algemene kenmerken van de studie</h2>
         <table>
@@ -114,11 +117,19 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             <tr>
                 <th>{% get_verbose_field_name study "has_traits" %}</th><td>{{ study.has_traits|yesno:"ja,nee" }}</td>
             </tr>
+            {% if study.legally_incapable or study.has_traits %}
             <tr>
                 <th>{% get_verbose_field_name study "necessity" %}</th><td>{{ study.necessity|yesno:"ja,nee,twijfel" }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name study "necessity_reason" %}</th><td>{{ study.necessity_reason }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name study "recruitment" %}</th><td>{{ study.recruitment.all|unordered_list }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name study "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name study "setting" %}</th><td>{{ study.setting.all|unordered_list }}</td>
@@ -134,12 +145,6 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name study "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
             </tr>
             {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name study "recruitment" %}</th><td>{{ study.recruitment.all|unordered_list }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name study "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
-            </tr>
         </table>
 
         <h2>Vragen per sessie</h2>
@@ -163,7 +168,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
         {% for task in session.task_set.all %}
-        <h3>Taak {{ task.order }}</h2>
+        <h3>Taak {{ task.order }}</h3>
         <table>
             <tr>
                 <th>{% get_verbose_field_name task "name" %}</th><td>{{ task.name }}</td>
