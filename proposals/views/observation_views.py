@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView
@@ -28,10 +29,20 @@ class ObservationMixin(object):
         return reverse('proposals:intervention_create', args=(self.object.study.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:study_update', args=(self.object.study.pk,))
+        return reverse('proposals:study_design', args=(self.kwargs['pk'],))
+
+    def forms_invalid(self, form, inlines):
+        """
+        On back button, allow form to have errors.
+        """
+        if 'save_back' in self.request.POST:
+            return HttpResponseRedirect(self.get_back_url())
+        else:
+            return super(ObservationMixin, self).forms_invalid(form, inlines)
 
 
-class ObservationCreate(ObservationMixin, LoginRequiredMixin, UserAllowedMixin, CreateWithInlinesView):
+class ObservationCreate(ObservationMixin, LoginRequiredMixin,
+                        UserAllowedMixin, CreateWithInlinesView):
     """Creates an Observation from a ObservationForm"""
 
     def forms_valid(self, form, inlines):
@@ -40,5 +51,6 @@ class ObservationCreate(ObservationMixin, LoginRequiredMixin, UserAllowedMixin, 
         return super(ObservationCreate, self).forms_valid(form, inlines)
 
 
-class ObservationUpdate(ObservationMixin, LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
+class ObservationUpdate(ObservationMixin, LoginRequiredMixin,
+                        UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Observation from a ObservationForm"""

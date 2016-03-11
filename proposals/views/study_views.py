@@ -9,7 +9,7 @@ from extra_views import UpdateWithInlinesView
 
 from .base_views import CreateView, UpdateView, success_url
 from ..mixins import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin
-from ..forms import StudyForm, StudySurveyForm, SurveysInline
+from ..forms import StudyForm, StudyDesignForm, StudySurveyForm, SurveysInline
 from ..models import Proposal, Study, AgeGroup
 from ..utils import string_to_bool
 
@@ -24,10 +24,7 @@ class StudyMixin(object):
     success_message = _('Studie opgeslagen')
 
     def get_next_url(self):
-        study = self.object
-        # TODO: send through based on selection
-        return reverse('proposals:observation_create', args=(self.object.pk,))
-        #return reverse('proposals:session_start', args=(self.object.proposal.id,))
+        return reverse('proposals:study_design', args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
@@ -44,6 +41,21 @@ class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):
 
 class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
     """Updates a Study from a StudyForm"""
+
+
+class StudyDesign(AllowErrorsMixin, UpdateView):
+    model = Study
+    form_class = StudyDesignForm
+    success_message = _('Studieontwerp opgeslagen')
+    template_name = 'proposals/study_design.html'
+
+    def get_next_url(self):
+        study = self.object
+        # TODO: send through based on selection
+        return reverse('proposals:observation_create', args=(self.kwargs['pk'],))
+
+    def get_back_url(self):
+        return reverse('proposals:study_update', args=(self.kwargs['pk'],))
 
 
 # NOTE: below view is non-standard, as it include inlines
