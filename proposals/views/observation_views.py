@@ -25,7 +25,7 @@ class ObservationMixin(object):
         return success_url(self)
 
     def get_next_url(self):
-        return reverse('proposals:study_update', args=(self.object.study.pk,))
+        return reverse('proposals:intervention_create', args=(self.object.study.pk,))
 
     def get_back_url(self):
         return reverse('proposals:study_update', args=(self.object.study.pk,))

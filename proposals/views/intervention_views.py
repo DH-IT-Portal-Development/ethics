@@ -17,10 +17,11 @@ class InterventionMixin(object):
     success_message = _('Interventie opgeslagen')
 
     def get_next_url(self):
-        return reverse('proposals:session_start', args=(self.object.proposal.id,))
+        return reverse('proposals:session_start', args=(self.object.study.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:observation_update', args=(self.kwargs['pk'],))
+        study = Study.objects.get(pk=self.kwargs['pk'])
+        return reverse('proposals:observation_update', args=(study.pk,))
 
 
 class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):

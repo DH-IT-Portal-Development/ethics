@@ -7,6 +7,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Proposal, Relation, Wmo, Study, Compensation, Session, Task
 from .utils import generate_ref_number
 
+
 class BaseProposalTestCase(TestCase):
     fixtures = ['relations', 'compensations']
 

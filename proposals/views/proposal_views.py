@@ -92,21 +92,34 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Proposal
 
 
-class ProposalCreate(CreateView):
+class ProposalMixin(object):
     model = Proposal
     form_class = ProposalForm
-    success_message = _('Studie %(title)s aangemaakt')
+    success_message = _('Studie %(title)s bewerkt')
 
+    def get_form_kwargs(self):
+        """Sets the User as a form kwarg"""
+        kwargs = super(ProposalMixin, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_back_url(self):
+        return reverse('proposals:start')
+
+    def get_next_url(self):
+        proposal = self.object
+        if hasattr(proposal, 'wmo'):
+            return reverse('proposals:wmo_update', args=(proposal.id,))
+        else:
+            return reverse('proposals:wmo_create', args=(proposal.id,))
+
+
+class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
     def get_initial(self):
         """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
         initial['applicants'] = [self.request.user]
         return initial
-
-    def get_form_kwargs(self):
-        kwargs = super(ProposalCreate, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""
@@ -115,40 +128,22 @@ class ProposalCreate(CreateView):
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        """Adds 'create'/'no_back' to template context"""
+        """Adds 'create' to template context"""
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True
-        context['no_back'] = True
         return context
 
-    def get_next_url(self):
-        proposal = self.object
-        return reverse('proposals:wmo_create', args=(proposal.id,))
 
-
-class ProposalUpdate(UpdateView):
+class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = ProposalForm
     success_message = _('Studie %(title)s bewerkt')
 
     def get_context_data(self, **kwargs):
-        """Adds 'create'/'no_back' to template context"""
+        """Adds 'create' to template context"""
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
         context['create'] = False
-        context['no_back'] = True
         return context
-
-    def get_form_kwargs(self):
-        kwargs = super(ProposalUpdate, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-    def get_next_url(self):
-        proposal = self.object
-        if hasattr(proposal, 'wmo'):
-            return reverse('proposals:wmo_update', args=(proposal.id,))
-        else:
-            return reverse('proposals:wmo_create', args=(proposal.id,))
 
 
 class ProposalDelete(DeleteView):
@@ -162,6 +157,10 @@ class ProposalDelete(DeleteView):
 ###########################
 # Other actions on Proposal
 ###########################
+class ProposalStart(generic.TemplateView):
+    template_name = 'proposals/proposal_start.html'
+
+
 class ProposalCopy(CreateView):
     model = Proposal
     form_class = ProposalCopyForm

@@ -24,6 +24,8 @@ class StudyMixin(object):
     success_message = _('Studie opgeslagen')
 
     def get_next_url(self):
+        study = self.object
+        # TODO: send through based on selection
         return reverse('proposals:observation_create', args=(self.object.pk,))
         #return reverse('proposals:session_start', args=(self.object.proposal.id,))
 

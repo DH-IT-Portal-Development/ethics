@@ -5,6 +5,7 @@ from .views.proposal_views import *
 from .views.wmo_views import *
 from .views.study_views import *
 from .views.observation_views import *
+from .views.intervention_views import *
 from .views.session_views import *
 from .views.task_views import *
 
@@ -12,7 +13,7 @@ urlpatterns = [
     # Home
     url(r'^$', HomeView.as_view(), name='home'),
 
-    # Lists
+    # List views
     url(r'^proposals-all/$', ProposalsView.as_view(), name='archive'),
     url(r'^concepts/$', MyConceptsView.as_view(), name='my_concepts'),
     url(r'^submitted/$', MySubmittedView.as_view(), name='my_submitted'),
@@ -20,6 +21,7 @@ urlpatterns = [
     url(r'^proposals/$', MyProposalsView.as_view(), name='my_archive'),
 
     # Proposal
+    url(r'^start/$', ProposalStart.as_view(), name='start'),
     url(r'^create/$', ProposalCreate.as_view(), name='create'),
     url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
@@ -45,6 +47,10 @@ urlpatterns = [
     url(r'^observation/create/(?P<pk>\d+)/$', ObservationCreate.as_view(), name='observation_create'),
     url(r'^observation/update/(?P<pk>\d+)/$', ObservationUpdate.as_view(), name='observation_update'),
 
+    # Intervention
+    url(r'^intervention/create/(?P<pk>\d+)/$', InterventionCreate.as_view(), name='intervention_create'),
+    url(r'^intervention/update/(?P<pk>\d+)/$', InterventionUpdate.as_view(), name='intervention_update'),
+
     # Session(s)
     url(r'^session_start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),
     url(r'^session_end/(?P<pk>\d+)/$', SessionEnd.as_view(), name='session_end'),
@@ -58,6 +64,7 @@ urlpatterns = [
     url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
     url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view(), name='task_delete'),
 
+    # Checks on conditional fields
     url(r'^check_requires/$', check_requires, name='check_requires'),
     url(r'^check_necessity_required/$', check_necessity_required, name='check_necessity_required'),
 ]
