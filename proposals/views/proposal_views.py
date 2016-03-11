@@ -199,7 +199,7 @@ class ProposalSubmit(UpdateView):
     def form_valid(self, form):
         """Start the review process on submission"""
         success_url = super(ProposalSubmit, self).form_valid(form)
-        if not 'save_back' in self.request.POST:
+        if 'save_back' not in self.request.POST:
             start_review(self.get_object())
         return success_url
 

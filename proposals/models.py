@@ -355,6 +355,15 @@ class Recruitment(models.Model):
 
 
 class Study(models.Model):
+    OBSERVATION = 0
+    INTERVENTION = 1
+    TASK = 2
+    DESIGNS = (
+        (OBSERVATION, _('Observatieonderzoek')),
+        (INTERVENTION, _('Interventieonderzoek')),
+        (TASK, _('Taakonderzoek')),
+    )
+
     age_groups = models.ManyToManyField(
         AgeGroup,
         verbose_name=_('Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, \
@@ -391,11 +400,21 @@ beantwoorden door volwassen deelnemers te testen?'))
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname aan deze studie?'),
+        # TODO: put a proper text here.
         help_text=_('tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld'))
     compensation_details = models.CharField(
         _('Namelijk'),
         max_length=200,
         blank=True)
+
+    """
+    design = models.MultipleChoiceField(
+        _('Om welk type onderzoek gaat het bij uw studie? \
+Als uw studie meerdere sessies heeft die niet allen van hetzelfde type zijn (bijv. een observatiesessie gevolgd \
+door een interventiesessie, of een interventiesessie gevolgd door een takensessie), kruis dan meerdere opties aan.'),
+        choices=DESIGNS
+    )
+    """
 
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
