@@ -103,9 +103,6 @@ class ProposalMixin(object):
         kwargs['user'] = self.request.user
         return kwargs
 
-    def get_back_url(self):
-        return reverse('proposals:start')
-
     def get_next_url(self):
         proposal = self.object
         if hasattr(proposal, 'wmo'):
@@ -128,9 +125,10 @@ class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        """Adds 'create' to template context"""
+        """Adds 'create'/'no_back' to template context"""
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context['create'] = True
+        context['no_back'] = True
         return context
 
 
@@ -140,9 +138,10 @@ class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
     success_message = _('Studie %(title)s bewerkt')
 
     def get_context_data(self, **kwargs):
-        """Adds 'create' to template context"""
+        """Adds 'create'/'no_back' to template context"""
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
         context['create'] = False
+        context['no_back'] = True
         return context
 
 

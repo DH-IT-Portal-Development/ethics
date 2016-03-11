@@ -21,11 +21,13 @@ class ProposalForm(forms.ModelForm):
                   'other_applicants', 'applicants',
                   'date_start', 'date_end',
                   'title', 'tech_summary',
+                  'funding', 'funding_details',
                   'allow_in_archive']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
             'tech_summary': forms.Textarea(attrs={'rows': 30, 'cols': 80}),
+            'funding': forms.CheckboxSelectMultiple(),
             'allow_in_archive': forms.RadioSelect(choices=YES_NO)
         }
         error_messages = {
@@ -69,6 +71,8 @@ class ProposalForm(forms.ModelForm):
         if tech_summary and len(tech_summary.split()) > SUMMARY_MAX_WORDS:
             error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
             self.add_error('tech_summary', error)
+
+        check_dependency_multiple(self, cleaned_data, 'funding', 'needs_details', 'funding_details')
 
 
 class ProposalCopyForm(forms.ModelForm):

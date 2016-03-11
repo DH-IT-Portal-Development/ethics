@@ -25,6 +25,15 @@ class Relation(models.Model):
         return self.description
 
 
+class Funding(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.description
+
+
 class Proposal(models.Model):
     DRAFT = 1
     WMO_DECISION_BY_ETCL = 2
@@ -82,6 +91,13 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
     other_applicants = models.BooleanField(
         _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
         default=False)
+    funding = models.ManyToManyField(
+        Funding,
+        verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'))
+    funding_details = models.CharField(
+        _('Namelijk'),
+        max_length=200,
+        blank=True)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
