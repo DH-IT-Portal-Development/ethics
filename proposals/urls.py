@@ -4,6 +4,7 @@ from .views.base_views import *
 from .views.proposal_views import *
 from .views.wmo_views import *
 from .views.study_views import *
+from .views.observation_views import *
 from .views.session_views import *
 from .views.task_views import *
 
@@ -39,6 +40,10 @@ urlpatterns = [
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
     url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
     url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
+
+    # Observation
+    url(r'^observation/create/(?P<pk>\d+)/$', ObservationCreate.as_view(), name='observation_create'),
+    url(r'^observation/update/(?P<pk>\d+)/$', ObservationUpdate.as_view(), name='observation_update'),
 
     # Session(s)
     url(r'^session_start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),

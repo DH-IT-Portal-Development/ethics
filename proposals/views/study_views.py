@@ -24,7 +24,8 @@ class StudyMixin(object):
     success_message = _('Studie opgeslagen')
 
     def get_next_url(self):
-        return reverse('proposals:session_start', args=(self.object.proposal.id,))
+        return reverse('proposals:observation_create', args=(self.object.pk,))
+        #return reverse('proposals:session_start', args=(self.object.proposal.id,))
 
     def get_back_url(self):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))

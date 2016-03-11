@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.views.generic.detail import SingleObjectMixin
 
-from .models import Proposal, Session, Task
+from .models import Proposal, Observation, Intervention, Session, Task
 
 SECRETARY = 'Secretaris'
 COMMISSION = 'Commissie'
@@ -63,7 +63,7 @@ class UserAllowedMixin(SingleObjectMixin):
 
         if isinstance(obj, Proposal):
             proposal = obj
-        elif isinstance(obj, Session):
+        elif isinstance(obj, Observation) or isinstance(obj, Intervention) or isinstance(obj, Session):
             proposal = obj.study.proposal
         elif isinstance(obj, Task):
             proposal = obj.session.study.proposal

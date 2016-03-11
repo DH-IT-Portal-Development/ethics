@@ -66,8 +66,12 @@ form th {
     color: red;
 }
 
-.survey_set p {
+.survey_set p, .location_set p {
     display: inline;
+}
+
+.survey_set textarea, .location_set textarea {
+    height: 3em;
 }
 
 form table {

@@ -1,0 +1,48 @@
+{% extends "proposals/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+{% trans "Observatiestudie" %}
+{% endblock %}
+
+{% block progress %}15{% endblock %}
+
+{% block content %}
+<script>
+$(function() {
+    $('.location_set').formset({
+        prefix: 'location_set',
+        addText: "{% trans 'Voeg locatie toe' %}",
+        deleteText: "{% trans 'Verwijder' %}"
+    });
+
+    $('.location_set textarea').focus(function() {
+        $(this).css('height', '6em');
+    }).blur(function() {
+        $(this).css('height', '3em');
+    });
+});
+</script>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <th><strong>{% trans 'Geef hieronder de locatie(s) aan waar de observatie plaatsvindt.' %}</strong></th>
+            <td></td>
+        </tr>
+        {% for formset in inlines %}
+        {% for subform in formset.forms %}
+        <tr class="{{ formset.prefix }}">
+            <td colspan="2">{{ subform.as_p }}</td>
+        </tr>
+        {% endfor %}
+        {{ formset.management_form }}
+        {% endfor %}
+    </table>
+    {% with proposal=observation.study.proposal %}
+    {% include "proposals/form_buttons.html" %}
+    {% endwith %}
+</form>
+{% endblock %}

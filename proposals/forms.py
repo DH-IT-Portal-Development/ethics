@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 from extra_views import InlineFormSet
 
-from .models import Proposal, Wmo, Study, Session, Task, Survey
+from .models import Proposal, Wmo, Study, Observation, Session, Task, Survey, Location
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
@@ -241,6 +241,25 @@ class SurveysInline(InlineFormSet):
     can_delete = True
     extra = 1
     formset_class = SurveyInlineFormSet
+
+
+class ObservationForm(forms.ModelForm):
+    class Meta:
+        model = Observation
+        fields = ['days', 'mean_hours',
+                  'is_anonymous', 'is_test']
+        widgets = {
+            'is_anonymous': forms.RadioSelect(choices=YES_NO),
+            'is_test': forms.RadioSelect(choices=YES_NO),
+        }
+
+
+class LocationsInline(InlineFormSet):
+    """Creates an InlineFormSet for Locations"""
+    model = Location
+    fields = ['name', 'registration']
+    can_delete = True
+    extra = 1
 
 
 class SessionStartForm(forms.ModelForm):
