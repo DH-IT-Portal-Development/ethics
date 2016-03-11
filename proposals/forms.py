@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 from extra_views import InlineFormSet
 
-from .models import Proposal, Wmo, Study, Observation, Session, Task, Survey, Location
+from .models import Proposal, Wmo, Study, Observation, Intervention, Session, Task, Survey, Location
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
@@ -260,6 +260,12 @@ class LocationsInline(InlineFormSet):
     fields = ['name', 'registration']
     can_delete = True
     extra = 1
+
+
+class InterventionForm(forms.ModelForm):
+    class Meta:
+        model = Intervention
+        fields = ['relation', 'count', 'description']
 
 
 class SessionStartForm(forms.ModelForm):
