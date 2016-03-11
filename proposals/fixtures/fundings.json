@@ -1,0 +1,38 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "order": 1,
+        "description": "uit de 1e geldstroom (bijv. UiL OTS, TLC, de opleiding)"
+    },
+    "model": "proposals.funding",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 2,
+        "description": "uit de 2e geldstroom (bijv. NWO, ERC)"
+    },
+    "model": "proposals.funding",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 3,
+        "description": "uit de 3e geldstroom (bijv. marktpartijen, brancheorganisaties)"
+    },
+    "model": "proposals.funding",
+    "pk": 3
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 4,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.funding",
+    "pk": 4
+}
+]
