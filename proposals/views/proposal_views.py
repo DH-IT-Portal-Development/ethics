@@ -8,7 +8,7 @@ from easy_pdf.views import PDFTemplateResponseMixin
 
 from .base_views import CreateView, UpdateView, DeleteView
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalCopyForm, UploadConsentForm, ProposalSubmitForm
+from ..forms import ProposalForm, ProposalCopyForm, ProposalSubmitForm
 from ..mixins import AllowErrorsMixin, LoginRequiredMixin
 from ..models import Proposal
 from ..utils import generate_ref_number
@@ -177,19 +177,6 @@ class ProposalCopy(CreateView):
         return super(ProposalCopy, self).form_valid(form)
 
 
-class ProposalUploadConsent(AllowErrorsMixin, UpdateView):
-    model = Proposal
-    form_class = UploadConsentForm
-    template_name = 'proposals/proposal_consent.html'
-    success_message = _('Informed consent geupload')
-
-    def get_next_url(self):
-        return reverse('proposals:submit', args=(self.object.id,))
-
-    def get_back_url(self):
-        return reverse('proposals:study_survey', args=(self.object.id,))
-
-
 class ProposalSubmit(UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
@@ -207,7 +194,7 @@ class ProposalSubmit(UpdateView):
         return reverse('proposals:my_submitted')
 
     def get_back_url(self):
-        return reverse('proposals:consent', args=(self.object.id,))
+        return reverse('proposals:study_survey', args=(self.object.study.pk,))
 
 
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):

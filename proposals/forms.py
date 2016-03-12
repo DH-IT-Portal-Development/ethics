@@ -135,7 +135,8 @@ class StudyForm(forms.ModelForm):
                   'necessity', 'necessity_reason',
                   'recruitment', 'recruitment_details',
                   'setting', 'setting_details',
-                  'compensation', 'compensation_details']
+                  'compensation', 'compensation_details',
+                  'informed_consent_pdf', 'passive_consent', 'briefing_pdf']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
@@ -144,6 +145,7 @@ class StudyForm(forms.ModelForm):
             'recruitment': forms.CheckboxSelectMultiple(),
             'setting': forms.CheckboxSelectMultiple(),
             'compensation': forms.RadioSelect(),
+            'passive_consent': forms.RadioSelect(choices=YES_NO)
         }
 
     def __init__(self, *args, **kwargs):
@@ -464,19 +466,6 @@ class SessionEndForm(forms.ModelForm):
 
         check_dependency(self, cleaned_data, 'stressful', 'stressful_details')
         check_dependency(self, cleaned_data, 'risk', 'risk_details')
-
-
-class UploadConsentForm(forms.ModelForm):
-    class Meta:
-        model = Proposal
-        fields = ['informed_consent_pdf', 'passive_consent', 'briefing_pdf']
-        widgets = {
-            'passive_consent': forms.RadioSelect(choices=YES_NO)
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(UploadConsentForm, self).__init__(*args, **kwargs)
-        self.fields['informed_consent_pdf'].required = True
 
 
 class ProposalSubmitForm(forms.ModelForm):

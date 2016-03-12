@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^show/(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
     url(r'^pdf/(?P<pk>\d+)/$', ProposalAsPdf.as_view(), name='pdf'),
 
-    url(r'^consent/(?P<pk>\d+)/$', ProposalUploadConsent.as_view(), name='consent'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
 
     # WMO

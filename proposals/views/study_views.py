@@ -70,10 +70,10 @@ class StudySurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
         return success_url(self)
 
     def get_next_url(self):
-        return reverse('proposals:consent', args=(self.object.proposal.id,))
+        return reverse('proposals:submit', args=(self.object.proposal.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:session_end', args=(self.object.proposal.id,))
+        return reverse('proposals:session_end', args=(self.object.proposal.pk,))
 
 
 ################

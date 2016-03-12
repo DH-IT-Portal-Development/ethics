@@ -44,7 +44,6 @@ class Proposal(models.Model):
     TASKS_ADDED = 7
     TASKS_ENDED = 8
     SESSIONS_ENDED = 9
-    INFORMED_CONSENT_UPLOADED = 10
     SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
     DECISION_MADE = 55
@@ -59,7 +58,6 @@ class Proposal(models.Model):
         (TASKS_ADDED, _('Belasting deelnemer: alle taken toegevoegd')),
         (TASKS_ENDED, _('Belasting deelnemer: afgerond')),
         (SESSIONS_ENDED, _('Belasting deelnemer: afgerond')),
-        (INFORMED_CONSENT_UPLOADED, _(u'Informed consent geüpload')),
 
         (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
         (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
@@ -105,23 +103,6 @@ van de methode meer gedetailleerde informatie worden gevraagd.'))
         _('Mag deze studie ter goedkeuring in het semi-publiekelijk archief?'),
         default=True,
         help_text=_('Dit archief is alleen toegankelijk voor mensen die aan het UiL OTS geaffilieerd zijn.')
-    )
-
-    # Fields with respect to informed consent
-    informed_consent_pdf = models.FileField(
-        _('Upload hier de toestemmingsverklaring (in PDF-formaat)'),
-        blank=True,
-        validators=[validate_pdf])
-    briefing_pdf = models.FileField(
-        _('Upload hier de informatiebrief (in PDF-formaat)'),
-        blank=True,
-        validators=[validate_pdf])
-    passive_consent = models.BooleanField(
-        _('Maakt uw studie gebruik van passieve informed consent?'),
-        default=False,
-        help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
-ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
-U kunt de templates vinden op <link website?>')
     )
 
     # Status
@@ -193,8 +174,6 @@ De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen b
             if self.study.sessions_duration:
                 status = self.SESSIONS_ENDED
 
-        if self.informed_consent_pdf:
-            status = self.INFORMED_CONSENT_UPLOADED
         if self.date_submitted_supervisor:
             status = self.SUBMITTED_TO_SUPERVISOR
         if self.date_submitted:
@@ -407,9 +386,26 @@ beantwoorden door volwassen deelnemers te testen?'))
         max_length=200,
         blank=True)
 
+    # Fields with respect to experimental design
     has_observation = models.BooleanField(default=False)
     has_intervention = models.BooleanField(default=False)
     has_sessions = models.BooleanField(default=False)
+
+    # Fields with respect to informed consent
+    informed_consent_pdf = models.FileField(
+        _('Upload hier de toestemmingsverklaring (in PDF-formaat)'),
+        blank=True,
+        validators=[validate_pdf])
+    briefing_pdf = models.FileField(
+        _('Upload hier de informatiebrief (in PDF-formaat)'),
+        blank=True,
+        validators=[validate_pdf])
+    passive_consent = models.BooleanField(
+        _('Maakt uw studie gebruik van passieve informed consent?'),
+        default=False,
+        help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
+ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
+U kunt de templates vinden op <link website?>'))
 
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
