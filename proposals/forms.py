@@ -441,7 +441,7 @@ class SessionEndForm(forms.ModelForm):
         """
         - Set sessions_duration as required, update the sessions_duration label
         - Set stressful and risk as required and mark_safe the labels
-        - If there is only one session, make the sessions_duration input hidden
+        - If there is are no Sessions or only one Session in this Study, make the sessions_duration input hidden
         """
         super(SessionEndForm, self).__init__(*args, **kwargs)
 
@@ -456,7 +456,7 @@ class SessionEndForm(forms.ModelForm):
         self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)
         self.fields['risk'].label = mark_safe(self.fields['risk'].label)
 
-        if self.instance.sessions_number == 1:
+        if not self.instance.has_sessions or self.instance.sessions_number == 1:
             self.fields['sessions_duration'].widget = forms.HiddenInput()
 
     def clean(self):

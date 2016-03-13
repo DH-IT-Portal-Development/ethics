@@ -90,11 +90,16 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
     success_message = _(u'Sessies toevoegen beëindigd')
 
     def get_initial(self):
-        """If there is only one Session, transfer the duration to Study level"""
+        """
+        - If there is only one Session, transfer the duration to Study level
+        - If there are no Sessions, set the duration to zero
+        """
         initial = super(SessionEnd, self).get_initial()
-        if self.object.sessions_number == 1:
-            session = self.object.first_session()
-            initial['sessions_duration'] = session.tasks_duration
+        study = self.object
+        if not study.has_sessions:
+            initial['sessions_duration'] = 0
+        elif study.sessions_number == 1:
+            initial['sessions_duration'] = study.first_session().tasks_duration
         return initial
 
     def get_next_url(self):
