@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from .base_views import CreateView, UpdateView
 from ..mixins import AllowErrorsMixin
 from ..forms import InterventionForm
-from ..models import Study, Intervention
+from ..models import Study, Intervention, Observation
 
 
 #######################
@@ -17,11 +17,29 @@ class InterventionMixin(object):
     success_message = _('Interventie opgeslagen')
 
     def get_next_url(self):
-        return reverse('proposals:session_start', args=(self.object.study.pk,))
+        study = self.object.study
+        next_url = ''
+        pk = study.pk
+        if study.has_sessions:
+            next_url = 'proposals:session_start'
+        else:
+            next_url = 'proposals:session_end'
+        return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
-        study = Study.objects.get(pk=self.kwargs['pk'])
-        return reverse('proposals:observation_update', args=(study.pk,))
+        study = self.object.study
+        next_url = ''
+        pk = study.pk
+        if study.has_observation:
+            try:
+                observation = Observation.objects.get(study=study)
+                next_url = 'proposals:observation_update'
+                pk = observation.pk
+            except Observation.DoesNotExist:
+                pass # TODO: should not happen
+        else:
+            next_url = 'proposals:study_design'
+        return reverse(next_url, args=(pk,))
 
 
 class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):

@@ -479,7 +479,8 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
 
     def net_duration(self):
         """Returns the duration of all Tasks in this Study"""
-        return self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
+        sum = self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
+        return sum or 0
 
     def first_session(self):
         """Returns the first Session in this Study"""

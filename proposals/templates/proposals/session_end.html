@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %} 
-Belasting voor de deelnemer
+Informatie over de belasting en de risico's
 {% endblock %}
 
 {% block progress %}85{% endblock %}
@@ -14,7 +14,7 @@ $(function() {
     depends_on_value('risk', 'True', 'risk_details');
 });
 </script>
-
+{% if study.has_sessions %}
 <div class="session_list">
 	<p>
 		<em>Deze studie bestaat uit de volgende sessies:</em>
@@ -34,7 +34,7 @@ $(function() {
 	</div>
 	{% endfor %}
 </div>
-
+{% endif %}
 <p>Beantwoord op basis van dit overzicht de volgende vragen:</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>

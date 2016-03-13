@@ -9,7 +9,7 @@ from .base_views import UpdateView, DeleteView, get_session_progress
 from ..copy import copy_tasks_to_session
 from ..forms import SessionStartForm, TaskStartForm, TaskEndForm, SessionEndForm
 from ..mixins import AllowErrorsMixin, DeletionAllowedMixin
-from ..models import Study, Session, Task
+from ..models import Study, Session, Task, Observation, Intervention
 
 
 ######################
@@ -92,7 +92,18 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
         return reverse('proposals:study_survey', args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:task_end', args=(self.object.last_session().pk,))
+        study = self.object
+        if study.has_sessions:
+            next_url = 'proposals:task_end'
+            pk = self.object.last_session().pk
+        elif study.has_intervention:
+            next_url = 'proposals:intervention_update'
+            pk = Intervention.objects.get(study=study).pk
+        else:
+            next_url = 'proposals:observation_update'
+            pk = Observation.objects.get(study=study).pk
+
+        return reverse(next_url, args=(pk,))
 
 
 class SessionDelete(DeletionAllowedMixin, DeleteView):
