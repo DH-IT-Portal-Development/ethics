@@ -62,7 +62,7 @@ $(function() {
         var help = $(this).nextAll('.helptext');
         if (help.html())
         {
-            var label = $("th label[for^='" + $(this).attr('id') + "']");
+            var label = $("th label[for^='" + $(this).attr('id') + "']").first();
             label.after(' <img src="{% static 'proposals/images/information.png' %}">');
             label.next().qtip({
                 content: {
