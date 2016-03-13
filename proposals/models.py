@@ -73,7 +73,9 @@ class Proposal(models.Model):
     date_start = models.DateField(
         _('Wat is de beoogde startdatum van uw studie?'))
     date_end = models.DateField(
-        _('Wat is de beoogde einddatum van uw studie?'))
+        _('Wat is de beoogde einddatum van uw studie (indien bekend)?'),
+        blank=True,
+        null=True)
     title = models.CharField(
         _('Wat is de titel van uw studie?'),
         max_length=200,
