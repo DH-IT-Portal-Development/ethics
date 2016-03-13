@@ -79,13 +79,8 @@ class Proposal(models.Model):
         max_length=200,
         unique=True,
         help_text=_('Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies.'))
-    tech_summary = models.TextField(
-        _(u'Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een duidelijke, \
-bondige beschrijving van de onderzoeksvraag of -vragen, en (b) een korte beschrijving van de beoogde methode, \
-d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over deelnemers, materiaal (taken, stimuli), \
-design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen \
-en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingrediënten \
-van de methode meer gedetailleerde informatie worden gevraagd.'))
+    summary = models.TextField(
+        _('Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'))
     other_applicants = models.BooleanField(
         _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
         default=False)

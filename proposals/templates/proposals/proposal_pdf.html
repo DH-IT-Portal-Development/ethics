@@ -77,7 +77,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name proposal "title" %}</th><td>{{ proposal.title }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name proposal "tech_summary" %}</th><td>{{ proposal.tech_summary }}</td>
+                <th>{% get_verbose_field_name proposal "summary" %}</th><td>{{ proposal.summary }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name proposal "allow_in_archive" %}</th><td>{{ proposal.allow_in_archive|yesno:"ja,nee" }}</td>

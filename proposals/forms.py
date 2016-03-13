@@ -11,7 +11,7 @@ from .models import Proposal, Wmo, Study, Observation, Intervention, Session, Ta
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
-SUMMARY_MAX_WORDS = 600
+SUMMARY_MAX_WORDS = 200
 
 
 class ProposalForm(forms.ModelForm):
@@ -20,13 +20,13 @@ class ProposalForm(forms.ModelForm):
         fields = ['relation', 'supervisor',
                   'other_applicants', 'applicants',
                   'date_start', 'date_end',
-                  'title', 'tech_summary',
+                  'title', 'summary',
                   'funding', 'funding_details',
                   'allow_in_archive']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
-            'tech_summary': forms.Textarea(attrs={'rows': 30, 'cols': 80}),
+            'summary': forms.Textarea(attrs={'rows': 30, 'cols': 80}),
             'funding': forms.CheckboxSelectMultiple(),
             'allow_in_archive': forms.RadioSelect(choices=YES_NO)
         }
@@ -51,14 +51,14 @@ class ProposalForm(forms.ModelForm):
         Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor is set
         - If other_applicants is checked, make sure applicants are set
-        - Maximum number of words for tech_summary
+        - Maximum number of words for summary
         """
         cleaned_data = super(ProposalForm, self).clean()
         relation = cleaned_data.get('relation')
         supervisor = cleaned_data.get('supervisor')
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
-        tech_summary = cleaned_data.get('tech_summary')
+        summary = cleaned_data.get('summary')
 
         if relation and relation.needs_supervisor and not supervisor:
             error = forms.ValidationError(_('U dient een eindverantwoordelijke op te geven.'), code='required')
@@ -68,9 +68,9 @@ class ProposalForm(forms.ModelForm):
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
             self.add_error('applicants', error)
 
-        if tech_summary and len(tech_summary.split()) > SUMMARY_MAX_WORDS:
+        if summary and len(summary.split()) > SUMMARY_MAX_WORDS:
             error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
-            self.add_error('tech_summary', error)
+            self.add_error('summary', error)
 
         check_dependency_multiple(self, cleaned_data, 'funding', 'needs_details', 'funding_details')
 
