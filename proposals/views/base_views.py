@@ -10,8 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ..mixins import LoginRequiredMixin, UserAllowedMixin
 
-SESSION_PROGRESS_START = 20
-SESSION_PROGRESS_TOTAL = 60
+SESSION_PROGRESS_START = 35
+SESSION_PROGRESS_TOTAL = 50
 SESSION_PROGRESS_EPSILON = 5
 
 
