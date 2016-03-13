@@ -10,7 +10,7 @@ from extra_views import UpdateWithInlinesView
 from .base_views import CreateView, UpdateView, success_url
 from ..mixins import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin
 from ..forms import StudyForm, StudyDesignForm, StudySurveyForm, SurveysInline
-from ..models import Proposal, Study, AgeGroup
+from ..models import Proposal, Study, AgeGroup, Observation, Intervention
 from ..utils import string_to_bool
 
 
@@ -51,8 +51,25 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
 
     def get_next_url(self):
         study = self.object
-        # TODO: send through based on selection
-        return reverse('proposals:observation_create', args=(self.kwargs['pk'],))
+        next_url = ''
+        pk = study.pk
+        if study.has_observation:
+            try:
+                observation = Observation.objects.get(study=study)
+                next_url = 'proposals:observation_update'
+                pk = observation.pk
+            except Observation.DoesNotExist:
+                next_url = 'proposals:observation_create'
+        elif study.has_intervention:
+            try:
+                intervention = Intervention.objects.get(study=study)
+                next_url = 'proposals:intervention_update'
+                pk = intervention.pk
+            except Intervention.DoesNotExist:
+                next_url = 'proposals:intervention_create'
+        else:
+            next_url = 'proposals:session_start'
+        return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
         return reverse('proposals:study_update', args=(self.kwargs['pk'],))

@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %} 
-{% trans "Observatiestudie" %}
+{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}
 {% endblock %}
 
 {% block progress %}15{% endblock %}
@@ -29,7 +29,7 @@ $(function() {
     <table>
         {{ form.as_table }}
         <tr>
-            <th><strong>{% trans 'Geef hieronder de locatie(s) aan waar de observatie plaatsvindt.' %}</strong></th>
+            <th><strong>{% trans "Geef hieronder de locatie(s) aan waar de observatie plaatsvindt." %}</strong></th>
             <td></td>
         </tr>
         {% for formset in inlines %}

@@ -278,6 +278,9 @@ class InterventionForm(forms.ModelForm):
     class Meta:
         model = Intervention
         fields = ['description', 'has_drawbacks', 'has_drawbacks_details']
+        widgets = {
+            'has_drawbacks': forms.RadioSelect(choices=YES_NO),
+        }
 
     def clean(self):
         """
