@@ -39,9 +39,6 @@ class ObservationMixin(object):
             next_url = 'proposals:session_start'
         return reverse(next_url, args=(pk,))
 
-    def get_back_url(self):
-        return reverse('proposals:study_design', args=(self.object.study.pk,))
-
     def forms_invalid(self, form, inlines):
         """
         On back button, allow form to have errors.
@@ -55,13 +52,17 @@ class ObservationMixin(object):
 class ObservationCreate(ObservationMixin, LoginRequiredMixin,
                         UserAllowedMixin, CreateWithInlinesView):
     """Creates an Observation from a ObservationForm"""
-
     def forms_valid(self, form, inlines):
         """Sets the Study on the Observation before starting validation."""
         form.instance.study = Study.objects.get(pk=self.kwargs['pk'])
         return super(ObservationCreate, self).forms_valid(form, inlines)
 
+    def get_back_url(self):
+        return reverse('proposals:study_design', args=(self.kwargs['pk'],))
+
 
 class ObservationUpdate(ObservationMixin, LoginRequiredMixin,
                         UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Observation from a ObservationForm"""
+    def get_back_url(self):
+        return reverse('proposals:study_design', args=(self.object.study.pk,))
