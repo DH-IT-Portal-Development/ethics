@@ -222,6 +222,18 @@ class StudyDesignForm(forms.ModelForm):
         model = Study
         fields = ['has_observation', 'has_intervention', 'has_sessions']
 
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - at least one of the fields has to be checked
+        """
+        cleaned_data = super(StudyDesignForm, self).clean()
+        if not (cleaned_data.get('has_observation')
+                or cleaned_data.get('has_intervention')
+                or cleaned_data.get('has_sessions')):
+            msg = _(u'U dient minstens één van de opties te selecteren')
+            self.add_error('has_sessions', forms.ValidationError(msg, code='required'))
+
 
 class StudySurveyForm(forms.ModelForm):
     class Meta:

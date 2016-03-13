@@ -52,6 +52,7 @@
                 gevolgd door een takensessie), kruis dan meerdere opties aan.
             </th>
             <td>
+                {{ form.has_sessions.errors }}
                 <ul>
                     {% for field in form %}
                     <li>
