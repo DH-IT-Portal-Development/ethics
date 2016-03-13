@@ -51,23 +51,21 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
 
     def get_next_url(self):
         study = self.object
-        next_url = ''
+        next_url = 'proposals:session_end'
         pk = study.pk
         if study.has_observation:
-            try:
-                observation = Observation.objects.get(study=study)
+            if hasattr(study, 'observation'):
                 next_url = 'proposals:observation_update'
-                pk = observation.pk
-            except Observation.DoesNotExist:
+                pk = study.observation.pk
+            else:
                 next_url = 'proposals:observation_create'
         elif study.has_intervention:
-            try:
-                intervention = Intervention.objects.get(study=study)
+            if hasattr(study, 'intervention'):
                 next_url = 'proposals:intervention_update'
-                pk = intervention.pk
-            except Intervention.DoesNotExist:
+                pk = study.intervention.pk
+            else:
                 next_url = 'proposals:intervention_create'
-        else:
+        elif study.has_sessions:
             next_url = 'proposals:session_start'
         return reverse(next_url, args=(pk,))
 

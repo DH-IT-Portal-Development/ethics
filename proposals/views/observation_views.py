@@ -26,10 +26,21 @@ class ObservationMixin(object):
         return success_url(self)
 
     def get_next_url(self):
-        return reverse('proposals:intervention_create', args=(self.object.study.pk,))
+        study = self.object.study
+        next_url = 'proposals:session_end'
+        pk = study.pk
+        if study.has_intervention:
+            if hasattr(study, 'intervention'):
+                next_url = 'proposals:intervention_update'
+                pk = study.intervention.pk
+            else:
+                next_url = 'proposals:intervention_create'
+        elif study.has_sessions:
+            next_url = 'proposals:session_start'
+        return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
-        return reverse('proposals:study_design', args=(self.kwargs['pk'],))
+        return reverse('proposals:study_design', args=(self.object.study.pk,))
 
     def forms_invalid(self, form, inlines):
         """

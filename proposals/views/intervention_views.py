@@ -18,27 +18,19 @@ class InterventionMixin(object):
 
     def get_next_url(self):
         study = self.object.study
-        next_url = ''
+        next_url = 'proposals:session_end'
         pk = study.pk
         if study.has_sessions:
             next_url = 'proposals:session_start'
-        else:
-            next_url = 'proposals:session_end'
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
         study = self.object.study
-        next_url = ''
+        next_url = 'proposals:study_design'
         pk = study.pk
         if study.has_observation:
-            try:
-                observation = Observation.objects.get(study=study)
-                next_url = 'proposals:observation_update'
-                pk = observation.pk
-            except Observation.DoesNotExist:
-                pass # TODO: should not happen
-        else:
-            next_url = 'proposals:study_design'
+            next_url = 'proposals:observation_update'
+            pk = study.observation.pk
         return reverse(next_url, args=(pk,))
 
 

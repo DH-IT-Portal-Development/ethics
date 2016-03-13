@@ -511,7 +511,7 @@ class Observation(models.Model):
         default=False)
 
     # References
-    study = models.ForeignKey(Study)
+    study = models.OneToOneField(Study)
 
 
 class Location(models.Model):
@@ -537,7 +537,7 @@ een slechter adviesgesprek, een ongunstiger beoordeling, etc'),
         blank=True)
 
     # References
-    study = models.ForeignKey(Study)
+    study = models.OneToOneField(Study)
 
 
 class Session(models.Model):

@@ -51,7 +51,16 @@ class SessionStart(AllowErrorsMixin, UpdateView):
         return reverse('proposals:task_start', args=(self.object.first_session().pk,))
 
     def get_back_url(self):
-        return reverse('proposals:study_update', args=(self.object.pk,))
+        study = self.object
+        next_url = 'proposals:study_design'
+        pk = study.pk
+        if study.has_intervention:
+            next_url = 'proposals:intervention_update'
+            pk = study.intervention.pk
+        elif study.has_observation:
+            next_url = 'proposals:observation_update'
+            pk = study.observation.pk
+        return reverse(next_url, args=(pk,))
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, title=self.object.proposal.title)
