@@ -452,6 +452,7 @@ onder begeleiding van adequaat geschoolde specialisten).')),
         default=False)
     risk_details = models.TextField(
         _('Licht toe'),
+        max_length=200,
         blank=True)
 
     # Fields with respect to Surveys
@@ -518,9 +519,17 @@ class Location(models.Model):
 
 
 class Intervention(models.Model):
-    relation = models.CharField(_('Wat is de relatie tot de proefpersoon?'), max_length=200)
-    count = models.CharField(_('Hoe vaak wordt die instructie gegeven?'), max_length=200)
-    description = models.TextField(_('Beschrijf de interventie.'))
+    description = models.TextField(_('Beschrijf de interventie. Geef daarbij aan in welke precieze setting(s) \
+in hoe veel sessies welke precieze veranderingen worden doorgevoerd, en welke partijen er bij betrokken zijn.'))
+    has_drawbacks = models.BooleanField(
+        _('Is de interventie zodanig dat er voor de deelnemers ook nadelen aan verbonden kunnen zijn?'),
+        help_text=_('Denk aan een verminderde leeropbrengst, een minder effectief 112-gesprek, \
+een slechter adviesgesprek, een ongunstiger beoordeling, etc'),
+        default=False)
+    has_drawbacks_details = models.CharField(
+        _('Licht toe'),
+        max_length=200,
+        blank=True)
 
     # References
     study = models.ForeignKey(Study)
