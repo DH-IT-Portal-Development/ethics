@@ -273,6 +273,7 @@ class ObservationForm(forms.ModelForm):
         fields = ['days', 'mean_hours',
                   'is_anonymous', 'is_test']
         widgets = {
+            'mean_hours': forms.NumberInput(attrs={'step': 0.25}),
             'is_anonymous': forms.RadioSelect(choices=YES_NO),
             'is_test': forms.RadioSelect(choices=YES_NO),
         }
