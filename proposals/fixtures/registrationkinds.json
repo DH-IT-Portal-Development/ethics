@@ -82,7 +82,7 @@
         "needs_details": false,
         "registration": 6,
         "order": 8,
-        "description": "ademhaling"
+        "description": "huidgeleiding (GSR)"
     },
     "model": "proposals.registrationkind",
     "pk": 8
@@ -93,7 +93,7 @@
         "needs_details": false,
         "registration": 6,
         "order": 9,
-        "description": "vingertemperatuur"
+        "description": "ademhaling"
     },
     "model": "proposals.registrationkind",
     "pk": 9
@@ -101,12 +101,23 @@
 {
     "fields": {
         "requires_review": false,
-        "needs_details": true,
+        "needs_details": false,
         "registration": 6,
         "order": 10,
-        "description": "anders, namelijk"
+        "description": "vingertemperatuur"
     },
     "model": "proposals.registrationkind",
     "pk": 10
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": true,
+        "registration": 6,
+        "order": 11,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.registrationkind",
+    "pk": 11
 }
 ]
