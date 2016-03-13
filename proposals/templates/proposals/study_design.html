@@ -43,7 +43,25 @@
 </li>
 </ul>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
+    <table>
+        <tr>
+            <th>
+                Om welk type onderzoek gaat het bij uw studie?
+                Als uw studie meerdere sessies heeft die niet allen van hetzelfde type zijn
+                (bijv. een observatiesessie gevolgd door een interventiesessie, of een interventiesessie
+                gevolgd door een takensessie), kruis dan meerdere opties aan.
+            </th>
+            <td>
+                <ul>
+                    {% for field in form %}
+                    <li>
+                        {{ field }} {{ field.label }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
     <p>
         Voor elk door u aangekruiste type onderzoek kunt u op de hiernavolgende pagina's
         de relevante informatie verschaffen.

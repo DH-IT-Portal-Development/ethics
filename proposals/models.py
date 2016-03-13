@@ -199,8 +199,6 @@ De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen b
         elif self.status == self.TASKS_ENDED:
             return reverse('proposals:session_end', args=(self.id,))
         elif self.status == self.SESSIONS_ENDED:
-            return reverse('proposals:consent', args=(self.id,))
-        elif self.status == self.INFORMED_CONSENT_UPLOADED:
             return reverse('proposals:submit', args=(self.id,))
 
         elif self.status == self.WMO_DECISION_MADE:
@@ -384,9 +382,15 @@ beantwoorden door volwassen deelnemers te testen?'))
         blank=True)
 
     # Fields with respect to experimental design
-    has_observation = models.BooleanField(default=False)
-    has_intervention = models.BooleanField(default=False)
-    has_sessions = models.BooleanField(default=False)
+    has_observation = models.BooleanField(
+        _('Observatieonderzoek'),
+        default=False)
+    has_intervention = models.BooleanField(
+        _('Interventieonderzoek'),
+        default=False)
+    has_sessions = models.BooleanField(
+        _('Taakonderzoek'),
+        default=False)
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(

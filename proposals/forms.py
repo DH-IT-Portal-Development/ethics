@@ -218,23 +218,9 @@ def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_messag
 
 
 class StudyDesignForm(forms.ModelForm):
-    design = forms.MultipleChoiceField(
-        label=_('Om welk type onderzoek gaat het bij uw studie? \
-Als uw studie meerdere sessies heeft die niet allen van hetzelfde type zijn (bijv. een observatiesessie gevolgd \
-door een interventiesessie, of een interventiesessie gevolgd door een takensessie), kruis dan meerdere opties aan.'),
-        choices=Study.DESIGNS,
-        widget=forms.CheckboxSelectMultiple(),
-    )
-
     class Meta:
         model = Study
-        fields = []
-
-    def save(self):
-        self.instance.has_observation = Study.OBSERVATION in self.cleaned_data['design']
-        self.instance.has_intervention = Study.INTERVENTION in self.cleaned_data['design']
-        self.instance.has_sessions = Study.SESSIONS in self.cleaned_data['design']
-        super(StudyDesignForm, self).save()
+        fields = ['has_observation', 'has_intervention', 'has_sessions']
 
 
 class StudySurveyForm(forms.ModelForm):
