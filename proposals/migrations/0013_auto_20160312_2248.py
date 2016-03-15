@@ -27,12 +27,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='study',
             name='briefing_pdf',
-            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de informatiebrief (in PDF-formaat)', validators=[proposals.models.validate_pdf]),
+            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de informatiebrief (in PDF-formaat)', validators=[proposals.models.validate_pdf_or_doc]),
         ),
         migrations.AddField(
             model_name='study',
             name='informed_consent_pdf',
-            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de toestemmingsverklaring (in PDF-formaat)', validators=[proposals.models.validate_pdf]),
+            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de toestemmingsverklaring (in PDF-formaat)', validators=[proposals.models.validate_pdf_or_doc]),
         ),
         migrations.AddField(
             model_name='study',

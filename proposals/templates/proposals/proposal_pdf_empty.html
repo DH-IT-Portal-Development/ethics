@@ -33,6 +33,10 @@
             font-weight: normal;
             text-align: left;
         }
+
+        #content li {
+            line-height: 10px;
+        }
     </style>
 {% endblock %}
 
@@ -84,19 +88,20 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
+        <pdf:nextpage>
         <h2>WMO-plichtig of niet?</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "wmo" "metc" %}</th><td>{% show_yesno true %}</td>
+                <th>{% get_verbose_field_name "wmo" "metc" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "wmo" "metc_institution" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "wmo" "is_medical" %}</th><td>{% show_yesno true %}</td>
+                <th>{% get_verbose_field_name "wmo" "is_medical" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "wmo" "is_behavioristic" %}</th><td>{% show_yesno true %}</td>
+                <th>{% get_verbose_field_name "wmo" "is_behavioristic" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "wmo" "metc_application" %}</th><td>{% show_yesno %}</td>
@@ -108,6 +113,8 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name "wmo" "metc_decision_pdf" %}</th><td></td>
             </tr>
         </table>
+
+        <pdf:nextpage>
         <h2>Algemene kenmerken van de studie</h2>
         <table>
             <tr>
@@ -120,7 +127,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name "study" "has_traits" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "study" "necessity" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "study" "necessity" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "study" "necessity_reason" %}</th><td></td>
@@ -154,6 +161,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
+        <pdf:nextpage>
         <h2>{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}</h2>
         <table>
             <tr>
@@ -179,6 +187,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
+        <pdf:nextpage>
         <h2>{% trans "Nadere specificatie van de interventiestudie (of het interventieonderzoeksdeel van de studie)" %}</h2>
         <table>
             <tr>
@@ -192,7 +201,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-
+        <pdf:nextpage>
         <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
         <table>
             <tr>
@@ -246,32 +255,34 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
+        <pdf:nextpage>
         <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "study" "sessions_duration" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "study" "stressful" %}</th><td>{% show_yesno true %}</td>
+                <th>{% get_verbose_field_name "study" "stressful" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "study" "stressful_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "study" "risk" %}</th><td>{% show_yesno true %}</td>
+                <th>{% get_verbose_field_name "study" "risk" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "study" "risk_details" %}</th><td></td>
             </tr>
         </table>
 
+        <pdf:nextpage>
         <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "study" "has_surveys" %}</th><td></td>
+                <th>{% get_verbose_field_name "study" "has_surveys" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "study" "surveys_stressful" %}</th><td></td>
+                <th>{% get_verbose_field_name "study" "surveys_stressful" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
         </table>
         <h3>Vragenlijst <em>n</em></h3>
@@ -290,6 +301,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
+        <pdf:nextpage>
         <h2>{% trans "Concept-aanmelding versturen" %}</h2>
         <table>
             <tr>

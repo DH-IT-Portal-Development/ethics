@@ -365,7 +365,6 @@ class TaskForm(forms.ModelForm):
                   'feedback', 'feedback_details',
                   'deception', 'deception_details']
         widgets = {
-            'procedure': forms.RadioSelect(choices=YES_NO_DOUBT),
             'registrations': forms.CheckboxSelectMultiple(),
             'registration_kinds': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=YES_NO),

@@ -51,3 +51,7 @@ def show_yesno(doubt=False):
         result += '<li>{}</li>'.format('twijfel')
     result += '</ul>'
     return mark_safe(result)
+
+@register.simple_tag
+def show_yesnodoubt():
+    return show_yesno(True)
