@@ -96,11 +96,6 @@ class Proposal(models.Model):
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
-    allow_in_archive = models.BooleanField(
-        _('Mag deze studie ter goedkeuring in het semi-publiekelijk archief?'),
-        default=True,
-        help_text=_('Dit archief is alleen toegankelijk voor mensen die aan het UiL OTS geaffilieerd zijn.')
-    )
 
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)

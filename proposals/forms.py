@@ -21,14 +21,12 @@ class ProposalForm(forms.ModelForm):
                   'other_applicants', 'applicants',
                   'date_start', 'date_end',
                   'title', 'summary',
-                  'funding', 'funding_details',
-                  'allow_in_archive']
+                  'funding', 'funding_details']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
             'summary': forms.Textarea(attrs={'rows': 30, 'cols': 80}),
-            'funding': forms.CheckboxSelectMultiple(),
-            'allow_in_archive': forms.RadioSelect(choices=YES_NO)
+            'funding': forms.CheckboxSelectMultiple()
         }
         error_messages = {
             'title': {
