@@ -1,0 +1,204 @@
+{% extends "easy_pdf/base.html" %}
+
+{% load proposal_filters %}
+
+{% block extra_style %}
+    <style type="text/css">
+        #content table {
+            border-top-width: .5px;
+            border-top-style: solid;
+            border-top-color: #cbcbcb;
+            border-right-width: .5px;
+            border-right-style: solid;
+            border-right-color: #cbcbcb;
+            border-bottom-width: .5px;
+            border-bottom-style: solid;
+            border-bottom-color: #cbcbcb;
+            border-left-width: .5px;
+            border-left-style: solid;
+            border-left-color: #cbcbcb;
+        }
+
+        #content th, td {
+            font-weight: normal;
+            text-align: left;
+            padding-top: 3px;
+            padding-right: 3px;
+            padding-bottom: 3px;
+            padding-left: 3px;
+        }
+
+        #content th {
+            font-weight: normal;
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+
+{% block page_header %}
+<div id="page-header">
+ETCL - <em>naam aanvraag</em> (referentienummer <em>referentienummer</em>)
+</div>
+{% endblock %}
+
+{% block page_foot %}
+Pagina <pdf:pagenumber> van <pdf:pagecount>
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="main">
+        <h1>Referentienummer <em>referentienummer</em></h1>
+        <h2>Algemene informatie over de studie</h2>
+        <table id="test">
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "relation" %}</th><td>{% show_all "relation" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "supervisor" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "other_applicants" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "applicants" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "date_start" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "date_end" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "title" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "summary" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "funding" %}</th><td>{% show_all "funding" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "funding_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "allow_in_archive" %}</th><td>{% show_yesno %}</td>
+            </tr>
+        </table>
+
+        <h2>WMO-plichtig of niet?</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "wmo" "metc" %}</th><td>{% show_yesno true %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "wmo" "metc_institution" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "wmo" "is_medical" %}</th><td>{% show_yesno true %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "wmo" "is_behavioristic" %}</th><td>{% show_yesno true %}</td>
+            </tr>
+        </table>
+        <h2>Algemene kenmerken van de studie</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "study" "age_groups" %}</th><td>{% show_all "agegroup" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "legally_incapable" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "has_traits" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "necessity" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "necessity_reason" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "recruitment" %}</th><td>{% show_all "recruitment" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "recruitment_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "setting" %}</th><td>{% show_all "setting" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "setting_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "compensation" %}</th><td>{% show_all "compensation" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "compensation_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "informed_consent_pdf" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "passive_consent" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "briefing_pdf" %}</th><td></td>
+            </tr>
+        </table>
+
+        <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "study" "sessions_number" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "sessions_duration" %}</th><td></td>
+            </tr>
+        </table>
+
+        <h2>Sessie <em>n</em></h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "session" "tasks_number" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "session" "tasks_duration" %}</th><td></td>
+            </tr>
+        </table>
+        <h3>Taak <em>n</em></h3>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "task" "name" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "description" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "duration" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "registrations" %}</th><td>{% show_all "registration" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "registration_kinds" %}</th><td>{% show_all "registrationkind" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "registrations_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "feedback" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "feedback_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "deception" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "task" "deception_details" %}</th><td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

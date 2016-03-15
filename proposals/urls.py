@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
     url(r'^show/(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
     url(r'^pdf/(?P<pk>\d+)/$', ProposalAsPdf.as_view(), name='pdf'),
+    url(r'^pdf_empty/$', EmptyPDF.as_view(), name='empty_pdf'),
 
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
 

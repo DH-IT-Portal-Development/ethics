@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils.translation import ugettext as _
 
-from easy_pdf.views import PDFTemplateResponseMixin
+from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
 from .base_views import CreateView, UpdateView, DeleteView
 from ..copy import copy_proposal
@@ -200,3 +200,7 @@ class ProposalSubmit(UpdateView):
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_pdf.html'
+
+
+class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
+    template_name = 'proposals/proposal_pdf_empty.html'
