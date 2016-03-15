@@ -11,8 +11,8 @@
 {% block content %} 
 {% if user.is_authenticated %}
 <p>
-	{% blocktrans with first=user.first_name last=user.last_name trimmed %}
-	Welkom {{ first }} {{ last }}! In dit portal kan je het volgende doen: 
+	{% blocktrans with username=user.get_full_name trimmed %}
+	Welkom {{ username }}! In dit portal kan je het volgende doen:
 	{% endblocktrans %}
 </p>
 <h3>Mijn studie</h3>
