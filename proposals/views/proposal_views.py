@@ -17,6 +17,10 @@ from reviews.utils import start_review
 
 # List views
 class ProposalsView(LoginRequiredMixin, generic.ListView):
+    title = _('Publiek archief')
+    body = _('Dit overzicht toont alle beoordeelde studies.')
+    is_modifiable = False
+    is_submitted = True
     context_object_name = 'proposals'
 
     def get_queryset(self):
@@ -25,63 +29,55 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProposalsView, self).get_context_data(**kwargs)
-        context['title'] = self.get_title()
-        context['body'] = self.get_body()
+        context['title'] = self.title
+        context['body'] = self.body
+        context['modifiable'] = self.is_modifiable
+        context['submitted'] = self.is_submitted
         return context
-
-    def get_title(self):
-        return _('Publiek archief')
-
-    def get_body(self):
-        return _('Dit overzicht toont alle beoordeelde studies.')
 
 
 class MyConceptsView(ProposalsView):
+    title = _('Mijn conceptstudies')
+    body = _('Dit overzicht toont al uw nog niet ingediende studies.')
+    is_modifiable = True
+    is_submitted = False
+
     def get_queryset(self):
         """Returns all non-submitted proposals for the current user"""
         return Proposal.objects.filter(applicants=self.request.user).filter(status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
-    def get_title(self):
-        return _('Mijn conceptstudies')
-
-    def get_body(self):
-        return _('Dit overzicht toont al uw nog niet ingediende studies.')
-
 
 class MySubmittedView(ProposalsView):
+    title = _('Mijn ingediende studies')
+    body = _('Dit overzicht toont al uw ingediende studies.')
+    is_modifiable = False
+    is_submitted = True
+
     def get_queryset(self):
         """Returns all submitted proposals for the current user"""
         return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR, status__lt=Proposal.DECISION_MADE)
 
-    def get_title(self):
-        return _('Mijn ingediende studies')
-
-    def get_body(self):
-        return _('Dit overzicht toont al uw ingediende studies.')
-
 
 class MyCompletedView(ProposalsView):
+    title = _('Mijn afgeronde studies')
+    body = _('Dit overzicht toont al uw beoordeelde studies.')
+    is_modifiable = False
+    is_submitted = True
+
     def get_queryset(self):
         """Returns all completed proposals for the current user"""
         return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.DECISION_MADE)
 
-    def get_title(self):
-        return _('Mijn afgeronde studies')
-
-    def get_body(self):
-        return _('Dit overzicht toont al uw beoordeelde studies.')
-
 
 class MyProposalsView(ProposalsView):
+    title = _('Mijn studies')
+    body = _('Dit overzicht toont al uw studies.')
+    is_modifiable = True
+    is_submitted = True
+
     def get_queryset(self):
         """Returns all proposals for the current user"""
         return Proposal.objects.filter(applicants=self.request.user)
-
-    def get_title(self):
-        return _('Mijn studies')
-
-    def get_body(self):
-        return _('Dit overzicht toont al uw studies.')
 
 
 ##########################

@@ -14,15 +14,19 @@
 </p>
 <h3>{% trans "Uitleg" %}</h3>
 <ul>
+    {% if modifiable %}
     <li>
         Klik op <img src="{% static 'proposals/images/page_white_go.png' %}" title="Naar volgende stap"> om naar de volgende stap in het proces te gaan. 
     </li>
     <li>
         Klik op <img src="{% static 'proposals/images/delete.png' %}" title="Verwijderen"> om uw studie te verwijderen.
     </li>
+    {% endif %}
+    {% if submitted %}
     <li>
         Klik op <img src="{% static 'proposals/images/page_white_acrobat.png' %}" title="Inzien"> om een ingediende studie in te zien.
     </li>
+    {% endif %}
 </ul>
 <table class="dataTable display">
     <thead>
