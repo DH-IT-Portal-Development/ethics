@@ -26,7 +26,7 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
+        "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken, op knop klikken)",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
