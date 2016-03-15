@@ -412,7 +412,7 @@ U kunt de templates vinden op <link website?>'))
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies telt deze studie?'),
         null=True,
-        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        validators=[MinValueValidator(1)],
         help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens \
 een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
@@ -547,7 +547,7 @@ class Session(models.Model):
     tasks_number = models.PositiveIntegerField(
         _('Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?'),
         null=True,
-        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        validators=[MinValueValidator(1)],
         help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer observeert en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.'))
     tasks_duration = models.PositiveIntegerField(
