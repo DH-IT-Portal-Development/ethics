@@ -10,10 +10,14 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
-def validate_pdf(value):
+ALLOWED_CONTENT_TYPES = ['application/pdf', 'application/msword',
+                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+
+
+def validate_pdf_or_doc(value):
     f = value.file
-    if isinstance(f, UploadedFile) and f.content_type != 'application/pdf':
-        raise ValidationError(_('Alleen PDF-bestanden zijn toegestaan.'))
+    if isinstance(f, UploadedFile) and f.content_type not in ALLOWED_CONTENT_TYPES:
+        raise ValidationError(_('Alleen .pdf- of .doc(x)-bestanden zijn toegestaan.'))
 
 
 class Relation(models.Model):
@@ -250,9 +254,9 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
         _('Is de METC al tot een beslissing gekomen?'),
         default=False)
     metc_decision_pdf = models.FileField(
-        _('Upload hier de beslissing van het METC (in PDF-formaat)'),
+        _('Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf])
+        validators=[validate_pdf_or_doc])
 
     # Status
     status = models.PositiveIntegerField(choices=WMO_STATUSES, default=NO_WMO)
@@ -389,13 +393,13 @@ beantwoorden door volwassen deelnemers te testen?'))
 
     # Fields with respect to informed consent
     informed_consent_pdf = models.FileField(
-        _('Upload hier de toestemmingsverklaring (in PDF-formaat)'),
+        _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf])
+        validators=[validate_pdf_or_doc])
     briefing_pdf = models.FileField(
-        _('Upload hier de informatiebrief (in PDF-formaat)'),
+        _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf])
+        validators=[validate_pdf_or_doc])
     passive_consent = models.BooleanField(
         _('Maakt uw studie gebruik van passieve informed consent?'),
         default=False,
