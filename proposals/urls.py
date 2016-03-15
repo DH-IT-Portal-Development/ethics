@@ -21,16 +21,18 @@ urlpatterns = [
     url(r'^proposals/$', MyProposalsView.as_view(), name='my_archive'),
 
     # Proposal
-    url(r'^start/$', ProposalStart.as_view(), name='start'),
     url(r'^create/$', ProposalCreate.as_view(), name='create'),
-    url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
     url(r'^show/(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
+
+    url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
+    url(r'^start/$', ProposalStart.as_view(), name='start'),
+    url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
+    url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
+
     url(r'^pdf/(?P<pk>\d+)/$', ProposalAsPdf.as_view(), name='pdf'),
     url(r'^pdf_empty/$', EmptyPDF.as_view(), name='empty_pdf'),
-
-    url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
 
     # WMO
     url(r'^wmo/create/(?P<pk>\d+)/$', WmoCreate.as_view(), name='wmo_create'),

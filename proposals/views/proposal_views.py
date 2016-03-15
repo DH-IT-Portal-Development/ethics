@@ -191,11 +191,14 @@ class ProposalSubmit(UpdateView):
         return success_url
 
     def get_next_url(self):
-        return reverse('proposals:my_submitted')
+        return reverse('proposals:submitted')
 
     def get_back_url(self):
         return reverse('proposals:study_survey', args=(self.object.study.pk,))
 
+
+class ProposalSubmitted(generic.TemplateView):
+    template_name = 'proposals/proposal_submitted.html'
 
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):
     model = Proposal
