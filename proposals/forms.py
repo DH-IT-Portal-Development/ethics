@@ -469,11 +469,12 @@ class SessionEndForm(forms.ModelForm):
         """
         cleaned_data = super(SessionEndForm, self).clean()
 
-        sessions_duration = cleaned_data.get('sessions_duration')
-        net_duration = self.instance.net_duration()
-        if sessions_duration < net_duration:
-            error = forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
-            self.add_error('sessions_duration', error)
+        if self.instance.has_sessions:
+            sessions_duration = cleaned_data.get('sessions_duration')
+            net_duration = self.instance.net_duration()
+            if sessions_duration < net_duration:
+                error = forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
+                self.add_error('sessions_duration', error)
 
         check_dependency(self, cleaned_data, 'stressful', 'stressful_details')
         check_dependency(self, cleaned_data, 'risk', 'risk_details')

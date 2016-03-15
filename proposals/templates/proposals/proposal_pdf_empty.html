@@ -1,5 +1,6 @@
 {% extends "easy_pdf/base.html" %}
 
+{% load i18n %}
 {% load proposal_filters %}
 
 {% block extra_style %}
@@ -100,6 +101,15 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             <tr>
                 <th>{% get_verbose_field_name "wmo" "is_behavioristic" %}</th><td>{% show_yesno true %}</td>
             </tr>
+            <tr>
+                <th>{% get_verbose_field_name "wmo" "metc_application" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "wmo" "metc_decision" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "wmo" "metc_decision_pdf" %}</th><td></td>
+            </tr>
         </table>
         <h2>Algemene kenmerken van de studie</h2>
         <table>
@@ -140,20 +150,56 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name "study" "informed_consent_pdf" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "study" "passive_consent" %}</th><td></td>
+                <th>{% get_verbose_field_name "study" "passive_consent" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "study" "briefing_pdf" %}</th><td></td>
             </tr>
         </table>
 
+        <h2>{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "observation" "days" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observation" "mean_hours" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observation" "is_anonymous" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observation" "is_test" %}</th><td>{% show_yesno %}</td>
+            </tr>
+        </table>
+        <h3>{% trans "Locatie" %} <em>n</em></h3>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "location" "name" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "location" "registration" %}</th><td></td>
+            </tr>
+        </table>
+
+        <h2>{% trans "Nadere specificatie van de interventiestudie (of het interventieonderzoeksdeel van de studie)" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "intervention" "description" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "intervention" "has_drawbacks" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "intervention" "has_drawbacks_details" %}</th><td></td>
+            </tr>
+        </table>
+
+
         <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "study" "sessions_number" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "study" "sessions_duration" %}</th><td></td>
             </tr>
         </table>
 
@@ -181,10 +227,13 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name "task" "registrations" %}</th><td>{% show_all "registration" %}</td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "task" "registrations_details" %}</th><td></td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "task" "registration_kinds" %}</th><td>{% show_all "registrationkind" %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "task" "registrations_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "task" "registration_kinds_details" %}</th><td></td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "task" "feedback" %}</th><td>{% show_yesno %}</td>
@@ -199,6 +248,58 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
                 <th>{% get_verbose_field_name "task" "deception_details" %}</th><td></td>
             </tr>
         </table>
+
+        <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "study" "sessions_duration" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "stressful" %}</th><td>{% show_yesno true %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "stressful_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "risk" %}</th><td>{% show_yesno true %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "risk_details" %}</th><td></td>
+            </tr>
+        </table>
+
+        <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "study" "has_surveys" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "study" "surveys_stressful" %}</th><td></td>
+            </tr>
+        </table>
+        <h3>Vragenlijst <em>n</em></h3>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "survey" "name" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "survey" "minutes" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "survey" "survey_url" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "survey" "description" %}</th><td></td>
+            </tr>
+        </table>
+
+        <h2>{% trans "Concept-aanmelding versturen" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "comments" %}</th><td></td>
+            </tr>
+        </table>
+
     </div>
 </div>
 {% endblock %}
