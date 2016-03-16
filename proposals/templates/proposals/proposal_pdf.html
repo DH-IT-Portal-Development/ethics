@@ -105,13 +105,16 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "wmo" "metc_institution" %}</th><td>{{ wmo.metc_institution }}</td>
             </tr>
-            {% endif %}
+            {% else %}
             <tr>
                 <th>{% get_verbose_field_name "wmo" "is_medical" %}</th><td>{{ wmo.is_medical|yesno:"ja,nee,twijfel" }}</td>
             </tr>
+            {% if wmo.is_medical %}
             <tr>
                 <th>{% get_verbose_field_name "wmo" "is_behavioristic" %}</th><td>{{ wmo.is_behavioristic|yesno:"ja,nee,twijfel" }}</td>
             </tr>
+            {% endif %}
+            {% endif %}
             {% if wmo.status != wmo.NO_WMO %}
             <tr>
                 <th>{% get_verbose_field_name "wmo" "metc_application" %}</th><td>{{ wmo.metc_application }}</td>
