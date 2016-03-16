@@ -30,6 +30,16 @@ def show_selected(selected_values):
     return mark_safe(result)
 
 
+@register.filter
+def needs_details(selected_values, field='needs_details'):
+    result = False
+    for sv in selected_values:
+        if getattr(sv, field):
+            result = True
+            break
+    return result
+
+
 @register.simple_tag
 def show_all(model):
     """
@@ -51,6 +61,7 @@ def show_yesno(doubt=False):
         result += '<li>{}</li>'.format('twijfel')
     result += '</ul>'
     return mark_safe(result)
+
 
 @register.simple_tag
 def show_yesnodoubt():

@@ -47,7 +47,7 @@ ETCL - <em>naam aanvraag</em> (referentienummer <em>referentienummer</em>)
 {% endblock %}
 
 {% block page_foot %}
-Pagina <pdf:pagenumber> van <pdf:pagecount>
+Pagina <pdf:pagenumber /> van <pdf:pagecount />
 {% endblock %}
 
 {% block content %}
@@ -88,8 +88,8 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
-        <h2>WMO-plichtig of niet?</h2>
+        <pdf:nextpage />
+        <h2>Toetsing: ook door de METC?</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "wmo" "metc" %}</th><td>{% show_yesnodoubt %}</td>
@@ -114,8 +114,8 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
-        <h2>Algemene kenmerken van de studie</h2>
+        <pdf:nextpage />
+        <h2>{% trans "Deelnemers-gerelateerde informatie en informed consent" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "study" "age_groups" %}</th><td>{% show_all "agegroup" %}</td>
@@ -161,7 +161,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
+        <pdf:nextpage />
         <h2>{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}</h2>
         <table>
             <tr>
@@ -187,7 +187,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
+        <pdf:nextpage />
         <h2>{% trans "Nadere specificatie van de interventiestudie (of het interventieonderzoeksdeel van de studie)" %}</h2>
         <table>
             <tr>
@@ -201,7 +201,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
+        <pdf:nextpage />
         <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
         <table>
             <tr>
@@ -255,7 +255,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
+        <pdf:nextpage />
         <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
         <table>
             <tr>
@@ -275,7 +275,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
+        <pdf:nextpage />
         <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
         <table>
             <tr>
@@ -301,7 +301,7 @@ Pagina <pdf:pagenumber> van <pdf:pagecount>
             </tr>
         </table>
 
-        <pdf:nextpage>
+        <pdf:nextpage />
         <h2>{% trans "Concept-aanmelding versturen" %}</h2>
         <table>
             <tr>
