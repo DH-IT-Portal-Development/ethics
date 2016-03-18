@@ -48,10 +48,6 @@ $(function() {
 </script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% if create or proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-    <p>
-        {% include "proposals/form_buttons.html" %}
-    </p>
-    {% endif %}
+    {% include "proposals/form_buttons.html" %}
 </form>
 {% endblock %}

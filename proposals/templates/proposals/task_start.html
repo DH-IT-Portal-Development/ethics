@@ -1,8 +1,10 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} 
-Belasting voor de deelnemer
+{% trans "Belasting voor de deelnemer" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -16,10 +18,16 @@ $(function() {
     $('input[name=tasks_number]').parents('tr').insertAfter($('input[name=is_copy]').parents('tr'));
 });
 </script>
-<h3>Sessie {{ object.order }}</h3>
+<h3>
+    {% blocktrans with order=session.order %}
+    Sessie {{ order }}
+    {% endblocktrans %}
+</h3>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    <p>Voor elke taak stellen we in de komende schermen steeds dezelfde vragen.</p>
+    <p>
+        {% trans "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen." %}
+    </p>
     {% with proposal=session.study.proposal %}
     {% include "proposals/form_buttons.html" %}
     {% endwith %}

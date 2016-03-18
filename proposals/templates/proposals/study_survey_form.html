@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %} 
-{% trans 'Dataverzameling direct betrokkenen' %}
+{% trans "Dataverzameling direct betrokkenen" %}
 {% endblock %}
 
 {% block progress %}95{% endblock %}
@@ -41,7 +41,7 @@ $(function() {
     <table>
         {{ form.as_table }}
         <tr id="survey_set_title">
-            <th><strong>{% trans 'Voeg hieronder de vragenlijsten toe' %}</strong></th>
+            <th><strong>{% trans "Voeg hieronder de vragenlijsten toe" %}</strong></th>
             <td></td>
         </tr>
         {% for formset in inlines %}

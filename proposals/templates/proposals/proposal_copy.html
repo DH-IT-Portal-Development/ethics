@@ -10,7 +10,9 @@
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
-<p>{% trans "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}</p>
+<p>
+	{% trans "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
+</p>
 <form action="" method="post">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Kopiëren' %}" />

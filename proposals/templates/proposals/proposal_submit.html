@@ -1,21 +1,23 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} 
-Concept-aanmelding versturen
+{% trans "Concept-aanmelding versturen" %}
 {% endblock %}
 
 {% block progress %}100{% endblock %}
 
 {% block content %}
 <p>
-	Uw concept-aanmelding is compleet.
+	{% trans "Uw concept-aanmelding is compleet." %}
 	{% if proposal.relation.needs_supervisor %}
-	U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen.
+		{% trans "U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen." %}
 	{% else %}
-	U kunt nu uw concept-aanmelding ter beoordeling naar de ethische commissie versturen.
+		{% trans "U kunt nu uw concept-aanmelding ter beoordeling naar de ethische commissie versturen." %}
 	{% endif %}
-	Als u deze concept-aanmelding nog wil wijzigen, kan dat via de 'vorige'-knop.
+	{% trans "Als u deze concept-aanmelding nog wil wijzigen, kan dat via de 'vorige'-knop." %}
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
