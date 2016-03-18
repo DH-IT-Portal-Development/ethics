@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from .base_views import CreateView, UpdateView
 from ..mixins import AllowErrorsMixin
 from ..forms import InterventionForm
-from ..models import Study, Intervention, Observation
+from ..models import Study, Intervention
 
 
 #######################

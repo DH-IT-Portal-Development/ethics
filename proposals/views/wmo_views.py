@@ -72,7 +72,7 @@ def check_wmo(request):
     message = _('Uw studie hoeft niet te worden beoordeeld door de METC.')
     message_class = 'info'
 
-    if is_metc is None or (not is_metc and is_medical is None):
+    if is_metc is None or (not is_metc and (is_medical is None or is_behavioristic is None)):
         message = _('Neem contact op met Maartje de Klerk om de twijfels weg te nemen.')
         message_class = 'warning'
     elif is_metc or (is_medical and is_behavioristic):

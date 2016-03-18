@@ -8,6 +8,7 @@ from django.utils.translation import ugettext as _
 from extra_views import InlineFormSet
 
 from .models import Proposal, Wmo, Study, Observation, Intervention, Session, Task, Survey, Location
+from .utils import check_dependency, check_dependency_singular, check_dependency_multiple
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
@@ -179,40 +180,6 @@ class StudyForm(forms.ModelForm):
         check_dependency_multiple(self, cleaned_data, 'setting', 'needs_details', 'setting_details')
         check_dependency_singular(self, cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         check_dependency_multiple(self, cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
-
-
-def check_dependency(form, cleaned_data, f1, f2, error_message=''):
-    is_required = False
-    if not error_message:
-        error_message = _('Dit veld is verplicht.')
-    if cleaned_data.get(f1) and not cleaned_data.get(f2):
-        is_required = True
-        form.add_error(f2, forms.ValidationError(error_message, code='required'))
-    return is_required
-
-
-def check_dependency_singular(form, cleaned_data, f1, f1_field, f2, error_message=''):
-    is_required = False
-    if not error_message:
-        error_message = _('Dit veld is verplicht.')
-    if cleaned_data.get(f1):
-        if getattr(cleaned_data.get(f1), f1_field) and not cleaned_data.get(f2):
-            is_required = True
-            form.add_error(f2, forms.ValidationError(error_message, code='required'))
-    return is_required
-
-
-def check_dependency_multiple(form, cleaned_data, f1, f1_field, f2, error_message=''):
-    is_required = False
-    if not error_message:
-        error_message = _('Dit veld is verplicht.')
-    if cleaned_data.get(f1):
-        for item in cleaned_data.get(f1):
-            if getattr(item, f1_field) and not cleaned_data.get(f2):
-                is_required = True
-                form.add_error(f2, forms.ValidationError(error_message, code='required'))
-                break
-    return is_required
 
 
 class StudyDesignForm(forms.ModelForm):

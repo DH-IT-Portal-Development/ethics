@@ -10,7 +10,7 @@ from extra_views import UpdateWithInlinesView
 from .base_views import CreateView, UpdateView, success_url
 from ..mixins import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin
 from ..forms import StudyForm, StudyDesignForm, StudySurveyForm, SurveysInline
-from ..models import Proposal, Study, AgeGroup, Observation, Intervention
+from ..models import Proposal, Study, AgeGroup
 from ..utils import string_to_bool
 
 
