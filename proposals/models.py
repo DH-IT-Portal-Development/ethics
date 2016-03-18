@@ -403,6 +403,7 @@ beantwoorden door volwassen deelnemers te testen?'))
     passive_consent = models.BooleanField(
         _('Maakt uw studie gebruik van passieve informed consent?'),
         default=False,
+        # TODO: link to website
         help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
 ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
 U kunt de templates vinden op <link website?>'))
