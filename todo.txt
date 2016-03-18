@@ -3,14 +3,8 @@ TODO:
 - WMO (alles correct?)
 
 - links naar website vanuit teksten
-- Uitvoer naar PDF, paginanummers
-- AUTH: Solis-login
-- korte en verlengde procedure, secretaris beslist
 - Uitlijnen lange teksten
-- e-mail naar aanvragers/eindverantwoordelijke (geen problemen (binnen twee weken bericht)/besproken bij eerstkomende vergadering)
-- Inregelen e-mails eindverantwoordelijke
 
 Input commissie nodig:
 - Woordenboek van definities?
 - WMO: success messages
-v WMO: afhandeling regelen (aparte flow, niet langs commissie voor go/no-go)

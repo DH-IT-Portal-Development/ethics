@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from extra_views import InlineFormSet
 
 from .models import Proposal, Wmo, Study, Observation, Intervention, Session, Task, Survey, Location
-from .utils import check_dependency, check_dependency_singular, check_dependency_multiple
+from .utils import check_dependency, check_dependency_singular, check_dependency_multiple, get_users_as_list
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
@@ -38,12 +38,14 @@ class ProposalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from relation field
-        - Don't allow to pick yourself as supervisor
+        - Don't allow to pick yourself (or a superuser) as supervisor
+        - Retrieve all Users as a nice list
         """
         user = kwargs.pop('user', None)
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
-        self.fields['supervisor'].queryset = get_user_model().objects.exclude(pk=user.pk)
+        self.fields['supervisor'].queryset = get_user_model().objects.exclude(pk=user.pk, is_superuser=True)
+        self.fields['applicants'].choices = get_users_as_list()
 
     def clean(self):
         """
