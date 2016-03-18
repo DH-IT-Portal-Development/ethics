@@ -113,9 +113,12 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
         elif study.has_intervention:
             next_url = 'proposals:intervention_update'
             pk = Intervention.objects.get(study=study).pk
-        else:
+        elif study.has_observation:
             next_url = 'proposals:observation_update'
             pk = Observation.objects.get(study=study).pk
+        else:
+            next_url = 'proposals:study_design'
+            pk = study.pk
 
         return reverse(next_url, args=(pk,))
 
