@@ -36,7 +36,8 @@ $(function() {
         var url = "{% url 'proposals:check_necessity_required' %}";
         var params = {'age_groups': age_groups,
             'legally_incapable': legally_incapable,
-            'has_traits': has_traits};
+            'has_traits': has_traits,
+            'proposal_pk': {{ proposal.pk }} };
         $.post(url, params, function(data) {
             $('#id_necessity, #id_necessity_reason').parents('tr').toggle(data.result);
             $('#id_necessity').parents('tr').prev().toggle(data.result); // Toggles header as well
@@ -47,8 +48,6 @@ $(function() {
 </script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% with proposal=study.proposal %}
     {% include "proposals/form_buttons.html" %}
-    {% endwith %}
 </form>
 {% endblock %}

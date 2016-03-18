@@ -156,7 +156,10 @@ class StudyForm(forms.ModelForm):
         """
         - Allow legally_incapable to have HTML in its label
         - Remove empty label from setting/compensation field
+        - Set the Proposal for later reference in the clean method
         """
+        self.proposal = kwargs.pop('proposal', None)
+
         super(StudyForm, self).__init__(*args, **kwargs)
         self.fields['legally_incapable'].label = mark_safe(self.fields['legally_incapable'].label)
         self.fields['setting'].empty_label = None
@@ -165,23 +168,27 @@ class StudyForm(forms.ModelForm):
     def clean(self):
         """
         Check for conditional requirements:
-        - If an age group which needs details has been checked, make sure necessity/necessity_reason has been filled out
-        - If has_traits is checked, make sure necessity/necessity_reason has been filled out
-        - If legally_incapable is checked, make sure necessity/necessity_reason has been filled out
+        - Check whether necessity/necessity_reason was required and if so, if it has been filled out
         - If a setting which needs details has been checked, make sure the details are filled
         - If a compensation which needs details has been checked, make sure the details are filled
         - If a recruitment which needs details has been checked, make sure the details are filled
         """
         cleaned_data = super(StudyForm, self).clean()
 
-        age_group_needs_details = check_dependency_multiple(self, cleaned_data, 'age_groups', 'needs_details', 'necessity')
-        check_dependency_multiple(self, cleaned_data, 'age_groups', 'needs_details', 'necessity_reason')
-        if not age_group_needs_details:
-            has_traits = check_dependency(self, cleaned_data, 'has_traits', 'necessity')
-            check_dependency(self, cleaned_data, 'has_traits', 'necessity_reason')
-            if not has_traits:
-                check_dependency(self, cleaned_data, 'legally_incapable', 'necessity')
-                check_dependency(self, cleaned_data, 'legally_incapable', 'necessity_reason')
+        if self.proposal.relation.needs_supervisor:
+            age_groups = cleaned_data['age_groups']
+            neccesity_required = False
+            for age_group in age_groups:
+                if age_group.needs_details:
+                    neccesity_required = True
+                    break
+            neccesity_required |= cleaned_data['has_traits']
+            neccesity_required |= cleaned_data['legally_incapable']
+            if neccesity_required:
+                if not cleaned_data['necessity_reason']:
+                    error = forms.ValidationError(_('Dit veld is verplicht'), code='required')
+                    self.add_error('necessity_reason', error)
+
         check_dependency_multiple(self, cleaned_data, 'setting', 'needs_details', 'setting_details')
         check_dependency_singular(self, cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         check_dependency_multiple(self, cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
