@@ -20,12 +20,14 @@ class ProposalForm(forms.ModelForm):
         model = Proposal
         fields = ['relation', 'supervisor',
                   'other_applicants', 'applicants',
+                  'other_stakeholders', 'stakeholders',
                   'date_start', 'date_end',
                   'title', 'summary',
                   'funding', 'funding_details']
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
+            'other_stakeholders': forms.RadioSelect(choices=YES_NO),
             'summary': forms.Textarea(attrs={'rows': 30, 'cols': 80}),
             'funding': forms.CheckboxSelectMultiple()
         }
@@ -55,20 +57,21 @@ class ProposalForm(forms.ModelForm):
         - Maximum number of words for summary
         """
         cleaned_data = super(ProposalForm, self).clean()
-        relation = cleaned_data.get('relation')
-        supervisor = cleaned_data.get('supervisor')
-        other_applicants = cleaned_data.get('other_applicants')
-        applicants = cleaned_data.get('applicants')
-        summary = cleaned_data.get('summary')
 
-        if relation and relation.needs_supervisor and not supervisor:
+        relation = cleaned_data.get('relation')
+        if relation and relation.needs_supervisor and not cleaned_data.get('supervisor'):
             error = forms.ValidationError(_('U dient een eindverantwoordelijke op te geven.'), code='required')
             self.add_error('supervisor', error)
 
-        if other_applicants and len(applicants) == 1:
+        if cleaned_data.get('other_applicants') and len(cleaned_data.get('applicants')) == 1:
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
             self.add_error('applicants', error)
 
+        if cleaned_data.get('other_stakeholders') and not cleaned_data.get('stakeholders'):
+            error = forms.ValidationError(_('U heeft geen andere betrokkenen genoemd.'), code='required')
+            self.add_error('stakeholders', error)
+
+        summary = cleaned_data.get('summary')
         if summary and len(summary.split()) > SUMMARY_MAX_WORDS:
             error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
             self.add_error('summary', error)

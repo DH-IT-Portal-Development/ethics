@@ -69,6 +69,12 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposal" "applicants" %}</th><td></td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "proposal" "other_stakeholders" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "stakeholders" %}</th><td></td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "proposal" "date_start" %}</th><td></td>
             </tr>
             <tr>

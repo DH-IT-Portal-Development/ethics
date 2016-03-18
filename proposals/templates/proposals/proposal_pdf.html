@@ -73,6 +73,14 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             <tr>
+                <th>{% get_verbose_field_name "proposal" "other_stakeholders" %}</th><td>{{ proposal.other_stakeholders|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if proposal.other_stakeholders %}
+            <tr>
+                <th>{% get_verbose_field_name "proposal" "stakeholders" %}</th><td>{{ proposal.stakeholders }}</td>
+            </tr>
+            {% endif %}
+            <tr>
                 <th>{% get_verbose_field_name "proposal" "date_start" %}</th><td>{{ proposal.date_start }}</td>
             </tr>
             <tr>

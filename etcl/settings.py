@@ -128,5 +128,7 @@ EMAIL_FROM = 'M.H.vanderKlis@uu.nl'
 GROUP_SECRETARY = 'Secretaris'
 GROUP_COMMISSION = 'Commissie'
 
-if DEBUG:
+try:
     from ldap_settings import *
+except ImportError:
+    print 'Proceeding without LDAP settings'

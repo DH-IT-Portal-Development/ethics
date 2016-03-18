@@ -90,6 +90,12 @@ class Proposal(models.Model):
     other_applicants = models.BooleanField(
         _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
         default=False)
+    other_stakeholders = models.BooleanField(
+        _('Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?'),
+        default=False)
+    stakeholders = models.TextField(
+        _('Andere betrokkenen'),
+        blank=True)
     funding = models.ManyToManyField(
         Funding,
         verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'))
@@ -122,14 +128,16 @@ class Proposal(models.Model):
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Uitvoerende(n)'),
-        related_name='applicants')
+        related_name='applicants',
+        help_text=_('Als uw medeonderzoeker niet in de lijst voorkomt, \
+vraag hem dan een keer in te loggen in het webportaal.'))
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
         blank=True,
         null=True,
-        help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. \
-De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'))
+        help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke \
+sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'))
     parent = models.ForeignKey(
         'self',
         null=True,
