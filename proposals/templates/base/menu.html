@@ -1,0 +1,107 @@
+{% load i18n %}
+{% load proposal_filters %}
+
+<div class="pure-menu pure-menu-horizontal pure-menu-custom">
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{% url 'proposals:home' %}">{% trans "Startpagina" %}</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">{% trans "Studies" %}</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:start' %}">{% trans "Nieuwe studie starten" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:copy' %}">{% trans "Bestaande studie kopiëren" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptstudies" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:my_submitted' %}">{% trans "Mijn ingediende studies" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:my_completed' %}">{% trans "Mijn afgeronde studies" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:my_archive' %}">{% trans "Al mijn studies" %}</a>
+                </li>
+            </ul>
+        </li>
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">{% trans "UiL OTS archief" %}</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS-studies bekijken" %}</a>
+                </li>
+            </ul>
+        </li>
+        {% if user|in_commission %}
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">{% trans "Commissie" %}</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:home' %}">{% trans "Mijn besluiten" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:supervisor' %}">{% trans "Openstaande besluiten" %}</a>
+                </li>
+            </ul>
+        </li>
+        {% endif %}
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">{% trans "Help" %}</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'feedback:faq' %}">{% trans "FAQ" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'feedback:create' %}">{% trans "Feedback" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">{% trans "ETCL reglement" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
+                </li>
+            </ul>
+        </li>
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{% url 'logout' %}"><em>{% trans "Uitloggen" %}</em></a>
+        </li>
+        {% else %}
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl" target="_blank">{% trans "ETCL-website" %}</a>
+        </li>
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{% url 'login' %}"><em>{% trans "Inloggen" %}</em></a>
+        </li>
+        {% endif %}
+
+        <li class="pure-menu-item">
+            <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}" />
+                <select name="language">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                            {{ language.name_local }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<script>
+    $(function() {
+        $('select[name="language"]').change(function() {
+            this.form.submit();
+        });
+    });
+</script>
