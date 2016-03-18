@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from django.views import generic
 
 from .forms import FeedbackForm
-from .models import Feedback, Faq
+from .models import Feedback
 
 
 class LoginRequiredMixin(object):
@@ -44,8 +44,3 @@ class FeedbackThanks(LoginRequiredMixin, generic.DetailView):
 
 class FeedbackListing(LoginRequiredMixin, generic.ListView):
     model = Feedback
-
-
-class FaqsView(generic.ListView):
-    context_object_name = 'faqs'
-    model = Faq

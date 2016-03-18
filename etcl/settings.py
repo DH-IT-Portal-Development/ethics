@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'proposals',
     'reviews',
     'feedback',
+    'faqs',
 
     'easy_pdf',
 

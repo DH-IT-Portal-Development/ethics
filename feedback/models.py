@@ -25,15 +25,3 @@ class Feedback(models.Model):
     date_modified = models.DateField(auto_now=True)
 
     submitter = models.ForeignKey(settings.AUTH_USER_MODEL)
-
-
-class Faq(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    question = models.TextField()
-    answer = models.TextField()
-
-    class Meta:
-        verbose_name = _('FAQ')
-
-    def __unicode__(self):
-        return self.question

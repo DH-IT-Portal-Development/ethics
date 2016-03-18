@@ -1,0 +1,23 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "Frequently Asked Questions" %}
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
+
+{% block content %}
+{% for faq in faqs %}
+    <ul>
+        <li><a href="#{{ faq.order }}">{{ faq.question }}</a></li>
+    </ul>
+{% endfor %}
+
+{% for faq in faqs %}
+    <a name="{{ faq.order }}"></a>
+    <h3>{{ faq.question }}</h3>
+    <p>{{ faq.answer }}</p>
+{% endfor %}
+{% endblock %}
