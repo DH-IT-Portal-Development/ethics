@@ -5,6 +5,7 @@
 __pycache__/
 
 media/
+etcl/ldap_settings.py
 
 ### IDE ###
 .idea
