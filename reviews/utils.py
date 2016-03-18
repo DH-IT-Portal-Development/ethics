@@ -10,14 +10,12 @@ from django.utils import timezone
 from .models import Review, Decision
 from proposals.models import Task
 
-SECRETARY = 'Secretaris'
-
 
 def get_secretary():
     """
     Returns the Secretary. We limit this to one user.
     """
-    return get_user_model().objects.filter(groups__name=SECRETARY)[0]
+    return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)[0]
 
 
 def start_review(proposal):

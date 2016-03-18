@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from django.test import TestCase
+from django.conf import settings
 from django.contrib.auth.models import User, Group
+from django.test import TestCase
 
 from .models import Review, Decision
 from .utils import start_review, auto_review
@@ -22,9 +23,9 @@ class BaseReviewTestCase(TestCase):
         self.user = User.objects.create_user('user', 'test@test.com', 'secret')
         self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret')
 
-        self.secretary.groups.add(Group.objects.get(name='Secretaris'))
-        self.c1.groups.add(Group.objects.get(name='Commissie'))
-        self.c2.groups.add(Group.objects.get(name='Commissie'))
+        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
+        self.c1.groups.add(Group.objects.get(name=settings.GROUP_COMMISSION))
+        self.c2.groups.add(Group.objects.get(name=settings.GROUP_COMMISSION))
 
         self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                                 date_start=datetime.now(), date_end=datetime.now(),

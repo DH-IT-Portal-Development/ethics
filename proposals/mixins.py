@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -5,9 +6,6 @@ from django.http import HttpResponseRedirect
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Proposal, Observation, Intervention, Session, Task
-
-SECRETARY = 'Secretaris'
-COMMISSION = 'Commissie'
 
 
 class LoginRequiredMixin(object):
@@ -75,8 +73,8 @@ class UserAllowedMixin(SingleObjectMixin):
             supervisor = get_user_model().objects.filter(pk=proposal.supervisor.id)
         else:
             supervisor = get_user_model().objects.none()
-        commission = get_user_model().objects.filter(groups__name=SECRETARY)
-        commission |= get_user_model().objects.filter(groups__name=COMMISSION)
+        commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
+        commission |= get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
 
         if proposal.status >= Proposal.SUBMITTED:
             if self.request.user not in commission:

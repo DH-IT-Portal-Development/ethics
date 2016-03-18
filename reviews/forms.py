@@ -1,10 +1,10 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
 
 from .models import Review, Decision
 
-COMMISSION = 'Commissie'
 YES_NO = [(True, _('akkoord')), (False, _('niet akkoord'))]
 SHORT_LONG = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route'))]
 
@@ -20,8 +20,9 @@ class ReviewAssignForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """Adds a field to select reviewers for this Proposal"""
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
-        reviewers = get_user_model().objects.filter(groups__name=COMMISSION)
-        self.fields['reviewers'] = forms.ModelMultipleChoiceField(queryset=reviewers,
+        reviewers = get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
+        self.fields['reviewers'] = forms.ModelMultipleChoiceField(
+            queryset=reviewers,
             widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}))
 
 

@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load proposal_filters %}
+
 <div class="pure-menu pure-menu-horizontal pure-menu-custom">
     <ul class="pure-menu-list">
         <li class="pure-menu-item">
@@ -36,6 +38,7 @@
                 </li>
             </ul>
         </li>
+        {% if user|in_commission %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
             <a href="#" class="pure-menu-link">{% trans "Commissie" %}</a>
             <ul class="pure-menu-children">
@@ -47,6 +50,7 @@
                 </li>
             </ul>
         </li>
+        {% endif %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
             <a href="#" class="pure-menu-link">{% trans "Help" %}</a>
             <ul class="pure-menu-children">

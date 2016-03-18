@@ -164,3 +164,7 @@ MEDIA_ROOT = 'media'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025
 EMAIL_FROM = 'M.H.vanderKlis@uu.nl'
+
+# Group names
+GROUP_SECRETARY = 'Secretaris'
+GROUP_COMMISSION = 'Commissie'
