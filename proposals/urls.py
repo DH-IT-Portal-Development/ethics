@@ -1,13 +1,15 @@
 from django.conf.urls import url
 
-from .views.base_views import *
-from .views.proposal_views import *
-from .views.wmo_views import *
-from .views.study_views import *
-from .views.observation_views import *
-from .views.intervention_views import *
-from .views.session_views import *
-from .views.task_views import *
+from .views.base_views import HomeView, check_requires
+from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
+    ProposalCreate, ProposalUpdate, ProposalDelete, ProposalCopy, ProposalStart, ProposalSubmit, ProposalSubmitted, \
+    DetailView, ProposalAsPdf, EmptyPDF
+from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
+from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, check_necessity_required
+from .views.observation_views import ObservationCreate, ObservationUpdate
+from .views.intervention_views import InterventionCreate, InterventionUpdate
+from .views.session_views import SessionStart, SessionEnd, TaskStart, TaskEnd, SessionDelete, add_session, add_task
+from .views.task_views import TaskUpdate, TaskDelete
 
 urlpatterns = [
     # Home
