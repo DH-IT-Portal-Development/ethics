@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 
 from extra_views import InlineFormSet
 
-from .models import Proposal, Wmo, Study, Observation, Intervention, Session, Task, Survey, Location
+from .models import Proposal, Wmo, Study, Observation, Session, Task, Survey, Location
 from .utils import check_dependency, check_dependency_singular, check_dependency_multiple, get_users_as_list
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
@@ -259,24 +259,6 @@ class LocationsInline(InlineFormSet):
     fields = ['name', 'registration']
     can_delete = True
     extra = 1
-
-
-class InterventionForm(forms.ModelForm):
-    class Meta:
-        model = Intervention
-        fields = ['description', 'has_drawbacks', 'has_drawbacks_details']
-        widgets = {
-            'has_drawbacks': forms.RadioSelect(choices=YES_NO),
-        }
-
-    def clean(self):
-        """
-        Check for conditional requirements:
-        - If has_drawbacks is True, has_drawbacks_details is required
-        """
-        cleaned_data = super(InterventionForm, self).clean()
-
-        check_dependency(self, cleaned_data, 'has_drawbacks', 'has_drawbacks_details')
 
 
 class SessionStartForm(forms.ModelForm):
