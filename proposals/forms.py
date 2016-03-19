@@ -67,10 +67,10 @@ class ProposalForm(forms.ModelForm):
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
             self.add_error('applicants', error)
 
-        if cleaned_data.get('other_stakeholders') and not cleaned_data.get('stakeholders'):
-            error = forms.ValidationError(_('U heeft geen andere betrokkenen genoemd.'), code='required')
-            self.add_error('stakeholders', error)
+        check_dependency(self, cleaned_data, 'other_stakeholders', 'stakeholders',
+                         _('U heeft geen andere betrokkenen genoemd.'))
 
+        # TODO: turn into custom validator
         summary = cleaned_data.get('summary')
         if summary and len(summary.split()) > SUMMARY_MAX_WORDS:
             error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
@@ -112,12 +112,9 @@ class WmoForm(forms.ModelForm):
         - If metc is checked, make sure institution is set
         """
         cleaned_data = super(WmoForm, self).clean()
-        metc = cleaned_data.get('metc')
-        metc_institution = cleaned_data.get('metc_institution')
 
-        if metc and not metc_institution:
-            error = forms.ValidationError(_('U dient een instelling op te geven.'), code='required')
-            self.add_error('metc_institution', error)
+        check_dependency(self, cleaned_data, 'metc', 'metc_institution',
+                         _('U dient een instelling op te geven.'))
 
 
 class WmoCheckForm(forms.ModelForm):
@@ -294,14 +291,16 @@ class SessionStartForm(forms.ModelForm):
 
 
 class TaskStartForm(forms.ModelForm):
-    is_copy = forms.BooleanField(label=_('Is deze sessie een kopie van een voorgaande sessie?'),
-                                 help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar.'),
-                                 widget=forms.RadioSelect(choices=YES_NO),
-                                 initial=False,
-                                 required=False)
-    parent_session = forms.ModelChoiceField(label=_(u'Te kopiëren sessie'),
-                                            queryset=Session.objects.all(),
-                                            required=False)
+    is_copy = forms.BooleanField(
+        label=_('Is deze sessie een kopie van een voorgaande sessie?'),
+        help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar.'),
+        widget=forms.RadioSelect(choices=YES_NO),
+        initial=False,
+        required=False)
+    parent_session = forms.ModelChoiceField(
+        label=_(u'Te kopiëren sessie'),
+        queryset=Session.objects.all(),
+        required=False)
 
     class Meta:
         model = Session
@@ -396,6 +395,7 @@ class TaskEndForm(forms.ModelForm):
         """
         cleaned_data = super(TaskEndForm, self).clean()
 
+        # TODO: put this into custom validator
         tasks_duration = cleaned_data.get('tasks_duration')
         net_duration = self.instance.net_duration()
         if tasks_duration < net_duration:
@@ -445,6 +445,7 @@ class SessionEndForm(forms.ModelForm):
         """
         cleaned_data = super(SessionEndForm, self).clean()
 
+        # TODO: put this into custom validator
         if self.instance.has_sessions:
             sessions_duration = cleaned_data.get('sessions_duration')
             net_duration = self.instance.net_duration()
