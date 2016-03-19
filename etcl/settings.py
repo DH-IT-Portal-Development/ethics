@@ -37,6 +37,7 @@ INSTALLED_APPS = (
 
     'proposals',
     'interventions',
+    'observations',
     'reviews',
     'feedback',
     'faqs',

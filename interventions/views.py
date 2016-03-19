@@ -31,7 +31,7 @@ class InterventionMixin(object):
         pk = study.pk
         next_url = 'proposals:study_design'
         if study.has_observation:
-            next_url = 'proposals:observation_update'
+            next_url = 'observations:update'
             pk = study.observation.pk
         return reverse(next_url, args=(pk,))
 

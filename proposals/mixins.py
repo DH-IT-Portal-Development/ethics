@@ -5,7 +5,9 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.views.generic.detail import SingleObjectMixin
 
-from .models import Proposal, Observation, Intervention, Session, Task
+from .models import Proposal, Session, Task
+from observations.models import Observation
+from interventions.models import Intervention
 
 
 class LoginRequiredMixin(object):

@@ -12,6 +12,8 @@ urlpatterns = patterns('',
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name='logout'),
 
     url(r'^', include('proposals.urls', namespace='proposals')),
+    url(r'^observations/', include('observations.urls', namespace='observations')),
+    url(r'^interventions/', include('interventions.urls', namespace='interventions')),
     url(r'^reviews/', include('reviews.urls', namespace='reviews')),
     url(r'^feedback/', include('feedback.urls', namespace='feedback')),
     url(r'^faqs/', include('faqs.urls', namespace='faqs')),

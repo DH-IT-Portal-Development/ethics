@@ -66,16 +66,16 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         pk = study.pk
         if study.has_observation:
             if hasattr(study, 'observation'):
-                next_url = 'proposals:observation_update'
+                next_url = 'observations:update'
                 pk = study.observation.pk
             else:
-                next_url = 'proposals:observation_create'
+                next_url = 'observations:create'
         elif study.has_intervention:
             if hasattr(study, 'intervention'):
-                next_url = 'proposals:intervention_update'
+                next_url = 'interventions:update'
                 pk = study.intervention.pk
             else:
-                next_url = 'proposals:intervention_create'
+                next_url = 'interventions:create'
         elif study.has_sessions:
             next_url = 'proposals:session_start'
         return reverse(next_url, args=(pk,))

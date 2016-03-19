@@ -4,10 +4,10 @@ from django.utils.translation import ugettext as _
 
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
-from .base_views import success_url
-from ..mixins import LoginRequiredMixin, UserAllowedMixin
-from ..forms import ObservationForm, LocationsInline
-from ..models import Study, Observation
+from proposals.views.base_views import success_url
+from proposals.mixins import LoginRequiredMixin, UserAllowedMixin
+from .forms import ObservationForm, LocationsInline
+from .models import Study, Observation
 
 
 #############################
@@ -31,10 +31,10 @@ class ObservationMixin(object):
         pk = study.pk
         if study.has_intervention:
             if hasattr(study, 'intervention'):
-                next_url = 'proposals:intervention_update'
+                next_url = 'interventions:update'
                 pk = study.intervention.pk
             else:
-                next_url = 'proposals:intervention_create'
+                next_url = 'interventions:create'
         elif study.has_sessions:
             next_url = 'proposals:session_start'
         return reverse(next_url, args=(pk,))

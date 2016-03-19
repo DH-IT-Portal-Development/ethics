@@ -6,8 +6,6 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView
     DetailView, ProposalAsPdf, EmptyPDF
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, check_necessity_required
-from .views.observation_views import ObservationCreate, ObservationUpdate
-from .views.intervention_views import InterventionCreate, InterventionUpdate
 from .views.session_views import SessionStart, SessionEnd, TaskStart, TaskEnd, SessionDelete, add_session, add_task
 from .views.task_views import TaskUpdate, TaskDelete
 
@@ -47,14 +45,6 @@ urlpatterns = [
     url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
     url(r'^study/design/(?P<pk>\d+)/$', StudyDesign.as_view(), name='study_design'),
     url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
-
-    # Observation
-    url(r'^observation/create/(?P<pk>\d+)/$', ObservationCreate.as_view(), name='observation_create'),
-    url(r'^observation/update/(?P<pk>\d+)/$', ObservationUpdate.as_view(), name='observation_update'),
-
-    # Intervention
-    url(r'^intervention/create/(?P<pk>\d+)/$', InterventionCreate.as_view(), name='intervention_create'),
-    url(r'^intervention/update/(?P<pk>\d+)/$', InterventionUpdate.as_view(), name='intervention_update'),
 
     # Session(s)
     url(r'^session_start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),

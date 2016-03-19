@@ -5,11 +5,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
+from observations.models import Observation
+from interventions.models import Intervention
 from .base_views import UpdateView, DeleteView, get_session_progress
 from ..copy import copy_tasks_to_session
 from ..forms import SessionStartForm, TaskStartForm, TaskEndForm, SessionEndForm
 from ..mixins import AllowErrorsMixin, DeletionAllowedMixin
-from ..models import Study, Session, Task, Observation, Intervention
+from ..models import Study, Session, Task
 
 
 ######################
@@ -55,10 +57,10 @@ class SessionStart(AllowErrorsMixin, UpdateView):
         next_url = 'proposals:study_design'
         pk = study.pk
         if study.has_intervention:
-            next_url = 'proposals:intervention_update'
+            next_url = 'interventions:update'
             pk = study.intervention.pk
         elif study.has_observation:
-            next_url = 'proposals:observation_update'
+            next_url = 'observations:update'
             pk = study.observation.pk
         return reverse(next_url, args=(pk,))
 
@@ -111,10 +113,10 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
             next_url = 'proposals:task_end'
             pk = self.object.last_session().pk
         elif study.has_intervention:
-            next_url = 'proposals:intervention_update'
+            next_url = 'interventions:update'
             pk = Intervention.objects.get(study=study).pk
         elif study.has_observation:
-            next_url = 'proposals:observation_update'
+            next_url = 'observations:update'
             pk = Observation.objects.get(study=study).pk
         else:
             next_url = 'proposals:study_design'
