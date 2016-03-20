@@ -1,39 +1,14 @@
 # -*- encoding: utf-8 -*-
 
 from django.apps import apps
-from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
-from ..mixins import LoginRequiredMixin, UserAllowedMixin
-
 SESSION_PROGRESS_START = 35
 SESSION_PROGRESS_TOTAL = 50
 SESSION_PROGRESS_EPSILON = 5
-
-
-class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
-    """Generic create view including success message and login required mixins"""
-    def get_success_url(self):
-        """Sets the success_url based on the submit button pressed"""
-        return success_url(self)
-
-
-class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
-    """Generic update view including success message, user allowed and login required mixins"""
-    def get_success_url(self):
-        """Sets the success_url based on the submit button pressed"""
-        return success_url(self)
-
-
-class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
-    """Generic delete view including login required and user allowed mixin and alternative for success message"""
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super(DeleteView, self).delete(request, *args, **kwargs)
 
 
 # Home view
@@ -63,16 +38,6 @@ def check_requires(request):
 #########
 # Helpers
 #########
-
-def success_url(self):
-    if 'save_continue' in self.request.POST:
-        return self.get_next_url()
-    if 'save_back' in self.request.POST:
-        return self.get_back_url()
-    else:
-        return reverse('proposals:my_concepts')
-
-
 def get_session_progress(session, is_end=False):
     progress = SESSION_PROGRESS_TOTAL / session.study.sessions_number
     if not is_end:

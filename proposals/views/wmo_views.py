@@ -6,7 +6,8 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
-from .base_views import CreateView, UpdateView
+from core.views import CreateView, UpdateView
+
 from ..models import Proposal, Wmo
 from ..forms import WmoForm, WmoCheckForm
 from ..utils import string_to_bool

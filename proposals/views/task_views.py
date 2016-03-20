@@ -4,9 +4,11 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
-from .base_views import UpdateView, DeleteView, get_task_progress
+from core.views import AllowErrorsMixin, UpdateView, DeleteView
+
+from .base_views import get_task_progress
 from ..forms import TaskForm
-from ..mixins import AllowErrorsMixin, DeletionAllowedMixin
+from ..mixins import DeletionAllowedMixin
 from ..models import Task
 
 

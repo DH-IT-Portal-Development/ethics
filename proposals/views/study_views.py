@@ -7,8 +7,8 @@ from django.utils.translation import ugettext as _
 
 from extra_views import UpdateWithInlinesView
 
-from .base_views import CreateView, UpdateView, success_url
-from ..mixins import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin
+from core.views import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin, CreateView, UpdateView, success_url
+
 from ..forms import StudyForm, StudyDesignForm, StudySurveyForm, SurveysInline
 from ..models import Proposal, Study, AgeGroup
 from ..utils import string_to_bool

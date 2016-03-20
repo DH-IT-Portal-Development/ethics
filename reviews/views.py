@@ -6,8 +6,10 @@ from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views import generic
 
+from core.views import LoginRequiredMixin
+
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
-from .mixins import LoginRequiredMixin, UserAllowedMixin, AutoReviewMixin
+from .mixins import UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
 from .utils import get_secretary
 
@@ -94,7 +96,6 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
         form.instance.date_end = timezone.now()  # TODO: propagate this date to a Proposal
         # TODO: actions based on continuation selected
         return super(ReviewCloseView, self).form_valid(form)
-
 
 
 class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):

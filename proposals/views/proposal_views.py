@@ -6,13 +6,13 @@ from django.utils.translation import ugettext as _
 
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
-from .base_views import CreateView, UpdateView, DeleteView
+from core.views import AllowErrorsMixin, LoginRequiredMixin, CreateView, UpdateView, DeleteView
+from reviews.utils import start_review
+
 from ..copy import copy_proposal
 from ..forms import ProposalForm, ProposalCopyForm, ProposalSubmitForm
-from ..mixins import AllowErrorsMixin, LoginRequiredMixin
 from ..models import Proposal
 from ..utils import generate_ref_number
-from reviews.utils import start_review
 
 
 # List views

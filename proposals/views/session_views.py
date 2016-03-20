@@ -5,12 +5,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
+from core.views import AllowErrorsMixin, UpdateView, DeleteView
 from observations.models import Observation
 from interventions.models import Intervention
-from .base_views import UpdateView, DeleteView, get_session_progress
+
+from .base_views import get_session_progress
 from ..copy import copy_tasks_to_session
 from ..forms import SessionStartForm, TaskStartForm, TaskEndForm, SessionEndForm
-from ..mixins import AllowErrorsMixin, DeletionAllowedMixin
+from ..mixins import DeletionAllowedMixin
 from ..models import Study, Session, Task
 
 

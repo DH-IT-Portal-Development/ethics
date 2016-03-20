@@ -1,8 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from proposals.views.base_views import CreateView, UpdateView
-from proposals.mixins import AllowErrorsMixin
+from core.views import CreateView, UpdateView, AllowErrorsMixin
 from proposals.models import Study
 
 from .forms import InterventionForm

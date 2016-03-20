@@ -4,8 +4,8 @@ from django.utils.translation import ugettext as _
 
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
-from proposals.views.base_views import success_url
-from proposals.mixins import LoginRequiredMixin, UserAllowedMixin
+from core.views import LoginRequiredMixin, UserAllowedMixin, success_url
+
 from .forms import ObservationForm, LocationsInline
 from .models import Study, Observation
 
