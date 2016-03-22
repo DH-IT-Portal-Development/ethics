@@ -230,16 +230,6 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             return reverse('proposals:session_start', args=(self.object.study.pk,))
 
 
-def add_task(request, pk):
-    """Updates the tasks_number on a Session"""
-    # TODO: fix this or delete functionality.
-    session = get_object_or_404(Session, pk=pk)
-    session.tasks_number += 1
-    session.save()
-
-    return HttpResponseRedirect(reverse('proposals:task_create', args=(session.pk,)))
-
-
 class TaskEnd(AllowErrorsMixin, UpdateView):
     """Completes a Session"""
     model = Session

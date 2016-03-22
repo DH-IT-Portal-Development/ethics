@@ -6,7 +6,7 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView
     DetailView, ProposalAsPdf, EmptyPDF
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, check_necessity_required
-from .views.session_views import SessionStart, SessionEnd, TaskStart, TaskEnd, SessionDelete, add_session, add_task
+from .views.session_views import SessionStart, SessionEnd, TaskStart, TaskEnd, SessionDelete, add_session
 from .views.task_views import TaskUpdate, TaskDelete
 
 urlpatterns = [
@@ -53,7 +53,6 @@ urlpatterns = [
     url(r'^session/delete/(?P<pk>\d+)/$', SessionDelete.as_view(), name='session_delete'),
     url(r'^task_start/(?P<pk>\d+)/$', TaskStart.as_view(), name='task_start'),
     url(r'^task_end/(?P<pk>\d+)/$', TaskEnd.as_view(), name='task_end'),
-    url(r'^task_add/(?P<pk>\d+)/$', add_task, name='task_add'),
 
     # Task(s)
     url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
