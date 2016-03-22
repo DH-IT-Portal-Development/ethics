@@ -34,7 +34,7 @@
         "needs_details": false,
         "requires_review": true,
         "order": 4,
-        "description": "scholen"
+        "description": "verloskundige praktijken"
     },
     "model": "proposals.recruitment",
     "pk": 4
@@ -44,19 +44,29 @@
         "needs_details": false,
         "requires_review": true,
         "order": 5,
-        "description": "KDV, BSO"
+        "description": "scholen"
     },
     "model": "proposals.recruitment",
     "pk": 5
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
         "requires_review": true,
         "order": 6,
-        "description": "anders, namelijk"
+        "description": "KDV, BSO"
     },
     "model": "proposals.recruitment",
     "pk": 6
+},
+{
+    "fields": {
+        "needs_details": true,
+        "requires_review": true,
+        "order": 7,
+        "description": "anders, namelijk"
+    },
+    "model": "proposals.recruitment",
+    "pk": 7
 }
 ]
