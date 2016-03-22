@@ -25,6 +25,9 @@ class Relation(models.Model):
     description = models.CharField(max_length=200)
     needs_supervisor = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ['order']
+
     def __unicode__(self):
         return self.description
 
@@ -33,6 +36,9 @@ class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
 
     def __unicode__(self):
         return self.description
@@ -311,6 +317,9 @@ class Setting(models.Model):
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['order']
+
     def __unicode__(self):
         return self.description
 
@@ -321,6 +330,9 @@ class Compensation(models.Model):
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['order']
+
     def __unicode__(self):
         return self.description
 
@@ -330,6 +342,9 @@ class Recruitment(models.Model):
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
 
     def __unicode__(self):
         return self.description
@@ -639,6 +654,9 @@ class Registration(models.Model):
     requires_review = models.BooleanField(default=False)
     age_min = models.PositiveIntegerField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['order']
+
     def __unicode__(self):
         return self.description
 
@@ -649,6 +667,9 @@ class RegistrationKind(models.Model):
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
     registration = models.ForeignKey(Registration)
+
+    class Meta:
+        ordering = ['order']
 
     def __unicode__(self):
         return self.description
