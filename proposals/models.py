@@ -9,9 +9,12 @@ from django.core.validators import MinValueValidator
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+from .validators import MaxWordsValidator
+
 
 ALLOWED_CONTENT_TYPES = ['application/pdf', 'application/msword',
                          'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+SUMMARY_MAX_WORDS = 200
 
 
 def validate_pdf_or_doc(value):
@@ -86,7 +89,8 @@ class Proposal(models.Model):
         unique=True,
         help_text=_('Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies.'))
     summary = models.TextField(
-        _('Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'))
+        _('Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'),
+        validators=[MaxWordsValidator(SUMMARY_MAX_WORDS)])
     other_applicants = models.BooleanField(
         _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
         default=False)

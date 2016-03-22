@@ -12,8 +12,6 @@ from core.utils import YES_NO, YES_NO_DOUBT
 from .models import Proposal, Wmo, Study, Session, Task, Survey
 from .utils import get_users_as_list
 
-SUMMARY_MAX_WORDS = 200
-
 
 class ProposalForm(ConditionalModelForm):
     class Meta:
@@ -69,12 +67,6 @@ class ProposalForm(ConditionalModelForm):
 
         self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders',
                               _('U heeft geen andere betrokkenen genoemd.'))
-
-        # TODO: turn into custom validator
-        summary = cleaned_data.get('summary')
-        if summary and len(summary.split()) > SUMMARY_MAX_WORDS:
-            error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
-            self.add_error('summary', error)
 
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
 
