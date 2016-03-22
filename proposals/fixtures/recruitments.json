@@ -4,7 +4,7 @@
         "needs_details": false,
         "requires_review": false,
         "order": 1,
-        "description": "volwassen databestand UiL OTS"
+        "description": "UiL OTS databestand"
     },
     "model": "proposals.recruitment",
     "pk": 1
@@ -12,18 +12,8 @@
 {
     "fields": {
         "needs_details": false,
-        "requires_review": false,
-        "order": 2,
-        "description": "databestand babylab UiL OTS"
-    },
-    "model": "proposals.recruitment",
-    "pk": 2
-},
-{
-    "fields": {
-        "needs_details": false,
         "requires_review": true,
-        "order": 3,
+        "order": 2,
         "description": "eigen netwerk"
     },
     "model": "proposals.recruitment",
@@ -33,7 +23,7 @@
     "fields": {
         "needs_details": false,
         "requires_review": true,
-        "order": 4,
+        "order": 3,
         "description": "scholen"
     },
     "model": "proposals.recruitment",
@@ -43,7 +33,7 @@
     "fields": {
         "needs_details": false,
         "requires_review": true,
-        "order": 5,
+        "order": 4,
         "description": "KDV, BSO"
     },
     "model": "proposals.recruitment",
@@ -53,7 +43,7 @@
     "fields": {
         "needs_details": true,
         "requires_review": true,
-        "order": 6,
+        "order": 5,
         "description": "anders, namelijk"
     },
     "model": "proposals.recruitment",
