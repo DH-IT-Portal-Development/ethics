@@ -1,11 +1,11 @@
 from django import forms
 
-from proposals.utils import check_dependency
-from proposals.forms import YES_NO
+from core.forms import ConditionalModelForm
+from core.utils import YES_NO
 from .models import Intervention
 
 
-class InterventionForm(forms.ModelForm):
+class InterventionForm(ConditionalModelForm):
     class Meta:
         model = Intervention
         fields = ['description', 'has_drawbacks', 'has_drawbacks_details']
@@ -20,4 +20,4 @@ class InterventionForm(forms.ModelForm):
         """
         cleaned_data = super(InterventionForm, self).clean()
 
-        check_dependency(self, cleaned_data, 'has_drawbacks', 'has_drawbacks_details')
+        self.check_dependency(cleaned_data, 'has_drawbacks', 'has_drawbacks_details')

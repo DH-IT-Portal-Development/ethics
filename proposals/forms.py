@@ -7,15 +7,15 @@ from django.utils.translation import ugettext as _
 
 from extra_views import InlineFormSet
 
+from core.forms import ConditionalModelForm
+from core.utils import YES_NO, YES_NO_DOUBT
 from .models import Proposal, Wmo, Study, Session, Task, Survey
-from .utils import check_dependency, check_dependency_singular, check_dependency_multiple, get_users_as_list
+from .utils import get_users_as_list
 
-YES_NO = [(True, _('ja')), (False, _('nee'))]
-YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
 SUMMARY_MAX_WORDS = 200
 
 
-class ProposalForm(forms.ModelForm):
+class ProposalForm(ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ['relation', 'supervisor',
@@ -67,8 +67,8 @@ class ProposalForm(forms.ModelForm):
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
             self.add_error('applicants', error)
 
-        check_dependency(self, cleaned_data, 'other_stakeholders', 'stakeholders',
-                         _('U heeft geen andere betrokkenen genoemd.'))
+        self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders',
+                              _('U heeft geen andere betrokkenen genoemd.'))
 
         # TODO: turn into custom validator
         summary = cleaned_data.get('summary')
@@ -76,7 +76,7 @@ class ProposalForm(forms.ModelForm):
             error = forms.ValidationError(_('De samenvatting bestaat uit teveel woorden.'), code='max')
             self.add_error('summary', error)
 
-        check_dependency_multiple(self, cleaned_data, 'funding', 'needs_details', 'funding_details')
+        self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
 
 
 class ProposalCopyForm(forms.ModelForm):
@@ -93,7 +93,7 @@ class ProposalCopyForm(forms.ModelForm):
         self.fields['parent'].queryset = Proposal.objects.filter(applicants=user)
 
 
-class WmoForm(forms.ModelForm):
+class WmoForm(ConditionalModelForm):
     class Meta:
         model = Wmo
         fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic',
@@ -113,8 +113,8 @@ class WmoForm(forms.ModelForm):
         """
         cleaned_data = super(WmoForm, self).clean()
 
-        check_dependency(self, cleaned_data, 'metc', 'metc_institution',
-                         _('U dient een instelling op te geven.'))
+        self.check_dependency(cleaned_data, 'metc', 'metc_institution',
+                              _('U dient een instelling op te geven.'))
 
 
 class WmoCheckForm(forms.ModelForm):
@@ -128,7 +128,7 @@ class WmoCheckForm(forms.ModelForm):
         }
 
 
-class StudyForm(forms.ModelForm):
+class StudyForm(ConditionalModelForm):
     class Meta:
         model = Study
         fields = ['age_groups', 'legally_incapable',
@@ -172,6 +172,19 @@ class StudyForm(forms.ModelForm):
         """
         cleaned_data = super(StudyForm, self).clean()
 
+        self.check_necessity_required(cleaned_data)
+        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
+        self.check_dependency_singular(cleaned_data, 'compensation', 'needs_details', 'compensation_details')
+        self.check_dependency_multiple(cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
+
+    def check_necessity_required(self, cleaned_data):
+        """
+        This call checks whether the necessity questions are required. They are required when:
+        - The researcher requires a supervisor AND one of these cases applies:
+            - A selected AgeGroup requires details.
+            - Participants have been selected on certain traits.
+            - Participants are legally incapable.
+        """
         if self.proposal.relation.needs_supervisor:
             age_groups = cleaned_data['age_groups']
             neccesity_required = False
@@ -186,10 +199,6 @@ class StudyForm(forms.ModelForm):
                     error = forms.ValidationError(_('Dit veld is verplicht'), code='required')
                     self.add_error('necessity_reason', error)
 
-        check_dependency_multiple(self, cleaned_data, 'setting', 'needs_details', 'setting_details')
-        check_dependency_singular(self, cleaned_data, 'compensation', 'needs_details', 'compensation_details')
-        check_dependency_multiple(self, cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
-
 
 class StudyDesignForm(forms.ModelForm):
     class Meta:
@@ -202,9 +211,7 @@ class StudyDesignForm(forms.ModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        if not (cleaned_data.get('has_observation')
-                or cleaned_data.get('has_intervention')
-                or cleaned_data.get('has_sessions')):
+        if not (cleaned_data.get('has_observation') or cleaned_data.get('has_intervention') or cleaned_data.get('has_sessions')):
             msg = _(u'U dient minstens één van de opties te selecteren')
             self.add_error('has_sessions', forms.ValidationError(msg, code='required'))
 
@@ -252,7 +259,7 @@ class SessionStartForm(forms.ModelForm):
         self.fields['sessions_number'].required = True
 
 
-class TaskStartForm(forms.ModelForm):
+class TaskStartForm(ConditionalModelForm):
     is_copy = forms.BooleanField(
         label=_('Is deze sessie een kopie van een voorgaande sessie?'),
         help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar.'),
@@ -291,12 +298,12 @@ class TaskStartForm(forms.ModelForm):
         """
         cleaned_data = super(TaskStartForm, self).clean()
 
-        check_dependency(self, cleaned_data, 'is_copy', 'parent_session')
+        self.check_dependency(cleaned_data, 'is_copy', 'parent_session')
         if not cleaned_data.get('is_copy') and not cleaned_data.get('tasks_number'):
             self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht'), code='required'))
 
 
-class TaskForm(forms.ModelForm):
+class TaskForm(ConditionalModelForm):
     class Meta:
         model = Task
         fields = ['name', 'description', 'duration',
@@ -326,11 +333,11 @@ class TaskForm(forms.ModelForm):
         """
         cleaned_data = super(TaskForm, self).clean()
 
-        check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_kind', 'registration_kinds')
-        check_dependency_multiple(self, cleaned_data, 'registrations', 'needs_details', 'registrations_details')
-        check_dependency_multiple(self, cleaned_data, 'registration_kinds', 'needs_details', 'registration_kinds_details')
-        check_dependency(self, cleaned_data, 'feedback', 'feedback_details')
-        check_dependency(self, cleaned_data, 'deception', 'deception_details')
+        self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_kind', 'registration_kinds')
+        self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
+        self.check_dependency_multiple(cleaned_data, 'registration_kinds', 'needs_details', 'registration_kinds_details')
+        self.check_dependency(cleaned_data, 'feedback', 'feedback_details')
+        self.check_dependency(cleaned_data, 'deception', 'deception_details')
 
 
 class TaskEndForm(forms.ModelForm):
@@ -365,7 +372,7 @@ class TaskEndForm(forms.ModelForm):
             self.add_error('tasks_duration', error)
 
 
-class SessionEndForm(forms.ModelForm):
+class SessionEndForm(ConditionalModelForm):
     class Meta:
         model = Study
         fields = ['sessions_duration',
@@ -415,8 +422,8 @@ class SessionEndForm(forms.ModelForm):
                 error = forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
                 self.add_error('sessions_duration', error)
 
-        check_dependency(self, cleaned_data, 'stressful', 'stressful_details')
-        check_dependency(self, cleaned_data, 'risk', 'risk_details')
+        self.check_dependency(cleaned_data, 'stressful', 'stressful_details')
+        self.check_dependency(cleaned_data, 'risk', 'risk_details')
 
 
 class ProposalSubmitForm(forms.ModelForm):

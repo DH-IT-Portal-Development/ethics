@@ -2,7 +2,7 @@ from django import forms
 
 from extra_views import InlineFormSet
 
-from proposals.forms import YES_NO
+from core.utils import YES_NO
 from .models import Observation, Location
 
 
