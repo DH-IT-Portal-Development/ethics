@@ -17,7 +17,7 @@
         "description": "eigen netwerk"
     },
     "model": "proposals.recruitment",
-    "pk": 3
+    "pk": 2
 },
 {
     "fields": {
@@ -27,7 +27,7 @@
         "description": "scholen"
     },
     "model": "proposals.recruitment",
-    "pk": 5
+    "pk": 3
 },
 {
     "fields": {
@@ -37,7 +37,7 @@
         "description": "KDV, BSO"
     },
     "model": "proposals.recruitment",
-    "pk": 6
+    "pk": 4
 },
 {
     "fields": {
@@ -47,6 +47,6 @@
         "description": "anders, namelijk"
     },
     "model": "proposals.recruitment",
-    "pk": 7
+    "pk": 5
 }
 ]

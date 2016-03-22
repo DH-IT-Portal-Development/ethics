@@ -3,7 +3,7 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "thuis bij de deelnemer",
+        "description": "het UiL OTS lab",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -11,10 +11,10 @@
 },
 {
     "fields": {
-        "needs_details": true,
+        "needs_details": false,
         "order": 2,
-        "description": "zorginstelling",
-        "requires_review": true
+        "description": "online",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 2
@@ -23,8 +23,8 @@
     "fields": {
         "needs_details": false,
         "order": 3,
-        "description": "collegezaal",
-        "requires_review": true
+        "description": "school/onderwijsinstelling",
+        "requires_review": false
     },
     "model": "proposals.setting",
     "pk": 3
@@ -33,7 +33,7 @@
     "fields": {
         "needs_details": false,
         "order": 4,
-        "description": "school/onderwijsinstelling",
+        "description": "dagopvang",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -43,7 +43,7 @@
     "fields": {
         "needs_details": false,
         "order": 5,
-        "description": "dagopvang",
+        "description": "peuterspeelzaal",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -53,7 +53,7 @@
     "fields": {
         "needs_details": false,
         "order": 6,
-        "description": "peuterspeelzaal",
+        "description": "buitenschoolse opvang",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -63,7 +63,7 @@
     "fields": {
         "needs_details": false,
         "order": 7,
-        "description": "buitenschoolse opvang",
+        "description": "thuis bij de deelnemer",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -73,18 +73,18 @@
     "fields": {
         "needs_details": false,
         "order": 8,
-        "description": "het UiL OTS lab",
-        "requires_review": false
+        "description": "collegezaal",
+        "requires_review": true
     },
     "model": "proposals.setting",
     "pk": 8
 },
 {
     "fields": {
-        "needs_details": false,
+        "needs_details": true,
         "order": 9,
-        "description": "online",
-        "requires_review": false
+        "description": "zorginstelling",
+        "requires_review": true
     },
     "model": "proposals.setting",
     "pk": 9
