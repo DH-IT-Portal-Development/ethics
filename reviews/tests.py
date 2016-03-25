@@ -6,8 +6,9 @@ from django.test import TestCase
 
 from .models import Review, Decision
 from .utils import start_review, auto_review
-from proposals.models import Proposal, Study, Session, Task, Relation, Compensation, Registration, AgeGroup
+from proposals.models import Proposal, Study, Relation, Compensation, AgeGroup
 from proposals.utils import generate_ref_number
+from tasks.models import Session, Task, Registration
 
 
 class BaseReviewTestCase(TestCase):
@@ -28,7 +29,7 @@ class BaseReviewTestCase(TestCase):
         self.c2.groups.add(Group.objects.get(name=settings.GROUP_COMMISSION))
 
         self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
-                                                date_start=datetime.now(), date_end=datetime.now(),
+                                                date_start=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4))
         self.study = Study.objects.create(proposal=self.proposal, compensation=Compensation.objects.get(pk=1))

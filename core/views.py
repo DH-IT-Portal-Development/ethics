@@ -9,9 +9,10 @@ from django.core.exceptions import PermissionDenied
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
 
-from proposals.models import Proposal, Session, Task
+from proposals.models import Proposal
 from observations.models import Observation
 from interventions.models import Intervention
+from tasks.models import Session, Task
 
 
 class AllowErrorsMixin(object):

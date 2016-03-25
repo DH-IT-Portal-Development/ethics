@@ -4,7 +4,8 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from .models import Proposal, Relation, Wmo, Study, Compensation, Session, Task
+from tasks.models import Session, Task
+from .models import Proposal, Relation, Wmo, Study, Compensation
 from .utils import generate_ref_number
 
 
@@ -56,7 +57,7 @@ class ProposalTestCase(BaseProposalTestCase):
         compensation = Compensation.objects.get(pk=1)
         s = Study.objects.create(proposal=proposal, compensation=compensation)
         self.assertEqual(proposal.status, Proposal.STUDY_CREATED)
-        self.assertEqual(proposal.continue_url(), '/session_start/1/')
+        self.assertEqual(proposal.continue_url(), '/study/design/1/')
 
         s.sessions_number = 2
         s.save()

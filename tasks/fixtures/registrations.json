@@ -8,7 +8,7 @@
         "requires_review": false,
         "order": 1
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 1
 },
 {
@@ -20,7 +20,7 @@
         "requires_review": false,
         "order": 2
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 2
 },
 {
@@ -32,7 +32,7 @@
         "requires_review": false,
         "order": 3
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 3
 },
 {
@@ -44,7 +44,7 @@
         "requires_review": false,
         "order": 4
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 4
 },
 {
@@ -56,7 +56,7 @@
         "requires_review": false,
         "order": 5
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 5
 },
 {
@@ -68,7 +68,7 @@
         "requires_review": true,
         "order": 6
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 6
 },
 {
@@ -80,7 +80,7 @@
         "requires_review": false,
         "order": 7
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 7
 },
 {
@@ -92,7 +92,7 @@
         "requires_review": true,
         "order": 8
     },
-    "model": "proposals.registration",
+    "model": "tasks.registration",
     "pk": 8
 }
 ]

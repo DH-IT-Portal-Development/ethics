@@ -199,56 +199,56 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>Sessie {{ session.order }}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "sessions" "tasks_number" %}</th><td>{{ session.tasks_number }}</td>
+                <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td>{{ session.tasks_number }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "sessions" "tasks_duration" %}</th><td>{{ session.tasks_duration }}</td>
+                <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" %}</th><td>{{ session.tasks_duration }}</td>
             </tr>
         </table>
         {% for task in session.task_set.all %}
         <h3>Taak {{ task.order }}</h3>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "name" %}</th><td>{{ task.name }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "name" %}</th><td>{{ task.name }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "description" %}</th><td>{{ task.description }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "description" %}</th><td>{{ task.description }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "duration" %}</th><td>{{ task.duration }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "duration" %}</th><td>{{ task.duration }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "registrations" %}</th><td>{{ task.registrations.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "registrations" %}</th><td>{{ task.registrations.all|unordered_list }}</td>
             </tr>
             {% if task.registrations.all|needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "registrations_details" %}</th><td>{{ task.registrations_details }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "registrations_details" %}</th><td>{{ task.registrations_details }}</td>
             </tr>
             {% endif %}
             {% if task.registrations.all|needs_details:"needs_kind" %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "registration_kinds" %}</th><td>{{ task.registration_kinds.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "registration_kinds" %}</th><td>{{ task.registration_kinds.all|unordered_list }}</td>
             </tr>
             {% if task.registration_kinds.all|needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "registration_kinds_details" %}</th><td>{{ task.registration_kinds_details }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "registration_kinds_details" %}</th><td>{{ task.registration_kinds_details }}</td>
             </tr>
             {% endif %}
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "feedback" %}</th><td>{{ task.feedback|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "feedback" %}</th><td>{{ task.feedback|yesno:"ja,nee" }}</td>
             </tr>
             {% if task.feedback %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "feedback_details" %}</th><td>{{ task.feedback_details }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "feedback_details" %}</th><td>{{ task.feedback_details }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "deception" %}</th><td>{{ task.deception|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "deception" %}</th><td>{{ task.deception|yesno:"ja,nee" }}</td>
             </tr>
             {% if task.deception %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "tasks" "deception_details" %}</th><td>{{ task.deception_details }}</td>
+                <th>{% get_verbose_field_name "tasks" "task" "deception_details" %}</th><td>{{ task.deception_details }}</td>
             </tr>
             {% endif %}
         </table>

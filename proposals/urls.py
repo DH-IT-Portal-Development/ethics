@@ -4,10 +4,9 @@ from .views.base_views import HomeView, check_requires
 from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, ProposalCopy, ProposalStart, ProposalSubmit, ProposalSubmitted, \
     DetailView, ProposalAsPdf, EmptyPDF
-from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
+from .views.session_views import SessionStart, SessionEnd
 from .views.study_views import StudyCreate, StudyUpdate, StudyConsent, StudyDesign, StudySurvey, check_necessity_required
-from .views.session_views import SessionStart, SessionEnd, TaskStart, TaskEnd, SessionDelete, add_session
-from .views.task_views import TaskUpdate, TaskDelete
+from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 
 urlpatterns = [
     # Home
@@ -48,16 +47,8 @@ urlpatterns = [
     url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
 
     # Session(s)
-    url(r'^session_start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),
-    url(r'^session_end/(?P<pk>\d+)/$', SessionEnd.as_view(), name='session_end'),
-    url(r'^session_add/(?P<pk>\d+)/$', add_session, name='session_add'),
-    url(r'^session/delete/(?P<pk>\d+)/$', SessionDelete.as_view(), name='session_delete'),
-    url(r'^task_start/(?P<pk>\d+)/$', TaskStart.as_view(), name='task_start'),
-    url(r'^task_end/(?P<pk>\d+)/$', TaskEnd.as_view(), name='task_end'),
-
-    # Task(s)
-    url(r'^task/update/(?P<pk>\d+)/$', TaskUpdate.as_view(), name='task_update'),
-    url(r'^task/delete/(?P<pk>\d+)/$', TaskDelete.as_view(), name='task_delete'),
+    url(r'^session/start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),
+    url(r'^session/end/(?P<pk>\d+)/$', SessionEnd.as_view(), name='session_end'),
 
     # Checks on conditional fields
     url(r'^check_requires/$', check_requires, name='check_requires'),

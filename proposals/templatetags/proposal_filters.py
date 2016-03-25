@@ -12,7 +12,7 @@ def get_verbose_field_name(app_label, model_name, field_name):
     """
     Returns verbose_name for a field.
     """
-    return apps.get_model(app_label=app_label, model_name=model_name)._meta.get_field(field_name).verbose_name
+    return apps.get_model(app_label, model_name)._meta.get_field(field_name).verbose_name
 
 
 @register.filter
@@ -51,12 +51,12 @@ def in_commission(current_user):
 
 
 @register.simple_tag
-def show_all(model):
+def show_all(app_label, model_name):
     """
     Return a unordered list of with all possible values for a model
     """
     result = '<ul>'
-    for m in apps.get_model('proposals', model).objects.all():
+    for m in apps.get_model(app_label, model_name).objects.all():
         result += '<li>{}</li>'.format(str(m))
     result += '</ul>'
     return mark_safe(result)

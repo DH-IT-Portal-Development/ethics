@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from .models import Task
+from tasks.models import Task
 from .utils import generate_ref_number
 
 

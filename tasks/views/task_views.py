@@ -5,11 +5,10 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
 from core.views import AllowErrorsMixin, UpdateView, DeleteView
-
-from .base_views import get_task_progress
 from ..forms import TaskForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Task
+from ..utils import get_task_progress
 
 
 ######################
@@ -30,19 +29,19 @@ class TaskUpdate(AllowErrorsMixin, UpdateView):
         try:
             # Try to continue to next Task
             next_task = Task.objects.get(session=self.object.session, order=self.object.order + 1)
-            return reverse('proposals:task_update', args=(next_task.pk,))
+            return reverse('tasks:update', args=(next_task.pk,))
         except Task.DoesNotExist:
             # If this is the last Task, continue to task_end
-            return reverse('proposals:task_end', args=(self.object.session.pk,))
+            return reverse('tasks:end', args=(self.object.session.pk,))
 
     def get_back_url(self):
         try:
             # Try to return to previous Task
             prev_task = Task.objects.get(session=self.object.session, order=self.object.order - 1)
-            return reverse('proposals:task_update', args=(prev_task.pk,))
+            return reverse('tasks:update', args=(prev_task.pk,))
         except Task.DoesNotExist:
             # If this is the first Task, return to task_start
-            return reverse('proposals:task_start', args=(self.object.session.pk,))
+            return reverse('tasks:start', args=(self.object.session.pk,))
 
 
 class TaskDelete(DeletionAllowedMixin, DeleteView):
@@ -51,7 +50,7 @@ class TaskDelete(DeletionAllowedMixin, DeleteView):
     success_message = _('Taak verwijderd')
 
     def get_success_url(self):
-        return reverse('proposals:task_end', args=(self.object.session.pk,))
+        return reverse('tasks:end', args=(self.object.session.pk,))
 
     def delete(self, request, *args, **kwargs):
         """

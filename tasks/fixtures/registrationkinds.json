@@ -7,7 +7,7 @@
         "order": 1,
         "description": "fMRI (functional magnetic resonance imaging)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 1
 },
 {
@@ -18,7 +18,7 @@
         "order": 2,
         "description": "EEG (electroencephalography)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 2
 },
 {
@@ -29,7 +29,7 @@
         "order": 3,
         "description": "NIRS (near-infrared spectroscopy)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 3
 },
 {
@@ -40,7 +40,7 @@
         "order": 4,
         "description": "ECG (electrocardiography)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 4
 },
 {
@@ -51,7 +51,7 @@
         "order": 5,
         "description": "BVP (blood volume pulse)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 5
 },
 {
@@ -62,7 +62,7 @@
         "order": 6,
         "description": "fEMG (facial electromyography)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 6
 },
 {
@@ -73,7 +73,7 @@
         "order": 7,
         "description": "EMA (electromagnetic articulography)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 7
 },
 {
@@ -84,7 +84,7 @@
         "order": 8,
         "description": "huidgeleiding (GSR)"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 8
 },
 {
@@ -95,7 +95,7 @@
         "order": 9,
         "description": "ademhaling"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 9
 },
 {
@@ -106,7 +106,7 @@
         "order": 10,
         "description": "vingertemperatuur"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 10
 },
 {
@@ -117,7 +117,7 @@
         "order": 11,
         "description": "anders, namelijk"
     },
-    "model": "proposals.registrationkind",
+    "model": "tasks.registrationkind",
     "pk": 11
 }
 ]

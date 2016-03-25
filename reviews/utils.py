@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from django.utils import timezone
 
 from .models import Review, Decision
-from proposals.models import Task
+from tasks.models import Task
 
 
 def get_secretary():
