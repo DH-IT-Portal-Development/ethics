@@ -44,7 +44,7 @@
         "needs_details": true,
         "requires_review": true,
         "order": 5,
-        "description": "anders, namelijk"
+        "description": "anders"
     },
     "model": "proposals.recruitment",
     "pk": 5

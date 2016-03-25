@@ -402,7 +402,7 @@ beantwoorden door volwassen deelnemers te testen?'))
         Recruitment,
         verbose_name=_('Hoe worden de deelnemers geworven?'))
     recruitment_details = models.CharField(
-        _('Namelijk'),
+        _('Licht toe'),
         max_length=200,
         blank=True)
     setting = models.ManyToManyField(
