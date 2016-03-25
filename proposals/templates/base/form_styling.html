@@ -90,6 +90,17 @@ $(function() {
     // Will make every form a pure-form
     $('form').addClass('pure-form');
 
+    // Will make each textarea auto-resize.
+    // Copied from: http://stackoverflow.com/a/25621277
+    function h(e) {
+        $(e).css({'height':'auto', 'overflow-y':'hidden'}).height(e.scrollHeight);
+    }
+    $('textarea').each(function () {
+        h(this);
+    }).on('input', function () {
+        h(this);
+    });
+
     // Prevents the backspace key from navigating back.
     // Copied from: http://stackoverflow.com/a/2768256
     $(document).unbind('keydown').bind('keydown', function (event) {

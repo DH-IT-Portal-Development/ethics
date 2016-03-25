@@ -25,7 +25,7 @@ class ProposalForm(ConditionalModelForm):
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
             'other_stakeholders': forms.RadioSelect(choices=YES_NO),
-            'summary': forms.Textarea(attrs={'rows': 30, 'cols': 80}),
+            'summary': forms.Textarea(attrs={'cols': 50}),
             'funding': forms.CheckboxSelectMultiple()
         }
         error_messages = {
