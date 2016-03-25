@@ -19,8 +19,7 @@ class ProposalForm(ConditionalModelForm):
         fields = ['relation', 'supervisor',
                   'other_applicants', 'applicants',
                   'other_stakeholders', 'stakeholders',
-                  'date_start', 'date_end',
-                  'title', 'summary',
+                  'date_start', 'title', 'summary',
                   'funding', 'funding_details']
         widgets = {
             'relation': forms.RadioSelect(),

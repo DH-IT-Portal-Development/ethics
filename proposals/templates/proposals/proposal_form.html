@@ -17,22 +17,12 @@ $(function() {
     depends_on_value('other_stakeholders', 'True', 'stakeholders');
     check_field_required('funding', 'needs_details', 'funding_details');
 
-    // Add datepickers for date_start and date_end, set locale to current language
+    // Add datepickers for date_start, set locale to current language
     $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
     $("#id_date_start").datepicker({
         dateFormat: 'dd-mm-yy',
         minDate: 'now',
-        onClose: function( selectedDate ) {
-            $("#id_date_end").datepicker("option", "minDate", selectedDate);
-        }
-    });
-    $("#id_date_end").datepicker({
-        dateFormat: 'dd-mm-yy',
-        minDate: 'now',
-        onClose: function( selectedDate ) {
-            $("#id_date_start").datepicker("option", "maxDate", selectedDate);
-        }
     });
 
     // Adds a running word count to the technical summary

@@ -84,9 +84,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposal" "date_start" %}</th><td>{{ proposal.date_start }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposal" "date_end" %}</th><td>{{ proposal.date_end|default_if_none:"" }}</td>
-            </tr>
-            <tr>
                 <th>{% get_verbose_field_name "proposal" "title" %}</th><td>{{ proposal.title }}</td>
             </tr>
             <tr>
