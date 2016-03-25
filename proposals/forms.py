@@ -127,8 +127,7 @@ class StudyForm(ConditionalModelForm):
                   'necessity', 'necessity_reason',
                   'recruitment', 'recruitment_details',
                   'setting', 'setting_details',
-                  'compensation', 'compensation_details',
-                  'informed_consent_pdf', 'passive_consent', 'briefing_pdf']
+                  'compensation', 'compensation_details']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
@@ -137,7 +136,6 @@ class StudyForm(ConditionalModelForm):
             'recruitment': forms.CheckboxSelectMultiple(),
             'setting': forms.CheckboxSelectMultiple(),
             'compensation': forms.RadioSelect(),
-            'passive_consent': forms.RadioSelect(choices=YES_NO)
         }
 
     def __init__(self, *args, **kwargs):
@@ -189,6 +187,15 @@ class StudyForm(ConditionalModelForm):
                 if not cleaned_data['necessity_reason']:
                     error = forms.ValidationError(_('Dit veld is verplicht'), code='required')
                     self.add_error('necessity_reason', error)
+
+
+class StudyConsentForm(forms.ModelForm):
+    class Meta:
+        model = Study
+        fields = ['informed_consent_pdf', 'passive_consent', 'briefing_pdf']
+        widgets = {
+            'passive_consent': forms.RadioSelect(choices=YES_NO),
+        }
 
 
 class StudyDesignForm(forms.ModelForm):

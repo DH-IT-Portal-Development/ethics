@@ -9,7 +9,7 @@ from extra_views import UpdateWithInlinesView
 
 from core.views import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin, CreateView, UpdateView, success_url
 
-from ..forms import StudyForm, StudyDesignForm, StudySurveyForm, SurveysInline
+from ..forms import StudyForm, StudyConsentForm, StudyDesignForm, StudySurveyForm, SurveysInline
 from ..models import Proposal, Study, AgeGroup
 from ..utils import string_to_bool
 
@@ -35,7 +35,7 @@ class StudyMixin(object):
         return kwargs
 
     def get_next_url(self):
-        return reverse('proposals:study_design', args=(self.object.pk,))
+        return reverse('proposals:study_consent', args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
@@ -52,6 +52,20 @@ class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):
 
 class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
     """Updates a Study from a StudyForm"""
+
+
+class StudyConsent(AllowErrorsMixin, UpdateView):
+    """Updates a Study from a StudyForm"""
+    model = Study
+    form_class = StudyConsentForm
+    success_message = _('Consent opgeslagen')
+    template_name = 'proposals/study_consent.html'
+
+    def get_next_url(self):
+        return reverse('proposals:study_design', args=(self.kwargs['pk'],))
+
+    def get_back_url(self):
+        return reverse('proposals:study_update', args=(self.kwargs['pk'],))
 
 
 class StudyDesign(AllowErrorsMixin, UpdateView):
@@ -81,7 +95,7 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
-        return reverse('proposals:study_update', args=(self.kwargs['pk'],))
+        return reverse('proposals:study_consent', args=(self.kwargs['pk'],))
 
 
 # NOTE: below view is non-standard, as it include inlines

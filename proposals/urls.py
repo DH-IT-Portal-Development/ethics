@@ -5,7 +5,7 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView
     ProposalCreate, ProposalUpdate, ProposalDelete, ProposalCopy, ProposalStart, ProposalSubmit, ProposalSubmitted, \
     DetailView, ProposalAsPdf, EmptyPDF
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
-from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, check_necessity_required
+from .views.study_views import StudyCreate, StudyUpdate, StudyConsent, StudyDesign, StudySurvey, check_necessity_required
 from .views.session_views import SessionStart, SessionEnd, TaskStart, TaskEnd, SessionDelete, add_session
 from .views.task_views import TaskUpdate, TaskDelete
 
@@ -43,6 +43,7 @@ urlpatterns = [
     # Study
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
     url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
+    url(r'^study/consent/(?P<pk>\d+)/$', StudyConsent.as_view(), name='study_consent'),
     url(r'^study/design/(?P<pk>\d+)/$', StudyDesign.as_view(), name='study_design'),
     url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
 
