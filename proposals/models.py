@@ -46,11 +46,14 @@ class Proposal(models.Model):
     WMO_DECISION_BY_ETCL = 2
     WMO_DECISION_BY_METC = 3
     STUDY_CREATED = 4
-    SESSIONS_STARTED = 5
-    TASKS_STARTED = 6
-    TASKS_ADDED = 7
-    TASKS_ENDED = 8
-    SESSIONS_ENDED = 9
+    STUDY_DESIGN = 5
+    INTERVENTION_CREATED = 10
+    OBSERVATION_CREATED = 20
+    SESSIONS_STARTED = 30
+    TASKS_STARTED = 31
+    TASKS_ADDED = 32
+    TASKS_ENDED = 33
+    SESSIONS_ENDED = 34
     SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
     DECISION_MADE = 55
@@ -60,11 +63,17 @@ class Proposal(models.Model):
         (WMO_DECISION_BY_ETCL, _('WMO: geen beoordeling door METC noodzakelijk')),
         (WMO_DECISION_BY_METC, _('WMO: wordt beoordeeld door METC')),
         (STUDY_CREATED, _('Kenmerken studie toegevoegd')),
-        (SESSIONS_STARTED, _('Belasting deelnemer: sessies toevoegen')),
-        (TASKS_STARTED, _('Belasting deelnemer: taken toevoegen')),
-        (TASKS_ADDED, _('Belasting deelnemer: alle taken toegevoegd')),
-        (TASKS_ENDED, _('Belasting deelnemer: afgerond')),
-        (SESSIONS_ENDED, _('Belasting deelnemer: afgerond')),
+        (STUDY_DESIGN, _('Opzet studie: gestart')),
+
+        (INTERVENTION_CREATED, _('Nadere specificatie van het interventieonderdeel')),
+        (OBSERVATION_CREATED, _('Nadere specificatie van het observatieonderdeel')),
+
+        (SESSIONS_STARTED, _('Nadere specificatie van het takenonderdeel')),
+        (TASKS_STARTED, _('Takenonderdeel: taken toevoegen')),
+        (TASKS_ADDED, _('Takenonderdeel: alle taken toegevoegd')),
+        (TASKS_ENDED, _('Takenonderdeel: afgerond')),
+
+        (SESSIONS_ENDED, _('Opzet studie: afgerond')),
 
         (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
         (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
@@ -166,7 +175,11 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
                 status = self.WMO_DECISION_BY_ETCL
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
-            if self.study.sessions_number:
+            if self.study.has_observation:
+                status = self.OBSERVATION_CREATED
+            if self.study.has_intervention:
+                status = self.INTERVENTION_CREATED
+            if self.study.has_sessions:
                 status = self.SESSIONS_STARTED
 
         session = self.current_session()
@@ -194,23 +207,25 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
     def continue_url(self):
         session = self.current_session()
         if self.status == self.DRAFT:
-            return reverse('proposals:wmo_create', args=(self.id,))
+            return reverse('proposals:wmo_create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_ETCL:
-            return reverse('proposals:study_create', args=(self.id,))
+            return reverse('proposals:study_create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_METC:
-            return reverse('proposals:wmo_update', args=(self.id,))
+            return reverse('proposals:wmo_update', args=(self.pk,))
         elif self.status == self.STUDY_CREATED:
-            return reverse('proposals:session_start', args=(self.id,))
+            return reverse('proposals:study_design', args=(self.pk,))
+        elif self.status == self.STUDY_DESIGN:
+            return reverse('proposals:session_start', args=(self.pk,))
         elif self.status == self.SESSIONS_STARTED:
-            return reverse('proposals:task_start', args=(session.id,))
+            return reverse('proposals:task_start', args=(session.pk,))
         elif self.status == self.TASKS_STARTED:
-            return reverse('proposals:task_update', args=(session.current_task().id,))
+            return reverse('proposals:task_update', args=(session.current_task().pk,))
         elif self.status == self.TASKS_ADDED:
-            return reverse('proposals:task_end', args=(session.id,))
+            return reverse('proposals:task_end', args=(session.pk,))
         elif self.status == self.TASKS_ENDED:
-            return reverse('proposals:session_end', args=(self.id,))
+            return reverse('proposals:session_end', args=(self.pk,))
         elif self.status == self.SESSIONS_ENDED:
-            return reverse('proposals:submit', args=(self.id,))
+            return reverse('proposals:submit', args=(self.pk,))
 
         elif self.status == self.WMO_DECISION_MADE:
             return reverse('proposals:my_archive')
