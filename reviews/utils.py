@@ -114,6 +114,12 @@ def auto_review(proposal):
     go = True
     reasons = []
 
+    for funding in proposal.funding.all():
+        if funding.requires_review:
+            go = False
+            reasons.append(_('De studie heeft een afwijkende geldstroom.'))
+            break
+
     if study.legally_incapable:
         go = False
         reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
