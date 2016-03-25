@@ -33,7 +33,7 @@
     "fields": {
         "needs_details": false,
         "order": 4,
-        "description": "dagopvang",
+        "description": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -43,7 +43,7 @@
     "fields": {
         "needs_details": false,
         "order": 5,
-        "description": "peuterspeelzaal",
+        "description": "thuis bij de deelnemer",
         "requires_review": false
     },
     "model": "proposals.setting",
@@ -53,50 +53,30 @@
     "fields": {
         "needs_details": false,
         "order": 6,
-        "description": "buitenschoolse opvang",
-        "requires_review": false
+        "description": "collegezaal",
+        "requires_review": true
     },
     "model": "proposals.setting",
     "pk": 6
 },
 {
     "fields": {
-        "needs_details": false,
+        "needs_details": true,
         "order": 7,
-        "description": "thuis bij de deelnemer",
-        "requires_review": false
+        "description": "zorginstelling",
+        "requires_review": true
     },
     "model": "proposals.setting",
     "pk": 7
 },
 {
     "fields": {
-        "needs_details": false,
+        "needs_details": true,
         "order": 8,
-        "description": "collegezaal",
-        "requires_review": true
-    },
-    "model": "proposals.setting",
-    "pk": 8
-},
-{
-    "fields": {
-        "needs_details": true,
-        "order": 9,
-        "description": "zorginstelling",
-        "requires_review": true
-    },
-    "model": "proposals.setting",
-    "pk": 9
-},
-{
-    "fields": {
-        "needs_details": true,
-        "order": 10,
         "description": "anders, namelijk",
         "requires_review": true
     },
     "model": "proposals.setting",
-    "pk": 10
+    "pk": 8
 }
 ]
