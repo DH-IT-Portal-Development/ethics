@@ -8,11 +8,11 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_verbose_field_name(instance, field_name):
+def get_verbose_field_name(app_label, model_name, field_name):
     """
     Returns verbose_name for a field.
     """
-    return apps.get_model('proposals', instance)._meta.get_field(field_name).verbose_name
+    return apps.get_model(app_label=app_label, model_name=model_name)._meta.get_field(field_name).verbose_name
 
 
 @register.filter
