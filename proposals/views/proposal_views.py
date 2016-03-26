@@ -196,6 +196,7 @@ class ProposalSubmit(UpdateView):
 class ProposalSubmitted(generic.TemplateView):
     template_name = 'proposals/proposal_submitted.html'
 
+
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_pdf.html'
@@ -203,3 +204,7 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.Detail
 
 class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
     template_name = 'proposals/proposal_pdf_empty.html'
+
+
+class ProposalDifference(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'proposals/proposal_diff.html'
