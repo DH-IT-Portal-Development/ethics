@@ -12,9 +12,9 @@
 {% block content %}
 <script>
 $(function() {
-    check_field_required('registrations', 'needs_kind', 'registration_kinds', 'Registration');
-    check_field_required('registrations', 'needs_details', 'registrations_details', 'Registration');
-    check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'RegistrationKind');
+    check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
+    check_field_required('registrations', 'needs_details', 'registrations_details', 'tasks', 'Registration');
+    check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'tasks', 'RegistrationKind');
     depends_on_value('feedback', 'True', 'feedback_details');
     depends_on_value('deception', 'True', 'deception_details');
 });

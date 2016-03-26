@@ -11,7 +11,7 @@ function depends_on_value(a, a_value, b)
 }
 
 // Checks whether a field is required given the selected inputs
-function check_field_required(input_name, field_name, required_input, model_name)
+function check_field_required(input_name, field_name, required_input, app_name, model_name)
 {
     model_name = typeof model_name !== 'undefined' ? model_name : input_name;
 
@@ -21,7 +21,7 @@ function check_field_required(input_name, field_name, required_input, model_name
         }).get();
 
         var url = "{% url 'proposals:check_requires' %}";
-        var params = {'value': checked_inputs, 'model': model_name, 'field': field_name};
+        var params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
         $.post(url, params, function(data) {
             $('#id_' + required_input).parents('tr').toggle(data.result);
         });

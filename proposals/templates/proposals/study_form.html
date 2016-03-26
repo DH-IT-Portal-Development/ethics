@@ -13,11 +13,11 @@
 <script>
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
-    check_field_required('traits', 'needs_details', 'traits_details', 'Trait');
-    check_field_required('setting', 'needs_details', 'setting_details');
-    check_field_required('setting', 'needs_supervision', 'supervision');
-    check_field_required('compensation', 'needs_details', 'compensation_details');
-    check_field_required('recruitment', 'needs_details', 'recruitment_details');
+    check_field_required('traits', 'needs_details', 'traits_details', 'proposals', 'Trait');
+    check_field_required('setting', 'needs_details', 'setting_details', 'proposals');
+    check_field_required('setting', 'needs_supervision', 'supervision', 'proposals');
+    check_field_required('compensation', 'needs_details', 'compensation_details', 'proposals');
+    check_field_required('recruitment', 'needs_details', 'recruitment_details', 'proposals');
 
     add_title('age_groups', "{% trans 'De leeftijdsgroep van uw deelnemers' %}");
     add_title('legally_incapable', "{% trans 'Wilsonbekwaamheid' %}");
