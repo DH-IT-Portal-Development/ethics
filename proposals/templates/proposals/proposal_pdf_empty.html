@@ -154,6 +154,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "study" "setting_details" %}</th><td></td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "proposals" "study" "supervision" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "proposals" "study" "compensation" %}</th><td>{% show_all "proposals" "compensation" %}</td>
             </tr>
             <tr>

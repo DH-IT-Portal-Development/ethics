@@ -179,6 +179,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "study" "setting_details" %}</th><td>{{ study.setting_details }}</td>
             </tr>
             {% endif %}
+            {% if study.setting.all|needs_supervision %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "study" "supervision" %}</th><td>{{ study.supervision }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "proposals" "study" "compensation" %}</th><td>{{ study.compensation }}</td>
             </tr>
