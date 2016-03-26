@@ -17,7 +17,6 @@
 	{% else %}
 		{% trans "U kunt nu uw concept-aanmelding ter beoordeling naar de ethische commissie versturen." %}
 	{% endif %}
-	{% trans "Als u deze concept-aanmelding nog wil wijzigen, kan dat via de 'vorige'-knop." %}
 </p>
 <ul>
     {% if not proposal.informed_consent_pdf %}
@@ -33,6 +32,11 @@
 </ul>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
+	<p class="info">
+		{% trans "U gaat nu uw concept-aanmelding versturen. Als u deze concept-aanmelding nog wil wijzigen, kan dat via de 'vorige'-knop." %}
+        <br />
+        {% trans "U kunt ook op een later moment terugkomen om uw aanmelding te versturen, alle voorgaande gegevens blijven bewaard." %}
+	</p>
     {% include "proposals/form_buttons.html" with next_text="Concept-aanmelding versturen" %}
 </form>
 {% endblock %}
