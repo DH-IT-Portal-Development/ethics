@@ -51,9 +51,6 @@
             {% endif %}
             </div>
         {% endif %}
-        {% block notitle %}
-            <h2>{% block title %}{% endblock %}</h2>
-        {% endblock %}
         {% block noprogressbar %}
             <script>
             $(function() {
@@ -65,6 +62,9 @@
             });
             </script>
             <div id="progressbar"><div class="progress-label"></div></div>
+        {% endblock %}
+        {% block notitle %}
+            <h2>{% block title %}{% endblock %}</h2>
         {% endblock %}
         {% block content %}
         {% endblock %}
