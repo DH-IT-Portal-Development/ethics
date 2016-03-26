@@ -5,7 +5,7 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView
     ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalConsent, ProposalSubmit, ProposalSubmitted, \
     DetailView, ProposalCopy, ProposalAsPdf, EmptyPDF
 from .views.session_views import SessionStart, SessionEnd
-from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, check_necessity_required
+from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, necessity_required
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 
 urlpatterns = [
@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
 
     # List views
-    url(r'^proposals-all/$', ProposalsView.as_view(), name='archive'),
+    url(r'^archive/$', ProposalsView.as_view(), name='archive'),
     url(r'^concepts/$', MyConceptsView.as_view(), name='my_concepts'),
     url(r'^submitted/$', MySubmittedView.as_view(), name='my_submitted'),
     url(r'^completed/$', MyCompletedView.as_view(), name='my_completed'),
@@ -52,5 +52,5 @@ urlpatterns = [
 
     # Checks on conditional fields
     url(r'^check_requires/$', check_requires, name='check_requires'),
-    url(r'^check_necessity_required/$', check_necessity_required, name='check_necessity_required'),
+    url(r'^check_necessity_required/$', necessity_required, name='check_necessity_required'),
 ]

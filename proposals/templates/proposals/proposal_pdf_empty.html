@@ -165,13 +165,13 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Informed consent" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "informed_consent_pdf" %}</th><td></td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "informed_consent_pdf" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "passive_consent" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "passive_consent" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "briefing_pdf" %}</th><td></td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "briefing_pdf" %}</th><td></td>
             </tr>
         </table>
 

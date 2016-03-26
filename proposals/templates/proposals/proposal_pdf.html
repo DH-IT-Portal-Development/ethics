@@ -155,7 +155,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             {% endif %}
-            {% if proposal.relation.needs_supervisor and (study.age_groups.all|needs_details or study.legally_incapable or study.has_traits) %}
+            {% if study|necessity_required %}
             <tr>
                 <th>{% get_verbose_field_name "proposals" "study" "necessity" %}</th><td>{{ study.necessity|yesno:"ja,nee,twijfel" }}</td>
             </tr>
@@ -193,7 +193,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Informed consent" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:"ja,nee" }}</td>
             </tr>
         </table>
 

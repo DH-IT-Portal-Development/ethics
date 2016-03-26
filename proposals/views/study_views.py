@@ -10,8 +10,8 @@ from extra_views import UpdateWithInlinesView
 from core.views import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin, CreateView, UpdateView, success_url
 
 from ..forms import StudyForm, StudyDesignForm, StudySurveyForm, SurveysInline
-from ..models import Proposal, Study, AgeGroup
-from ..utils import string_to_bool
+from ..models import Proposal, Study
+from ..utils import string_to_bool, check_necessity_required
 
 
 #######################
@@ -106,7 +106,7 @@ class StudySurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
 # AJAX callbacks
 ################
 @csrf_exempt
-def check_necessity_required(request):
+def necessity_required(request):
     """
     This call checks whether the necessity questions are required. They are required when:
     - The researcher requires a supervisor AND one of these cases applies:
@@ -115,13 +115,7 @@ def check_necessity_required(request):
         - Participants are legally incapable.
     """
     proposal = Proposal.objects.get(pk=request.POST.get('proposal_pk'))
-    if not proposal.relation.needs_supervisor:
-        result = False
-    else:
-        age_groups = map(int, request.POST.getlist('age_groups[]'))
-        required_values = AgeGroup.objects.filter(needs_details=True).values_list('id', flat=True)
-        result = bool(set(required_values).intersection(age_groups))
-        result |= string_to_bool(request.POST.get('has_traits'))
-        result |= string_to_bool(request.POST.get('legally_incapable'))
-
-    return JsonResponse({'result': result})
+    age_groups = map(int, request.POST.getlist('age_groups[]'))
+    has_traits = string_to_bool(request.POST.get('has_traits'))
+    legally_incapable = string_to_bool(request.POST.get('legally_incapable'))
+    return JsonResponse({'result': check_necessity_required(proposal, age_groups, has_traits, legally_incapable)})

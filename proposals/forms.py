@@ -10,7 +10,7 @@ from extra_views import InlineFormSet
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO, YES_NO_DOUBT
 from .models import Proposal, Wmo, Study, Survey
-from .utils import get_users_as_list
+from .utils import get_users_as_list, check_necessity_required
 
 
 class ProposalForm(ConditionalModelForm):
@@ -155,7 +155,7 @@ class StudyForm(ConditionalModelForm):
     def clean(self):
         """
         Check for conditional requirements:
-        - Check whether necessity/necessity_reason was required and if so, if it has been filled out
+        - Check whether necessity_reason was required and if so, if it has been filled out
         - If has_traits is checked, make sure there is at least one trait selected
         - If a trait which needs details has been checked, make sure the details are filled
         - If a setting which needs details has been checked, make sure the details are filled
@@ -164,34 +164,25 @@ class StudyForm(ConditionalModelForm):
         """
         cleaned_data = super(StudyForm, self).clean()
 
-        self.check_necessity_required(cleaned_data)
+        self.necessity_required(cleaned_data)
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details', 'traits_details')
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
         self.check_dependency_singular(cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         self.check_dependency_multiple(cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
 
-    def check_necessity_required(self, cleaned_data):
+    def necessity_required(self, cleaned_data):
         """
-        This call checks whether the necessity questions are required. They are required when:
-        - The researcher requires a supervisor AND one of these cases applies:
-            - A selected AgeGroup requires details.
-            - Participants have been selected on certain traits.
-            - Participants are legally incapable.
+        Check whether necessity_reason was required and if so, if it has been filled out.
         """
-        if self.proposal.relation.needs_supervisor:
-            age_groups = cleaned_data['age_groups']
-            neccesity_required = False
-            for age_group in age_groups:
-                if age_group.needs_details:
-                    neccesity_required = True
-                    break
-            neccesity_required |= cleaned_data['has_traits']
-            neccesity_required |= cleaned_data['legally_incapable']
-            if neccesity_required:
-                if not cleaned_data['necessity_reason']:
-                    error = forms.ValidationError(_('Dit veld is verplicht'), code='required')
-                    self.add_error('necessity_reason', error)
+        age_groups = cleaned_data['age_groups'].values_list('id', flat=True) if 'age_groups' in cleaned_data else []
+        if check_necessity_required(self.proposal,
+                                    age_groups,
+                                    cleaned_data['has_traits'],
+                                    cleaned_data['legally_incapable']):
+            if not cleaned_data['necessity_reason']:
+                error = forms.ValidationError(_('Dit veld is verplicht'), code='required')
+                self.add_error('necessity_reason', error)
 
 
 class ProposalConsentForm(forms.ModelForm):
