@@ -357,6 +357,7 @@ class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    needs_supervision = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
 
     class Meta:
@@ -443,6 +444,10 @@ beantwoorden door volwassen deelnemers te testen?'))
         _('Namelijk'),
         max_length=200,
         blank=True)
+    supervision = models.NullBooleanField(
+        _('Vindt het afnemen van de taak plaats onder het toeziend oog \
+van de leraar of een ander persoon die bevoegd is?')
+    )
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname aan deze studie?'),

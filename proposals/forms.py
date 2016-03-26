@@ -126,7 +126,7 @@ class StudyForm(ConditionalModelForm):
                   'has_traits', 'traits', 'traits_details',
                   'necessity', 'necessity_reason',
                   'recruitment', 'recruitment_details',
-                  'setting', 'setting_details',
+                  'setting', 'setting_details', 'supervision',
                   'compensation', 'compensation_details']
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
@@ -136,6 +136,7 @@ class StudyForm(ConditionalModelForm):
             'necessity': forms.RadioSelect(choices=YES_NO_DOUBT),
             'recruitment': forms.CheckboxSelectMultiple(),
             'setting': forms.CheckboxSelectMultiple(),
+            'supervision': forms.RadioSelect(choices=YES_NO),
             'compensation': forms.RadioSelect(),
         }
 
@@ -168,6 +169,7 @@ class StudyForm(ConditionalModelForm):
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details', 'traits_details')
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
+        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
         self.check_dependency_singular(cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         self.check_dependency_multiple(cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
 

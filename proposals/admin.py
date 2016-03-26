@@ -32,7 +32,7 @@ class TraitAdmin(admin.ModelAdmin):
 
 @admin.register(Setting)
 class SettingAdmin(admin.ModelAdmin):
-    list_display = ('order', 'description', 'needs_details', )
+    list_display = ('order', 'description', 'needs_details', 'needs_supervision', 'requires_review', )
     list_display_links = ('description', )
     ordering = ['order']
 
