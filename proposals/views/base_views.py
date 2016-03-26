@@ -24,6 +24,7 @@ def check_requires(request):
     This call checks whether a certain value requires another input to be filled.
     """
     values = map(int, request.POST.getlist('value[]'))
+    # TODO: look at the correct app
     model = apps.get_model('proposals', request.POST.get('model'))
     required_values = model.objects.filter(**{request.POST.get('field'): True}).values_list('id', flat=True)
     result = bool(set(required_values).intersection(values))

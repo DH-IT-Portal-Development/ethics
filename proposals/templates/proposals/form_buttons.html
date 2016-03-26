@@ -14,7 +14,7 @@
 	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update' proposal.pk %}">{% trans "Terug naar begin studie" %}</a>
 	{% endif %}
 	{% if session %}
-	<a class="pure-button pure-button-secondary" href="{% url 'proposals:task_start' session.pk %}">{% trans "Terug naar begin sessie" %}</a>
+	<a class="pure-button pure-button-secondary" href="{% url 'tasks:start' session.pk %}">{% trans "Terug naar begin sessie" %}</a>
 	{% endif %}
 </nav>
 {% endif %}

@@ -139,21 +139,19 @@ geef dan het redelijkerwijs te verwachten maximum op.'),
         _('Namelijk'),
         max_length=200,
         blank=True)
-    feedback = models.BooleanField(
-        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'),
-        default=False)
+    feedback = models.NullBooleanField(
+        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'))
     feedback_details = models.TextField(
         _('Beschrijf hoe de feedback wordt gegeven.'),
         blank=True)
-    deception = models.BooleanField(
+    deception = models.NullBooleanField(
         _('Is er binnen deze sessie sprake van misleiding van de deelnemer, \
 d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of \
 belangrijke aspecten van de gang van zaken tijdens de studie? \
 Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
 het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; \
 het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
-        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'),
-        default=False)
+        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'))
     deception_details = models.TextField(
         _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.'),
         blank=True)

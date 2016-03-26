@@ -408,12 +408,10 @@ class Study(models.Model):
         verbose_name=_('Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, \
 er zijn meerdere antwoorden mogelijk'))
     legally_incapable = models.BooleanField(
-        _('Maakt uw studie gebruik van <strong>volwassen</strong> wilsonbekwame deelnemers?'),
-        default=False)
+        _('Maakt uw studie gebruik van <strong>volwassen</strong> wilsonbekwame deelnemers?'))
     has_traits = models.BooleanField(
         _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
-Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
-        default=False)
+Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
     traits = models.ManyToManyField(
         Trait,
         blank=True,
@@ -493,8 +491,7 @@ in deze inschatting mee.'),
         help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
 een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de \
 privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren \
-belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.')),
-        default=False)
+belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.')))
     stressful_details = models.TextField(
         _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante aspecten van uw studie \
 (bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, \
@@ -513,8 +510,7 @@ et cetera.'),
 risico\'s van "routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische \
 contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
 intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, \
-onder begeleiding van adequaat geschoolde specialisten).')),
-        default=False)
+onder begeleiding van adequaat geschoolde specialisten).')))
     risk_details = models.TextField(
         _('Licht toe'),
         max_length=200,

@@ -64,7 +64,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
     """Initial creation of Tasks for a Session"""
     model = Session
     form_class = TaskStartForm
-    template_name = 'proposals/task_start.html'
+    template_name = 'tasks/task_start.html'
     success_message = _('%(tasks_number)s ta(a)k(en) aangemaakt')
 
     def get_context_data(self, **kwargs):
@@ -137,7 +137,7 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
     """Completes a Session"""
     model = Session
     form_class = TaskEndForm
-    template_name = 'proposals/task_end.html'
+    template_name = 'tasks/task_end.html'
     success_message = _(u'Taken toevoegen beëindigd')
 
     def get_context_data(self, **kwargs):
