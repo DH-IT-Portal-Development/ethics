@@ -130,6 +130,12 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "study" "has_traits" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "proposals" "study" "traits" %}</th><td>{% show_all "proposals" "trait" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "study" "traits_details" %}</th><td></td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "proposals" "study" "necessity" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>

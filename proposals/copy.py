@@ -18,6 +18,7 @@ def copy_proposal(self, form):
     if hasattr(parent, 'study'):
         copy_study = parent.study
         copy_age_groups = parent.study.age_groups.all()
+        copy_traits = parent.study.traits.all()
         copy_setting = parent.study.setting.all()
         copy_compensation = parent.study.compensation
         copy_recruitment = parent.study.recruitment.all()
@@ -52,6 +53,7 @@ def copy_proposal(self, form):
     if copy_study:
         copy_study.pk = copy_proposal.pk
         copy_study.age_groups = copy_age_groups
+        copy_study.traits = copy_traits
         copy_study.setting = copy_setting
         copy_study.compensation = copy_compensation
         copy_study.recruitment = copy_recruitment

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Relation, Funding, AgeGroup, Setting, Compensation, Recruitment
+from .models import Relation, Funding, AgeGroup, Trait, Setting, Compensation, Recruitment
 
 
 @admin.register(Relation)
@@ -22,6 +22,12 @@ class AgeGroupAdmin(admin.ModelAdmin):
     list_display = ('description', 'age_min', 'age_max', )
     list_display_links = ('description', )
     ordering = ['age_min']
+
+
+@admin.register(Trait)
+class TraitAdmin(admin.ModelAdmin):
+    list_display = ('order', 'description', 'needs_details', )
+    ordering = ['order']
 
 
 @admin.register(Setting)

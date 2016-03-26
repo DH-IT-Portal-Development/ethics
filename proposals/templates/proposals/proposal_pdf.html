@@ -145,6 +145,16 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "proposals" "study" "has_traits" %}</th><td>{{ study.has_traits|yesno:"ja,nee" }}</td>
             </tr>
+            {% if study.has_traits %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
+            </tr>
+            {% if study.recruitment.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
             {% if proposal.relation.needs_supervisor and (study.age_groups.all|needs_details or study.legally_incapable or study.has_traits) %}
             <tr>
                 <th>{% get_verbose_field_name "proposals" "study" "necessity" %}</th><td>{{ study.necessity|yesno:"ja,nee,twijfel" }}</td>
