@@ -19,6 +19,18 @@
 	{% endif %}
 	{% trans "Als u deze concept-aanmelding nog wil wijzigen, kan dat via de 'vorige'-knop." %}
 </p>
+<ul>
+    {% if not proposal.informed_consent_pdf %}
+	<li>
+		{% trans "U heeft nog geen toestemmingsverklaring toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
+    </li>
+    {% endif %}
+    {% if not proposal.briefing_pdf %}
+	<li>
+		{% trans "U heeft nog geen informatiebrief toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
+    </li>
+    {% endif %}
+</ul>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% include "proposals/form_buttons.html" with next_text="Concept-aanmelding versturen" %}

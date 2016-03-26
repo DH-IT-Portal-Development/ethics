@@ -123,6 +123,23 @@ class Proposal(models.Model):
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
 
+    # Fields with respect to informed consent
+    informed_consent_pdf = models.FileField(
+        _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc])
+    briefing_pdf = models.FileField(
+        _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc])
+    passive_consent = models.BooleanField(
+        _('Maakt uw studie gebruik van passieve informed consent?'),
+        default=False,
+        # TODO: link to website
+        help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
+ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
+U kunt de templates vinden op <link website?>'))
+
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
 
@@ -446,23 +463,6 @@ beantwoorden door volwassen deelnemers te testen?'))
     has_sessions = models.BooleanField(
         _('Taakonderzoek'),
         default=False)
-
-    # Fields with respect to informed consent
-    informed_consent_pdf = models.FileField(
-        _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc])
-    briefing_pdf = models.FileField(
-        _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc])
-    passive_consent = models.BooleanField(
-        _('Maakt uw studie gebruik van passieve informed consent?'),
-        default=False,
-        # TODO: link to website
-        help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
-ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
-U kunt de templates vinden op <link website?>'))
 
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(

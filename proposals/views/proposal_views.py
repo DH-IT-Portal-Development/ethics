@@ -10,7 +10,7 @@ from core.views import AllowErrorsMixin, LoginRequiredMixin, CreateView, UpdateV
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalCopyForm, ProposalSubmitForm
+from ..forms import ProposalForm, ProposalConsentForm, ProposalSubmitForm, ProposalCopyForm
 from ..models import Proposal
 from ..utils import generate_ref_number
 
@@ -156,24 +156,23 @@ class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
 
 
-class ProposalCopy(CreateView):
+class ProposalConsent(AllowErrorsMixin, UpdateView):
+    """
+    Allows the applicant to add informed consent to their Proposal
+    """
     model = Proposal
-    form_class = ProposalCopyForm
-    success_message = _('Studie gekopieerd')
-    template_name = 'proposals/proposal_copy.html'
+    form_class = ProposalConsentForm
+    success_message = _('Consent opgeslagen')
+    template_name = 'proposals/study_consent.html'
 
-    def get_form_kwargs(self):
-        kwargs = super(ProposalCopy, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
+    def get_next_url(self):
+        return reverse('proposals:study_design', args=(self.kwargs['pk'],))
 
-    def form_valid(self, form):
-        """Create a copy of the selected Proposal"""
-        form.instance = copy_proposal(self, form)
-        return super(ProposalCopy, self).form_valid(form)
+    def get_back_url(self):
+        return reverse('proposals:study_update', args=(self.kwargs['pk'],))
 
 
-class ProposalSubmit(UpdateView):
+class ProposalSubmit(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
@@ -195,6 +194,23 @@ class ProposalSubmit(UpdateView):
 
 class ProposalSubmitted(generic.TemplateView):
     template_name = 'proposals/proposal_submitted.html'
+
+
+class ProposalCopy(CreateView):
+    model = Proposal
+    form_class = ProposalCopyForm
+    success_message = _('Studie gekopieerd')
+    template_name = 'proposals/proposal_copy.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(ProposalCopy, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        """Create a copy of the selected Proposal"""
+        form.instance = copy_proposal(self, form)
+        return super(ProposalCopy, self).form_valid(form)
 
 
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):

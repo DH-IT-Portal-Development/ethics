@@ -194,9 +194,9 @@ class StudyForm(ConditionalModelForm):
                     self.add_error('necessity_reason', error)
 
 
-class StudyConsentForm(forms.ModelForm):
+class ProposalConsentForm(forms.ModelForm):
     class Meta:
-        model = Study
+        model = Proposal
         fields = ['informed_consent_pdf', 'passive_consent', 'briefing_pdf']
         widgets = {
             'passive_consent': forms.RadioSelect(choices=YES_NO),
@@ -319,4 +319,20 @@ class SessionEndForm(ConditionalModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['comments']
+        fields = ['informed_consent_pdf', 'briefing_pdf', 'comments']
+
+    def __init__(self, *args, **kwargs):
+        """Set the consent fields as required"""
+        super(ProposalSubmitForm, self).__init__(*args, **kwargs)
+
+        proposal = self.instance
+
+        if not proposal.informed_consent_pdf:
+            self.fields['informed_consent_pdf'].required = True
+        else:
+            del self.fields['informed_consent_pdf']
+
+        if not proposal.briefing_pdf:
+            self.fields['briefing_pdf'].required = True
+        else:
+            del self.fields['briefing_pdf']

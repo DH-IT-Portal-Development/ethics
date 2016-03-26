@@ -2,10 +2,10 @@ from django.conf.urls import url
 
 from .views.base_views import HomeView, check_requires
 from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
-    ProposalCreate, ProposalUpdate, ProposalDelete, ProposalCopy, ProposalStart, ProposalSubmit, ProposalSubmitted, \
-    DetailView, ProposalAsPdf, EmptyPDF
+    ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalConsent, ProposalSubmit, ProposalSubmitted, \
+    DetailView, ProposalCopy, ProposalAsPdf, EmptyPDF
 from .views.session_views import SessionStart, SessionEnd
-from .views.study_views import StudyCreate, StudyUpdate, StudyConsent, StudyDesign, StudySurvey, check_necessity_required
+from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, check_necessity_required
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
 
     url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^start/$', ProposalStart.as_view(), name='start'),
+    url(r'^consent/(?P<pk>\d+)/$', ProposalConsent.as_view(), name='study_consent'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
     url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
 
@@ -42,7 +43,6 @@ urlpatterns = [
     # Study
     url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
     url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
-    url(r'^study/consent/(?P<pk>\d+)/$', StudyConsent.as_view(), name='study_consent'),
     url(r'^study/design/(?P<pk>\d+)/$', StudyDesign.as_view(), name='study_design'),
     url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
 
