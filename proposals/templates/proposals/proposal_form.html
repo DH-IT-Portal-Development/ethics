@@ -33,7 +33,7 @@ $(function() {
         if (this.value.trim()) {
             wordCount = this.value.match(/\S+/g).length;
         }
-        $("#wordcount").text(" Aantal woorden: " + wordCount); 
+        $("#wordcount").text({% trans " Aantal woorden: " %} + wordCount);
         }, false);
     });
 </script>

@@ -11,34 +11,42 @@
 
 {% block content %}
 <p>
+    {% blocktrans %}
     In dit deel dient u de opzet van het onderzoek in detail te beschrijven.
     Allereerst is een grove schifting naar type onderzoek van belang:
+    {% endblocktrans %}
 </p>
 <ul>
 <li>
     <p>
+        {% blocktrans %}
         <strong>Observatieonderzoek</strong>: Onderzoek waarin mensen <em>in hun normale leven in bepaalde contexten
         worden geobserveerd</em>, bijvoorbeeld op scholen of in andere institutionele settings, in de digitale publieke
         ruimte, of bij de deelnemer thuis, <em>zonder dat de onderzoeker daar op enige wijze op ingrijpt</em>.
         Het gedrag wordt geobserveerd, maar eventueel ook de producten ervan.
+        {% endblocktrans %}
     </p>
 </li>
 <li>
     <p>
+        {% blocktrans %}
         <strong>Interventieonderzoek</strong>: Onderzoek waarin mensen <em>in hun normale leven in bepaalde contexten
         doen wat ze daar normaliter ook doen, maar maar waar de onderzoeker d.m.v. een interventie iets in de
         context manipuleert </em> (een ander lesboek, andere behandeling, anders vormgegeven website, etc.).
         De effecten van die interventie kunnen gelijktijdig worden geobserveerd, maar ook achteraf.
+        {% endblocktrans %}
     </p>
 </li>
 <li>
     <p>
+        {% blocktrans %}
         <strong>Taakonderzoek</strong>: Onderzoek waarbij aan mensen <em>van onderzoekswege speciale taken of
         gedragsregels worden opgelegd, via bepaalde taakinstructies</em> ("speel 10 minuten met Uw kind zoals U dat
         thuis ook zou doen", "vul deze internetsurvey in", "lees deze verhaaltjes aandachtig door",
         "beluister/beoordeel deze zinnen", "vertel eens iets over Uw vakantie", etc.).
         Er wordt dus iets van mensen gevraagd wat ze in hun normale leven niet (of niet dáár, dán, op déze wijze)
         zouden doen.
+        {% endblocktrans %}
     </p>
 </li>
 </ul>
@@ -46,10 +54,12 @@
     <table>
         <tr>
             <th>
+                {% blocktrans %}
                 Om welk type onderzoek gaat het bij uw studie?
                 Als uw studie meerdere sessies heeft die niet allen van hetzelfde type zijn
                 (bijv. een observatiesessie gevolgd door een interventiesessie, of een interventiesessie
                 gevolgd door een takensessie), kruis dan meerdere opties aan.
+                {% endblocktrans %}
             </th>
             <td>
                 {{ form.has_sessions.errors }}
@@ -64,8 +74,10 @@
         </tr>
     </table>
     <p>
+        {% blocktrans %}
         Voor elk door u aangekruiste type onderzoek kunt u op de hiernavolgende pagina's
         de relevante informatie verschaffen.
+        {% endblocktrans %}
     </p>
     {% with proposal=study.proposal %}
     {% include "proposals/form_buttons.html" %}

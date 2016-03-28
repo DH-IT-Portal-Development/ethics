@@ -3,8 +3,10 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %} 
-Belasting voor de deelnemer, sessie {{ session.order }}
+{% block title %}
+{% blocktrans with order=session.order %}
+Belasting voor de deelnemer, sessie {{ order }}
+{% endblocktrans %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -12,12 +14,12 @@ Belasting voor de deelnemer, sessie {{ session.order }}
 {% block content %}
 <div class="task_list">
 	<p>
-		<em>Deze sessie bestaat uit de volgende taken:</em>
+		<em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
 	</p>
 	{% include "proposals/task_list.html" %}
 </div>
 
-<p>Beantwoord op basis van dit overzicht de volgende vragen:</p>
+<p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% with proposal=session.study.proposal %}

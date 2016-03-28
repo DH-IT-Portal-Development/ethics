@@ -1,8 +1,10 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %} 
-Informatie over de belasting en de risico's
+{% trans "Informatie over de belasting en de risico's" %}
 {% endblock %}
 
 {% block progress %}90{% endblock %}
@@ -17,7 +19,7 @@ $(function() {
 {% if study.has_sessions %}
 <div class="session_list">
 	<p>
-		<em>Deze studie bestaat uit de volgende sessies:</em>
+		<em>{% trans "Deze studie bestaat uit de volgende sessies:" %}</em>
 	</p>
 	{% for session in study.session_set.all %}
 	<div class="task_list">
@@ -28,14 +30,14 @@ $(function() {
 		{% endif %}
 	</h4>
 		<p>
-			<em>Deze sessie bestaat uit de volgende taken:</em>
+			<em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
 		</p>
 		{% include "proposals/task_list.html" %}
 	</div>
 	{% endfor %}
 </div>
 {% endif %}
-<p>Beantwoord op basis van dit overzicht de volgende vragen:</p>
+<p>" %}Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% with proposal=study.proposal %}
