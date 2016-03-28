@@ -32,7 +32,8 @@ class BaseReviewTestCase(TestCase):
                                                 date_start=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4))
-        self.study = Study.objects.create(proposal=self.proposal, compensation=Compensation.objects.get(pk=1))
+        self.study = Study.objects.create(proposal=self.proposal, legally_incapable=False,
+                                          has_traits=False, compensation=Compensation.objects.get(pk=1))
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -119,6 +120,8 @@ class CommissionTestCase(BaseReviewTestCase):
 class AutoReviewTests(BaseReviewTestCase):
     def test_auto_review(self):
         self.study.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
+        self.study.stressful = False
+        self.study.risk = False
         self.study.save()
 
         go, reasons = auto_review(self.proposal)

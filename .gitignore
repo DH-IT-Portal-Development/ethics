@@ -4,8 +4,14 @@
 *.pyc
 __pycache__/
 
+
+### Project-specific ###
 media/
 etcl/ldap_settings.py
+
+### Coverage ###
+.coverage
+htmlcov/
 
 ### IDE ###
 .idea

@@ -55,15 +55,16 @@ class ProposalTestCase(BaseProposalTestCase):
         self.assertEqual(proposal.continue_url(), '/study/create/1/')
 
         compensation = Compensation.objects.get(pk=1)
-        s = Study.objects.create(proposal=proposal, compensation=compensation)
-        self.assertEqual(proposal.status, Proposal.STUDY_CREATED)
+        s = Study.objects.create(proposal=proposal, legally_incapable=False,
+                                 has_traits=False, compensation=compensation)
+        self.assertEqual(proposal.status, Proposal.CONSENT_ADDED)
         self.assertEqual(proposal.continue_url(), '/study/design/1/')
 
         s.sessions_number = 2
         s.save()
         s1 = Session.objects.create(study=s, order=1)
         s2 = Session.objects.create(study=s, order=2)
-        self.assertEqual(proposal.status, Proposal.SESSIONS_STARTED)
+        self.assertEqual(proposal.status, Proposal.SESSIONS)
 
         s1.tasks_number = 2
         s1.save()
@@ -76,7 +77,7 @@ class ProposalTestCase(BaseProposalTestCase):
         s1.tasks_duration = 45
         s1.save()
         self.assertEqual(proposal.current_session(), s2)
-        self.assertEqual(proposal.status, proposal.SESSIONS_STARTED)
+        self.assertEqual(proposal.status, proposal.SESSIONS)
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)

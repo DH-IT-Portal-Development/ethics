@@ -124,7 +124,7 @@ def auto_review(proposal):
         go = False
         reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
 
-    if study.passive_consent:
+    if proposal.passive_consent:
         go = False
         reasons.append(_('De studie werkt met passieve informed consent.'))
 
