@@ -164,7 +164,7 @@ class ProposalConsent(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = ProposalConsentForm
     success_message = _('Consent opgeslagen')
-    template_name = 'proposals/study_consent.html'
+    template_name = 'proposals/proposal_consent.html'
 
     def get_next_url(self):
         return reverse('proposals:study_design', args=(self.kwargs['pk'],))

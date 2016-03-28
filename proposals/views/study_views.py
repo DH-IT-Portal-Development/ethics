@@ -36,7 +36,7 @@ class StudyMixin(object):
         return kwargs
 
     def get_next_url(self):
-        return reverse('proposals:study_consent', args=(self.object.pk,))
+        return reverse('proposals:consent', args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
@@ -82,7 +82,7 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
-        return reverse('proposals:study_consent', args=(self.kwargs['pk'],))
+        return reverse('proposals:consent', args=(self.kwargs['pk'],))
 
 
 # NOTE: below view is non-standard, as it include inlines

@@ -27,7 +27,7 @@ urlpatterns = [
 
     url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^start/$', ProposalStart.as_view(), name='start'),
-    url(r'^consent/(?P<pk>\d+)/$', ProposalConsent.as_view(), name='study_consent'),
+    url(r'^consent/(?P<pk>\d+)/$', ProposalConsent.as_view(), name='consent'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
     url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
 

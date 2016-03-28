@@ -53,10 +53,11 @@ class Proposal(models.Model):
     WMO_DECISION_BY_ETCL = 2
     WMO_DECISION_BY_METC = 3
     STUDY_CREATED = 4
-    STUDY_DESIGN = 5
-    INTERVENTION_CREATED = 10
-    OBSERVATION_CREATED = 20
-    SESSIONS_STARTED = 30
+    CONSENT_ADDED = 5
+    STUDY_DESIGN = 6
+    INTERVENTION = 10
+    OBSERVATION = 20
+    SESSIONS = 30
     TASKS_STARTED = 31
     TASKS_ADDED = 32
     TASKS_ENDED = 33
@@ -70,12 +71,13 @@ class Proposal(models.Model):
         (WMO_DECISION_BY_ETCL, _('WMO: geen beoordeling door METC noodzakelijk')),
         (WMO_DECISION_BY_METC, _('WMO: wordt beoordeeld door METC')),
         (STUDY_CREATED, _('Kenmerken studie toegevoegd')),
+        (CONSENT_ADDED, _('Informed consent toegevoegd')),
         (STUDY_DESIGN, _('Opzet studie: gestart')),
 
-        (INTERVENTION_CREATED, _('Nadere specificatie van het interventieonderdeel')),
-        (OBSERVATION_CREATED, _('Nadere specificatie van het observatieonderdeel')),
+        (INTERVENTION, _('Nadere specificatie van het interventieonderdeel')),
+        (OBSERVATION, _('Nadere specificatie van het observatieonderdeel')),
 
-        (SESSIONS_STARTED, _('Nadere specificatie van het takenonderdeel')),
+        (SESSIONS, _('Nadere specificatie van het takenonderdeel')),
         (TASKS_STARTED, _('Takenonderdeel: taken toevoegen')),
         (TASKS_ADDED, _('Takenonderdeel: alle taken toegevoegd')),
         (TASKS_ENDED, _('Takenonderdeel: afgerond')),
@@ -195,6 +197,8 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
                 status = self.WMO_DECISION_BY_ETCL
         if hasattr(self, 'study'):
             status = self.STUDY_CREATED
+            if not (self.study.has_observation or self.study.has_intervention or self.study.has_sessions):
+                status = self.CONSENT_ADDED
             if self.study.has_observation:
                 status = self.OBSERVATION_CREATED
             if self.study.has_intervention:
@@ -204,7 +208,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
         session = self.current_session()
         if session:
-            status = self.SESSIONS_STARTED
+            status = self.SESSIONS
             if session.tasks_number:
                 status = self.TASKS_STARTED
             if session.all_tasks_completed():
@@ -233,10 +237,12 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         elif self.status == self.WMO_DECISION_BY_METC:
             return reverse('proposals:wmo_update', args=(self.pk,))
         elif self.status == self.STUDY_CREATED:
+            return reverse('proposals:consent', args=(self.pk,))
+        elif self.status == self.CONSENT_ADDED:
             return reverse('proposals:study_design', args=(self.pk,))
         elif self.status == self.STUDY_DESIGN:
             return reverse('proposals:session_start', args=(self.pk,))
-        elif self.status == self.SESSIONS_STARTED:
+        elif self.status == self.SESSIONS:
             return reverse('tasks:start', args=(session.pk,))
         elif self.status == self.TASKS_STARTED:
             return reverse('tasks:update', args=(session.current_task().pk,))
