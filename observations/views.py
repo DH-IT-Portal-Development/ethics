@@ -2,9 +2,10 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
+from braces.views import LoginRequiredMixin
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
-from core.views import LoginRequiredMixin, UserAllowedMixin, success_url
+from core.views import UserAllowedMixin, success_url
 
 from .forms import ObservationForm, LocationsInline
 from .models import Study, Observation
@@ -49,7 +50,7 @@ class ObservationMixin(object):
             return super(ObservationMixin, self).forms_invalid(form, inlines)
 
 
-class ObservationCreate(ObservationMixin, LoginRequiredMixin,
+class ObservationCreate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, CreateWithInlinesView):
     """Creates an Observation from a ObservationForm"""
     def forms_valid(self, form, inlines):
@@ -61,7 +62,7 @@ class ObservationCreate(ObservationMixin, LoginRequiredMixin,
         return reverse('proposals:study_design', args=(self.kwargs['pk'],))
 
 
-class ObservationUpdate(ObservationMixin, LoginRequiredMixin,
+class ObservationUpdate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Observation from a ObservationForm"""
     def get_back_url(self):

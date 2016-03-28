@@ -1,13 +1,14 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied
 from django.views import generic
 from django.views.generic.detail import SingleObjectMixin
+
+from braces.views import LoginRequiredMixin
 
 from proposals.models import Proposal
 from observations.models import Observation
@@ -24,16 +25,6 @@ class AllowErrorsMixin(object):
             return HttpResponseRedirect(self.get_back_url())
         else:
             return super(AllowErrorsMixin, self).form_invalid(form)
-
-
-class LoginRequiredMixin(object):
-    """
-    Mixin for generic views to return to login view if not logged in.
-    """
-    @classmethod
-    def as_view(cls, **initkwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
-        return login_required(view)
 
 
 class UserAllowedMixin(SingleObjectMixin):
@@ -79,14 +70,14 @@ class UserAllowedMixin(SingleObjectMixin):
         return obj
 
 
-class CreateView(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
+class CreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     """Generic create view including success message and login required mixins"""
     def get_success_url(self):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
 
-class UpdateView(SuccessMessageMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class UpdateView(LoginRequiredMixin, SuccessMessageMixin, UserAllowedMixin, generic.UpdateView):
     """Generic update view including success message, user allowed and login required mixins"""
     def get_success_url(self):
         """Sets the success_url based on the submit button pressed"""

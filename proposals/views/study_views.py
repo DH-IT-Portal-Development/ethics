@@ -5,9 +5,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
+from braces.views import LoginRequiredMixin
 from extra_views import UpdateWithInlinesView
 
-from core.views import AllowErrorsMixin, LoginRequiredMixin, UserAllowedMixin, CreateView, UpdateView, success_url
+from core.views import AllowErrorsMixin, UserAllowedMixin, CreateView, UpdateView, success_url
 
 from ..forms import StudyForm, StudyDesignForm, StudySurveyForm, SurveysInline
 from ..models import Proposal, Study

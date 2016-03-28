@@ -4,9 +4,10 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils.translation import ugettext as _
 
+from braces.views import LoginRequiredMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
-from core.views import AllowErrorsMixin, LoginRequiredMixin, CreateView, UpdateView, DeleteView
+from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
 from reviews.utils import start_review
 
 from ..copy import copy_proposal

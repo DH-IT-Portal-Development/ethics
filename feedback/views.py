@@ -1,22 +1,15 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.views import generic
 
+from braces.views import LoginRequiredMixin
+
 from .forms import FeedbackForm
 from .models import Feedback
 
 
-class LoginRequiredMixin(object):
-    """Mixin for generic views to return to login view if not logged in"""
-    @classmethod
-    def as_view(cls, **initkwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
-        return login_required(view)
-
-
-class FeedbackCreate(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
+class FeedbackCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     model = Feedback
     form_class = FeedbackForm
     success_message = _('Feedback verstuurd')

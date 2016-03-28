@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views import generic
 
-from core.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin
 
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
 from .mixins import UserAllowedMixin, AutoReviewMixin
@@ -38,14 +38,14 @@ class CommissionView(LoginRequiredMixin, generic.ListView):
         return Decision.objects.all()  # filter(review__date_end=None, review__stage=Review.COMMISSION, reviewer=self.request.user)
 
 
-class ReviewDetailView(AutoReviewMixin, LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
+class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.DetailView):
     """
     Shows the Decisions for a Review
     """
     model = Review
 
 
-class ReviewAssignView(AutoReviewMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """
