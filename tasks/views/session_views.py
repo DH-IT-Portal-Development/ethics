@@ -7,9 +7,10 @@ from django.utils.translation import ugettext as _
 
 from core.views import AllowErrorsMixin, UpdateView, DeleteView
 from proposals.copy import copy_tasks_to_session
+from studies.models import Study
 from ..forms import TaskStartForm, TaskEndForm
 from ..mixins import DeletionAllowedMixin
-from ..models import Study, Session, Task
+from ..models import Session, Task
 from ..utils import get_session_progress
 
 
@@ -35,7 +36,7 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
     success_message = _('Sessie verwijderd')
 
     def get_success_url(self):
-        return reverse('proposals:session_end', args=(self.object.study.pk,))
+        return reverse('studies:session_end', args=(self.object.study.pk,))
 
     def delete(self, request, *args, **kwargs):
         """
@@ -130,7 +131,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             return reverse('tasks:end', args=(prev_session.pk,))
         except Session.DoesNotExist:
             # If this is the first Session, return to session_start
-            return reverse('proposals:session_start', args=(self.object.study.pk,))
+            return reverse('studies:session_start', args=(self.object.study.pk,))
 
 
 class TaskEnd(AllowErrorsMixin, UpdateView):
@@ -152,7 +153,7 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
             return reverse('tasks:start', args=(next_session.pk,))
         except Session.DoesNotExist:
             # If this is the last Session, continue to session_end
-            return reverse('proposals:session_end', args=(self.object.study.pk,))
+            return reverse('studies:session_end', args=(self.object.study.pk,))
 
     def get_back_url(self):
         return reverse('tasks:update', args=(self.object.last_task().pk,))

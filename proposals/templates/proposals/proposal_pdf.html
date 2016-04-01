@@ -192,13 +192,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
             </tr>
             {% endif %}
-        </table>
-
-        <pdf:nextpage />
-        <h2>{% trans "Informed consent" %}</h2>
-        <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "proposals" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:"ja,nee" }}</td>
             </tr>
         </table>
 

@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from tasks.models import Session, Task
-from .models import Proposal, Relation, Wmo, Study, Compensation
+from studies.models import Study, Compensation
+from .models import Proposal, Relation, Wmo
 from .utils import generate_ref_number
 
 

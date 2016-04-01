@@ -6,12 +6,13 @@ from django.utils.translation import ugettext as _
 
 from braces.views import LoginRequiredMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
+from extra_views import UpdateWithInlinesView
 
-from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
+from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView, UserAllowedMixin, success_url
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalConsentForm, ProposalSubmitForm, ProposalCopyForm
+from ..forms import ProposalForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
 from ..models import Proposal
 from ..utils import generate_ref_number
 
@@ -157,20 +158,23 @@ class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
 
 
-class ProposalConsent(AllowErrorsMixin, UpdateView):
-    """
-    Allows the applicant to add informed consent to their Proposal
-    """
+# NOTE: below view is non-standard, as it include inlines
+# NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
+class ProposalSurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     model = Proposal
-    form_class = ProposalConsentForm
-    success_message = _('Consent opgeslagen')
-    template_name = 'proposals/proposal_consent.html'
+    form_class = ProposalSurveyForm
+    inlines = [SurveysInline]
+    template_name = 'proposals/proposal_survey_form.html'
+
+    def get_success_url(self):
+        return success_url(self)
 
     def get_next_url(self):
-        return reverse('proposals:study_design', args=(self.kwargs['pk'],))
+        return reverse('proposals:submit', args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:study_update', args=(self.kwargs['pk'],))
+        # TODO: sent back to the last Study in the Proposal
+        return reverse('studies:consent', args=(self.object.pk,))
 
 
 class ProposalSubmit(AllowErrorsMixin, UpdateView):
@@ -190,7 +194,7 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         return reverse('proposals:submitted')
 
     def get_back_url(self):
-        return reverse('proposals:study_survey', args=(self.object.study.pk,))
+        return reverse('proposals:survey', args=(self.object.pk,))
 
 
 class ProposalSubmitted(generic.TemplateView):

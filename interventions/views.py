@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from core.views import CreateView, UpdateView, AllowErrorsMixin
-from proposals.models import Study
+from studies.models import Study
 
 from .forms import InterventionForm
 from .models import Intervention
@@ -19,16 +19,16 @@ class InterventionMixin(object):
 
     def get_next_url(self):
         study = self.object.study
-        next_url = 'proposals:session_end'
+        next_url = 'studies:session_end'
         pk = study.pk
         if study.has_sessions:
-            next_url = 'proposals:session_start'
+            next_url = 'studies:session_start'
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
         study = self.object.study if self.object else Study.objects.get(pk=self.kwargs['pk'])
         pk = study.pk
-        next_url = 'proposals:study_design'
+        next_url = 'studies:design'
         if study.has_observation:
             next_url = 'observations:update'
             pk = study.observation.pk

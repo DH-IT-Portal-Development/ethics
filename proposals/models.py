@@ -2,25 +2,13 @@
 
 from django.conf import settings
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import UploadedFile
 from django.core.urlresolvers import reverse
-from django.core.validators import MinValueValidator
-from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from .validators import MaxWordsValidator
+from core.validators import MaxWordsValidator, validate_pdf_or_doc
 
 
-ALLOWED_CONTENT_TYPES = ['application/pdf', 'application/msword',
-                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
 SUMMARY_MAX_WORDS = 200
-
-
-def validate_pdf_or_doc(value):
-    f = value.file
-    if isinstance(f, UploadedFile) and f.content_type not in ALLOWED_CONTENT_TYPES:
-        raise ValidationError(_('Alleen .pdf- of .doc(x)-bestanden zijn toegestaan.'))
 
 
 class Relation(models.Model):
@@ -125,22 +113,15 @@ class Proposal(models.Model):
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
 
-    # Fields with respect to informed consent
-    informed_consent_pdf = models.FileField(
-        _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc])
-    briefing_pdf = models.FileField(
-        _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc])
-    passive_consent = models.BooleanField(
-        _('Maakt uw studie gebruik van passieve informed consent?'),
-        default=False,
-        # TODO: link to website
-        help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
-ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
-U kunt de templates vinden op <link website?>'))
+    # Fields with respect to Surveys
+    has_surveys = models.BooleanField(
+        _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
+Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'),
+        default=False)
+    surveys_stressful = models.NullBooleanField(
+        _('Is het invullen van deze vragenlijsten belastend? \
+Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
+        default=False)
 
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
@@ -233,15 +214,15 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_ETCL:
-            return reverse('proposals:study_create', args=(self.pk,))
+            return reverse('studies:create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_METC:
             return reverse('proposals:wmo_update', args=(self.pk,))
         elif self.status == self.STUDY_CREATED:
-            return reverse('proposals:consent', args=(self.pk,))
+            return reverse('studies:consent', args=(self.pk,))
         elif self.status == self.CONSENT_ADDED:
-            return reverse('proposals:study_design', args=(self.pk,))
+            return reverse('studies:design', args=(self.pk,))
         elif self.status == self.STUDY_DESIGN:
-            return reverse('proposals:session_start', args=(self.pk,))
+            return reverse('studies:session_start', args=(self.pk,))
         elif self.status == self.SESSIONS:
             return reverse('tasks:start', args=(session.pk,))
         elif self.status == self.TASKS_STARTED:
@@ -249,7 +230,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         elif self.status == self.TASKS_ADDED:
             return reverse('tasks:end', args=(session.pk,))
         elif self.status == self.TASKS_ENDED:
-            return reverse('proposals:session_end', args=(self.pk,))
+            return reverse('studies:session_end', args=(self.pk,))
         elif self.status == self.SESSIONS_ENDED:
             return reverse('proposals:submit', args=(self.pk,))
 
@@ -336,233 +317,12 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
         return _('WMO %s, status %s') % (self.proposal.title, self.status)
 
 
-class AgeGroup(models.Model):
-    age_min = models.PositiveIntegerField()
-    age_max = models.PositiveIntegerField(blank=True, null=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    max_net_duration = models.PositiveIntegerField()
-
-    def __unicode__(self):
-        if self.age_max:
-            return _('%d-%d jaar') % (self.age_min, self.age_max)
-        else:
-            return _('%d+ jaar') % (self.age_min)
-
-
-class Trait(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-
-    def __unicode__(self):
-        return self.description
-
-
-class Setting(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    needs_supervision = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['order']
-
-    def __unicode__(self):
-        return self.description
-
-
-class Compensation(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['order']
-
-    def __unicode__(self):
-        return self.description
-
-
-class Recruitment(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['order']
-
-    def __unicode__(self):
-        return self.description
-
-
-class Study(models.Model):
-    OBSERVATION = 0
-    INTERVENTION = 1
-    SESSIONS = 2
-    DESIGNS = (
-        (OBSERVATION, _('Observatieonderzoek')),
-        (INTERVENTION, _('Interventieonderzoek')),
-        (SESSIONS, _('Taakonderzoek')),
-    )
-
-    age_groups = models.ManyToManyField(
-        AgeGroup,
-        verbose_name=_('Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, \
-er zijn meerdere antwoorden mogelijk'))
-    legally_incapable = models.BooleanField(
-        _('Maakt uw studie gebruik van <strong>volwassen</strong> wilsonbekwame deelnemers?'))
-    has_traits = models.BooleanField(
-        _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
-Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
-    traits = models.ManyToManyField(
-        Trait,
-        blank=True,
-        verbose_name=_('Selecteer de bijzondere kenmerken van uw proefpersonen'))
-    traits_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-    necessity = models.NullBooleanField(
-        _('Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het geselecteerde type \
-deelnemer aan de studie te laten meedoen?'),
-        help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen \
-beantwoorden door volwassen deelnemers te testen?'))
-    necessity_reason = models.TextField(
-        _('Leg uit waarom'),
-        blank=True)
-    recruitment = models.ManyToManyField(
-        Recruitment,
-        verbose_name=_('Hoe worden de deelnemers geworven?'))
-    recruitment_details = models.CharField(
-        _('Licht toe'),
-        max_length=200,
-        blank=True)
-    setting = models.ManyToManyField(
-        Setting,
-        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'))
-    setting_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-    supervision = models.NullBooleanField(
-        _('Vindt het afnemen van de taak plaats onder het toeziend oog \
-van de leraar of een ander persoon die bevoegd is?')
-    )
-    compensation = models.ForeignKey(
-        Compensation,
-        verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname aan deze studie?'),
-        # TODO: put a proper text here.
-        help_text=_('tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld'))
-    compensation_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-
-    # Fields with respect to experimental design
-    has_observation = models.BooleanField(
-        _('Observatieonderzoek'),
-        default=False)
-    has_intervention = models.BooleanField(
-        _('Interventieonderzoek'),
-        default=False)
-    has_sessions = models.BooleanField(
-        _('Taakonderzoek'),
-        default=False)
-
-    # Fields with respect to Sessions
-    sessions_number = models.PositiveIntegerField(
-        _('Hoeveel sessies telt deze studie?'),
-        null=True,
-        validators=[MinValueValidator(1)],
-        help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens \
-een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
-of andere taak/taken te doen, dan spreken we van twee sessies. \
-Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
-    sessions_duration = models.PositiveIntegerField(
-        _('De netto duur van uw studie komt op basis van uw opgegeven tijd, uit op <strong>%d minuten</strong>. \
-Wat is de totale duur van de gehele studie? Schat de totale tijd die de deelnemers kwijt zijn aan de studie.'),
-        null=True,
-        help_text=_('Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessies \
-bij elkaar opgeteld, exclusief reistijd.'))
-    stressful = models.NullBooleanField(
-        _('Is de studie op onderdelen of als geheel zodanig belastend dat deze <em>ondanks de verkregen informed \
-consent </em> vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, \
-bij de deelnemers zelf, of bij ouders of andere vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit \
-van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep, en neem ook de leeftijd van de deelnemers \
-in deze inschatting mee.'),
-        help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
-een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de \
-privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren \
-belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.')))
-    stressful_details = models.TextField(
-        _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante aspecten van uw studie \
-(bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, \
-of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.'),
-        blank=True)
-    risk = models.NullBooleanField(
-        _('Zijn de risico\'s op psychische, fysieke, of andere (bijv. economische, juridische) schade door deelname \
-aan de studie <em>meer dan</em> minimaal? minimaal? D.w.z. ligt de kans op en/of omvang van mogelijke schade bij de \
-deelnemers duidelijk <em>boven</em> het "achtergrondrisico"? Achtergrondrisico is datgene dat gezonde, gemiddelde \
-burgers in de relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Ga bij het \
-beantwoorden van deze vraag uit van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep in uw studie. \
-En denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van bepaalde informatie \
-kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, economische schade door data-koppeling, \
-et cetera.'),
-        help_text=mark_safe(_('Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de \
-risico\'s van "routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische \
-contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
-intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, \
-onder begeleiding van adequaat geschoolde specialisten).')))
-    risk_details = models.TextField(
-        _('Licht toe'),
-        max_length=200,
-        blank=True)
-
-    # Fields with respect to Surveys
-    has_surveys = models.BooleanField(
-        _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
-Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'),
-        default=False)
-    surveys_stressful = models.NullBooleanField(
-        _('Is het invullen van deze vragenlijsten belastend? \
-Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
-        default=False)
-
-    # References
-    proposal = models.OneToOneField(Proposal, primary_key=True)
-
-    def save(self, *args, **kwargs):
-        """Sets the correct status on Proposal on save of a Study"""
-        super(Study, self).save(*args, **kwargs)
-        self.proposal.save()
-
-    def net_duration(self):
-        """Returns the duration of all Tasks in this Study"""
-        sum = self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
-        return sum or 0
-
-    def first_session(self):
-        """Returns the first Session in this Study"""
-        return self.session_set.order_by('order')[0]
-
-    def last_session(self):
-        """Returns the last Session in this Study"""
-        return self.session_set.order_by('-order')[0]
-
-    def __unicode__(self):
-        return _('Study details for proposal %s') % self.proposal.title
-
-
 class Survey(models.Model):
     name = models.CharField(_('Naam vragenlijst'), max_length=200)
     minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
     survey_url = models.URLField(_('URL'), blank=True)
     description = models.TextField(_('Korte beschrijving'))
-    study = models.ForeignKey(Study)
+    proposal = models.ForeignKey(Proposal)
 
     def __unicode__(self):
         return self.name

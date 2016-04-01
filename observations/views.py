@@ -28,7 +28,7 @@ class ObservationMixin(object):
 
     def get_next_url(self):
         study = self.object.study
-        next_url = 'proposals:session_end'
+        next_url = 'studies:session_end'
         pk = study.pk
         if study.has_intervention:
             if hasattr(study, 'intervention'):
@@ -37,7 +37,7 @@ class ObservationMixin(object):
             else:
                 next_url = 'interventions:create'
         elif study.has_sessions:
-            next_url = 'proposals:session_start'
+            next_url = 'studies:session_start'
         return reverse(next_url, args=(pk,))
 
     def forms_invalid(self, form, inlines):
@@ -59,11 +59,11 @@ class ObservationCreate(LoginRequiredMixin, ObservationMixin,
         return super(ObservationCreate, self).forms_valid(form, inlines)
 
     def get_back_url(self):
-        return reverse('proposals:study_design', args=(self.kwargs['pk'],))
+        return reverse('studies:design', args=(self.kwargs['pk'],))
 
 
 class ObservationUpdate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Observation from a ObservationForm"""
     def get_back_url(self):
-        return reverse('proposals:study_design', args=(self.object.study.pk,))
+        return reverse('studies:design', args=(self.object.study.pk,))

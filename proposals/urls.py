@@ -1,17 +1,11 @@
 from django.conf.urls import url
 
-from .views.base_views import HomeView, check_requires
 from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
-    ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalConsent, ProposalSubmit, ProposalSubmitted, \
+    ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalSurvey, ProposalSubmit, ProposalSubmitted, \
     DetailView, ProposalCopy, ProposalAsPdf, EmptyPDF
-from .views.session_views import SessionStart, SessionEnd
-from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudySurvey, necessity_required
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 
 urlpatterns = [
-    # Home
-    url(r'^$', HomeView.as_view(), name='home'),
-
     # List views
     url(r'^archive/$', ProposalsView.as_view(), name='archive'),
     url(r'^concepts/$', MyConceptsView.as_view(), name='my_concepts'),
@@ -27,7 +21,7 @@ urlpatterns = [
 
     url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^start/$', ProposalStart.as_view(), name='start'),
-    url(r'^consent/(?P<pk>\d+)/$', ProposalConsent.as_view(), name='consent'),
+    url(r'^survey/(?P<pk>\d+)/$', ProposalSurvey.as_view(), name='survey'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
     url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
 
@@ -39,18 +33,4 @@ urlpatterns = [
     url(r'^wmo/update/(?P<pk>\d+)/$', WmoUpdate.as_view(), name='wmo_update'),
     url(r'^wmo/check/$', WmoCheck.as_view(), name='wmo_check'),
     url(r'^wmo/check_js/$', check_wmo, name='check_wmo'),
-
-    # Study
-    url(r'^study/create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='study_create'),
-    url(r'^study/update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='study_update'),
-    url(r'^study/design/(?P<pk>\d+)/$', StudyDesign.as_view(), name='study_design'),
-    url(r'^study/survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='study_survey'),
-
-    # Session(s)
-    url(r'^session/start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),
-    url(r'^session/end/(?P<pk>\d+)/$', SessionEnd.as_view(), name='session_end'),
-
-    # Checks on conditional fields
-    url(r'^check_requires/$', check_requires, name='check_requires'),
-    url(r'^check_necessity_required/$', necessity_required, name='check_necessity_required'),
 ]

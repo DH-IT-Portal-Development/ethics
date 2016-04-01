@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 
-from proposals.models import Study
+from studies.models import Study
 
 
 class Observation(models.Model):

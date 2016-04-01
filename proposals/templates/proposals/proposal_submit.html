@@ -19,12 +19,12 @@
 	{% endif %}
 </p>
 <ul>
-    {% if not proposal.informed_consent_pdf %}
+    {% if not proposal.informed_consent %}
 	<li>
 		{% trans "U heeft nog geen toestemmingsverklaring toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
     </li>
     {% endif %}
-    {% if not proposal.briefing_pdf %}
+    {% if not proposal.briefing %}
 	<li>
 		{% trans "U heeft nog geen informatiebrief toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
     </li>

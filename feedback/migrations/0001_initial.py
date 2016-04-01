@@ -13,18 +13,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Faq',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('order', models.PositiveIntegerField(unique=True)),
-                ('question', models.TextField()),
-                ('answer', models.TextField()),
-            ],
-            options={
-                'verbose_name': 'FAQ',
-            },
-        ),
-        migrations.CreateModel(
             name='Feedback',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),

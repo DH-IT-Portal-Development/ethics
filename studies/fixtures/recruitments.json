@@ -1,0 +1,52 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "requires_review": false,
+        "order": 1,
+        "description": "UiL OTS databestand"
+    },
+    "model": "studies.recruitment",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": false,
+        "requires_review": true,
+        "order": 2,
+        "description": "eigen netwerk"
+    },
+    "model": "studies.recruitment",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": false,
+        "requires_review": true,
+        "order": 3,
+        "description": "scholen"
+    },
+    "model": "studies.recruitment",
+    "pk": 3
+},
+{
+    "fields": {
+        "needs_details": false,
+        "requires_review": true,
+        "order": 4,
+        "description": "KDV, BSO"
+    },
+    "model": "studies.recruitment",
+    "pk": 4
+},
+{
+    "fields": {
+        "needs_details": true,
+        "requires_review": true,
+        "order": 5,
+        "description": "anders"
+    },
+    "model": "studies.recruitment",
+    "pk": 5
+}
+]

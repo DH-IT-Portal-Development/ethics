@@ -14,10 +14,10 @@ Klik op de onderstaande onderdelen om wijzigingen aan te brengen.
 <h3><a href="{% url 'proposals:wmo_update' proposal.id %}">WMO-plichtigheid</a></h3>
 {% endif %}
 {% if proposal.study %}
-<h3><a href="{% url 'proposals:study_update' proposal.id %}">Algemene kenmerken van de studie</a></h3>
+<h3><a href="{% url 'studies:update' proposal.id %}">Algemene kenmerken van de studie</a></h3>
 {% endif %}
 {% if proposal.study.session_set.all %}
-<h3><a href="{% url 'proposals:session_end' proposal.id %}">Belasting voor de deelnemer</a></h3>
+<h3><a href="{% url 'studies:session_end' proposal.id %}">Belasting voor de deelnemer</a></h3>
 {% endif %}
 <p>
 	<a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">Terug naar de vorige pagina</a>
