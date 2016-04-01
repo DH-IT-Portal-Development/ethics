@@ -154,7 +154,7 @@ class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
 
 
-class StudyStart(UpdateView):
+class StudyStart(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = StudyStartForm
     template_name = 'proposals/study_start.html'

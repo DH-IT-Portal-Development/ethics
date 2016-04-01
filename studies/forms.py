@@ -62,6 +62,7 @@ class StudyForm(ConditionalModelForm):
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details', 'traits_details')
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
+        # TODO: this doesn't work as supervision is a boolean value
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
         self.check_dependency_singular(cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         self.check_dependency_multiple(cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')

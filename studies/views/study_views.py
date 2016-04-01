@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from django.db.models import Max
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -37,21 +38,26 @@ class StudyMixin(object):
     def get_next_url(self):
         return reverse('studies:design', args=(self.object.pk,))
 
-    def get_back_url(self):
-        return reverse('proposals:study_start', args=(self.kwargs['pk'],))
-
 
 class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):
     """Creates a Study from a StudyForm"""
 
     def form_valid(self, form):
-        """Sets the Proposal on the Study before starting validation."""
-        form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
+        """Sets the Proposal and the order field on the Study before starting validation."""
+        proposal = Proposal.objects.get(pk=self.kwargs['pk'])
+        form.instance.proposal = proposal
+        form.instance.order = proposal.study_set.count() + 1
         return super(StudyCreate, self).form_valid(form)
+
+    def get_back_url(self):
+        return reverse('proposals:study_start', args=(self.kwargs['pk'],))
 
 
 class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
     """Updates a Study from a StudyForm"""
+
+    def get_back_url(self):
+        return reverse('proposals:study_start', args=(self.object.proposal.pk,))
 
 
 class StudyDesign(AllowErrorsMixin, UpdateView):

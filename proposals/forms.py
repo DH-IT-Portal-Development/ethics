@@ -130,6 +130,14 @@ class StudyStartForm(forms.ModelForm):
             'has_multiple_trajectories': forms.RadioSelect(choices=YES_NO),
         }
 
+    def __init__(self, *args, **kwargs):
+        """
+        - Set has_multiple_groups as required.
+        """
+        super(StudyStartForm, self).__init__(*args, **kwargs)
+
+        self.fields['has_multiple_groups'].required = True
+
 
 class ProposalSurveyForm(forms.ModelForm):
     class Meta:

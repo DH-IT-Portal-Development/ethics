@@ -82,7 +82,7 @@ class Study(models.Model):
         (SESSIONS, _('Taakonderzoek')),
     )
 
-    order = models.PositiveIntegerField(unique=True)
+    order = models.PositiveIntegerField()
     name = models.CharField(
         _('Wat is de naam van deze deelnemersgroep?'),
         max_length=200)
@@ -219,6 +219,10 @@ onder begeleiding van adequaat geschoolde specialisten).')))
 
     # References
     proposal = models.ForeignKey(Proposal)
+
+    class Meta:
+        ordering = ['order']
+        unique_together = ('proposal', 'order')
 
     def save(self, *args, **kwargs):
         """Sets the correct status on Proposal on save of a Study"""

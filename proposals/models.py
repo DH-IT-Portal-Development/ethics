@@ -127,7 +127,7 @@ Er is ook sprake van een ander traject wanneer u een groep 18-22 jarigen sessie 
 A, B en C laat doen, terwijl de 35-40 jarigen alleen C doen.'))
     studies_number = models.PositiveIntegerField(
         _('Hoeveel verschillende trajecten zijn er?'),
-        null=True,
+        default=1,
         validators=[MinValueValidator(1)])
 
     # Fields with respect to Surveys
@@ -256,6 +256,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""
+        print self.study_set
         return self.study_set.order_by('order')[0] if self.study_set.count() else None
 
     def last_study(self):
@@ -270,7 +271,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         """
         current_session = None
         for study in self.study_set.all():
-            for session in self.study.session_set.all():
+            for session in study.session_set.all():
                 current_session = session
                 if not session.tasks_duration:
                     break
