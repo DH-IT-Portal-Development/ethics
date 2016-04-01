@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils.translation import ugettext as _
 
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from extra_views import UpdateWithInlinesView
 
@@ -90,16 +90,10 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Proposal
 
 
-class ProposalMixin(object):
+class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
     success_message = _('Studie %(title)s bewerkt')
-
-    def get_form_kwargs(self):
-        """Sets the User as a form kwarg"""
-        kwargs = super(ProposalMixin, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
     def get_next_url(self):
         proposal = self.object
@@ -212,16 +206,11 @@ class ProposalSubmitted(generic.TemplateView):
     template_name = 'proposals/proposal_submitted.html'
 
 
-class ProposalCopy(CreateView):
+class ProposalCopy(UserFormKwargsMixin, CreateView):
     model = Proposal
     form_class = ProposalCopyForm
     success_message = _('Studie gekopieerd')
     template_name = 'proposals/proposal_copy.html'
-
-    def get_form_kwargs(self):
-        kwargs = super(ProposalCopy, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""

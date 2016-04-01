@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
+from braces.forms import UserKwargModelFormMixin
 from extra_views import InlineFormSet
 
 from core.forms import ConditionalModelForm
@@ -13,7 +14,7 @@ from .models import Proposal, Wmo, Survey
 from .utils import get_users_as_list
 
 
-class ProposalForm(ConditionalModelForm):
+class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ['relation', 'supervisor',
@@ -40,10 +41,9 @@ class ProposalForm(ConditionalModelForm):
         - Don't allow to pick yourself (or a superuser) as supervisor
         - Retrieve all Users as a nice list
         """
-        user = kwargs.pop('user', None)
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
-        self.fields['supervisor'].queryset = get_user_model().objects.exclude(pk=user.pk, is_superuser=True)
+        self.fields['supervisor'].queryset = get_user_model().objects.exclude(pk=self.user.pk).exclude(is_superuser=True)
         self.fields['applicants'].choices = get_users_as_list()
 
     def clean(self):
@@ -70,7 +70,7 @@ class ProposalForm(ConditionalModelForm):
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
 
 
-class ProposalCopyForm(forms.ModelForm):
+class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['parent', 'title']
@@ -79,9 +79,8 @@ class ProposalCopyForm(forms.ModelForm):
         """
         Filters the Proposals to only show those where the current User is an applicant.
         """
-        user = kwargs.pop('user', None)
         super(ProposalCopyForm, self).__init__(*args, **kwargs)
-        self.fields['parent'].queryset = Proposal.objects.filter(applicants=user)
+        self.fields['parent'].queryset = Proposal.objects.filter(applicants=self.user)
 
 
 class WmoForm(ConditionalModelForm):

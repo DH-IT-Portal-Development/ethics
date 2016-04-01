@@ -25,6 +25,7 @@ class StudyMixin(object):
     success_message = _('Studie opgeslagen')
 
     def get_context_data(self, **kwargs):
+        """Setting the Proposal on the context"""
         context = super(StudyMixin, self).get_context_data(**kwargs)
         context['proposal'] = Proposal.objects.get(pk=self.kwargs['pk'])
         return context
@@ -43,7 +44,7 @@ class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):
     """Creates a Study from a StudyForm"""
 
     def form_valid(self, form):
-        """Sets the Proposal and the order field on the Study before starting validation."""
+        """Sets the Proposal and the order field on the Study after the form has been validated."""
         proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         form.instance.proposal = proposal
         form.instance.order = proposal.study_set.count() + 1
@@ -60,6 +61,9 @@ class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
         return reverse('proposals:study_start', args=(self.object.proposal.pk,))
 
 
+###############
+# Other actions
+###############
 class StudyDesign(AllowErrorsMixin, UpdateView):
     model = Study
     form_class = StudyDesignForm
