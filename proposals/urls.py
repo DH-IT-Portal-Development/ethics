@@ -2,7 +2,8 @@ from django.conf.urls import url
 
 from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalSurvey, ProposalSubmit, ProposalSubmitted, \
-    DetailView, ProposalCopy, ProposalAsPdf, EmptyPDF, StudyStart
+    DetailView, ProposalCopy, ProposalAsPdf, EmptyPDF
+from .views.study_views import StudyStart
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 
 urlpatterns = [

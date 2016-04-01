@@ -104,10 +104,14 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
     template_name = 'studies/study_consent.html'
 
     def get_next_url(self):
-        return reverse('proposals:survey', args=(self.kwargs['pk'],))
+        proposal = self.object.proposal
+        if proposal.studies_number != self.object.order:
+            return reverse('studies:create', args=(proposal.pk,))
+        else:
+            return reverse('proposals:survey', args=(proposal.pk,))
 
     def get_back_url(self):
-        return reverse('studies:update', args=(self.kwargs['pk'],))
+        return reverse('studies:session_end', args=(self.object.pk,))
 
 
 ################

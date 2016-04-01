@@ -12,12 +12,14 @@ from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView, Use
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, StudyStartForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
+from ..forms import ProposalForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
 from ..models import Proposal
 from ..utils import generate_ref_number
 
 
+############
 # List views
+############
 class ProposalsView(LoginRequiredMixin, generic.ListView):
     title = _('Publiek archief')
     body = _('Dit overzicht toont alle beoordeelde studies.')
@@ -146,22 +148,6 @@ class ProposalDelete(DeleteView):
 ###########################
 class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
-
-
-class StudyStart(AllowErrorsMixin, UpdateView):
-    model = Proposal
-    form_class = StudyStartForm
-    template_name = 'proposals/study_start.html'
-
-    def get_next_url(self):
-        proposal = self.object
-        if proposal.first_study():
-            return reverse('studies:update', args=(proposal.first_study().pk,))
-        else:
-            return reverse('studies:create', args=(proposal.pk,))
-
-    def get_back_url(self):
-        return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))
 
 
 # NOTE: below view is non-standard, as it include inlines
