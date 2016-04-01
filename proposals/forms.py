@@ -119,6 +119,18 @@ class WmoCheckForm(forms.ModelForm):
         }
 
 
+class StudyStartForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['has_multiple_groups',
+                  'has_multiple_trajectories',
+                  'studies_number']
+        widgets = {
+            'has_multiple_groups': forms.RadioSelect(choices=YES_NO),
+            'has_multiple_trajectories': forms.RadioSelect(choices=YES_NO),
+        }
+
+
 class ProposalSurveyForm(forms.ModelForm):
     class Meta:
         model = Proposal

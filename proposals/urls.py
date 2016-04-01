@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalSurvey, ProposalSubmit, ProposalSubmitted, \
-    DetailView, ProposalCopy, ProposalAsPdf, EmptyPDF
+    DetailView, ProposalCopy, ProposalAsPdf, EmptyPDF, StudyStart
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 
 urlpatterns = [
@@ -19,11 +19,13 @@ urlpatterns = [
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
     url(r'^show/(?P<pk>\d+)/$', DetailView.as_view(), name='detail'),
 
-    url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
     url(r'^start/$', ProposalStart.as_view(), name='start'),
+    url(r'^study_start/(?P<pk>\d+)/$', StudyStart.as_view(), name='study_start'),
     url(r'^survey/(?P<pk>\d+)/$', ProposalSurvey.as_view(), name='survey'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
     url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
+
+    url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
 
     url(r'^pdf/(?P<pk>\d+)/$', ProposalAsPdf.as_view(), name='pdf'),
     url(r'^pdf_empty/$', EmptyPDF.as_view(), name='empty_pdf'),

@@ -38,7 +38,7 @@ class StudyMixin(object):
         return reverse('studies:design', args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:wmo_update', args=(self.kwargs['pk'],))
+        return reverse('proposals:study_start', args=(self.kwargs['pk'],))
 
 
 class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):

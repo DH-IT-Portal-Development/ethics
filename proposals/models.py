@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings
-from django.db import models
+from django.core.validators import MinValueValidator
 from django.core.urlresolvers import reverse
+from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from core.validators import MaxWordsValidator, validate_pdf_or_doc
@@ -112,6 +113,22 @@ class Proposal(models.Model):
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
+
+    # Fields with respect to Studies
+    has_multiple_groups = models.NullBooleanField(
+        _('Is er in uw studie sprake van verschillende deelnemersgroepen?'),
+        help_text=_('Een deelnemersgroep kan gekenmerkt worden door een controle- en experimentele groep, \
+maar ook door twee verschillende leeftijden (0-2 jarigen en volwassenen of 18-22 jarigen en 35-40 jarigen)'))
+    has_multiple_trajectories = models.NullBooleanField(
+        _('Lopen deze groepen een verschillend traject door?'),
+        help_text=_(u'Een traject is verschillend wanneer u bijvoorbeeld baby\'s \
+én volwassenen test op hun discriminatievaardigheden, maar zij krijgen een ander type taak. \
+Er is ook sprake van een ander traject wanneer u een groep 18-22 jarigen sessie \
+A, B en C laat doen, terwijl de 35-40 jarigen alleen C doen.'))
+    studies_number = models.PositiveIntegerField(
+        _('Hoeveel verschillende trajecten zijn er?'),
+        null=True,
+        validators=[MinValueValidator(1)])
 
     # Fields with respect to Surveys
     has_surveys = models.BooleanField(
@@ -237,6 +254,14 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         elif self.status == self.WMO_DECISION_MADE:
             return reverse('proposals:my_archive')
 
+    def first_study(self):
+        """Returns the first Study in this Proposal, or None if there's none."""
+        return self.study_set.order_by('order')[0] if self.study_set.count() else None
+
+    def last_study(self):
+        """Returns the last Study in this Proposal, or None if there's none."""
+        return self.study_set.order_by('-order')[0] if self.study_set.count() else None
+
     def current_session(self):
         """
         Returns the current (incomplete) session.
@@ -244,7 +269,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         - If no sessions have yet been created, None is returned.
         """
         current_session = None
-        if hasattr(self, 'study'):
+        for study in self.study_set.all():
             for session in self.study.session_set.all():
                 current_session = session
                 if not session.tasks_duration:

@@ -13,8 +13,8 @@
 <script>
 $(function() {
     check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
-    depends_on_value('other_applicants', 'True', 'applicants', 'proposals');
-    depends_on_value('other_stakeholders', 'True', 'stakeholders', 'proposals');
+    depends_on_value('other_applicants', 'True', 'applicants');
+    depends_on_value('other_stakeholders', 'True', 'stakeholders');
     check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
 
     // Add datepickers for date_start, set locale to current language

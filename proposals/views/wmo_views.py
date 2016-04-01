@@ -24,10 +24,7 @@ class WmoMixin(object):
         wmo = self.object
         if wmo.status == Wmo.NO_WMO:
             proposal = wmo.proposal
-            if hasattr(proposal, 'study'):
-                return reverse('studies:update', args=(proposal.pk,))
-            else:
-                return reverse('studies:create', args=(proposal.pk,))
+            return reverse('proposals:study_start', args=(proposal.pk,))
         elif wmo.status == Wmo.WAITING:
             return reverse('proposals:wmo_update', args=(wmo.pk,))
         else:

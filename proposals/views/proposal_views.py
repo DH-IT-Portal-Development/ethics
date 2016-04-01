@@ -12,7 +12,7 @@ from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView, Use
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
+from ..forms import ProposalForm, StudyStartForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
 from ..models import Proposal
 from ..utils import generate_ref_number
 
@@ -131,10 +131,6 @@ class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
 
 
 class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
-    model = Proposal
-    form_class = ProposalForm
-    success_message = _('Studie %(title)s bewerkt')
-
     def get_context_data(self, **kwargs):
         """Adds 'create'/'no_back' to template context"""
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
@@ -158,6 +154,22 @@ class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
 
 
+class StudyStart(UpdateView):
+    model = Proposal
+    form_class = StudyStartForm
+    template_name = 'proposals/study_start.html'
+
+    def get_next_url(self):
+        proposal = self.object
+        if proposal.first_study():
+            return reverse('studies:update', args=(proposal.first_study().pk,))
+        else:
+            return reverse('studies:create', args=(proposal.pk,))
+
+    def get_back_url(self):
+        return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))
+
+
 # NOTE: below view is non-standard, as it include inlines
 # NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
 class ProposalSurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
@@ -173,8 +185,7 @@ class ProposalSurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView
         return reverse('proposals:submit', args=(self.object.pk,))
 
     def get_back_url(self):
-        # TODO: sent back to the last Study in the Proposal
-        return reverse('studies:consent', args=(self.object.pk,))
+        return reverse('studies:consent', args=(self.object.last_study().pk,))
 
 
 class ProposalSubmit(AllowErrorsMixin, UpdateView):

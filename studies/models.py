@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
-from django.db import models
 from django.core.validators import MinValueValidator
+from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
@@ -81,6 +81,11 @@ class Study(models.Model):
         (INTERVENTION, _('Interventieonderzoek')),
         (SESSIONS, _('Taakonderzoek')),
     )
+
+    order = models.PositiveIntegerField(unique=True)
+    name = models.CharField(
+        _('Wat is de naam van deze deelnemersgroep?'),
+        max_length=200)
 
     age_groups = models.ManyToManyField(
         AgeGroup,
