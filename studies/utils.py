@@ -1,5 +1,8 @@
 from .models import AgeGroup
 
+STUDY_PROGRESS_START = 10
+STUDY_PROGRESS_TOTAL = 80
+
 
 def check_necessity_required(proposal, age_groups, has_traits, legally_incapable):
     """
@@ -17,3 +20,14 @@ def check_necessity_required(proposal, age_groups, has_traits, legally_incapable
         result |= has_traits
         result |= legally_incapable
     return result
+
+
+def get_study_progress(study, is_end=False):
+    if not study:
+        return STUDY_PROGRESS_START
+    progress = STUDY_PROGRESS_TOTAL / study.proposal.studies_number
+    if not is_end:
+        progress *= (study.order - 1)
+    else:
+        progress *= study.order
+    return STUDY_PROGRESS_START + progress

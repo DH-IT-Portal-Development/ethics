@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from django.db.models import Max
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -12,7 +11,7 @@ from proposals.models import Proposal
 
 from ..forms import StudyForm, StudyDesignForm, StudyConsentForm
 from ..models import Study
-from ..utils import check_necessity_required
+from ..utils import check_necessity_required, get_study_progress
 
 
 #######################
@@ -37,6 +36,7 @@ class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):
         proposal = Proposal.objects.get(pk=self.kwargs['pk'])
         context['proposal'] = proposal
         context['order'] = proposal.study_set.count() + 1
+        context['progress'] = get_study_progress(self.object)
         return context
 
     def get_form_kwargs(self):
@@ -65,6 +65,7 @@ class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
         context = super(StudyMixin, self).get_context_data(**kwargs)
         context['proposal'] = self.object.proposal
         context['order'] = self.object.order
+        context['progress'] = get_study_progress(self.object)
         return context
 
     def get_form_kwargs(self):

@@ -3,9 +3,6 @@ SESSION_PROGRESS_TOTAL = 50
 SESSION_PROGRESS_EPSILON = 5
 
 
-#########
-# Helpers
-#########
 def get_session_progress(session, is_end=False):
     progress = SESSION_PROGRESS_TOTAL / session.study.sessions_number
     if not is_end:
