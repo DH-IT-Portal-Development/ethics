@@ -38,6 +38,12 @@ class InterventionMixin(object):
 class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
     """Creates a Intervention from a InterventionForm"""
 
+    def get_context_data(self, **kwargs):
+        """Setting the Study on the context"""
+        context = super(InterventionCreate, self).get_context_data(**kwargs)
+        context['study'] = Study.objects.get(pk=self.kwargs['pk'])
+        return context
+
     def form_valid(self, form):
         """Sets the Study on the Intervention before starting validation."""
         form.instance.study = Study.objects.get(pk=self.kwargs['pk'])
@@ -46,3 +52,9 @@ class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
 
 class InterventionUpdate(InterventionMixin, AllowErrorsMixin, UpdateView):
     """Updates a Intervention from an InterventionForm"""
+
+    def get_context_data(self, **kwargs):
+        """Setting the Study on the context"""
+        context = super(InterventionUpdate, self).get_context_data(**kwargs)
+        context['study'] = self.object.study
+        return context

@@ -201,11 +201,11 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
             if not (study.has_observation or study.has_intervention or study.has_sessions):
                 status = self.CONSENT_ADDED
             if study.has_observation:
-                status = self.OBSERVATION_CREATED
+                status = self.OBSERVATION
             if study.has_intervention:
-                status = self.INTERVENTION_CREATED
+                status = self.INTERVENTION
             if study.has_sessions:
-                status = self.SESSIONS_STARTED
+                status = self.SESSIONS
 
         session = self.current_session()
         if session:

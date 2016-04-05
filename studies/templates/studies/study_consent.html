@@ -10,6 +10,7 @@
 {% block progress %}12{% endblock %}
 
 {% block content %}
+{% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% include "proposals/form_buttons.html" %}

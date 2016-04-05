@@ -53,6 +53,13 @@ class ObservationMixin(object):
 class ObservationCreate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, CreateWithInlinesView):
     """Creates an Observation from a ObservationForm"""
+
+    def get_context_data(self, **kwargs):
+        """Setting the Study on the context"""
+        context = super(ObservationCreate, self).get_context_data(**kwargs)
+        context['study'] = Study.objects.get(pk=self.kwargs['pk'])
+        return context
+
     def forms_valid(self, form, inlines):
         """Sets the Study on the Observation before starting validation."""
         form.instance.study = Study.objects.get(pk=self.kwargs['pk'])
@@ -65,5 +72,12 @@ class ObservationCreate(LoginRequiredMixin, ObservationMixin,
 class ObservationUpdate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Observation from a ObservationForm"""
+
+    def get_context_data(self, **kwargs):
+        """Setting the Study on the context"""
+        context = super(ObservationUpdate, self).get_context_data(**kwargs)
+        context['study'] = self.object.study
+        return context
+
     def get_back_url(self):
         return reverse('studies:design', args=(self.object.study.pk,))

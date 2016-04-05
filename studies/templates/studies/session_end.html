@@ -16,6 +16,7 @@ $(function() {
     depends_on_value('risk', 'True', 'risk_details');
 });
 </script>
+{% include "studies/study_title.html" %}
 {% if study.has_sessions %}
 <div class="session_list">
 	<p>
@@ -36,8 +37,8 @@ $(function() {
 	</div>
 	{% endfor %}
 </div>
-{% endif %}
 <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
+{% endif %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% with proposal=study.proposal %}

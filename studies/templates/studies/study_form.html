@@ -3,8 +3,10 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "Informatie over de deelnemersgroep" %}
+{% block title %}
+{% blocktrans with order=order %}
+Informatie over de deelnemersgroep {{ order }}
+{% endblocktrans %}
 {% endblock %}
 
 {% block progress %}10{% endblock %}

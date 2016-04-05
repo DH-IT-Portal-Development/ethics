@@ -17,7 +17,7 @@ class StudyStart(AllowErrorsMixin, UpdateView):
         """Deletes superfluous Studies on save"""
         nr_studies = form.cleaned_data['studies_number']
         proposal = form.instance
-        current = proposal.session_set.count() or 0
+        current = proposal.study_set.count() or 0
 
         for n in xrange(nr_studies, current):
             order = n + 1
