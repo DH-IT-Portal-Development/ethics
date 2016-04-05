@@ -185,6 +185,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
     def get_status(self):
         """Retrieves the current status for a Proposal"""
         status = self.status
+
         if hasattr(self, 'wmo'):
             wmo = self.wmo
             if wmo.status == wmo.WAITING:
@@ -193,15 +194,17 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
                 status = self.WMO_DECISION_MADE
             else:
                 status = self.WMO_DECISION_BY_ETCL
-        if hasattr(self, 'study'):
+
+        study = self.current_study()
+        if study:
             status = self.STUDY_CREATED
-            if not (self.study.has_observation or self.study.has_intervention or self.study.has_sessions):
+            if not (study.has_observation or study.has_intervention or study.has_sessions):
                 status = self.CONSENT_ADDED
-            if self.study.has_observation:
+            if study.has_observation:
                 status = self.OBSERVATION_CREATED
-            if self.study.has_intervention:
+            if study.has_intervention:
                 status = self.INTERVENTION_CREATED
-            if self.study.has_sessions:
+            if study.has_sessions:
                 status = self.SESSIONS_STARTED
 
         session = self.current_session()
@@ -227,7 +230,9 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         return status
 
     def continue_url(self):
+        study = self.current_study()
         session = self.current_session()
+
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_ETCL:
@@ -235,11 +240,11 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         elif self.status == self.WMO_DECISION_BY_METC:
             return reverse('proposals:wmo_update', args=(self.pk,))
         elif self.status == self.STUDY_CREATED:
-            return reverse('studies:consent', args=(self.pk,))
+            return reverse('studies:consent', args=(study.pk,))
         elif self.status == self.CONSENT_ADDED:
-            return reverse('studies:design', args=(self.pk,))
+            return reverse('studies:design', args=(study.pk,))
         elif self.status == self.STUDY_DESIGN:
-            return reverse('studies:session_start', args=(self.pk,))
+            return reverse('studies:session_start', args=(study.pk,))
         elif self.status == self.SESSIONS:
             return reverse('tasks:start', args=(session.pk,))
         elif self.status == self.TASKS_STARTED:
@@ -247,7 +252,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         elif self.status == self.TASKS_ADDED:
             return reverse('tasks:end', args=(session.pk,))
         elif self.status == self.TASKS_ENDED:
-            return reverse('studies:session_end', args=(self.pk,))
+            return reverse('studies:session_end', args=(study.pk,))
         elif self.status == self.SESSIONS_ENDED:
             return reverse('proposals:submit', args=(self.pk,))
 
@@ -256,18 +261,30 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""
-        print self.study_set
         return self.study_set.order_by('order')[0] if self.study_set.count() else None
 
     def last_study(self):
         """Returns the last Study in this Proposal, or None if there's none."""
         return self.study_set.order_by('-order')[0] if self.study_set.count() else None
 
+    def current_study(self):
+        """
+        Returns the current (incomplete) Study.
+        - If all Studies are completed, the last Study is returned.
+        - If no Studies have yet been created, None is returned.
+        """
+        current_study = None
+        for study in self.study_set.all():
+            current_study = study
+            if not study.sessions_duration:
+                break
+        return current_study
+
     def current_session(self):
         """
-        Returns the current (incomplete) session.
-        - If all sessions are completed, the last session is returned.
-        - If no sessions have yet been created, None is returned.
+        Returns the current (incomplete) Session.
+        - If all Sessions are completed, the last Session is returned.
+        - If no Sessions have yet been created, None is returned.
         """
         current_session = None
         for study in self.study_set.all():

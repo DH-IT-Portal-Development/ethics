@@ -118,7 +118,7 @@ def auto_review(proposal):
             reasons.append(_('De studie heeft een afwijkende geldstroom.'))
             break
 
-    for study in proposal.study.all():
+    for study in proposal.study_set.all():
         if study.legally_incapable:
             go = False
             reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
