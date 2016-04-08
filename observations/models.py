@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 
+from core.validators import validate_pdf_or_doc
 from studies.models import Study
 
 
@@ -28,6 +29,18 @@ tijdens een hypotheekgesprek of tijdens politieverhoren.'),
     has_advanced_consent = models.BooleanField(
         _('Vindt de informed consent van tevoren plaats?'),
         default=True)
+    needs_approval = models.BooleanField(
+        _('Heeft u toestemming nodig van een (samenwerkende) instantie \
+om deze observatie te mogen uitvoeren?'),
+        default=False)
+    approval_institution = models.CharField(
+        _('Welke instantie?'),
+        max_length=200,
+        blank=True)
+    approval_document = models.FileField(
+        _('Upload hiet het toestemmingsdocument (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc])
 
     # References
     study = models.OneToOneField(Study)
