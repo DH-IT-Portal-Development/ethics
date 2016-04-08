@@ -12,6 +12,8 @@
 {% block content %}
 <script>
 $(function() {
+    depends_on_value('is_nonpublic_space', 'True', 'has_advanced_consent');
+
     $('.location_set').formset({
         prefix: 'location_set',
         addText: "{% trans 'Voeg locatie toe' %}",

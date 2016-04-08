@@ -14,12 +14,20 @@ class Observation(models.Model):
         decimal_places=2,
         validators=[MaxValueValidator(24)])
     is_anonymous = models.BooleanField(
-        _('Weten de deelnemers dat ze deelnemer zijn, ofwel, wordt er anoniem geobserveerd?'),
+        _('Wordt er anoniem geobserveerd?'),
         help_text=_('Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.'),
         default=False)
-    is_test = models.BooleanField(
+    is_in_target_group = models.BooleanField(
         _('Doet de onderzoeker zich voor als behorende tot de doelgroep?'),
         default=False)
+    is_nonpublic_space = models.BooleanField(
+        _('Wordt er geobserveerd in een niet-openbare ruimte?'),
+        help_text=_('Bijvoorbeeld er wordt geobserveerd bij iemand thuis, \
+tijdens een hypotheekgesprek of tijdens politieverhoren.'),
+        default=False)
+    has_advanced_consent = models.BooleanField(
+        _('Vindt de informed consent van tevoren plaats?'),
+        default=True)
 
     # References
     study = models.OneToOneField(Study)
