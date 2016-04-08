@@ -8,6 +8,7 @@ from django.utils.translation import ugettext as _
 from django.utils import timezone
 
 from .models import Review, Decision
+from interventions.models import Intervention
 from tasks.models import Task
 
 
@@ -191,5 +192,11 @@ fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
                 reasons.append(_('De totale duur van de taken in de sessie ({d} minuten), exclusief pauzes \
 en andere niet-taak elementen, is groter dan het streefmaximum ({max_d} minuten) \
 voor de leeftijdsgroep {ag}.'.format(ag=age_group, d=study.net_duration(), max_d=age_group.max_net_duration)))
+
+        if study.has_intervention:
+            intervention = Intervention.object.get(study=study)
+            if not intervention.is_supervised:
+                go = False
+                reasons.append(_('De interventie vindt plaats met een onbevoegd persoon'))
 
     return go, reasons

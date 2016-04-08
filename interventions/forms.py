@@ -8,9 +8,10 @@ from .models import Intervention
 class InterventionForm(ConditionalModelForm):
     class Meta:
         model = Intervention
-        fields = ['description', 'has_drawbacks', 'has_drawbacks_details']
+        fields = ['description', 'has_drawbacks', 'has_drawbacks_details', 'is_supervised']
         widgets = {
             'has_drawbacks': forms.RadioSelect(choices=YES_NO),
+            'is_supervised': forms.RadioSelect(choices=YES_NO),
         }
 
     def clean(self):
