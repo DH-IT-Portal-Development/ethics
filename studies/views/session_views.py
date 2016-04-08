@@ -28,13 +28,13 @@ class SessionStart(AllowErrorsMixin, UpdateView):
         study = form.instance
         current = study.session_set.count() or 0
 
-        # Create sessions
+        # Create Sessions
         for n in xrange(current, nr_sessions):
             order = n + 1
             session = Session(study=study, order=order)
             session.save()
 
-        # Delete sessions
+        # Delete Sessions
         for n in xrange(nr_sessions, current):
             order = n + 1
             session = Session.objects.get(study=study, order=order)

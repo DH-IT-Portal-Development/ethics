@@ -236,7 +236,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_ETCL:
-            return reverse('studies:create', args=(self.pk,))
+            return reverse('studies:update', args=(study.pk,))
         elif self.status == self.WMO_DECISION_BY_METC:
             return reverse('proposals:wmo_update', args=(self.pk,))
         elif self.status == self.STUDY_CREATED:
@@ -276,7 +276,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         current_study = None
         for study in self.study_set.all():
             current_study = study
-            if not study.sessions_duration:
+            if study.sessions_duration is None:
                 break
         return current_study
 
@@ -290,7 +290,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         for study in self.study_set.all():
             for session in study.session_set.all():
                 current_session = session
-                if not session.tasks_duration:
+                if session.tasks_duration is None:
                     break
         return current_session
 

@@ -33,8 +33,7 @@ class BaseReviewTestCase(TestCase):
                                                 date_start=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4))
-        self.study = Study.objects.create(proposal=self.proposal, order=1, name='Test', legally_incapable=False,
-                                          has_traits=False, compensation=Compensation.objects.get(pk=1))
+        self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=1))
 
 
 class ReviewTestCase(BaseReviewTestCase):

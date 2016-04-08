@@ -85,15 +85,16 @@ class Study(models.Model):
     order = models.PositiveIntegerField()
     name = models.CharField(
         _('Wat is de naam van deze deelnemersgroep?'),
-        max_length=200)
+        max_length=200,
+        null=True)
 
     age_groups = models.ManyToManyField(
         AgeGroup,
         verbose_name=_(u'Geef aan binnen welke leeftijdscategorie(ën) uw deelnemersgroep valt'),
         help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen'))
-    legally_incapable = models.BooleanField(
+    legally_incapable = models.NullBooleanField(
         _('Maakt uw studie gebruik van <strong>volwassen</strong> wilsonbekwame deelnemers?'))
-    has_traits = models.BooleanField(
+    has_traits = models.NullBooleanField(
         _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
     traits = models.ManyToManyField(
@@ -134,7 +135,8 @@ van de leraar of een ander persoon die bevoegd is?')
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname aan deze studie?'),
         # TODO: put a proper text here.
-        help_text=_('tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld'))
+        help_text=_('tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld'),
+        null=True)
     compensation_details = models.CharField(
         _('Namelijk'),
         max_length=200,

@@ -56,8 +56,7 @@ class ProposalTestCase(BaseProposalTestCase):
         self.assertEqual(proposal.continue_url(), '/studies/create/1/')
 
         compensation = Compensation.objects.get(pk=1)
-        s = Study.objects.create(proposal=proposal, order=1, name='Test', legally_incapable=False,
-                                 has_traits=False, compensation=compensation)
+        s = Study.objects.create(proposal=proposal, order=1)
         self.assertEqual(proposal.status, Proposal.CONSENT_ADDED)
         self.assertEqual(proposal.continue_url(), '/studies/design/1/')
 

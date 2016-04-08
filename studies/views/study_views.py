@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
-from core.views import AllowErrorsMixin, CreateView, UpdateView
+from core.views import AllowErrorsMixin, UpdateView
 from core.utils import string_to_bool
 from proposals.models import Proposal
 
@@ -17,52 +17,15 @@ from ..utils import check_necessity_required, get_study_progress
 #######################
 # CRUD actions on Study
 #######################
-class StudyMixin(object):
-    """Mixin for a Study, to use in both StudyCreate and StudyUpdate below"""
+class StudyUpdate(AllowErrorsMixin, UpdateView):
+    """Updates a Study from a StudyForm"""
     model = Study
     form_class = StudyForm
     success_message = _('Studie opgeslagen')
 
-    def get_next_url(self):
-        return reverse('studies:design', args=(self.object.pk,))
-
-
-class StudyCreate(StudyMixin, AllowErrorsMixin, CreateView):
-    """Creates a Study from a StudyForm"""
-
     def get_context_data(self, **kwargs):
         """Setting the Proposal and order on the context"""
-        context = super(StudyMixin, self).get_context_data(**kwargs)
-        proposal = Proposal.objects.get(pk=self.kwargs['pk'])
-        context['proposal'] = proposal
-        context['order'] = proposal.study_set.count() + 1
-        context['progress'] = get_study_progress(self.object)
-        return context
-
-    def get_form_kwargs(self):
-        """Sets the Proposal as a form kwarg"""
-        kwargs = super(StudyMixin, self).get_form_kwargs()
-        kwargs['proposal'] = Proposal.objects.get(pk=self.kwargs['pk'])
-        return kwargs
-
-    def form_valid(self, form):
-        """Sets the Proposal and the order field on the Study after the form has been validated."""
-        proposal = Proposal.objects.get(pk=self.kwargs['pk'])
-        form.instance.proposal = proposal
-        form.instance.order = proposal.study_set.count() + 1
-        return super(StudyCreate, self).form_valid(form)
-
-    def get_back_url(self):
-        # TODO: this is not correct, depends on the order
-        return reverse('proposals:study_start', args=(self.kwargs['pk'],))
-
-
-class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
-    """Updates a Study from a StudyForm"""
-
-    def get_context_data(self, **kwargs):
-        """Setting the Proposal and order on the context"""
-        context = super(StudyMixin, self).get_context_data(**kwargs)
+        context = super(StudyUpdate, self).get_context_data(**kwargs)
         context['proposal'] = self.object.proposal
         context['order'] = self.object.order
         context['progress'] = get_study_progress(self.object)
@@ -70,13 +33,16 @@ class StudyUpdate(StudyMixin, AllowErrorsMixin, UpdateView):
 
     def get_form_kwargs(self):
         """Sets the Proposal as a form kwarg"""
-        kwargs = super(StudyMixin, self).get_form_kwargs()
+        kwargs = super(StudyUpdate, self).get_form_kwargs()
         kwargs['proposal'] = self.object.proposal
         return kwargs
 
     def get_back_url(self):
         # TODO: this is not correct, depends on the order
         return reverse('proposals:study_start', args=(self.object.proposal.pk,))
+
+    def get_next_url(self):
+        return reverse('studies:design', args=(self.object.pk,))
 
 
 ###############
@@ -123,8 +89,9 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
 
     def get_next_url(self):
         proposal = self.object.proposal
-        if proposal.studies_number != proposal.study_set.count():
-            return reverse('studies:create', args=(proposal.pk,))
+        study = proposal.current_study()
+        if study.order < proposal.studies_number:
+            return reverse('studies:update', args=(study.pk,))
         else:
             return reverse('proposals:survey', args=(proposal.pk,))
 

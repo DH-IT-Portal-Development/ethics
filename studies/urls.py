@@ -1,11 +1,10 @@
 from django.conf.urls import url
 
 from .views.session_views import SessionStart, SessionEnd
-from .views.study_views import StudyCreate, StudyUpdate, StudyDesign, StudyConsent, necessity_required
+from .views.study_views import StudyUpdate, StudyDesign, StudyConsent, necessity_required
 
 urlpatterns = [
     # Study
-    url(r'^create/(?P<pk>\d+)/$', StudyCreate.as_view(), name='create'),
     url(r'^update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='update'),
     url(r'^design/(?P<pk>\d+)/$', StudyDesign.as_view(), name='design'),
     url(r'^consent/(?P<pk>\d+)/$', StudyConsent.as_view(), name='consent'),

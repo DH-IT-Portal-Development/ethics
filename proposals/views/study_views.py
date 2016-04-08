@@ -14,11 +14,18 @@ class StudyStart(AllowErrorsMixin, UpdateView):
     template_name = 'proposals/study_start.html'
 
     def form_valid(self, form):
-        """Deletes superfluous Studies on save"""
+        """Creates or deletes Studies on save"""
         nr_studies = form.cleaned_data['studies_number']
         proposal = form.instance
         current = proposal.study_set.count() or 0
 
+        # Create Studies
+        for n in xrange(current, nr_studies):
+            order = n + 1
+            study = Study(proposal=proposal, order=order)
+            study.save()
+
+        # Delete Studies
         for n in xrange(nr_studies, current):
             order = n + 1
             study = Study.objects.get(proposal=proposal, order=order)
@@ -27,12 +34,9 @@ class StudyStart(AllowErrorsMixin, UpdateView):
         return super(StudyStart, self).form_valid(form)
 
     def get_next_url(self):
-        """Continue to the first Study, or create a new one."""
+        """Continue to the first Study"""
         proposal = self.object
-        if proposal.first_study():
-            return reverse('studies:update', args=(proposal.first_study().pk,))
-        else:
-            return reverse('studies:create', args=(proposal.pk,))
+        return reverse('studies:update', args=(proposal.first_study().pk,))
 
     def get_back_url(self):
         return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))
