@@ -26,7 +26,7 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken, op knop klikken)",
+        "description": "logdata",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -38,7 +38,7 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "registratie van reactietijd via Zep, Presentation, E-prime, etc",
+        "description": "gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken, op knop klikken)",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -50,7 +50,7 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "oogbewegingsregistratie via een eye-tracker",
+        "description": "registratie van reactietijd via Zep, Presentation, E-prime, etc",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -62,10 +62,10 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "psychofysiologische meting (bijvoorbeeld: EEG, fMRI, EMA, NIRS)",
-        "needs_kind": true,
-        "age_min": 18,
-        "requires_review": true,
+        "description": "oogbewegingsregistratie via een eye-tracker",
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
         "order": 6
     },
     "model": "tasks.registration",
@@ -74,14 +74,26 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "registratie gegevens d.m.v. een (online) vragenlijst",
-        "needs_kind": false,
-        "age_min": null,
-        "requires_review": false,
+        "description": "psychofysiologische meting (bijvoorbeeld: EEG, fMRI, EMA, NIRS)",
+        "needs_kind": true,
+        "age_min": 18,
+        "requires_review": true,
         "order": 7
     },
     "model": "tasks.registration",
     "pk": 7
+},
+{
+    "fields": {
+        "needs_details": false,
+        "description": "registratie gegevens d.m.v. een (online) vragenlijst",
+        "needs_kind": false,
+        "age_min": null,
+        "requires_review": false,
+        "order": 8
+    },
+    "model": "tasks.registration",
+    "pk": 8
 },
 {
     "fields": {
@@ -90,9 +102,9 @@
         "needs_kind": false,
         "age_min": null,
         "requires_review": true,
-        "order": 8
+        "order": 9
     },
     "model": "tasks.registration",
-    "pk": 8
+    "pk": 9
 }
 ]
