@@ -20,11 +20,17 @@ $(function() {
         deleteText: "{% trans 'Verwijder' %}"
     });
 
-    $('.location_set textarea').focus(function() {
-        $(this).css('height', '6em');
-    }).blur(function() {
-        $(this).css('height', '3em');
+    $('select[name$="registrations"').change(function() {
+        var selected_values = $(this).chosen().val();
+        var current = $(this);
+
+        var url = "{% url 'core:check_requires' %}";
+        var params = {'value': selected_values, 'app': 'observations', 'model': 'registration', 'field': 'needs_details'};
+        $.post(url, params, function(data) {
+            current.parents('td').find('input[name$="registrations_details"]').parent().toggle(data.result);
+        });
     });
+    $('select[name$="registrations"').change();
 });
 </script>
 {% include "studies/study_title.html" %}

@@ -27,6 +27,6 @@ class ObservationForm(forms.ModelForm):
 class LocationsInline(InlineFormSet):
     """Creates an InlineFormSet for Locations"""
     model = Location
-    fields = ['name', 'registration']
+    fields = ['name', 'registrations', 'registrations_details']
     can_delete = True
     extra = 1

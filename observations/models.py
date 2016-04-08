@@ -33,9 +33,27 @@ tijdens een hypotheekgesprek of tijdens politieverhoren.'),
     study = models.OneToOneField(Study)
 
 
+class Registration(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
+
+    def __unicode__(self):
+        return self.description
+
+
 class Location(models.Model):
     name = models.CharField(_('Locatie'), max_length=200)
-    registration = models.TextField(_('Hoe wordt het gedrag geregistreerd?'))
+    registrations = models.ManyToManyField(
+        Registration,
+        verbose_name=_('Hoe wordt het gedrag geregistreerd?'))
+    registrations_details = models.CharField(
+        _('Namelijk'),
+        max_length=200,
+        blank=True)
     observation = models.ForeignKey(Observation)
 
     def __unicode__(self):
