@@ -217,7 +217,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
             if session.tasks_duration:
                 status = self.TASKS_ENDED
         if session and session.tasks_duration:
-            if self.study.sessions_duration:
+            if study.sessions_duration:
                 status = self.SESSIONS_ENDED
 
         if self.date_submitted_supervisor:
@@ -236,7 +236,8 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_ETCL:
-            return reverse('studies:update', args=(study.pk,))
+            if study:
+                return reverse('studies:update', args=(study.pk,))
         elif self.status == self.WMO_DECISION_BY_METC:
             return reverse('proposals:wmo_update', args=(self.pk,))
         elif self.status == self.STUDY_CREATED:

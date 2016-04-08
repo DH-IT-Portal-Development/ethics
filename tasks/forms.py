@@ -107,16 +107,13 @@ class TaskEndForm(forms.ModelForm):
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
 
-    def clean(self):
+    def clean_tasks_duration(self):
         """
-        Check for conditional requirements:
-        - Check that the net duration is at least equal to the gross duration
+        Check that the net duration is at least equal to the gross duration
         """
-        cleaned_data = super(TaskEndForm, self).clean()
+        tasks_duration = self.cleaned_data.get('tasks_duration')
 
-        # TODO: put this into custom validator
-        tasks_duration = cleaned_data.get('tasks_duration')
-        net_duration = self.instance.net_duration()
-        if tasks_duration < net_duration:
-            error = forms.ValidationError(_('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.'), code='comparison')
-            self.add_error('tasks_duration', error)
+        if tasks_duration < self.instance.net_duration():
+            raise forms.ValidationError(_('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.'), code='comparison')
+
+        return tasks_duration

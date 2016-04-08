@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 
-from ..utils import check_necessity_required
+from studies.utils import check_necessity_required
 
 register = template.Library()
 

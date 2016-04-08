@@ -131,69 +131,73 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
         {% endwith %}
 
-        {% if proposal.study and proposal.wmo.status == proposal.wmo.NO_WMO %}
-        {% with study=proposal.study %}
+        {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
+        {% for study in proposal.study_set.all %}
         <pdf:nextpage />
-        <h2>{% trans "Deelnemers-gerelateerde informatie en informed consent" %}</h2>
+        <h2>
+            {% blocktrans with order=study.order %}
+            Informatie over deelnemersgroep {{ order }}
+            {% endblocktrans %}
+        </h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "legally_incapable" %}</th><td>{{ study.legally_incapable|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th><td>{{ study.legally_incapable|yesno:"ja,nee" }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "has_traits" %}</th><td>{{ study.has_traits|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th><td>{{ study.has_traits|yesno:"ja,nee" }}</td>
             </tr>
             {% if study.has_traits %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
             </tr>
             {% if study.recruitment.all|needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
             </tr>
             {% endif %}
             {% endif %}
             {% if study|necessity_required %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "necessity" %}</th><td>{{ study.necessity|yesno:"ja,nee,twijfel" }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th><td>{{ study.necessity|yesno:"ja,nee,twijfel" }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "necessity_reason" %}</th><td>{{ study.necessity_reason }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "necessity_reason" %}</th><td>{{ study.necessity_reason }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "recruitment" %}</th><td>{{ study.recruitment.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "recruitment" %}</th><td>{{ study.recruitment.all|unordered_list }}</td>
             </tr>
             {% if study.recruitment.all|needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "setting" %}</th><td>{{ study.setting.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "setting" %}</th><td>{{ study.setting.all|unordered_list }}</td>
             </tr>
             {% if study.setting.all|needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "setting_details" %}</th><td>{{ study.setting_details }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "setting_details" %}</th><td>{{ study.setting_details }}</td>
             </tr>
             {% endif %}
             {% if study.setting.all|needs_details:"needs_supervision" %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "supervision" %}</th><td>{{ study.supervision }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "supervision" %}</th><td>{{ study.supervision|yesno:"ja,nee" }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "compensation" %}</th><td>{{ study.compensation }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th><td>{{ study.compensation }}</td>
             </tr>
             {% if study.compensation.needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:"ja,nee" }}</td>
             </tr>
         </table>
 
@@ -254,7 +258,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "sessions_number" %}</th><td>{{ study.sessions_number }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "sessions_number" %}</th><td>{{ study.sessions_number }}</td>
             </tr>
         </table>
 
@@ -324,23 +328,23 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <table>
             {% if study.has_sessions %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "sessions_duration" %}</th><td>{{ study.sessions_duration }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "sessions_duration" %}</th><td>{{ study.sessions_duration }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "stressful" %}</th><td>{{ study.stressful|yesno:"ja,nee,twijfel" }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.stressful|yesno:"ja,nee,twijfel" }}</td>
             </tr>
             {% if study.stressful %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "stressful_details" %}</th><td>{{ study.stressful_details }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "stressful_details" %}</th><td>{{ study.stressful_details }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "risk" %}</th><td>{{ study.risk|yesno:"ja,nee,twijfel" }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "risk" %}</th><td>{{ study.risk|yesno:"ja,nee,twijfel" }}</td>
             </tr>
             {% if study.risk %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
             </tr>
             {% endif %}
         </table>
@@ -349,11 +353,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "has_surveys" %}</th><td>{{ study.has_surveys|yesno:"ja,nee" }}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "has_surveys" %}</th><td>{{ study.has_surveys|yesno:"ja,nee" }}</td>
             </tr>
             {% if study.has_surveys %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "surveys_stressful" %}</th><td>{{ study.surveys_stressful }}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "surveys_stressful" %}</th><td>{{ study.surveys_stressful }}</td>
             </tr>
             {% endif %}
         </table>
@@ -383,7 +387,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
         </table>
 
-        {% endwith %}
+        {% endfor %}
         {% endif %}
     </div>
 </div>

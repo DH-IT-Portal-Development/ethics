@@ -54,7 +54,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
 <div id="content">
     <div class="main">
         <h1>Referentienummer <em>referentienummer</em></h1>
-        <h2>Algemene informatie over de studie</h2>
+        <h2>{% trans "Algemene informatie over de studie" %}</h2>
         <table id="test">
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th><td>{% show_all "proposals" "relation" %}</td>
@@ -92,7 +92,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>Toetsing: ook door de METC?</h2>
+        <h2>{% trans "Toetsing: ook door de METC?" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{% show_yesnodoubt %}</td>
@@ -118,52 +118,52 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Deelnemersgerelateerde informatie" %}</h2>
+        <h2>{% trans "Informatie over deelnemersgroep" %} <em>n</em></h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "age_groups" %}</th><td>{% show_all "proposals" "agegroup" %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th><td>{% show_all "studies" "agegroup" %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "legally_incapable" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "has_traits" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "traits" %}</th><td>{% show_all "proposals" "trait" %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{% show_all "studies" "trait" %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "traits_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "necessity" %}</th><td>{% show_yesnodoubt %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "necessity_reason" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "necessity_reason" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "recruitment" %}</th><td>{% show_all "proposals" "recruitment" %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "recruitment" %}</th><td>{% show_all "studies" "recruitment" %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "recruitment_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "recruitment_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "setting" %}</th><td>{% show_all "proposals" "setting" %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "setting" %}</th><td>{% show_all "studies" "setting" %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "setting_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "setting_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "supervision" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "supervision" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "compensation" %}</th><td>{% show_all "proposals" "compensation" %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th><td>{% show_all "studies" "compensation" %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "compensation_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "passive_consent" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th><td>{% show_yesno %}</td>
             </tr>
         </table>
 
@@ -211,11 +211,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "sessions_number" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "sessions_number" %}</th><td></td>
             </tr>
         </table>
 
-        <h2>Sessie <em>n</em></h2>
+        <h2>{% trans "Sessie" %} <em>n</em></h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td></td>
@@ -224,7 +224,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" %}</th><td></td>
             </tr>
         </table>
-        <h3>Taak <em>n</em></h3>
+        <h3>{% trans "Taak" %} <em>n</em></h3>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "task" "name" %}</th><td></td>
@@ -265,19 +265,19 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "sessions_duration" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "sessions_duration" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "stressful" %}</th><td>{% show_yesnodoubt %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "stressful_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "stressful_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "risk" %}</th><td>{% show_yesnodoubt %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "risk" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "risk_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td></td>
             </tr>
         </table>
 
@@ -285,10 +285,10 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Informed consent" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "informed_consent" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "briefing" %}</th><td></td>
+                <th>{% get_verbose_field_name "studies" "study" "briefing" %}</th><td></td>
             </tr>
         </table>
 
@@ -296,10 +296,10 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "has_surveys" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "has_surveys" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "study" "surveys_stressful" %}</th><td>{% show_yesnodoubt %}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "surveys_stressful" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
         </table>
         <h3>Vragenlijst <em>n</em></h3>

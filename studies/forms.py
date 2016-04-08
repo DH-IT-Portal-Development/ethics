@@ -147,6 +147,15 @@ class SessionEndForm(ConditionalModelForm):
         if not self.instance.has_sessions or self.instance.sessions_number == 1:
             self.fields['sessions_duration'].widget = forms.HiddenInput()
 
+    def clean_sessions_duration(self):
+        sessions_duration = self.cleaned_data.get('sessions_duration')
+
+        if self.instance.has_sessions:
+            if sessions_duration < self.instance.net_duration():
+                raise forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
+
+        return sessions_duration
+
     def clean(self):
         """
         Check for conditional requirements:
@@ -155,14 +164,6 @@ class SessionEndForm(ConditionalModelForm):
         - If risk is set to yes, make sure risk_details has been filled out
         """
         cleaned_data = super(SessionEndForm, self).clean()
-
-        # TODO: put this into custom validator
-        if self.instance.has_sessions:
-            sessions_duration = cleaned_data.get('sessions_duration')
-            net_duration = self.instance.net_duration()
-            if sessions_duration < net_duration:
-                error = forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
-                self.add_error('sessions_duration', error)
 
         self.check_dependency(cleaned_data, 'stressful', 'stressful_details')
         self.check_dependency(cleaned_data, 'risk', 'risk_details')
