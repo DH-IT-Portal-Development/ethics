@@ -9,12 +9,23 @@
 
 {% if not no_back %}
 <nav id="form_buttons_extra">
-	<a class="pure-button pure-button-secondary" href="{% url 'core:home' %}">{% trans "Terug naar startpagina" %}</a>
+	<a class="pure-button pure-button-secondary" href="{% url 'core:home' %}">
+		{% trans "Terug naar startpagina" %}
+	</a>
 	{% if proposal %}
-	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update' proposal.pk %}">{% trans "Terug naar begin studie" %}</a>
+	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update' proposal.pk %}">
+		{% trans "Terug naar begin studie" %}
+	</a>
+	{% endif %}
+	{% if study %}
+	<a class="pure-button pure-button-secondary" href="{% url 'studies:update' study.pk %}">
+		{% trans "Terug naar begin deelnemersgroep" %}
+	</a>
 	{% endif %}
 	{% if session %}
-	<a class="pure-button pure-button-secondary" href="{% url 'tasks:start' session.pk %}">{% trans "Terug naar begin sessie" %}</a>
+	<a class="pure-button pure-button-secondary" href="{% url 'tasks:start' session.pk %}">
+		{% trans "Terug naar begin sessie" %}
+	</a>
 	{% endif %}
 </nav>
 {% endif %}

@@ -38,8 +38,13 @@ class StudyUpdate(AllowErrorsMixin, UpdateView):
         return kwargs
 
     def get_back_url(self):
-        # TODO: this is not correct, depends on the order
-        return reverse('proposals:study_start', args=(self.object.proposal.pk,))
+        proposal = self.object.proposal
+        if self.object.order == 1:
+            return reverse('proposals:study_start', args=(proposal.pk,))
+        else:
+            prev = self.object.order - 1
+            prev_study = Study.objects.get(proposal=proposal, order=prev)
+            return reverse('studies:consent', args=(prev_study.pk,))
 
     def get_next_url(self):
         return reverse('studies:design', args=(self.object.pk,))
@@ -89,9 +94,10 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
 
     def get_next_url(self):
         proposal = self.object.proposal
-        study = proposal.current_study()
-        if study.order < proposal.studies_number:
-            return reverse('studies:update', args=(study.pk,))
+        if self.object.order < proposal.studies_number:
+            next = self.object.order + 1
+            next_study = Study.objects.get(proposal=proposal, order=next)
+            return reverse('studies:update', args=(next_study.pk,))
         else:
             return reverse('proposals:survey', args=(proposal.pk,))
 
