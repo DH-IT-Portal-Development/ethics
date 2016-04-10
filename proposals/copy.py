@@ -1,6 +1,5 @@
 from django.utils import timezone
 
-from tasks.models import Task
 from .utils import generate_ref_number
 
 
@@ -11,20 +10,10 @@ def copy_proposal(self, form):
     # Save relationships
     relation = parent.relation
     applicants = parent.applicants.all()
+    copy_surveys = parent.survey_set.all()
     copy_wmo = None
-    copy_study = None
     if hasattr(parent, 'wmo'):
         copy_wmo = parent.wmo
-    if hasattr(parent, 'study'):
-        copy_study = parent.study
-        copy_age_groups = parent.study.age_groups.all()
-        copy_traits = parent.study.traits.all()
-        copy_setting = parent.study.setting.all()
-        copy_compensation = parent.study.compensation
-        copy_recruitment = parent.study.recruitment.all()
-        copy_surveys = parent.study.survey_set.all()
-        copy_sessions = parent.study.session_set.all()
-        copy_tasks = Task.objects.filter(session__study__proposal=parent)
 
     # Create copy and save the this new model, set it to not-submitted
     copy_proposal = parent
@@ -50,42 +39,11 @@ def copy_proposal(self, form):
         copy_wmo.pk = copy_proposal.pk
         copy_wmo.save()
 
-    if copy_study:
-        copy_study.pk = copy_proposal.pk
-        copy_study.age_groups = copy_age_groups
-        copy_study.traits = copy_traits
-        copy_study.setting = copy_setting
-        copy_study.compensation = copy_compensation
-        copy_study.recruitment = copy_recruitment
-        for survey in copy_surveys:
-            copy_survey = survey
-            copy_survey.pk = None
-            copy_survey.study = copy_study
-            copy_survey.save()
-        copy_study.save()
-
-    for session in copy_sessions:
-        copy_session = session
-        copy_session.pk = None
-        copy_session.study = copy_study
-        copy_session.save()
-        copy_tasks_to_session(copy_session, copy_tasks)
-
+    for survey in copy_surveys:
+        copy_survey = survey
+        copy_survey.pk = None
+        copy_survey.proposal = copy_proposal
+        copy_survey.save()
     copy_proposal.save()
 
     return copy_proposal
-
-
-def copy_tasks_to_session(session, tasks):
-    for t in tasks:
-        r = t.registrations.all()
-        rk = t.registration_kinds.all()
-
-        task = t
-        task.pk = None
-        task.session = session
-        task.save()
-
-        task.registrations = r
-        task.registration_kinds = rk
-        task.save()

@@ -1,3 +1,6 @@
+from interventions.utils import copy_intervention_to_study
+from observations.utils import copy_observation_to_study
+from tasks.utils import copy_session_to_study
 from .models import AgeGroup
 
 STUDY_PROGRESS_START = 10
@@ -31,3 +34,32 @@ def get_study_progress(study, is_end=False):
     else:
         progress *= study.order
     return STUDY_PROGRESS_START + progress
+
+
+def copy_study_to_proposal(proposal, study):
+    age_groups = study.age_groups.all()
+    traits = study.traits.all()
+    setting = study.setting.all()
+    compensation = study.compensation
+    recruitment = study.recruitment.all()
+    observation = study.observation if hasattr(study, 'observation') else None
+    intervention = study.intervention if hasattr(study, 'intervention') else None
+    sessions = study.session_set.all()
+
+    s = study
+    s.pk = None
+    s.proposal = proposal
+    s.save()
+
+    s.age_groups = age_groups
+    s.traits = traits
+    s.setting = setting
+    s.compensation = compensation
+    s.recruitment = recruitment
+
+    if observation:
+        copy_observation_to_study(s, observation)
+    if intervention:
+        copy_intervention_to_study(s, intervention)
+    for session in sessions:
+        copy_session_to_study(s, session)

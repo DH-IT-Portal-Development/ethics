@@ -6,12 +6,11 @@ from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
 from core.views import AllowErrorsMixin, UpdateView, DeleteView
-from proposals.copy import copy_tasks_to_session
 from studies.models import Study
 from ..forms import TaskStartForm, TaskEndForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Session, Task
-from ..utils import get_session_progress
+from ..utils import copy_tasks_to_session, get_session_progress
 
 
 ######################

@@ -17,3 +17,29 @@ def get_task_progress(task):
     session_progress = get_session_progress(session)
     task_progress = task.order / float(session.tasks_number)
     return int(session_progress + (SESSION_PROGRESS_TOTAL / session.study.sessions_number) * task_progress - SESSION_PROGRESS_EPSILON)
+
+
+def copy_task_to_session(session, task):
+    r = task.registrations.all()
+    rk = task.registration_kinds.all()
+
+    t = task
+    t.pk = None
+    t.session = session
+    t.save()
+
+    t.registrations = r
+    t.registration_kinds = rk
+    t.save()
+
+
+def copy_session_to_study(study, session):
+    tasks = session.tasks.all()
+
+    s = session
+    s.pk = None
+    s.study = study
+    s.save()
+
+    for task in tasks:
+        copy_task_to_session(s, task)
