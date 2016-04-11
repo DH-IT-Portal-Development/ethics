@@ -10,7 +10,7 @@ from studies.models import Study
 from ..forms import TaskStartForm, TaskEndForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Session, Task
-from ..utils import copy_tasks_to_session, get_session_progress
+from ..utils import copy_task_to_session, get_session_progress
 
 
 ######################
@@ -91,7 +91,8 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             form.cleaned_data['tasks_number'] = s.tasks_number
 
             # Copy Tasks from the parent Session
-            copy_tasks_to_session(session, s.task_set.all())
+            for task in s.task_set.all():
+                copy_task_to_session(session, s.task)
         else:
             nr_tasks = form.cleaned_data['tasks_number']
             session = form.instance

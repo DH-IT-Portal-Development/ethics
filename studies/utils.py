@@ -42,9 +42,9 @@ def copy_study_to_proposal(proposal, study):
     setting = study.setting.all()
     compensation = study.compensation
     recruitment = study.recruitment.all()
-    observation = study.observation if hasattr(study, 'observation') else None
-    intervention = study.intervention if hasattr(study, 'intervention') else None
-    sessions = study.session_set.all()
+    observation = study.observation if study.has_observation else None
+    intervention = study.intervention if study.has_intervention else None
+    sessions = study.session_set.all() if study.has_sessions else None
 
     s = study
     s.pk = None

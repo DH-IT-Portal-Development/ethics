@@ -1,5 +1,6 @@
 from django.utils import timezone
 
+from studies.utils import copy_study_to_proposal
 from .utils import generate_ref_number
 
 
@@ -10,6 +11,7 @@ def copy_proposal(self, form):
     # Save relationships
     relation = parent.relation
     applicants = parent.applicants.all()
+    copy_studies = parent.study_set.all()
     copy_surveys = parent.survey_set.all()
     copy_wmo = None
     if hasattr(parent, 'wmo'):
@@ -38,6 +40,9 @@ def copy_proposal(self, form):
     if copy_wmo:
         copy_wmo.pk = copy_proposal.pk
         copy_wmo.save()
+
+    for study in copy_studies:
+        copy_study_to_proposal(copy_proposal, study)
 
     for survey in copy_surveys:
         copy_survey = survey
