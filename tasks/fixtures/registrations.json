@@ -50,7 +50,7 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "registratie van reactietijd via Zep, Presentation, E-prime, etc",
+        "description": "registratie van reactietijd of andere respons via Zep, Presentation, E-prime, etc",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
