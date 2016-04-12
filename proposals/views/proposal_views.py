@@ -63,7 +63,7 @@ class MySubmittedView(ProposalsView):
 
 
 class MyCompletedView(ProposalsView):
-    title = _('Mijn afgeronde studies')
+    title = _('Mijn afgehandelde studies')
     body = _('Dit overzicht toont al uw beoordeelde studies.')
     is_modifiable = False
     is_submitted = True
