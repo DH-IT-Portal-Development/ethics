@@ -60,7 +60,7 @@
                 {% endif %}
             </table>
             <h4>Taken</h4>
-            {% include "proposals/task_list.html" %}
+            {% include "tasks/task_list.html" %}
             {% else %}
             <p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'tasks:start' session.id %}">Taak toevoegen</a></p>
             {% endif %}
