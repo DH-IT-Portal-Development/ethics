@@ -53,8 +53,8 @@
             },
 
             insertDeleteLink = function(row) {
-                var delCssSelector = options.deleteCssClass.trim().replace(/\s+/g, '.'),
-                    addCssSelector = options.addCssClass.trim().replace(/\s+/g, '.');
+                var delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.'),
+                    addCssSelector = $.trim(options.addCssClass).replace(/\s+/g, '.');
                 if (row.is('TR')) {
                     // If the forms are laid out in table rows, insert
                     // the remove button into the last table cell:
@@ -154,6 +154,8 @@
                 });
                 insertDeleteLink(template);
             } else {
+                // Destroy the chosen plugin before cloning
+                $('.' + options.formCssClass + ':last select').chosen("destroy");
                 // Otherwise, use the last form in the formset; this works much better if you've got
                 // extra (>= 1) forms (thnaks to justhamade for pointing this out):
                 template = $('.' + options.formCssClass + ':last').clone(true).removeAttr('id');
@@ -168,6 +170,8 @@
                     } else {
                         elem.val('');
                     }
+                    // Reset the chosen plugin
+                    $('select').chosen({width: '20em'});
                 });
             }
             // FIXME: Perhaps using $.data would be a better idea?
@@ -192,13 +196,15 @@
                 var formCount = parseInt(totalForms.val()),
                     row = options.formTemplate.clone(true).removeClass('formset-custom-template'),
                     buttonRow = $($(this).parents('tr.' + options.formCssClass + '-add').get(0) || this)
-                    delCssSelector = options.deleteCssClass.trim().replace(/\s+/g, '.');
+                    delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.');
                 applyExtraClasses(row, formCount);
                 row.insertBefore(buttonRow).show();
                 row.find(childElementSelector).each(function() {
                     updateElementIndex($(this), options.prefix, formCount);
                 });
                 totalForms.val(formCount + 1);
+                // Reset the chosen plugin
+                $('select').chosen({width: '20em'});
                 // Check if we're above the minimum allowed number of forms -> show all delete link(s)
                 if (showDeleteLinks()){
                     $('a.' + delCssSelector).each(function(){$(this).show();});

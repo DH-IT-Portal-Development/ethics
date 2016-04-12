@@ -26,8 +26,10 @@ class Migration(migrations.Migration):
             name='Review',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('stage', models.PositiveIntegerField(default=0, choices=[(0, 'Beoordeling door supervisor'), (1, 'Aanstelling commissieleden'), (2, 'Beoordeling door ethische commissie')])),
+                ('stage', models.PositiveIntegerField(default=0, choices=[(0, 'Beoordeling door eindverantwoordelijke'), (1, 'Aanstelling commissieleden'), (2, 'Beoordeling door ethische commissie')])),
+                ('short_route', models.BooleanField(default=True, verbose_name='Route')),
                 ('go', models.NullBooleanField(default=None, verbose_name='Beslissing')),
+                ('continuation', models.PositiveIntegerField(default=0, verbose_name='Afhandeling', choices=[(0, 'Goedkeuring door ETCL'), (1, 'Afwijzing door ETCL'), (2, 'Open review met lange (4-weken) route'), (3, 'Laat opnieuw beoordelen door METC')])),
                 ('date_start', models.DateTimeField()),
                 ('date_end', models.DateTimeField(null=True, blank=True)),
                 ('proposal', models.ForeignKey(to='proposals.Proposal')),

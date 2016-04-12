@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+{% trans "Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)" %}
+{% endblock %}
+
+{% block progress %}30{% endblock %}
+
+{% block content %}
+{% include "studies/study_title.html" %}
+<p>
+    {% trans "U heeft aangegeven dat u gebruik maakt van deelnemers binnen de leeftijdsgroepen:" %}
+</p>
+<ul>
+    {{ study.age_groups.all|unordered_list }}
+</ul>
+<p>
+    {% blocktrans %}
+    In de volgende vragen gaan we nader in op wat u in een sessie van uw deelnemers zal verlangen (d.w.z. welke taak of taken), en hoe belastend de binnen die sessie gevolgde procedure voor de deelnemers zou kunnen zijn. Daarbij gelden de volgende definities (aansluitend bij hoe een en ander in een onderzoeksartikel zal worden beschreven):
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    <strong>Sessie:</strong> Het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een deelnemer vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de deelnemer ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    <strong>Procedure:</strong> De voor het onderzoek benodigde gang van zaken binnen één sessie (bijvoorbeeld: eerst ontvangst en preview, dan EEG-electrodes plakken, dan taak A, dan pauze, dan taak B, dan debriefing).
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    <strong>Taak:</strong> Een coherente verzameling handelingen die u via een gesproken of geschreven taak-instructie aan de deelnemer oplegt, en ook als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: "Beluister de volgende 200 zinnetjes en druk op een knop als u een fout ontdekt", "Vul persoonlijkheidsvragenlijst X in", "Speel 10 minuten met uw kind zoals u dat thuis doet"). Indien de specifieke opdracht aan de deelnemer per item varieert (bijvoorbeeld: "bij een Nederlandse zin beoordeelt u de betekenis, bij een Engelse zin de grammatica"), beschouw dit dan gewoon als één taak.
+    {% endblocktrans %}
+</p>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <p>
+        {% trans "Voor elke sessie stellen we in de komende schermen steeds dezelfde vragen." %}
+    </p>
+    {% with proposal=study.proposal %}
+    {% include "base/form_buttons.html" %}
+    {% endwith %}
+</form>
+{% endblock %}

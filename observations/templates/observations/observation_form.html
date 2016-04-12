@@ -1,0 +1,59 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}
+{% endblock %}
+
+{% block progress %}20{% endblock %}
+
+{% block content %}
+<script>
+$(function() {
+    depends_on_value('is_nonpublic_space', 'True', 'has_advanced_consent');
+    depends_on_value('needs_approval', 'True', 'approval_institution');
+    depends_on_value('needs_approval', 'True', 'approval_document');
+
+    $('.location_set').formset({
+        prefix: 'location_set',
+        addText: "{% trans 'Voeg locatie toe' %}",
+        deleteText: "{% trans 'Verwijder' %}"
+    });
+
+    $('body').on('change', 'select', function() {
+        var selected_values = $(this).val();
+        var current = $(this);
+
+        var url = "{% url 'core:check_requires' %}";
+        var params = {'value': selected_values, 'app': 'observations', 'model': 'registration', 'field': 'needs_details'};
+        $.post(url, params, function(data) {
+            current.parents('td').find('input[name$="registrations_details"]').parent().toggle(data.result);
+        });
+    });
+    $('select[name$="registrations"]').change();
+});
+</script>
+{% include "studies/study_title.html" %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <th><strong>{% trans "Geef hieronder de locatie(s) aan waar de observatie plaatsvindt." %}</strong></th>
+            <td></td>
+        </tr>
+        {% for formset in inlines %}
+        {% for subform in formset.forms %}
+        <tr class="{{ formset.prefix }}">
+            <td colspan="2">{{ subform.as_p }}</td>
+        </tr>
+        {% endfor %}
+        {{ formset.management_form }}
+        {% endfor %}
+    </table>
+    {% with proposal=observation.study.proposal %}
+    {% include "base/form_buttons.html" %}
+    {% endwith %}
+</form>
+{% endblock %}

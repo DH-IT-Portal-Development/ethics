@@ -1,0 +1,10 @@
+from django.contrib import admin
+
+from .models import Registration
+
+
+@admin.register(Registration)
+class RegistrationAdmin(admin.ModelAdmin):
+    list_display = ('order', 'description', 'needs_details', )
+    list_display_links = ('description', )
+    ordering = ['order']

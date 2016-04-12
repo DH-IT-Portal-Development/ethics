@@ -1,0 +1,123 @@
+[
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 1,
+        "description": "fMRI (functional magnetic resonance imaging)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 1
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 2,
+        "description": "EEG (electroencephalography)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 2
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 3,
+        "description": "NIRS (near-infrared spectroscopy)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 3
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 4,
+        "description": "ECG (electrocardiography)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 4
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 5,
+        "description": "BVP (blood volume pulse)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 5
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 6,
+        "description": "fEMG (facial electromyography)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 6
+},
+{
+    "fields": {
+        "requires_review": true,
+        "needs_details": false,
+        "registration": 7,
+        "order": 7,
+        "description": "EMA (electromagnetic articulography)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 7
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 8,
+        "description": "huidgeleiding (GSR)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 8
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 9,
+        "description": "ademhaling"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 9
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 7,
+        "order": 10,
+        "description": "vingertemperatuur"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 10
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": true,
+        "registration": 7,
+        "order": 11,
+        "description": "anders, namelijk"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 11
+}
+]

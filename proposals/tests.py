@@ -4,7 +4,9 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from .models import Proposal, Relation, Wmo, Study, Compensation, Session, Task
+from tasks.models import Session, Task
+from studies.models import Study, Compensation
+from .models import Proposal, Relation, Wmo
 from .utils import generate_ref_number
 
 
@@ -15,7 +17,7 @@ class BaseProposalTestCase(TestCase):
         self.user = User.objects.create_user(username='test0101', email='test@test.com', password='secret')
         self.relation = Relation.objects.get(pk=4)
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
-                                          date_start=datetime.now(), date_end=datetime.now(),
+                                          date_start=datetime.now(),
                                           created_by=self.user, relation=self.relation)
 
 
@@ -26,7 +28,7 @@ class ProposalTestCase(BaseProposalTestCase):
         # Add a proposal for the same user, check new reference number
         ref_number = generate_ref_number(self.user)
         p2 = Proposal.objects.create(title='p2', reference_number=ref_number,
-                                     date_start=datetime.now(), date_end=datetime.now(),
+                                     date_start=datetime.now(),
                                      created_by=self.user, relation=self.relation)
         self.assertEqual(ref_number, 'test0101-02-' + current_year)
 
@@ -38,7 +40,7 @@ class ProposalTestCase(BaseProposalTestCase):
         # Add a proposal for another user
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
         p3 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2),
-                                     date_start=datetime.now(), date_end=datetime.now(),
+                                     date_start=datetime.now(),
                                      created_by=user2, relation=self.relation)
         self.assertEqual(p3.reference_number, 'test0102-01-' + current_year)
 
@@ -51,18 +53,18 @@ class ProposalTestCase(BaseProposalTestCase):
         wmo.metc = False
         wmo.save()
         self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_ETCL)
-        self.assertEqual(proposal.continue_url(), '/study/create/1/')
+        self.assertEqual(proposal.continue_url(), '/studies/create/1/')
 
         compensation = Compensation.objects.get(pk=1)
-        s = Study.objects.create(proposal=proposal, compensation=compensation)
-        self.assertEqual(proposal.status, Proposal.STUDY_CREATED)
-        self.assertEqual(proposal.continue_url(), '/session_start/1/')
+        s = Study.objects.create(proposal=proposal, order=1)
+        self.assertEqual(proposal.status, Proposal.CONSENT_ADDED)
+        self.assertEqual(proposal.continue_url(), '/studies/design/1/')
 
         s.sessions_number = 2
         s.save()
         s1 = Session.objects.create(study=s, order=1)
         s2 = Session.objects.create(study=s, order=2)
-        self.assertEqual(proposal.status, Proposal.SESSIONS_STARTED)
+        self.assertEqual(proposal.status, Proposal.SESSIONS)
 
         s1.tasks_number = 2
         s1.save()
@@ -75,7 +77,7 @@ class ProposalTestCase(BaseProposalTestCase):
         s1.tasks_duration = 45
         s1.save()
         self.assertEqual(proposal.current_session(), s2)
-        self.assertEqual(proposal.status, proposal.SESSIONS_STARTED)
+        self.assertEqual(proposal.status, proposal.SESSIONS)
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)

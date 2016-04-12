@@ -1,6 +1,7 @@
 [
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "order": 1,
         "description": "uit de 1e geldstroom (bijv. UiL OTS, TLC, de opleiding)"
@@ -10,6 +11,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": false,
         "order": 2,
         "description": "uit de 2e geldstroom (bijv. NWO, ERC)"
@@ -19,6 +21,7 @@
 },
 {
     "fields": {
+        "requires_review": true,
         "needs_details": true,
         "order": 3,
         "description": "uit de 3e geldstroom (bijv. marktpartijen, brancheorganisaties)"
@@ -28,6 +31,7 @@
 },
 {
     "fields": {
+        "requires_review": false,
         "needs_details": true,
         "order": 4,
         "description": "anders, namelijk"

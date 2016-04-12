@@ -1,0 +1,32 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "order": 1,
+        "description": "geen",
+        "requires_review": false
+    },
+    "model": "studies.compensation",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 2,
+        "description": "geld",
+        "requires_review": true
+    },
+    "model": "studies.compensation",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 3,
+        "description": "cadeautje",
+        "requires_review": false
+    },
+    "model": "studies.compensation",
+    "pk": 3
+}
+]

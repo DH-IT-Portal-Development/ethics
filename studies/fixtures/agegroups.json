@@ -1,0 +1,68 @@
+[
+{
+    "fields": {
+        "needs_details": true,
+        "age_max": 3,
+        "description": "Baby",
+        "age_min": 0,
+        "max_net_duration": 20
+    },
+    "model": "studies.agegroup",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": true,
+        "age_max": 5,
+        "description": "Peuter",
+        "age_min": 4,
+        "max_net_duration": 40
+    },
+    "model": "studies.agegroup",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": true,
+        "age_max": 11,
+        "description": "Kind",
+        "age_min": 6,
+        "max_net_duration": 60
+    },
+    "model": "studies.agegroup",
+    "pk": 3
+},
+{
+    "fields": {
+        "needs_details": true,
+        "age_max": 17,
+        "description": "Adolescent",
+        "age_min": 12,
+        "max_net_duration": 90
+    },
+    "model": "studies.agegroup",
+    "pk": 4
+},
+{
+    "fields": {
+        "needs_details": false,
+        "age_max": 69,
+        "description": "Volwassene",
+        "age_min": 18,
+        "max_net_duration": 120
+    },
+    "model": "studies.agegroup",
+    "pk": 5
+},
+{
+    "fields": {
+        "needs_details": true,
+        "age_max": null,
+        "description": "70-plusser",
+        "age_min": 70,
+        "max_net_duration": 60
+    },
+    "model": "studies.agegroup",
+    "pk": 6
+}
+]

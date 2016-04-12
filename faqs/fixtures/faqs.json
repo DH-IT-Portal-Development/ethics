@@ -1,0 +1,20 @@
+[
+{
+    "fields": {
+        "answer": "Elke keer als je op de blauwe knop 'Volgende stap >>' klikt, wordt de studie opgeslagen in de database. Als je op een later tijdstip verder wilt gaan, kun je het browserscherm sluiten en je opgeslagen studie vinden in 'Studies' => 'Mijn conceptstudies'. ",
+        "question": "Wanneer wordt mijn studie opgeslagen?",
+        "order": 1
+    },
+    "model": "faqs.faq",
+    "pk": 1
+},
+{
+    "fields": {
+        "answer": "Iedere onderzoeker moet zich eerst eenmalig aanmelden bij het webportaal. Als de onderzoeker zich heeft aangemeld, wordt hij selecteerbaar in de lijst.",
+        "question": "Ik wil een mede-onderzoeker opgeven, maar kan deze niet in de lijst selecteren. Hoe moet ik nu verder?",
+        "order": 2
+    },
+    "model": "faqs.faq",
+    "pk": 2
+}
+]

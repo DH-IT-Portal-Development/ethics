@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <div id="tabs-4">
-    <h3><a href="{% url 'proposals:session_end' proposal.id %}">Belasting voor de deelnemer</a></h3>
+    <h3><a href="{% url 'studies:session_end' proposal.id %}">Belasting voor de deelnemer</a></h3>
     <table class="pure-table">
         <tr>
             <th>Aantal sessies</th>
@@ -62,12 +62,12 @@
             <h4>Taken</h4>
             {% include "proposals/task_list.html" %}
             {% else %}
-            <p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'proposals:task_start' session.id %}">Taak toevoegen</a></p>
+            <p>Nog geen taken aan deze sessie toegevoegd. <a href="{% url 'tasks:start' session.id %}">Taak toevoegen</a></p>
             {% endif %}
             {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
             <h4>Acties op sessie</h4>
             <ul>
-                <li><a href="{% url 'proposals:session_delete' session.id %}">Sessie verwijderen</a></li>
+                <li><a href="{% url 'tasks:session_delete' session.id %}">Sessie verwijderen</a></li>
             </ul>
             {% endif %}
         </div>

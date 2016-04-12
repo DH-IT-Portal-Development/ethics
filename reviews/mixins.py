@@ -1,19 +1,8 @@
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.generic.detail import SingleObjectMixin
 
 from .models import Review, Decision
 from .utils import auto_review
-
-
-class LoginRequiredMixin(object):
-    """
-    Mixin for generic views to retun to login view if not logged in.
-    """
-    @classmethod
-    def as_view(cls, **initkwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
-        return login_required(view)
 
 
 class UserAllowedMixin(SingleObjectMixin):

@@ -11,16 +11,51 @@
 
 {% block content %}
 <p>
-	{% trans "Uw concept-aanmelding is compleet." %}
-	{% if proposal.relation.needs_supervisor %}
-		{% trans "U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen." %}
-	{% else %}
-		{% trans "U kunt nu uw concept-aanmelding ter beoordeling naar de ethische commissie versturen." %}
-	{% endif %}
-	{% trans "Als u deze concept-aanmelding nog wil wijzigen, kan dat via de 'vorige'-knop." %}
+    {% trans "Uw concept-aanmelding is compleet." %}
+    {% if proposal.relation.needs_supervisor %}
+        {% trans "U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen." %}
+    {% else %}
+        {% trans "U kunt nu uw concept-aanmelding ter beoordeling naar de ethische commissie versturen." %}
+    {% endif %}
 </p>
+<p>
+    {% blocktrans %}
+    Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
+    nu ter beoordeling naar de ETCL versturen.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Als u de concept-aanmelding eerst nog even wilt nakijken kan dar door via "Terug naar begin
+    van de studie" alle pagina's nog even door te lopen.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Als u de concept-aanmelding nu nog niet wilt versturen kunt u gewoon teruggaan naar de startpagina;
+    de concept-aanvraag wordt dan bewaard voor evt. latere wijziging en indiening.
+    {% endblocktrans %}
+</p>
+<!-- TODO: fix this
+<ul>
+    {% if not proposal.informed_consent %}
+    <li>
+        {% trans "U heeft nog geen toestemmingsverklaring toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
+    </li>
+    {% endif %}
+    {% if not proposal.briefing %}
+    <li>
+        {% trans "U heeft nog geen informatiebrief toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
+    </li>
+    {% endif %}
+</ul>
+-->
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% include "proposals/form_buttons.html" with next_text="Concept-aanmelding versturen" %}
+    {% if proposal.relation.needs_supervisor %}
+    {% include "base/form_buttons.html" with next_text="{% trans "Concept-aanmelding versturen" %}" %}
+    {% else %}
+    {% include "base/form_buttons.html" with next_text="{% trans "Aanmelding versturen" %}" %}
+    {% endif %}
 </form>
 {% endblock %}

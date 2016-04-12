@@ -4,15 +4,17 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 
+from studies.utils import check_necessity_required
+
 register = template.Library()
 
 
 @register.simple_tag
-def get_verbose_field_name(instance, field_name):
+def get_verbose_field_name(app_label, model_name, field_name):
     """
     Returns verbose_name for a field.
     """
-    return apps.get_model('proposals', instance)._meta.get_field(field_name).verbose_name
+    return apps.get_model(app_label, model_name)._meta.get_field(field_name).verbose_name
 
 
 @register.filter
@@ -50,13 +52,19 @@ def in_commission(current_user):
     return Group.objects.get(name=settings.GROUP_COMMISSION) in current_user.groups.all()
 
 
+@register.filter
+def necessity_required(study):
+    age_groups = study.age_groups.values_list('id', flat=True)
+    return check_necessity_required(study.proposal, age_groups, study.has_traits, study.legally_incapable)
+
+
 @register.simple_tag
-def show_all(model):
+def show_all(app_label, model_name):
     """
     Return a unordered list of with all possible values for a model
     """
     result = '<ul>'
-    for m in apps.get_model('proposals', model).objects.all():
+    for m in apps.get_model(app_label, model_name).objects.all():
         result += '<li>{}</li>'.format(str(m))
     result += '</ul>'
     return mark_safe(result)

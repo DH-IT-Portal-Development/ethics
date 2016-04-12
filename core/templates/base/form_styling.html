@@ -1,0 +1,133 @@
+{% load staticfiles %}
+
+<script>
+function depends_on_value(a, a_value, b)
+{
+    $('input[name=' + a + ']').change(function() {
+        var check = $('input[name=' + a + ']:checked').val() === a_value;
+        $('#id_' + b).parents('tr').toggle(check);
+    });
+    $('input[name=' + a + ']').change();
+}
+
+// Checks whether a field is required given the selected inputs
+function check_field_required(input_name, field_name, required_input, app_name, model_name)
+{
+    model_name = typeof model_name !== 'undefined' ? model_name : input_name;
+
+    $('input[name=' + input_name + ']').change(function() {
+        var checked_inputs = $('input[name=' + input_name + ']:checked').map(function() {
+            return this.value;
+        }).get();
+
+        var url = "{% url 'core:check_requires' %}";
+        var params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
+        $.post(url, params, function(data) {
+            $('#id_' + required_input).parents('tr').toggle(data.result);
+        });
+    });
+    $('input[name=' + input_name + ']').change();
+}
+
+// TODO: deprecated, use check_field_required
+function depends_on_list_value(a, a_value, b)
+{
+    $('input[name=' + a + ']').change(function() {
+        var values = $('input[name=' + a + ']:checked').map(function() {
+            return this.value;
+        }).get();
+        $('#id_' + b).parent().parent().toggle(intersect(values, a_value).length > 0);
+    });
+    $('input[name=' + a + ']').change();
+}
+
+// TODO: deprecated, see above
+function intersect(a, b)
+{
+    return a.filter(function (e) {
+        if (b.indexOf(e) !== -1) return true;
+    });
+}
+
+// Adds a title row to a form field
+function add_title(field, title)
+{
+    var insert = $('<tr>').append($('<th>').append($('<strong>').text(title))).append($('<td>'));
+    $('#id_' + field).parents('tr').before(insert);
+}
+
+$(function() {
+    // Will put help texts as a tooltip on an information image
+    $("[id^=id]").each(function() {
+        var help = $(this).nextAll('.helptext');
+        if (help.html())
+        {
+            var label = $("th label[for^='" + $(this).attr('id') + "']").first();
+            label.after(' <img src="{% static 'proposals/images/information.png' %}">');
+            label.next().qtip({
+                content: {
+                    text: help.html()
+                }
+            });
+            help.hide();
+        }
+    });
+
+    // Will automatically create tabindices
+    $('select[name!=language], input[type!=hidden], textarea, .pure-button').each(function(index) {
+        $(this).attr('tabindex', index + 1)
+    });
+
+    // Will set select boxes to use Chosen and set a width, except for the language element
+    $('select').chosen({
+        width: '20em'
+    });
+    $('select[name="language"] + .chosen-container').width('100%');
+
+    // Will make every form table a pure-table
+    $('form table').addClass('pure-table pure-table-horizontal');
+
+    // Will make every form a pure-form
+    $('form').addClass('pure-form');
+
+    // Will make each textarea auto-resize.
+    // Copied from: http://stackoverflow.com/a/25621277
+    function h(e) {
+        $(e).css({'height':'auto', 'overflow-y':'hidden'}).height(e.scrollHeight);
+    }
+    $('textarea').each(function () {
+        h(this);
+    }).on('input', function () {
+        h(this);
+    });
+
+    // Prevents the backspace key from navigating back.
+    // Copied from: http://stackoverflow.com/a/2768256
+    $(document).unbind('keydown').bind('keydown', function (event) {
+        var doPrevent = false;
+        if (event.keyCode === 8) {
+            var d = event.srcElement || event.target;
+            if ((d.tagName.toUpperCase() === 'INPUT' &&
+                 (
+                     d.type.toUpperCase() === 'TEXT' ||
+                     d.type.toUpperCase() === 'PASSWORD' ||
+                     d.type.toUpperCase() === 'FILE' ||
+                     d.type.toUpperCase() === 'SEARCH' ||
+                     d.type.toUpperCase() === 'EMAIL' ||
+                     d.type.toUpperCase() === 'NUMBER' ||
+                     d.type.toUpperCase() === 'DATE' )
+                 ) ||
+                 d.tagName.toUpperCase() === 'TEXTAREA') {
+                doPrevent = d.readOnly || d.disabled;
+            }
+            else {
+                doPrevent = true;
+            }
+        }
+
+        if (doPrevent) {
+            event.preventDefault();
+        }
+    });
+});
+</script>

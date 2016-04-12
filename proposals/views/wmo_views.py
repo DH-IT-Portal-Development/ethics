@@ -6,10 +6,11 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
-from .base_views import CreateView, UpdateView
+from core.views import CreateView, UpdateView
+from core.utils import string_to_bool
+
 from ..models import Proposal, Wmo
 from ..forms import WmoForm, WmoCheckForm
-from ..utils import string_to_bool
 
 
 #####################
@@ -23,10 +24,7 @@ class WmoMixin(object):
         wmo = self.object
         if wmo.status == Wmo.NO_WMO:
             proposal = wmo.proposal
-            if hasattr(proposal, 'study'):
-                return reverse('proposals:study_update', args=(proposal.pk,))
-            else:
-                return reverse('proposals:study_create', args=(proposal.pk,))
+            return reverse('proposals:study_start', args=(proposal.pk,))
         elif wmo.status == Wmo.WAITING:
             return reverse('proposals:wmo_update', args=(wmo.pk,))
         else:

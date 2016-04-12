@@ -6,8 +6,10 @@ from django.utils import timezone
 from django.utils.translation import ugettext as _
 from django.views import generic
 
+from braces.views import LoginRequiredMixin
+
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
-from .mixins import LoginRequiredMixin, UserAllowedMixin, AutoReviewMixin
+from .mixins import UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
 from .utils import get_secretary
 
@@ -36,14 +38,14 @@ class CommissionView(LoginRequiredMixin, generic.ListView):
         return Decision.objects.all()  # filter(review__date_end=None, review__stage=Review.COMMISSION, reviewer=self.request.user)
 
 
-class ReviewDetailView(AutoReviewMixin, LoginRequiredMixin, UserAllowedMixin, generic.DetailView):
+class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.DetailView):
     """
     Shows the Decisions for a Review
     """
     model = Review
 
 
-class ReviewAssignView(AutoReviewMixin, LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """
@@ -94,7 +96,6 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
         form.instance.date_end = timezone.now()  # TODO: propagate this date to a Proposal
         # TODO: actions based on continuation selected
         return super(ReviewCloseView, self).form_valid(form)
-
 
 
 class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):

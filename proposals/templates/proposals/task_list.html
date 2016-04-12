@@ -18,9 +18,9 @@
             <td>{{ task.registrations.all|unordered_list }}</td>
             <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
             <td>
-                <a href="{% url 'proposals:task_update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="Taak bewerken"></a>
+                <a href="{% url 'tasks:update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="Taak bewerken"></a>
                 {% if session.tasks_number > 1 %}
-                <a href="{% url 'proposals:task_delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="Taak verwijderen"></a>
+                <a href="{% url 'tasks:delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="Taak verwijderen"></a>
                 {% endif %}
             </td>
         </tr>

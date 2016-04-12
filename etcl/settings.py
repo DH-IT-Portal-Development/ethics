@@ -35,7 +35,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'core',
     'proposals',
+    'studies',
+    'tasks',
+    'interventions',
+    'observations',
     'reviews',
     'feedback',
     'faqs',
@@ -128,5 +133,7 @@ EMAIL_FROM = 'M.H.vanderKlis@uu.nl'
 GROUP_SECRETARY = 'Secretaris'
 GROUP_COMMISSION = 'Commissie'
 
-if DEBUG:
+try:
     from ldap_settings import *
+except ImportError:
+    print 'Proceeding without LDAP settings'

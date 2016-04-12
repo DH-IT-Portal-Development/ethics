@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Vragen per taak per sessie" %}
+{% endblock %}
+
+{% block progress %}{{ progress }}{% endblock %}
+
+{% block content %}
+<script>
+$(function() {
+    check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
+    check_field_required('registrations', 'needs_details', 'registrations_details', 'tasks', 'Registration');
+    check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'tasks', 'RegistrationKind');
+    depends_on_value('feedback', 'True', 'feedback_details');
+    depends_on_value('deception', 'True', 'deception_details');
+});
+</script>
+<h3>Sessie {{ task.session.order }}, taak {{ task.order }}</h3>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    {% with session=task.session proposal=task.session.study.proposal %}
+    {% include "base/form_buttons.html" %}
+    {% endwith %}
+</form>
+{% endblock %}

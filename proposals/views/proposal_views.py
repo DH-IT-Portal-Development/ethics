@@ -4,18 +4,22 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils.translation import ugettext as _
 
+from braces.views import LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
+from extra_views import UpdateWithInlinesView
 
-from .base_views import CreateView, UpdateView, DeleteView
-from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalCopyForm, ProposalSubmitForm
-from ..mixins import AllowErrorsMixin, LoginRequiredMixin
-from ..models import Proposal
-from ..utils import generate_ref_number
+from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView, UserAllowedMixin, success_url
 from reviews.utils import start_review
 
+from ..copy import copy_proposal
+from ..forms import ProposalForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
+from ..models import Proposal
+from ..utils import generate_ref_number
 
+
+############
 # List views
+############
 class ProposalsView(LoginRequiredMixin, generic.ListView):
     title = _('Publiek archief')
     body = _('Dit overzicht toont alle beoordeelde studies.')
@@ -88,16 +92,10 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
     model = Proposal
 
 
-class ProposalMixin(object):
+class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
     success_message = _('Studie %(title)s bewerkt')
-
-    def get_form_kwargs(self):
-        """Sets the User as a form kwarg"""
-        kwargs = super(ProposalMixin, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
     def get_next_url(self):
         proposal = self.object
@@ -129,10 +127,6 @@ class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
 
 
 class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
-    model = Proposal
-    form_class = ProposalForm
-    success_message = _('Studie %(title)s bewerkt')
-
     def get_context_data(self, **kwargs):
         """Adds 'create'/'no_back' to template context"""
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
@@ -156,24 +150,25 @@ class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
 
 
-class ProposalCopy(CreateView):
+# NOTE: below view is non-standard, as it include inlines
+# NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
+class ProposalSurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     model = Proposal
-    form_class = ProposalCopyForm
-    success_message = _('Studie gekopieerd')
-    template_name = 'proposals/proposal_copy.html'
+    form_class = ProposalSurveyForm
+    inlines = [SurveysInline]
+    template_name = 'proposals/proposal_survey_form.html'
 
-    def get_form_kwargs(self):
-        kwargs = super(ProposalCopy, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
+    def get_success_url(self):
+        return success_url(self)
 
-    def form_valid(self, form):
-        """Create a copy of the selected Proposal"""
-        form.instance = copy_proposal(self, form)
-        return super(ProposalCopy, self).form_valid(form)
+    def get_next_url(self):
+        return reverse('proposals:submit', args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse('studies:consent', args=(self.object.last_study().pk,))
 
 
-class ProposalSubmit(UpdateView):
+class ProposalSubmit(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
@@ -190,11 +185,24 @@ class ProposalSubmit(UpdateView):
         return reverse('proposals:submitted')
 
     def get_back_url(self):
-        return reverse('proposals:study_survey', args=(self.object.study.pk,))
+        return reverse('proposals:survey', args=(self.object.pk,))
 
 
 class ProposalSubmitted(generic.TemplateView):
     template_name = 'proposals/proposal_submitted.html'
+
+
+class ProposalCopy(UserFormKwargsMixin, CreateView):
+    model = Proposal
+    form_class = ProposalCopyForm
+    success_message = _('Studie gekopieerd')
+    template_name = 'proposals/proposal_copy.html'
+
+    def form_valid(self, form):
+        """Create a copy of the selected Proposal"""
+        form.instance = copy_proposal(self, form)
+        return super(ProposalCopy, self).form_valid(form)
+
 
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):
     model = Proposal
@@ -203,3 +211,7 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.Detail
 
 class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
     template_name = 'proposals/proposal_pdf_empty.html'
+
+
+class ProposalDifference(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'proposals/proposal_diff.html'

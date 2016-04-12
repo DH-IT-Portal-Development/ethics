@@ -1,0 +1,47 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "order": 1,
+        "description": "logdata"
+    },
+    "model": "observations.registration",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 2,
+        "description": "audio-opname"
+    },
+    "model": "observations.registration",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 3,
+        "description": "video-opname"
+    },
+    "model": "observations.registration",
+    "pk": 3
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 4,
+        "description": "notities"
+    },
+    "model": "observations.registration",
+    "pk": 4
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 5,
+        "description": "anders, namelijk"
+    },
+    "model": "observations.registration",
+    "pk": 5
+}
+]

@@ -1,15 +1,20 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %}
-Concept-aanmelding verstuurd
+{% trans "Concept-aanmelding verstuurd" %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
 <p>
-	Uw concept-aanmelding is verstuurd. U ontvangt een e-mail ter bevestiging.
-    Klik <a href="{% url 'proposals:my_submitted' %}">hier</a> om uw ingediende studies in te zien.
+	{% trans "Uw concept-aanmelding is verstuurd. U ontvangt een e-mail ter bevestiging." %}
+    {% url 'proposals:my_submitted' as submitted_url %}
+    {% blocktrans %}
+    Klik <a href="{{ submitted_url }}">hier</a> om uw ingediende studies in te zien.
+    {% endblocktrans %}
 </p>
 {% endblock %}

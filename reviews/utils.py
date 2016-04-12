@@ -8,7 +8,9 @@ from django.utils.translation import ugettext as _
 from django.utils import timezone
 
 from .models import Review, Decision
-from proposals.models import Task
+from interventions.models import Intervention
+from observations.models import Observation
+from tasks.models import Task
 
 
 def get_secretary():
@@ -109,82 +111,99 @@ def auto_review(proposal):
     """
     Reviews a Proposal machine-wise. Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
     """
-    study = proposal.study
-
     go = True
     reasons = []
 
-    if study.legally_incapable:
-        go = False
-        reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
-
-    if study.passive_consent:
-        go = False
-        reasons.append(_('De studie werkt met passieve informed consent.'))
-
-    # TODO: is this correct?
-    for setting in study.setting.all():
-        if setting.requires_review:
+    for funding in proposal.funding.all():
+        if funding.requires_review:
             go = False
-            reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
+            reasons.append(_('De studie heeft een afwijkende geldstroom.'))
             break
 
-    for task in Task.objects.filter(session__study=study):
-        if task.deception:
+    for study in proposal.study_set.all():
+        if study.legally_incapable:
             go = False
-            reasons.append(_('De studie maakt gebruik van misleiding.'))
-            break
+            reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
 
-    # TODO: is this correct?
-    if study.compensation.requires_review:
-        go = False
-        reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
+        if study.passive_consent:
+            go = False
+            reasons.append(_('De studie werkt met passieve informed consent.'))
 
-    if study.has_traits:
-        go = False
-        reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
-
-    for task in Task.objects.filter(session__study=study):
-        for registration in task.registrations.all():
-            if registration.requires_review:
-                if registration.age_min:
-                    for age_group in study.age_groups.all():
-                        if age_group.age_max < registration.age_min:
-                            go = False
-                            reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
-                            break
-                else:
-                    # TODO: not necessary?
-                    go = False
-                    reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
-                    break
-        for registration_kind in task.registration_kinds.all():
-            if registration_kind.requires_review:
+        # TODO: is this correct?
+        for setting in study.setting.all():
+            if setting.requires_review:
                 go = False
-                reasons.append(_('De studie maakt gebruik van {}'.format(registration_kind.description)))
+                reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
+                break
 
-    # TODO: not necessary?
-    for recruitment in study.recruitment.all():
-        if recruitment.requires_review:
+        for task in Task.objects.filter(session__study=study):
+            if task.deception:
+                go = False
+                reasons.append(_('De studie maakt gebruik van misleiding.'))
+                break
+
+        # TODO: is this correct?
+        if study.compensation.requires_review:
             go = False
-            reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
-            break
+            reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
 
-    if study.stressful or study.stressful is None:
-        go = False
-        reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of \
+        if study.has_traits:
+            go = False
+            reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
+
+        for task in Task.objects.filter(session__study=study):
+            for registration in task.registrations.all():
+                if registration.requires_review:
+                    if registration.age_min:
+                        for age_group in study.age_groups.all():
+                            if age_group.age_max < registration.age_min:
+                                go = False
+                                reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
+                                break
+                    else:
+                        # TODO: not necessary?
+                        go = False
+                        reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
+                        break
+            for registration_kind in task.registration_kinds.all():
+                if registration_kind.requires_review:
+                    go = False
+                    reasons.append(_('De studie maakt gebruik van {}'.format(registration_kind.description)))
+
+        # TODO: not necessary?
+        for recruitment in study.recruitment.all():
+            if recruitment.requires_review:
+                go = False
+                reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
+                break
+
+        if study.stressful or study.stressful is None:
+            go = False
+            reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
-    if study.risk or study.risk is None:
-        go = False
-        reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
+        if study.risk or study.risk is None:
+            go = False
+            reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
 fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
 
-    for age_group in study.age_groups.all():
-        if study.net_duration() > age_group.max_net_duration:
-            go = False
-            reasons.append(_('De totale duur van de taken in de sessie ({d} minuten), exclusief pauzes \
+        for age_group in study.age_groups.all():
+            if study.net_duration() > age_group.max_net_duration:
+                go = False
+                reasons.append(_('De totale duur van de taken in de sessie ({d} minuten), exclusief pauzes \
 en andere niet-taak elementen, is groter dan het streefmaximum ({max_d} minuten) \
 voor de leeftijdsgroep {ag}.'.format(ag=age_group, d=study.net_duration(), max_d=age_group.max_net_duration)))
+
+        if study.has_obervation:
+            observation = Observation.object.get(study=study)
+            if observation.is_anonymous:
+                go = False
+                reasons.append(_('De interventie vindt plaats met een onbevoegd persoon'))
+
+        if study.has_intervention:
+            intervention = Intervention.object.get(study=study)
+            if not intervention.is_supervised:
+                go = False
+                reasons.append(_('De interventie vindt plaats met een onbevoegd persoon'))
 
     return go, reasons
