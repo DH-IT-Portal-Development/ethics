@@ -24,10 +24,8 @@ class StudyUpdate(AllowErrorsMixin, UpdateView):
     success_message = _('Studie opgeslagen')
 
     def get_context_data(self, **kwargs):
-        """Setting the Proposal and order on the context"""
+        """Setting the progress on the context"""
         context = super(StudyUpdate, self).get_context_data(**kwargs)
-        context['proposal'] = self.object.proposal
-        context['order'] = self.object.order
         context['progress'] = get_study_progress(self.object)
         return context
 
@@ -58,6 +56,12 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
     form_class = StudyDesignForm
     success_message = _('Studieontwerp opgeslagen')
     template_name = 'studies/study_design.html'
+
+    def get_context_data(self, **kwargs):
+        """Setting the progress on the context"""
+        context = super(StudyDesign, self).get_context_data(**kwargs)
+        context['progress'] = get_study_progress(self.object) + 3
+        return context
 
     def get_next_url(self):
         study = self.object
@@ -91,6 +95,12 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
     form_class = StudyConsentForm
     success_message = _('Consent opgeslagen')
     template_name = 'studies/study_consent.html'
+
+    def get_context_data(self, **kwargs):
+        """Setting the progress on the context"""
+        context = super(StudyConsent, self).get_context_data(**kwargs)
+        context['progress'] = get_study_progress(self.object, True) - 2
+        return context
 
     def get_next_url(self):
         proposal = self.object.proposal

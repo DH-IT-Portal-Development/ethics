@@ -10,6 +10,7 @@ from tasks.models import Session
 
 from ..forms import SessionStartForm, SessionEndForm
 from ..models import Study
+from ..utils import get_study_progress
 
 
 ######################
@@ -21,6 +22,12 @@ class SessionStart(AllowErrorsMixin, UpdateView):
     form_class = SessionStartForm
     template_name = 'studies/session_start.html'
     success_message = _('%(sessions_number)s sessie(s) voor studie %(title)s aangemaakt')
+
+    def get_context_data(self, **kwargs):
+        """Setting the progress on the context"""
+        context = super(SessionStart, self).get_context_data(**kwargs)
+        context['progress'] = get_study_progress(self.object) + 9
+        return context
 
     def form_valid(self, form):
         """Creates or deletes Sessions on save"""
@@ -74,6 +81,12 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
     form_class = SessionEndForm
     template_name = 'studies/session_end.html'
     success_message = _(u'Sessies toevoegen beëindigd')
+
+    def get_context_data(self, **kwargs):
+        """Setting the progress on the context"""
+        context = super(SessionEnd, self).get_context_data(**kwargs)
+        context['progress'] = get_study_progress(self.object, True) - 5
+        return context
 
     def get_initial(self):
         """

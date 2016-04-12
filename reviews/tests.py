@@ -130,7 +130,7 @@ class AutoReviewTests(BaseReviewTestCase):
         s1 = Session.objects.create(study=self.study, order=1, tasks_number=1)
 
         s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t1.registrations = Registration.objects.filter(pk=6)  # psychofysiological measurements
+        s1_t1.registrations = Registration.objects.filter(pk=7)  # psychofysiological measurements
         s1_t1.save()
 
         go, reasons = auto_review(self.proposal)

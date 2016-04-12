@@ -1,3 +1,5 @@
+from __future__ import division
+
 from interventions.utils import copy_intervention_to_study
 from observations.utils import copy_observation_to_study
 from tasks.utils import copy_session_to_study
@@ -33,7 +35,7 @@ def get_study_progress(study, is_end=False):
         progress *= (study.order - 1)
     else:
         progress *= study.order
-    return STUDY_PROGRESS_START + progress
+    return int(STUDY_PROGRESS_START + progress)
 
 
 def copy_study_to_proposal(proposal, study):

@@ -194,7 +194,7 @@ fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
 en andere niet-taak elementen, is groter dan het streefmaximum ({max_d} minuten) \
 voor de leeftijdsgroep {ag}.'.format(ag=age_group, d=study.net_duration(), max_d=age_group.max_net_duration)))
 
-        if study.has_obervation:
+        if study.has_observation:
             observation = Observation.object.get(study=study)
             if observation.is_anonymous:
                 go = False

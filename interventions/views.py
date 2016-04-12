@@ -3,6 +3,7 @@ from django.utils.translation import ugettext as _
 
 from core.views import CreateView, UpdateView, AllowErrorsMixin
 from studies.models import Study
+from studies.utils import get_study_progress
 
 from .forms import InterventionForm
 from .models import Intervention
@@ -39,9 +40,11 @@ class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
     """Creates a Intervention from a InterventionForm"""
 
     def get_context_data(self, **kwargs):
-        """Setting the Study on the context"""
+        """Setting the Study and progress on the context"""
         context = super(InterventionCreate, self).get_context_data(**kwargs)
-        context['study'] = Study.objects.get(pk=self.kwargs['pk'])
+        study = Study.objects.get(pk=self.kwargs['pk'])
+        context['study'] = study
+        context['progress'] = get_study_progress(study) + 7
         return context
 
     def form_valid(self, form):
@@ -54,7 +57,9 @@ class InterventionUpdate(InterventionMixin, AllowErrorsMixin, UpdateView):
     """Updates a Intervention from an InterventionForm"""
 
     def get_context_data(self, **kwargs):
-        """Setting the Study on the context"""
+        """Setting the Study and progress on the context"""
         context = super(InterventionUpdate, self).get_context_data(**kwargs)
-        context['study'] = self.object.study
+        study = self.object.study
+        context['study'] = study
+        context['progress'] = get_study_progress(study) + 7
         return context

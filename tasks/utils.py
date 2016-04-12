@@ -1,21 +1,24 @@
-SESSION_PROGRESS_START = 35
-SESSION_PROGRESS_TOTAL = 50
+from __future__ import division
+
+SESSION_PROGRESS_START = 10
+SESSION_PROGRESS_TOTAL = 20
 SESSION_PROGRESS_EPSILON = 5
 
 
 def get_session_progress(session, is_end=False):
+    from studies.utils import get_study_progress
     progress = SESSION_PROGRESS_TOTAL / session.study.sessions_number
     if not is_end:
         progress *= (session.order - 1)
     else:
         progress *= session.order
-    return SESSION_PROGRESS_START + progress
+    return int(get_study_progress(session.study) + SESSION_PROGRESS_START + progress)
 
 
 def get_task_progress(task):
     session = task.session
     session_progress = get_session_progress(session)
-    task_progress = task.order / float(session.tasks_number)
+    task_progress = task.order / session.tasks_number
     return int(session_progress + (SESSION_PROGRESS_TOTAL / session.study.sessions_number) * task_progress - SESSION_PROGRESS_EPSILON)
 
 

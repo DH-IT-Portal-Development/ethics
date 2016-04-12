@@ -53,9 +53,8 @@ class ProposalTestCase(BaseProposalTestCase):
         wmo.metc = False
         wmo.save()
         self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_ETCL)
-        self.assertEqual(proposal.continue_url(), '/studies/create/1/')
+        #self.assertEqual(proposal.continue_url(), '/studies/create/1/')
 
-        compensation = Compensation.objects.get(pk=1)
         s = Study.objects.create(proposal=proposal, order=1)
         self.assertEqual(proposal.status, Proposal.CONSENT_ADDED)
         self.assertEqual(proposal.continue_url(), '/studies/design/1/')

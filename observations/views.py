@@ -6,6 +6,7 @@ from braces.views import LoginRequiredMixin
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
 from core.views import UserAllowedMixin, success_url
+from studies.utils import get_study_progress
 
 from .forms import ObservationForm, LocationsInline
 from .models import Study, Observation
@@ -55,9 +56,11 @@ class ObservationCreate(LoginRequiredMixin, ObservationMixin,
     """Creates an Observation from a ObservationForm"""
 
     def get_context_data(self, **kwargs):
-        """Setting the Study on the context"""
+        """Setting the Study and progress on the context"""
         context = super(ObservationCreate, self).get_context_data(**kwargs)
-        context['study'] = Study.objects.get(pk=self.kwargs['pk'])
+        study = Study.objects.get(pk=self.kwargs['pk'])
+        context['study'] = study
+        context['progress'] = get_study_progress(study) + 5
         return context
 
     def forms_valid(self, form, inlines):
@@ -74,9 +77,11 @@ class ObservationUpdate(LoginRequiredMixin, ObservationMixin,
     """Updates a Observation from a ObservationForm"""
 
     def get_context_data(self, **kwargs):
-        """Setting the Study on the context"""
+        """Setting the Study and progress on the context"""
         context = super(ObservationUpdate, self).get_context_data(**kwargs)
-        context['study'] = self.object.study
+        study = self.object.study
+        context['study'] = study
+        context['progress'] = get_study_progress(study) + 5
         return context
 
     def get_back_url(self):
