@@ -156,6 +156,7 @@ class SurveyInlineFormSet(forms.BaseInlineFormSet):
     def clean(self):
         """
         - If has_surveys has been set, there should be at least one Survey
+        - If has_surveys has not been set, remove all validation errors
         """
         if self.instance.has_surveys:
             count = 0
@@ -172,6 +173,9 @@ class SurveyInlineFormSet(forms.BaseInlineFormSet):
                 else:
                     # TODO: find a way to show this error in the template
                     raise error
+        else:
+            for form in self.forms:
+                form._errors = []
 
 
 class SurveysInline(InlineFormSet):

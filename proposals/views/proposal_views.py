@@ -13,7 +13,7 @@ from reviews.utils import start_review
 
 from ..copy import copy_proposal
 from ..forms import ProposalForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
-from ..models import Proposal
+from ..models import Proposal, Survey
 from ..utils import generate_ref_number
 
 
@@ -157,6 +157,13 @@ class ProposalSurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView
     form_class = ProposalSurveyForm
     inlines = [SurveysInline]
     template_name = 'proposals/proposal_survey_form.html'
+
+    def forms_valid(self, form, inlines):
+        """Removes existing Surveys if has_surveys is set to False."""
+        if not form.instance.has_surveys:
+            Survey.objects.filter(proposal=form.instance).delete()
+            inlines = []
+        return super(ProposalSurvey, self).forms_valid(form, inlines)
 
     def get_success_url(self):
         return success_url(self)
