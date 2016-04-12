@@ -22,8 +22,8 @@ $(function() {
         deleteText: "{% trans 'Verwijder' %}"
     });
 
-    $('select[name$="registrations"').change(function() {
-        var selected_values = $(this).chosen().val();
+    $('body').on('change', 'select', function() {
+        var selected_values = $(this).val();
         var current = $(this);
 
         var url = "{% url 'core:check_requires' %}";
@@ -32,7 +32,7 @@ $(function() {
             current.parents('td').find('input[name$="registrations_details"]').parent().toggle(data.result);
         });
     });
-    $('select[name$="registrations"').change();
+    $('select[name$="registrations"]').change();
 });
 </script>
 {% include "studies/study_title.html" %}
