@@ -44,7 +44,7 @@ def copy_study_to_proposal(proposal, study):
     recruitment = study.recruitment.all()
     observation = study.observation if study.has_observation else None
     intervention = study.intervention if study.has_intervention else None
-    sessions = study.session_set.all() if study.has_sessions else None
+    sessions = study.session_set.all() if study.has_sessions else []
 
     s = study
     s.pk = None
