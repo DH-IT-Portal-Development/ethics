@@ -153,12 +153,25 @@ class ProposalSurveyForm(forms.ModelForm):
 
 
 class SurveyInlineFormSet(forms.BaseInlineFormSet):
-    """BaseInlineFormSet for Surveys, handles validation"""
     def clean(self):
-        cleaned_data = super(SurveyInlineFormSet, self).clean()
-        # TODO: add error if no Survey has been provided
-        #print cleaned_data
-        #raise self.add_error('has_surveys', forms.ValidationError('Foobar'))
+        """
+        - If has_surveys has been set, there should be at least one Survey
+        """
+        if self.instance.has_surveys:
+            count = 0
+            for form in self.forms:
+                cleaned_data = form.cleaned_data
+                if cleaned_data and not cleaned_data.get('DELETE', False):
+                    count += 1
+
+            if count == 0:
+                first_form = self.forms[0]
+                error = forms.ValidationError(_(u'U dient op zijn minst één vragenlijst toe te voegen.'), code='required')
+                if first_form.is_valid():
+                    first_form.add_error('name', error)
+                else:
+                    # TODO: find a way to show this error in the template
+                    raise error
 
 
 class SurveysInline(InlineFormSet):

@@ -38,7 +38,6 @@ class ObservationForm(ConditionalModelForm):
 
 
 class LocationInlineFormSet(forms.BaseInlineFormSet):
-    """BaseInlineFormSet for Locations, handles validation"""
     def clean(self):
         """
         - There should be at least one Location
@@ -59,7 +58,7 @@ class LocationInlineFormSet(forms.BaseInlineFormSet):
 
         if count == 0:
             first_form = self.forms[0]
-            error = forms.ValidationError(_(u'U dient op zijn minst één locatie aan te geven'), code='required')
+            error = forms.ValidationError(_(u'U dient op zijn minst één locatie aan te geven.'), code='required')
             if first_form.is_valid():
                 first_form.add_error('name', error)
             else:

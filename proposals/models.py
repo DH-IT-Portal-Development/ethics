@@ -233,6 +233,8 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         study = self.current_study()
         session = self.current_session()
 
+        print self.status
+
         if self.status == self.DRAFT:
             return reverse('proposals:wmo_create', args=(self.pk,))
         elif self.status == self.WMO_DECISION_BY_ETCL:
@@ -246,6 +248,12 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
             return reverse('studies:design', args=(study.pk,))
         elif self.status == self.STUDY_DESIGN:
             return reverse('studies:session_start', args=(study.pk,))
+
+        elif self.status == self.OBSERVATION:
+            return reverse('observations:update', args=(study.observation.pk,))
+        elif self.status == self.INTERVENTION:
+            return reverse('interventions:update', args=(study.intervention.pk,))
+
         elif self.status == self.SESSIONS:
             return reverse('tasks:start', args=(session.pk,))
         elif self.status == self.TASKS_STARTED:

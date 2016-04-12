@@ -23,6 +23,7 @@ $(function() {
     }).blur(function() {
         $(this).css('height', '3em');
     });
+    $('.survey_set textarea').css('height', '3em');
 
     depends_on_value('has_surveys', 'True', 'surveys_stressful');
     $('input[name="has_surveys"]').change(function() {
