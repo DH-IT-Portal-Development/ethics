@@ -16,7 +16,7 @@
             <td>{{ task.name }}</td>
             <td>{{ task.duration }}</td>
             <td>{{ task.registrations.all|unordered_list }}</td>
-            <td>{{ task.feedback|yesno:"ja,nee,twijfel" }}</td>
+            <td>{{ task.feedback|yesno:_("ja,nee,twijfel") }}</td>
             <td>
                 <a href="{% url 'tasks:update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="Taak bewerken"></a>
                 {% if session.tasks_number > 1 %}

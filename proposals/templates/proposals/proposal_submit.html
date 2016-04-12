@@ -53,9 +53,9 @@
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% if proposal.relation.needs_supervisor %}
-    {% include "base/form_buttons.html" with next_text="{% trans "Concept-aanmelding versturen" %}" %}
+    {% include "base/form_buttons.html" with next_text=_("Concept-aanmelding versturen") %}
     {% else %}
-    {% include "base/form_buttons.html" with next_text="{% trans "Aanmelding versturen" %}" %}
+    {% include "base/form_buttons.html" with next_text=_("Aanmelding versturen") %}
     {% endif %}
 </form>
 {% endblock %}

@@ -4,7 +4,7 @@
 	{% if not no_back %}
 	<input class="pure-button pure-button-secondary" type="submit" name="save_back" value="{% trans '<< Vorige stap' %}" />
 	{% endif %}
-	<input class="pure-button pure-button-primary" type="submit" name="save_continue" value="{{ next_text|default:'Volgende stap >>' }}" />
+	<input class="pure-button pure-button-primary" type="submit" name="save_continue" value="{{ next_text|default:_('Volgende stap >>') }}" />
 </nav>
 
 {% if not no_back %}
