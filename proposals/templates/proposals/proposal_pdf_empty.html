@@ -118,6 +118,20 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
+        <h2>{% trans "Specificatie over deelnemersgroep(en)" %} <em>n</em></h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "has_multiple_groups" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "has_multiple_trajectories" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th><td></td>
+            </tr>
+        </table>
+
+        <pdf:nextpage />
         <h2>{% trans "Informatie over deelnemersgroep" %} <em>n</em></h2>
         <table>
             <tr>
@@ -180,7 +194,22 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "observations" "observation" "is_anonymous" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "observations" "observation" "is_test" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "observations" "observation" "is_in_target_group" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "is_nonpublic_space" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "needs_approval" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th><td></td>
             </tr>
         </table>
         <h3>{% trans "Locatie" %} <em>n</em></h3>
@@ -189,7 +218,10 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "observations" "location" "name" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "observations" "location" "registration" %}</th><td></td>
+                <th>{% get_verbose_field_name "observations" "location" "registrations" %}</th><td>{% show_all "observations" "registration" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "location" "registrations_details" %}</th><td></td>
             </tr>
         </table>
 
@@ -204,6 +236,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{% show_yesno %}</td>
             </tr>
         </table>
 

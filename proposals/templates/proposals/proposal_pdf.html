@@ -131,6 +131,24 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
         {% endwith %}
 
+        <pdf:nextpage />
+        <h2>{% trans "Specificatie over deelnemersgroep(en)" %} <em>n</em></h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "has_multiple_groups" %}</th><td>{{ proposal.has_multiple_groups|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if proposal.has_multiple_groups %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "has_multiple_trajectories" %}</th><td>{{ proposal.has_multiple_trajectories|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if proposal.has_multiple_trajectories %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th><td>{{ proposals.studies_number }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+        </table>
+
         {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
         {% for study in proposal.study_set.all %}
         <pdf:nextpage />
@@ -202,7 +220,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         {% if study.has_observation %}
-        {% with study=proposal.study %}
+        {% with observation=study.observation %}
         <pdf:nextpage />
         <h2>{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}</h2>
         <table>
@@ -213,11 +231,27 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "observations" "observation" "mean_hours" %}</th><td>{{ observation.mean_hours }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "observations" "observation" "is_anonymous" %}</th><td>{{ observation.is_anonymous }}</td>
+                <th>{% get_verbose_field_name "observations" "observation" "is_anonymous" %}</th><td>{{ observation.is_anonymous|yesno:"ja,nee" }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "observations" "observation" "is_test" %}</th><td>{{ observation.is_test }}</td>
+                <th>{% get_verbose_field_name "observations" "observation" "is_in_target_group" %}</th><td>{{ observation.is_in_target_group|yesno:"ja,nee" }}</td>
             </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "is_nonpublic_space" %}</th><td>{{ observation.is_nonpublic_space|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if observation.is_nonpublic_space %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th><td>{{ observation.has_advanced_consent|yesno:"ja,nee" }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "needs_approval" %}</th><td>{{ observation.needs_approval|yesno:"ja,nee" }}</td>
+            </tr>
+            {% if observation.needs_approval %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th><td></td>
+            </tr>
+            {% endif %}
         </table>
         {% for location in observation.location_set.all %}
         <h3>{% trans "Locatie" %}</h3>
@@ -226,8 +260,13 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "observations" "location" "name" %}</th><td>{{ location.name }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "observations" "location" "registration" %}</th><td>{{ location.registration }}</td>
+                <th>{% get_verbose_field_name "observations" "location" "registrations" %}</th><td>{{ location.registrations.all|unordered_list }}</td>
             </tr>
+            {% if location.registrations.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "location" "registrations_details" %}</th><td>{{ location.registrations_details }}</td>
+            </tr>
+            {% endif %}
         </table>
         {% endfor %}
         {% endwith %}
@@ -242,13 +281,16 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td>{{ intervention.description }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{{ intervention.has_drawbacks }}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{{ intervention.has_drawbacks|yesno:"ja,nee" }}</td>
             </tr>
             {% if intervention.has_drawbacks %}
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td>{{ intervention.has_drawbacks_details }}</td>
             </tr>
             {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{{ intervention.is_supervised|yesno:"ja,nee" }}</td>
+            </tr>
         </table>
         {% endwith %}
         {% endif %}
