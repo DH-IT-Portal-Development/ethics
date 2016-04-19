@@ -16,6 +16,7 @@ class InterventionForm(ConditionalModelForm):
         widgets = {
             'setting': forms.CheckboxSelectMultiple(),
             'supervision': forms.RadioSelect(choices=YES_NO),
+            'description': forms.Textarea(attrs={'cols': 50}),
             'has_drawbacks': forms.RadioSelect(choices=YES_NO),
             'is_supervised': forms.RadioSelect(choices=YES_NO),
         }
