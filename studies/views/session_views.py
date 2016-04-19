@@ -47,11 +47,6 @@ class SessionStart(AllowErrorsMixin, UpdateView):
             session = Session.objects.get(study=study, order=order)
             session.delete()
 
-        # If the number of Sessions has changed, invalidate the Study fields
-        if current != nr_sessions:
-            study.sessions_duration = None
-            study.save()
-
         return super(SessionStart, self).form_valid(form)
 
     def get_next_url(self):
@@ -87,19 +82,6 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
         context = super(SessionEnd, self).get_context_data(**kwargs)
         context['progress'] = get_study_progress(self.object, True) - 5
         return context
-
-    def get_initial(self):
-        """
-        - If there is only one Session, transfer the duration to Study level
-        - If there are no Sessions, set the duration to zero
-        """
-        initial = super(SessionEnd, self).get_initial()
-        study = self.object
-        if not study.has_sessions:
-            initial['sessions_duration'] = 0
-        elif study.sessions_number == 1:
-            initial['sessions_duration'] = study.first_session().tasks_duration
-        return initial
 
     def get_next_url(self):
         return reverse('studies:consent', args=(self.object.pk,))

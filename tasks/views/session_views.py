@@ -110,14 +110,10 @@ class TaskStart(AllowErrorsMixin, UpdateView):
                 task = Task.objects.get(session=session, order=order)
                 task.delete()
 
-            # If the number of Tasks has changed, invalidate the Session and Study duration
+            # If the number of Tasks has changed, invalidate the Session duration
             if current != nr_tasks:
                 session.tasks_duration = None
                 session.save()
-
-                study = session.study
-                study.sessions_duration = None
-                study.save()
 
         return super(TaskStart, self).form_valid(form)
 

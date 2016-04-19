@@ -35,15 +35,6 @@ pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertr
         super(Session, self).save(*args, **kwargs)
         self.study.proposal.save()
 
-    def delete(self, *args, **kwargs):
-        """
-        Invalidate the totals on Study level on deletion of a Session.
-        """
-        study = self.study
-        study.sessions_duration = None
-        super(Session, self).delete(*args, **kwargs)
-        study.save()
-
     def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
@@ -172,15 +163,12 @@ het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefi
 
     def delete(self, *args, **kwargs):
         """
-        Invalidate the totals on Session/Study level on deletion of a Task.
+        Invalidate the totals on Session level on deletion of a Task.
         """
         session = self.session
         session.tasks_duration = None
-        study = self.session.study
-        study.sessions_duration = None
         super(Task, self).delete(*args, **kwargs)
         session.save()
-        study.save()
 
     def __unicode__(self):
         return 'Task at {}'.format(self.session)

@@ -12,18 +12,10 @@
                 {% endif %}
             </td>
         </tr>
-        {% if proposal.study.sessions_duration %}
         <tr>
-            <th>Netto duur</th>
+            <th>Nettoduur</th>
             <td>{{ proposal.study.net_duration }} minuten</td>
         </tr>
-        <tr>
-            <th>Bruto duur</th>
-            <td>
-                {{ proposal.study.sessions_duration }} minuten
-            </td>
-        </tr>
-        {% endif %}
     </table>
     <h3>Sessies</h3>
     <div id="accordion">

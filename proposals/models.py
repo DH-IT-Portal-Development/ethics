@@ -220,7 +220,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
             if session.tasks_duration:
                 status = self.TASKS_ENDED
         if session and session.tasks_duration:
-            if study.sessions_duration:
+            if study.feedback is not None:
                 status = self.SESSIONS_ENDED
 
         if self.date_submitted_supervisor:
@@ -286,7 +286,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         current_study = None
         for study in self.study_set.all():
             current_study = study
-            if study.sessions_duration is None:
+            if study.feedback is None:
                 break
         return current_study
 

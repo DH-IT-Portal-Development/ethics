@@ -117,8 +117,7 @@ class SessionStartForm(forms.ModelForm):
 class SessionEndForm(ConditionalModelForm):
     class Meta:
         model = Study
-        fields = ['sessions_duration',
-                  'stressful', 'stressful_details',
+        fields = ['stressful', 'stressful_details',
                   'risk', 'risk_details']
         widgets = {
             'stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
@@ -127,34 +126,14 @@ class SessionEndForm(ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        - Set sessions_duration as required, update the sessions_duration label
         - Set stressful and risk as required and mark_safe the labels
-        - If there is are no Sessions or only one Session in this Study, make the sessions_duration input hidden
         """
         super(SessionEndForm, self).__init__(*args, **kwargs)
 
-        sessions_duration = self.fields['sessions_duration']
-        sessions_duration.required = True
-        label = sessions_duration.label % self.instance.net_duration()
-        sessions_duration.label = mark_safe(label)
-
         self.fields['stressful'].required = True
         self.fields['risk'].required = True
-
         self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)
         self.fields['risk'].label = mark_safe(self.fields['risk'].label)
-
-        if not self.instance.has_sessions or self.instance.sessions_number == 1:
-            self.fields['sessions_duration'].widget = forms.HiddenInput()
-
-    def clean_sessions_duration(self):
-        sessions_duration = self.cleaned_data.get('sessions_duration')
-
-        if self.instance.has_sessions:
-            if sessions_duration < self.instance.net_duration():
-                raise forms.ValidationError(_('Totale studieduur moet minstens gelijk zijn aan netto studieduur.'), code='comparison')
-
-        return sessions_duration
 
     def clean(self):
         """

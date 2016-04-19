@@ -363,11 +363,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <pdf:nextpage />
         <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
         <table>
-            {% if study.has_sessions %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "sessions_duration" %}</th><td>{{ study.sessions_duration }}</td>
-            </tr>
-            {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.stressful|yesno:_("ja,nee,twijfel") }}</td>
             </tr>
