@@ -172,7 +172,7 @@ U kunt de templates vinden op <link website?>'))
 
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
-        _('Hoeveel sessies telt deze studie?'),
+        _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
         null=True,
         validators=[MinValueValidator(1)],
         help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens \

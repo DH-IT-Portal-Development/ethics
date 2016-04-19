@@ -10,10 +10,21 @@
 {% block progress %}8{% endblock %}
 
 {% block content %}
+{% trans "U kunt de aard van de studie nu in detail op de volgende pagina's specificeren." as is_similar %}
+{% trans "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
 <script>
 $(function() {
-    depends_on_value('has_multiple_groups', 'True', 'has_multiple_trajectories');
     depends_on_value('has_multiple_trajectories', 'True', 'studies_number');
+
+    $('input[name=has_multiple_trajectories]').change(function() {
+        var check = $('input[name=has_multiple_trajectories]:checked').val() === 'True';
+        var text = "{{ is_similar }}";
+        if (check) {
+        	text = "{{ is_dissimilar }}";
+        }
+        $('#next_text').html(text);
+        $('#next_text').show();
+    });
 });
 </script>
 <p>
@@ -23,6 +34,7 @@ $(function() {
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
+    <p id="next_text"></p>
     {% include "base/form_buttons.html" %}
 </form>
 {% endblock %}

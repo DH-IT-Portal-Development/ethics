@@ -117,10 +117,6 @@ class Proposal(models.Model):
         blank=True)
 
     # Fields with respect to Studies
-    has_multiple_groups = models.NullBooleanField(
-        _('Is er in uw studie sprake van verschillende deelnemersgroepen?'),
-        help_text=_('Een deelnemersgroep kan gekenmerkt worden door een controle- en experimentele groep, \
-maar ook door twee verschillende leeftijden (0-2 jarigen en volwassenen of 18-22 jarigen en 35-40 jarigen)'))
     has_multiple_trajectories = models.NullBooleanField(
         _('Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
         help_text=_(u'Daar waar de verschillen klein en qua belasting of \

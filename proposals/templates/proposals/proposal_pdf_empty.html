@@ -121,9 +121,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Eén of meerdere trajecten?" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "has_multiple_groups" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "has_multiple_trajectories" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>

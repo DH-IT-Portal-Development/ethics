@@ -1,13 +1,14 @@
 {% load staticfiles %}
+{% load i18n %}
 
 <table class="pure-table" width="100%">
     <thead>
         <tr>
-            <th width="20%">Naam</th>
-            <th width="15%">Duur (in minuten)</th>
-            <th width="40%">Registratie via</th>
-            <th width="15%">Feedback?</th>
-            <th width="10%">Acties</th>
+            <th width="20%">{% trans "Naam" %}</th>
+            <th width="15%">{% trans "Brutoduur (in minuten)" %}</th>
+            <th width="40%">{% trans "Registratie via" %}</th>
+            <th width="15%">{% trans "Feedback?" %}</th>
+            <th width="10%">{% trans "Acties" %}</th>
         </tr>
     </thead>
     <tbody>
@@ -18,9 +19,9 @@
             <td>{{ task.registrations.all|unordered_list }}</td>
             <td>{{ task.feedback|yesno:_("ja,nee,twijfel") }}</td>
             <td>
-                <a href="{% url 'tasks:update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="Taak bewerken"></a>
+                <a href="{% url 'tasks:update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Taak bewerken' %}"></a>
                 {% if session.tasks_number > 1 %}
-                <a href="{% url 'tasks:delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="Taak verwijderen"></a>
+                <a href="{% url 'tasks:delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Taak verwijderen' %}"></a>
                 {% endif %}
             </td>
         </tr>

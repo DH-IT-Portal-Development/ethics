@@ -121,21 +121,19 @@ class WmoCheckForm(forms.ModelForm):
 class StudyStartForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['has_multiple_groups',
-                  'has_multiple_trajectories',
+        fields = ['has_multiple_trajectories',
                   'studies_number']
         widgets = {
-            'has_multiple_groups': forms.RadioSelect(choices=YES_NO),
             'has_multiple_trajectories': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
         """
-        - Set has_multiple_groups as required.
+        - Set has_multiple_trajectories as required.
         """
         super(StudyStartForm, self).__init__(*args, **kwargs)
 
-        self.fields['has_multiple_groups'].required = True
+        self.fields['has_multiple_trajectories'].required = True
 
 
 class ProposalSurveyForm(forms.ModelForm):
