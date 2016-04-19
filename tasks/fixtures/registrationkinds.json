@@ -5,6 +5,17 @@
         "needs_details": false,
         "registration": 7,
         "order": 1,
+        "description": "EEG (electroencephalography)"
+    },
+    "model": "tasks.registrationkind",
+    "pk": 1
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": false,
+        "registration": 6,
+        "order": 1,
         "description": "fMRI (functional magnetic resonance imaging)"
     },
     "model": "tasks.registrationkind",
@@ -15,19 +26,8 @@
         "requires_review": false,
         "needs_details": false,
         "registration": 7,
-        "order": 2,
-        "description": "EEG (electroencephalography)"
-    },
-    "model": "tasks.registrationkind",
-    "pk": 2
-},
-{
-    "fields": {
-        "requires_review": false,
-        "needs_details": false,
-        "registration": 7,
         "order": 3,
-        "description": "NIRS (near-infrared spectroscopy)"
+        "description": "fNIRS (functional near-infrared spectroscopy)"
     },
     "model": "tasks.registrationkind",
     "pk": 3
@@ -38,18 +38,18 @@
         "needs_details": false,
         "registration": 7,
         "order": 4,
-        "description": "ECG (electrocardiography)"
+        "description": "fEMG (facial electromyography)"
     },
     "model": "tasks.registrationkind",
     "pk": 4
 },
 {
     "fields": {
-        "requires_review": false,
+        "requires_review": true,
         "needs_details": false,
         "registration": 7,
         "order": 5,
-        "description": "BVP (blood volume pulse)"
+        "description": "EMA (electromagnetic articulography)"
     },
     "model": "tasks.registrationkind",
     "pk": 5
@@ -60,18 +60,18 @@
         "needs_details": false,
         "registration": 7,
         "order": 6,
-        "description": "fEMG (facial electromyography)"
+        "description": "huidgeleiding (SC/GSR)"
     },
     "model": "tasks.registrationkind",
     "pk": 6
 },
 {
     "fields": {
-        "requires_review": true,
+        "requires_review": false,
         "needs_details": false,
         "registration": 7,
         "order": 7,
-        "description": "EMA (electromagnetic articulography)"
+        "description": "ECG (electrocardiography)"
     },
     "model": "tasks.registrationkind",
     "pk": 7
@@ -82,7 +82,7 @@
         "needs_details": false,
         "registration": 7,
         "order": 8,
-        "description": "huidgeleiding (GSR)"
+        "description": "BVP (blood volume pulse)"
     },
     "model": "tasks.registrationkind",
     "pk": 8
