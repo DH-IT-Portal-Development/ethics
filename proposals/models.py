@@ -246,11 +246,14 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
             return reverse('interventions:update', args=(study.intervention.pk,))
 
         elif self.status == self.SESSIONS:
-            return reverse('tasks:start', args=(session.pk,))
+            if session:
+                return reverse('tasks:start', args=(session.pk,))
         elif self.status == self.TASKS_STARTED:
-            return reverse('tasks:update', args=(session.current_task().pk,))
+            if session:
+                return reverse('tasks:update', args=(session.current_task().pk,))
         elif self.status == self.TASKS_ADDED:
-            return reverse('tasks:end', args=(session.pk,))
+            if session:
+                return reverse('tasks:end', args=(session.pk,))
         elif self.status == self.TASKS_ENDED:
             return reverse('studies:session_end', args=(study.pk,))
         elif self.status == self.SESSIONS_ENDED:
@@ -258,6 +261,8 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
         elif self.status == self.WMO_DECISION_MADE:
             return reverse('proposals:my_archive')
+        else:
+            return reverse('proposals:update', args=(self.pk,))
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""
