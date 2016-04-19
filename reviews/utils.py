@@ -130,17 +130,17 @@ def auto_review(proposal):
             reasons.append(_('De studie werkt met passieve informed consent.'))
 
         # TODO: is this correct?
-        for setting in study.setting.all():
-            if setting.requires_review:
-                go = False
-                reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
-                break
+        for session in study.session_set.all():
+            for setting in session.setting.all():
+                if setting.requires_review:
+                    go = False
+                    reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
+                    break
 
-        for task in Task.objects.filter(session__study=study):
-            if task.deception:
-                go = False
-                reasons.append(_('De studie maakt gebruik van misleiding.'))
-                break
+        if study.deception:
+            go = False
+            reasons.append(_('De studie maakt gebruik van misleiding.'))
+            break
 
         # TODO: is this correct?
         if study.compensation.requires_review:
