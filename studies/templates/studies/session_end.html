@@ -44,22 +44,24 @@ $(function() {
     <li>{% trans "Interventieonderzoek" %}</li>
     {% endif %}
     {% if study.has_sessions %}
-    <li class="session_list">
-        <em>{% trans "Takenonderzoek met de volgende opbouw:" %}</em>
-        {% for session in study.session_set.all %}
-        <div class="task_list">
-        <h4>
-            Sessie {{ session.order }} (totale nettoduur: {{ session.tasks_duration }} minuten)
-            {% if study.sessions_number > 1 %}
-            <a href="{% url 'tasks:session_delete' session.pk %}"><img src="{% static 'proposals/images/delete.png' %}" title="Sessie verwijderen"></a>
-            {% endif %}
-        </h4>
-            <p>
-                <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
-            </p>
-            {% include "tasks/task_list.html" %}
+    <li>
+        <div>
+            <p>{% trans "Takenonderzoek met de volgende opbouw:" %}</p>
+            {% for session in study.session_set.all %}
+            <div class="task_list">
+            <h4>
+                Sessie {{ session.order }} (totale nettoduur: {{ session.tasks_duration }} minuten)
+                {% if study.sessions_number > 1 %}
+                <a href="{% url 'tasks:session_delete' session.pk %}"><img src="{% static 'proposals/images/delete.png' %}" title="Sessie verwijderen"></a>
+                {% endif %}
+            </h4>
+                <p>
+                    <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
+                </p>
+                {% include "tasks/task_list.html" %}
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </li>
     {% endif %}
 </ul>

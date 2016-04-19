@@ -122,10 +122,12 @@ class SessionEndForm(ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
+        - Set deception as required
         - Set stressful and risk as required and mark_safe the labels
         """
         super(SessionEndForm, self).__init__(*args, **kwargs)
 
+        self.fields['deception'].required = True
         self.fields['stressful'].required = True
         self.fields['risk'].required = True
         self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)

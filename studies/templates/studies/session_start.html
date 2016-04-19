@@ -12,12 +12,6 @@
 {% block content %}
 {% include "studies/study_title.html" %}
 <p>
-    {% trans "U heeft aangegeven dat u gebruik maakt van deelnemers binnen de leeftijdsgroepen:" %}
-</p>
-<ul>
-    {{ study.age_groups.all|unordered_list }}
-</ul>
-<p>
     {% blocktrans %}
     In de volgende vragen gaan we nader in op wat u in uw takenonderzoek van uw deelnemers zal verlangen. Daarbij gelden de volgende definities:
     {% endblocktrans %}

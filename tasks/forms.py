@@ -34,7 +34,7 @@ class TaskStartForm(ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        - The field tasks_number is not required by default (only is is_copy is set to False)
+        - The field tasks_number is not required by default (only if is_copy is set to False)
         - Only allow to choose earlier Sessions
         - Remove option to copy altogether from first Session
         """
