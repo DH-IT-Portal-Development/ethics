@@ -195,15 +195,15 @@ en andere niet-taak elementen, is groter dan het streefmaximum ({max_d} minuten)
 voor de leeftijdsgroep {ag}.'.format(ag=age_group, d=study.net_duration(), max_d=age_group.max_net_duration)))
 
         if study.has_observation:
-            observation = Observation.object.get(study=study)
+            observation = Observation.objects.get(study=study)
             if observation.is_anonymous:
                 go = False
-                reasons.append(_('De interventie vindt plaats met een onbevoegd persoon'))
+                reasons.append(_('De observatie gebeurt anoniem.'))
 
         if study.has_intervention:
-            intervention = Intervention.object.get(study=study)
+            intervention = Intervention.objects.get(study=study)
             if not intervention.is_supervised:
                 go = False
-                reasons.append(_('De interventie vindt plaats met een onbevoegd persoon'))
+                reasons.append(_('De interventie vindt plaats met een onbevoegd persoon.'))
 
     return go, reasons
