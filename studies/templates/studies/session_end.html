@@ -12,12 +12,30 @@
 {% block content %}
 <script>
 $(function() {
+    depends_on_value('deception', 'True', 'deception_details');
     depends_on_value('stressful', 'True', 'stressful_details');
     depends_on_value('risk', 'True', 'risk_details');
 });
 </script>
 {% include "studies/study_title.html" %}
-Deelnemers uit de leeftijdscategorieën [als reeks in-line invullen] en met de volgende bijzondere kenmerken [als reeks in-line invullen, + evt volwassen wilsonbekwaam] zullen aan de volgende onderdelen meedoen:
+<p>
+    {% blocktrans with age_groups=study.age_groups.all|join:', ' %}
+    Deelnemers uit de leeftijdscategorieën <em>{{ age_groups }}</em>
+    {% endblocktrans %}
+    {% if study.has_traits %}
+    {% blocktrans with traits=study.traits.all|join:', ' %}
+    en met de volgende bijzondere kenmerken <em>{{ traits }}</em>
+    {% endblocktrans %}
+    {% endif %}
+    {% if study.legally_incapable %}
+    {% blocktrans %}
+    en zijnde <em>wilsonbekwaam</em>
+    {% endblocktrans %}
+    {% endif %}
+    {% blocktrans %}
+    zullen aan de volgende onderdelen meedoen:
+    {% endblocktrans %}
+</p>
 <ul>
     {% if study.has_observation %}
     <li>{% trans "Observatieonderzoek" %}</li>

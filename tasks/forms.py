@@ -59,13 +59,11 @@ class TaskForm(ConditionalModelForm):
         fields = ['name', 'description', 'duration',
                   'registrations', 'registrations_details',
                   'registration_kinds', 'registration_kinds_details',
-                  'feedback', 'feedback_details',
-                  'deception', 'deception_details']
+                  'feedback', 'feedback_details']
         widgets = {
             'registrations': forms.CheckboxSelectMultiple(),
             'registration_kinds': forms.CheckboxSelectMultiple(),
             'feedback': forms.RadioSelect(choices=YES_NO),
-            'deception': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -79,7 +77,6 @@ class TaskForm(ConditionalModelForm):
         - If a registration which needs details has been checked, make sure the details are filled
         - If a registration_kind which needs details has been checked, make sure the details are filled
         - If feedback is set to yes, make sure feedback_details has been filled out
-        - If deception is set to yes, make sure deception_details has been filled out
         """
         cleaned_data = super(TaskForm, self).clean()
 
@@ -87,7 +84,6 @@ class TaskForm(ConditionalModelForm):
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
         self.check_dependency_multiple(cleaned_data, 'registration_kinds', 'needs_details', 'registration_kinds_details')
         self.check_dependency(cleaned_data, 'feedback', 'feedback_details')
-        self.check_dependency(cleaned_data, 'deception', 'deception_details')
 
 
 class TaskEndForm(forms.ModelForm):

@@ -179,6 +179,17 @@ U kunt de templates vinden op <link website?>'))
 een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
+    deception = models.NullBooleanField(
+        _('Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer, \
+d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of \
+belangrijke aspecten van de gang van zaken tijdens de studie? \
+Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
+het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; \
+het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
+        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'))
+    deception_details = models.TextField(
+        _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.'),
+        blank=True)
     stressful = models.NullBooleanField(
         _('Is de studie op onderdelen of als geheel zodanig belastend dat deze <em>ondanks de verkregen informed \
 consent </em> vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, \

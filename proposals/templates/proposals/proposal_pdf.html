@@ -347,14 +347,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "tasks" "task" "feedback_details" %}</th><td>{{ task.feedback_details }}</td>
             </tr>
             {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "tasks" "task" "deception" %}</th><td>{{ task.deception|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if task.deception %}
-            <tr>
-                <th>{% get_verbose_field_name "tasks" "task" "deception_details" %}</th><td>{{ task.deception_details }}</td>
-            </tr>
-            {% endif %}
         </table>
         {% endfor %}
         {% endfor %}
@@ -363,6 +355,14 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <pdf:nextpage />
         <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
         <table>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.deception|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if study.deception %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th><td>{{ study.deception_details }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.stressful|yesno:_("ja,nee,twijfel") }}</td>
             </tr>

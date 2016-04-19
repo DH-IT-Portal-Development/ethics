@@ -117,9 +117,11 @@ class SessionStartForm(forms.ModelForm):
 class SessionEndForm(ConditionalModelForm):
     class Meta:
         model = Study
-        fields = ['stressful', 'stressful_details',
+        fields = ['deception', 'deception_details',
+                  'stressful', 'stressful_details',
                   'risk', 'risk_details']
         widgets = {
+            'deception': forms.RadioSelect(choices=YES_NO),
             'stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
             'risk': forms.RadioSelect(choices=YES_NO_DOUBT),
         }
@@ -138,11 +140,12 @@ class SessionEndForm(ConditionalModelForm):
     def clean(self):
         """
         Check for conditional requirements:
-        - Check that the net duration is at least equal to the gross duration
+        - If deception is set to yes, make sure deception_details has been filled out
         - If stressful is set to yes, make sure stressful_details has been filled out
         - If risk is set to yes, make sure risk_details has been filled out
         """
         cleaned_data = super(SessionEndForm, self).clean()
 
+        self.check_dependency(cleaned_data, 'deception', 'deception_details')
         self.check_dependency(cleaned_data, 'stressful', 'stressful_details')
         self.check_dependency(cleaned_data, 'risk', 'risk_details')

@@ -285,17 +285,17 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "tasks" "task" "feedback_details" %}</th><td></td>
             </tr>
-            <tr>
-                <th>{% get_verbose_field_name "tasks" "task" "deception" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "tasks" "task" "deception_details" %}</th><td></td>
-            </tr>
         </table>
 
         <pdf:nextpage />
         <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
         <table>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th><td></td>
+            </tr>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
