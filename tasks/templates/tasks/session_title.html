@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% with order=session.order study_order=session.study.order study_name=session.study.name studies_number=session.study.proposal.studies_number sessions_number=session.study.sessions_number %}
+{% if studies_number > 1 and {%  > 1 %}
+<h3>
+    {% blocktrans %}
+    Traject {{ study_order }} (<em>{{ study_name }}</em>), sessie {{ order }}
+    {% endblocktrans %}
+</h3>
+{% elif studies_number > 1 %}
+<h3>
+    {% blocktrans %}
+    Traject {{ study_order }} (<em>{{ study_name }}</em>)
+    {% endblocktrans %}
+</h3>
+{% elif sessions_number > 1 %}
+<h3>
+    {% blocktrans %}
+    Sessie {{ order }}
+    {% endblocktrans %}
+</h3>
+{% endif %}
+{% endwith %}

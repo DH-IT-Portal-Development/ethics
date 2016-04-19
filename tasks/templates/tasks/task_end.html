@@ -4,21 +4,19 @@
 {% load i18n %}
 
 {% block title %}
-{% blocktrans with order=session.order %}
-Overzicht van het [traject X] takenonderzoek: [sessie 1]
-{% endblocktrans %}
+{% trans "Overzicht van het takenonderzoek" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
 
 {% block content %}
+{% include "tasks/session_title.html" %}
 <div class="task_list">
 	<p>
 		<em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
 	</p>
 	{% include "tasks/task_list.html" %}
 </div>
-
 <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>

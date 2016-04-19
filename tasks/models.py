@@ -31,8 +31,9 @@ Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelde
     tasks_duration = models.PositiveIntegerField(
         _('De totale geschatte netto taakduur van uw sessie komt \
 op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
-Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, \
-pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)'),
+Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, \
+instructies per taak, pauzes tussen taken, en debriefing? \
+(bij labbezoek dus van binnenkomst tot vertrek)'),
         null=True)
 
     # References

@@ -4,9 +4,7 @@
 {% load i18n %}
 
 {% block title %}
-{% blocktrans with order=study.order %}
-Informatie over deelnemersgroep {{ order }}
-{% endblocktrans %}
+{% trans "De deelnemers" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -23,8 +21,8 @@ $(function() {
     add_title('legally_incapable', "{% trans 'Wilsonbekwaamheid' %}");
     add_title('has_traits', "{% trans 'Bijzondere kenmerken van de deelnemers' %}");
     add_title('necessity', "{% trans 'Noodzakelijkheid' %}");
-    add_title('compensation', "{% trans 'Vergoeding' %}");
     add_title('recruitment', "{% trans 'Werving' %}");
+    add_title('compensation', "{% trans 'Vergoeding' %}");
     add_title('passive_consent', "{% trans 'Informed consent' %}");
 
     // Logic for necessity display.
@@ -48,6 +46,7 @@ $(function() {
     $('input[name=age_groups], input[name=legally_incapable], input[name=has_traits]').change();
 });
 </script>
+{% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% with proposal=study.proposal %}

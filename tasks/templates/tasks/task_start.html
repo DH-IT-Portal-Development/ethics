@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %} 
-{% trans "Het [traject X] takenonderzoek: [sessie 1] setting" %}
+{% trans "Het takenonderzoek" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -20,6 +20,7 @@ $(function() {
     $('input[name=tasks_number]').parents('tr').insertAfter($('input[name=is_copy]').parents('tr'));
 });
 </script>
+{% include "tasks/session_title.html" %}
 <h3>
     {% blocktrans with order=session.order %}
     Sessie {{ order }}
