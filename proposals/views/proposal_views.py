@@ -6,14 +6,13 @@ from django.utils.translation import ugettext as _
 
 from braces.views import LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
-from extra_views import UpdateWithInlinesView
 
-from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView, UserAllowedMixin, success_url
+from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalSurveyForm, SurveysInline, ProposalSubmitForm, ProposalCopyForm
-from ..models import Proposal, Survey
+from ..forms import ProposalForm, ProposalSubmitForm, ProposalCopyForm
+from ..models import Proposal
 from ..utils import generate_ref_number
 
 
@@ -150,31 +149,6 @@ class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
 
 
-# NOTE: below view is non-standard, as it include inlines
-# NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
-class ProposalSurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
-    model = Proposal
-    form_class = ProposalSurveyForm
-    inlines = [SurveysInline]
-    template_name = 'proposals/proposal_survey_form.html'
-
-    def forms_valid(self, form, inlines):
-        """Removes existing Surveys if has_surveys is set to False."""
-        if not form.instance.has_surveys:
-            Survey.objects.filter(proposal=form.instance).delete()
-            inlines = []
-        return super(ProposalSurvey, self).forms_valid(form, inlines)
-
-    def get_success_url(self):
-        return success_url(self)
-
-    def get_next_url(self):
-        return reverse('proposals:submit', args=(self.object.pk,))
-
-    def get_back_url(self):
-        return reverse('studies:consent', args=(self.object.last_study().pk,))
-
-
 class ProposalSubmit(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
@@ -192,7 +166,7 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         return reverse('proposals:submitted')
 
     def get_back_url(self):
-        return reverse('proposals:survey', args=(self.object.pk,))
+        return reverse('studies:consent', args=(self.object.last_study().pk,))
 
 
 class ProposalSubmitted(generic.TemplateView):

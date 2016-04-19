@@ -47,6 +47,7 @@ def copy_study_to_proposal(proposal, study):
     observation = study.observation if study.has_observation else None
     intervention = study.intervention if study.has_intervention else None
     sessions = study.session_set.all() if study.has_sessions else []
+    surveys = study.survey_set.all()
 
     s = study
     s.pk = None
@@ -65,3 +66,13 @@ def copy_study_to_proposal(proposal, study):
         copy_intervention_to_study(s, intervention)
     for session in sessions:
         copy_session_to_study(s, session)
+
+    for survey in surveys:
+        copy_survey_to_study(s, survey)
+
+
+def copy_survey_to_study(study, survey):
+    s = survey
+    s.pk = None
+    s.study = study
+    s.save()

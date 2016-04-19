@@ -4,9 +4,11 @@ from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
+from extra_views import InlineFormSet
+
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO, YES_NO_DOUBT
-from .models import Study
+from .models import Study, Survey
 from .utils import check_necessity_required
 
 
@@ -145,3 +147,52 @@ class SessionEndForm(ConditionalModelForm):
         self.check_dependency(cleaned_data, 'deception', 'deception_details')
         self.check_dependency(cleaned_data, 'stressful', 'stressful_details')
         self.check_dependency(cleaned_data, 'risk', 'risk_details')
+
+
+class SurveyForm(forms.ModelForm):
+    class Meta:
+        model = Study
+        fields = ['has_surveys', 'surveys_stressful']
+        widgets = {
+            'has_surveys': forms.RadioSelect(choices=YES_NO),
+            'surveys_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(SurveyForm, self).__init__(*args, **kwargs)
+        self.fields['has_surveys'].label = mark_safe(self.fields['has_surveys'].label)
+
+
+class SurveyInlineFormSet(forms.BaseInlineFormSet):
+    def clean(self):
+        """
+        - If has_surveys has been set, there should be at least one Survey
+        - If has_surveys has not been set, remove all validation errors
+        """
+        if self.instance.has_surveys:
+            count = 0
+            for form in self.forms:
+                cleaned_data = form.cleaned_data
+                if cleaned_data and not cleaned_data.get('DELETE', False):
+                    count += 1
+
+            if count == 0:
+                first_form = self.forms[0]
+                error = forms.ValidationError(_(u'U dient op zijn minst één vragenlijst toe te voegen.'), code='required')
+                if first_form.is_valid():
+                    first_form.add_error('name', error)
+                else:
+                    # TODO: find a way to show this error in the template
+                    raise error
+        else:
+            for form in self.forms:
+                form._errors = []
+
+
+class SurveysInline(InlineFormSet):
+    """Creates an InlineFormSet for Surveys"""
+    model = Survey
+    fields = ['name', 'minutes', 'survey_url', 'description']
+    can_delete = True
+    extra = 1
+    formset_class = SurveyInlineFormSet

@@ -12,7 +12,6 @@ def copy_proposal(self, form):
     relation = parent.relation
     applicants = parent.applicants.all()
     copy_studies = parent.study_set.all()
-    copy_surveys = parent.survey_set.all()
     copy_wmo = None
     if hasattr(parent, 'wmo'):
         copy_wmo = parent.wmo
@@ -43,12 +42,5 @@ def copy_proposal(self, form):
 
     for study in copy_studies:
         copy_study_to_proposal(copy_proposal, study)
-
-    for survey in copy_surveys:
-        copy_survey = survey
-        copy_survey.pk = None
-        copy_survey.proposal = copy_proposal
-        copy_survey.save()
-    copy_proposal.save()
 
     return copy_proposal

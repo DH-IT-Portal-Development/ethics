@@ -210,6 +210,16 @@ onder begeleiding van adequaat geschoolde specialisten).')))
         max_length=200,
         blank=True)
 
+    # Fields with respect to Surveys
+    has_surveys = models.BooleanField(
+        _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
+Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'),
+        default=False)
+    surveys_stressful = models.NullBooleanField(
+        _('Is het invullen van deze vragenlijsten belastend? \
+Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
+        default=False)
+
     # References
     proposal = models.ForeignKey(Proposal)
 
@@ -237,3 +247,14 @@ onder begeleiding van adequaat geschoolde specialisten).')))
 
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title
+
+
+class Survey(models.Model):
+    name = models.CharField(_('Naam vragenlijst'), max_length=200)
+    minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
+    survey_url = models.URLField(_('URL'), blank=True)
+    description = models.TextField(_('Korte beschrijving'))
+    study = models.ForeignKey(Study)
+
+    def __unicode__(self):
+        return self.name

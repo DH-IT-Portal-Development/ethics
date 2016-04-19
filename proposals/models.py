@@ -132,16 +132,6 @@ gebruikt worden).'))
         default=1,
         validators=[MinValueValidator(1)])
 
-    # Fields with respect to Surveys
-    has_surveys = models.BooleanField(
-        _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
-Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'),
-        default=False)
-    surveys_stressful = models.NullBooleanField(
-        _('Is het invullen van deze vragenlijsten belastend? \
-Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
-        default=False)
-
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
 
@@ -368,14 +358,3 @@ Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor p
 
     def __unicode__(self):
         return _('WMO %s, status %s') % (self.proposal.title, self.status)
-
-
-class Survey(models.Model):
-    name = models.CharField(_('Naam vragenlijst'), max_length=200)
-    minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
-    survey_url = models.URLField(_('URL'), blank=True)
-    description = models.TextField(_('Korte beschrijving'))
-    proposal = models.ForeignKey(Proposal)
-
-    def __unicode__(self):
-        return self.name

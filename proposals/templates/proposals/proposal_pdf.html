@@ -385,11 +385,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "has_surveys" %}</th><td>{{ study.has_surveys|yesno:_("ja,nee") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "has_surveys" %}</th><td>{{ study.has_surveys|yesno:_("ja,nee") }}</td>
             </tr>
             {% if study.has_surveys %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "surveys_stressful" %}</th><td>{{ study.surveys_stressful }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "surveys_stressful" %}</th><td>{{ study.surveys_stressful }}</td>
             </tr>
             {% endif %}
         </table>
@@ -397,18 +397,19 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h3>Vragenlijst</h3>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "survey" "name" %}</th><td>{{ survey.name }}</td>
+                <th>{% get_verbose_field_name "studies" "survey" "name" %}</th><td>{{ survey.name }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "survey" "minutes" %}</th><td>{{ survey.minutes }}</td>
+                <th>{% get_verbose_field_name "studies" "survey" "minutes" %}</th><td>{{ survey.minutes }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "survey" "survey_url" %}</th><td>{{ survey.survey_url }}</td>
+                <th>{% get_verbose_field_name "studies" "survey" "survey_url" %}</th><td>{{ survey.survey_url }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "survey" "description" %}</th><td>{{ survey.description }}</td>
+                <th>{% get_verbose_field_name "studies" "survey" "description" %}</th><td>{{ survey.description }}</td>
             </tr>
         </table>
+        {% endfor %}
         {% endfor %}
 
         <pdf:nextpage />
@@ -418,8 +419,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th><td>{{ proposal.comments }}</td>
             </tr>
         </table>
-
-        {% endfor %}
         {% endif %}
     </div>
 </div>

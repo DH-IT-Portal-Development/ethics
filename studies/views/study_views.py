@@ -109,7 +109,7 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
             next_study = Study.objects.get(proposal=proposal, order=next)
             return reverse('studies:update', args=(next_study.pk,))
         else:
-            return reverse('proposals:survey', args=(proposal.pk,))
+            return reverse('studies:survey', args=(proposal.pk,))
 
     def get_back_url(self):
         return reverse('studies:session_end', args=(self.object.pk,))
