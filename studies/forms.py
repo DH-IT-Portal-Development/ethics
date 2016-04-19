@@ -32,13 +32,15 @@ class StudyForm(ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        - Allow legally_incapable to have HTML in its label
         - Set the Proposal for later reference in the clean method
+        - Allow legally_incapable to have HTML in its label
+        - Remove the empty label for compensation
         """
         self.proposal = kwargs.pop('proposal', None)
 
         super(StudyForm, self).__init__(*args, **kwargs)
         self.fields['legally_incapable'].label = mark_safe(self.fields['legally_incapable'].label)
+        self.fields['compensation'].empty_label = None
 
     def clean(self):
         """
