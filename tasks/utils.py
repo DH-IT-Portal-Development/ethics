@@ -37,11 +37,15 @@ def copy_task_to_session(session, task):
 
 
 def copy_session_to_study(study, session):
+    setting = session.setting.all()
     tasks = session.tasks.all()
 
     s = session
     s.pk = None
     s.study = study
+    s.save()
+
+    s.setting = setting
     s.save()
 
     for task in tasks:

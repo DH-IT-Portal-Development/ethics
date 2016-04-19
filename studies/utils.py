@@ -41,7 +41,6 @@ def get_study_progress(study, is_end=False):
 def copy_study_to_proposal(proposal, study):
     age_groups = study.age_groups.all()
     traits = study.traits.all()
-    setting = study.setting.all()
     compensation = study.compensation
     recruitment = study.recruitment.all()
     observation = study.observation if study.has_observation else None
@@ -56,9 +55,9 @@ def copy_study_to_proposal(proposal, study):
 
     s.age_groups = age_groups
     s.traits = traits
-    s.setting = setting
     s.compensation = compensation
     s.recruitment = recruitment
+    s.save()
 
     if observation:
         copy_observation_to_study(s, observation)
