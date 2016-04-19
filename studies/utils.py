@@ -6,7 +6,7 @@ from tasks.utils import copy_session_to_study
 from .models import AgeGroup
 
 STUDY_PROGRESS_START = 10
-STUDY_PROGRESS_TOTAL = 80
+STUDY_PROGRESS_TOTAL = 90
 
 
 def check_necessity_required(proposal, age_groups, has_traits, legally_incapable):

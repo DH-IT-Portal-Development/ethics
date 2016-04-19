@@ -7,6 +7,7 @@ from core.views import UserAllowedMixin, success_url
 
 from ..forms import SurveyForm, SurveysInline
 from ..models import Study, Survey
+from ..utils import get_study_progress
 
 
 # NOTE: below view is non-standard, as it include inlines
@@ -16,6 +17,12 @@ class StudySurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     form_class = SurveyForm
     inlines = [SurveysInline]
     template_name = 'studies/survey_form.html'
+
+    def get_context_data(self, **kwargs):
+        """Setting the progress on the context"""
+        context = super(StudySurvey, self).get_context_data(**kwargs)
+        context['progress'] = get_study_progress(self.object, True) - 7
+        return context
 
     def forms_valid(self, form, inlines):
         """Removes existing Surveys if has_surveys is set to False."""
@@ -28,7 +35,7 @@ class StudySurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
         return success_url(self)
 
     def get_next_url(self):
-        return reverse('proposals:submit', args=(self.object.pk,))
+        return reverse('studies:consent', args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse('studies:consent', args=(self.object.last_study().pk,))
+        return reverse('studies:session_end', args=(self.object.pk,))

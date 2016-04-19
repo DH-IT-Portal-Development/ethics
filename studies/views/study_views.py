@@ -99,7 +99,7 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
     def get_context_data(self, **kwargs):
         """Setting the progress on the context"""
         context = super(StudyConsent, self).get_context_data(**kwargs)
-        context['progress'] = get_study_progress(self.object, True) - 2
+        context['progress'] = get_study_progress(self.object, True) - 3
         return context
 
     def get_next_url(self):
@@ -109,10 +109,10 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
             next_study = Study.objects.get(proposal=proposal, order=next)
             return reverse('studies:update', args=(next_study.pk,))
         else:
-            return reverse('studies:survey', args=(proposal.pk,))
+            return reverse('proposals:submit', args=(proposal.pk,))
 
     def get_back_url(self):
-        return reverse('studies:session_end', args=(self.object.pk,))
+        return reverse('studies:survey', args=(self.object.pk,))
 
 
 ################

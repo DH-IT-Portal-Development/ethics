@@ -80,11 +80,11 @@ class SessionEnd(AllowErrorsMixin, UpdateView):
     def get_context_data(self, **kwargs):
         """Setting the progress on the context"""
         context = super(SessionEnd, self).get_context_data(**kwargs)
-        context['progress'] = get_study_progress(self.object, True) - 5
+        context['progress'] = get_study_progress(self.object, True) - 10
         return context
 
     def get_next_url(self):
-        return reverse('studies:consent', args=(self.object.pk,))
+        return reverse('studies:survey', args=(self.object.pk,))
 
     def get_back_url(self):
         study = self.object
