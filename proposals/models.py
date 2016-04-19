@@ -117,7 +117,7 @@ class Proposal(models.Model):
         blank=True)
 
     # Fields with respect to Studies
-    has_multiple_trajectories = models.NullBooleanField(
+    studies_similar = models.NullBooleanField(
         _('Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
         help_text=_(u'Daar waar de verschillen klein en qua belasting of \
 risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk \

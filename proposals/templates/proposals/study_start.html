@@ -14,12 +14,11 @@
 {% trans "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
 <script>
 $(function() {
-    depends_on_value('has_multiple_trajectories', 'True', 'studies_number');
+    depends_on_value('studies_similar', 'False', 'studies_number');
 
-    $('input[name=has_multiple_trajectories]').change(function() {
-        var check = $('input[name=has_multiple_trajectories]:checked').val() === 'True';
+    $('input[name=studies_similar]').change(function() {
         var text = "{{ is_similar }}";
-        if (check) {
+        if ($('input[name=studies_similar]:checked').val() === 'False') {
         	text = "{{ is_dissimilar }}";
         }
         $('#next_text').html(text);
