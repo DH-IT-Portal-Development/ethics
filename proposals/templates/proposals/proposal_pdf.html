@@ -81,7 +81,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th><td>{{ proposal.date_start }}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th><td>{{ proposal.title }}</td>
@@ -139,7 +139,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if not proposal.studies_similar %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th><td>{{ proposals.studies_number }}</td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th><td>{{ proposal.studies_number }}</td>
             </tr>
             {% endif %}
         </table>
@@ -147,11 +147,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
         {% for study in proposal.study_set.all %}
         <pdf:nextpage />
-        <h2>
-            {% blocktrans with order=study.order %}
-            Informatie over deelnemersgroep {{ order }}
-            {% endblocktrans %}
-        </h2>
+        <h2>{% trans "De deelnemers" %}</h2>
+        {% include "studies/study_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
@@ -204,7 +201,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% if study.has_observation %}
         {% with observation=study.observation %}
         <pdf:nextpage />
-        <h2>{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}</h2>
+        <h2>{% trans "Het observatieonderzoek" %}</h2>
+        {% include "studies/study_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th><td>{{ observation.setting.all|unordered_list }}</td>
@@ -270,7 +268,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% if study.has_intervention %}
         {% with intervention=study.intervention %}
         <pdf:nextpage />
-        <h2>{% trans "Nadere specificatie van de interventiestudie (of het interventieonderzoeksdeel van de studie)" %}</h2>
+        <h2>{% trans "Het interventieonderzoek" %}</h2>
+        {% include "studies/study_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{{ intervention.setting.all|unordered_list }}</td>
@@ -305,7 +304,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
 
         {% if study.has_sessions %}
         <pdf:nextpage />
-        <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
+        <h2>{% trans "Het takenonderzoek" %}</h2>
+        {% include "studies/study_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "sessions_number" %}</th><td>{{ study.sessions_number }}</td>
@@ -379,7 +379,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% endif %}
 
         <pdf:nextpage />
-        <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
+        <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
+        {% include "studies/study_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.deception|yesno:_("ja,nee") }}</td>
@@ -408,7 +409,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
+        <h2>{% trans "Dataverzameling direct betrokkenen t.b.v. het onderzoek" %}</h2>
+        {% include "studies/study_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "has_surveys" %}</th><td>{{ study.has_surveys|yesno:_("ja,nee") }}</td>
