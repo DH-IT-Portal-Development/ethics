@@ -92,7 +92,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
 
             # Copy Tasks from the parent Session
             for task in s.task_set.all():
-                copy_task_to_session(session, s.task)
+                copy_task_to_session(session, task)
         else:
             nr_tasks = form.cleaned_data['tasks_number']
             session = form.instance
