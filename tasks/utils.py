@@ -38,7 +38,7 @@ def copy_task_to_session(session, task):
 
 def copy_session_to_study(study, session):
     setting = session.setting.all()
-    tasks = session.tasks.all()
+    tasks = session.task_set.all()
 
     s = session
     s.pk = None
