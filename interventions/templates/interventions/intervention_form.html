@@ -12,7 +12,11 @@
 {% block content %}
 <script>
 $(function() {
+    check_field_required('setting', 'needs_details', 'setting_details', 'core');
+    check_field_required('setting', 'needs_supervision', 'supervision', 'core');
     depends_on_value('has_drawbacks', 'True', 'has_drawbacks_details');
+    
+    add_title('setting', "{% trans 'Setting' %}");
 });
 </script>
 {% include "studies/study_title.html" %}

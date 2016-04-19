@@ -12,6 +12,8 @@
 {% block content %}
 <script>
 $(function() {
+    check_field_required('setting', 'needs_details', 'setting_details', 'core');
+    check_field_required('setting', 'needs_supervision', 'supervision', 'core');
     depends_on_value('is_copy', 'True', 'parent_session');
     depends_on_value('is_copy', 'False', 'tasks_number');
 

@@ -28,17 +28,6 @@ class Trait(models.Model):
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
 
-    def __unicode__(self):
-        return self.description
-
-
-class Setting(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    needs_supervision = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-
     class Meta:
         ordering = ['order']
 
@@ -120,17 +109,6 @@ beantwoorden door volwassen deelnemers te testen?'))
         _('Licht toe'),
         max_length=200,
         blank=True)
-    setting = models.ManyToManyField(
-        Setting,
-        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'))
-    setting_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-    supervision = models.NullBooleanField(
-        _('Vindt het afnemen van de taak plaats onder het toeziend oog \
-van de leraar of een ander persoon die bevoegd is?')
-    )
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),

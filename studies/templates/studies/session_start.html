@@ -10,6 +10,14 @@
 {% block progress %}{{ progress }}{% endblock %}
 
 {% block content %}
+<script>
+$(function() {
+    check_field_required('setting', 'needs_details', 'setting_details', 'core');
+    check_field_required('setting', 'needs_supervision', 'supervision', 'core');
+    
+    add_title('setting', "{% trans 'Setting' %}");
+});
+</script>
 {% include "studies/study_title.html" %}
 <p>
     {% trans "U heeft aangegeven dat u gebruik maakt van deelnemers binnen de leeftijdsgroepen:" %}

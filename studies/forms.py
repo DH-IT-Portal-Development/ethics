@@ -17,7 +17,6 @@ class StudyForm(ConditionalModelForm):
                   'has_traits', 'traits', 'traits_details',
                   'necessity', 'necessity_reason',
                   'recruitment', 'recruitment_details',
-                  'setting', 'setting_details', 'supervision',
                   'compensation', 'compensation_details',
                   'passive_consent']
         widgets = {
@@ -27,8 +26,6 @@ class StudyForm(ConditionalModelForm):
             'traits': forms.CheckboxSelectMultiple(),
             'necessity': forms.RadioSelect(choices=YES_NO_DOUBT),
             'recruitment': forms.CheckboxSelectMultiple(),
-            'setting': forms.CheckboxSelectMultiple(),
-            'supervision': forms.RadioSelect(choices=YES_NO),
             'compensation': forms.RadioSelect(),
             'passive_consent': forms.RadioSelect(choices=YES_NO),
         }
@@ -36,15 +33,12 @@ class StudyForm(ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Allow legally_incapable to have HTML in its label
-        - Remove empty label from setting/compensation field
         - Set the Proposal for later reference in the clean method
         """
         self.proposal = kwargs.pop('proposal', None)
 
         super(StudyForm, self).__init__(*args, **kwargs)
         self.fields['legally_incapable'].label = mark_safe(self.fields['legally_incapable'].label)
-        self.fields['setting'].empty_label = None
-        self.fields['compensation'].empty_label = None
 
     def clean(self):
         """
@@ -52,7 +46,6 @@ class StudyForm(ConditionalModelForm):
         - Check whether necessity_reason was required and if so, if it has been filled out
         - If has_traits is checked, make sure there is at least one trait selected
         - If a trait which needs details has been checked, make sure the details are filled
-        - If a setting which needs details has been checked, make sure the details are filled
         - If a compensation which needs details has been checked, make sure the details are filled
         - If a recruitment which needs details has been checked, make sure the details are filled
         """
@@ -61,9 +54,6 @@ class StudyForm(ConditionalModelForm):
         self.necessity_required(cleaned_data)
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details', 'traits_details')
-        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
-        # TODO: this doesn't work as supervision is a boolean value
-        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
         self.check_dependency_singular(cleaned_data, 'compensation', 'needs_details', 'compensation_details')
         self.check_dependency_multiple(cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
 
@@ -109,7 +99,9 @@ class SessionStartForm(forms.ModelForm):
         fields = ['sessions_number']
 
     def __init__(self, *args, **kwargs):
-        """Set the sessions_number field as required"""
+        """
+        - Set the sessions_number field as required
+        """
         super(SessionStartForm, self).__init__(*args, **kwargs)
         self.fields['sessions_number'].required = True
 

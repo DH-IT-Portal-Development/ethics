@@ -12,9 +12,15 @@
 {% block content %}
 <script>
 $(function() {
+    check_field_required('setting', 'needs_details', 'setting_details', 'core');
+    check_field_required('setting', 'needs_supervision', 'supervision', 'core');
     depends_on_value('is_nonpublic_space', 'True', 'has_advanced_consent');
     depends_on_value('needs_approval', 'True', 'approval_institution');
     depends_on_value('needs_approval', 'True', 'approval_document');
+    
+    add_title('setting', "{% trans 'Setting' %}");
+    add_title('is_anonymous', "{% trans 'Anonimiteit' %}");
+    add_title('needs_approval', "{% trans 'Toestemming' %}");
 
     $('.location_set').formset({
         prefix: 'location_set',

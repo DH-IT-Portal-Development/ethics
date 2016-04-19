@@ -23,7 +23,14 @@ class TaskStartForm(ConditionalModelForm):
 
     class Meta:
         model = Session
-        fields = ['tasks_number']
+        fields = [
+            'setting', 'setting_details', 'supervision',
+            'tasks_number',
+        ]
+        widgets = {
+            'setting': forms.CheckboxSelectMultiple(),
+            'supervision': forms.RadioSelect(choices=YES_NO),
+        }
 
     def __init__(self, *args, **kwargs):
         """
@@ -43,10 +50,15 @@ class TaskStartForm(ConditionalModelForm):
     def clean(self):
         """
         Check for conditional requirements:
+        - If a setting which needs details has been checked, make sure the details are filled
         - If is_copy is True, parent_session is required
         - If is_copy is False, tasks_number is required
         """
         cleaned_data = super(TaskStartForm, self).clean()
+
+        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
+        # TODO: this doesn't work as supervision is a boolean value
+        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
 
         self.check_dependency(cleaned_data, 'is_copy', 'parent_session')
         if not cleaned_data.get('is_copy') and not cleaned_data.get('tasks_number'):

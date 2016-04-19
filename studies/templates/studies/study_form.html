@@ -16,8 +16,6 @@ Informatie over deelnemersgroep {{ order }}
 $(function() {
     depends_on_value('has_traits', 'True', 'traits');
     check_field_required('traits', 'needs_details', 'traits_details', 'studies', 'Trait');
-    check_field_required('setting', 'needs_details', 'setting_details', 'studies');
-    check_field_required('setting', 'needs_supervision', 'supervision', 'studies');
     check_field_required('compensation', 'needs_details', 'compensation_details', 'studies');
     check_field_required('recruitment', 'needs_details', 'recruitment_details', 'studies');
 
@@ -25,7 +23,6 @@ $(function() {
     add_title('legally_incapable', "{% trans 'Wilsonbekwaamheid' %}");
     add_title('has_traits', "{% trans 'Bijzondere kenmerken van de deelnemers' %}");
     add_title('necessity', "{% trans 'Noodzakelijkheid' %}");
-    add_title('setting', "{% trans 'Setting' %}");
     add_title('compensation', "{% trans 'Vergoeding' %}");
     add_title('recruitment', "{% trans 'Werving' %}");
     add_title('passive_consent', "{% trans 'Informed consent' %}");
