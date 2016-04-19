@@ -133,7 +133,7 @@ van de leraar of een ander persoon die bevoegd is?')
     )
     compensation = models.ForeignKey(
         Compensation,
-        verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname aan deze studie?'),
+        verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
         # TODO: put a proper text here.
         help_text=_('tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld'),
         null=True)
@@ -163,7 +163,7 @@ van de leraar of een ander persoon die bevoegd is?')
         blank=True,
         validators=[validate_pdf_or_doc])
     passive_consent = models.BooleanField(
-        _('Maakt uw studie gebruik van passieve informed consent?'),
+        _('Maakt u gebruik van passieve informed consent?'),
         default=False,
         # TODO: link to website
         help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
@@ -191,11 +191,13 @@ het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefi
         _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.'),
         blank=True)
     stressful = models.NullBooleanField(
-        _('Is de studie op onderdelen of als geheel zodanig belastend dat deze <em>ondanks de verkregen informed \
-consent </em> vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, \
-bij de deelnemers zelf, of bij ouders of andere vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit \
-van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep, en neem ook de leeftijd van de deelnemers \
-in deze inschatting mee.'),
+        _('Is bovenstaand onderzoekstraject op onderdelen of als geheel \
+zodanig belastend dat deze <em>ondanks de verkregen informed consent</em> \
+vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij \
+collega-onderzoekers, bij de deelnemers zelf, of bij ouders of andere \
+vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit van het naar \
+verwachting meest kwetsbare c.q. minst belastbare (bijv. jongste) \
+geselecteerde deelnemerstype dat dit traject doorloopt.'),
         help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
 een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de \
 privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren \
@@ -206,13 +208,19 @@ belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke scha
 of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.'),
         blank=True)
     risk = models.NullBooleanField(
-        _('Zijn de risico\'s op psychische, fysieke, of andere (bijv. economische, juridische) schade door deelname \
-aan de studie <em>meer dan</em> minimaal? minimaal? D.w.z. ligt de kans op en/of omvang van mogelijke schade bij de \
-deelnemers duidelijk <em>boven</em> het "achtergrondrisico"? Achtergrondrisico is datgene dat gezonde, gemiddelde \
-burgers in de relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Ga bij het \
-beantwoorden van deze vraag uit van de volgens u meest kwetsbare c.q. minst belastbare deelnemersgroep in uw studie. \
-En denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van bepaalde informatie \
-kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, economische schade door data-koppeling, \
+        _('Zijn de risico\'s op psychische, fysieke, of andere (bijv. \
+economische, juridische) schade door deelname aan bovenstaand \
+onderzoekstraject <em>meer dan</em> minimaal? \
+D.w.z. ligt de kans op en/of omvang van mogelijke schade \
+bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"? \
+Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de \
+relevante leeftijdscategorie normaalgesproken in het dagelijks leven \
+ten deel valt. Ga bij het beantwoorden van deze vraag uit van het naar \
+verwachting meest kwetsbare c.q. minst belastbare (bijv. jongste) \
+geselecteerde deelnemerstype dat dit traject doorloopt. En denk bij \
+schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar \
+komen van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, \
+stigmatisering door anderen, economische schade door data-koppeling, \
 et cetera.'),
         help_text=mark_safe(_('Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de \
 risico\'s van "routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische \
