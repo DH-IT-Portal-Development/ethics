@@ -90,10 +90,10 @@ class Study(models.Model):
 
     age_groups = models.ManyToManyField(
         AgeGroup,
-        verbose_name=_(u'Geef aan binnen welke leeftijdscategorie(ën) uw deelnemersgroep valt'),
+        verbose_name=_(u'Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
         help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen'))
     legally_incapable = models.NullBooleanField(
-        _('Maakt uw studie gebruik van <strong>volwassen</strong> wilsonbekwame deelnemers?'))
+        _('Maakt uw studie gebruik van <strong>volwassen</strong> wils<u>on</u>bekwame deelnemers?'))
     has_traits = models.NullBooleanField(
         _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de deelnemers het geval?'))

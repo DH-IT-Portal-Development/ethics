@@ -85,7 +85,9 @@ class Proposal(models.Model):
         max_length=16,
         unique=True)
     date_start = models.DateField(
-        _('Wat is de beoogde startdatum van uw studie?'))
+        _('Wat is, indien bekend, de beoogde startdatum van uw studie?'),
+        blank=True,
+        null=True)
     title = models.CharField(
         _('Wat is de titel van uw studie?'),
         max_length=200,
@@ -95,7 +97,7 @@ class Proposal(models.Model):
         _('Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'),
         validators=[MaxWordsValidator(SUMMARY_MAX_WORDS)])
     other_applicants = models.BooleanField(
-        _('Zijn er nog andere UiL OTS-onderzoekers bij deze studie betrokken?'),
+        _('Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie betrokken?'),
         default=False)
     other_stakeholders = models.BooleanField(
         _('Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?'),
@@ -120,11 +122,15 @@ class Proposal(models.Model):
         help_text=_('Een deelnemersgroep kan gekenmerkt worden door een controle- en experimentele groep, \
 maar ook door twee verschillende leeftijden (0-2 jarigen en volwassenen of 18-22 jarigen en 35-40 jarigen)'))
     has_multiple_trajectories = models.NullBooleanField(
-        _('Lopen deze groepen een verschillend traject door?'),
-        help_text=_(u'Een traject is verschillend wanneer u bijvoorbeeld baby\'s \
-én volwassenen test op hun discriminatievaardigheden, maar zij krijgen een ander type taak. \
-Er is ook sprake van een ander traject wanneer u een groep 18-22 jarigen sessie \
-A, B en C laat doen, terwijl de 35-40 jarigen alleen C doen.'))
+        _('Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
+        help_text=_(u'Daar waar de verschillen klein en qua belasting of \
+risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk \
+hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
+een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
+helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
+hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
+dan wel bij de beschrijving van de interventie welke varianten precies \
+gebruikt worden).'))
     studies_number = models.PositiveIntegerField(
         _('Hoeveel verschillende trajecten zijn er?'),
         default=1,
@@ -154,7 +160,8 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
     # References to other models
     relation = models.ForeignKey(
         Relation,
-        verbose_name=_('Wat is uw relatie tot het UiL OTS?'))
+        verbose_name=_('In welke hoedanigheid bent u betrokken \
+bij deze UiL OTS studie?'))
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='created_by')

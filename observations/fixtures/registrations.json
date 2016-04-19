@@ -39,7 +39,7 @@
     "fields": {
         "needs_details": true,
         "order": 5,
-        "description": "anders, namelijk"
+        "description": "anders"
     },
     "model": "observations.registration",
     "pk": 5

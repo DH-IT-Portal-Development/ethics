@@ -4,7 +4,7 @@
         "requires_review": false,
         "needs_details": false,
         "order": 1,
-        "description": "uit de 1e geldstroom (bijv. UiL OTS, TLC, de opleiding)"
+        "description": "uit de 1e geldstroom (bijv. UiL OTS, TLC, Ba-/Ma-/RMa-opleiding)"
     },
     "model": "proposals.funding",
     "pk": 1

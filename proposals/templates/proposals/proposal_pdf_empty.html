@@ -92,7 +92,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Toetsing: ook door de METC?" %}</h2>
+        <h2>{% trans "Ook ethische toetsing door de METC nodig?" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{% show_yesnodoubt %}</td>
@@ -118,7 +118,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Specificatie over deelnemersgroep(en)" %} <em>n</em></h2>
+        <h2>{% trans "Eén of meerdere trajecten?" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "has_multiple_groups" %}</th><td>{% show_yesno %}</td>

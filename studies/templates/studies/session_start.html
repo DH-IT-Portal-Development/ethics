@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %} 
-{% trans "Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)" %}
+{% trans "Het [traject X] takenonderzoek" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -25,11 +25,6 @@
 <p>
     {% blocktrans %}
     <strong>Sessie:</strong> Het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een deelnemer vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de deelnemer ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    <strong>Procedure:</strong> De voor het onderzoek benodigde gang van zaken binnen één sessie (bijvoorbeeld: eerst ontvangst en preview, dan EEG-electrodes plakken, dan taak A, dan pauze, dan taak B, dan debriefing).
     {% endblocktrans %}
 </p>
 <p>
