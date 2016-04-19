@@ -189,19 +189,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "setting" %}</th><td>{{ study.setting.all|unordered_list }}</td>
-            </tr>
-            {% if study.setting.all|needs_details %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "setting_details" %}</th><td>{{ study.setting_details }}</td>
-            </tr>
-            {% endif %}
-            {% if study.setting.all|needs_details:"needs_supervision" %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "supervision" %}</th><td>{{ study.supervision|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% endif %}
-            <tr>
                 <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th><td>{{ study.compensation }}</td>
             </tr>
             {% if study.compensation.needs_details %}
@@ -219,6 +206,19 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <pdf:nextpage />
         <h2>{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}</h2>
         <table>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th><td>{{ observation.setting.all|unordered_list }}</td>
+            </tr>
+            {% if observation.setting.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th><td>{{ observation.setting_details }}</td>
+            </tr>
+            {% endif %}
+            {% if observation.setting.all|needs_details:"needs_supervision" %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{{ observation.supervision|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "days" %}</th><td>{{ observation.days }}</td>
             </tr>
@@ -273,6 +273,19 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Nadere specificatie van de interventiestudie (of het interventieonderzoeksdeel van de studie)" %}</h2>
         <table>
             <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{{ intervention.setting.all|unordered_list }}</td>
+            </tr>
+            {% if intervention.setting.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td>{{ intervention.setting_details }}</td>
+            </tr>
+            {% endif %}
+            {% if intervention.setting.all|needs_details:"needs_supervision" %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% endif %}
+            <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td>{{ intervention.description }}</td>
             </tr>
             <tr>
@@ -302,6 +315,19 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% for session in study.session_set.all %}
         <h2>Sessie {{ session.order }}</h2>
         <table>
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th><td>{{ session.setting.all|unordered_list }}</td>
+            </tr>
+            {% if session.setting.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "setting_details" %}</th><td>{{ session.setting_details }}</td>
+            </tr>
+            {% endif %}
+            {% if session.setting.all|needs_details:"needs_supervision" %}
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th><td>{{ session.supervision|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td>{{ session.tasks_number }}</td>
             </tr>

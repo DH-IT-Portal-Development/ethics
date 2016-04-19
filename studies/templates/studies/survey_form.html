@@ -37,6 +37,7 @@ $(function() {
     surveys_stressful.insertAfter('.dynamic-form-add');
 });
 </script>
+{% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <table>

@@ -129,7 +129,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Informatie over deelnemersgroep" %} <em>n</em></h2>
+        <h2>{% trans "De deelnemers" %} <em>n</em></h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th><td>{% show_all "studies" "agegroup" %}</td>
@@ -159,15 +159,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "studies" "study" "recruitment_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "setting" %}</th><td>{% show_all "studies" "setting" %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "setting_details" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "supervision" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
                 <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th><td>{% show_all "studies" "compensation" %}</td>
             </tr>
             <tr>
@@ -179,8 +170,17 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Nadere specificatie van de observatiestudie (of het observatieonderzoeksdeel van de studie)" %}</h2>
+        <h2>{% trans "Het observatieonderzoek" %}</h2>
         <table>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{% show_yesno %}</td>
+            </tr>
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "days" %}</th><td></td>
             </tr>
@@ -223,8 +223,17 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Nadere specificatie van de interventiestudie (of het interventieonderzoeksdeel van de studie)" %}</h2>
+        <h2>{% trans "Het interventieonderzoek" %}</h2>
         <table>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{% show_yesno %}</td>
+            </tr>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td></td>
             </tr>
@@ -240,7 +249,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>Nadere specificatie van de takenstudie (of het takenonderzoeksdeel van de studie)</h2>
+        <h2>{% trans "Het takenonderzoek" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "sessions_number" %}</th><td></td>
@@ -249,6 +258,15 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
 
         <h2>{% trans "Sessie" %} <em>n</em></h2>
         <table>
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "setting_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th><td>{% show_yesno %}</td>
+            </tr>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td></td>
             </tr>
@@ -288,7 +306,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Informatie over de belasting en de risico's" %}</h2>
+        <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{% show_yesno %}</td>
@@ -311,13 +329,13 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Dataverzameling direct betrokkenen" %}</h2>
+        <h2>{% trans "Dataverzameling direct betrokkenen t.b.v. het onderzoek" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "has_surveys" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "has_surveys" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "surveys_stressful" %}</th><td>{% show_yesnodoubt %}</td>
+                <th>{% get_verbose_field_name "studies" "study" "surveys_stressful" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
         </table>
         <h3>Vragenlijst <em>n</em></h3>
@@ -337,7 +355,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Informed consent" %}</h2>
+        <h2>{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th><td></td>
