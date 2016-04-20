@@ -2,41 +2,41 @@
 
 from django.core.urlresolvers import reverse
 
-from core.views import AllowErrorsMixin, UpdateView
+from braces.views import LoginRequiredMixin
+from extra_views import UpdateWithInlinesView
+
+from core.views import UserAllowedMixin, success_url
 from studies.models import Study
-from ..forms import StudyStartForm
+
+from ..forms import StudyStartForm, StudiesInline
 from ..models import Proposal
 
 
-class StudyStart(AllowErrorsMixin, UpdateView):
+class StudyStart(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
     model = Proposal
     form_class = StudyStartForm
+    inlines = [StudiesInline]
     template_name = 'proposals/study_start.html'
 
-    def form_valid(self, form):
-        """Creates or deletes Studies on save"""
-        nr_studies = form.cleaned_data['studies_number']
-        proposal = form.instance
-        current = proposal.study_set.count() or 0
+    def forms_valid(self, form, inlines):
+        """
+        - If the studies_similar is set, set studies_number to 1 and remove superfluous Studies
+        """
+        if form.instance.studies_similar:
+            form.instance.studies_number = 1
+            inlines = []
+            Study.objects.filter(proposal=form.instance,
+                                 order__gt=form.instance.studies_number).delete()
 
-        # Create Studies
-        for n in xrange(current, nr_studies):
-            order = n + 1
-            study = Study(proposal=proposal, order=order)
-            study.save()
+        return super(StudyStart, self).forms_valid(form, inlines)
 
-        # Delete Studies
-        for n in xrange(nr_studies, current):
-            order = n + 1
-            study = Study.objects.get(proposal=proposal, order=order)
-            study.delete()
-
-        return super(StudyStart, self).form_valid(form)
+    def get_success_url(self):
+        return success_url(self)
 
     def get_next_url(self):
         """Continue to the first Study"""
-        proposal = self.object
-        return reverse('studies:update', args=(proposal.first_study().pk,))
+        return reverse('studies:update', args=(self.object.first_study().pk,))
 
     def get_back_url(self):
+        """Continue to WMO"""
         return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))

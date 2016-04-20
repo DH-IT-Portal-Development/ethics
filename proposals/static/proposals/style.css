@@ -63,7 +63,7 @@ form th {
     color: red;
 }
 
-.survey_set p, .location_set p {
+.study_set p, .survey_set p, .location_set p {
     display: inline;
 }
 

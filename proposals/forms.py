@@ -5,9 +5,11 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
 
 from braces.forms import UserKwargModelFormMixin
+from extra_views import InlineFormSet
 
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO, YES_NO_DOUBT
+from studies.models import Study
 from .models import Proposal, Wmo
 from .utils import get_users_as_list
 
@@ -132,6 +134,42 @@ class StudyStartForm(forms.ModelForm):
         super(StudyStartForm, self).__init__(*args, **kwargs)
 
         self.fields['studies_similar'].required = True
+
+
+class StudyInlineFormSet(forms.BaseInlineFormSet):
+    def clean(self):
+        """
+        - If studies_similar has not been set, the number of Studies should be equal to studies_number
+        - If studies_similar has been set, remove all validation errors
+        """
+        if not self.instance.studies_similar:
+            count = 0
+            for form in self.forms:
+                cleaned_data = form.cleaned_data
+                if cleaned_data and not cleaned_data.get('DELETE', False):
+                    count += 1
+
+            if count != self.instance.studies_number:
+                first_form = self.forms[0]
+                error = forms.ValidationError(_(u'Het aantal aangegeven trajecten komt niet overeen.'), code='required')
+                if first_form.is_valid():
+                    first_form.add_error('name', error)
+                else:
+                    # TODO: find a way to show this error in the template
+                    raise error
+        else:
+            for form in self.forms:
+                form._errors = []
+
+
+class StudiesInline(InlineFormSet):
+    """Creates an InlineFormSet for Studies"""
+    model = Study
+    fields = ['name']
+    can_delete = True
+    extra = 2
+    max_num = 3
+    formset_class = StudyInlineFormSet
 
 
 class ProposalSubmitForm(forms.ModelForm):

@@ -27,7 +27,7 @@ $(function() {
 
     depends_on_value('has_surveys', 'True', 'surveys_stressful');
     $('input[name="has_surveys"]').change(function() {
-        var check = $('input[name="has_surveys"]:checked').val() == 'True';
+        var check = $('input[name="has_surveys"]:checked').val() === 'True';
         $('#survey_set_title, .survey_set, .dynamic-form-add').toggle(check);
     });
     $('input[name="has_surveys"]').change();

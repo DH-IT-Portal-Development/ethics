@@ -14,16 +14,34 @@
 {% trans "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
 <script>
 $(function() {
+    $('.study_set').formset({
+        prefix: 'study_set',
+        addText: "{% trans 'Voeg traject toe' %}",
+        deleteText: "{% trans 'Verwijder' %}"
+    });
+    $('#study_set_title, .study_set, .dynamic-form-add').hide();
+
     depends_on_value('studies_similar', 'False', 'studies_number');
 
     $('input[name=studies_similar]').change(function() {
+        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
+
         var text = "{{ is_similar }}";
-        if ($('input[name=studies_similar]:checked').val() === 'False') {
+        if (is_dissimilar) {
         	text = "{{ is_dissimilar }}";
+        	$('#id_studies_number').val(2);
         }
+        else {
+        	$('#id_studies_number').val(1);
+        }
+
         $('#next_text').html(text);
         $('#next_text').show();
+
+        $('#id_studies_number').parents('tr').toggle(is_dissimilar);
+        $('#study_set_title, .study_set, .dynamic-form-add').toggle(is_dissimilar);
     });
+    $('input[name=studies_similar]').change();
 });
 </script>
 <p>
@@ -32,7 +50,21 @@ $(function() {
     {% endblocktrans %}
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
+    <table>
+        {{ form.as_table }}
+        <tr id="study_set_title">
+            <th><strong>{% trans "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters." %}</strong></th>
+            <td></td>
+        </tr>
+        {% for formset in inlines %}
+        {% for subform in formset.forms %}
+        <tr class="{{ formset.prefix }}">
+            <td colspan="2">{{ subform.as_p }}</td>
+        </tr>
+        {% endfor %}
+        {{ formset.management_form }}
+        {% endfor %}
+    </table>
     <p id="next_text"></p>
     {% include "base/form_buttons.html" %}
 </form>
