@@ -14,34 +14,40 @@
 {% trans "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
 <script>
 $(function() {
-    $('.study_set').formset({
-        prefix: 'study_set',
-        addText: "{% trans 'Voeg traject toe' %}",
-        deleteText: "{% trans 'Verwijder' %}"
-    });
-    $('#study_set_title, .study_set, .dynamic-form-add').hide();
-
-    depends_on_value('studies_similar', 'False', 'studies_number');
+    add_title('study_name_1', "{% trans 'Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters.' %}");
 
     $('input[name=studies_similar]').change(function() {
-        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
+        var is_similar = $('input[name=studies_similar]:checked').val() === 'True';
 
         var text = "{{ is_similar }}";
-        if (is_dissimilar) {
+        if (!is_similar) {
         	text = "{{ is_dissimilar }}";
-        	$('#id_studies_number').val(2);
         }
         else {
-        	$('#id_studies_number').val(1);
+            $('input[name^="study_name"]').parents('tr').hide();
+            $('input[name="study_name_1"]').parents('tr').prev().hide();
         }
 
         $('#next_text').html(text);
         $('#next_text').show();
 
-        $('#id_studies_number').parents('tr').toggle(is_dissimilar);
-        $('#study_set_title, .study_set, .dynamic-form-add').toggle(is_dissimilar);
+        $('#id_studies_number').parents('tr').toggle(!is_similar);
+        $('#id_studies_number').change();
     });
     $('input[name=studies_similar]').change();
+
+    $('input[name=studies_number]').change(function() {
+        var is_similar = $('input[name=studies_similar]:checked').val() === 'True';
+
+        if (!is_similar) {
+            $('input[name="study_name_1"]').parents('tr').prev().show();
+            for (var i = 1; i <= 5; i++) {
+                $('input[name="study_name_' + i + '"]').parents('tr').toggle(i <= $(this).val());
+            }
+        }
+
+    });
+    $('input[name=studies_number]').change();
 });
 </script>
 <p>
@@ -52,18 +58,6 @@ $(function() {
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>
         {{ form.as_table }}
-        <tr id="study_set_title">
-            <th><strong>{% trans "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters." %}</strong></th>
-            <td></td>
-        </tr>
-        {% for formset in inlines %}
-        {% for subform in formset.forms %}
-        <tr class="{{ formset.prefix }}">
-            <td colspan="2">{{ subform.as_p }}</td>
-        </tr>
-        {% endfor %}
-        {{ formset.management_form }}
-        {% endfor %}
     </table>
     <p id="next_text"></p>
     {% include "base/form_buttons.html" %}

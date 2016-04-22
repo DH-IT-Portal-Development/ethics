@@ -2,41 +2,49 @@
 
 from django.core.urlresolvers import reverse
 
-from braces.views import LoginRequiredMixin
-from extra_views import UpdateWithInlinesView
-
-from core.views import UserAllowedMixin, success_url
+from core.views import AllowErrorsMixin, UpdateView
 from studies.models import Study
-
-from ..forms import StudyStartForm, StudiesInline
+from ..forms import StudyStartForm
 from ..models import Proposal
 
 
-class StudyStart(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
+class StudyStart(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = StudyStartForm
-    inlines = [StudiesInline]
     template_name = 'proposals/study_start.html'
 
-    def forms_valid(self, form, inlines):
-        """
-        - If the studies_similar is set, set studies_number to 1 and remove superfluous Studies
-        """
-        if form.instance.studies_similar:
-            form.instance.studies_number = 1
-            inlines = []
-            Study.objects.filter(proposal=form.instance,
-                                 order__gt=form.instance.studies_number).delete()
+    def get_form_kwargs(self):
+        """Sets the Proposal as a form kwarg"""
+        kwargs = super(StudyStart, self).get_form_kwargs()
+        kwargs['proposal'] = self.object
+        return kwargs
 
-        return super(StudyStart, self).forms_valid(form, inlines)
+    def form_valid(self, form):
+        """Creates or deletes Studies on save"""
+        proposal = form.instance
+        current = proposal.study_set.count() or 0
+        if proposal.studies_similar:
+            proposal.studies_number = 1
 
-    def get_success_url(self):
-        return success_url(self)
+        # Create or update Studies
+        for n in xrange(proposal.studies_number):
+            order = n + 1
+            s, _ = Study.objects.get_or_create(proposal=proposal, order=order)
+            s.name = self.request.POST['study_name_' + str(order)]
+            s.save()
+
+        # Delete Studies
+        for n in xrange(proposal.studies_number, current):
+            order = n + 1
+            study = Study.objects.get(proposal=proposal, order=order)
+            study.delete()
+
+        return super(StudyStart, self).form_valid(form)
 
     def get_next_url(self):
         """Continue to the first Study"""
-        return reverse('studies:update', args=(self.object.first_study().pk,))
+        proposal = self.object
+        return reverse('studies:update', args=(proposal.first_study().pk,))
 
     def get_back_url(self):
-        """Continue to WMO"""
         return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))

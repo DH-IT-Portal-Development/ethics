@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -130,7 +130,7 @@ gebruikt worden).'))
     studies_number = models.PositiveIntegerField(
         _('Hoeveel verschillende trajecten zijn er?'),
         default=1,
-        validators=[MinValueValidator(1)])
+        validators=[MinValueValidator(1), MaxValueValidator(5)])
 
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)

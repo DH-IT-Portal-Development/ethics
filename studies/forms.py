@@ -15,7 +15,7 @@ from .utils import check_necessity_required
 class StudyForm(ConditionalModelForm):
     class Meta:
         model = Study
-        fields = ['name', 'age_groups', 'legally_incapable',
+        fields = ['age_groups', 'legally_incapable',
                   'has_traits', 'traits', 'traits_details',
                   'necessity', 'necessity_reason',
                   'recruitment', 'recruitment_details',

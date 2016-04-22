@@ -119,57 +119,54 @@ class WmoCheckForm(forms.ModelForm):
 
 
 class StudyStartForm(forms.ModelForm):
+    study_name_1 = forms.CharField(label=_('Naam traject 1'), max_length=15, required=False)
+    study_name_2 = forms.CharField(label=_('Naam traject 2'), max_length=15, required=False)
+    study_name_3 = forms.CharField(label=_('Naam traject 3'), max_length=15, required=False)
+    study_name_4 = forms.CharField(label=_('Naam traject 4'), max_length=15, required=False)
+    study_name_5 = forms.CharField(label=_('Naam traject 5'), max_length=15, required=False)
+
     class Meta:
         model = Proposal
-        fields = ['studies_similar',
-                  'studies_number']
+        fields = ['studies_similar', 'studies_number',
+                  'study_name_1', 'study_name_2', 'study_name_3', 'study_name_4', 'study_name_5']
         widgets = {
             'studies_similar': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
         """
-        - Set studies_similar as required.
+        - Set the Proposal for later reference
+        - Set studies_similar as required
+        - Set initial data for the study_name fields
         """
+        self.proposal = kwargs.pop('proposal', None)
+
         super(StudyStartForm, self).__init__(*args, **kwargs)
 
         self.fields['studies_similar'].required = True
 
+        for n, study in enumerate(self.proposal.study_set.all()):
+            study_name = 'study_name_' + str(n + 1)
+            self.fields[study_name].initial = study.name
 
-class StudyInlineFormSet(forms.BaseInlineFormSet):
     def clean(self):
         """
-        - If studies_similar has not been set, the number of Studies should be equal to studies_number
-        - If studies_similar has been set, remove all validation errors
+        Check for conditional requirements:
+        - If studies_similar is set to False, make sure studies_number is set (and higher than 2)
+        - If studies_number is set, make sure the corresponding name fields are filled.
         """
-        if not self.instance.studies_similar:
-            count = 0
-            for form in self.forms:
-                cleaned_data = form.cleaned_data
-                if cleaned_data and not cleaned_data.get('DELETE', False):
-                    count += 1
+        cleaned_data = super(StudyStartForm, self).clean()
 
-            if count != self.instance.studies_number:
-                first_form = self.forms[0]
-                error = forms.ValidationError(_(u'Het aantal aangegeven trajecten komt niet overeen.'), code='required')
-                if first_form.is_valid():
-                    first_form.add_error('name', error)
-                else:
-                    # TODO: find a way to show this error in the template
-                    raise error
-        else:
-            for form in self.forms:
-                form._errors = []
-
-
-class StudiesInline(InlineFormSet):
-    """Creates an InlineFormSet for Studies"""
-    model = Study
-    fields = ['name']
-    can_delete = True
-    extra = 2
-    max_num = 3
-    formset_class = StudyInlineFormSet
+        if not cleaned_data['studies_similar']:
+            nr_studies = cleaned_data['studies_number']
+            if cleaned_data['studies_number'] < 2:
+                self.add_error('studies_number', _('Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
+            for n in xrange(nr_studies):
+                if n >= 5:
+                    break
+                study_name = 'study_name_' + str(n + 1)
+                if not cleaned_data[study_name]:
+                    self.add_error(study_name, _('Dit veld is verplicht.'))
 
 
 class ProposalSubmitForm(forms.ModelForm):

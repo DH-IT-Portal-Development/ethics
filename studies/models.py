@@ -74,7 +74,8 @@ class Study(models.Model):
     order = models.PositiveIntegerField()
     name = models.CharField(
         _('Naam traject'),
-        max_length=15)
+        max_length=15,
+        blank=True)
 
     age_groups = models.ManyToManyField(
         AgeGroup,
