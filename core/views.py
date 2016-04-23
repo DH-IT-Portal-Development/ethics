@@ -23,7 +23,7 @@ from tasks.models import Session, Task
 # Views
 ################
 class HomeView(generic.TemplateView):
-    template_name = 'proposals/index.html'
+    template_name = 'core/index.html'
 
 
 ################
