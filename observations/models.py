@@ -19,6 +19,7 @@ class Observation(models.Model):
         _('Vindt het afnemen van de taak plaats onder het toeziend oog \
 van de leraar of een ander persoon die bevoegd is?')
     )
+
     days = models.PositiveIntegerField(
         _('Op hoeveel dagen wordt er geobserveerd?'))
     mean_hours = models.DecimalField(
@@ -26,6 +27,7 @@ van de leraar of een ander persoon die bevoegd is?')
         max_digits=4,
         decimal_places=2,
         validators=[MaxValueValidator(24)])
+
     is_anonymous = models.BooleanField(
         _('Wordt er anoniem geobserveerd?'),
         help_text=_('Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.'),
@@ -41,6 +43,7 @@ tijdens een hypotheekgesprek of tijdens politieverhoren.'),
     has_advanced_consent = models.BooleanField(
         _('Vindt de informed consent van tevoren plaats?'),
         default=True)
+
     needs_approval = models.BooleanField(
         _('Heeft u toestemming nodig van een (samenwerkende) instantie \
 om deze observatie te mogen uitvoeren?'),
