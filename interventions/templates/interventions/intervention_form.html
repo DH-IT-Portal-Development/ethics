@@ -22,11 +22,21 @@ $(function() {
     add_title('number', "{% trans 'Details interventie' %}");
     add_title('has_controls', "{% trans 'Controlegroep' %}");
     add_title('has_recording', "{% trans 'Voor- en nameting' %}");
+
+    // Fixing display of the two fields on Study level
+    $('label[for="id_has_observation"]').empty();
+    $('#id_has_observation').after(' <label for="id_has_observation">' + "{% trans 'Observatie' %}" + '</label>');
+    $('label[for="id_has_sessions"]').empty();
+    $('#id_has_sessions').after(' <label for="id_has_sessions">' + "{% trans 'Taak/taken' %}" + '</label>');
+    $('#id_has_observation').parents('tr').find('th').text("{% trans 'Maak je bij de voor- en/of nameting gebruik van:' %}");
+
 });
 </script>
 {% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
+    <table>
+        {% for field in form.as_table %}{{ field|safe }}{% endfor %}
+    </table>
     {% with proposal=study.proposal %}
     {% include "base/form_buttons.html" %}
     {% endwith %}

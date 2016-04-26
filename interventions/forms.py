@@ -7,6 +7,9 @@ from .models import Intervention
 
 
 class InterventionForm(ConditionalModelForm):
+    has_observation = forms.BooleanField(label='')
+    has_sessions = forms.BooleanField(label='')
+
     class Meta:
         model = Intervention
         fields = [
