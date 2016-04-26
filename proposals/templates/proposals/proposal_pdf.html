@@ -94,7 +94,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if proposal.funding.all|needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td>{{ proposal.funding.details }}</td>
             </tr>
             {% endif %}
         </table>
@@ -242,7 +242,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if observation.needs_approval %}
             <tr>
-                <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th><td></td>
+                <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th><td>{{ observation.approval_institution }}</td>
             </tr>
             {% endif %}
         </table>

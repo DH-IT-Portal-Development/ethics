@@ -5,11 +5,9 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
 
 from braces.forms import UserKwargModelFormMixin
-from extra_views import InlineFormSet
 
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO, YES_NO_DOUBT
-from studies.models import Study
 from .models import Proposal, Wmo
 from .utils import get_users_as_list
 
