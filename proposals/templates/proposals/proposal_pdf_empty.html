@@ -170,6 +170,32 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
+        <h2>{% trans "Het interventieonderzoek" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{% show_yesno %}</td>
+            </tr>
+        </table>
+
+        <pdf:nextpage />
         <h2>{% trans "Het observatieonderzoek" %}</h2>
         <table>
             <tr>
@@ -219,32 +245,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "observations" "location" "registrations_details" %}</th><td></td>
-            </tr>
-        </table>
-
-        <pdf:nextpage />
-        <h2>{% trans "Het interventieonderzoek" %}</h2>
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{% show_yesno %}</td>
             </tr>
         </table>
 

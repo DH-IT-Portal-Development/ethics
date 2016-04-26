@@ -37,11 +37,11 @@ $(function() {
     {% endblocktrans %}
 </p>
 <ul>
-    {% if study.has_observation %}
-    <li>{% trans "Observatieonderzoek" %}</li>
-    {% endif %}
     {% if study.has_intervention %}
     <li>{% trans "Interventieonderzoek" %}</li>
+    {% endif %}
+    {% if study.has_observation %}
+    <li>{% trans "Observatieonderzoek" %}</li>
     {% endif %}
     {% if study.has_sessions %}
     <li>

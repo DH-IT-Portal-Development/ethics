@@ -191,7 +191,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         study = self.current_study()
         if study:
             status = self.STUDY_CREATED
-            if not (study.has_observation or study.has_intervention or study.has_sessions):
+            if not (study.has_intervention or study.has_observation or study.has_sessions):
                 status = self.CONSENT_ADDED
             if study.has_observation:
                 status = self.OBSERVATION

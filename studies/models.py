@@ -121,11 +121,11 @@ beantwoorden door volwassen deelnemers te testen?'))
         blank=True)
 
     # Fields with respect to experimental design
-    has_observation = models.BooleanField(
-        _('Observatieonderzoek'),
-        default=False)
     has_intervention = models.BooleanField(
         _('Interventieonderzoek'),
+        default=False)
+    has_observation = models.BooleanField(
+        _('Observatieonderzoek'),
         default=False)
     has_sessions = models.BooleanField(
         _('Taakonderzoek'),

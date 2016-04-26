@@ -67,18 +67,18 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         study = self.object
         next_url = 'studies:session_end'
         pk = study.pk
-        if study.has_observation:
-            if hasattr(study, 'observation'):
-                next_url = 'observations:update'
-                pk = study.observation.pk
-            else:
-                next_url = 'observations:create'
-        elif study.has_intervention:
+        if study.has_intervention:
             if hasattr(study, 'intervention'):
                 next_url = 'interventions:update'
                 pk = study.intervention.pk
             else:
                 next_url = 'interventions:create'
+        elif study.has_observation:
+            if hasattr(study, 'observation'):
+                next_url = 'observations:update'
+                pk = study.observation.pk
+            else:
+                next_url = 'observations:create'
         elif study.has_sessions:
             next_url = 'studies:session_start'
         return reverse(next_url, args=(pk,))

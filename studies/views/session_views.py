@@ -56,12 +56,12 @@ class SessionStart(AllowErrorsMixin, UpdateView):
         study = self.object
         next_url = 'studies:design'
         pk = study.pk
-        if study.has_intervention:
-            next_url = 'interventions:update'
-            pk = study.intervention.pk
-        elif study.has_observation:
+        if study.has_observation:
             next_url = 'observations:update'
             pk = study.observation.pk
+        elif study.has_intervention:
+            next_url = 'interventions:update'
+            pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
 
     def get_success_message(self, cleaned_data):

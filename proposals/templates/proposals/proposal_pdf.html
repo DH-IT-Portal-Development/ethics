@@ -198,6 +198,43 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
         </table>
 
+        {% if study.has_intervention %}
+        {% with intervention=study.intervention %}
+        <pdf:nextpage />
+        <h2>{% trans "Het interventieonderzoek" %}</h2>
+        {% include "studies/study_title.html" %}
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{{ intervention.setting.all|unordered_list }}</td>
+            </tr>
+            {% if intervention.setting.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td>{{ intervention.setting_details }}</td>
+            </tr>
+            {% endif %}
+            {% if intervention.setting.all|needs_details:"needs_supervision" %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td>{{ intervention.description }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{{ intervention.has_drawbacks|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if intervention.has_drawbacks %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td>{{ intervention.has_drawbacks_details }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{{ intervention.is_supervised|yesno:_("ja,nee") }}</td>
+            </tr>
+        </table>
+        {% endwith %}
+        {% endif %}
+
         {% if study.has_observation %}
         {% with observation=study.observation %}
         <pdf:nextpage />
@@ -262,43 +299,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             {% endif %}
         </table>
         {% endfor %}
-        {% endwith %}
-        {% endif %}
-
-        {% if study.has_intervention %}
-        {% with intervention=study.intervention %}
-        <pdf:nextpage />
-        <h2>{% trans "Het interventieonderzoek" %}</h2>
-        {% include "studies/study_title.html" %}
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{{ intervention.setting.all|unordered_list }}</td>
-            </tr>
-            {% if intervention.setting.all|needs_details %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td>{{ intervention.setting_details }}</td>
-            </tr>
-            {% endif %}
-            {% if intervention.setting.all|needs_details:"needs_supervision" %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td>{{ intervention.description }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{{ intervention.has_drawbacks|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if intervention.has_drawbacks %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td>{{ intervention.has_drawbacks_details }}</td>
-            </tr>
-            {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{{ intervention.is_supervised|yesno:_("ja,nee") }}</td>
-            </tr>
-        </table>
         {% endwith %}
         {% endif %}
 

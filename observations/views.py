@@ -24,21 +24,32 @@ class ObservationMixin(object):
     success_message = _('Observatie opgeslagen')
     inlines = [LocationsInline]
 
+    def get_context_data(self, **kwargs):
+        """Setting the Study and progress on the context"""
+        context = super(ObservationMixin, self).get_context_data(**kwargs)
+        study = self.get_study()
+        context['study'] = study
+        context['progress'] = get_study_progress(study) + 5
+        return context
+
     def get_success_url(self):
         return success_url(self)
 
     def get_next_url(self):
-        study = self.object.study
+        study = self.get_study()
         next_url = 'studies:session_end'
         pk = study.pk
-        if study.has_intervention:
-            if hasattr(study, 'intervention'):
-                next_url = 'interventions:update'
-                pk = study.intervention.pk
-            else:
-                next_url = 'interventions:create'
-        elif study.has_sessions:
+        if study.has_sessions:
             next_url = 'studies:session_start'
+        return reverse(next_url, args=(pk,))
+
+    def get_back_url(self):
+        study = self.get_study()
+        pk = study.pk
+        next_url = 'studies:design'
+        if study.has_intervention:
+            next_url = 'interventions:update'
+            pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
 
     def forms_invalid(self, form, inlines):
@@ -50,39 +61,25 @@ class ObservationMixin(object):
         else:
             return super(ObservationMixin, self).forms_invalid(form, inlines)
 
+    def get_study(self):
+        raise NotImplementedError
+
 
 class ObservationCreate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, CreateWithInlinesView):
     """Creates an Observation from a ObservationForm"""
-
-    def get_context_data(self, **kwargs):
-        """Setting the Study and progress on the context"""
-        context = super(ObservationCreate, self).get_context_data(**kwargs)
-        study = Study.objects.get(pk=self.kwargs['pk'])
-        context['study'] = study
-        context['progress'] = get_study_progress(study) + 5
-        return context
 
     def forms_valid(self, form, inlines):
         """Sets the Study on the Observation before starting validation."""
         form.instance.study = Study.objects.get(pk=self.kwargs['pk'])
         return super(ObservationCreate, self).forms_valid(form, inlines)
 
-    def get_back_url(self):
-        return reverse('studies:design', args=(self.kwargs['pk'],))
+    def get_study(self):
+        return Study.objects.get(pk=self.kwargs['pk'])
 
 
 class ObservationUpdate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Observation from a ObservationForm"""
-
-    def get_context_data(self, **kwargs):
-        """Setting the Study and progress on the context"""
-        context = super(ObservationUpdate, self).get_context_data(**kwargs)
-        study = self.object.study
-        context['study'] = study
-        context['progress'] = get_study_progress(study) + 5
-        return context
-
-    def get_back_url(self):
-        return reverse('studies:design', args=(self.object.study.pk,))
+    def get_study(self):
+        return self.object.study

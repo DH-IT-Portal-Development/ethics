@@ -43,8 +43,8 @@ def copy_study_to_proposal(proposal, study):
     traits = study.traits.all()
     compensation = study.compensation
     recruitment = study.recruitment.all()
-    observation = study.observation if study.has_observation else None
     intervention = study.intervention if study.has_intervention else None
+    observation = study.observation if study.has_observation else None
     sessions = study.session_set.all() if study.has_sessions else []
     surveys = study.survey_set.all()
 
@@ -59,10 +59,10 @@ def copy_study_to_proposal(proposal, study):
     s.recruitment = recruitment
     s.save()
 
-    if observation:
-        copy_observation_to_study(s, observation)
     if intervention:
         copy_intervention_to_study(s, intervention)
+    if observation:
+        copy_observation_to_study(s, observation)
     for session in sessions:
         copy_session_to_study(s, session)
 

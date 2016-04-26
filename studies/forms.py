@@ -78,7 +78,7 @@ class StudyForm(ConditionalModelForm):
 class StudyDesignForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['has_observation', 'has_intervention', 'has_sessions']
+        fields = ['has_intervention', 'has_observation', 'has_sessions']
 
     def clean(self):
         """
@@ -86,7 +86,7 @@ class StudyDesignForm(forms.ModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        if not (cleaned_data.get('has_observation') or cleaned_data.get('has_intervention') or cleaned_data.get('has_sessions')):
+        if not (cleaned_data.get('has_intervention') or cleaned_data.get('has_observation') or cleaned_data.get('has_sessions')):
             msg = _(u'U dient minstens één van de opties te selecteren')
             self.add_error('has_sessions', forms.ValidationError(msg, code='required'))
 

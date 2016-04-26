@@ -18,60 +18,53 @@ class InterventionMixin(object):
     form_class = InterventionForm
     success_message = _('Interventie opgeslagen')
 
-    def get_next_url(self):
-        study = self.object.study
-        next_url = 'studies:session_end'
-        pk = study.pk
-        if study.has_sessions:
-            next_url = 'studies:session_start'
-        return reverse(next_url, args=(pk,))
-
-    def get_back_url(self):
-        study = self.object.study if self.object else Study.objects.get(pk=self.kwargs['pk'])
-        pk = study.pk
-        next_url = 'studies:design'
-        if study.has_observation:
-            next_url = 'observations:update'
-            pk = study.observation.pk
-        return reverse(next_url, args=(pk,))
-
-
-class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
-    """Creates a Intervention from a InterventionForm"""
-
     def get_form_kwargs(self):
         """Sets the Proposal as a form kwarg"""
-        kwargs = super(InterventionCreate, self).get_form_kwargs()
-        kwargs['proposal'] = Study.objects.get(pk=self.kwargs['pk']).proposal
+        kwargs = super(InterventionMixin, self).get_form_kwargs()
+        kwargs['proposal'] = self.get_study().proposal
         return kwargs
 
     def get_context_data(self, **kwargs):
         """Setting the Study and progress on the context"""
-        context = super(InterventionCreate, self).get_context_data(**kwargs)
-        study = Study.objects.get(pk=self.kwargs['pk'])
+        context = super(InterventionMixin, self).get_context_data(**kwargs)
+        study = self.get_study()
         context['study'] = study
         context['progress'] = get_study_progress(study) + 7
         return context
 
+    def get_next_url(self):
+        study = self.get_study()
+        next_url = 'studies:session_end'
+        pk = study.pk
+        if study.has_observation:
+            if hasattr(study, 'observation'):
+                next_url = 'observations:update'
+                pk = study.observation.pk
+            else:
+                next_url = 'observations:create'
+        elif study.has_sessions:
+            next_url = 'studies:session_start'
+        return reverse(next_url, args=(pk,))
+
+    def get_back_url(self):
+        return reverse('studies:design', args=(self.get_study().pk,))
+
+    def get_study(self):
+        raise NotImplementedError
+
+
+class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
+    """Creates a Intervention from a InterventionForm"""
     def form_valid(self, form):
         """Sets the Study on the Intervention before starting validation."""
         form.instance.study = Study.objects.get(pk=self.kwargs['pk'])
         return super(InterventionCreate, self).form_valid(form)
 
+    def get_study(self):
+        return Study.objects.get(pk=self.kwargs['pk'])
+
 
 class InterventionUpdate(InterventionMixin, AllowErrorsMixin, UpdateView):
     """Updates a Intervention from an InterventionForm"""
-
-    def get_form_kwargs(self):
-        """Sets the Proposal as a form kwarg"""
-        kwargs = super(InterventionUpdate, self).get_form_kwargs()
-        kwargs['proposal'] = self.object.study.proposal
-        return kwargs
-
-    def get_context_data(self, **kwargs):
-        """Setting the Study and progress on the context"""
-        context = super(InterventionUpdate, self).get_context_data(**kwargs)
-        study = self.object.study
-        context['study'] = study
-        context['progress'] = get_study_progress(study) + 7
-        return context
+    def get_study(self):
+        return self.object.study
