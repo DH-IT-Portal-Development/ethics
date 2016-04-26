@@ -78,11 +78,11 @@
 },
 {
     "fields": {
-        "requires_review": true,
-        "needs_details": true,
+        "requires_review": false,
+        "needs_details": false,
         "needs_supervision": false,
         "order": 8,
-        "description": "zorginstelling"
+        "description": "logopediepraktijk"
     },
     "model": "core.setting",
     "pk": 8
@@ -93,9 +93,20 @@
         "needs_details": true,
         "needs_supervision": false,
         "order": 9,
-        "description": "anders, namelijk"
+        "description": "zorginstelling"
     },
     "model": "core.setting",
     "pk": 9
+},
+{
+    "fields": {
+        "requires_review": true,
+        "needs_details": true,
+        "needs_supervision": false,
+        "order": 10,
+        "description": "anders, namelijk"
+    },
+    "model": "core.setting",
+    "pk": 10
 }
 ]
