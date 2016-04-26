@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from django.contrib.auth import get_user_model
-
 from .models import Proposal
 
 
@@ -14,11 +12,3 @@ def generate_ref_number(user):
         proposal_number = 1
 
     return '{}-{:02}-{}'.format(user.username, proposal_number, current_year)
-
-
-def get_users_as_list():
-    """
-    Retrieves all Users, excluding superusers, as a list.
-    """
-    users = get_user_model().objects.exclude(is_superuser=True)
-    return [(user.pk, user.username + ': ' + user.get_full_name()) for user in users]

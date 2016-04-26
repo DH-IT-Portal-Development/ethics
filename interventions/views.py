@@ -39,6 +39,12 @@ class InterventionMixin(object):
 class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
     """Creates a Intervention from a InterventionForm"""
 
+    def get_form_kwargs(self):
+        """Sets the Proposal as a form kwarg"""
+        kwargs = super(InterventionCreate, self).get_form_kwargs()
+        kwargs['proposal'] = Study.objects.get(pk=self.kwargs['pk']).proposal
+        return kwargs
+
     def get_context_data(self, **kwargs):
         """Setting the Study and progress on the context"""
         context = super(InterventionCreate, self).get_context_data(**kwargs)
@@ -55,6 +61,12 @@ class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
 
 class InterventionUpdate(InterventionMixin, AllowErrorsMixin, UpdateView):
     """Updates a Intervention from an InterventionForm"""
+
+    def get_form_kwargs(self):
+        """Sets the Proposal as a form kwarg"""
+        kwargs = super(InterventionUpdate, self).get_form_kwargs()
+        kwargs['proposal'] = self.object.study.proposal
+        return kwargs
 
     def get_context_data(self, **kwargs):
         """Setting the Study and progress on the context"""

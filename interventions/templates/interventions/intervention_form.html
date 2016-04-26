@@ -14,9 +14,14 @@
 $(function() {
     check_field_required('setting', 'needs_details', 'setting_details', 'core');
     check_field_required('setting', 'needs_supervision', 'supervision', 'core');
-    depends_on_value('has_drawbacks', 'True', 'has_drawbacks_details');
+    depends_on_value('has_controls', 'True', 'has_controls_details');
+    depends_on_value('has_recording', 'True', 'recording_same_experimenter');
+    depends_on_value('recording_same_experimenter', 'False', 'recording_experimenter');
     
     add_title('setting', "{% trans 'Setting' %}");
+    add_title('number', "{% trans 'Details interventie' %}");
+    add_title('has_controls', "{% trans 'Controlegroep' %}");
+    add_title('has_recording', "{% trans 'Voor- en nameting' %}");
 });
 </script>
 {% include "studies/study_title.html" %}

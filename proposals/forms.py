@@ -7,9 +7,8 @@ from django.utils.translation import ugettext as _
 from braces.forms import UserKwargModelFormMixin
 
 from core.forms import ConditionalModelForm
-from core.utils import YES_NO, YES_NO_DOUBT
+from core.utils import YES_NO, YES_NO_DOUBT, get_users_as_list
 from .models import Proposal, Wmo
-from .utils import get_users_as_list
 
 
 class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
@@ -36,13 +35,13 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from relation field
-        - Don't allow to pick yourself (or a superuser) as supervisor
-        - Retrieve all Users as a nice list
+        - Don't allow to pick yourself or a superuser as supervisor
+        - Don't allow to pick a superuser as applicant
         """
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
-        self.fields['supervisor'].queryset = get_user_model().objects.exclude(pk=self.user.pk).exclude(is_superuser=True)
-        self.fields['applicants'].choices = get_users_as_list()
+        self.fields['supervisor'].choices = get_users_as_list(get_user_model().objects.exclude(pk=self.user.pk).exclude(is_superuser=True))
+        self.fields['applicants'].choices = get_users_as_list(get_user_model().objects.exclude(is_superuser=True))
 
     def clean(self):
         """

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,23 +18,37 @@ class Intervention(models.Model):
         _('Vindt het afnemen van de taak plaats onder het toeziend oog \
 van de leraar of een ander persoon die bevoegd is?')
     )
+
+    number = models.PositiveIntegerField(
+        _('Uit hoeveel sessies bestaat de interventie?'))
+    duration = models.PositiveIntegerField(
+        _('Wat is de duur van de sessie(s)?'))
+    experimenter = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Wie voert de voor- en nameting uit?'),
+        related_name='experimenter')
     description = models.TextField(
-        _('Beschrijf de interventie(s). Geef aan waar de interventie plaatsvindt en \
-binnen hoeveel sessies. Geef een duidelijke beschrijving van wat de interventie inhoud en \
-welke partijen er bij betrokken zijn.'))
-    has_drawbacks = models.BooleanField(
-        _('Is de interventie zodanig dat er voor de deelnemers ook nadelen aan verbonden kunnen zijn?'),
-        help_text=_('Denk aan een verminderde leeropbrengst, een minder effectief 112-gesprek, \
-een slechter adviesgesprek, een ongunstiger beoordeling, etc'),
+        _('Geef een beschrijving van de experimentele interventie'))
+
+    has_controls = models.BooleanField(
+        _('Is er sprake van een controle groep?'),
         default=False)
-    has_drawbacks_details = models.TextField(
-        _('Licht toe'),
+    has_controls_details = models.TextField(
+        _('Geef een beschrijving van de controle interventie'),
         blank=True)
-    is_supervised = models.BooleanField(
-        _('Vindt de interventie plaats onder het toezicht \
-van een een bevoegd persoon die, wanneer de interventie niet zou plaatsvinden, er ook zou zijn. \
-Zoals een leraar of logopedist.'),
+
+    has_recording = models.BooleanField(
+        _('Is er sprake van een voor- en een nameting?'),
+        default=False)
+    recording_same_experimenter = models.BooleanField(
+        _('Is de afnemer van de voor- en nameting dezelfde persoon als die de interventie afneemt?'),
         default=True)
+    recording_experimenter = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Wie voert de voor- en nameting uit?'),
+        related_name='recording_experimenter',
+        blank=True,
+        null=True)
 
     # References
     study = models.OneToOneField(Study)
