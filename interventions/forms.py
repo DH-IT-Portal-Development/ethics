@@ -7,8 +7,8 @@ from .models import Intervention
 
 
 class InterventionForm(ConditionalModelForm):
-    has_observation = forms.BooleanField(label='')
-    has_sessions = forms.BooleanField(label='')
+    has_observation = forms.BooleanField(label=_('Observatie'), label_suffix='', required=False)
+    has_sessions = forms.BooleanField(label=_('Taak/taken'), label_suffix='', required=False)
 
     class Meta:
         model = Intervention
@@ -29,13 +29,16 @@ class InterventionForm(ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        - Set the choices for experimenters to the applicants of the proposal
+        - Sets the choices for experimenters to the applicants of the Proposal
+        - Sets initial data for has_observation and has_sessions
         """
-        self.proposal = kwargs.pop('proposal', None)
+        self.study = kwargs.pop('study', None)
         super(InterventionForm, self).__init__(*args, **kwargs)
-        applicants = get_users_as_list(self.proposal.applicants.all())
+        applicants = get_users_as_list(self.study.proposal.applicants.all())
         self.fields['experimenter'].choices = applicants
         self.fields['recording_experimenter'].choices = applicants
+        self.fields['has_observation'].initial = self.study.has_observation
+        self.fields['has_sessions'].initial = self.study.has_sessions
 
     def clean(self):
         """

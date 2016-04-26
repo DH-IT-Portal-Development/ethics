@@ -30,7 +30,7 @@ class StudyStart(AllowErrorsMixin, UpdateView):
         for n in xrange(proposal.studies_number):
             order = n + 1
             s, _ = Study.objects.get_or_create(proposal=proposal, order=order)
-            s.name = self.request.POST['study_name_' + str(order)]
+            s.name = self.request.POST.get('study_name_' + str(order))
             s.save()
 
         # Delete Studies

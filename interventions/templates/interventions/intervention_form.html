@@ -24,19 +24,21 @@ $(function() {
     add_title('has_recording', "{% trans 'Voor- en nameting' %}");
 
     // Fixing display of the two fields on Study level
-    $('label[for="id_has_observation"]').empty();
-    $('#id_has_observation').after(' <label for="id_has_observation">' + "{% trans 'Observatie' %}" + '</label>');
-    $('label[for="id_has_sessions"]').empty();
-    $('#id_has_sessions').after(' <label for="id_has_sessions">' + "{% trans 'Taak/taken' %}" + '</label>');
+    $('label[for="id_has_observation"]').insertAfter($('#id_has_observation'));
+
+    $('label[for="id_has_sessions"]').insertAfter($('#id_has_sessions'));
+    $('#id_has_sessions').next().andSelf().insertAfter($('label[for="id_has_observation"]'));
+
     $('#id_has_observation').parents('tr').find('th').text("{% trans 'Maak je bij de voor- en/of nameting gebruik van:' %}");
+    $('#id_has_observation').parents('tr').next().empty();
+
+    $('label[for="id_has_observation"]').after('<br/>');
 
 });
 </script>
 {% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>
-        {% for field in form.as_table %}{{ field|safe }}{% endfor %}
-    </table>
+    <table>{{ form.as_table }}</table>
     {% with proposal=study.proposal %}
     {% include "base/form_buttons.html" %}
     {% endwith %}

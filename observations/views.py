@@ -71,10 +71,11 @@ class ObservationCreate(LoginRequiredMixin, ObservationMixin,
 
     def forms_valid(self, form, inlines):
         """Sets the Study on the Observation before starting validation."""
-        form.instance.study = Study.objects.get(pk=self.kwargs['pk'])
+        form.instance.study = self.get_study()
         return super(ObservationCreate, self).forms_valid(form, inlines)
 
     def get_study(self):
+        """Retrieves the Study from the pk kwarg"""
         return Study.objects.get(pk=self.kwargs['pk'])
 
 
@@ -82,4 +83,5 @@ class ObservationUpdate(LoginRequiredMixin, ObservationMixin,
                         UserAllowedMixin, UpdateWithInlinesView):
     """Updates a Observation from a ObservationForm"""
     def get_study(self):
+        """Retrieves the Study from the form object"""
         return self.object.study

@@ -19,9 +19,9 @@ class InterventionMixin(object):
     success_message = _('Interventie opgeslagen')
 
     def get_form_kwargs(self):
-        """Sets the Proposal as a form kwarg"""
+        """Sets the Study as a form kwarg"""
         kwargs = super(InterventionMixin, self).get_form_kwargs()
-        kwargs['proposal'] = self.get_study().proposal
+        kwargs['study'] = self.get_study()
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -31,6 +31,14 @@ class InterventionMixin(object):
         context['study'] = study
         context['progress'] = get_study_progress(study) + 7
         return context
+
+    def form_valid(self, form):
+        """Sets the extra fields from the ModelForm on the Study"""
+        study = self.get_study()
+        study.has_observation = self.request.POST.get('has_observation', False)
+        study.has_sessions = self.request.POST.get('has_sessions', False)
+        study.save()
+        return super(InterventionMixin, self).form_valid(form)
 
     def get_next_url(self):
         study = self.get_study()
@@ -57,14 +65,16 @@ class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
     """Creates a Intervention from a InterventionForm"""
     def form_valid(self, form):
         """Sets the Study on the Intervention before starting validation."""
-        form.instance.study = Study.objects.get(pk=self.kwargs['pk'])
+        form.instance.study = self.get_study()
         return super(InterventionCreate, self).form_valid(form)
 
     def get_study(self):
+        """Retrieves the Study from the pk kwarg"""
         return Study.objects.get(pk=self.kwargs['pk'])
 
 
 class InterventionUpdate(InterventionMixin, AllowErrorsMixin, UpdateView):
     """Updates a Intervention from an InterventionForm"""
     def get_study(self):
+        """Retrieves the Study from the form object"""
         return self.object.study
