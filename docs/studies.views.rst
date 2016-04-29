@@ -1,0 +1,38 @@
+studies.views package
+=====================
+
+Submodules
+----------
+
+studies.views.session_views module
+----------------------------------
+
+.. automodule:: studies.views.session_views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+studies.views.study_views module
+--------------------------------
+
+.. automodule:: studies.views.study_views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+studies.views.survey_views module
+---------------------------------
+
+.. automodule:: studies.views.survey_views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: studies.views
+    :members:
+    :undoc-members:
+    :show-inheritance:

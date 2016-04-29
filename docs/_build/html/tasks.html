@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tasks package &mdash; ETCL 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="ETCL 1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tasks-package">
+<h1>tasks package<a class="headerlink" href="#tasks-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tasks.views.html">tasks.views package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tasks.views.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.views.html#module-tasks.views.session_views">tasks.views.session_views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.views.html#module-tasks.views.task_views">tasks.views.task_views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.views.html#module-tasks.views">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tasks.admin">
+<span id="tasks-admin-module"></span><h2>tasks.admin module<a class="headerlink" href="#module-tasks.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tasks.admin.RegistrationAdmin">
+<em class="property">class </em><code class="descclassname">tasks.admin.</code><code class="descname">RegistrationAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.admin.RegistrationAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('order', 'description', 'needs_details', 'needs_kind', 'requires_review', 'age_min')</em><a class="headerlink" href="#tasks.admin.RegistrationAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#tasks.admin.RegistrationAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#tasks.admin.RegistrationAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#tasks.admin.RegistrationAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tasks.admin.RegistrationKindAdmin">
+<em class="property">class </em><code class="descclassname">tasks.admin.</code><code class="descname">RegistrationKindAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.admin.RegistrationKindAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationKindAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('registration', 'order', 'description', 'needs_details', 'requires_review')</em><a class="headerlink" href="#tasks.admin.RegistrationKindAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationKindAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#tasks.admin.RegistrationKindAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationKindAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#tasks.admin.RegistrationKindAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.admin.RegistrationKindAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['registration', 'order']</em><a class="headerlink" href="#tasks.admin.RegistrationKindAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tasks.forms">
+<span id="tasks-forms-module"></span><h2>tasks.forms module<a class="headerlink" href="#module-tasks.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tasks.forms.TaskEndForm">
+<em class="property">class </em><code class="descclassname">tasks.forms.</code><code class="descname">TaskEndForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.forms.TaskEndForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="class">
+<dt id="tasks.forms.TaskEndForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#tasks.forms.TaskEndForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="tasks.forms.TaskEndForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['tasks_duration']</em><a class="headerlink" href="#tasks.forms.TaskEndForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskEndForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#tasks.forms.TaskEndForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Session</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskEndForm.base_fields">
+<code class="descclassname">TaskEndForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('tasks_duration', &lt;django.forms.fields.IntegerField object at 0xb0e374c&gt;)])</em><a class="headerlink" href="#tasks.forms.TaskEndForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.forms.TaskEndForm.clean_tasks_duration">
+<code class="descclassname">TaskEndForm.</code><code class="descname">clean_tasks_duration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.forms.TaskEndForm.clean_tasks_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check that the net duration is at least equal to the gross duration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskEndForm.declared_fields">
+<code class="descclassname">TaskEndForm.</code><code class="descname">declared_fields</code><em class="property"> = OrderedDict()</em><a class="headerlink" href="#tasks.forms.TaskEndForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskEndForm.media">
+<code class="descclassname">TaskEndForm.</code><code class="descname">media</code><a class="headerlink" href="#tasks.forms.TaskEndForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tasks.forms.TaskForm">
+<em class="property">class </em><code class="descclassname">tasks.forms.</code><code class="descname">TaskForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.forms.TaskForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="core.html#core.forms.ConditionalModelForm" title="core.forms.ConditionalModelForm"><code class="xref py py-class docutils literal"><span class="pre">core.forms.ConditionalModelForm</span></code></a></p>
+<dl class="class">
+<dt id="tasks.forms.TaskForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#tasks.forms.TaskForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="tasks.forms.TaskForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['name', 'description', 'duration', 'registrations', 'registrations_details', 'registration_kinds', 'registration_kinds_details', 'feedback', 'feedback_details']</em><a class="headerlink" href="#tasks.forms.TaskForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#tasks.forms.TaskForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Task</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskForm.Meta.widgets">
+<code class="descname">widgets</code><em class="property"> = {'feedback': &lt;django.forms.widgets.RadioSelect object at 0xaa9b26c&gt;, 'registration_kinds': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0xaa9b5ec&gt;, 'registrations': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0xaa9ba8c&gt;}</em><a class="headerlink" href="#tasks.forms.TaskForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskForm.base_fields">
+<code class="descclassname">TaskForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('name', &lt;django.forms.fields.CharField object at 0xaa9be2c&gt;), ('description', &lt;django.forms.fields.CharField object at 0xa9a1b2c&gt;), ('duration', &lt;django.forms.fields.IntegerField object at 0xa9a14ec&gt;), ('registrations', &lt;django.forms.models.ModelMultipleChoiceField object at 0xaa550cc&gt;), ('registrations_details', &lt;django.forms.fields.CharField object at 0xa9a1e6c&gt;), ('registration_kinds', &lt;django.forms.models.ModelMultipleChoiceField object at 0xa9a176c&gt;), ('registration_kinds_details', &lt;django.forms.fields.CharField object at 0xa9a1c2c&gt;), ('feedback', &lt;django.forms.fields.NullBooleanField object at 0xaa4bb2c&gt;), ('feedback_details', &lt;django.forms.fields.CharField object at 0xaa4b6cc&gt;)])</em><a class="headerlink" href="#tasks.forms.TaskForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.forms.TaskForm.clean">
+<code class="descclassname">TaskForm.</code><code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.forms.TaskForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for conditional requirements:
+- If a registration which needs a kind has been checked, make sure the kind is selected
+- If a registration which needs details has been checked, make sure the details are filled
+- If a registration_kind which needs details has been checked, make sure the details are filled
+- If feedback is set to yes, make sure feedback_details has been filled out</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskForm.declared_fields">
+<code class="descclassname">TaskForm.</code><code class="descname">declared_fields</code><em class="property"> = OrderedDict()</em><a class="headerlink" href="#tasks.forms.TaskForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskForm.media">
+<code class="descclassname">TaskForm.</code><code class="descname">media</code><a class="headerlink" href="#tasks.forms.TaskForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tasks.forms.TaskStartForm">
+<em class="property">class </em><code class="descclassname">tasks.forms.</code><code class="descname">TaskStartForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.forms.TaskStartForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="core.html#core.forms.ConditionalModelForm" title="core.forms.ConditionalModelForm"><code class="xref py py-class docutils literal"><span class="pre">core.forms.ConditionalModelForm</span></code></a></p>
+<dl class="class">
+<dt id="tasks.forms.TaskStartForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="tasks.forms.TaskStartForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['setting', 'setting_details', 'supervision', 'tasks_number']</em><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskStartForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Session</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskStartForm.Meta.widgets">
+<code class="descname">widgets</code><em class="property"> = {'setting': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0xaa98c2c&gt;, 'supervision': &lt;django.forms.widgets.RadioSelect object at 0xaa9b08c&gt;}</em><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskStartForm.base_fields">
+<code class="descclassname">TaskStartForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('setting', &lt;django.forms.models.ModelMultipleChoiceField object at 0xb02440c&gt;), ('setting_details', &lt;django.forms.fields.CharField object at 0xb024e8c&gt;), ('supervision', &lt;django.forms.fields.NullBooleanField object at 0xb02470c&gt;), ('tasks_number', &lt;django.forms.fields.IntegerField object at 0xb15ce8c&gt;), ('is_copy', &lt;django.forms.fields.BooleanField object at 0xaa9b62c&gt;), ('parent_session', &lt;django.forms.models.ModelChoiceField object at 0xaa9bbec&gt;)])</em><a class="headerlink" href="#tasks.forms.TaskStartForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.forms.TaskStartForm.clean">
+<code class="descclassname">TaskStartForm.</code><code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.forms.TaskStartForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for conditional requirements:
+- If a setting which needs details has been checked, make sure the details are filled
+- If is_copy is True, parent_session is required
+- If is_copy is False, tasks_number is required</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskStartForm.declared_fields">
+<code class="descclassname">TaskStartForm.</code><code class="descname">declared_fields</code><em class="property"> = OrderedDict([('is_copy', &lt;django.forms.fields.BooleanField object at 0xaa9b62c&gt;), ('parent_session', &lt;django.forms.models.ModelChoiceField object at 0xaa9bbec&gt;)])</em><a class="headerlink" href="#tasks.forms.TaskStartForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.forms.TaskStartForm.media">
+<code class="descclassname">TaskStartForm.</code><code class="descname">media</code><a class="headerlink" href="#tasks.forms.TaskStartForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tasks.mixins">
+<span id="tasks-mixins-module"></span><h2>tasks.mixins module<a class="headerlink" href="#module-tasks.mixins" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tasks.mixins.DeletionAllowedMixin">
+<em class="property">class </em><code class="descclassname">tasks.mixins.</code><code class="descname">DeletionAllowedMixin</code><a class="headerlink" href="#tasks.mixins.DeletionAllowedMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="tasks.mixins.DeletionAllowedMixin.get_object">
+<code class="descname">get_object</code><span class="sig-paren">(</span><em>queryset=None</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.mixins.DeletionAllowedMixin.get_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prevent deletion of a single Task/Session in a Session/Study.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tasks.models">
+<span id="tasks-models-module"></span><h2>tasks.models module<a class="headerlink" href="#module-tasks.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tasks.models.Registration">
+<em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">Registration</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>needs_details</em>, <em>needs_kind</em>, <em>requires_review</em>, <em>age_min</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Registration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="tasks.models.Registration.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.Registration.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="tasks.models.Registration.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Registration.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#tasks.models.Registration.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Registration.objects">
+<code class="descclassname">Registration.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object at 0x9f72b2c&gt;</em><a class="headerlink" href="#tasks.models.Registration.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Registration.registrationkind_set">
+<code class="descclassname">Registration.</code><code class="descname">registrationkind_set</code><a class="headerlink" href="#tasks.models.Registration.registrationkind_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Registration.task_set">
+<code class="descclassname">Registration.</code><code class="descname">task_set</code><a class="headerlink" href="#tasks.models.Registration.task_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tasks.models.RegistrationKind">
+<em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">RegistrationKind</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>needs_details</em>, <em>requires_review</em>, <em>registration</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.RegistrationKind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="tasks.models.RegistrationKind.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.RegistrationKind.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="tasks.models.RegistrationKind.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">RegistrationKind.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#tasks.models.RegistrationKind.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.RegistrationKind.objects">
+<code class="descclassname">RegistrationKind.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object at 0x9f72fac&gt;</em><a class="headerlink" href="#tasks.models.RegistrationKind.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.RegistrationKind.registration">
+<code class="descclassname">RegistrationKind.</code><code class="descname">registration</code><a class="headerlink" href="#tasks.models.RegistrationKind.registration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.RegistrationKind.task_set">
+<code class="descclassname">RegistrationKind.</code><code class="descname">task_set</code><a class="headerlink" href="#tasks.models.RegistrationKind.task_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tasks.models.Session">
+<em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">Session</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>setting_details</em>, <em>supervision</em>, <em>tasks_number</em>, <em>tasks_duration</em>, <em>study</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="tasks.models.Session.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.Session.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="tasks.models.Session.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Session.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#tasks.models.Session.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Session.all_tasks_completed">
+<code class="descclassname">Session.</code><code class="descname">all_tasks_completed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Session.all_tasks_completed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Session.current_task">
+<code class="descclassname">Session.</code><code class="descname">current_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Session.current_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current (imcomplete) Task.
+- If all Tasks are completed, the last Task is returned.
+- If no Tasks have yet been created, None is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Session.first_task">
+<code class="descclassname">Session.</code><code class="descname">first_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Session.first_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Session.last_task">
+<code class="descclassname">Session.</code><code class="descname">last_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Session.last_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Session.net_duration">
+<code class="descclassname">Session.</code><code class="descname">net_duration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Session.net_duration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Session.objects">
+<code class="descclassname">Session.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object at 0x9f726ac&gt;</em><a class="headerlink" href="#tasks.models.Session.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Session.save">
+<code class="descclassname">Session.</code><code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Session.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the correct status on Proposal on save of a Session</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Session.setting">
+<code class="descclassname">Session.</code><code class="descname">setting</code><a class="headerlink" href="#tasks.models.Session.setting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Session.study">
+<code class="descclassname">Session.</code><code class="descname">study</code><a class="headerlink" href="#tasks.models.Session.study" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Session.task_set">
+<code class="descclassname">Session.</code><code class="descname">task_set</code><a class="headerlink" href="#tasks.models.Session.task_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="tasks.models.Task">
+<em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">Task</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>name</em>, <em>description</em>, <em>duration</em>, <em>registrations_details</em>, <em>registration_kinds_details</em>, <em>feedback</em>, <em>feedback_details</em>, <em>session</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="tasks.models.Task.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.Task.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="tasks.models.Task.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Task.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#tasks.models.Task.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Task.delete">
+<code class="descclassname">Task.</code><code class="descname">delete</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Task.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalidate the totals on Session level on deletion of a Task.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Task.objects">
+<code class="descclassname">Task.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object at 0x9f7f86c&gt;</em><a class="headerlink" href="#tasks.models.Task.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Task.registration_kinds">
+<code class="descclassname">Task.</code><code class="descname">registration_kinds</code><a class="headerlink" href="#tasks.models.Task.registration_kinds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Task.registrations">
+<code class="descclassname">Task.</code><code class="descname">registrations</code><a class="headerlink" href="#tasks.models.Task.registrations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="tasks.models.Task.save">
+<code class="descclassname">Task.</code><code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.models.Task.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the correct status on Proposal on save of a Task.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="tasks.models.Task.session">
+<code class="descclassname">Task.</code><code class="descname">session</code><a class="headerlink" href="#tasks.models.Task.session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tasks.tests">
+<span id="tasks-tests-module"></span><h2>tasks.tests module<a class="headerlink" href="#module-tasks.tests" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tasks.urls">
+<span id="tasks-urls-module"></span><h2>tasks.urls module<a class="headerlink" href="#module-tasks.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tasks.utils">
+<span id="tasks-utils-module"></span><h2>tasks.utils module<a class="headerlink" href="#module-tasks.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tasks.utils.copy_session_to_study">
+<code class="descclassname">tasks.utils.</code><code class="descname">copy_session_to_study</code><span class="sig-paren">(</span><em>study</em>, <em>session</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.utils.copy_session_to_study" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tasks.utils.copy_task_to_session">
+<code class="descclassname">tasks.utils.</code><code class="descname">copy_task_to_session</code><span class="sig-paren">(</span><em>session</em>, <em>task</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.utils.copy_task_to_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tasks.utils.get_session_progress">
+<code class="descclassname">tasks.utils.</code><code class="descname">get_session_progress</code><span class="sig-paren">(</span><em>session</em>, <em>is_end=False</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.utils.get_session_progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tasks.utils.get_task_progress">
+<code class="descclassname">tasks.utils.</code><code class="descname">get_task_progress</code><span class="sig-paren">(</span><em>task</em><span class="sig-paren">)</span><a class="headerlink" href="#tasks.utils.get_task_progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-tasks">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tasks" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tasks package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-tasks.admin">tasks.admin module</a></li>
+<li><a class="reference internal" href="#module-tasks.forms">tasks.forms module</a></li>
+<li><a class="reference internal" href="#module-tasks.mixins">tasks.mixins module</a></li>
+<li><a class="reference internal" href="#module-tasks.models">tasks.models module</a></li>
+<li><a class="reference internal" href="#module-tasks.tests">tasks.tests module</a></li>
+<li><a class="reference internal" href="#module-tasks.urls">tasks.urls module</a></li>
+<li><a class="reference internal" href="#module-tasks.utils">tasks.utils module</a></li>
+<li><a class="reference internal" href="#module-tasks">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tasks.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Martijn van der Klis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/tasks.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

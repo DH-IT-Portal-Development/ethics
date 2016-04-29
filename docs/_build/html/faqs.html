@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>faqs package &mdash; ETCL 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="ETCL 1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="faqs-package">
+<h1>faqs package<a class="headerlink" href="#faqs-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-faqs.admin">
+<span id="faqs-admin-module"></span><h2>faqs.admin module<a class="headerlink" href="#module-faqs.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="faqs.admin.FaqAdmin">
+<em class="property">class </em><code class="descclassname">faqs.admin.</code><code class="descname">FaqAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#faqs.admin.FaqAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="faqs.admin.FaqAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('order', 'question')</em><a class="headerlink" href="#faqs.admin.FaqAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="faqs.admin.FaqAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#faqs.admin.FaqAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="faqs.admin.FaqAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#faqs.admin.FaqAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-faqs.models">
+<span id="faqs-models-module"></span><h2>faqs.models module<a class="headerlink" href="#module-faqs.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="faqs.models.Faq">
+<em class="property">class </em><code class="descclassname">faqs.models.</code><code class="descname">Faq</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>question</em>, <em>answer</em><span class="sig-paren">)</span><a class="headerlink" href="#faqs.models.Faq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="faqs.models.Faq.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#faqs.models.Faq.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="faqs.models.Faq.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Faq.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#faqs.models.Faq.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="faqs.models.Faq.objects">
+<code class="descclassname">Faq.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object at 0x9ce6f4c&gt;</em><a class="headerlink" href="#faqs.models.Faq.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-faqs.tests">
+<span id="faqs-tests-module"></span><h2>faqs.tests module<a class="headerlink" href="#module-faqs.tests" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-faqs.urls">
+<span id="faqs-urls-module"></span><h2>faqs.urls module<a class="headerlink" href="#module-faqs.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-faqs.views">
+<span id="faqs-views-module"></span><h2>faqs.views module<a class="headerlink" href="#module-faqs.views" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="faqs.views.FaqsView">
+<em class="property">class </em><code class="descclassname">faqs.views.</code><code class="descname">FaqsView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#faqs.views.FaqsView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dl class="attribute">
+<dt id="faqs.views.FaqsView.context_object_name">
+<code class="descname">context_object_name</code><em class="property"> = 'faqs'</em><a class="headerlink" href="#faqs.views.FaqsView.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="faqs.views.FaqsView.model">
+<code class="descname">model</code><a class="headerlink" href="#faqs.views.FaqsView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Faq</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-faqs">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-faqs" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">faqs package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-faqs.admin">faqs.admin module</a></li>
+<li><a class="reference internal" href="#module-faqs.models">faqs.models module</a></li>
+<li><a class="reference internal" href="#module-faqs.tests">faqs.tests module</a></li>
+<li><a class="reference internal" href="#module-faqs.urls">faqs.urls module</a></li>
+<li><a class="reference internal" href="#module-faqs.views">faqs.views module</a></li>
+<li><a class="reference internal" href="#module-faqs">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/faqs.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Martijn van der Klis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/faqs.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

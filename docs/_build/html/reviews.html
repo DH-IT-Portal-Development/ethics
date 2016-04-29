@@ -1,0 +1,755 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>reviews package &mdash; ETCL 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="ETCL 1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="reviews-package">
+<h1>reviews package<a class="headerlink" href="#reviews-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reviews.admin">
+<span id="reviews-admin-module"></span><h2>reviews.admin module<a class="headerlink" href="#module-reviews.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reviews.admin.DecisionAdmin">
+<em class="property">class </em><code class="descclassname">reviews.admin.</code><code class="descname">DecisionAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.admin.DecisionAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="reviews.admin.DecisionAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('review', 'reviewer', 'go')</em><a class="headerlink" href="#reviews.admin.DecisionAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.admin.DecisionAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#reviews.admin.DecisionAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.admin.ReviewAdmin">
+<em class="property">class </em><code class="descclassname">reviews.admin.</code><code class="descname">ReviewAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.admin.ReviewAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="reviews.admin.ReviewAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('proposal', 'date_start', 'date_end', 'go')</em><a class="headerlink" href="#reviews.admin.ReviewAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.admin.ReviewAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#reviews.admin.ReviewAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reviews.forms">
+<span id="reviews-forms-module"></span><h2>reviews.forms module<a class="headerlink" href="#module-reviews.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reviews.forms.DecisionForm">
+<em class="property">class </em><code class="descclassname">reviews.forms.</code><code class="descname">DecisionForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.forms.DecisionForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="class">
+<dt id="reviews.forms.DecisionForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#reviews.forms.DecisionForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="reviews.forms.DecisionForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['go', 'comments']</em><a class="headerlink" href="#reviews.forms.DecisionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.DecisionForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.forms.DecisionForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Decision</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.DecisionForm.Meta.widgets">
+<code class="descname">widgets</code><em class="property"> = {'go': &lt;django.forms.widgets.RadioSelect object at 0xb02130c&gt;}</em><a class="headerlink" href="#reviews.forms.DecisionForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.DecisionForm.base_fields">
+<code class="descclassname">DecisionForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('go', &lt;django.forms.fields.NullBooleanField object at 0xb02108c&gt;), ('comments', &lt;django.forms.fields.CharField object at 0xb021dcc&gt;)])</em><a class="headerlink" href="#reviews.forms.DecisionForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.DecisionForm.declared_fields">
+<code class="descclassname">DecisionForm.</code><code class="descname">declared_fields</code><em class="property"> = OrderedDict()</em><a class="headerlink" href="#reviews.forms.DecisionForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.DecisionForm.media">
+<code class="descclassname">DecisionForm.</code><code class="descname">media</code><a class="headerlink" href="#reviews.forms.DecisionForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.forms.ReviewAssignForm">
+<em class="property">class </em><code class="descclassname">reviews.forms.</code><code class="descname">ReviewAssignForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.forms.ReviewAssignForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="class">
+<dt id="reviews.forms.ReviewAssignForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="reviews.forms.ReviewAssignForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['short_route']</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewAssignForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Review</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewAssignForm.Meta.widgets">
+<code class="descname">widgets</code><em class="property"> = {'short_route': &lt;django.forms.widgets.RadioSelect object at 0xb07934c&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewAssignForm.base_fields">
+<code class="descclassname">ReviewAssignForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('short_route', &lt;django.forms.fields.BooleanField object at 0xb0790ec&gt;)])</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewAssignForm.declared_fields">
+<code class="descclassname">ReviewAssignForm.</code><code class="descname">declared_fields</code><em class="property"> = OrderedDict()</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewAssignForm.media">
+<code class="descclassname">ReviewAssignForm.</code><code class="descname">media</code><a class="headerlink" href="#reviews.forms.ReviewAssignForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.forms.ReviewCloseForm">
+<em class="property">class </em><code class="descclassname">reviews.forms.</code><code class="descname">ReviewCloseForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.forms.ReviewCloseForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<dl class="class">
+<dt id="reviews.forms.ReviewCloseForm.Meta">
+<em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="reviews.forms.ReviewCloseForm.Meta.fields">
+<code class="descname">fields</code><em class="property"> = ['continuation']</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewCloseForm.Meta.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Review</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewCloseForm.Meta.widgets">
+<code class="descname">widgets</code><em class="property"> = {'continuation': &lt;django.forms.widgets.RadioSelect object at 0xb0795ac&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewCloseForm.base_fields">
+<code class="descclassname">ReviewCloseForm.</code><code class="descname">base_fields</code><em class="property"> = OrderedDict([('continuation', &lt;django.forms.fields.TypedChoiceField object at 0xb02172c&gt;)])</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewCloseForm.declared_fields">
+<code class="descclassname">ReviewCloseForm.</code><code class="descname">declared_fields</code><em class="property"> = OrderedDict()</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.forms.ReviewCloseForm.media">
+<code class="descclassname">ReviewCloseForm.</code><code class="descname">media</code><a class="headerlink" href="#reviews.forms.ReviewCloseForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reviews.mixins">
+<span id="reviews-mixins-module"></span><h2>reviews.mixins module<a class="headerlink" href="#module-reviews.mixins" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reviews.mixins.AutoReviewMixin">
+<em class="property">class </em><code class="descclassname">reviews.mixins.</code><code class="descname">AutoReviewMixin</code><a class="headerlink" href="#reviews.mixins.AutoReviewMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="reviews.mixins.AutoReviewMixin.get_context_data">
+<code class="descname">get_context_data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.mixins.AutoReviewMixin.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the results of the machine-wise review to the context.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.mixins.UserAllowedMixin">
+<em class="property">class </em><code class="descclassname">reviews.mixins.</code><code class="descname">UserAllowedMixin</code><a class="headerlink" href="#reviews.mixins.UserAllowedMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></p>
+<dl class="method">
+<dt id="reviews.mixins.UserAllowedMixin.get_object">
+<code class="descname">get_object</code><span class="sig-paren">(</span><em>queryset=None</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.mixins.UserAllowedMixin.get_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the current User is a reviewer in this Review,
+as well as whether the Review is still open.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reviews.models">
+<span id="reviews-models-module"></span><h2>reviews.models module<a class="headerlink" href="#module-reviews.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reviews.models.Decision">
+<em class="property">class </em><code class="descclassname">reviews.models.</code><code class="descname">Decision</code><span class="sig-paren">(</span><em>id</em>, <em>go</em>, <em>date_decision</em>, <em>comments</em>, <em>review</em>, <em>reviewer</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Decision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="reviews.models.Decision.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#reviews.models.Decision.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="reviews.models.Decision.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Decision.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#reviews.models.Decision.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Decision.objects">
+<code class="descclassname">Decision.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object at 0x9f9e16c&gt;</em><a class="headerlink" href="#reviews.models.Decision.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Decision.review">
+<code class="descclassname">Decision.</code><code class="descname">review</code><a class="headerlink" href="#reviews.models.Decision.review" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Decision.reviewer">
+<code class="descclassname">Decision.</code><code class="descname">reviewer</code><a class="headerlink" href="#reviews.models.Decision.reviewer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.models.Decision.save">
+<code class="descclassname">Decision.</code><code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Decision.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the correct status of the Review on save of a Decision.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.models.Review">
+<em class="property">class </em><code class="descclassname">reviews.models.</code><code class="descname">Review</code><span class="sig-paren">(</span><em>id</em>, <em>stage</em>, <em>short_route</em>, <em>go</em>, <em>continuation</em>, <em>date_start</em>, <em>date_end</em>, <em>proposal</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="attribute">
+<dt id="reviews.models.Review.ASSIGNMENT">
+<code class="descname">ASSIGNMENT</code><em class="property"> = 1</em><a class="headerlink" href="#reviews.models.Review.ASSIGNMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.COMMISSION">
+<code class="descname">COMMISSION</code><em class="property"> = 2</em><a class="headerlink" href="#reviews.models.Review.COMMISSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.CONTINUATIONS">
+<code class="descname">CONTINUATIONS</code><em class="property"> = ((0, &lt;django.utils.functional.__proxy__ object at 0x9f8a1ec&gt;), (1, &lt;django.utils.functional.__proxy__ object at 0x9f8a20c&gt;), (2, &lt;django.utils.functional.__proxy__ object at 0x9f8a22c&gt;), (3, &lt;django.utils.functional.__proxy__ object at 0x9f8a26c&gt;))</em><a class="headerlink" href="#reviews.models.Review.CONTINUATIONS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="reviews.models.Review.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#reviews.models.Review.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.GO">
+<code class="descclassname">Review.</code><code class="descname">GO</code><em class="property"> = 0</em><a class="headerlink" href="#reviews.models.Review.GO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.LONG_ROUTE">
+<code class="descclassname">Review.</code><code class="descname">LONG_ROUTE</code><em class="property"> = 2</em><a class="headerlink" href="#reviews.models.Review.LONG_ROUTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.METC">
+<code class="descclassname">Review.</code><code class="descname">METC</code><em class="property"> = 3</em><a class="headerlink" href="#reviews.models.Review.METC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="reviews.models.Review.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descclassname">Review.</code><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#reviews.models.Review.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.NO_GO">
+<code class="descclassname">Review.</code><code class="descname">NO_GO</code><em class="property"> = 1</em><a class="headerlink" href="#reviews.models.Review.NO_GO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.STAGES">
+<code class="descclassname">Review.</code><code class="descname">STAGES</code><em class="property"> = ((0, &lt;django.utils.functional.__proxy__ object at 0x9f8a16c&gt;), (1, &lt;django.utils.functional.__proxy__ object at 0x9f8a18c&gt;), (2, &lt;django.utils.functional.__proxy__ object at 0x9f8a1cc&gt;))</em><a class="headerlink" href="#reviews.models.Review.STAGES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.SUPERVISOR">
+<code class="descclassname">Review.</code><code class="descname">SUPERVISOR</code><em class="property"> = 0</em><a class="headerlink" href="#reviews.models.Review.SUPERVISOR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.decision_set">
+<code class="descclassname">Review.</code><code class="descname">decision_set</code><a class="headerlink" href="#reviews.models.Review.decision_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.models.Review.get_continuation_display">
+<code class="descclassname">Review.</code><code class="descname">get_continuation_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Review.get_continuation_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.models.Review.get_next_by_date_start">
+<code class="descclassname">Review.</code><code class="descname">get_next_by_date_start</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Review.get_next_by_date_start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.models.Review.get_previous_by_date_start">
+<code class="descclassname">Review.</code><code class="descname">get_previous_by_date_start</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Review.get_previous_by_date_start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.models.Review.get_stage_display">
+<code class="descclassname">Review.</code><code class="descname">get_stage_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Review.get_stage_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.objects">
+<code class="descclassname">Review.</code><code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object at 0x9f8abac&gt;</em><a class="headerlink" href="#reviews.models.Review.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.models.Review.proposal">
+<code class="descclassname">Review.</code><code class="descname">proposal</code><a class="headerlink" href="#reviews.models.Review.proposal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.models.Review.update_go">
+<code class="descclassname">Review.</code><code class="descname">update_go</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.models.Review.update_go" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check all decisions: if all are finished, set the final decision and date_end.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reviews.tests">
+<span id="reviews-tests-module"></span><h2>reviews.tests module<a class="headerlink" href="#module-reviews.tests" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reviews.tests.AssignmentTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">AssignmentTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.AssignmentTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.AssignmentTestCase.test_assignment">
+<code class="descname">test_assignment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.AssignmentTestCase.test_assignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the assignment works correctly.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.AutoReviewTests">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">AutoReviewTests</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.AutoReviewTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.AutoReviewTests.test_auto_review">
+<code class="descname">test_auto_review</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.AutoReviewTests.test_auto_review" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.BaseReviewTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">BaseReviewTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.BaseReviewTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<dl class="attribute">
+<dt id="reviews.tests.BaseReviewTestCase.fixtures">
+<code class="descname">fixtures</code><em class="property"> = ['relations', 'compensations', 'registrations', 'agegroups', 'groups']</em><a class="headerlink" href="#reviews.tests.BaseReviewTestCase.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.tests.BaseReviewTestCase.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.BaseReviewTestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the Users and a default Proposal to use in the tests below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.CommissionTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">CommissionTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.CommissionTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.CommissionTestCase.test_decision_commission">
+<code class="descname">test_decision_commission</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.CommissionTestCase.test_decision_commission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the commission phase in a Review works correctly.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.ReviewTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">ReviewTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.ReviewTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.ReviewTestCase.test_start_review">
+<code class="descname">test_start_review</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.ReviewTestCase.test_start_review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests starting of a Review from a submitted Proposal.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.SupervisorTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">SupervisorTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.SupervisorTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.SupervisorTestCase.test_decision_supervisor">
+<code class="descname">test_decision_supervisor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.tests.SupervisorTestCase.test_decision_supervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether a Decision from the supervisor leads to a change in the Review.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reviews.urls">
+<span id="reviews-urls-module"></span><h2>reviews.urls module<a class="headerlink" href="#module-reviews.urls" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reviews.utils">
+<span id="reviews-utils-module"></span><h2>reviews.utils module<a class="headerlink" href="#module-reviews.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reviews.utils.auto_review">
+<code class="descclassname">reviews.utils.</code><code class="descname">auto_review</code><span class="sig-paren">(</span><em>proposal</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.utils.auto_review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reviews a Proposal machine-wise. Based on the regulations on <a class="reference external" href="http://etcl.wp.hum.uu.nl/reglement/">http://etcl.wp.hum.uu.nl/reglement/</a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reviews.utils.get_secretary">
+<code class="descclassname">reviews.utils.</code><code class="descname">get_secretary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.utils.get_secretary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Secretary. We limit this to one user.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reviews.utils.start_assignment_phase">
+<code class="descclassname">reviews.utils.</code><code class="descname">start_assignment_phase</code><span class="sig-paren">(</span><em>proposal</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.utils.start_assignment_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the assignment phase:
+- Set the Review status to ASSIGNMENT
+- Do an automatic review to determine whether this Review can follow the short route
+- Set date_submitted on Proposal to current date/time
+- Create a Decision for all Users in the &#8216;Secretaris&#8217; Group
+- Send an e-mail to these Users
+- Send an e-mail to the supervisor</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reviews.utils.start_review">
+<code class="descclassname">reviews.utils.</code><code class="descname">start_review</code><span class="sig-paren">(</span><em>proposal</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.utils.start_review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a Review for the given Proposal.</p>
+<p>If the proposal needs a supervisor, start the supervisor phase. Otherwise, start the assignment phase.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reviews.utils.start_supervisor_phase">
+<code class="descclassname">reviews.utils.</code><code class="descname">start_supervisor_phase</code><span class="sig-paren">(</span><em>proposal</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.utils.start_supervisor_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the supervisor phase:
+- Set the Review status to SUPERVISOR
+- Set date_submitted_supervisor to current date/time
+- Create a Decision for the supervisor
+- Send an e-mail to the supervisor
+- Send an e-mail to the creator</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reviews.views">
+<span id="reviews-views-module"></span><h2>reviews.views module<a class="headerlink" href="#module-reviews.views" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reviews.views.CommissionView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">CommissionView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.CommissionView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dl class="attribute">
+<dt id="reviews.views.CommissionView.context_object_name">
+<code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.CommissionView.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.CommissionView.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.CommissionView.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the current open Decisions for the current User</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.views.DecisionListView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">DecisionListView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.DecisionListView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dl class="attribute">
+<dt id="reviews.views.DecisionListView.context_object_name">
+<code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.DecisionListView.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.DecisionListView.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.DecisionListView.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all Decisions of the current User</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.views.DecisionUpdateView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">DecisionUpdateView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.DecisionUpdateView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="#reviews.mixins.UserAllowedMixin" title="reviews.mixins.UserAllowedMixin"><code class="xref py py-class docutils literal"><span class="pre">reviews.mixins.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.edit.UpdateView</span></code></p>
+<p>Allows a User to make a Decision on a Review.</p>
+<dl class="attribute">
+<dt id="reviews.views.DecisionUpdateView.form_class">
+<code class="descname">form_class</code><a class="headerlink" href="#reviews.views.DecisionUpdateView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">DecisionForm</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.DecisionUpdateView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.DecisionUpdateView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the decision date</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.DecisionUpdateView.get_success_url">
+<code class="descname">get_success_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.DecisionUpdateView.get_success_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.DecisionUpdateView.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.views.DecisionUpdateView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Decision</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.views.ReviewAssignView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">ReviewAssignView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewAssignView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="#reviews.mixins.AutoReviewMixin" title="reviews.mixins.AutoReviewMixin"><code class="xref py py-class docutils literal"><span class="pre">reviews.mixins.AutoReviewMixin</span></code></a>, <a class="reference internal" href="#reviews.mixins.UserAllowedMixin" title="reviews.mixins.UserAllowedMixin"><code class="xref py py-class docutils literal"><span class="pre">reviews.mixins.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.edit.UpdateView</span></code></p>
+<p>Allows a User of the SECRETARY group to assign reviewers.</p>
+<dl class="attribute">
+<dt id="reviews.views.ReviewAssignView.form_class">
+<code class="descname">form_class</code><a class="headerlink" href="#reviews.views.ReviewAssignView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ReviewAssignForm</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ReviewAssignView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewAssignView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the review stage, creates Decisions and sends e-mail to reviewers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ReviewAssignView.get_success_url">
+<code class="descname">get_success_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewAssignView.get_success_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ReviewAssignView.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.views.ReviewAssignView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Review</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ReviewAssignView.template_name">
+<code class="descname">template_name</code><em class="property"> = 'reviews/review_assign_form.html'</em><a class="headerlink" href="#reviews.views.ReviewAssignView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.views.ReviewCloseView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">ReviewCloseView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewCloseView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="#reviews.mixins.UserAllowedMixin" title="reviews.mixins.UserAllowedMixin"><code class="xref py py-class docutils literal"><span class="pre">reviews.mixins.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.edit.UpdateView</span></code></p>
+<dl class="attribute">
+<dt id="reviews.views.ReviewCloseView.form_class">
+<code class="descname">form_class</code><a class="headerlink" href="#reviews.views.ReviewCloseView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ReviewCloseForm</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ReviewCloseView.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewCloseView.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ReviewCloseView.get_form_kwargs">
+<code class="descname">get_form_kwargs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewCloseView.get_form_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ReviewCloseView.get_initial">
+<code class="descname">get_initial</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewCloseView.get_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ReviewCloseView.get_success_url">
+<code class="descname">get_success_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewCloseView.get_success_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ReviewCloseView.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.views.ReviewCloseView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Review</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ReviewCloseView.template_name">
+<code class="descname">template_name</code><em class="property"> = 'reviews/review_close_form.html'</em><a class="headerlink" href="#reviews.views.ReviewCloseView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.views.ReviewDetailView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">ReviewDetailView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.ReviewDetailView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="#reviews.mixins.AutoReviewMixin" title="reviews.mixins.AutoReviewMixin"><code class="xref py py-class docutils literal"><span class="pre">reviews.mixins.AutoReviewMixin</span></code></a>, <a class="reference internal" href="#reviews.mixins.UserAllowedMixin" title="reviews.mixins.UserAllowedMixin"><code class="xref py py-class docutils literal"><span class="pre">reviews.mixins.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.detail.DetailView</span></code></p>
+<p>Shows the Decisions for a Review</p>
+<dl class="attribute">
+<dt id="reviews.views.ReviewDetailView.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.views.ReviewDetailView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Review</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.views.SupervisorView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">SupervisorView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.SupervisorView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dl class="attribute">
+<dt id="reviews.views.SupervisorView.context_object_name">
+<code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.SupervisorView.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.SupervisorView.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#reviews.views.SupervisorView.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the current open Decisions for the current User</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reviews">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-reviews" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">reviews package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-reviews.admin">reviews.admin module</a></li>
+<li><a class="reference internal" href="#module-reviews.forms">reviews.forms module</a></li>
+<li><a class="reference internal" href="#module-reviews.mixins">reviews.mixins module</a></li>
+<li><a class="reference internal" href="#module-reviews.models">reviews.models module</a></li>
+<li><a class="reference internal" href="#module-reviews.tests">reviews.tests module</a></li>
+<li><a class="reference internal" href="#module-reviews.urls">reviews.urls module</a></li>
+<li><a class="reference internal" href="#module-reviews.utils">reviews.utils module</a></li>
+<li><a class="reference internal" href="#module-reviews.views">reviews.views module</a></li>
+<li><a class="reference internal" href="#module-reviews">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/reviews.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Martijn van der Klis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/reviews.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

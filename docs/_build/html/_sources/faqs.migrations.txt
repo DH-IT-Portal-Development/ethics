@@ -1,0 +1,22 @@
+faqs.migrations package
+=======================
+
+Submodules
+----------
+
+faqs.migrations.0001_initial module
+-----------------------------------
+
+.. automodule:: faqs.migrations.0001_initial
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: faqs.migrations
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,22 @@
+reviews.migrations package
+==========================
+
+Submodules
+----------
+
+reviews.migrations.0001_initial module
+--------------------------------------
+
+.. automodule:: reviews.migrations.0001_initial
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: reviews.migrations
+    :members:
+    :undoc-members:
+    :show-inheritance:

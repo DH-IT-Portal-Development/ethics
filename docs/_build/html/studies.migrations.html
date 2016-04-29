@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>studies.migrations package &mdash; ETCL 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="ETCL 1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="studies-migrations-package">
+<h1>studies.migrations package<a class="headerlink" href="#studies-migrations-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-studies.migrations.0001_initial">
+<span id="studies-migrations-0001-initial-module"></span><h2>studies.migrations.0001_initial module<a class="headerlink" href="#module-studies.migrations.0001_initial" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0001_initial.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0001_initial.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0001_initial.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0001_initial.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'proposals', u'0001_initial')]</em><a class="headerlink" href="#studies.migrations.0001_initial.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0001_initial.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;CreateModel  fields=[(u'id', &lt;django.db.models.fields.AutoField&gt;), (u'age_min', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'age_max', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'description', &lt;django.db.models.fields.CharField&gt;), (u'needs_details', &lt;django.db.models.fields.BooleanField&gt;), (u'max_net_duration', &lt;django.db.models.fields.PositiveIntegerField&gt;)], name=u'AgeGroup'&gt;, &lt;CreateModel  fields=[(u'id', &lt;django.db.models.fields.AutoField&gt;), (u'order', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'description', &lt;django.db.models.fields.CharField&gt;), (u'needs_details', &lt;django.db.models.fields.BooleanField&gt;), (u'requires_review', &lt;django.db.models.fields.BooleanField&gt;)], options={u'ordering': [u'order']}, name=u'Compensation'&gt;, &lt;CreateModel  fields=[(u'id', &lt;django.db.models.fields.AutoField&gt;), (u'order', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'description', &lt;django.db.models.fields.CharField&gt;), (u'needs_details', &lt;django.db.models.fields.BooleanField&gt;), (u'requires_review', &lt;django.db.models.fields.BooleanField&gt;)], options={u'ordering': [u'order']}, name=u'Recruitment'&gt;, &lt;CreateModel  fields=[(u'id', &lt;django.db.models.fields.AutoField&gt;), (u'order', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'description', &lt;django.db.models.fields.CharField&gt;), (u'needs_details', &lt;django.db.models.fields.BooleanField&gt;), (u'needs_supervision', &lt;django.db.models.fields.BooleanField&gt;), (u'requires_review', &lt;django.db.models.fields.BooleanField&gt;)], options={u'ordering': [u'order']}, name=u'Setting'&gt;, &lt;CreateModel  fields=[(u'id', &lt;django.db.models.fields.AutoField&gt;), (u'legally_incapable', &lt;django.db.models.fields.BooleanField&gt;), (u'has_traits', &lt;django.db.models.fields.BooleanField&gt;), (u'traits_details', &lt;django.db.models.fields.CharField&gt;), (u'necessity', &lt;django.db.models.fields.NullBooleanField&gt;), (u'necessity_reason', &lt;django.db.models.fields.TextField&gt;), (u'recruitment_details', &lt;django.db.models.fields.CharField&gt;), (u'setting_details', &lt;django.db.models.fields.CharField&gt;), (u'supervision', &lt;django.db.models.fields.NullBooleanField&gt;), (u'compensation_details', &lt;django.db.models.fields.CharField&gt;), (u'has_observation', &lt;django.db.models.fields.BooleanField&gt;), (u'has_intervention', &lt;django.db.models.fields.BooleanField&gt;), (u'has_sessions', &lt;django.db.models.fields.BooleanField&gt;), (u'informed_consent', &lt;django.db.models.fields.files.FileField&gt;), (u'briefing', &lt;django.db.models.fields.files.FileField&gt;), (u'passive_consent', &lt;django.db.models.fields.BooleanField&gt;), (u'sessions_number', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'sessions_duration', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'stressful', &lt;django.db.models.fields.NullBooleanField&gt;), (u'stressful_details', &lt;django.db.models.fields.TextField&gt;), (u'risk', &lt;django.db.models.fields.NullBooleanField&gt;), (u'risk_details', &lt;django.db.models.fields.TextField&gt;), (u'age_groups', &lt;django.db.models.fields.related.ManyToManyField&gt;), (u'compensation', &lt;django.db.models.fields.related.ForeignKey&gt;), (u'proposal', &lt;django.db.models.fields.related.ForeignKey&gt;), (u'recruitment', &lt;django.db.models.fields.related.ManyToManyField&gt;), (u'setting', &lt;django.db.models.fields.related.ManyToManyField&gt;)], name=u'Study'&gt;, &lt;CreateModel  fields=[(u'id', &lt;django.db.models.fields.AutoField&gt;), (u'order', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'description', &lt;django.db.models.fields.CharField&gt;), (u'needs_details', &lt;django.db.models.fields.BooleanField&gt;)], name=u'Trait'&gt;, &lt;AddField  field=&lt;django.db.models.fields.related.ManyToManyField&gt;, name=u'traits', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0001_initial.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0002_auto_20160401_1504">
+<span id="studies-migrations-0002-auto-20160401-1504-module"></span><h2>studies.migrations.0002_auto_20160401_1504 module<a class="headerlink" href="#module-studies.migrations.0002_auto_20160401_1504" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0002_auto_20160401_1504.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0002_auto_20160401_1504.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0002_auto_20160401_1504.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0002_auto_20160401_1504.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0001_initial')]</em><a class="headerlink" href="#studies.migrations.0002_auto_20160401_1504.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0002_auto_20160401_1504.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AddField  field=&lt;django.db.models.fields.CharField&gt;, preserve_default=False, name=u'name', model_name=u'study'&gt;, &lt;AddField  field=&lt;django.db.models.fields.PositiveIntegerField&gt;, preserve_default=False, name=u'order', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0002_auto_20160401_1504.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0003_auto_20160401_1546">
+<span id="studies-migrations-0003-auto-20160401-1546-module"></span><h2>studies.migrations.0003_auto_20160401_1546 module<a class="headerlink" href="#module-studies.migrations.0003_auto_20160401_1546" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0003_auto_20160401_1546.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0003_auto_20160401_1546.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0003_auto_20160401_1546.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0003_auto_20160401_1546.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0002_auto_20160401_1504')]</em><a class="headerlink" href="#studies.migrations.0003_auto_20160401_1546.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0003_auto_20160401_1546.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterModelOptions  options={u'ordering': [u'order']}, name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.PositiveIntegerField&gt;, name=u'order', model_name=u'study'&gt;, &lt;AlterUniqueTogether  unique_together=set([(u'proposal', u'order')]), name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0003_auto_20160401_1546.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0004_auto_20160408_0919">
+<span id="studies-migrations-0004-auto-20160408-0919-module"></span><h2>studies.migrations.0004_auto_20160408_0919 module<a class="headerlink" href="#module-studies.migrations.0004_auto_20160408_0919" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0004_auto_20160408_0919.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0004_auto_20160408_0919.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0004_auto_20160408_0919.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0004_auto_20160408_0919.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0003_auto_20160401_1546')]</em><a class="headerlink" href="#studies.migrations.0004_auto_20160408_0919.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0004_auto_20160408_0919.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterField  field=&lt;django.db.models.fields.related.ForeignKey&gt;, name=u'compensation', model_name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.NullBooleanField&gt;, name=u'has_traits', model_name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.NullBooleanField&gt;, name=u'legally_incapable', model_name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.CharField&gt;, name=u'name', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0004_auto_20160408_0919.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0005_auto_20160419_1123">
+<span id="studies-migrations-0005-auto-20160419-1123-module"></span><h2>studies.migrations.0005_auto_20160419_1123 module<a class="headerlink" href="#module-studies.migrations.0005_auto_20160419_1123" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0005_auto_20160419_1123.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0005_auto_20160419_1123.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0005_auto_20160419_1123.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0005_auto_20160419_1123.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0004_auto_20160408_0919')]</em><a class="headerlink" href="#studies.migrations.0005_auto_20160419_1123.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0005_auto_20160419_1123.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterField  field=&lt;django.db.models.fields.related.ManyToManyField&gt;, name=u'age_groups', model_name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.NullBooleanField&gt;, name=u'legally_incapable', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0005_auto_20160419_1123.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0006_auto_20160419_1338">
+<span id="studies-migrations-0006-auto-20160419-1338-module"></span><h2>studies.migrations.0006_auto_20160419_1338 module<a class="headerlink" href="#module-studies.migrations.0006_auto_20160419_1338" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0006_auto_20160419_1338.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0006_auto_20160419_1338.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0006_auto_20160419_1338.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0006_auto_20160419_1338.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0005_auto_20160419_1123')]</em><a class="headerlink" href="#studies.migrations.0006_auto_20160419_1338.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0006_auto_20160419_1338.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterField  field=&lt;django.db.models.fields.PositiveIntegerField&gt;, name=u'sessions_number', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0006_auto_20160419_1338.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0007_remove_study_sessions_duration">
+<span id="studies-migrations-0007-remove-study-sessions-duration-module"></span><h2>studies.migrations.0007_remove_study_sessions_duration module<a class="headerlink" href="#module-studies.migrations.0007_remove_study_sessions_duration" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0007_remove_study_sessions_duration.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0007_remove_study_sessions_duration.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0007_remove_study_sessions_duration.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0007_remove_study_sessions_duration.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0006_auto_20160419_1338')]</em><a class="headerlink" href="#studies.migrations.0007_remove_study_sessions_duration.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0007_remove_study_sessions_duration.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;RemoveField  name=u'sessions_duration', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0007_remove_study_sessions_duration.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0008_auto_20160419_1351">
+<span id="studies-migrations-0008-auto-20160419-1351-module"></span><h2>studies.migrations.0008_auto_20160419_1351 module<a class="headerlink" href="#module-studies.migrations.0008_auto_20160419_1351" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0008_auto_20160419_1351.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0008_auto_20160419_1351.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0008_auto_20160419_1351.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0008_auto_20160419_1351.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0007_remove_study_sessions_duration')]</em><a class="headerlink" href="#studies.migrations.0008_auto_20160419_1351.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0008_auto_20160419_1351.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AddField  field=&lt;django.db.models.fields.NullBooleanField&gt;, name=u'deception', model_name=u'study'&gt;, &lt;AddField  field=&lt;django.db.models.fields.TextField&gt;, name=u'deception_details', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0008_auto_20160419_1351.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0009_auto_20160419_1414">
+<span id="studies-migrations-0009-auto-20160419-1414-module"></span><h2>studies.migrations.0009_auto_20160419_1414 module<a class="headerlink" href="#module-studies.migrations.0009_auto_20160419_1414" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0009_auto_20160419_1414.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0009_auto_20160419_1414.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0009_auto_20160419_1414.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0009_auto_20160419_1414.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0008_auto_20160419_1351')]</em><a class="headerlink" href="#studies.migrations.0009_auto_20160419_1414.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0009_auto_20160419_1414.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterField  field=&lt;django.db.models.fields.related.ForeignKey&gt;, name=u'compensation', model_name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.BooleanField&gt;, name=u'passive_consent', model_name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.NullBooleanField&gt;, name=u'risk', model_name=u'study'&gt;, &lt;AlterField  field=&lt;django.db.models.fields.NullBooleanField&gt;, name=u'stressful', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0009_auto_20160419_1414.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0010_auto_20160419_1420">
+<span id="studies-migrations-0010-auto-20160419-1420-module"></span><h2>studies.migrations.0010_auto_20160419_1420 module<a class="headerlink" href="#module-studies.migrations.0010_auto_20160419_1420" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0010_auto_20160419_1420.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0010_auto_20160419_1420.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0010_auto_20160419_1420.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0010_auto_20160419_1420.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0009_auto_20160419_1414')]</em><a class="headerlink" href="#studies.migrations.0010_auto_20160419_1420.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0010_auto_20160419_1420.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;DeleteModel  name=u'Setting'&gt;, &lt;AlterModelOptions  options={u'ordering': [u'order']}, name=u'trait'&gt;, &lt;RemoveField  name=u'setting', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0010_auto_20160419_1420.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0011_study_setting">
+<span id="studies-migrations-0011-study-setting-module"></span><h2>studies.migrations.0011_study_setting module<a class="headerlink" href="#module-studies.migrations.0011_study_setting" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0011_study_setting.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0011_study_setting.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0011_study_setting.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0011_study_setting.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'core', u'0001_initial'), (u'studies', u'0010_auto_20160419_1420')]</em><a class="headerlink" href="#studies.migrations.0011_study_setting.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0011_study_setting.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AddField  field=&lt;django.db.models.fields.related.ManyToManyField&gt;, name=u'setting', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0011_study_setting.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0012_auto_20160419_1451">
+<span id="studies-migrations-0012-auto-20160419-1451-module"></span><h2>studies.migrations.0012_auto_20160419_1451 module<a class="headerlink" href="#module-studies.migrations.0012_auto_20160419_1451" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0012_auto_20160419_1451.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0012_auto_20160419_1451.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0012_auto_20160419_1451.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0012_auto_20160419_1451.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0011_study_setting')]</em><a class="headerlink" href="#studies.migrations.0012_auto_20160419_1451.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0012_auto_20160419_1451.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;RemoveField  name=u'setting', model_name=u'study'&gt;, &lt;RemoveField  name=u'setting_details', model_name=u'study'&gt;, &lt;RemoveField  name=u'supervision', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0012_auto_20160419_1451.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0013_auto_20160419_2149">
+<span id="studies-migrations-0013-auto-20160419-2149-module"></span><h2>studies.migrations.0013_auto_20160419_2149 module<a class="headerlink" href="#module-studies.migrations.0013_auto_20160419_2149" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0013_auto_20160419_2149.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0013_auto_20160419_2149.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0013_auto_20160419_2149.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0013_auto_20160419_2149.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0012_auto_20160419_1451')]</em><a class="headerlink" href="#studies.migrations.0013_auto_20160419_2149.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0013_auto_20160419_2149.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;CreateModel  fields=[(u'id', &lt;django.db.models.fields.AutoField&gt;), (u'name', &lt;django.db.models.fields.CharField&gt;), (u'minutes', &lt;django.db.models.fields.PositiveIntegerField&gt;), (u'survey_url', &lt;django.db.models.fields.URLField&gt;), (u'description', &lt;django.db.models.fields.TextField&gt;)], name=u'Survey'&gt;, &lt;AddField  field=&lt;django.db.models.fields.BooleanField&gt;, name=u'has_surveys', model_name=u'study'&gt;, &lt;AddField  field=&lt;django.db.models.fields.NullBooleanField&gt;, name=u'surveys_stressful', model_name=u'study'&gt;, &lt;AddField  field=&lt;django.db.models.fields.related.ForeignKey&gt;, name=u'study', model_name=u'survey'&gt;]</em><a class="headerlink" href="#studies.migrations.0013_auto_20160419_2149.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0014_auto_20160420_2026">
+<span id="studies-migrations-0014-auto-20160420-2026-module"></span><h2>studies.migrations.0014_auto_20160420_2026 module<a class="headerlink" href="#module-studies.migrations.0014_auto_20160420_2026" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0014_auto_20160420_2026.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0014_auto_20160420_2026.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0014_auto_20160420_2026.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0014_auto_20160420_2026.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0013_auto_20160419_2149')]</em><a class="headerlink" href="#studies.migrations.0014_auto_20160420_2026.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0014_auto_20160420_2026.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterField  field=&lt;django.db.models.fields.CharField&gt;, preserve_default=False, name=u'name', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0014_auto_20160420_2026.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations.0015_auto_20160422_1628">
+<span id="studies-migrations-0015-auto-20160422-1628-module"></span><h2>studies.migrations.0015_auto_20160422_1628 module<a class="headerlink" href="#module-studies.migrations.0015_auto_20160422_1628" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="studies.migrations.0015_auto_20160422_1628.Migration">
+<em class="property">class </em><code class="descclassname">studies.migrations.0015_auto_20160422_1628.</code><code class="descname">Migration</code><span class="sig-paren">(</span><em>name</em>, <em>app_label</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.migrations.0015_auto_20160422_1628.Migration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.migrations.migration.Migration</span></code></p>
+<dl class="attribute">
+<dt id="studies.migrations.0015_auto_20160422_1628.Migration.dependencies">
+<code class="descname">dependencies</code><em class="property"> = [(u'studies', u'0014_auto_20160420_2026')]</em><a class="headerlink" href="#studies.migrations.0015_auto_20160422_1628.Migration.dependencies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.migrations.0015_auto_20160422_1628.Migration.operations">
+<code class="descname">operations</code><em class="property"> = [&lt;AlterField  field=&lt;django.db.models.fields.CharField&gt;, name=u'name', model_name=u'study'&gt;]</em><a class="headerlink" href="#studies.migrations.0015_auto_20160422_1628.Migration.operations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-studies.migrations">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-studies.migrations" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">studies.migrations package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0001_initial">studies.migrations.0001_initial module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0002_auto_20160401_1504">studies.migrations.0002_auto_20160401_1504 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0003_auto_20160401_1546">studies.migrations.0003_auto_20160401_1546 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0004_auto_20160408_0919">studies.migrations.0004_auto_20160408_0919 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0005_auto_20160419_1123">studies.migrations.0005_auto_20160419_1123 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0006_auto_20160419_1338">studies.migrations.0006_auto_20160419_1338 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0007_remove_study_sessions_duration">studies.migrations.0007_remove_study_sessions_duration module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0008_auto_20160419_1351">studies.migrations.0008_auto_20160419_1351 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0009_auto_20160419_1414">studies.migrations.0009_auto_20160419_1414 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0010_auto_20160419_1420">studies.migrations.0010_auto_20160419_1420 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0011_study_setting">studies.migrations.0011_study_setting module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0012_auto_20160419_1451">studies.migrations.0012_auto_20160419_1451 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0013_auto_20160419_2149">studies.migrations.0013_auto_20160419_2149 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0014_auto_20160420_2026">studies.migrations.0014_auto_20160420_2026 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations.0015_auto_20160422_1628">studies.migrations.0015_auto_20160422_1628 module</a></li>
+<li><a class="reference internal" href="#module-studies.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/studies.migrations.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Martijn van der Klis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/studies.migrations.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
