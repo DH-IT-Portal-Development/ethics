@@ -9,6 +9,12 @@
 
 {% block noprogressbar %}{% endblock %}
 
+{% block sidebar %}
+{% if not create %}
+{% include "base/sidebar.html" %}
+{% endif %}
+{% endblock %}
+
 {% block content %}
 <script>
 $(function() {

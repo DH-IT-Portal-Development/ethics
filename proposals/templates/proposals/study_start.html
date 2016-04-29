@@ -9,6 +9,10 @@
 
 {% block progress %}8{% endblock %}
 
+{% block sidebar %}
+{% include "base/sidebar.html" %}
+{% endblock %}
+
 {% block content %}
 {% trans "U kunt de aard van de studie nu in detail op de volgende pagina's specificeren." as is_similar %}
 {% trans "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}

@@ -1,0 +1,155 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sidebar/3.3.2/jquery.sidebar.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'proposals/progress.css' %}" />
+
+{% trans "Het interventieonderzoek" as intervention_title %}
+{% trans "Het observatieonderzoek" as observation_title %}
+{% trans "Het takenonderzoek" as sessions_title %}
+
+<script>
+$(function() {
+    // Add nodes and dividers
+    $('.progress li').after('<li><div class="divider"></div></li>');
+    $('.progress li:even').prepend('<div class="item">');
+
+    // Set current item
+    $('a[href="{{request.path}}').prev().addClass('current');
+
+    // Sidebar functionality
+    $('.progress').sidebar({side: 'right'});
+    $('.open-progress').click(function() {
+        $('.progress').trigger('sidebar:open');
+    });
+    $('.close-progress').click(function() {
+        $('.progress').trigger('sidebar:close');
+    });
+});
+</script>
+
+<button class="pure-button open-progress">{% trans "Toon navigatie" %}</button>
+<div class="progress">
+    <button class="pure-button close-progress">{% trans "Sluit navigatie" %}</button>
+    <h2>{% trans "Voortgang" %}</h2>
+<ul>
+    <li>
+        <a href="{% url 'proposals:update' proposal.pk %}">
+            {% trans "Algemene informatie over de studie" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'proposals:wmo_update' proposal.pk %}">
+            {% trans "Ook ethische toetsing door de METC nodig?" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'proposals:study_start' proposal.pk %}">
+            {% trans "Eén of meerdere trajecten?" %}
+        </a>
+    </li>
+    {% for study in proposal.study_set.all %}
+    {% if proposal.studies_number > 1 %}
+</ul>
+    <strong>
+    {% blocktrans with order=study.order name=study.name %}
+    Traject {{ order }} ({{ name}})
+    {% endblocktrans %}
+    </strong>
+<ul>
+    {% endif %}
+    <li>
+        <a class="margin-1" href="{% url 'studies:update' study.pk %}">
+            {% trans "De deelnemers" %}
+        </a>
+    </li>
+    <li>
+        <a class="margin-1" href="{% url 'studies:design' study.pk %}">
+            {% trans "De onderzoekstype(n)" %}
+        </a>
+    </li>
+
+    <li>
+        {% if study.has_intervention and study.intervention %}
+        <a class="margin-2" href="{% url 'interventions:update' study.intervention.pk %}">
+            {{ intervention_title }}
+        </a>
+        {% else %}
+        <span class="margin-2">{{ intervention_title }}</span>
+        {% endif %}
+    </li>
+
+    <li>
+        {% if study.has_observation and study.observation %}
+        <a class="margin-2" href="{% url 'observations:update' study.observation.pk %}">
+            {{ observation_title }}
+        </a>
+        {% else %}
+        <span class="margin-2">{{ observation_title }}</span>
+        {% endif %}
+    </li>
+
+    {% if study.has_sessions %}
+    <li>
+        <a class="margin-2" href="{% url 'studies:session_start' study.pk %}">
+            {{ sessions_title }}
+        </a>
+    </li>
+    {% for session in study.session_set.all %}
+    <li>
+        <a class="margin-3" href="{% url 'tasks:start' session.pk %}">
+            {% blocktrans with order=session.order %}
+            Het takenonderzoek: sessie {{ order }}
+            {% endblocktrans %}
+        </a>
+    </li>
+        {% for task in session.task_set.all %}
+    <li>
+        <a class="margin-3" href="{% url 'tasks:update' task.pk %}">
+            {% blocktrans with s_order=session.order t_order=task.order %}
+            Het takenonderzoek: sessie {{ s_order }} taak {{ t_order }}
+            {% endblocktrans %}
+        </a>
+    </li>
+        {% endfor %}
+    <li>
+        <a class="margin-3" href="{% url 'tasks:end' session.pk %}">
+            {% blocktrans with order=session.order %}
+            Overzicht van het takenonderzoek: sessie {{ order }}
+            {% endblocktrans %}
+        </a>
+    {% endfor %}
+    {% else %}
+    <li>
+        <span>{{ sessions_title }}</span>
+    </li>
+    {% endif %}
+
+    <li>
+        <a class="margin-1" href="{% url 'studies:session_end' study.pk %}">
+            {% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}
+        </a>
+    </li>
+    <li>
+        <a class="margin-1" href="{% url 'studies:survey' study.pk %}">
+            {% trans "Dataverzameling direct betrokkenen t.b.v. het onderzoek" %}
+        </a>
+    </li>
+    <li>
+        <a class="margin-1" href="{% url 'studies:consent' study.pk %}">
+            {% trans "Informed consent formulieren voor het onderzoek" %}
+        </a>
+    </li>
+
+    {% if proposal.studies_number > 1 %}
+</ul>
+<ul>
+    {% endif %}
+    {% endfor %}
+    <li>
+        <a href="{% url 'proposals:submit' proposal.pk %}">
+            {% trans "Concept-aanmelding klaar voor versturen" %}
+        </a>
+    </li>
+</ul>
+</div>

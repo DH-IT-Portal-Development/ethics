@@ -20,6 +20,12 @@ class WmoMixin(object):
     model = Wmo
     form_class = WmoForm
 
+    def get_context_data(self, **kwargs):
+        """Setting the Proposal on the context"""
+        context = super(WmoMixin, self).get_context_data(**kwargs)
+        context['proposal'] = self.get_proposal()
+        return context
+
     def get_next_url(self):
         wmo = self.object
         if wmo.status == Wmo.NO_WMO:
@@ -33,17 +39,29 @@ class WmoMixin(object):
     def get_back_url(self):
         return reverse('proposals:update', args=(self.object.proposal.pk,))
 
+    def get_proposal(self):
+        raise NotImplementedError
+
 
 class WmoCreate(WmoMixin, CreateView):
     success_message = _('WMO-gegevens opgeslagen')
 
     def form_valid(self, form):
-        form.instance.proposal = Proposal.objects.get(pk=self.kwargs['pk'])
+        """Saves the Proposal on the WMO instance"""
+        form.instance.proposal = self.get_proposal()
         return super(WmoCreate, self).form_valid(form)
+
+    def get_proposal(self):
+        """Retrieves the Proposal from the pk kwarg"""
+        return Proposal.objects.get(pk=self.kwargs['pk'])
 
 
 class WmoUpdate(WmoMixin, UpdateView):
     success_message = _('WMO-gegevens bewerkt')
+
+    def get_proposal(self):
+        """Retrieves the Proposal from the form object"""
+        return self.object.proposal
 
 
 ######################

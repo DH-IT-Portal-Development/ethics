@@ -9,6 +9,12 @@
 
 {% block progress %}{{ progress }}{% endblock %}
 
+{% block sidebar %}
+{% with proposal=session.study.proposal %}
+{% include "base/sidebar.html" %}
+{% endwith %}
+{% endblock %}
+
 {% block content %}
 {% include "tasks/session_title.html" %}
 <div class="task_list">

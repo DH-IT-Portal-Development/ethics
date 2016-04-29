@@ -9,6 +9,12 @@
 
 {% block progress %}{{ progress }}{% endblock %}
 
+{% block sidebar %}
+{% with proposal=study.proposal %}
+{% include "base/sidebar.html" %}
+{% endwith %}
+{% endblock %}
+
 {% block content %}
 {% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
