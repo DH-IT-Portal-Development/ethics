@@ -4,3 +4,4 @@ django-easy-pdf==0.1.0
 django-extra-views==0.7.1
 mysql-python==1.2.5
 xhtml2pdf==0.0.6
+sphinx==1.4.1
