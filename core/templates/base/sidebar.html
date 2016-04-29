@@ -121,7 +121,7 @@ $(function() {
     {% endfor %}
     {% else %}
     <li>
-        <span>{{ sessions_title }}</span>
+        <span class="margin-2">{{ sessions_title }}</span>
     </li>
     {% endif %}
 
@@ -140,8 +140,7 @@ $(function() {
             {% trans "Informed consent formulieren voor het onderzoek" %}
         </a>
     </li>
-
-    {% if proposal.studies_number > 1 %}
+    {% if proposal.studies_number > 1 and forloop.last %}
 </ul>
 <ul>
     {% endif %}
