@@ -2,11 +2,9 @@
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
 from core.views import AllowErrorsMixin, UpdateView, DeleteView
-from studies.models import Study
 from ..forms import TaskStartForm, TaskEndForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Session, Task
@@ -16,20 +14,6 @@ from ..utils import copy_task_to_session, get_session_progress
 ######################
 # Actions on a Session
 ######################
-def add_session(request, pk):
-    """Adds a Session to the given Study"""
-    study = get_object_or_404(Study, pk=pk)
-    new_session_number = study.sessions_number + 1
-
-    study.sessions_number = new_session_number
-    study.save()
-
-    session = Session(study=study, order=new_session_number)
-    session.save()
-
-    return HttpResponseRedirect(reverse('tasks:start', args=(session.pk,)))
-
-
 class SessionDelete(DeletionAllowedMixin, DeleteView):
     model = Session
     success_message = _('Sessie verwijderd')
@@ -60,6 +44,9 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
+##################
+# Actions on Tasks
+##################
 class TaskStart(AllowErrorsMixin, UpdateView):
     """Initial creation of Tasks for a Session"""
     model = Session
