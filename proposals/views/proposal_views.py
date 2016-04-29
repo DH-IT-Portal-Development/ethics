@@ -86,11 +86,6 @@ class MyProposalsView(ProposalsView):
 ##########################
 # CRUD actions on Proposal
 ##########################
-class DetailView(LoginRequiredMixin, generic.DetailView):
-    # TODO: limit access to applicants, supervisor and commission
-    model = Proposal
-
-
 class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
