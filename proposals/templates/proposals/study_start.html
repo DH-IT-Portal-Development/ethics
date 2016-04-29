@@ -21,10 +21,10 @@ $(function() {
     add_title('study_name_1', "{% trans 'Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters.' %}");
 
     $('input[name=studies_similar]').change(function() {
-        var is_similar = $('input[name=studies_similar]:checked').val() === 'True';
+        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
 
         var text = "{{ is_similar }}";
-        if (!is_similar) {
+        if (is_dissimilar) {
         	text = "{{ is_dissimilar }}";
         }
         else {
@@ -35,15 +35,15 @@ $(function() {
         $('#next_text').html(text);
         $('#next_text').show();
 
-        $('#id_studies_number').parents('tr').toggle(!is_similar);
+        $('#id_studies_number').parents('tr').toggle(is_dissimilar);
         $('#id_studies_number').change();
     });
     $('input[name=studies_similar]').change();
 
     $('input[name=studies_number]').change(function() {
-        var is_similar = $('input[name=studies_similar]:checked').val() === 'True';
+        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
 
-        if (!is_similar) {
+        if (is_dissimilar) {
             $('input[name="study_name_1"]').parents('tr').prev().show();
             for (var i = 1; i <= 5; i++) {
                 $('input[name="study_name_' + i + '"]').parents('tr').toggle(i <= $(this).val());
