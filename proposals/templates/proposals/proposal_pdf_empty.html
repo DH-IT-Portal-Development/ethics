@@ -182,16 +182,31 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "number" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "duration" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "experimenter" %}</th><td></td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_controls_details" %}</th><td></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{% show_yesno %}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_recording" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "recording_same_experimenter" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "recording_experimenter" %}</th><td></td>
             </tr>
         </table>
 

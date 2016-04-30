@@ -218,19 +218,38 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "number" %}</th><td>{{ intervention.number }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "duration" %}</th><td>{{ intervention.duration }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "experimenter" %}</th><td>{{ intervention.experimenter.get_full_name }}</td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td>{{ intervention.description }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks" %}</th><td>{{ intervention.has_drawbacks|yesno:_("ja,nee") }}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th><td>{{ intervention.has_controls|yesno:_("ja,nee") }}</td>
             </tr>
-            {% if intervention.has_drawbacks %}
+            {% if intervention.has_controls %}
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_drawbacks_details" %}</th><td>{{ intervention.has_drawbacks_details }}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_controls_details" %}</th><td>{{ intervention.has_controls_details }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "is_supervised" %}</th><td>{{ intervention.is_supervised|yesno:_("ja,nee") }}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_recording" %}</th><td>{{ intervention.has_recording|yesno:_("ja,nee") }}</td>
             </tr>
+            {% if intervention.has_recording %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "recording_same_experimenter" %}</th><td>{{ intervention.recording_same_experimenter|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if not intervention.recording_same_experimenter %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "recording_experimenter" %}</th><td>{{ intervention.recording_experimenter.get_full_name }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
         </table>
         {% endwith %}
         {% endif %}
