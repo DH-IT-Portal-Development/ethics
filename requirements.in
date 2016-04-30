@@ -1,4 +1,5 @@
 Django==1.8.11
+django-auth-ldap==1.2.8
 django-braces==1.8.1
 django-easy-pdf==0.1.0
 django-extra-views==0.7.1
