@@ -40,6 +40,8 @@ $(function() {
 
     $('label[for="id_has_observation"]').after('<br/>');
 
+    depends_on_value('has_recording', 'True', 'has_observation');
+
 });
 </script>
 {% include "studies/study_title.html" %}

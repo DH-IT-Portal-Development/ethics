@@ -31,10 +31,10 @@ van de leraar of een ander persoon die bevoegd is?')
         _('Geef een beschrijving van de experimentele interventie'))
 
     has_controls = models.BooleanField(
-        _('Is er sprake van een controle groep?'),
+        _('Is er sprake van een controlegroep?'),
         default=False)
     has_controls_details = models.TextField(
-        _('Geef een beschrijving van de controle interventie'),
+        _('Geef een beschrijving van de controleinterventie'),
         blank=True)
 
     has_recording = models.BooleanField(
