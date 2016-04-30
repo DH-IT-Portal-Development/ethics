@@ -123,6 +123,7 @@ STATIC_URL = '/static/'
 
 # File handling
 MEDIA_ROOT = 'media'
+MEDIA_URL = '/media/'
 
 # E-mail settings
 EMAIL_HOST = 'localhost'

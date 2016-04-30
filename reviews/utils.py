@@ -200,10 +200,4 @@ voor de leeftijdsgroep {ag}.'.format(ag=age_group, d=study.net_duration(), max_d
                 go = False
                 reasons.append(_('De observatie gebeurt anoniem.'))
 
-        if study.has_intervention:
-            intervention = Intervention.objects.get(study=study)
-            if not intervention.is_supervised:
-                go = False
-                reasons.append(_('De interventie vindt plaats met een onbevoegd persoon.'))
-
     return go, reasons

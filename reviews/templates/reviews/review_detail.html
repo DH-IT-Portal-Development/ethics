@@ -1,10 +1,11 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
 {% load i18n %}
 
 {% block title %} 
 {% blocktrans with proposal=review.proposal.title %}
-Beslissingen bij voorstel {{ proposal }}
+Beslissingen bij aanmelding <em>{{ proposal }}</em>
 {% endblocktrans %}
 {% endblock %}
 
@@ -21,6 +22,33 @@ Beslissingen bij voorstel {{ proposal }}
     {% endblocktrans %}
     {% endif %}
 </p>
+
 {% include "reviews/review_table.html" %}
+
 {% include "reviews/auto_review.html" %}
+
+<h2>{% trans "Formulieren bij aanmelding" %}</h2>
+{% for study in review.proposal.study_set.all %}
+{% include "studies/study_title.html" %}
+<ul>
+    <li>
+        <a href="{{ study.informed_consent.url }}" target="_blank">
+            {% trans "Informed consent" %}
+        </a>
+    </li>
+    <li>
+        <a href="{{ study.briefing.url }}" target="_blank">
+            {% trans "Briefing" %}
+        </a>
+    </li>
+    {% if study.has_observation and study.observation.needs_approval %}
+    <li>
+        <a href="{{ study.observation.approval_document.url }}" target="_blank">
+            {% trans "Toestemmingsdocument observatiestudie" %}
+        </a>
+    </li>
+    {% endif %}
+</ul>
+{% endfor %}
+
 {% endblock %}
