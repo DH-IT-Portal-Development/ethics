@@ -7,7 +7,7 @@
 <head>
     <title>{% trans "ETCL UiL OTS" %}</title>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'proposals/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
     <link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
@@ -17,9 +17,9 @@
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/jquery.formset.js' %}"></script>
-    <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/pure.menus.js' %}"></script>
-    <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/datepicker-nl.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'core/js/jquery.formset.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'core/js/pure.menus.js' %}"></script>
+    <script type="text/javascript" charset="utf8" src="{% static 'core/js/datepicker-nl.js' %}"></script>
     <script>
         $(document).ready(function() {
             var language = "nl" === "{{ LANGUAGE_CODE }}" ? "Dutch" : "English";
@@ -37,7 +37,7 @@
 <div class="pure-g">
     <div class="pure-u-1-8"></div>
     <div id="content" class="pure-u-3-4">
-        <img id="header-img" src="{% static 'proposals/images/uu-header.png' %}">
+        <img id="header-img" src="{% static 'core/images/uu-header.png' %}">
         <h1 id="title">{% trans "ETCL UiL OTS" %}</h1>
         {% include "base/menu.html" %}
         {% if debug %}

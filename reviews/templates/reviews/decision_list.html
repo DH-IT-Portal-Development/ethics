@@ -34,8 +34,8 @@
             <td>{{ review.date_start|date:"j M Y" }}</td>
             <td>{{ decision.go|yesno:"go,no go,open" }}</td>
             <td>
-                <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'proposals/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
-                <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'proposals/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
+                <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
+                <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
                 {% if review.stage == review.ASSIGNMENT %}
                     <a href="{% url 'reviews:assign' review.id %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
                 {% elif not review.date_end %}
