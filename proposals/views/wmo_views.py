@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
 from core.views import CreateView, UpdateView
-from core.utils import string_to_bool
+from core.utils import get_secretary, string_to_bool
 
 from ..models import Proposal, Wmo
 from ..forms import WmoForm, WmoCheckForm
@@ -87,12 +87,16 @@ def check_wmo(request):
     # Default message: OK.
     message = _('Uw studie hoeft niet te worden beoordeeld door de METC.')
     message_class = 'info'
+    needs_metc = False
 
     if is_metc is None or (not is_metc and (is_medical is None or is_behavioristic is None)):
-        message = _('Neem contact op met Maartje de Klerk om de twijfels weg te nemen.')
+        secretary = get_secretary().get_full_name()
+        message = _('Neem contact op met {secretary} om de twijfels weg te nemen.').format(secretary=secretary)
         message_class = 'warning'
+        needs_metc = True
     elif is_metc or (is_medical and is_behavioristic):
         message = _('Uw studie zal moeten worden beoordeeld door de METC.')
         message_class = 'warning'
+        needs_metc = True
 
-    return JsonResponse({'message': message, 'message_class': message_class})
+    return JsonResponse({'needs_metc': needs_metc, 'message': message, 'message_class': message_class})

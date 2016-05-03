@@ -17,33 +17,47 @@
 <script>
 $(function() {
     $("input[name=metc]").change(function() {
-        var metc_undef = typeof $('input[name=metc]:checked').val() == "undefined";
-        var metc_true = $('input[name=metc]:checked').val() == "True";
-        var metc_doubt = metc_true || $('input[name=metc]:checked').val() == "None";
+        // On change of the metc field, hide/unset all values
+        $("input[name=is_medical]").parents("tr").hide();
+        $("input[name=is_behavioristic]").parents("tr").hide();
+        $("input[name=is_medical]").prop("checked", false);
+        $("input[name=is_behavioristic]").prop("checked", false);
+        $("#metc_status").empty().removeClass();
 
-        $("input[name=metc_institution]").parent().parent().toggle(metc_doubt);
-        if (metc_undef)
-        {
-            $("#id_is_medical, #id_is_behavioristic").parent().parent().hide();
-        }
-        else
-        {
-            $("#id_is_medical").parent().parent().toggle(!metc_true);
-        }
+        // Set the is_medical field based on the checked value
+        var no_metc = $.inArray($("input[name=metc]:checked").val(), ["None", "False"]) > -1;
+        $("input[name=is_medical]").parents("tr").toggle(no_metc);
     });
     $("input[name=metc]").change();
 
-    depends_on_list_value('is_medical', ['True', 'None'], 'is_behavioristic');
-
-    $("#id_metc, #id_is_medical, #id_is_behavioristic").change(function() {
-        var metc = $('#id_metc_0:checked').val() == "True";
-        var medical = $('#id_is_medical_0:checked').val() == "True";
-        var behavioristic = $('#id_is_behavioristic_0:checked').val() == "True";
-
-        $("#id_metc_application").parent().parent().toggle(metc || (medical && behavioristic));
+    $("input[name=is_medical]").change(function() {
+        // When is_medical has not yet been checked, hide is_behavoristic
+        var is_medical_undef = $("input[name=is_medical]:checked").val() === undefined;
+        $("input[name=is_behavioristic]").parents("tr").toggle(!is_medical_undef);
     });
-    $("#id_metc, #id_is_medical, #id_is_behavioristic").change();
+    $("input[name=is_medical]").change();
 
+    $("input[name=metc], input[name=is_medical], input[name=is_behavioristic]").change(function() {
+        // Check which status message should be displayed
+        var metc = $("input[name=metc]:checked").val();
+        var medical = $("input[name=is_medical]:checked").val();
+        var behavioristic = $("input[name=is_behavioristic]:checked").val();
+
+        // Only do the check if the fields are filled
+        if (metc === "True" || (medical !== undefined && behavioristic !== undefined)) {
+            var url = "{% url 'proposals:check_wmo' %}";
+            var params = {"metc": metc, "medical": medical, "behavioristic": behavioristic};
+            $.post(url, params, function(data) {
+                $("input[name=metc_application]").parents("tr").toggle(data.needs_metc);
+            });
+        }
+        else {
+            $("input[name=metc_application]").parents("tr").hide();
+        }
+    });
+    $("input[name=metc], input[name=is_medical], input[name=is_behavioristic]").change();
+
+    depends_on_value('metc', 'True', 'metc_institution');
     depends_on_value('metc_application', 'True', 'metc_decision');
     depends_on_value('metc_decision', 'True', 'metc_decision_pdf');
 });

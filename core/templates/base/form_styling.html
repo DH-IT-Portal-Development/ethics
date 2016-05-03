@@ -29,26 +29,6 @@ function check_field_required(input_name, field_name, required_input, app_name, 
     $('input[name=' + input_name + ']').change();
 }
 
-// TODO: deprecated, use check_field_required
-function depends_on_list_value(a, a_value, b)
-{
-    $('input[name=' + a + ']').change(function() {
-        var values = $('input[name=' + a + ']:checked').map(function() {
-            return this.value;
-        }).get();
-        $('#id_' + b).parent().parent().toggle(intersect(values, a_value).length > 0);
-    });
-    $('input[name=' + a + ']').change();
-}
-
-// TODO: deprecated, see above
-function intersect(a, b)
-{
-    return a.filter(function (e) {
-        if (b.indexOf(e) !== -1) return true;
-    });
-}
-
 // Adds a title row to a form field
 function add_title(field, title)
 {
