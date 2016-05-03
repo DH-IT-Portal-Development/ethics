@@ -4,11 +4,9 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from core.views import AllowErrorsMixin, UpdateView
-from observations.models import Observation
-from interventions.models import Intervention
 from tasks.models import Session
 
-from ..forms import SessionStartForm, SessionEndForm
+from ..forms import SessionStartForm
 from ..models import Study
 from ..utils import get_study_progress
 
@@ -66,39 +64,3 @@ class SessionStart(AllowErrorsMixin, UpdateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, title=self.object.proposal.title)
-
-
-class SessionEnd(AllowErrorsMixin, UpdateView):
-    """
-    Completes the creation of Sessions
-    """
-    model = Study
-    form_class = SessionEndForm
-    template_name = 'studies/session_end.html'
-    success_message = _(u'Sessies toevoegen beëindigd')
-
-    def get_context_data(self, **kwargs):
-        """Setting the progress on the context"""
-        context = super(SessionEnd, self).get_context_data(**kwargs)
-        context['progress'] = get_study_progress(self.object, True) - 10
-        return context
-
-    def get_next_url(self):
-        return reverse('studies:survey', args=(self.object.pk,))
-
-    def get_back_url(self):
-        study = self.object
-        if study.has_sessions:
-            next_url = 'tasks:end'
-            pk = self.object.last_session().pk
-        elif study.has_intervention:
-            next_url = 'interventions:update'
-            pk = Intervention.objects.get(study=study).pk
-        elif study.has_observation:
-            next_url = 'observations:update'
-            pk = Observation.objects.get(study=study).pk
-        else:
-            next_url = 'studies:design'
-            pk = study.pk
-
-        return reverse(next_url, args=(pk,))

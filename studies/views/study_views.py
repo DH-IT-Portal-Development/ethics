@@ -8,8 +8,10 @@ from django.utils.translation import ugettext as _
 from core.views import AllowErrorsMixin, UpdateView
 from core.utils import string_to_bool
 from proposals.models import Proposal
+from interventions.models import Intervention
+from observations.models import Observation
 
-from ..forms import StudyForm, StudyDesignForm, StudyConsentForm
+from ..forms import StudyForm, StudyDesignForm, StudyConsentForm, StudyEndForm
 from ..models import Study
 from ..utils import check_necessity_required, get_study_progress
 
@@ -113,6 +115,41 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
 
     def get_back_url(self):
         return reverse('studies:survey', args=(self.object.pk,))
+
+
+class StudyEnd(AllowErrorsMixin, UpdateView):
+    """
+    Completes a Study
+    """
+    model = Study
+    form_class = StudyEndForm
+    template_name = 'studies/study_end.html'
+
+    def get_context_data(self, **kwargs):
+        """Setting the progress on the context"""
+        context = super(StudyEnd, self).get_context_data(**kwargs)
+        context['progress'] = get_study_progress(self.object, True) - 10
+        return context
+
+    def get_next_url(self):
+        return reverse('studies:survey', args=(self.object.pk,))
+
+    def get_back_url(self):
+        study = self.object
+        if study.has_sessions:
+            next_url = 'tasks:end'
+            pk = self.object.last_session().pk
+        elif study.has_intervention:
+            next_url = 'interventions:update'
+            pk = Intervention.objects.get(study=study).pk
+        elif study.has_observation:
+            next_url = 'observations:update'
+            pk = Observation.objects.get(study=study).pk
+        else:
+            next_url = 'studies:design'
+            pk = study.pk
+
+        return reverse(next_url, args=(pk,))
 
 
 ################

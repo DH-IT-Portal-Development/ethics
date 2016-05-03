@@ -15,12 +15,14 @@ from .utils import check_necessity_required
 class StudyForm(ConditionalModelForm):
     class Meta:
         model = Study
-        fields = ['age_groups', 'legally_incapable',
-                  'has_traits', 'traits', 'traits_details',
-                  'necessity', 'necessity_reason',
-                  'recruitment', 'recruitment_details',
-                  'compensation', 'compensation_details',
-                  'passive_consent']
+        fields = [
+            'age_groups', 'legally_incapable',
+            'has_traits', 'traits', 'traits_details',
+            'necessity', 'necessity_reason',
+            'recruitment', 'recruitment_details',
+            'compensation', 'compensation_details',
+            'passive_consent',
+        ]
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
@@ -97,25 +99,14 @@ class StudyConsentForm(forms.ModelForm):
         fields = ['informed_consent', 'briefing']
 
 
-class SessionStartForm(forms.ModelForm):
+class StudyEndForm(ConditionalModelForm):
     class Meta:
         model = Study
-        fields = ['sessions_number']
-
-    def __init__(self, *args, **kwargs):
-        """
-        - Set the sessions_number field as required
-        """
-        super(SessionStartForm, self).__init__(*args, **kwargs)
-        self.fields['sessions_number'].required = True
-
-
-class SessionEndForm(ConditionalModelForm):
-    class Meta:
-        model = Study
-        fields = ['deception', 'deception_details',
-                  'stressful', 'stressful_details',
-                  'risk', 'risk_details']
+        fields = [
+            'deception', 'deception_details',
+            'stressful', 'stressful_details',
+            'risk', 'risk_details'
+        ]
         widgets = {
             'deception': forms.RadioSelect(choices=YES_NO_DOUBT),
             'stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
@@ -127,7 +118,7 @@ class SessionEndForm(ConditionalModelForm):
         - Set deception as required
         - Set stressful and risk as required and mark_safe the labels
         """
-        super(SessionEndForm, self).__init__(*args, **kwargs)
+        super(StudyEndForm, self).__init__(*args, **kwargs)
 
         self.fields['deception'].required = True
         self.fields['stressful'].required = True
@@ -142,11 +133,24 @@ class SessionEndForm(ConditionalModelForm):
         - If stressful is set to yes, make sure stressful_details has been filled out
         - If risk is set to yes, make sure risk_details has been filled out
         """
-        cleaned_data = super(SessionEndForm, self).clean()
+        cleaned_data = super(StudyEndForm, self).clean()
 
         self.check_dependency(cleaned_data, 'deception', 'deception_details')
         self.check_dependency(cleaned_data, 'stressful', 'stressful_details')
         self.check_dependency(cleaned_data, 'risk', 'risk_details')
+
+
+class SessionStartForm(forms.ModelForm):
+    class Meta:
+        model = Study
+        fields = ['sessions_number']
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Set the sessions_number field as required
+        """
+        super(SessionStartForm, self).__init__(*args, **kwargs)
+        self.fields['sessions_number'].required = True
 
 
 class SurveyForm(forms.ModelForm):
