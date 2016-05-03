@@ -9,10 +9,10 @@ from .views.wmo_views import WmoCreate, WmoUpdate, WmoCheck, check_wmo
 urlpatterns = [
     # List views
     url(r'^archive/$', ProposalsView.as_view(), name='archive'),
-    url(r'^concepts/$', MyConceptsView.as_view(), name='my_concepts'),
-    url(r'^submitted/$', MySubmittedView.as_view(), name='my_submitted'),
-    url(r'^completed/$', MyCompletedView.as_view(), name='my_completed'),
-    url(r'^proposals/$', MyProposalsView.as_view(), name='my_archive'),
+    url(r'^my_concepts/$', MyConceptsView.as_view(), name='my_concepts'),
+    url(r'^my_submitted/$', MySubmittedView.as_view(), name='my_submitted'),
+    url(r'^my_completed/$', MyCompletedView.as_view(), name='my_completed'),
+    url(r'^my_archive/$', MyProposalsView.as_view(), name='my_archive'),
 
     # Proposal
     url(r'^create/$', ProposalCreate.as_view(), name='create'),

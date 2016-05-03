@@ -30,8 +30,9 @@
 </p>
 <p>
     {% blocktrans %}
-    Als u de concept-aanmelding eerst nog even wilt nakijken kan dar door via "Terug naar begin
-    van de studie" alle pagina's nog even door te lopen.
+    Als u de concept-aanmelding eerst nog even wilt nakijken kan dat door via "Terug naar begin
+    van de studie" alle pagina's nog even door te lopen, of gebruik te maken van de knop 
+    "Toon navigatie" in de rechterbovenhoek.
     {% endblocktrans %}
 </p>
 <p>
@@ -40,20 +41,18 @@
     de concept-aanvraag wordt dan bewaard voor evt. latere wijziging en indiening.
     {% endblocktrans %}
 </p>
-<!-- TODO: fix this
-<ul>
-    {% if not proposal.informed_consent %}
-    <li>
-        {% trans "U heeft nog geen toestemmingsverklaring toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
-    </li>
-    {% endif %}
-    {% if not proposal.briefing %}
-    <li>
-        {% trans "U heeft nog geen informatiebrief toegevoegd. Dat kunt u op deze pagina alsnog toevoegen." %}
-    </li>
-    {% endif %}
-</ul>
--->
+
+{% for study in proposal.study_set.all %}
+{% if not study.informed_consent or not study.briefing %}
+    <div class="warning">
+    {% url "studies:consent" study.pk as consent_link %}
+    {% blocktrans with study_order=study.order%}
+    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}. Dat kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
+    {% endblocktrans %}
+    </div>
+{% endif %}
+{% endfor %}
+
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% if proposal.relation.needs_supervisor %}

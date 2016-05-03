@@ -169,23 +169,17 @@ class StudyStartForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        #fields = ['informed_consent', 'briefing', 'comments']
         fields = ['comments']
 
-    def __init__(self, *args, **kwargs):
-        """Set the consent fields as required"""
-        super(ProposalSubmitForm, self).__init__(*args, **kwargs)
-
+    def clean(self):
         """
-        TODO: fix this!
-        proposal = self.instance
-        if not proposal.informed_consent:
-            self.fields['informed_consent'].required = True
-        else:
-            del self.fields['informed_consent']
-
-        if not proposal.briefing_pdf:
-            self.fields['briefing'].required = True
-        else:
-            del self.fields['briefing']
+        Check if the Proposal is complete:
+        - Do all Studies have informed consent/briefing?
         """
+        super(ProposalSubmitForm, self).clean()
+
+        for study in self.instance.study_set.all():
+            if not study.informed_consent:
+                self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
+            if not study.briefing:
+                self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
