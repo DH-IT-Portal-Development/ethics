@@ -23,7 +23,9 @@
     {% trans "Afhankelijk van de complexiteit van uw onderzoek kan de specificatie zeker enige tijd in beslag nemen. U kunt de aanmelding echter altijd onderbreken, bewaren, en op een later moment afmaken." %}
 </p>
 <p>
-    {% trans "Raadpleeg bij vragen eerst het reglement (te downloaden via de ETCL website), en neem eventueel daarna contact op met de ETCL secretaris." %}
+    {% blocktrans with secretary_name=secretary.get_full_name secretary_mail=secretary.email %}
+    Raadpleeg bij vragen eerst het <a href="{{ regulations }}" target="_blank">reglement</a>, en neem eventueel daarna contact op met de ETCL secretaris ({{ secretary_name }}, <a href="mailto:{{ secretary_mail }}">{{ secretary_mail }}</a>).
+    {% endblocktrans %}
 </p>
 <a class="pure-button pure-button-primary" href="{% url 'proposals:create' %}">{% trans "Volgende stap >>" %}</a>
 {% endblock %}

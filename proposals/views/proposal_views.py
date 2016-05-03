@@ -8,6 +8,7 @@ from braces.views import LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
 from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
+from core.utils import get_secretary
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
@@ -142,6 +143,13 @@ class ProposalDelete(DeleteView):
 ###########################
 class ProposalStart(generic.TemplateView):
     template_name = 'proposals/proposal_start.html'
+
+    def get_context_data(self, **kwargs):
+        """Adds secretary and link to regulations to template context"""
+        context = super(ProposalStart, self).get_context_data(**kwargs)
+        context['secretary'] = get_secretary()
+        context['regulations'] = 'https://etcl.wp.hum.uu.nl/reglement/'
+        return context
 
 
 class ProposalSubmit(AllowErrorsMixin, UpdateView):

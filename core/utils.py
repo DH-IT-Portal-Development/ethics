@@ -1,7 +1,16 @@
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as _
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 YES_NO_DOUBT = [(True, _('ja')), (False, _('nee')), (None, _('twijfel'))]
+
+
+def get_secretary():
+    """
+    Returns the Secretary. We limit this to one user.
+    """
+    return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)[0]
 
 
 def string_to_bool(s):

@@ -8,10 +8,10 @@ from django.views import generic
 
 from braces.views import LoginRequiredMixin
 
+from core.utils import get_secretary
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
 from .mixins import UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
-from .utils import get_secretary
 
 
 class DecisionListView(LoginRequiredMixin, generic.ListView):

@@ -1,23 +1,15 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.utils import timezone
 
-from .models import Review, Decision
-from interventions.models import Intervention
+from core.utils import get_secretary
 from observations.models import Observation
 from tasks.models import Task
-
-
-def get_secretary():
-    """
-    Returns the Secretary. We limit this to one user.
-    """
-    return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)[0]
+from .models import Review, Decision
 
 
 def start_review(proposal):
