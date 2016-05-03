@@ -9,9 +9,9 @@ from .forms import InterventionForm
 from .models import Intervention
 
 
-#######################
+##############################
 # CRUD actions on Intervention
-#######################
+##############################
 class InterventionMixin(object):
     """Mixin for an Intervention, to use in both InterventionCreate and InterventionUpdate below"""
     model = Intervention
@@ -63,6 +63,7 @@ class InterventionMixin(object):
 
 class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
     """Creates a Intervention from a InterventionForm"""
+
     def form_valid(self, form):
         """Sets the Study on the Intervention before starting validation."""
         form.instance.study = self.get_study()
@@ -75,6 +76,7 @@ class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
 
 class InterventionUpdate(InterventionMixin, AllowErrorsMixin, UpdateView):
     """Updates a Intervention from an InterventionForm"""
+
     def get_study(self):
         """Retrieves the Study from the form object"""
         return self.object.study

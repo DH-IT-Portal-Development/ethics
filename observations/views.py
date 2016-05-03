@@ -1,28 +1,22 @@
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
-from braces.views import LoginRequiredMixin
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView
-
-from core.views import UserAllowedMixin, success_url
+from core.views import CreateView, UpdateView, AllowErrorsMixin
+from studies.models import Study
 from studies.utils import get_study_progress
 
-from .forms import ObservationForm, LocationsInline
-from .models import Study, Observation
+from .forms import ObservationForm
+from .models import Observation
 
 
 #############################
 # CRUD actions on Observation
 #############################
-# NOTE: below mixin is non-standard, as it include inlines
-# NOTE: no success message will be generated: https://github.com/AndrewIngram/django-extra-views/issues/59
 class ObservationMixin(object):
     """Mixin for a Observation, to use in both ObservationCreate and ObservationUpdate below"""
     model = Observation
     form_class = ObservationForm
     success_message = _('Observatie opgeslagen')
-    inlines = [LocationsInline]
 
     def get_context_data(self, **kwargs):
         """Setting the Study and progress on the context"""
@@ -31,9 +25,6 @@ class ObservationMixin(object):
         context['study'] = study
         context['progress'] = get_study_progress(study) + 5
         return context
-
-    def get_success_url(self):
-        return success_url(self)
 
     def get_next_url(self):
         study = self.get_study()
@@ -52,36 +43,26 @@ class ObservationMixin(object):
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
 
-    def forms_invalid(self, form, inlines):
-        """
-        On back button, allow form to have errors.
-        """
-        if 'save_back' in self.request.POST:
-            return HttpResponseRedirect(self.get_back_url())
-        else:
-            return super(ObservationMixin, self).forms_invalid(form, inlines)
-
     def get_study(self):
         raise NotImplementedError
 
 
-class ObservationCreate(LoginRequiredMixin, ObservationMixin,
-                        UserAllowedMixin, CreateWithInlinesView):
+class ObservationCreate(ObservationMixin, AllowErrorsMixin, CreateView):
     """Creates an Observation from a ObservationForm"""
 
-    def forms_valid(self, form, inlines):
+    def form_valid(self, form):
         """Sets the Study on the Observation before starting validation."""
         form.instance.study = self.get_study()
-        return super(ObservationCreate, self).forms_valid(form, inlines)
+        return super(ObservationCreate, self).form_valid(form)
 
     def get_study(self):
         """Retrieves the Study from the pk kwarg"""
         return Study.objects.get(pk=self.kwargs['pk'])
 
 
-class ObservationUpdate(LoginRequiredMixin, ObservationMixin,
-                        UserAllowedMixin, UpdateWithInlinesView):
+class ObservationUpdate(ObservationMixin, AllowErrorsMixin, UpdateView):
     """Updates a Observation from a ObservationForm"""
+
     def get_study(self):
         """Retrieves the Study from the form object"""
         return self.object.study
