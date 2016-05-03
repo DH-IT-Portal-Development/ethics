@@ -117,7 +117,7 @@ class SessionEndForm(ConditionalModelForm):
                   'stressful', 'stressful_details',
                   'risk', 'risk_details']
         widgets = {
-            'deception': forms.RadioSelect(choices=YES_NO),
+            'deception': forms.RadioSelect(choices=YES_NO_DOUBT),
             'stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
             'risk': forms.RadioSelect(choices=YES_NO_DOUBT),
         }
