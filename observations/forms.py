@@ -35,6 +35,7 @@ class ObservationForm(ConditionalModelForm):
         Check for conditional requirements:
         - If a setting which needs details has been checked, make sure the details are filled
         - If the Observation needs_approval, check if approval_institution is provided
+        - If a registration which needs details has been checked, make sure the details are filled
         """
         cleaned_data = super(ObservationForm, self).clean()
 
