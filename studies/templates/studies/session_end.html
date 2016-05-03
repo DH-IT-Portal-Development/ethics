@@ -56,9 +56,9 @@ $(function() {
             {% for session in study.session_set.all %}
             <div class="task_list">
             <h4>
-                Sessie {{ session.order }} (totale nettoduur: {{ session.tasks_duration }} minuten)
+                Sessie {{ session.order }} (totale brutoduur: {{ session.tasks_duration }} minuten)
                 {% if study.sessions_number > 1 %}
-                <a href="{% url 'tasks:session_delete' session.pk %}"><img src="{% static 'proposals/images/delete.png' %}" title="Sessie verwijderen"></a>
+                <a href="{% url 'tasks:session_delete' session.pk %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Sessie verwijderen' %}"></a>
                 {% endif %}
             </h4>
                 <p>
