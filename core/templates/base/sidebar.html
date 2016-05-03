@@ -14,8 +14,10 @@ $(function() {
     $('.progress li').after('<li><div class="divider"></div></li>');
     $('.progress li:even').prepend('<div class="item">');
 
-    // Set current item
-    $('a[href="{{request.path}}').prev().addClass('current');
+    // Set current item and remove previous URLs
+    $('a[href="{{request.path}}"]').prev().addClass('current');
+    console.log("{{request.path}}");
+    $('a[href="{{request.path}}"]').parents('li').nextAll().find('a').removeAttr('href');
 
     // Sidebar functionality
     $('.progress').sidebar({side: 'right'});
@@ -39,9 +41,15 @@ $(function() {
         </a>
     </li>
     <li>
+        {% if proposal.wmo %}
         <a href="{% url 'proposals:wmo_update' proposal.pk %}">
             {% trans "Ook ethische toetsing door de METC nodig?" %}
         </a>
+        {% else %}
+        <a href="{% url 'proposals:wmo_create' proposal.pk %}">
+            {% trans "Ook ethische toetsing door de METC nodig?" %}
+        </a>
+        {% endif %}
     </li>
     <li>
         <a href="{% url 'proposals:study_start' proposal.pk %}">
