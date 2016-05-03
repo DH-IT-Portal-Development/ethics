@@ -69,7 +69,7 @@
                 <ul>
                     {% for field in form %}
                     <li>
-                        {{ field }} {{ field.label }}
+                        <label for="{{ field.auto_id }}">{{ field }} {{ field.label }}</label>
                     </li>
                     {% endfor %}
                 </ul>
