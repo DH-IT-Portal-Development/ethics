@@ -45,7 +45,7 @@
 },
 {
     "fields": {
-        "requires_review": false,
+        "requires_review": true,
         "needs_details": false,
         "needs_supervision": false,
         "order": 5,
