@@ -49,20 +49,25 @@ class Review(models.Model):
 
         if all_decisions == closed_decisions:
             self.go = final_go
+            self.date_end = timezone.now()
             self.save()
 
             # For a supervisor review:
             if self.stage == self.SUPERVISOR:
-                # Update the status of the Proposal with the end dates
+                # Update the status of the Proposal with the end date
                 self.proposal.date_reviewed_supervisor = self.date_end
                 self.proposal.save()
-                # Set the Review end date to now
-                self.date_end = timezone.now()
-                self.save()
                 # On GO, start the assignment phase
                 if self.go:
                     from .utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
+            else:
+                self.proposal.date_reviewed = self.date_end
+                self.proposal.save()
+                # Update the status of the Proposal with the end date
+                self.proposal.date_reviewed = self.date_end
+                self.proposal.status = Proposal.DECISION_MADE
+                self.proposal.save()
 
     def __unicode__(self):
         return 'Review of %s' % self.proposal

@@ -242,11 +242,6 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
         ordering = ['order']
         unique_together = ('proposal', 'order')
 
-    def save(self, *args, **kwargs):
-        """Sets the correct status on Proposal on save of a Study"""
-        super(Study, self).save(*args, **kwargs)
-        self.proposal.save()
-
     def net_duration(self):
         """Returns the duration of all Tasks in this Study"""
         result = self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']

@@ -40,39 +40,12 @@ class Funding(models.Model):
 
 class Proposal(models.Model):
     DRAFT = 1
-    WMO_DECISION_BY_ETCL = 2
-    WMO_DECISION_BY_METC = 3
-    STUDY_CREATED = 4
-    CONSENT_ADDED = 5
-    STUDY_DESIGN = 6
-    INTERVENTION = 10
-    OBSERVATION = 20
-    SESSIONS = 30
-    TASKS_STARTED = 31
-    TASKS_ADDED = 32
-    TASKS_ENDED = 33
-    SESSIONS_ENDED = 34
     SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
     DECISION_MADE = 55
     WMO_DECISION_MADE = 60
     STATUSES = (
-        (DRAFT, _('Algemene informatie ingevuld')),
-        (WMO_DECISION_BY_ETCL, _('WMO: geen beoordeling door METC noodzakelijk')),
-        (WMO_DECISION_BY_METC, _('WMO: wordt beoordeeld door METC')),
-        (STUDY_CREATED, _('Kenmerken studie toegevoegd')),
-        (CONSENT_ADDED, _('Informed consent toegevoegd')),
-        (STUDY_DESIGN, _('Opzet studie: gestart')),
-
-        (INTERVENTION, _('Nadere specificatie van het interventieonderdeel')),
-        (OBSERVATION, _('Nadere specificatie van het observatieonderdeel')),
-
-        (SESSIONS, _('Nadere specificatie van het takenonderdeel')),
-        (TASKS_STARTED, _('Takenonderdeel: taken toevoegen')),
-        (TASKS_ADDED, _('Takenonderdeel: alle taken toegevoegd')),
-        (TASKS_ENDED, _('Takenonderdeel: afgerond')),
-
-        (SESSIONS_ENDED, _('Opzet studie: afgerond')),
+        (DRAFT, _('Concept')),
 
         (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
         (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
@@ -171,99 +144,42 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         verbose_name=_(u'Te kopiëren studie'),
         help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'))
 
-    def save(self, *args, **kwargs):
-        """Sets the correct status on save of a Proposal"""
-        self.status = self.get_status()
-        super(Proposal, self).save(*args, **kwargs)
-
-    def get_status(self):
-        """Retrieves the current status for a Proposal"""
-        status = self.status
-
-        if hasattr(self, 'wmo'):
-            wmo = self.wmo
-            if wmo.status == wmo.WAITING:
-                status = self.WMO_DECISION_BY_METC
-            elif wmo.status == wmo.JUDGED:
-                status = self.WMO_DECISION_MADE
-            else:
-                status = self.WMO_DECISION_BY_ETCL
-
-        study = self.current_study()
-        if study:
-            status = self.STUDY_CREATED
-            if not (study.has_intervention or study.has_observation or study.has_sessions):
-                status = self.CONSENT_ADDED
-            if study.has_observation:
-                status = self.OBSERVATION
-            if study.has_intervention:
-                status = self.INTERVENTION
-            if study.has_sessions:
-                status = self.SESSIONS
-
-        session = self.current_session()
-        if session:
-            status = self.SESSIONS
-            if session.tasks_number:
-                status = self.TASKS_STARTED
-            if session.all_tasks_completed():
-                status = self.TASKS_ADDED
-            if session.tasks_duration:
-                status = self.TASKS_ENDED
-        if session and session.tasks_duration:
-            if study.deception is not None:
-                status = self.SESSIONS_ENDED
-
-        if self.date_submitted_supervisor:
-            status = self.SUBMITTED_TO_SUPERVISOR
-        if self.date_submitted:
-            status = self.SUBMITTED
-        if self.date_reviewed:
-            status = self.DECISION_MADE
-
-        return status
-
     def continue_url(self):
         study = self.current_study()
-        session = self.current_session()
 
-        if self.status == self.DRAFT:
-            return reverse('proposals:wmo_create', args=(self.pk,))
-        elif self.status == self.WMO_DECISION_BY_ETCL:
-            if study:
-                return reverse('studies:update', args=(study.pk,))
-        elif self.status == self.WMO_DECISION_BY_METC:
-            return reverse('proposals:wmo_update', args=(self.pk,))
-        elif self.status == self.STUDY_CREATED:
-            return reverse('studies:consent', args=(study.pk,))
-        elif self.status == self.CONSENT_ADDED:
-            return reverse('studies:design', args=(study.pk,))
-        elif self.status == self.STUDY_DESIGN:
-            return reverse('studies:session_start', args=(study.pk,))
+        next_url = reverse('proposals:update', args=(self.pk,))
 
-        elif self.status == self.OBSERVATION:
-            return reverse('observations:update', args=(study.observation.pk,))
-        elif self.status == self.INTERVENTION:
-            return reverse('interventions:update', args=(study.intervention.pk,))
+        if hasattr(self, 'wmo'):
+            next_url = reverse('proposals:wmo_update', args=(self.wmo.pk,))
 
-        elif self.status == self.SESSIONS:
-            if session:
-                return reverse('tasks:start', args=(session.pk,))
-        elif self.status == self.TASKS_STARTED:
-            if session:
-                return reverse('tasks:update', args=(session.current_task().pk,))
-        elif self.status == self.TASKS_ADDED:
-            if session:
-                return reverse('tasks:end', args=(session.pk,))
-        elif self.status == self.TASKS_ENDED:
-            return reverse('studies:session_end', args=(study.pk,))
-        elif self.status == self.SESSIONS_ENDED:
-            return reverse('proposals:submit', args=(self.pk,))
+        if study:
+            next_url = reverse('studies:update', args=(study.pk,))
 
-        elif self.status == self.WMO_DECISION_MADE:
-            return reverse('proposals:my_archive')
-        else:
-            return reverse('proposals:update', args=(self.pk,))
+            if study.compensation:
+                next_url = reverse('studies:design', args=(study.pk,))
+
+            if study.has_intervention:
+                if hasattr(study, 'intervention'):
+                    next_url = reverse('interventions:update', args=(study.intervention.pk,))
+                else:
+                    next_url = reverse('interventions:create', args=(study.pk,))
+
+            if study.has_observation:
+                if hasattr(study, 'observation'):
+                    next_url = reverse('observations:update', args=(study.observation.pk,))
+                else:
+                    next_url = reverse('observations:create', args=(study.pk,))
+
+            if study.has_sessions:
+                session = self.current_session()
+                if session:
+                    next_url = reverse('tasks:start', args=(session.pk,))
+                    # TODO: fix below
+                    # next_url = reverse('tasks:update', args=(session.current_task().pk,))
+                    # next_url = reverse('tasks:end', args=(session.pk,))
+                    # next_url = reverse('studies:session_end', args=(study.pk,))
+
+        return next_url
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""
@@ -376,7 +292,6 @@ bij een METC?'),
         """Sets the correct status on save of a WMO"""
         self.update_status()
         super(Wmo, self).save(*args, **kwargs)
-        self.proposal.save()
 
     def update_status(self):
         if self.metc == YES or (self.is_medical == YES and self.is_behavioristic == YES):

@@ -43,11 +43,6 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         ordering = ['order']
         unique_together = ('study', 'order')
 
-    def save(self, *args, **kwargs):
-        """Sets the correct status on Proposal on save of a Session"""
-        super(Session, self).save(*args, **kwargs)
-        self.study.proposal.save()
-
     def net_duration(self):
         return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
 
@@ -155,13 +150,6 @@ geef dan het redelijkerwijs te verwachten maximum op.'),
     class Meta:
         ordering = ['order']
         unique_together = ('session', 'order')
-
-    def save(self, *args, **kwargs):
-        """
-        Sets the correct status on Proposal on save of a Task.
-        """
-        super(Task, self).save(*args, **kwargs)
-        self.session.study.proposal.save()
 
     def delete(self, *args, **kwargs):
         """
