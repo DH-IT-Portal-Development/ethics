@@ -62,6 +62,8 @@ class StudyForm(ConditionalModelForm):
         cleaned_data = super(StudyForm, self).clean()
 
         self.necessity_required(cleaned_data)
+        self.check_empty(cleaned_data, 'legally_incapable')
+        self.check_empty(cleaned_data, 'has_traits')
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details', 'traits_details')
         self.check_dependency_singular(cleaned_data, 'compensation', 'needs_details', 'compensation_details')

@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import YES_NO_DOUBT, YES, DOUBT
+from core.models import YES_NO_DOUBT, YES
 from core.validators import MaxWordsValidator, validate_pdf_or_doc
 
 

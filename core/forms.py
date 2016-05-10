@@ -3,6 +3,15 @@ from django.utils.translation import ugettext as _
 
 
 class ConditionalModelForm(forms.ModelForm):
+    def check_empty(self, cleaned_data, f1, error_message=''):
+        is_required = False
+        if not error_message:
+            error_message = _('Dit veld is verplicht.')
+        if cleaned_data.get(f1) is None:
+            is_required = True
+            self.add_error(f1, forms.ValidationError(error_message, code='required'))
+        return is_required
+
     def check_dependency(self, cleaned_data, f1, f2, f1_value=True, error_message=''):
         is_required = False
         if not error_message:
