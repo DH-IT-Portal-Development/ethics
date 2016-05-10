@@ -57,6 +57,7 @@ $(function() {
     });
     $("input[name=metc], input[name=is_medical], input[name=is_behavioristic]").change();
 
+    depends_on_value('metc', 'True', 'metc_details');
     depends_on_value('metc', 'True', 'metc_institution');
     depends_on_value('metc_application', 'True', 'metc_decision');
     depends_on_value('metc_decision', 'True', 'metc_decision_pdf');

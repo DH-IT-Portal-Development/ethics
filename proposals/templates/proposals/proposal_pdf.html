@@ -405,7 +405,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% include "studies/study_title.html" %}
         <table>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.deception|yesno:_("ja,nee") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.deception|yesno:_("ja,nee,twijfel") }}</td>
             </tr>
             {% if study.deception %}
             <tr>
@@ -439,7 +439,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if study.has_surveys %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "surveys_stressful" %}</th><td>{{ study.surveys_stressful }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "surveys_stressful" %}</th><td>{{ study.surveys_stressful|yesno:_("ja,nee,twijfel") }}</td>
             </tr>
             {% endif %}
         </table>

@@ -314,29 +314,44 @@ class Wmo(models.Model):
     )
 
     metc = models.NullBooleanField(
-        _('Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?'))
+        _('Vindt de dataverzameling plaats binnen het UMC Utrecht of \
+andere instelling waar toetsing door een METC verplicht is gesteld?'))
+    metc_details = models.TextField(
+        _('Licht toe'),
+        blank=True)
     metc_institution = models.CharField(
         _('Welke instelling?'),
         max_length=200,
         blank=True)
     is_medical = models.NullBooleanField(
-        _('Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?'),
+        _('Is de onderzoeksvraag medisch-wetenschappelijk van aard \
+(zoals gedefinieerd door de WMO)?'),
         help_text=_('De definitie van medisch-wetenschappelijk onderzoek is: \
-Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid \
-(etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. \
-Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. \
-(CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)'))
+Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het \
+beantwoorden van een vraag op het gebied van ziekte en gezondheid \
+(etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, \
+uitkomst of behandeling van ziekte), door het op systematische wijze \
+vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen \
+aan medische kennis die ook geldend is voor populaties buiten de directe \
+onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk \
+onderzoek, 2005, ccmo.nl)'))
     is_behavioristic = models.NullBooleanField(
-        _('Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
-        help_text=_('Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken.'))
+        _('Worden de deelnemers aan een handeling onderworpen of worden \
+hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
+        help_text=_('Een handeling of opgelegde gedragsregel varieert \
+tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een \
+knop/toets in laten drukken.'))
     metc_application = models.BooleanField(
-        _('Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is voor deze studie al aangemeld bij een METC?'),
+        _('Uw studie moet beoordeeld worden door de METC, maar dient nog \
+wel bij de ETCL te worden geregistreerd. Is voor deze studie al aangemeld \
+bij een METC?'),
         default=False)
     metc_decision = models.BooleanField(
         _('Is de METC al tot een beslissing gekomen?'),
         default=False)
     metc_decision_pdf = models.FileField(
-        _('Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)'),
+        _('Upload hier de beslissing van het METC \
+(in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc])
 

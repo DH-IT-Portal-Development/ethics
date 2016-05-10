@@ -14,11 +14,13 @@ from .models import Proposal, Wmo
 class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
-        fields = ['relation', 'supervisor',
-                  'other_applicants', 'applicants',
-                  'other_stakeholders', 'stakeholders',
-                  'date_start', 'title', 'summary',
-                  'funding', 'funding_details']
+        fields = [
+            'relation', 'supervisor',
+            'other_applicants', 'applicants',
+            'other_stakeholders', 'stakeholders',
+            'date_start', 'title', 'summary',
+            'funding', 'funding_details',
+        ]
         widgets = {
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
@@ -83,8 +85,11 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
 class WmoForm(ConditionalModelForm):
     class Meta:
         model = Wmo
-        fields = ['metc', 'metc_institution', 'is_medical', 'is_behavioristic',
-                  'metc_application', 'metc_decision', 'metc_decision_pdf']
+        fields = [
+            'metc', 'metc_details', 'metc_institution',
+            'is_medical', 'is_behavioristic',
+            'metc_application', 'metc_decision', 'metc_decision_pdf',
+        ]
         widgets = {
             'metc': forms.RadioSelect(choices=YES_NO_DOUBT),
             'is_medical': forms.RadioSelect(choices=YES_NO_DOUBT),
@@ -96,18 +101,20 @@ class WmoForm(ConditionalModelForm):
     def clean(self):
         """
         Check for conditional requirements:
-        - If metc is checked, make sure institution is set
+        - If metc is checked, make sure institution is set and details are filled out
         """
         cleaned_data = super(WmoForm, self).clean()
 
-        self.check_dependency(cleaned_data, 'metc', 'metc_institution',
-                              _('U dient een instelling op te geven.'))
+        self.check_dependency(cleaned_data, 'metc', 'metc_institution', _('U dient een instelling op te geven.'))
+        self.check_dependency(cleaned_data, 'metc', 'metc_details')
 
 
 class WmoCheckForm(forms.ModelForm):
     class Meta:
         model = Wmo
-        fields = ['metc', 'is_medical', 'is_behavioristic']
+        fields = [
+            'metc', 'is_medical', 'is_behavioristic',
+        ]
         widgets = {
             'metc': forms.RadioSelect(choices=YES_NO_DOUBT),
             'is_medical': forms.RadioSelect(choices=YES_NO_DOUBT),
@@ -124,8 +131,10 @@ class StudyStartForm(forms.ModelForm):
 
     class Meta:
         model = Proposal
-        fields = ['studies_similar', 'studies_number',
-                  'study_name_1', 'study_name_2', 'study_name_3', 'study_name_4', 'study_name_5']
+        fields = [
+            'studies_similar', 'studies_number',
+            'study_name_1', 'study_name_2', 'study_name_3', 'study_name_4', 'study_name_5'
+        ]
         widgets = {
             'studies_similar': forms.RadioSelect(choices=YES_NO),
         }
