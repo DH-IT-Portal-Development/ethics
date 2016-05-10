@@ -110,6 +110,7 @@ class WmoForm(ConditionalModelForm):
         """
         Check for conditional requirements:
         - If metc is checked, make sure institution is set and details are filled out
+        - If metc is not checked, check if is_medical or is_behavioristic is set
         """
         cleaned_data = super(WmoForm, self).clean()
 
@@ -117,10 +118,8 @@ class WmoForm(ConditionalModelForm):
         self.check_dependency(cleaned_data, 'metc', 'metc_institution',
                               f1_value=YES,
                               error_message=_('U dient een instelling op te geven.'))
-        self.check_dependency(cleaned_data, 'metc', 'is_medical', f1_value=NO)
-        self.check_dependency(cleaned_data, 'metc', 'is_medical', f1_value=DOUBT)
-        self.check_dependency(cleaned_data, 'metc', 'is_behavioristic', f1_value=NO)
-        self.check_dependency(cleaned_data, 'metc', 'is_behavioristic', f1_value=DOUBT)
+        self.check_dependency_list(cleaned_data, 'metc', 'is_medical', f1_value_list=[NO, DOUBT])
+        self.check_dependency_list(cleaned_data, 'metc', 'is_behavioristic', f1_value_list=[NO, DOUBT])
 
 
 class WmoCheckForm(forms.ModelForm):

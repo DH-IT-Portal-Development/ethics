@@ -18,9 +18,9 @@
 {% block content %}
 <script>
 $(function() {
-    depends_on_value('deception', 'True', 'deception_details');
-    depends_on_value('stressful', 'True', 'stressful_details');
-    depends_on_value('risk', 'True', 'risk_details');
+    depends_on_list_value('deception', ['Y', '?'], 'deception_details');
+    depends_on_list_value('stressful', ['Y', '?'], 'stressful_details');
+    depends_on_list_value('risk', ['Y', '?'], 'risk_details');
 });
 </script>
 {% include "studies/study_title.html" %}

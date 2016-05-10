@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+from core.models import YES_NO_DOUBT
 from core.validators import validate_pdf_or_doc
 from proposals.models import Proposal
 
@@ -94,11 +95,14 @@ Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
         _('Namelijk'),
         max_length=200,
         blank=True)
-    necessity = models.NullBooleanField(
+    necessity = models.CharField(
         _('Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het geselecteerde type \
 deelnemer aan de studie te laten meedoen?'),
         help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen \
-beantwoorden door volwassen deelnemers te testen?'))
+beantwoorden door volwassen deelnemers te testen?'),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
     necessity_reason = models.TextField(
         _('Leg uit waarom'),
         blank=True)
@@ -157,18 +161,21 @@ U kunt de templates vinden op <link website?>'))
 een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
-    deception = models.NullBooleanField(
+    deception = models.CharField(
         _('Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer, \
 d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of \
 belangrijke aspecten van de gang van zaken tijdens de studie? \
 Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
 het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; \
 het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
-        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'))
+        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
     deception_details = models.TextField(
         _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.'),
         blank=True)
-    stressful = models.NullBooleanField(
+    stressful = models.CharField(
         _('Is bovenstaand onderzoekstraject op onderdelen of als geheel \
 zodanig belastend dat deze <em>ondanks de verkregen informed consent</em> \
 vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij \
@@ -179,13 +186,16 @@ geselecteerde deelnemerstype dat dit traject doorloopt.'),
         help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
 een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de \
 privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren \
-belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.')))
+belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.')),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
     stressful_details = models.TextField(
         _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante aspecten van uw studie \
 (bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, \
 of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.'),
         blank=True)
-    risk = models.NullBooleanField(
+    risk = models.CharField(
         _('Zijn de risico\'s op psychische, fysieke, of andere (bijv. \
 economische, juridische) schade door deelname aan bovenstaand \
 onderzoekstraject <em>meer dan</em> minimaal? \
@@ -204,7 +214,10 @@ et cetera.'),
 risico\'s van "routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische \
 contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
 intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, \
-onder begeleiding van adequaat geschoolde specialisten).')))
+onder begeleiding van adequaat geschoolde specialisten).')),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
     risk_details = models.TextField(
         _('Licht toe'),
         max_length=200,
@@ -215,10 +228,12 @@ onder begeleiding van adequaat geschoolde specialisten).')))
         _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
 Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'),
         default=False)
-    surveys_stressful = models.NullBooleanField(
+    surveys_stressful = models.CharField(
         _('Is het invullen van deze vragenlijsten belastend? \
 Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
-        default=False)
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
 
     # References
     proposal = models.ForeignKey(Proposal)

@@ -6,6 +6,7 @@ from django.test import TestCase
 
 from .models import Review, Decision
 from .utils import start_review, auto_review
+from core.models import YES
 from proposals.models import Proposal, Relation
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
@@ -144,7 +145,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertFalse(go)
         self.assertEqual(len(reasons), 2)
 
-        self.study.risk = True
+        self.study.risk = YES
         self.study.save()
 
         go, reasons = auto_review(self.proposal)

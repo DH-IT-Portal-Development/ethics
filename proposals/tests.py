@@ -4,8 +4,9 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+from core.models import YES, NO
 from tasks.models import Session, Task
-from studies.models import Study, Compensation
+from studies.models import Study
 from .models import Proposal, Relation, Wmo
 from .utils import generate_ref_number
 
@@ -48,7 +49,7 @@ class ProposalTestCase(BaseProposalTestCase):
         proposal = self.p1
         self.assertEqual(proposal.status, Proposal.DRAFT)
 
-        wmo = Wmo.objects.create(proposal=proposal, metc=True)
+        wmo = Wmo.objects.create(proposal=proposal, metc=YES)
         self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_METC)
         wmo.metc = False
         wmo.save()
@@ -86,17 +87,17 @@ class ProposalTestCase(BaseProposalTestCase):
 class WmoTestCase(BaseProposalTestCase):
     def setUp(self):
         super(WmoTestCase, self).setUp()
-        self.wmo = Wmo.objects.create(proposal=self.p1, metc=False)
+        self.wmo = Wmo.objects.create(proposal=self.p1, metc=NO)
 
     def test_status(self):
         self.assertEqual(self.wmo.status, Wmo.NO_WMO)
 
-        self.wmo.metc = True
+        self.wmo.metc = YES
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)
 
-        self.wmo.metc_decision = True
+        self.wmo.metc_decision = YES
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)

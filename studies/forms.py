@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 from extra_views import InlineFormSet
 
 from core.forms import ConditionalModelForm
-from core.models import YES_NO_DOUBT
+from core.models import YES_NO_DOUBT, YES, DOUBT
 from core.utils import YES_NO
 from .models import Study, Survey
 from .utils import check_necessity_required
@@ -29,7 +29,7 @@ class StudyForm(ConditionalModelForm):
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
             'has_traits': forms.RadioSelect(choices=YES_NO),
             'traits': forms.CheckboxSelectMultiple(),
-            'necessity': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'necessity': forms.RadioSelect(),
             'recruitment': forms.CheckboxSelectMultiple(),
             'compensation': forms.RadioSelect(),
             'passive_consent': forms.RadioSelect(choices=YES_NO),
@@ -39,13 +39,16 @@ class StudyForm(ConditionalModelForm):
         """
         - Set the Proposal for later reference in the clean method
         - Allow legally_incapable to have HTML in its label
-        - Remove the empty label for compensation
+        - Remove the empty label for compensation/necessity
+        - Reset the choices for necessity
         """
         self.proposal = kwargs.pop('proposal', None)
 
         super(StudyForm, self).__init__(*args, **kwargs)
         self.fields['legally_incapable'].label = mark_safe(self.fields['legally_incapable'].label)
         self.fields['compensation'].empty_label = None
+        self.fields['necessity'].empty_label = None
+        self.fields['necessity'].choices = YES_NO_DOUBT
 
     def clean(self):
         """
@@ -109,21 +112,28 @@ class StudyEndForm(ConditionalModelForm):
             'risk', 'risk_details'
         ]
         widgets = {
-            'deception': forms.RadioSelect(choices=YES_NO_DOUBT),
-            'stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
-            'risk': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'deception': forms.RadioSelect(),
+            'stressful': forms.RadioSelect(),
+            'risk': forms.RadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
         """
-        - Set deception as required
-        - Set stressful and risk as required and mark_safe the labels
+        - Remove empty label from deception/stressful/risk field and reset the choices
+        - mark_safe the labels of stressful/risk
         """
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
+        self.fields['deception'].empty_label = None
+        self.fields['deception'].choices = YES_NO_DOUBT
         self.fields['deception'].required = True
+        self.fields['stressful'].empty_label = None
+        self.fields['stressful'].choices = YES_NO_DOUBT
         self.fields['stressful'].required = True
+        self.fields['risk'].empty_label = None
+        self.fields['risk'].choices = YES_NO_DOUBT
         self.fields['risk'].required = True
+
         self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)
         self.fields['risk'].label = mark_safe(self.fields['risk'].label)
 
@@ -136,9 +146,9 @@ class StudyEndForm(ConditionalModelForm):
         """
         cleaned_data = super(StudyEndForm, self).clean()
 
-        self.check_dependency(cleaned_data, 'deception', 'deception_details')
-        self.check_dependency(cleaned_data, 'stressful', 'stressful_details')
-        self.check_dependency(cleaned_data, 'risk', 'risk_details')
+        self.check_dependency_list(cleaned_data, 'deception', 'deception_details', f1_value_list=[YES, DOUBT])
+        self.check_dependency_list(cleaned_data, 'stressful', 'stressful_details', f1_value_list=[YES, DOUBT])
+        self.check_dependency_list(cleaned_data, 'risk', 'risk_details', f1_value_list=[YES, DOUBT])
 
 
 class SessionStartForm(forms.ModelForm):
@@ -160,11 +170,19 @@ class SurveyForm(forms.ModelForm):
         fields = ['has_surveys', 'surveys_stressful']
         widgets = {
             'has_surveys': forms.RadioSelect(choices=YES_NO),
-            'surveys_stressful': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'surveys_stressful': forms.RadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
+        """
+        - Remove empty label from surveys_stressful field and reset the choices
+        - mark_safe the labels of has_surveys
+        """
         super(SurveyForm, self).__init__(*args, **kwargs)
+
+        self.fields['surveys_stressful'].empty_label = None
+        self.fields['surveys_stressful'].choices = YES_NO_DOUBT
+
         self.fields['has_surveys'].label = mark_safe(self.fields['has_surveys'].label)
 
 

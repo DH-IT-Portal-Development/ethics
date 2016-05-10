@@ -10,6 +10,24 @@ function depends_on_value(a, a_value, b)
     $('input[name=' + a + ']').change();
 }
 
+function depends_on_list_value(a, a_value, b)
+{
+    $('input[name=' + a + ']').change(function() {
+        var values = $('input[name=' + a + ']:checked').map(function() {
+            return this.value;
+        }).get();
+        $('#id_' + b).parent().parent().toggle(intersect(values, a_value).length > 0);
+    });
+    $('input[name=' + a + ']').change();
+}
+
+function intersect(a, b)
+{
+    return a.filter(function (e) {
+        if (b.indexOf(e) !== -1) return true;
+    });
+}
+
 // Checks whether a field is required given the selected inputs
 function check_field_required(input_name, field_name, required_input, app_name, model_name)
 {

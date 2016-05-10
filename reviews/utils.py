@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.utils import timezone
 
+from core.models import YES, DOUBT
 from core.utils import get_secretary
 from observations.models import Observation
 from tasks.models import Task
@@ -129,7 +130,7 @@ def auto_review(proposal):
                     reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
                     break
 
-        if study.deception:
+        if study.deception in [YES, DOUBT]:
             go = False
             reasons.append(_('De studie maakt gebruik van misleiding.'))
             break
@@ -169,12 +170,12 @@ def auto_review(proposal):
                 reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
                 break
 
-        if study.stressful or study.stressful is None:
+        if study.stressful in [YES, DOUBT]:
             go = False
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
-        if study.risk or study.risk is None:
+        if study.risk in [YES, DOUBT]:
             go = False
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
 fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
