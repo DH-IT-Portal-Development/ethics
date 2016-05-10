@@ -7,6 +7,7 @@ function check_metc_required(check_url) {
         var no_metc = $.inArray($("input[name=metc]:checked").val(), ["N", "?"]) > -1;
         $("input[name=is_medical]").parents("tr").toggle(no_metc);
         $("input[name=is_medical]").change();
+        $("input[name=is_behavioristic]").parents("tr").toggle(no_metc);
     });
     $("input[name=metc]").change();
 
