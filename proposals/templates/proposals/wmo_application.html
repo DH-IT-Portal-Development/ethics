@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+{% trans "Aanmelding bij de METC" %}
+{% endblock %}
+
+{% block progress %}7{% endblock %}
+
+{% block sidebar %}
+{% include "base/sidebar.html" %}
+{% endblock %}
+
+{% block content %}
+<script>
+$(function() {
+    depends_on_value('metc_application', 'True', 'metc_decision');
+    depends_on_value('metc_application', 'True', 'metc_decision_pdf');
+    depends_on_value('metc_decision', 'True', 'metc_decision_pdf');
+});
+</script>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    {% if wmo.status == wmo.WAITING %}
+    <div class="warning">
+        {% trans "Zolang uw studie nog niet is beoordeeld door de METC, kunt u niet verder in het aanmeldingsproces." %}
+    </div>
+    {% endif %}
+    {% with proposal=wmo.proposal %}
+    {% include "base/form_buttons.html" %}
+    {% endwith %}
+</form>
+{% endblock %}

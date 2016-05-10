@@ -14,57 +14,18 @@
 {% endblock %}
 
 {% block content %}
+<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
 <script>
 $(function() {
-    $("input[name=metc]").change(function() {
-        // On change of the metc field, hide/unset all values
-        $("input[name=is_medical]").parents("tr").hide();
-        $("input[name=is_behavioristic]").parents("tr").hide();
-        $("input[name=is_medical]").prop("checked", false);
-        $("input[name=is_behavioristic]").prop("checked", false);
-        $("#metc_status").empty().removeClass();
+    check_metc_required("{% url 'proposals:check_wmo' %}");
 
-        // Set the is_medical field based on the checked value
-        var no_metc = $.inArray($("input[name=metc]:checked").val(), ["None", "False"]) > -1;
-        $("input[name=is_medical]").parents("tr").toggle(no_metc);
-    });
-    $("input[name=metc]").change();
-
-    $("input[name=is_medical]").change(function() {
-        // When is_medical has not yet been checked, hide is_behavoristic
-        var is_medical_undef = $("input[name=is_medical]:checked").val() === undefined;
-        $("input[name=is_behavioristic]").parents("tr").toggle(!is_medical_undef);
-    });
-    $("input[name=is_medical]").change();
-
-    $("input[name=metc], input[name=is_medical], input[name=is_behavioristic]").change(function() {
-        // Check which status message should be displayed
-        var metc = $("input[name=metc]:checked").val();
-        var medical = $("input[name=is_medical]:checked").val();
-        var behavioristic = $("input[name=is_behavioristic]:checked").val();
-
-        // Only do the check if the fields are filled
-        if (metc === "True" || (medical !== undefined && behavioristic !== undefined)) {
-            var url = "{% url 'proposals:check_wmo' %}";
-            var params = {"metc": metc, "medical": medical, "behavioristic": behavioristic};
-            $.post(url, params, function(data) {
-                $("input[name=metc_application]").parents("tr").toggle(data.needs_metc);
-            });
-        }
-        else {
-            $("input[name=metc_application]").parents("tr").hide();
-        }
-    });
-    $("input[name=metc], input[name=is_medical], input[name=is_behavioristic]").change();
-
-    depends_on_value('metc', 'True', 'metc_details');
-    depends_on_value('metc', 'True', 'metc_institution');
-    depends_on_value('metc_application', 'True', 'metc_decision');
-    depends_on_value('metc_decision', 'True', 'metc_decision_pdf');
+    depends_on_value('metc', 'Y', 'metc_details');
+    depends_on_value('metc', 'Y', 'metc_institution');
 });
 </script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
+    <div id="metc_status"></div>
     {% with proposal=wmo.proposal %}
     {% include "base/form_buttons.html" %}
     {% endwith %}

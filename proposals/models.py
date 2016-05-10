@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from core.models import YES_NO_DOUBT, YES, DOUBT
 from core.validators import MaxWordsValidator, validate_pdf_or_doc
 
 
@@ -313,9 +314,13 @@ class Wmo(models.Model):
         (JUDGED, _(u'Beslissing METC geüpload')),
     )
 
-    metc = models.NullBooleanField(
+    metc = models.CharField(
         _('Vindt de dataverzameling plaats binnen het UMC Utrecht of \
-andere instelling waar toetsing door een METC verplicht is gesteld?'))
+andere instelling waar toetsing door een METC verplicht is gesteld?'),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=False,
+        default=None)
     metc_details = models.TextField(
         _('Licht toe'),
         blank=True)
@@ -323,7 +328,7 @@ andere instelling waar toetsing door een METC verplicht is gesteld?'))
         _('Welke instelling?'),
         max_length=200,
         blank=True)
-    is_medical = models.NullBooleanField(
+    is_medical = models.CharField(
         _('Is de onderzoeksvraag medisch-wetenschappelijk van aard \
 (zoals gedefinieerd door de WMO)?'),
         help_text=_('De definitie van medisch-wetenschappelijk onderzoek is: \
@@ -334,16 +339,22 @@ uitkomst of behandeling van ziekte), door het op systematische wijze \
 vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen \
 aan medische kennis die ook geldend is voor populaties buiten de directe \
 onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk \
-onderzoek, 2005, ccmo.nl)'))
-    is_behavioristic = models.NullBooleanField(
+onderzoek, 2005, ccmo.nl)'),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
+    is_behavioristic = models.CharField(
         _('Worden de deelnemers aan een handeling onderworpen of worden \
 hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
         help_text=_('Een handeling of opgelegde gedragsregel varieert \
 tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een \
-knop/toets in laten drukken.'))
+knop/toets in laten drukken.'),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
     metc_application = models.BooleanField(
         _('Uw studie moet beoordeeld worden door de METC, maar dient nog \
-wel bij de ETCL te worden geregistreerd. Is voor deze studie al aangemeld \
+wel bij de ETCL te worden geregistreerd. Is deze studie al aangemeld \
 bij een METC?'),
         default=False)
     metc_decision = models.BooleanField(
@@ -368,7 +379,7 @@ bij een METC?'),
         self.proposal.save()
 
     def update_status(self):
-        if self.metc or (self.is_medical and self.is_behavioristic):
+        if self.metc == YES or (self.is_medical == YES and self.is_behavioristic == YES):
             if self.metc_decision and self.metc_decision_pdf:
                 self.status = self.JUDGED
             else:

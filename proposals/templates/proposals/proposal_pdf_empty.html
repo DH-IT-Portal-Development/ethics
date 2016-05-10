@@ -98,6 +98,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th><td></td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</th><td></td>
             </tr>
             <tr>
@@ -106,6 +109,10 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "is_behavioristic" %}</th><td>{% show_yesnodoubt %}</td>
             </tr>
+        </table>
+
+        <h2>{% trans "Aanmelding bij de METC" %}</h2>
+        <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th><td>{% show_yesno %}</td>
             </tr>

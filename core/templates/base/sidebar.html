@@ -16,7 +16,6 @@ $(function() {
 
     // Set current item and remove previous URLs
     $('a[href="{{request.path}}"]').prev().addClass('current');
-    console.log("{{request.path}}");
     $('a[href="{{request.path}}"]').parents('li').nextAll().find('a').removeAttr('href');
 
     // Sidebar functionality
@@ -40,17 +39,26 @@ $(function() {
             {% trans "Algemene informatie over de studie" %}
         </a>
     </li>
-    <li>
         {% if proposal.wmo %}
+    <li>
         <a href="{% url 'proposals:wmo_update' proposal.pk %}">
             {% trans "Ook ethische toetsing door de METC nodig?" %}
         </a>
+    </li>
+        {% if proposal.wmo.status >= proposal.wmo.WAITING %}
+    <li>
+        <a href="{% url 'proposals:wmo_application' proposal.pk %}">
+            {% trans "Aanmelding bij de METC" %}
+        </a>
+    </li>
+        {% endif %}
         {% else %}
+    <li>
         <a href="{% url 'proposals:wmo_create' proposal.pk %}">
             {% trans "Ook ethische toetsing door de METC nodig?" %}
         </a>
-        {% endif %}
     </li>
+        {% endif %}
     <li>
         <a href="{% url 'proposals:study_start' proposal.pk %}">
             {% trans "Eén of meerdere trajecten?" %}

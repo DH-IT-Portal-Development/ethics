@@ -28,6 +28,17 @@ Beslissingen bij aanmelding <em>{{ proposal }}</em>
 {% include "reviews/auto_review.html" %}
 
 <h2>{% trans "Formulieren bij aanmelding" %}</h2>
+
+{% if review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
+<ul>
+    <li>
+        <a href="{{ review.proposal.wmo.metc_decision_pdf.url }}" target="_blank">
+            {% trans "Beslissing METC" %}
+        </a>
+    </li>
+</ul>
+{% endif %}
+
 {% for study in review.proposal.study_set.all %}
 {% include "studies/study_title.html" %}
 <ul>

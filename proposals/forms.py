@@ -7,7 +7,8 @@ from django.utils.translation import ugettext as _
 from braces.forms import UserKwargModelFormMixin
 
 from core.forms import ConditionalModelForm
-from core.utils import YES_NO, YES_NO_DOUBT, get_users_as_list
+from core.models import YES_NO_DOUBT, YES, NO, DOUBT
+from core.utils import YES_NO, get_users_as_list
 from .models import Proposal, Wmo
 
 
@@ -88,15 +89,22 @@ class WmoForm(ConditionalModelForm):
         fields = [
             'metc', 'metc_details', 'metc_institution',
             'is_medical', 'is_behavioristic',
-            'metc_application', 'metc_decision', 'metc_decision_pdf',
         ]
         widgets = {
-            'metc': forms.RadioSelect(choices=YES_NO_DOUBT),
-            'is_medical': forms.RadioSelect(choices=YES_NO_DOUBT),
-            'is_behavioristic': forms.RadioSelect(choices=YES_NO_DOUBT),
-            'metc_application': forms.RadioSelect(choices=YES_NO),
-            'metc_decision': forms.RadioSelect(choices=YES_NO),
+            'metc': forms.RadioSelect(),
+            'is_medical': forms.RadioSelect(),
+            'is_behavioristic': forms.RadioSelect(),
         }
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Remove empty label from is_medical/is_behavioristic field and reset the choices
+        """
+        super(WmoForm, self).__init__(*args, **kwargs)
+        self.fields['is_medical'].empty_label = None
+        self.fields['is_medical'].choices = YES_NO_DOUBT
+        self.fields['is_behavioristic'].empty_label = None
+        self.fields['is_behavioristic'].choices = YES_NO_DOUBT
 
     def clean(self):
         """
@@ -105,8 +113,14 @@ class WmoForm(ConditionalModelForm):
         """
         cleaned_data = super(WmoForm, self).clean()
 
-        self.check_dependency(cleaned_data, 'metc', 'metc_institution', _('U dient een instelling op te geven.'))
-        self.check_dependency(cleaned_data, 'metc', 'metc_details')
+        self.check_dependency(cleaned_data, 'metc', 'metc_details', f1_value=YES)
+        self.check_dependency(cleaned_data, 'metc', 'metc_institution',
+                              f1_value=YES,
+                              error_message=_('U dient een instelling op te geven.'))
+        self.check_dependency(cleaned_data, 'metc', 'is_medical', f1_value=NO)
+        self.check_dependency(cleaned_data, 'metc', 'is_medical', f1_value=DOUBT)
+        self.check_dependency(cleaned_data, 'metc', 'is_behavioristic', f1_value=NO)
+        self.check_dependency(cleaned_data, 'metc', 'is_behavioristic', f1_value=DOUBT)
 
 
 class WmoCheckForm(forms.ModelForm):
@@ -116,10 +130,41 @@ class WmoCheckForm(forms.ModelForm):
             'metc', 'is_medical', 'is_behavioristic',
         ]
         widgets = {
-            'metc': forms.RadioSelect(choices=YES_NO_DOUBT),
-            'is_medical': forms.RadioSelect(choices=YES_NO_DOUBT),
-            'is_behavioristic': forms.RadioSelect(choices=YES_NO_DOUBT),
+            'metc': forms.RadioSelect(),
+            'is_medical': forms.RadioSelect(),
+            'is_behavioristic': forms.RadioSelect(),
         }
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Remove empty label from is_medical/is_behavioristic field and reset the choices
+        """
+        super(WmoCheckForm, self).__init__(*args, **kwargs)
+        self.fields['is_medical'].empty_label = None
+        self.fields['is_medical'].choices = YES_NO_DOUBT
+        self.fields['is_behavioristic'].empty_label = None
+        self.fields['is_behavioristic'].choices = YES_NO_DOUBT
+
+
+class WmoApplicationForm(ConditionalModelForm):
+    class Meta:
+        model = Wmo
+        fields = [
+            'metc_application', 'metc_decision', 'metc_decision_pdf',
+        ]
+        widgets = {
+            'metc_application': forms.RadioSelect(choices=YES_NO),
+            'metc_decision': forms.RadioSelect(choices=YES_NO),
+        }
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If metc_decision has been checked, make sure the file is added
+        """
+        cleaned_data = super(WmoApplicationForm, self).clean()
+
+        self.check_dependency(cleaned_data, 'metc_decision', 'metc_decision_pdf')
 
 
 class StudyStartForm(forms.ModelForm):

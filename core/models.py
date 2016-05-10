@@ -1,4 +1,14 @@
 from django.db import models
+from django.utils.translation import ugettext as _
+
+YES = 'Y'
+NO = 'N'
+DOUBT = '?'
+YES_NO_DOUBT = (
+    (YES, _('ja')),
+    (NO, _('nee')),
+    (DOUBT, _('twijfel')),
+)
 
 
 class Setting(models.Model):

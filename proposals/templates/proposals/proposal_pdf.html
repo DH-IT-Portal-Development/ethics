@@ -108,6 +108,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if wmo.metc %}
             <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th><td>{{ wmo.metc_details }}</td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</th><td>{{ wmo.metc_institution }}</td>
             </tr>
             {% else %}
@@ -120,15 +123,22 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             {% endif %}
-            {% if wmo.status != wmo.NO_WMO %}
+        </table>
+
+        {% if wmo.status != wmo.NO_WMO %}
+        <h2>{% trans "Aanmelding bij de METC" %}</h2>
+        <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th><td>{{ wmo.metc_application }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</th><td>{{ wmo.metc_decision }}</td>
             </tr>
-            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th><td><a href="{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
+            </tr>
         </table>
+        {% endif %}
         {% endwith %}
 
         <pdf:nextpage />

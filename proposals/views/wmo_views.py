@@ -6,11 +6,12 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
+from core.models import YES, DOUBT
 from core.views import CreateView, UpdateView
-from core.utils import get_secretary, string_to_bool
+from core.utils import get_secretary
 
 from ..models import Proposal, Wmo
-from ..forms import WmoForm, WmoCheckForm
+from ..forms import WmoForm, WmoApplicationForm, WmoCheckForm
 
 
 #####################
@@ -29,12 +30,9 @@ class WmoMixin(object):
     def get_next_url(self):
         wmo = self.object
         if wmo.status == Wmo.NO_WMO:
-            proposal = wmo.proposal
-            return reverse('proposals:study_start', args=(proposal.pk,))
-        elif wmo.status == Wmo.WAITING:
-            return reverse('proposals:wmo_update', args=(wmo.pk,))
+            return reverse('proposals:study_start', args=(wmo.proposal.pk,))
         else:
-            return reverse('proposals:my_archive')
+            return reverse('proposals:wmo_application', args=(wmo.pk,))
 
     def get_back_url(self):
         return reverse('proposals:update', args=(self.object.proposal.pk,))
@@ -67,6 +65,28 @@ class WmoUpdate(WmoMixin, UpdateView):
 ######################
 # Other actions on WMO
 ######################
+class WmoApplication(UpdateView):
+    model = Wmo
+    form_class = WmoApplicationForm
+    template_name = 'proposals/wmo_application.html'
+
+    def get_context_data(self, **kwargs):
+        """Setting the Proposal on the context"""
+        context = super(WmoApplication, self).get_context_data(**kwargs)
+        context['proposal'] = self.object.proposal
+        return context
+
+    def get_next_url(self):
+        wmo = self.object
+        if wmo.status == Wmo.WAITING:
+            return reverse('proposals:wmo_application', args=(wmo.pk,))
+        else:
+            return reverse('proposals:study_start', args=(wmo.proposal.pk,))
+
+    def get_back_url(self):
+        return reverse('proposals:wmo_update', args=(self.object.pk,))
+
+
 class WmoCheck(generic.FormView):
     form_class = WmoCheckForm
     template_name = 'proposals/wmo_check.html'
@@ -80,16 +100,18 @@ def check_wmo(request):
     """
     This call checks which WMO message should be generated.
     """
-    is_metc = string_to_bool(request.POST.get('metc'))
-    is_medical = string_to_bool(request.POST.get('medical'))
-    is_behavioristic = string_to_bool(request.POST.get('behavioristic'))
+    is_metc = request.POST.get('metc') == YES
+    is_medical = request.POST.get('medical') == YES
+    is_behavioristic = request.POST.get('behavioristic') == YES
+
+    doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT or request.POST.get('behavioristic') == DOUBT
 
     # Default message: OK.
     message = _('Uw studie hoeft niet te worden beoordeeld door de METC.')
     message_class = 'info'
     needs_metc = False
 
-    if is_metc is None or (not is_metc and (is_medical is None or is_behavioristic is None)):
+    if doubt:
         secretary = get_secretary().get_full_name()
         message = _('Neem contact op met {secretary} om de twijfels weg te nemen.').format(secretary=secretary)
         message_class = 'warning'

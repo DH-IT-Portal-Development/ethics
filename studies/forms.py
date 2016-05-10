@@ -7,7 +7,8 @@ from django.utils.translation import ugettext as _
 from extra_views import InlineFormSet
 
 from core.forms import ConditionalModelForm
-from core.utils import YES_NO, YES_NO_DOUBT
+from core.models import YES_NO_DOUBT
+from core.utils import YES_NO
 from .models import Study, Survey
 from .utils import check_necessity_required
 
