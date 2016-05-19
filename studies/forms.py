@@ -22,7 +22,6 @@ class StudyForm(ConditionalModelForm):
             'necessity', 'necessity_reason',
             'recruitment', 'recruitment_details',
             'compensation', 'compensation_details',
-            'passive_consent',
         ]
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
@@ -32,7 +31,6 @@ class StudyForm(ConditionalModelForm):
             'necessity': forms.RadioSelect(),
             'recruitment': forms.CheckboxSelectMultiple(),
             'compensation': forms.RadioSelect(),
-            'passive_consent': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -102,7 +100,14 @@ class StudyDesignForm(forms.ModelForm):
 class StudyConsentForm(forms.ModelForm):
     class Meta:
         model = Study
-        fields = ['informed_consent', 'briefing']
+        fields = [
+            'informed_consent',
+            'briefing',
+            'passive_consent',
+        ]
+        widgets = {
+            'passive_consent': forms.RadioSelect(choices=YES_NO),
+        }
 
 
 class StudyEndForm(ConditionalModelForm):

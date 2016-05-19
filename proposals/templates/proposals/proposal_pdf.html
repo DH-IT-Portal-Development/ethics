@@ -201,9 +201,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
             </tr>
             {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:_("ja,nee") }}</td>
-            </tr>
         </table>
 
         {% if study.has_intervention %}
@@ -478,6 +475,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "briefing" %}</th><td><a href="{{ study.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:_("ja,nee") }}</td>
             </tr>
         </table>
         {% endfor %}
