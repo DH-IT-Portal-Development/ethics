@@ -38,7 +38,7 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "gedrags- en/of RT-registratie via Zep, Presentation, E-prime, etc",
+        "description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
