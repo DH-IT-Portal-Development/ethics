@@ -83,7 +83,14 @@ class Study(models.Model):
         verbose_name=_(u'Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
         help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen'))
     legally_incapable = models.NullBooleanField(
-        _('Maakt uw studie gebruik van <strong>volwassen</strong> wils<u>on</u>bekwame deelnemers?'))
+        _('Maakt uw studie gebruik van <strong>volwassen</strong> wils<u>on</u>bekwame deelnemers?'),
+        help_text=_('Wilsonbekwame volwassenen zijn volwassenen die waarvan \
+redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
+wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
+worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
+(bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). \
+Hier dient in ieder geval altijd de informed consent van een relevante \
+vertegenwoordiger te worden verkregen.'))
     has_traits = models.NullBooleanField(
         _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
