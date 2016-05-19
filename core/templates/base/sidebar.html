@@ -42,7 +42,7 @@ $(function() {
         {% if proposal.wmo %}
     <li>
         <a href="{% url 'proposals:wmo_update' proposal.pk %}">
-            {% trans "Ook ethische toetsing door de METC nodig?" %}
+            {% trans "Ethische toetsing nodig door een METC?" %}
         </a>
     </li>
         {% if proposal.wmo.status >= proposal.wmo.WAITING %}
@@ -55,7 +55,7 @@ $(function() {
         {% else %}
     <li>
         <a href="{% url 'proposals:wmo_create' proposal.pk %}">
-            {% trans "Ook ethische toetsing door de METC nodig?" %}
+            {% trans "Ethische toetsing nodig door een METC?" %}
         </a>
     </li>
         {% endif %}
