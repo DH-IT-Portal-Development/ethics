@@ -104,9 +104,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Ook ethische toetsing door de METC nodig?" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{{ wmo.metc|yesno:_("ja,nee,twijfel") }}</td>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{{ wmo.get_metc_display }}</td>
             </tr>
-            {% if wmo.metc %}
+            {% if wmo.metc == 'Y' %}
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th><td>{{ wmo.metc_details }}</td>
             </tr>
@@ -115,13 +115,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% else %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</th><td>{{ wmo.is_medical|yesno:_("ja,nee,twijfel") }}</td>
+                <th>{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</th><td>{{ wmo.get_is_medical_display }}</td>
             </tr>
-            {% if wmo.is_medical %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "is_behavioristic" %}</th><td>{{ wmo.is_behavioristic|yesno:_("ja,nee,twijfel") }}</td>
+                <th>{% get_verbose_field_name "proposals" "wmo" "is_behavioristic" %}</th><td>{{ wmo.get_is_behavioristic_display }}</td>
             </tr>
-            {% endif %}
             {% endif %}
         </table>
 
@@ -181,7 +179,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             {% endif %}
             {% if study|necessity_required %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th><td>{{ study.necessity|yesno:_("ja,nee,twijfel") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th><td>{{ study.get_necessity_display }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "necessity_reason" %}</th><td>{{ study.necessity_reason }}</td>
@@ -415,25 +413,25 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% include "studies/study_title.html" %}
         <table>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.deception|yesno:_("ja,nee,twijfel") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.get_deception_display }}</td>
             </tr>
-            {% if study.deception %}
+            {% if study.deception == 'Y' or study.deception == '?' %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th><td>{{ study.deception_details }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.stressful|yesno:_("ja,nee,twijfel") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.get_stressful_display }}</td>
             </tr>
-            {% if study.stressful %}
+            {% if study.stressful == 'Y' or study.stressful == '?' %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "stressful_details" %}</th><td>{{ study.stressful_details }}</td>
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "risk" %}</th><td>{{ study.risk|yesno:_("ja,nee,twijfel") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "risk" %}</th><td>{{ study.get_risk_display }}</td>
             </tr>
-            {% if study.risk %}
+            {% if study.risk == 'Y' or study.risk == '?' %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
             </tr>
