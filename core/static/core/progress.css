@@ -62,3 +62,8 @@
 .margin-3 {
     margin-left: 4.5em !important;
 }
+
+/* Always keep links blue */
+.progress a:visited {
+    color: #00e;
+}
