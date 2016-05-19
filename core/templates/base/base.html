@@ -51,18 +51,6 @@
             {% endif %}
             </div>
         {% endif %}
-        {% block noprogressbar %}
-            <script>
-            $(function() {
-                var val = {% block progress %}{% endblock %};
-                $('#progressbar').progressbar({
-                    value: val
-                });
-                $('.progress-label').text(val + "%");
-            });
-            </script>
-            <div id="progressbar"><div class="progress-label"></div></div>
-        {% endblock %}
         {% block sidebar %}{% endblock %}
         {% block notitle %}
             <h2>{% block title %}{% endblock %}</h2>
