@@ -53,7 +53,7 @@ van de leraar of een ander persoon die bevoegd is?')
 tijdens een hypotheekgesprek of tijdens politieverhoren.'),
         default=False)
     has_advanced_consent = models.BooleanField(
-        _('Vindt de informed consent van tevoren plaats?'),
+        _('Vindt informed consent van tevoren plaats?'),
         default=True)
 
     needs_approval = models.BooleanField(
@@ -65,7 +65,7 @@ om deze observatie te mogen uitvoeren?'),
         max_length=200,
         blank=True)
     approval_document = models.FileField(
-        _('Upload hiet het toestemmingsdocument (in .pdf of .doc(x)-formaat)'),
+        _('Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc])
 

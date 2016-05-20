@@ -89,7 +89,7 @@ redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
 worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
 (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). \
-Hier dient in ieder geval altijd de informed consent van een relevante \
+Hier dient in ieder geval altijd informed consent van een relevante \
 vertegenwoordiger te worden verkregen.'))
     has_traits = models.NullBooleanField(
         _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
