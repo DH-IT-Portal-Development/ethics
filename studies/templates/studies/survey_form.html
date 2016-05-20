@@ -24,12 +24,7 @@ $(function() {
         deleteText: "{% trans 'Verwijder' %}"
     });
 
-    $('.survey_set textarea').focus(function() {
-        $(this).css('height', '6em');
-    }).blur(function() {
-        $(this).css('height', '3em');
-    });
-    $('.survey_set textarea').css('height', '3em');
+    $('.survey_set textarea').css('max-height', '5em');
 
     depends_on_value('has_surveys', 'True', 'surveys_stressful');
     $('input[name="has_surveys"]').change(function() {

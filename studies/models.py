@@ -155,9 +155,12 @@ beantwoorden door volwassen deelnemers te testen?'),
         _('Maakt u gebruik van passieve informed consent?'),
         default=False,
         # TODO: link to website
-        help_text=_('Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat \
-ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. \
-U kunt de templates vinden op <link website?>'))
+        help_text=mark_safe(_('Wanneer u kinderen via een instelling \
+(dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
+plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
+passieve informed consent. U kunt de templates vinden op \
+<a href="https://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" \
+target="_blank">de ETCL-website</a>.')))
 
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
