@@ -19,7 +19,7 @@ $(function() {
     $('a[href="{{request.path}}"]').parents('li').nextAll().find('a').removeAttr('href');
 
     // Sidebar functionality
-    $('.progress').sidebar({side: 'right'}).trigger("sidebar:open");
+    $('.progress').sidebar({side: 'right'});
     $('.open-progress').click(function() {
         $('.progress').trigger('sidebar:open');
     });
