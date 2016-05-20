@@ -33,7 +33,7 @@ van de leraar of een ander persoon die bevoegd is?')
     )
 
     days = models.PositiveIntegerField(
-        _('Op hoeveel dagen wordt er geobserveerd?'))
+        _('Op hoeveel dagen wordt er geobserveerd (per deelnemer)?'))
     mean_hours = models.DecimalField(
         _('Hoeveel uur wordt er gemiddeld per dag geobserveerd?'),
         max_digits=4,

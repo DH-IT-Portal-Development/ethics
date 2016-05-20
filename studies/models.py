@@ -268,8 +268,8 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
 
 class Survey(models.Model):
     name = models.CharField(_('Naam vragenlijst'), max_length=200)
-    minutes = models.PositiveIntegerField(_('Duur (in minuten)'))
-    survey_url = models.URLField(_('URL'), blank=True)
+    duration = models.PositiveIntegerField(_('Duur (in minuten)'))
+    url = models.CharField(_('URL'), blank=True, max_length=200)
     description = models.TextField(_('Korte beschrijving'))
     study = models.ForeignKey(Study)
 

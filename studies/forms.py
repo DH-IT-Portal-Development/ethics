@@ -222,7 +222,7 @@ class SurveyInlineFormSet(forms.BaseInlineFormSet):
 class SurveysInline(InlineFormSet):
     """Creates an InlineFormSet for Surveys"""
     model = Survey
-    fields = ['name', 'minutes', 'survey_url', 'description']
+    fields = ['name', 'duration', 'url', 'description']
     can_delete = True
     extra = 1
     formset_class = SurveyInlineFormSet
