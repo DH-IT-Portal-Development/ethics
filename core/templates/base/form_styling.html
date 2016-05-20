@@ -64,12 +64,12 @@ $(function() {
             label.after(' <img src="{% static 'core/images/information.png' %}">');
             label.next().qtip({
                 content: {
-                    text: help.html()
+                    text: help.html(),
                 },
                 hide: {
                     fixed: true,
-                    delay: 500
-                }
+                    delay: 500,
+                },
             });
             help.hide();
         }

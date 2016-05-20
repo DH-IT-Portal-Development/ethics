@@ -85,6 +85,10 @@ form table {
     text-shadow: 1px 1px 0 #fff;
 }
 
+.qtip-content {
+    font-size: 1.1em;
+}
+
 /* Datatables */
 .dataTable td { 
     text-align: center; 
