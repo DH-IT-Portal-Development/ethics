@@ -10,11 +10,14 @@ register = template.Library()
 
 
 @register.simple_tag
-def get_verbose_field_name(app_label, model_name, field_name):
+def get_verbose_field_name(app_label, model_name, field_name, value=None):
     """
     Returns verbose_name for a field.
     """
-    return apps.get_model(app_label, model_name)._meta.get_field(field_name).verbose_name
+    verbose_name = apps.get_model(app_label, model_name)._meta.get_field(field_name).verbose_name
+    if value is not None:
+        verbose_name %= value
+    return verbose_name
 
 
 @register.filter

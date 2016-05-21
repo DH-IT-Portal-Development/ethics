@@ -309,23 +309,15 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th><td><a href="{{ study.observation.approval_document.url }}" target="_blank">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
-        </table>
-        {% for location in observation.location_set.all %}
-        <h3>{% trans "Locatie" %}</h3>
-        <table>
             <tr>
-                <th>{% get_verbose_field_name "observations" "location" "name" %}</th><td>{{ location.name }}</td>
+                <th>{% get_verbose_field_name "observations" "observation" "registrations" %}</th><td>{{ observation.registrations.all|unordered_list }}</td>
             </tr>
+            {% if observation.registrations.all|needs_details %}
             <tr>
-                <th>{% get_verbose_field_name "observations" "location" "registrations" %}</th><td>{{ location.registrations.all|unordered_list }}</td>
-            </tr>
-            {% if location.registrations.all|needs_details %}
-            <tr>
-                <th>{% get_verbose_field_name "observations" "location" "registrations_details" %}</th><td>{{ location.registrations_details }}</td>
+                <th>{% get_verbose_field_name "observations" "observation" "registrations_details" %}</th><td>{{ observation.registrations_details }}</td>
             </tr>
             {% endif %}
         </table>
-        {% endfor %}
         {% endwith %}
         {% endif %}
 
@@ -340,7 +332,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         {% for session in study.session_set.all %}
-        <h2>Sessie {{ session.order }}</h2>
+        {% include "tasks/session_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th><td>{{ session.setting.all|unordered_list }}</td>
@@ -358,12 +350,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td>{{ session.tasks_number }}</td>
             </tr>
-            <tr>
-                <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" %}</th><td>{{ session.tasks_duration }}</td>
-            </tr>
         </table>
         {% for task in session.task_set.all %}
-        <h3>Taak {{ task.order }}</h3>
+        {% include "tasks/task_title.html" %}
         <table>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "task" "name" %}</th><td>{{ task.name }}</td>
@@ -402,6 +391,14 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             {% endif %}
         </table>
         {% endfor %}
+
+        <h3>{% trans "Overzicht van het takenonderzoek" %}</h3>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" session.net_duration %}</th><td>{{ session.tasks_duration }}</td>
+            </tr>
+        </table>
+
         {% endfor %}
         {% endif %}
 

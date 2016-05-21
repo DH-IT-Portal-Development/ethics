@@ -253,17 +253,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th><td></td>
             </tr>
-        </table>
-        <h3>{% trans "Locatie" %} <em>n</em></h3>
-        <table>
             <tr>
-                <th>{% get_verbose_field_name "observations" "location" "name" %}</th><td></td>
+                <th>{% get_verbose_field_name "observations" "observation" "registrations" %}</th><td>{% show_all "observations" "registration" %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "observations" "location" "registrations" %}</th><td>{% show_all "observations" "registration" %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "observations" "location" "registrations_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "observations" "observation" "registrations_details" %}</th><td></td>
             </tr>
         </table>
 
@@ -288,9 +282,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" %}</th><td></td>
             </tr>
         </table>
         <h3>{% trans "Taak" %} <em>n</em></h3>
@@ -321,6 +312,13 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "task" "feedback_details" %}</th><td></td>
+            </tr>
+        </table>
+
+        <h3>{% trans "Overzicht van het takenonderzoek" %}</h3>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" 0 %}</th><td></td>
             </tr>
         </table>
 
