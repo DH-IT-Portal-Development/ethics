@@ -114,7 +114,9 @@ class Task(models.Model):
         _('Wat is de naam van de taak?'),
         max_length=200)
     description = models.TextField(
-        _('Wat is de beschrijving van de taak?'))
+        _('Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
+uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
+beantwoording van uw onderzoeksvragen bijdraagt.'))
     duration = models.PositiveIntegerField(
         _('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, \
 dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak \
