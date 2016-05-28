@@ -173,18 +173,21 @@ een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om 
 of andere taak/taken te doen, dan spreken we van twee sessies. \
 Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
     deception = models.CharField(
-        _('Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer, \
-d.w.z. het doelbewust verschaffen van inaccurate informatie over het doel en/of \
-belangrijke aspecten van de gang van zaken tijdens de studie? \
-Denk aan zaken als een bewust misleidende "cover story" voor het experiment; \
-het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; \
-het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback.'),
-        help_text=_('Wellicht ten overvloede: het gaat hierbij niet om fillers.'),
+        _('Is er binnen bovenstaand onderzoekstraject sprake van \
+misleiding van de deelnemer?'),
+        help_text=_('Misleiding is het doelbewust verschaffen van inaccurate \
+informatie over het doel en/of belangrijke aspecten van de gang van zaken \
+tijdens de studie. Denk aan zaken als een bewust misleidende "cover story" \
+voor het experiment; het ten onrechte suggereren dat er met andere \
+deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale \
+geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: \
+het gaat hierbij niet om fillers.'),
         max_length=1,
         choices=YES_NO_DOUBT,
         blank=True)
     deception_details = models.TextField(
-        _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.'),
+        _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer \
+zal worden gedebrieft.'),
         blank=True)
     stressful = models.CharField(
         _('Is bovenstaand onderzoekstraject op onderdelen of als geheel \
@@ -194,38 +197,45 @@ collega-onderzoekers, bij de deelnemers zelf, of bij ouders of andere \
 vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit van het naar \
 verwachting meest kwetsbare c.q. minst belastbare (bijv. jongste) \
 geselecteerde deelnemerstype dat dit traject doorloopt.'),
-        help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn bij een \'onmenselijk\' lange en uitputtende taak, \
-een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de \
-privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren \
-belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.')),
+        help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn \
+bij een \'onmenselijk\' lange en uitputtende taak, een zeer confronterende \
+vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren \
+inbreuk op de privacy, of een ander ervaren gebrek aan respect. \
+Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting \
+tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade \
+door het onderzoek.')),
         max_length=1,
         choices=YES_NO_DOUBT,
         blank=True)
     stressful_details = models.TextField(
-        _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante aspecten van uw studie \
-(bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, \
-of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.'),
+        _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
+aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer \
+kwetsende woorden of uitspraken in de taak, of van zeer confronterende \
+vragen in een vragenlijst), zodat de commissie zich een goed beeld kan \
+vormen.'),
         blank=True)
     risk = models.CharField(
         _('Zijn de risico\'s op psychische, fysieke, of andere (bijv. \
 economische, juridische) schade door deelname aan bovenstaand \
 onderzoekstraject <em>meer dan</em> minimaal? \
 D.w.z. ligt de kans op en/of omvang van mogelijke schade \
-bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"? \
-Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de \
-relevante leeftijdscategorie normaalgesproken in het dagelijks leven \
-ten deel valt. Ga bij het beantwoorden van deze vraag uit van het naar \
-verwachting meest kwetsbare c.q. minst belastbare (bijv. jongste) \
-geselecteerde deelnemerstype dat dit traject doorloopt. En denk bij \
-schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar \
-komen van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, \
-stigmatisering door anderen, economische schade door data-koppeling, \
-et cetera.'),
-        help_text=mark_safe(_('Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de \
-risico\'s van "routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische \
-contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
-intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, \
-onder begeleiding van adequaat geschoolde specialisten).')),
+bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"?'),
+        help_text=mark_safe(_('Achtergrondrisico is datgene dat gezonde, \
+gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken \
+in het dagelijks leven ten deel valt. Ga bij het beantwoorden van deze \
+vraag uit van het naar verwachting meest kwetsbare c.q. minst belastbare \
+(bijv. jongste) geselecteerde deelnemerstype dat dit traject doorloopt. \
+En denk bij schade ook aan de gevolgen die het voor de deelnemer of \
+anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. \
+op het vlak van zelfbeeld, stigmatisering door anderen, economische \
+schade door data-koppeling, et cetera. Het achtergrondrisico voor \
+psychische en fysieke schade omvat bijvoorbeeld ook de risico\'s van \
+"routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, \
+psychologische of medische contexten plaatsvinden (zoals een eindexamen, \
+een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
+intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke \
+inspanning; dit alles, waar relevant, onder begeleiding van adequaat \
+geschoolde specialisten).')),
         max_length=1,
         choices=YES_NO_DOUBT,
         blank=True)
