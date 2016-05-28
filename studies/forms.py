@@ -17,7 +17,8 @@ class StudyForm(ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
-            'age_groups', 'legally_incapable',
+            'age_groups',
+            'legally_incapable', 'legally_incapable_details',
             'has_traits', 'traits', 'traits_details',
             'necessity', 'necessity_reason',
             'recruitment', 'recruitment_details',
@@ -51,7 +52,10 @@ class StudyForm(ConditionalModelForm):
     def clean(self):
         """
         Check for conditional requirements:
-        - Check whether necessity_reason was required and if so, if it has been filled out
+        - Check whether necessity was required
+        - Check that legally_incapable has a value
+        - If legally_incapable is set, make sure the details are filled
+        - Check that has_traits has a value
         - If has_traits is checked, make sure there is at least one trait selected
         - If a trait which needs details has been checked, make sure the details are filled
         - If a compensation which needs details has been checked, make sure the details are filled
@@ -61,6 +65,7 @@ class StudyForm(ConditionalModelForm):
 
         self.necessity_required(cleaned_data)
         self.check_empty(cleaned_data, 'legally_incapable')
+        self.check_dependency(cleaned_data, 'legally_incapable', 'legally_incapable_details')
         self.check_empty(cleaned_data, 'has_traits')
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details', 'traits_details')

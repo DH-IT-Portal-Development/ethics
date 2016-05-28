@@ -81,7 +81,7 @@ class Study(models.Model):
     age_groups = models.ManyToManyField(
         AgeGroup,
         verbose_name=_(u'Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
-        help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen'))
+        help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.NullBooleanField(
         _('Maakt uw studie gebruik van <strong>volwassen</strong> wils<u>on</u>bekwame deelnemers?'),
         help_text=_('Wilsonbekwame volwassenen zijn volwassenen die waarvan \
@@ -91,6 +91,9 @@ worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
 (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). \
 Hier dient in ieder geval altijd informed consent van een relevante \
 vertegenwoordiger te worden verkregen.'))
+    legally_incapable_details = models.TextField(
+        _('Licht toe'),
+        blank=True)
     has_traits = models.NullBooleanField(
         _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
@@ -116,16 +119,15 @@ beantwoorden door volwassen deelnemers te testen?'),
     recruitment = models.ManyToManyField(
         Recruitment,
         verbose_name=_('Hoe worden de deelnemers geworven?'))
-    recruitment_details = models.CharField(
+    recruitment_details = models.TextField(
         _('Licht toe'),
-        max_length=200,
         blank=True)
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
         help_text=_(u'Het standaard bedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
-cadeautje'),
+cadeautje.'),
         null=True)
     compensation_details = models.CharField(
         _('Namelijk'),

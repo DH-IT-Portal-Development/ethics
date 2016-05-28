@@ -164,6 +164,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th><td>{{ study.legally_incapable|yesno:_("ja,nee") }}</td>
             </tr>
+            {% if study.legally_incapable %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "legally_incapable_details" %}</th><td>{{ study.legally_incapable_details }}</td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th><td>{{ study.has_traits|yesno:_("ja,nee") }}</td>
             </tr>
@@ -171,7 +176,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
             </tr>
-            {% if study.recruitment.all|needs_details %}
+            {% if study.traits.all|needs_details %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
             </tr>

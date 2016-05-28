@@ -18,6 +18,7 @@
 {% block content %}
 <script>
 $(function() {
+    depends_on_value('legally_incapable', 'True', 'legally_incapable_details');
     depends_on_value('has_traits', 'True', 'traits');
     check_field_required('traits', 'needs_details', 'traits_details', 'studies', 'Trait');
     check_field_required('compensation', 'needs_details', 'compensation_details', 'studies');
