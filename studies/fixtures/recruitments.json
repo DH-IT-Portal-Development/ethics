@@ -11,7 +11,7 @@
 },
 {
     "fields": {
-        "needs_details": false,
+        "needs_details": true,
         "requires_review": true,
         "order": 2,
         "description": "eigen netwerk"
