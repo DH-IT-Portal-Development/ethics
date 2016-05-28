@@ -14,7 +14,7 @@
         "needs_details": true,
         "order": 2,
         "description": "geld",
-        "requires_review": true
+        "requires_review": false
     },
     "model": "studies.compensation",
     "pk": 2
