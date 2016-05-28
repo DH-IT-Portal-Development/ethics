@@ -12,26 +12,26 @@
 {% block content %}
 <p>
     {% blocktrans %}
-    Via deze portal kunt u een UiL OTS studie ter toetsing aan de Ethische
-    ToetsingsCommissie Linguïstiek (ETCL) aanbieden. De ETCL zal deze studie
-    vervolgens beoordelen op criteria m.b.t. <em>informed consent</em>,
-    belasting en risico's voor de deelnemers, en data-management procedures.
+    U wilt een nieuwe studie ter toetsing bij de ETCL aanmelden.
+    Het is daarvoor <em>noodzakelijk</em> dat u goed bekend bent met het ETCL
+    reglement (waarin bijvoorbeeld de ETCL definities van 'studie').
+    U kunt uzelf en de commissieleden veel tijd besparen door uzelf eerst
+    goed te informeren.
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans %}
-    Voor die beoordeling is een gedetailleerde specificatie van uw studie
-    noodzakelijk. Na enkele inleidende vragen dient u o.a. op te geven wie
-    er aan deelnemen, en welk(e) soort(en) onderzoek uw studie omvat:
-    observatieonderzoek, interventieonderzoek, en/of takenonderzoek, d.w.z.
-    onderzoek waarin u de deelnemers <em>extra</em> taken geeft.
-    Voor elke onderzoekssoort dient u vervolgens op te geven hoe dit
-    onderzoek in uw studie precies is vormgegeven.
-    Na dit alles zult u gevraagd worden een inschatting te geven van de
-    belasting van, en risico’s voor, de deelnemers, en dient u vervolgens
-    alle voor uw studie aangepaste formulieren ten bate van <em>informed
-    consent</em> te uploaden.
-    Gebruik bij het invullen <u>geen afkortingen</u>.
+    Om een studie t.a.v. <em>informed consent</em>, belasting en risico's voor
+    de deelnemers, en data-management procedures goed te kunnen beoordelen
+    heeft de ETCL een gedetailleerde specificatie van de studie nodig.
+    Na enkele inleidende vragen dient u o.a. op te geven wie er aan deelnemen,
+    en welk(e) soort(en) onderzoek de studie omvat: observatieonderzoek,
+    interventieonderzoek, en/of takenonderzoek.
+    Voor elke onderzoekssoort dient u vervolgens op te geven hoe dit onderzoek
+    in uw studie precies is vormgegeven. Na dit alles zult u gevraagd worden
+    een inschatting te geven van de belasting van, en risico's voor, de
+    deelnemers, en dient u vervolgens alle voor uw studie aangepaste
+    formulieren ten bate van <em>informed consent</em> te uploaden.
     {% endblocktrans %}
 </p>
 <p>
@@ -46,11 +46,16 @@
     {% blocktrans %}
     Afhankelijk van de complexiteit van uw onderzoek kan de specificatie
     zeker enige tijd in beslag nemen. U kunt de aanmelding echter altijd
-    onderbreken, bewaren, en op een later moment afmaken.
+    onderbreken, bewaren, en op een later moment afmaken. Uw specificatie
+    wordt alleen zichtbaar voor de ETCL en, indien goedgekeurd, voor uw
+    collega's binnen het UiL OTS. De deelnemers zien uiteraard niets van
+    wat u hier specificeert.
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans with secretary_name=secretary.get_full_name secretary_mail=secretary.email %}
+    Gebruik bij het invullen s.v.p. geen afkortingen waar de ETCL wellicht
+    niet mee bekend is.
     Raadpleeg bij vragen eerst het
     <a href="{{ regulations }}" target="_blank">reglement</a>,
     en neem eventueel daarna contact op met de ETCL secretaris
