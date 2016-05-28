@@ -66,7 +66,10 @@ class Proposal(models.Model):
         _('Wat is de titel van uw studie?'),
         max_length=200,
         unique=True,
-        help_text=_('Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies.'))
+        help_text=_('De titel die u hier opgeeft is zichtbaar voor de \
+ETCL-leden en, wanneer de studie is goedgekeurd, ook voor alle UiL-OTS \
+medewerkers die in het archief van deze portal kijken. De titel mag niet \
+identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
     summary = models.TextField(
         _('Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'),
         validators=[MaxWordsValidator(SUMMARY_MAX_WORDS)])
