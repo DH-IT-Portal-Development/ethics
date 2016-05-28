@@ -264,7 +264,10 @@ onderzoek, 2005, ccmo.nl)'),
 hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
         help_text=_('Een handeling of opgelegde gedragsregel varieert \
 tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een \
-knop/toets in laten drukken.'),
+knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets \
+van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd \
+worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, \
+slechts dan kan "nee" ingevuld worden.'),
         max_length=1,
         choices=YES_NO_DOUBT,
         blank=True)
