@@ -15,18 +15,20 @@
 
 {% block content %}
 <p>
-    {% trans "Uw concept-aanmelding is compleet." %}
+    {% blocktrans %}
+    Uw concept-aanmelding is compleet.
+    {% endblocktrans %}
+
     {% if proposal.relation.needs_supervisor %}
-        {% trans "U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen." %}
+    {% blocktrans %}
+    U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen.
+    {% endblocktrans %}
     {% else %}
-        {% trans "U kunt nu uw concept-aanmelding ter beoordeling naar de ethische commissie versturen." %}
-    {% endif %}
-</p>
-<p>
     {% blocktrans %}
     Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
     nu ter beoordeling naar de ETCL versturen.
     {% endblocktrans %}
+    {% endif %}
 </p>
 <p>
     {% blocktrans %}
@@ -47,7 +49,7 @@
     <div class="warning">
     {% url "studies:consent" study.pk as consent_link %}
     {% blocktrans with study_order=study.order%}
-    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}. Dat kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
+    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}. Die kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
     {% endblocktrans %}
     </div>
 {% endif %}
