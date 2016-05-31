@@ -60,19 +60,35 @@
     <table>
         <tr>
             <th>
+                <label for="id_study_design">
                 {% blocktrans %}
-                Om welk type onderzoek gaat het hier? U kunt meerdere opties aankruisen.
+                Om welk type onderzoek gaat het hier?
+                U kunt meerdere opties aankruisen.
                 {% endblocktrans %}
+                </label>
             </th>
             <td>
                 {{ form.has_sessions.errors }}
-                <ul>
+                <ul id="id_study_design">
                     {% for field in form %}
                     <li>
                         <label for="{{ field.auto_id }}">{{ field }} {{ field.label }}</label>
                     </li>
                     {% endfor %}
                 </ul>
+                <span class="helptext">
+                    {% blocktrans %}
+                    Dit is bijvoorbeeld het geval wanneer u een
+                    observatiedeel combineert met een taakonderzoeksdeel,
+                    of met een interventiedeel (in dezelfde sessie, of 
+                    verspreid over dagen).
+                    Wanneer u in interventieonderzoek <em>extra</em> taken
+                    inzet om de effecten van de interventie te bemeten
+                    (bijvoorbeeld een speciale voor- en nameting met een
+                    vragenlijst die anders niet zou worden afgenomen)
+                    dient u die apart als taakonderzoek te specificeren.
+                    {% endblocktrans %}
+                </span>
             </td>
         </tr>
     </table>
