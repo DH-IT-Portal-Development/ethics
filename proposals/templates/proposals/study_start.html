@@ -25,9 +25,14 @@ $(function() {
 
         var text = "{{ is_similar }}";
         if (is_dissimilar) {
+            // Set the default value for studies_number to 2 (if it's not already set)
+            if ($('input[name="studies_number"]').val() === '1') {
+                $('input[name="studies_number"]').val('2');
+            }
         	text = "{{ is_dissimilar }}";
         }
         else {
+            $('input[name="studies_number"]').val('1');
             $('input[name^="study_name"]').parents('tr').hide();
             $('input[name="study_name_1"]').parents('tr').prev().hide();
         }
@@ -49,7 +54,6 @@ $(function() {
                 $('input[name="study_name_' + i + '"]').parents('tr').toggle(i <= $(this).val());
             }
         }
-
     });
     $('input[name=studies_number]').change();
 });
@@ -62,21 +66,26 @@ $(function() {
     (waarin een van twee typen interventies), en dan weer een observatiefase.
     Of: een takensessie met drie verschillende reactietijd-taken gevolgd
     door twee vragenlijsten.
+    Kleine verschillen tussen wat de verschillende deelnemers in zo'n traject
+    ten deel valt (bijv. in een between-subjects interventiedesign met les
+    uit een nieuw lesboek of uit het oude lesboek, of between-subjects
+    RT-takendesigns met een instructie richting snelle of juist accurate
+    performance) kunnen als varianten van hetzelfde traject worden benoemd.
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans %}
-    Soms zal het echter voorkomen dat verschillende deelnemersgroepen
-    verschillende trajecten doorlopen, met bijvoorbeeld een verschillend
-    aantal sessies, meer of hele andere taken.
-    Denk aan een situatie waarin oudere kinderen een takensessie
-    met drie verschillende reactietijd-taken en twee vragenlijsten doorlopen,
-    en jongere kinderen slechts twee korte reactietijd-taken en één
-    vragenlijst doen.
-    Of aan de situate binnen een interventiestudie waarbij de leraar ook een
-    taak krijgt opgelegd (vragenlijst) of wordt geobserveerd gedurende het
-    geven van de interventie.
-    In zulke gevallen zal elk traject volledig gespecificeerd moeten worden.
+    Soms zal het echter voorkomen dat verschillende deelnemersgroepen echt
+    heel verschillende trajecten doorlopen, met bijvoorbeeld een verschillend
+    aantal sessies, meer taken of hele andere taken. Denk aan een situatie
+    waarin oudere kinderen een takensessie met drie verschillende
+    reactietijdtaken en twee vragenlijsten doorlopen, en jongere kinderen
+    slechts twee korte reactietijd-taken en één vragenlijst doen.
+    Of aan de situate binnen een interventiestudie waarbij niet alleen de
+    leerlingen worden bestudeerd maar óók de leraar een vragenlijst moet
+    invullen of wordt geobserveerd gedurende het geven van de interventie.
+    In zulke gevallen zal elk traject en de bijbehorende deelnemersgroep
+    volledig gespecificeerd moeten worden.
     {% endblocktrans %}
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
