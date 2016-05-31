@@ -50,38 +50,32 @@ class ProposalTestCase(BaseProposalTestCase):
         self.assertEqual(proposal.status, Proposal.DRAFT)
 
         wmo = Wmo.objects.create(proposal=proposal, metc=YES)
-        self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_METC)
+        self.assertEqual(proposal.wmo.status, Wmo.WAITING)
         wmo.metc = False
         wmo.save()
-        self.assertEqual(proposal.status, Proposal.WMO_DECISION_BY_ETCL)
+        self.assertEqual(proposal.wmo.status, Wmo.NO_WMO)
         #self.assertEqual(proposal.continue_url(), '/studies/create/1/')
 
         s = Study.objects.create(proposal=proposal, order=1)
-        self.assertEqual(proposal.status, Proposal.CONSENT_ADDED)
-        self.assertEqual(proposal.continue_url(), '/studies/design/1/')
+        #self.assertEqual(proposal.continue_url(), '/studies/design/1/')
 
         s.sessions_number = 2
         s.save()
         s1 = Session.objects.create(study=s, order=1)
         s2 = Session.objects.create(study=s, order=2)
-        self.assertEqual(proposal.status, Proposal.SESSIONS)
 
         s1.tasks_number = 2
         s1.save()
-        self.assertEqual(proposal.status, Proposal.TASKS_STARTED)
 
         s1_t1 = Task.objects.create(session=s1, order=1, name='t1')
         s1_t2 = Task.objects.create(session=s1, order=2, name='t2')
-        self.assertEqual(proposal.status, Proposal.TASKS_ADDED)
 
         s1.tasks_duration = 45
         s1.save()
         self.assertEqual(proposal.current_session(), s2)
-        self.assertEqual(proposal.status, proposal.SESSIONS)
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)
-        self.assertEqual(proposal.status, proposal.TASKS_ADDED)
 
 
 class WmoTestCase(BaseProposalTestCase):

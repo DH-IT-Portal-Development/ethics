@@ -1,6 +1,8 @@
 from django import forms
 from django.utils.translation import ugettext as _
 
+from .utils import is_empty
+
 
 class ConditionalModelForm(forms.ModelForm):
     def check_empty(self, cleaned_data, f1, error_message=''):
@@ -16,7 +18,7 @@ class ConditionalModelForm(forms.ModelForm):
         is_required = False
         if not error_message:
             error_message = _('Dit veld is verplicht.')
-        if cleaned_data.get(f1) == f1_value and not cleaned_data.get(f2):
+        if cleaned_data.get(f1) == f1_value and is_empty(cleaned_data.get(f2)):
             is_required = True
             self.add_error(f2, forms.ValidationError(error_message, code='required'))
         return is_required
@@ -25,7 +27,7 @@ class ConditionalModelForm(forms.ModelForm):
         is_required = False
         if not error_message:
             error_message = _('Dit veld is verplicht.')
-        if cleaned_data.get(f1) in f1_value_list and not cleaned_data.get(f2):
+        if cleaned_data.get(f1) in f1_value_list and is_empty(cleaned_data.get(f2)):
             is_required = True
             self.add_error(f2, forms.ValidationError(error_message, code='required'))
         return is_required
@@ -35,7 +37,7 @@ class ConditionalModelForm(forms.ModelForm):
         if not error_message:
             error_message = _('Dit veld is verplicht.')
         if cleaned_data.get(f1):
-            if getattr(cleaned_data.get(f1), f1_field) and not cleaned_data.get(f2):
+            if getattr(cleaned_data.get(f1), f1_field) and is_empty(cleaned_data.get(f2)):
                 is_required = True
                 self.add_error(f2, forms.ValidationError(error_message, code='required'))
         return is_required
@@ -46,7 +48,7 @@ class ConditionalModelForm(forms.ModelForm):
             error_message = _('Dit veld is verplicht.')
         if cleaned_data.get(f1):
             for item in cleaned_data.get(f1):
-                if getattr(item, f1_field) and not cleaned_data.get(f2):
+                if getattr(item, f1_field) and is_empty(cleaned_data.get(f2)):
                     is_required = True
                     self.add_error(f2, forms.ValidationError(error_message, code='required'))
                     break

@@ -40,7 +40,6 @@ class ObservationForm(ConditionalModelForm):
         cleaned_data = super(ObservationForm, self).clean()
 
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
-        # TODO: this doesn't work as supervision is a boolean value
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
         self.check_dependency(cleaned_data, 'needs_approval', 'approval_institution')
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
