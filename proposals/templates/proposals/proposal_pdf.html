@@ -100,7 +100,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         {% with wmo=proposal.wmo %}
-        <pdf:nextpage />
         <h2>{% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}</h2>
         <table>
             <tr>
@@ -139,7 +138,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% endif %}
         {% endwith %}
 
-        <pdf:nextpage />
         <h2>{% trans "Eén of meerdere trajecten?" %}</h2>
         <table>
             <tr>
@@ -154,7 +152,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
 
         {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
         {% for study in proposal.study_set.all %}
-        <pdf:nextpage />
         <h2>{% trans "De deelnemers" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
@@ -210,7 +207,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
 
         {% if study.has_intervention %}
         {% with intervention=study.intervention %}
-        <pdf:nextpage />
         <h2>{% trans "Het interventieonderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
@@ -266,7 +262,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
 
         {% if study.has_observation %}
         {% with observation=study.observation %}
-        <pdf:nextpage />
         <h2>{% trans "Het observatieonderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
@@ -327,7 +322,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% endif %}
 
         {% if study.has_sessions %}
-        <pdf:nextpage />
         <h2>{% trans "Het takenonderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
@@ -407,7 +401,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         {% endfor %}
         {% endif %}
 
-        <pdf:nextpage />
         <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
@@ -445,7 +438,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             {% endif %}
         </table>
 
-        <pdf:nextpage />
         <h2>{% trans "Dataverzameling direct betrokkenen t.b.v. het onderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
@@ -476,7 +468,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
         {% endfor %}
 
-        <pdf:nextpage />
         <h2>{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
@@ -492,7 +483,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
         {% endfor %}
 
-        <pdf:nextpage />
         <h2>{% trans "Concept-aanmelding versturen" %}</h2>
         <table>
             <tr>
