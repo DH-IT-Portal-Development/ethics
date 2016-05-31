@@ -192,14 +192,24 @@ het gaat hierbij niet om fillers.'),
         _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer \
 zal worden gedebrieft.'),
         blank=True)
+    negativity = models.CharField(
+        _('Bevat bovenstaand onderzoekstraject elementen die \
+<em>tijdens</em> de deelname niet-triviale negatieve emoties kunnen opwekken? \
+Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende \
+uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of \
+(heel) saaie taken.'),
+        max_length=1,
+        choices=YES_NO_DOUBT,
+        blank=True)
+    negativity_details = models.TextField(
+        _('Licht je antwoord toe.'),
+        blank=True)
     stressful = models.CharField(
-        _('Is bovenstaand onderzoekstraject op onderdelen of als geheel \
-zodanig belastend dat deze <em>ondanks de verkregen informed consent</em> \
-vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij \
-collega-onderzoekers, bij de deelnemers zelf, of bij ouders of andere \
-vertegenwoordigers? Ga bij het beantwoorden van deze vraag uit van het naar \
-verwachting meest kwetsbare c.q. minst belastbare (bijv. jongste) \
-geselecteerde deelnemerstype dat dit traject doorloopt.'),
+        _('Bevat bovenstaand onderzoekstraject elementen die tijdens de \
+deelname zodanig belastend zijn dat deze <em>ondanks de verkregen \
+informed consent</em> vragen zou kunnen oproepen (of zelfs \
+verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
+zelf, of bij ouders of andere vertegenwoordigers?'),
         help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn \
 bij een \'onmenselijk\' lange en uitputtende taak, een zeer confronterende \
 vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren \
@@ -225,10 +235,8 @@ D.w.z. ligt de kans op en/of omvang van mogelijke schade \
 bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"?'),
         help_text=mark_safe(_('Achtergrondrisico is datgene dat gezonde, \
 gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken \
-in het dagelijks leven ten deel valt. Ga bij het beantwoorden van deze \
-vraag uit van het naar verwachting meest kwetsbare c.q. minst belastbare \
-(bijv. jongste) geselecteerde deelnemerstype dat dit traject doorloopt. \
-En denk bij schade ook aan de gevolgen die het voor de deelnemer of \
+in het dagelijks leven ten deel valt. \
+Denk bij schade ook aan de gevolgen die het voor de deelnemer of \
 anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. \
 op het vlak van zelfbeeld, stigmatisering door anderen, economische \
 schade door data-koppeling, et cetera. Het achtergrondrisico voor \

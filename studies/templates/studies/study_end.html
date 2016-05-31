@@ -19,6 +19,7 @@
 <script>
 $(function() {
     depends_on_list_value('deception', ['Y', '?'], 'deception_details');
+    depends_on_list_value('negativity', ['Y', '?'], 'negativity_details');
     depends_on_list_value('stressful', ['Y', '?'], 'stressful_details');
     depends_on_list_value('risk', ['Y', '?'], 'risk_details');
 });
@@ -71,7 +72,14 @@ $(function() {
     </li>
     {% endif %}
 </ul>
-<p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
+<p>
+    {% blocktrans %}
+    Beantwoord op basis van dit overzicht de volgende vragen, 
+    en ga daarbij uit van het naar verwachting meest kwetsbare c.q. 
+    minst belastbare (bijv. jongste) geselecteerde deelnemerstype 
+    dat dit traject doorloopt.
+    {% endblocktrans %}
+</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% with proposal=study.proposal %}

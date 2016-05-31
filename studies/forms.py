@@ -120,25 +120,30 @@ class StudyEndForm(ConditionalModelForm):
         model = Study
         fields = [
             'deception', 'deception_details',
+            'negativity', 'negativity_details',
             'stressful', 'stressful_details',
             'risk', 'risk_details'
         ]
         widgets = {
             'deception': forms.RadioSelect(),
+            'negativity': forms.RadioSelect(),
             'stressful': forms.RadioSelect(),
             'risk': forms.RadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
         """
-        - Remove empty label from deception/stressful/risk field and reset the choices
-        - mark_safe the labels of stressful/risk
+        - Remove empty label from deception/negativity/stressful/risk field and reset the choices
+        - mark_safe the labels of negativity/stressful/risk
         """
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
         self.fields['deception'].empty_label = None
         self.fields['deception'].choices = YES_NO_DOUBT
         self.fields['deception'].required = True
+        self.fields['negativity'].empty_label = None
+        self.fields['negativity'].choices = YES_NO_DOUBT
+        self.fields['negativity'].required = True
         self.fields['stressful'].empty_label = None
         self.fields['stressful'].choices = YES_NO_DOUBT
         self.fields['stressful'].required = True
@@ -146,6 +151,7 @@ class StudyEndForm(ConditionalModelForm):
         self.fields['risk'].choices = YES_NO_DOUBT
         self.fields['risk'].required = True
 
+        self.fields['negativity'].label = mark_safe(self.fields['negativity'].label)
         self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)
         self.fields['risk'].label = mark_safe(self.fields['risk'].label)
 
@@ -153,12 +159,14 @@ class StudyEndForm(ConditionalModelForm):
         """
         Check for conditional requirements:
         - If deception is set to yes, make sure deception_details has been filled out
+        - If negativity is set to yes, make sure negativity_details has been filled out
         - If stressful is set to yes, make sure stressful_details has been filled out
         - If risk is set to yes, make sure risk_details has been filled out
         """
         cleaned_data = super(StudyEndForm, self).clean()
 
         self.check_dependency_list(cleaned_data, 'deception', 'deception_details', f1_value_list=[YES, DOUBT])
+        self.check_dependency_list(cleaned_data, 'negativity', 'negativity_details', f1_value_list=[YES, DOUBT])
         self.check_dependency_list(cleaned_data, 'stressful', 'stressful_details', f1_value_list=[YES, DOUBT])
         self.check_dependency_list(cleaned_data, 'risk', 'risk_details', f1_value_list=[YES, DOUBT])
 

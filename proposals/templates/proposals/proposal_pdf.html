@@ -420,6 +420,14 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             <tr>
+                <th>{% get_verbose_field_name "studies" "study" "negativity" %}</th><td>{{ study.get_negativity_display }}</td>
+            </tr>
+            {% if study.negativity == 'Y' or study.negativity == '?' %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "negativity_details" %}</th><td>{{ study.negativity_details }}</td>
+            </tr>
+            {% endif %}
+            <tr>
                 <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.get_stressful_display }}</td>
             </tr>
             {% if study.stressful == 'Y' or study.stressful == '?' %}
