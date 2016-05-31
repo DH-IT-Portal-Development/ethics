@@ -11,8 +11,8 @@
 {% block content %} 
 {% if user.is_authenticated %}
 <p>
-	{% blocktrans %}
-	In deze webportal van de Ethische Toetsingscommissie Linguïstiek kunt u
+    {% blocktrans %}
+    In deze webportal van de Ethische Toetsingscommissie Linguïstiek kunt u
     alle <strong>praktische zaken</strong> rondom de ethische toetsing van uw
     UiL-OTS onderzoek regelen. U kunt een nieuwe studie bij de commissie
     aanmelden, maar ook bekijken wat er allemaal eerder door uzelf is aangemeld.
@@ -21,66 +21,66 @@
     <a href="http://etcl.wp.hum.uu.nl/" target="_blank">UU-webpagina van de ETCL</a>,
     alsmede naar het
     <a href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">reglement</a>.
-	{% endblocktrans %}
+    {% endblocktrans %}
 </p>
 <p>
-	{% blocktrans %}
-	In deze portal kunt u het volgende doen:
-	{% endblocktrans %}
+    {% blocktrans %}
+    In deze portal kunt u het volgende doen:
+    {% endblocktrans %}
 </p>
 <h3>{% trans "Mijn studies" %}</h3>
 <ul>
-	<li>
-		<a href="{% url 'proposals:start' %}">{% trans "Een nieuwe studie aanmelden (<em>from scratch</em> in een leeg formulier" %}</a>
-	</li>
-	<li>
-		<a href="{% url 'proposals:copy' %}">{% trans "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)" %}</a>
-	</li>
-	<li>
-		<a href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptstudies bekijken" %}</a>
-	</li>
-	<li>
-		<a href="{% url 'proposals:my_submitted' %}">{% trans "Mijn ingediende studies bekijken" %}</a>
-	</li>
-	<li>
-		<a href="{% url 'proposals:my_completed' %}">{% trans "Mijn afgehandelde studies bekijken" %}</a>
-	</li>
-	<li>
-		<a href="{% url 'proposals:my_archive' %}">{% trans "Al mijn studies bekijken" %}</a>
-	</li>
+    <li>
+        <a href="{% url 'proposals:start' %}">{% trans "Een nieuwe studie aanmelden (<em>from scratch</em> in een leeg formulier)" %}</a>
+    </li>
+    <li>
+        <a href="{% url 'proposals:copy' %}">{% trans "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)" %}</a>
+    </li>
+    <li>
+        <a href="{% url 'proposals:my_concepts' %}">{% trans "Mijn conceptstudies bekijken" %}</a>
+    </li>
+    <li>
+        <a href="{% url 'proposals:my_submitted' %}">{% trans "Mijn ingediende studies bekijken" %}</a>
+    </li>
+    <li>
+        <a href="{% url 'proposals:my_completed' %}">{% trans "Mijn afgehandelde studies bekijken" %}</a>
+    </li>
+    <li>
+        <a href="{% url 'proposals:my_archive' %}">{% trans "Al mijn studies bekijken" %}</a>
+    </li>
 </ul>
 <h3>UiL OTS archief</h3>
 <ul>
-	<li>
-		<a href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS-studies bekijken" %}</a>
-	</li>
+    <li>
+        <a href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS-studies bekijken" %}</a>
+    </li>
 </ul>
 <h3>Help</h3>
 <ul>
-	<li>
-		<a href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">{% trans "ETCL reglement" %}</a>
-	</li>
-	<li>
-		<a href="http://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
-	</li>
-	<li>
-		<a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
-	</li>
-	<li>
-		<a href="{% url 'feedback:create' %}">{% trans "Feedback op dit portal geven" %}</a>
-	</li>
+    <li>
+        <a href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">{% trans "ETCL reglement" %}</a>
+    </li>
+    <li>
+        <a href="http://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
+    </li>
+    <li>
+        <a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
+    </li>
+    <li>
+        <a href="{% url 'feedback:create' %}">{% trans "Feedback op dit portal geven" %}</a>
+    </li>
 </ul>
 {% else %}
 <p>
-	{% url 'login' as the_url %}
-	{% blocktrans %}
-	Welkom bij het portal van de ETCL. U kunt <a href="{{ the_url }}">hier</a> inloggen met Uw Solis-ID.
-	{% endblocktrans %}
+    {% url 'login' as the_url %}
+    {% blocktrans %}
+    Welkom bij het portal van de ETCL. U kunt <a href="{{ the_url }}">hier</a> inloggen met Uw Solis-ID.
+    {% endblocktrans %}
 </p>
 <p>
-	{% blocktrans %}
-	Klik <a href="http://etcl.wp.hum.uu.nl">hier</a> om terug te keren naar de ETCL-website.
-	{% endblocktrans %}
+    {% blocktrans %}
+    Klik <a href="http://etcl.wp.hum.uu.nl">hier</a> om terug te keren naar de ETCL-website.
+    {% endblocktrans %}
 </p>
 
 {% endif %}
