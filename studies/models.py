@@ -158,7 +158,6 @@ cadeautje.'),
     passive_consent = models.BooleanField(
         _('Maakt u gebruik van passieve informed consent?'),
         default=False,
-        # TODO: link to website
         help_text=mark_safe(_('Wanneer u kinderen via een instelling \
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
