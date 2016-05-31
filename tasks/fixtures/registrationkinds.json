@@ -15,11 +15,11 @@
         "requires_review": false,
         "needs_details": false,
         "registration": 6,
-        "order": 1,
+        "order": 2,
         "description": "fMRI (functional magnetic resonance imaging)"
     },
     "model": "tasks.registrationkind",
-    "pk": 1
+    "pk": 2
 },
 {
     "fields": {
