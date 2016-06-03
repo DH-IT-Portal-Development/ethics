@@ -10,7 +10,7 @@
 
 {% block content %} 
 <form action="" method="post">{% csrf_token %}
-    <p>Weet je zeker dat je deze sessie <strong>{{ session.order }}</strong> van de studie <em>{{ session.study.proposal.title }}</em> wilt verwijderen?</p>
+    <p>Weet u zeker dat u deze sessie <strong>{{ session.order }}</strong> van de studie <em>{{ session.study.proposal.title }}</em> wilt verwijderen?</p>
     <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Verwijderen' %}" />
     <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
 </form>

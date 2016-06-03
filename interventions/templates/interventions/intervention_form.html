@@ -35,7 +35,7 @@ $(function() {
     $('label[for="id_has_sessions"]').insertAfter($('#id_has_sessions'));
     $('#id_has_sessions').next().andSelf().insertAfter($('label[for="id_has_observation"]'));
 
-    $('#id_has_observation').parents('tr').find('th').text("{% trans 'Maak je bij de voor- en/of nameting gebruik van:' %}");
+    $('#id_has_observation').parents('tr').find('th').text("{% trans 'Maakt u bij de voor- en/of nameting gebruik van:' %}");
     $('#id_has_observation').parents('tr').next().empty();
 
     $('label[for="id_has_observation"]').after('<br/>');

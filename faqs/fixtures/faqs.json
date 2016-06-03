@@ -1,7 +1,7 @@
 [
 {
     "fields": {
-        "answer": "Elke keer als je op de blauwe knop 'Volgende stap >>' klikt, wordt de studie opgeslagen in de database. Als je op een later tijdstip verder wilt gaan, kun je het browserscherm sluiten en je opgeslagen studie vinden in 'Mijn studies' => 'Mijn conceptstudies'. ",
+        "answer": "Elke keer als u op de blauwe knop 'Volgende stap >>' klikt, wordt de studie opgeslagen in de database. Als u op een later tijdstip verder wilt gaan, kunt u het browserscherm sluiten en uw opgeslagen studie vinden in 'Mijn studies' => 'Mijn conceptstudies'. ",
         "question": "Wanneer wordt mijn studie opgeslagen?",
         "order": 1
     },

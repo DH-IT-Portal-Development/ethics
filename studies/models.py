@@ -201,7 +201,7 @@ uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of \
         choices=YES_NO_DOUBT,
         blank=True)
     negativity_details = models.TextField(
-        _('Licht je antwoord toe.'),
+        _('Licht uw antwoord toe.'),
         blank=True)
     stressful = models.CharField(
         _('Bevat bovenstaand onderzoekstraject elementen die tijdens de \
@@ -220,7 +220,7 @@ door het onderzoek.')),
         choices=YES_NO_DOUBT,
         blank=True)
     stressful_details = models.TextField(
-        _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
+        _('Licht uw antwoord toe. Geef concrete voorbeelden van de relevante \
 aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer \
 kwetsende woorden of uitspraken in de taak, of van zeer confronterende \
 vragen in een vragenlijst), zodat de commissie zich een goed beeld kan \
