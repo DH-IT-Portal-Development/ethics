@@ -35,6 +35,7 @@ $(function() {
     <h2>{% trans "Voortgang" %}</h2>
     <ul>
     {% for a in proposal.available_urls %}
+        {% if not a.is_title %}
         <li>
             {% if a.url %}
             <a class="margin-{{ a.margin }}" href="{{ a.url }}">{{ a.title }}</a>
@@ -42,6 +43,11 @@ $(function() {
             <span class="margin-{{ a.margin }}">{{ a.title }}</span>
             {% endif %}
         </li>
+        {% else %}
+    </ul>
+        <strong>{{ a.title }}</strong>
+    <ul>
+        {% endif %}
     {% endfor %}
     </ul>
 <!--

@@ -280,8 +280,13 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
         """Returns the last Session in this Study"""
         return self.session_set.order_by('-order')[0]
 
+    def design_started(self):
+        """Checks if the design phase has started"""
+        return any([self.has_intervention, self.has_observation, self.has_sessions])
+
     def design_completed(self):
-        result = True
+        """Checks if the design phase has been completed"""
+        result = self.design_started()
         if self.has_intervention:
             result &= hasattr(self, 'intervention')
         if self.has_observation:
