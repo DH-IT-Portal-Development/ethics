@@ -4,14 +4,9 @@
 <script type="text/javascript" charset="utf8" src="//cdnjs.cloudflare.com/ajax/libs/jquery-sidebar/3.3.2/jquery.sidebar.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'core/progress.css' %}">
 
-{% trans "Het interventieonderzoek" as intervention_title %}
-{% trans "Het observatieonderzoek" as observation_title %}
-{% trans "Het takenonderzoek" as sessions_title %}
-
 <script>
 $(function() {
-    // Add nodes and dividers
-    $('.progress li').after('<li><div class="divider"></div></li>');
+    // Add dividers
     $('.progress li:even').prepend('<div class="item">');
 
     // Set current item and remove previous URLs
@@ -42,6 +37,7 @@ $(function() {
             <span class="margin-{{ a.margin }}">{{ a.title }}</span>
             {% endif %}
         </li>
+        <li><div class="divider"></div></li>
         {% else %}
     </ul>
         <strong>{{ a.title }}</strong>
