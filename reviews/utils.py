@@ -175,7 +175,7 @@ def auto_review_task(study, task):
         if registration.requires_review:
             if registration.age_min:
                 for age_group in study.age_groups.all():
-                    if age_group.age_max < registration.age_min:
+                    if age_group.age_max is not None and age_group.age_max < registration.age_min:
                         reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
                         break
             else:
