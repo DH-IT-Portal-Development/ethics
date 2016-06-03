@@ -38,4 +38,4 @@ class StudySurvey(LoginRequiredMixin, UserAllowedMixin, UpdateWithInlinesView):
         return reverse('studies:consent', args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse('studies:session_end', args=(self.object.pk,))
+        return reverse('studies:design_end', args=(self.object.pk,))

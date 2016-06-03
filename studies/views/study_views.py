@@ -67,7 +67,7 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
 
     def get_next_url(self):
         study = self.object
-        next_url = 'studies:session_end'
+        next_url = 'studies:design_end'
         pk = study.pk
         if study.has_intervention:
             if hasattr(study, 'intervention'):

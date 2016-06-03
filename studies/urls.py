@@ -7,9 +7,11 @@ from .views.survey_views import StudySurvey
 urlpatterns = [
     # Study
     url(r'^update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='update'),
+
     url(r'^design/(?P<pk>\d+)/$', StudyDesign.as_view(), name='design'),
+    url(r'^end/(?P<pk>\d+)/$', StudyEnd.as_view(), name='design_end'),
+
     url(r'^consent/(?P<pk>\d+)/$', StudyConsent.as_view(), name='consent'),
-    url(r'^end/(?P<pk>\d+)/$', StudyEnd.as_view(), name='session_end'),
 
     # Session(s)
     url(r'^session/start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),

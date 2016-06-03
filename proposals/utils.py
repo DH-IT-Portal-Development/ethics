@@ -64,7 +64,7 @@ def study_urls(study):
 
     end_url = ProposalURL(title=_('Overzicht en eigen beoordeling van het gehele onderzoek'), margin=1)
     if study.design_completed():
-        end_url.url = reverse('studies:session_end', args=(study.pk,))
+        end_url.url = reverse('studies:design_end', args=(study.pk,))
     urls.append(end_url)
 
     survey_url = ProposalURL(title=_('Dataverzameling direct betrokkenen t.b.v. het onderzoek'), margin=1)

@@ -19,7 +19,7 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
     success_message = _('Sessie verwijderd')
 
     def get_success_url(self):
-        return reverse('studies:session_end', args=(self.object.study.pk,))
+        return reverse('studies:design_end', args=(self.object.study.pk,))
 
     def delete(self, request, *args, **kwargs):
         """
@@ -135,8 +135,8 @@ class TaskEnd(AllowErrorsMixin, UpdateView):
             next_session = Session.objects.get(study=self.object.study, order=self.object.order + 1)
             return reverse('tasks:start', args=(next_session.pk,))
         except Session.DoesNotExist:
-            # If this is the last Session, continue to session_end
-            return reverse('studies:session_end', args=(self.object.study.pk,))
+            # If this is the last Session, continue to design_end
+            return reverse('studies:design_end', args=(self.object.study.pk,))
 
     def get_back_url(self):
         return reverse('tasks:update', args=(self.object.last_task().pk,))

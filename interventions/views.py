@@ -42,7 +42,7 @@ class InterventionMixin(object):
 
     def get_next_url(self):
         study = self.get_study()
-        next_url = 'studies:session_end'
+        next_url = 'studies:design_end'
         pk = study.pk
         if study.has_observation:
             if hasattr(study, 'observation'):
