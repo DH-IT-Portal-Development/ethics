@@ -2,12 +2,12 @@
 
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from core.models import YES_NO_DOUBT, YES
 from core.validators import MaxWordsValidator, validate_pdf_or_doc
+from .utils import available_urls
 
 
 SUMMARY_MAX_WORDS = 200
@@ -148,41 +148,15 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'))
 
     def continue_url(self):
-        study = self.current_study()
+        for available_url in self.available_urls():
+            if available_url.url:
+                result = available_url.url
+            else:
+                break
+        return result
 
-        next_url = reverse('proposals:update', args=(self.pk,))
-
-        if hasattr(self, 'wmo'):
-            next_url = reverse('proposals:wmo_update', args=(self.wmo.pk,))
-
-        if study:
-            next_url = reverse('studies:update', args=(study.pk,))
-
-            if study.compensation:
-                next_url = reverse('studies:design', args=(study.pk,))
-
-            if study.has_intervention:
-                if hasattr(study, 'intervention'):
-                    next_url = reverse('interventions:update', args=(study.intervention.pk,))
-                else:
-                    next_url = reverse('interventions:create', args=(study.pk,))
-
-            if study.has_observation:
-                if hasattr(study, 'observation'):
-                    next_url = reverse('observations:update', args=(study.observation.pk,))
-                else:
-                    next_url = reverse('observations:create', args=(study.pk,))
-
-            if study.has_sessions:
-                session = self.current_session()
-                if session:
-                    next_url = reverse('tasks:start', args=(session.pk,))
-                    # TODO: fix below
-                    # next_url = reverse('tasks:update', args=(session.current_task().pk,))
-                    # next_url = reverse('tasks:end', args=(session.pk,))
-                    # next_url = reverse('studies:session_end', args=(study.pk,))
-
-        return next_url
+    def available_urls(self):
+        return available_urls(self)
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""

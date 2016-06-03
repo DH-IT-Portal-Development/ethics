@@ -255,10 +255,9 @@ geschoolde specialisten).')),
         blank=True)
 
     # Fields with respect to Surveys
-    has_surveys = models.BooleanField(
+    has_surveys = models.NullBooleanField(
         _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
-Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'),
-        default=False)
+Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'))
     surveys_stressful = models.CharField(
         _('Is het invullen van deze vragenlijsten belastend? \
 Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
@@ -280,6 +279,19 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
     def last_session(self):
         """Returns the last Session in this Study"""
         return self.session_set.order_by('-order')[0]
+
+    def design_completed(self):
+        result = True
+        if self.has_intervention:
+            result &= hasattr(self, 'intervention')
+        if self.has_observation:
+            result &= hasattr(self, 'observation')
+        if self.has_sessions:
+            if self.session_set.all():
+                result &= self.last_session().tasks_duration is not None
+            else:
+                result = False
+        return result
 
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title
