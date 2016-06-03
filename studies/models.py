@@ -298,6 +298,9 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
                 result = False
         return result
 
+    def is_completed(self):
+        return self.deception != ''
+
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title
 

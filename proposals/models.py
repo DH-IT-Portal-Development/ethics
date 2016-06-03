@@ -149,10 +149,8 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
     def continue_url(self):
         for available_url in self.available_urls():
-            if available_url.url:
+            if available_url.url and not available_url.is_title:
                 result = available_url.url
-            else:
-                break
         return result
 
     def available_urls(self):
@@ -175,7 +173,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         current_study = None
         for study in self.study_set.all():
             current_study = study
-            if study.deception is None:
+            if not study.is_completed():
                 break
         return current_study
 

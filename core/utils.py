@@ -5,6 +5,14 @@ from django.utils.translation import ugettext as _
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 
 
+class AvailableURL(object):
+    def __init__(self, title, margin=0, url=None, is_title=False):
+        self.title = title
+        self.margin = margin
+        self.url = url
+        self.is_title = is_title
+
+
 def get_secretary():
     """
     Returns the Secretary. We limit this to one user.
