@@ -273,11 +273,6 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
         ordering = ['order']
         unique_together = ('proposal', 'order')
 
-    def net_duration(self):
-        """Returns the duration of all Tasks in this Study"""
-        result = self.session_set.aggregate(models.Sum('tasks_duration'))['tasks_duration__sum']
-        return result or 0
-
     def first_session(self):
         """Returns the first Session in this Study"""
         return self.session_set.order_by('order')[0]

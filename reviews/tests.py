@@ -5,11 +5,12 @@ from django.contrib.auth.models import User, Group
 from django.test import TestCase
 
 from .models import Review, Decision
-from .utils import start_review, auto_review
-from core.models import YES
+from .utils import start_review, auto_review, auto_review_observation, auto_review_task
+from core.models import YES, DOUBT
 from proposals.models import Proposal, Relation
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
+from observations.models import Observation
 from tasks.models import Session, Task, Registration
 
 
@@ -120,34 +121,118 @@ class CommissionTestCase(BaseReviewTestCase):
 
 class AutoReviewTests(BaseReviewTestCase):
     def test_auto_review(self):
-        self.study.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
-        self.study.stressful = False
-        self.study.risk = False
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
+        self.study.has_intervention = True
         self.study.save()
 
-        go, reasons = auto_review(self.proposal)
-        self.assertTrue(go)
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 1)
+
+        self.study.legally_incapable = True
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 2)
+
+        self.study.passive_consent = True
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 3)
+
+        self.study.deception = DOUBT
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 4)
+
+        self.study.has_traits = True
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 5)
+
+        self.study.sessions_number = 2
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 6)
+
+        self.study.stressful = YES
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 7)
+
+        self.study.risk = YES
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 8)
+
+    def test_auto_review_age_groups(self):
+        self.study.has_sessions = True
+        self.study.age_groups = AgeGroup.objects.filter(pk=2)  # toddlers
+        self.study.save()
+
+        s1 = Session.objects.create(study=self.study, order=1, tasks_number=2)
+        s1_t1 = Task.objects.create(session=s1, order=1, duration=20)
+        s1_t2 = Task.objects.create(session=s1, order=2, duration=20)
+        self.study.save()
+
+        self.assertEqual(s1.net_duration(), 40)
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
+        s1_t2.duration = 30
+        s1_t2.save()
+        self.study.save()
+        self.assertEqual(s1.net_duration(), 50)
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 1)
+
+    def test_auto_review_observation(self):
+        self.study.has_observation = True
+        self.study.save()
+        o = Observation.objects.create(study=self.study, days=1, mean_hours=1)
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
+        self.study.observation.is_nonpublic_space = True
+        self.study.observation.has_advanced_consent = False
+        self.study.observation.save()
+
+        reasons = auto_review_observation(o)
+        self.assertEqual(len(reasons), 1)
+
+        self.study.observation.is_anonymous = True
+        self.study.observation.save()
+
+        reasons = auto_review_observation(o)
+        self.assertEqual(len(reasons), 2)
+
+    def test_auto_review_task(self):
+        self.study.has_sessions = True
+        self.study.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
 
         s1 = Session.objects.create(study=self.study, order=1, tasks_number=1)
-
         s1_t1 = Task.objects.create(session=s1, order=1)
         s1_t1.registrations = Registration.objects.filter(pk=6)  # psychofysiological measurements
-        s1_t1.save()
 
-        go, reasons = auto_review(self.proposal)
-        self.assertFalse(go)
+        reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 1)
 
         s1_t1.registrations = Registration.objects.filter(requires_review=True)  # psychofysiological measurements / other
         s1_t1.save()
 
-        go, reasons = auto_review(self.proposal)
-        self.assertFalse(go)
+        reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 2)
-
-        self.study.risk = YES
-        self.study.save()
-
-        go, reasons = auto_review(self.proposal)
-        self.assertFalse(go)
-        self.assertEqual(len(reasons), 3)

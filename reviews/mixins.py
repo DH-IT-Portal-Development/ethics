@@ -31,7 +31,7 @@ class AutoReviewMixin(object):
     def get_context_data(self, **kwargs):
         """Adds the results of the machine-wise review to the context."""
         context = super(AutoReviewMixin, self).get_context_data(**kwargs)
-        go, reasons = auto_review(self.get_object().proposal)
-        context['auto_review_go'] = go
+        reasons = auto_review(self.get_object().proposal)
+        context['auto_review_go'] = len(reasons) == 0
         context['auto_review_reasons'] = reasons
         return context

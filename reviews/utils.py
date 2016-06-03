@@ -71,10 +71,10 @@ def start_assignment_phase(proposal):
     - Send an e-mail to the supervisor
     """
     secretary = get_secretary()
-    auto_go = auto_review(proposal)[0]
+    reasons = auto_review(proposal)
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.ASSIGNMENT
-    review.short_route = auto_go
+    review.short_route = len(reasons) == 0
     review.save()
 
     proposal.date_submitted = timezone.now()
@@ -106,93 +106,84 @@ def auto_review(proposal):
     """
     Reviews a Proposal machine-wise. Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
     """
-    go = True
     reasons = []
 
-    for funding in proposal.funding.all():
-        if funding.requires_review:
-            go = False
-            reasons.append(_('De studie heeft een afwijkende geldstroom.'))
-            break
-
     for study in proposal.study_set.all():
+        if study.has_intervention:
+            reasons.append(_('De studie is een interventiestudie.'))
+
         if study.legally_incapable:
-            go = False
             reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
 
         if study.passive_consent:
-            go = False
             reasons.append(_('De studie werkt met passieve informed consent.'))
 
-        # TODO: is this correct?
-        for session in study.session_set.all():
-            for setting in session.setting.all():
-                if setting.requires_review:
-                    go = False
-                    reasons.append(_('De dataverzameling vindt op een afwijkende plek plaats.'))
-                    break
+        if study.has_observation:
+            reasons.extend(auto_review_observation(study.observation))
 
         if study.deception in [YES, DOUBT]:
-            go = False
             reasons.append(_('De studie maakt gebruik van misleiding.'))
-            break
 
         # TODO: is this correct?
         if study.compensation.requires_review:
-            go = False
             reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
 
         if study.has_traits:
-            go = False
             reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die verhoogde kwetsbaarheid met zich meebrengen.'))
 
         for task in Task.objects.filter(session__study=study):
-            for registration in task.registrations.all():
-                if registration.requires_review:
-                    if registration.age_min:
-                        for age_group in study.age_groups.all():
-                            if age_group.age_max < registration.age_min:
-                                go = False
-                                reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
-                                break
-                    else:
-                        # TODO: not necessary?
-                        go = False
-                        reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
-                        break
-            for registration_kind in task.registration_kinds.all():
-                if registration_kind.requires_review:
-                    go = False
-                    reasons.append(_('De studie maakt gebruik van {}'.format(registration_kind.description)))
+            reasons.extend(auto_review_task(study, task))
 
-        # TODO: not necessary?
-        for recruitment in study.recruitment.all():
-            if recruitment.requires_review:
-                go = False
-                reasons.append(_('De deelnemers worden op een niet-standaard manier geworven.'))
-                break
+        if study.sessions_number > 1:
+            reasons.append(_('De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek).'))
 
         if study.stressful in [YES, DOUBT]:
-            go = False
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
         if study.risk in [YES, DOUBT]:
-            go = False
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
 fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
 
-        for age_group in study.age_groups.all():
-            if study.net_duration() > age_group.max_net_duration:
-                go = False
-                reasons.append(_('De totale duur van de taken in de sessie ({d} minuten), exclusief pauzes \
-en andere niet-taak elementen, is groter dan het streefmaximum ({max_d} minuten) \
-voor de leeftijdsgroep {ag}.'.format(ag=age_group, d=study.net_duration(), max_d=age_group.max_net_duration)))
+        if study.has_sessions:
+            for session in study.session_set.all():
+                for age_group in study.age_groups.all():
+                    if session.net_duration() > age_group.max_net_duration:
+                        reasons.append(_('De totale duur van de taken in sessie {s}, exclusief pauzes \
+en andere niet-taak elementen ({d} minuten), is groter dan het streefmaximum ({max_d} minuten) \
+voor de leeftijdsgroep {ag}.'.format(s=session.order, ag=age_group, d=session.net_duration(), max_d=age_group.max_net_duration)))
 
-        if study.has_observation:
-            observation = Observation.objects.get(study=study)
-            if observation.is_anonymous:
-                go = False
-                reasons.append(_('De observatie gebeurt anoniem.'))
+    return reasons
 
-    return go, reasons
+
+def auto_review_observation(observation):
+    reasons = []
+
+    if observation.is_nonpublic_space:
+        if not observation.has_advanced_consent:
+            reasons.append(_('De studie observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf.'))
+        if observation.is_anonymous:
+            reasons.append(_('De onderzoeker begeeft zich "under cover" in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.'))
+
+    return reasons
+
+
+def auto_review_task(study, task):
+    reasons = []
+
+    for registration in task.registrations.all():
+        if registration.requires_review:
+            if registration.age_min:
+                for age_group in study.age_groups.all():
+                    if age_group.age_max < registration.age_min:
+                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
+                        break
+            else:
+                # TODO: not necessary?
+                reasons.append(_('De studie gebruikt een afwijkende soort vastlegging van gegevens.'))
+
+    for registration_kind in task.registration_kinds.all():
+        if registration_kind.requires_review:
+            reasons.append(_('De studie maakt gebruik van {}'.format(registration_kind.description)))
+
+    return reasons
