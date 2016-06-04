@@ -6,12 +6,15 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from core.utils import AvailableURL
-from interventions.utils import intervention_url
-from observations.utils import observation_url
-from tasks.utils import session_urls
+from studies.utils import study_urls
 
 
 def available_urls(proposal):
+    """
+    Returns the available URLs for the given Proposal.
+    :param proposal: the current Proposal
+    :return: a list of available URLs for this Proposal.
+    """
     urls = list()
 
     urls.append(AvailableURL(url=reverse('proposals:update', args=(proposal.pk,)), title=_('Algemene informatie over de studie'), margin=0))
@@ -44,45 +47,14 @@ def available_urls(proposal):
     return urls
 
 
-def study_urls(study, prev_study_completed):
-    urls = list()
-
-    if study.proposal.studies_number > 1:
-        urls.append(AvailableURL(title=_('Traject {} ({})'.format(study.order, study.name)), is_title=True))
-
-    study_url = AvailableURL(title=_('De deelnemers'), margin=1)
-    study_url.url = reverse('studies:update', args=(study.pk,))
-    if prev_study_completed:
-        urls.append(study_url)
-
-    design_url = AvailableURL(title=_('De onderzoekstype(n)'), margin=1)
-    if study.compensation:
-        design_url.url = reverse('studies:design', args=(study.pk,))
-    urls.append(design_url)
-
-    urls.append(intervention_url(study))
-    urls.append(observation_url(study))
-    urls.extend(session_urls(study))
-
-    end_url = AvailableURL(title=_('Overzicht en eigen beoordeling van het gehele onderzoek'), margin=1)
-    if study.design_completed():
-        end_url.url = reverse('studies:design_end', args=(study.pk,))
-    urls.append(end_url)
-
-    survey_url = AvailableURL(title=_('Dataverzameling direct betrokkenen t.b.v. het onderzoek'), margin=1)
-    if study.design_completed() and study.deception != '':
-        survey_url.url = reverse('studies:survey', args=(study.pk,))
-    urls.append(survey_url)
-
-    consent_url = AvailableURL(title=_('Informed consent formulieren voor het onderzoek'), margin=1)
-    if study.design_completed() and study.has_surveys is not None:
-        consent_url.url = reverse('studies:consent', args=(study.pk,))
-    urls.append(consent_url)
-
-    return urls
-
-
 def generate_ref_number(user):
+    """
+    Generates a reference number for a Proposal.
+    :param user: the creator of this Proposal, the currently logged-in User
+    :return: a reference number in the format {username}-{nr}-{current_year},
+    where nr is the number of Proposals created by the current User in the
+    current year.
+    """
     from .models import Proposal
 
     current_year = datetime.now().year

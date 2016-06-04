@@ -11,6 +11,12 @@ from proposals.models import Proposal
 
 
 class AgeGroup(models.Model):
+    """
+    A model to store participant age groups.
+    The model has fields for the age range and a description.
+    The 'needs_details' field is used to determine whether the 'necessity' field on Study needs to be filled.
+    The 'max_net_duration' field is used in the automatic review to check the target Session duration is not exceeded.
+    """
     age_min = models.PositiveIntegerField()
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
@@ -25,6 +31,11 @@ class AgeGroup(models.Model):
 
 
 class Trait(models.Model):
+    """
+    A model to store participant traits.
+    The model has fields to keep a certain order and a description.
+    The 'needs_details' field is used to determine whether the 'necessity' field on Study needs to be filled.
+    """
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
@@ -37,6 +48,12 @@ class Trait(models.Model):
 
 
 class Compensation(models.Model):
+    """
+    A model to store forms of participant compensation.
+    The model has fields to keep a certain order and a description.
+    The 'needs_details' field is used to determine whether the 'compensation_details' field on Study needs to be filled.
+    The 'requires_review' field is used in the automatic review to tag anomalous forms of compensation.
+    """
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
@@ -50,6 +67,12 @@ class Compensation(models.Model):
 
 
 class Recruitment(models.Model):
+    """
+    A model to store forms of participant recruitment.
+    The model has fields to keep a certain order and a description.
+    The 'needs_details' field is used to determine whether the 'recruitment_details' field on Study needs to be filled.
+    The 'requires_review' field is used in the automatic review to tag anomalous forms of recruitment.
+    """
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
@@ -63,6 +86,10 @@ class Recruitment(models.Model):
 
 
 class Study(models.Model):
+    """
+    A model to store a study within a Proposal.
+    A Study consists of participant details, experiment design, survey details and consent forms.
+    """
     OBSERVATION = 0
     INTERVENTION = 1
     SESSIONS = 2
