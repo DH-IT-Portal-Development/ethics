@@ -39,14 +39,14 @@ def session_urls(study):
     if study.has_sessions:
         prev_session_completed = True
         for session in study.session_set.all():
-            task_start_url = AvailableURL(title=_('Het takenonderzoek: sessie {}'.format(session.order)), margin=3)
+            task_start_url = AvailableURL(title=_('Het takenonderzoek: sessie {}').format(session.order), margin=3)
             if prev_session_completed:
                 task_start_url.url = reverse('tasks:start', args=(session.pk,))
             urls.append(task_start_url)
 
             urls.extend(tasks_urls(session))
 
-            task_end_url = AvailableURL(title=_('Overzicht van takenonderzoek: sessie {}'.format(session.order)), margin=3)
+            task_end_url = AvailableURL(title=_('Overzicht van takenonderzoek: sessie {}').format(session.order), margin=3)
             if session.all_tasks_completed():
                 task_end_url.url = reverse('tasks:end', args=(session.pk,))
             urls.append(task_end_url)
@@ -61,7 +61,7 @@ def tasks_urls(session):
 
     prev_task_completed = True
     for task in session.task_set.all():
-        task_url = AvailableURL(title=_('Het takenonderzoek: sessie {} taak {}'.format(session.order, task.order)), margin=3)
+        task_url = AvailableURL(title=_('Het takenonderzoek: sessie {} taak {}').format(session.order, task.order), margin=3)
         if prev_task_completed:
             task_url.url = reverse('tasks:update', args=(task.pk,))
         result.append(task_url)

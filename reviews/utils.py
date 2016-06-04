@@ -151,7 +151,7 @@ fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
                     if session.net_duration() > age_group.max_net_duration:
                         reasons.append(_('De totale duur van de taken in sessie {s}, exclusief pauzes \
 en andere niet-taak elementen ({d} minuten), is groter dan het streefmaximum ({max_d} minuten) \
-voor de leeftijdsgroep {ag}.'.format(s=session.order, ag=age_group, d=session.net_duration(), max_d=age_group.max_net_duration)))
+voor de leeftijdsgroep {ag}.').format(s=session.order, ag=age_group, d=session.net_duration(), max_d=age_group.max_net_duration))
 
     return reasons
 
@@ -176,7 +176,7 @@ def auto_review_task(study, task):
             if registration.age_min:
                 for age_group in study.age_groups.all():
                     if age_group.age_max is not None and age_group.age_max < registration.age_min:
-                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.'.format(registration.age_min)))
+                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.').format(registration.age_min))
                         break
             else:
                 # TODO: not necessary?
@@ -184,6 +184,6 @@ def auto_review_task(study, task):
 
     for registration_kind in task.registration_kinds.all():
         if registration_kind.requires_review:
-            reasons.append(_('De studie maakt gebruik van {}'.format(registration_kind.description)))
+            reasons.append(_('De studie maakt gebruik van {}').format(registration_kind.description))
 
     return reasons

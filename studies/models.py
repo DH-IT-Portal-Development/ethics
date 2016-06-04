@@ -25,9 +25,9 @@ class AgeGroup(models.Model):
 
     def __unicode__(self):
         if self.age_max:
-            return _('%d-%d jaar') % (self.age_min, self.age_max)
+            return _('{}-{} jaar').format(self.age_min, self.age_max)
         else:
-            return _('%d+ jaar') % (self.age_min)
+            return _('{} jaar').format(self.age_min)
 
 
 class Trait(models.Model):

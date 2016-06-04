@@ -52,7 +52,7 @@ def study_urls(study, prev_study_completed):
     urls = list()
 
     if study.proposal.studies_number > 1:
-        urls.append(AvailableURL(title=_('Traject {} ({})'.format(study.order, study.name)), is_title=True))
+        urls.append(AvailableURL(title=_('Traject {} ({})').format(study.order, study.name), is_title=True))
 
     study_url = AvailableURL(title=_('De deelnemers'), margin=1)
     study_url.url = reverse('studies:update', args=(study.pk,))

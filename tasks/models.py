@@ -166,4 +166,4 @@ geef dan het redelijkerwijs te verwachten maximum op.'),
         session.save()
 
     def __unicode__(self):
-        return 'Task at {}'.format(self.session)
+        return _('Taak {} in sessie {}').format(self.order, self.session.order)
