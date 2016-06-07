@@ -1,11 +1,10 @@
 from django.conf.urls import url
 
-from .views import SupervisorView, CommissionView, DecisionListView, ReviewDetailView, ReviewAssignView, ReviewCloseView, DecisionUpdateView
+from .views import DecisionOpenListView, DecisionListView, ReviewDetailView, ReviewAssignView, ReviewCloseView, DecisionUpdateView
 
 urlpatterns = [
-    url(r'^decisions/$', DecisionListView.as_view(), name='home'),
-    url(r'^as_supervisor/$', SupervisorView.as_view(), name='supervisor'),
-    url(r'^as_commission/$', CommissionView.as_view(), name='commission'),
+    url(r'^$', DecisionListView.as_view(), name='home'),
+    url(r'^open/$', DecisionOpenListView.as_view(), name='open'),
 
     url(r'^show/(?P<pk>\d+)/$', ReviewDetailView.as_view(), name='detail'),
 

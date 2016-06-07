@@ -1,9 +1,10 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% load core_filters %}
 
 {% block title %} 
-    {% trans "Mijn besluiten" %}
+{% trans "Mijn besluiten" %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
@@ -28,7 +29,7 @@
         {% with review=decision.review %}
         <tr>
             <td>{{ review.proposal.reference_number }}</td>
-            <td>{{ review.proposal.supervisor|default_if_none:review.proposal.created_by }}</td>
+            <td>{{ review.proposal.supervisor.get_full_name|default:review.proposal.created_by.get_full_name }}</td>
             <td>{{ review.proposal.title }}</td>
             <td>{{ review.get_stage_display }}</td>
             <td>{{ review.date_start|date:"j M Y" }}</td>
@@ -36,10 +37,12 @@
             <td>
                 <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
                 <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
-                {% if review.stage == review.ASSIGNMENT %}
+                {% if user|is_secretary and review.stage == review.ASSIGNMENT %}
                     <a href="{% url 'reviews:assign' review.id %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
                 {% elif not review.date_end %}
                     <a href="{% url 'reviews:decide' decision.id %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                {% elif user|is_secretary and review.stage == review.CLOSING %}
+                    <a href="{% url 'reviews:close' review.id %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
                 {% endif %}
             </td>
         </tr>

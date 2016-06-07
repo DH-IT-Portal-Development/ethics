@@ -1,17 +1,16 @@
-from django.conf import settings
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.template.loader import render_to_string
 from django.utils import timezone
-from django.utils.translation import ugettext as _
 from django.views import generic
 
 from braces.views import LoginRequiredMixin
 
-from core.utils import get_secretary
+from core.utils import get_reviewers
+from proposals.models import Proposal
+
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
 from .mixins import UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
+from .utils import start_review_route
 
 
 class DecisionListView(LoginRequiredMixin, generic.ListView):
@@ -20,6 +19,14 @@ class DecisionListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """Returns all Decisions of the current User"""
         return Decision.objects.filter(reviewer=self.request.user)
+
+
+class DecisionOpenListView(LoginRequiredMixin, generic.ListView):
+    context_object_name = 'decisions'
+
+    def get_queryset(self):
+        """Returns all open Decisions of the current User"""
+        return Decision.objects.filter(reviewer=self.request.user, go=None)
 
 
 class SupervisorView(LoginRequiredMixin, generic.ListView):
@@ -57,20 +64,9 @@ class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
         return reverse('reviews:home')
 
     def form_valid(self, form):
-        """Updates the review stage, creates Decisions and sends e-mail to reviewers."""
+        """Updates the Review stage and start the selected Review route for the selected Users."""
         form.instance.stage = Review.COMMISSION
-
-        for user in form.cleaned_data['reviewers']:
-            decision = Decision(review=form.instance, reviewer=user)
-            decision.save()
-
-            template = 'mail/assignment_shortroute.txt' if form.instance.short_route else 'mail/assignment_longroute.txt'
-
-            subject = _('ETCL: nieuwe studie')
-            params = {'reviewer': user.get_full_name(), 'secretary': get_secretary().get_full_name()}
-            msg_plain = render_to_string(template, params)
-            send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
-
+        start_review_route(form.instance, form.cleaned_data['reviewers'], form.instance.short_route)
         return super(ReviewAssignView, self).form_valid(form)
 
 
@@ -80,7 +76,7 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     template_name = 'reviews/review_close_form.html'
 
     def get_success_url(self):
-        return reverse('reviews:closed')
+        return reverse('reviews:home')
 
     def get_form_kwargs(self):
         kwargs = super(ReviewCloseView, self).get_form_kwargs()
@@ -93,8 +89,22 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
         return initial
 
     def form_valid(self, form):
-        form.instance.date_end = timezone.now()  # TODO: propagate this date to a Proposal
-        # TODO: actions based on continuation selected
+        proposal = form.instance.proposal
+
+        if form.instance.continuation in [Review.GO, Review.NO_GO]:
+            proposal.status = Proposal.DECISION_MADE
+            proposal.status_review = form.instance.continuation == Review.GO
+            proposal.date_reviewed = timezone.now()
+            proposal.save()
+        if form.instance.continuation == Review.LONG_ROUTE:
+            review = Review.objects.create(proposal=proposal, date_start=timezone.now())
+            start_review_route(review, get_reviewers(), False)
+        if form.instance.continuation == Review.METC:
+            proposal.status = Proposal.DRAFT
+            proposal.save()
+            proposal.wmo.enforced_by_commission = True
+            proposal.wmo.save()
+
         return super(ReviewCloseView, self).form_valid(form)
 
 

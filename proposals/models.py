@@ -111,6 +111,7 @@ gebruikt worden).'))
 
     # Status
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
+    status_review = models.NullBooleanField(default=None)
 
     # Dates for bookkeeping
     date_created = models.DateTimeField(auto_now_add=True)
@@ -262,6 +263,7 @@ bij een METC?'),
 
     # Status
     status = models.PositiveIntegerField(choices=WMO_STATUSES, default=NO_WMO)
+    enforced_by_commission = models.BooleanField(default=False)
 
     # References
     proposal = models.OneToOneField(Proposal, primary_key=True)
@@ -272,7 +274,7 @@ bij een METC?'),
         super(Wmo, self).save(*args, **kwargs)
 
     def update_status(self):
-        if self.metc == YES or (self.is_medical == YES and self.is_behavioristic == YES):
+        if self.metc == YES or (self.is_medical == YES and self.is_behavioristic == YES) or self.enforced_by_commission:
             if self.metc_decision and self.metc_decision_pdf:
                 self.status = self.JUDGED
             else:

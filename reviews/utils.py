@@ -8,7 +8,6 @@ from django.utils import timezone
 
 from core.models import YES, DOUBT
 from core.utils import get_secretary
-from observations.models import Observation
 from tasks.models import Task
 from .models import Review, Decision
 
@@ -100,6 +99,20 @@ def start_assignment_phase(proposal):
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [responsible.email])
 
     return review
+
+
+def start_review_route(review, commission_users, use_short_route):
+    """Creates Decisions and sends notification e-mail to the selected Reviewers"""
+    for user in commission_users:
+        decision = Decision(review=review, reviewer=user)
+        decision.save()
+
+        template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
+
+        subject = _('ETCL: nieuwe studie ter beoordeling')
+        params = {'reviewer': user.get_full_name(), 'secretary': get_secretary().get_full_name()}
+        msg_plain = render_to_string(template, params)
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
 
 
 def auto_review(proposal):

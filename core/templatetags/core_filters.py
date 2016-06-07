@@ -11,3 +11,11 @@ def in_commission(current_user):
     Check whether the current user is in the 'Commissie' group
     """
     return Group.objects.get(name=settings.GROUP_COMMISSION) in current_user.groups.all()
+
+
+@register.filter
+def is_secretary(current_user):
+    """
+    Check whether the current user is in the 'Secretary' group
+    """
+    return Group.objects.get(name=settings.GROUP_SECRETARY) in current_user.groups.all()

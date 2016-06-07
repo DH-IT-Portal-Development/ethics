@@ -28,8 +28,8 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
 
     def get_queryset(self):
-        """Returns all the proposals that have been decided upon, TODO: with a positive Review"""
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE)
+        """Returns all the proposals that have been decided positively upon"""
+        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE, status_review=True)
 
     def get_context_data(self, **kwargs):
         context = super(ProposalsView, self).get_context_data(**kwargs)

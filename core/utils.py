@@ -20,6 +20,10 @@ def get_secretary():
     return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)[0]
 
 
+def get_reviewers():
+    return get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
+
+
 def string_to_bool(s):
     if s == 'None':
         return None

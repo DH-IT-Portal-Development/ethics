@@ -10,10 +10,12 @@ class Review(models.Model):
     SUPERVISOR = 0
     ASSIGNMENT = 1
     COMMISSION = 2
+    CLOSING = 3
     STAGES = (
         (SUPERVISOR, _('Beoordeling door eindverantwoordelijke')),
         (ASSIGNMENT, _('Aanstelling commissieleden')),
-        (COMMISSION, _('Beoordeling door ethische commissie')),
+        (COMMISSION, _('Beoordeling door commissie')),
+        (CLOSING, _('Afsluiting door secretaris')),
     )
 
     GO = 0
@@ -31,8 +33,10 @@ class Review(models.Model):
     short_route = models.BooleanField(_('Route'), default=True)
     go = models.NullBooleanField(_('Beslissing'), default=None)
     continuation = models.PositiveIntegerField(_('Afhandeling'), choices=CONTINUATIONS, default=GO)
+
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(blank=True, null=True)
+
     proposal = models.ForeignKey(Proposal)
 
     def update_go(self):
@@ -61,13 +65,11 @@ class Review(models.Model):
                 if self.go:
                     from .utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
+            # For a review by commission:
             else:
-                self.proposal.date_reviewed = self.date_end
-                self.proposal.save()
-                # Update the status of the Proposal with the end date
-                self.proposal.date_reviewed = self.date_end
-                self.proposal.status = Proposal.DECISION_MADE
-                self.proposal.save()
+                # Set the status to CLOSING
+                self.status = self.CLOSING
+                self.save()
 
     def __unicode__(self):
         return 'Review of %s' % self.proposal
