@@ -27,7 +27,7 @@ $(function() {
 {% include "tasks/task_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% with session=task.session proposal=task.session.study.proposal %}
+    {% with proposal=task.session.study.proposal study=task.session.study session=task.session %}
     {% include "base/form_buttons.html" %}
     {% endwith %}
 </form>

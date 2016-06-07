@@ -32,7 +32,7 @@ $(function() {
     <p>
         {% trans "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen." %}
     </p>
-    {% with proposal=session.study.proposal %}
+    {% with proposal=session.study.proposal study=session.study %}
     {% include "base/form_buttons.html" %}
     {% endwith %}
 </form>
