@@ -47,11 +47,11 @@ def session_urls(study):
             urls.extend(tasks_urls(session))
 
             task_end_url = AvailableURL(title=_('Overzicht van takenonderzoek: sessie {}').format(session.order), margin=3)
-            if session.all_tasks_completed():
+            if session.tasks_completed():
                 task_end_url.url = reverse('tasks:end', args=(session.pk,))
             urls.append(task_end_url)
 
-            prev_session_completed = session.all_tasks_completed()
+            prev_session_completed = session.is_completed()
 
     return urls
 

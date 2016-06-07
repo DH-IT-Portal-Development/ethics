@@ -67,12 +67,17 @@ instructies per taak, pauzes tussen taken, en debriefing? \
                 break
         return current_task
 
-    def all_tasks_completed(self):
+    def tasks_completed(self):
         result = True
         if self.task_set.count() == 0:
             result = False
         for task in self.task_set.all():
             result &= task.is_completed()
+        return result
+
+    def is_completed(self):
+        result = self.tasks_completed()
+        result &= self.tasks_duration is not None
         return result
 
     def __unicode__(self):
