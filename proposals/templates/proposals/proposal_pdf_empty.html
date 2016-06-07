@@ -189,10 +189,16 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "number" %}</th><td></td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "amount_per_week" %}</th><td></td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "duration" %}</th><td></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "measurement" %}</th><td></td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "experimenter" %}</th><td></td>
@@ -203,18 +209,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th><td>{% show_yesno %}</td>
             </tr>
+            {% if intervention.has_controls %}
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_controls_details" %}</th><td></td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th><td></td>
             </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_recording" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "recording_same_experimenter" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "recording_experimenter" %}</th><td></td>
-            </tr>
+            {% endif %}
         </table>
 
         <pdf:nextpage />

@@ -18,12 +18,6 @@ class InterventionMixin(object):
     form_class = InterventionForm
     success_message = _('Interventie opgeslagen')
 
-    def get_form_kwargs(self):
-        """Sets the Study as a form kwarg"""
-        kwargs = super(InterventionMixin, self).get_form_kwargs()
-        kwargs['study'] = self.get_study()
-        return kwargs
-
     def get_context_data(self, **kwargs):
         """Setting the Study and progress on the context"""
         context = super(InterventionMixin, self).get_context_data(**kwargs)
@@ -31,14 +25,6 @@ class InterventionMixin(object):
         context['study'] = study
         context['progress'] = get_study_progress(study) + 7
         return context
-
-    def form_valid(self, form):
-        """Sets the extra fields from the ModelForm on the Study"""
-        study = self.get_study()
-        study.has_observation = self.request.POST.get('has_observation', False)
-        study.has_sessions = self.request.POST.get('has_sessions', False)
-        study.save()
-        return super(InterventionMixin, self).form_valid(form)
 
     def get_next_url(self):
         study = self.get_study()
