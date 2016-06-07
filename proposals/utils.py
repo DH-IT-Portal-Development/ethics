@@ -40,7 +40,7 @@ def available_urls(proposal):
         urls.append(AvailableURL(title='', is_title=True))
 
     studies_url = AvailableURL(title=_('Concept-aanmelding klaar voor versturen'), margin=0)
-    if proposal.last_study().is_completed():
+    if proposal.last_study() and proposal.last_study().is_completed():
         studies_url.url = reverse('proposals:submit', args=(proposal.pk,))
     urls.append(studies_url)
 
