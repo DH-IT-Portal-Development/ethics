@@ -7,7 +7,6 @@ from core.utils import AvailableURL
 from interventions.utils import intervention_url, copy_intervention_to_study
 from observations.utils import observation_url, copy_observation_to_study
 from tasks.utils import session_urls, copy_session_to_study
-from .models import AgeGroup
 
 STUDY_PROGRESS_START = 10
 STUDY_PROGRESS_TOTAL = 90
@@ -21,6 +20,8 @@ def check_necessity_required(proposal, age_groups, has_traits, legally_incapable
     * Participants have been selected on certain traits.
     * Participants are legally incapable.
     """
+    from .models import AgeGroup
+
     if not proposal.relation.needs_supervisor:
         result = False
     else:
