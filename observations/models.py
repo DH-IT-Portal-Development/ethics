@@ -38,7 +38,8 @@ class Observation(SettingModel):
     is_nonpublic_space = models.BooleanField(
         _('Wordt er geobserveerd in een niet-openbare ruimte?'),
         help_text=_('Bijvoorbeeld er wordt geobserveerd bij iemand thuis, \
-tijdens een hypotheekgesprek of tijdens politieverhoren.'),
+tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar \
+een account voor moet worden aangemaakt.'),
         default=False)
     has_advanced_consent = models.BooleanField(
         _('Vindt informed consent van tevoren plaats?'),
