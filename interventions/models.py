@@ -2,23 +2,11 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import Setting
+from core.models import SettingModel
 from studies.models import Study
 
 
-class Intervention(models.Model):
-    setting = models.ManyToManyField(
-        Setting,
-        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'))
-    setting_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-    supervision = models.NullBooleanField(
-        _('Vindt het afnemen van de taak plaats onder het toeziend oog \
-van de leraar of een ander persoon die bevoegd is?')
-    )
-
+class Intervention(SettingModel):
     number = models.PositiveIntegerField(
         _('Uit hoeveel sessies bestaat de interventie?'))
     duration = models.PositiveIntegerField(

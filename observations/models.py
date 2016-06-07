@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import Setting
+from core.models import SettingModel
 from core.validators import validate_pdf_or_doc
 from studies.models import Study
 
@@ -19,19 +19,7 @@ class Registration(models.Model):
         return self.description
 
 
-class Observation(models.Model):
-    setting = models.ManyToManyField(
-        Setting,
-        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'))
-    setting_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-    supervision = models.NullBooleanField(
-        _('Vindt het afnemen van de taak plaats onder het toeziend oog \
-van de leraar of een ander persoon die bevoegd is?')
-    )
-
+class Observation(SettingModel):
     days = models.PositiveIntegerField(
         _('Op hoeveel dagen wordt er geobserveerd (per deelnemer)?'))
     mean_hours = models.DecimalField(
