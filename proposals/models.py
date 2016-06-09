@@ -92,6 +92,7 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
+    pdf = models.FileField(blank=True)
 
     # Fields with respect to Studies
     studies_similar = models.NullBooleanField(

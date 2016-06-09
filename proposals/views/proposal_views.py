@@ -1,11 +1,13 @@
 # -*- encoding: utf-8 -*-
 
+from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils.translation import ugettext as _
 
 from braces.views import LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
+from easy_pdf.rendering import render_to_pdf
 
 from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
 from core.utils import get_secretary
@@ -159,10 +161,18 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
     success_message = _('Studie verzonden')
 
     def form_valid(self, form):
-        """Start the review process on submission"""
+        """
+        - Save the PDF on the Proposal
+        - Start the review process on submission
+        """
         success_url = super(ProposalSubmit, self).form_valid(form)
         if 'save_back' not in self.request.POST:
-            start_review(self.get_object())
+            proposal = self.get_object()
+
+            pdf = ContentFile(render_to_pdf('proposals/proposal_pdf.html', {'proposal': proposal}))
+            proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
+
+            start_review(proposal)
         return success_url
 
     def get_next_url(self):

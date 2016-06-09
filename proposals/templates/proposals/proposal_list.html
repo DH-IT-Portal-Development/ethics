@@ -49,6 +49,10 @@
                 <a href="{% url 'proposals:delete' proposal.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Verwijderen' %}"></a>
                 {% else %}
                 <a href="{% url 'proposals:pdf' proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Inzien' %}"></a>
+
+                {% if proposal.pdf %}
+                <a href="{{ proposal.pdf.url }}" target="_blank">test</a>
+                {% endif %}
                 {% endif %}
             </td>
         </tr>
