@@ -29,7 +29,7 @@
         {% with review=decision.review %}
         <tr>
             <td>{{ review.proposal.reference_number }}</td>
-            <td>{{ review.proposal.supervisor.get_full_name|default:review.proposal.created_by.get_full_name }}</td>
+            <td>{{ review.accountable_user.get_full_name }}</td>
             <td>{{ review.proposal.title }}</td>
             <td>{{ review.get_stage_display }}</td>
             <td>{{ review.date_start|date:"j M Y" }}</td>

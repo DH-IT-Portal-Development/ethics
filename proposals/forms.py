@@ -39,11 +39,13 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         """
         - Remove empty label from relation field
         - Don't allow to pick yourself or a superuser as supervisor
+        - Add a None-option for supervisor
         - Don't allow to pick a superuser as applicant
         """
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
         self.fields['supervisor'].choices = get_users_as_list(get_user_model().objects.exclude(pk=self.user.pk).exclude(is_superuser=True))
+        self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + self.fields['supervisor'].choices
         self.fields['applicants'].choices = get_users_as_list(get_user_model().objects.exclude(is_superuser=True))
 
     def clean(self):
@@ -51,6 +53,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor is set
         - If other_applicants is checked, make sure applicants are set
+        - If other_stakeholders is checked, make sure stakeholders is not empty
         - Maximum number of words for summary
         """
         cleaned_data = super(ProposalForm, self).clean()
@@ -64,9 +67,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
             self.add_error('applicants', error)
 
-        self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders',
-                              _('U heeft geen andere betrokkenen genoemd.'))
-
+        self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders')
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
 
 

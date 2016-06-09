@@ -23,7 +23,7 @@ $(function() {
     depends_on_value('other_stakeholders', 'True', 'stakeholders');
     check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
 
-    // Add datepickers for date_start, set locale to current language
+    // Add datepicker for date_start, set locale to current language
     $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
     $("#id_date_start").datepicker({

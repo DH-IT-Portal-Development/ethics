@@ -71,6 +71,12 @@ class Review(models.Model):
                 self.status = self.CLOSING
                 self.save()
 
+    def accountable_user(self):
+        accountable_user = self.proposal.created_by
+        if self.proposal.relation.needs_supervisor:
+            accountable_user = self.proposal.supervisor
+        return accountable_user
+
     def __unicode__(self):
         return 'Review of %s' % self.proposal
 
