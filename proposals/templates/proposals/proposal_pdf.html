@@ -431,36 +431,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             {% endif %}
         </table>
 
-        <h2>{% trans "Dataverzameling direct betrokkenen t.b.v. het onderzoek" %}</h2>
-        {% include "studies/study_title.html" %}
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "has_surveys" %}</th><td>{{ study.has_surveys|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if study.has_surveys %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "surveys_stressful" %}</th><td>{{ study.get_surveys_stressful_display }}</td>
-            </tr>
-            {% endif %}
-        </table>
-        {% for survey in study.survey_set.all %}
-        <h3>Vragenlijst</h3>
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "name" %}</th><td>{{ survey.name }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "duration" %}</th><td>{{ survey.minutes }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "url" %}</th><td>{{ survey.url }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "description" %}</th><td>{{ survey.description }}</td>
-            </tr>
-        </table>
-        {% endfor %}
-
         <h2>{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>

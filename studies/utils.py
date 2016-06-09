@@ -74,13 +74,8 @@ def study_urls(study, prev_study_completed):
         end_url.url = reverse('studies:design_end', args=(study.pk,))
     urls.append(end_url)
 
-    survey_url = AvailableURL(title=_('Dataverzameling direct betrokkenen t.b.v. het onderzoek'), margin=1)
-    if study.design_completed() and study.deception != '':
-        survey_url.url = reverse('studies:survey', args=(study.pk,))
-    urls.append(survey_url)
-
     consent_url = AvailableURL(title=_('Informed consent formulieren voor het onderzoek'), margin=1)
-    if study.design_completed() and study.has_surveys is not None:
+    if study.design_completed() and study.deception != '':
         consent_url.url = reverse('studies:consent', args=(study.pk,))
     urls.append(consent_url)
 
@@ -101,7 +96,6 @@ def copy_study_to_proposal(proposal, study):
     intervention = study.intervention if study.has_intervention else None
     observation = study.observation if study.has_observation else None
     sessions = study.session_set.all() if study.has_sessions else []
-    surveys = study.survey_set.all()
 
     s = study
     s.pk = None
@@ -120,19 +114,3 @@ def copy_study_to_proposal(proposal, study):
         copy_observation_to_study(s, observation)
     for session in sessions:
         copy_session_to_study(s, session)
-
-    for survey in surveys:
-        copy_survey_to_study(s, survey)
-
-
-def copy_survey_to_study(study, survey):
-    """
-    Copies the given Survey to the given Study.
-    :param study: the current Study
-    :param survey: the current Survey
-    :return: the Study appended with the details of the given Survey.
-    """
-    s = survey
-    s.pk = None
-    s.study = study
-    s.save()

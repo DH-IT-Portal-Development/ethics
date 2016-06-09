@@ -354,32 +354,6 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
 
         <pdf:nextpage />
-        <h2>{% trans "Dataverzameling direct betrokkenen t.b.v. het onderzoek" %}</h2>
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "has_surveys" %}</th><td>{% show_yesno %}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "surveys_stressful" %}</th><td>{% show_yesnodoubt %}</td>
-            </tr>
-        </table>
-        <h3>Vragenlijst <em>n</em></h3>
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "name" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "duration" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "url" %}</th><td></td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "studies" "survey" "description" %}</th><td></td>
-            </tr>
-        </table>
-
-        <pdf:nextpage />
         <h2>{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
         <table>
             <tr>

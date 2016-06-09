@@ -114,7 +114,7 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
             return reverse('proposals:submit', args=(proposal.pk,))
 
     def get_back_url(self):
-        return reverse('studies:survey', args=(self.object.pk,))
+        return reverse('studies:design_end', args=(self.object.pk,))
 
 
 class StudyEnd(AllowErrorsMixin, UpdateView):
@@ -132,7 +132,7 @@ class StudyEnd(AllowErrorsMixin, UpdateView):
         return context
 
     def get_next_url(self):
-        return reverse('studies:survey', args=(self.object.pk,))
+        return reverse('studies:consent', args=(self.object.pk,))
 
     def get_back_url(self):
         study = self.object

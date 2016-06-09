@@ -2,7 +2,6 @@ from django.conf.urls import url
 
 from .views.session_views import SessionStart
 from .views.study_views import StudyUpdate, StudyDesign, StudyConsent, StudyEnd, necessity_required
-from .views.survey_views import StudySurvey
 
 urlpatterns = [
     # Study
@@ -15,9 +14,6 @@ urlpatterns = [
 
     # Session(s)
     url(r'^session/start/(?P<pk>\d+)/$', SessionStart.as_view(), name='session_start'),
-
-    # Survey(s)
-    url(r'^survey/(?P<pk>\d+)/$', StudySurvey.as_view(), name='survey'),
 
     # Checks on conditional fields
     url(r'^check_necessity_required/$', necessity_required, name='check_necessity_required'),

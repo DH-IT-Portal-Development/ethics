@@ -88,7 +88,7 @@ class Recruitment(models.Model):
 class Study(models.Model):
     """
     A model to store a study within a Proposal.
-    A Study consists of participant details, experiment design, survey details and consent forms.
+    A Study consists of participant details, experiment design and consent forms.
     """
     OBSERVATION = 0
     INTERVENTION = 1
@@ -281,17 +281,6 @@ geschoolde specialisten).')),
         max_length=200,
         blank=True)
 
-    # Fields with respect to Surveys
-    has_surveys = models.NullBooleanField(
-        _(u'Worden er vragenlijsten afgenomen bij <em>een ander dan de deelnemer</em>? \
-Denk hierbij aan de ouder of voogd van een kind, de leraar van de klas, de arts van een patiënt, etc.'))
-    surveys_stressful = models.CharField(
-        _('Is het invullen van deze vragenlijsten belastend? \
-Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de persoon kwijt is met het invullen van alle vragenlijsten.'),
-        max_length=1,
-        choices=YES_NO_DOUBT,
-        blank=True)
-
     # References
     proposal = models.ForeignKey(Proposal)
 
@@ -330,14 +319,3 @@ Denk hierbij bijv. aan het type vragen dat gesteld wordt en aan de tijd die de p
 
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title
-
-
-class Survey(models.Model):
-    name = models.CharField(_('Naam vragenlijst'), max_length=200)
-    duration = models.PositiveIntegerField(_('Duur (in minuten)'))
-    url = models.CharField(_('URL'), blank=True, max_length=200)
-    description = models.TextField(_('Korte beschrijving'))
-    study = models.ForeignKey(Study)
-
-    def __unicode__(self):
-        return self.name
