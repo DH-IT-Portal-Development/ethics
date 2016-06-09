@@ -1,8 +1,7 @@
 Django==1.8.13
 django-auth-ldap==1.2.8
-django-braces==1.8.1
+django-braces==1.9.0
 django-easy-pdf==0.1.0
-django-extra-views==0.7.1
 mysql-python==1.2.5
 xhtml2pdf==0.0.6
 sphinx==1.4.1
