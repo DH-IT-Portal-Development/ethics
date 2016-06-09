@@ -10,10 +10,11 @@ class InterventionForm(ConditionalModelForm):
         model = Intervention
         fields = [
             'setting', 'setting_details', 'supervision',
-            'period', 'amount_per_week', 'duration', 'measurement',
+            'period', 'amount_per_week', 'duration',
             'experimenter', 'description',
             'has_controls', 'controls_description',
-            ]
+            'measurement',
+        ]
         widgets = {
             'setting': forms.CheckboxSelectMultiple(),
             'supervision': forms.RadioSelect(choices=YES_NO),

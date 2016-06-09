@@ -12,11 +12,6 @@ class Intervention(SettingModel):
         _('Hoe vaak per week vindt de interventiesessie plaats?'))
     duration = models.PositiveIntegerField(
         _('Wat is de duur van de interventie per sessie in minuten?'))
-    measurement = models.TextField(
-        _('Hoe wordt het effect van de interventie gemeten?'),
-        help_text=_('Wanneer u de deelnemer extra taken laat uitvoeren, \
-dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet \
-u op de vorige pagina ook "takenonderzoek" aanvinken.'))
 
     experimenter = models.TextField(
         _('Wie voert de interventie uit?'))
@@ -28,6 +23,12 @@ u op de vorige pagina ook "takenonderzoek" aanvinken.'))
     controls_description = models.TextField(
         _('Geef een beschrijving van de controleinterventie'),
         blank=True)
+
+    measurement = models.TextField(
+        _('Hoe wordt het effect van de interventie gemeten?'),
+        help_text=_('Wanneer u de deelnemer extra taken laat uitvoeren, \
+dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet \
+u op de vorige pagina ook "takenonderzoek" aanvinken.'))
 
     # References
     study = models.OneToOneField(Study)
