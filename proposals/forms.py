@@ -75,6 +75,11 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['parent', 'title']
+        error_messages = {
+            'title': {
+                'unique': _('Er bestaat al een studie met deze titel.'),
+            },
+        }
 
     def __init__(self, *args, **kwargs):
         """

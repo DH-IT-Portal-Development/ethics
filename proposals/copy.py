@@ -5,12 +5,15 @@ from .utils import generate_ref_number
 
 
 def copy_proposal(self, form):
+    from .models import Proposal
+
     parent = form.cleaned_data['parent']
     title = form.cleaned_data['title']
 
     # Save relationships
     relation = parent.relation
     applicants = parent.applicants.all()
+    funding = parent.funding.all()
     copy_studies = parent.study_set.all()
     copy_wmo = None
     if hasattr(parent, 'wmo'):
@@ -22,6 +25,9 @@ def copy_proposal(self, form):
     copy_proposal.reference_number = generate_ref_number(self.request.user)
     copy_proposal.title = title
     copy_proposal.created_by = self.request.user
+    copy_proposal.status = Proposal.DRAFT
+    copy_proposal.status_review = None
+    copy_proposal.pdf = None
     copy_proposal.date_created = timezone.now()
     copy_proposal.date_modified = timezone.now()
     copy_proposal.date_submitted_supervisor = None
@@ -33,7 +39,9 @@ def copy_proposal(self, form):
     # Copy references
     copy_proposal.relation = relation
     copy_proposal.applicants = applicants
+    copy_proposal.funding = funding
     copy_proposal.parent = parent
+    copy_proposal.save()
 
     # Copy linked models
     if copy_wmo:
