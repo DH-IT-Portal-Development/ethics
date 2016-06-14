@@ -1,6 +1,7 @@
 {% extends "mail/base.txt" %}
 
 {% block content %}
-Er is een nieuwe studie ingediend.
+Er is een nieuwe studie ingediend (referentienummer: {{ review.proposal.reference_number }}, eindverantwoordelijke: {{ review.accountable_user.get_full_name }}).
 Deze studie zou volgens de automatische screening de {{ review.short_route|yesno:"korte,lange" }} route moeten doorlopen.
+De studie is te vinden onder "Commissie -> Openstaande besluiten".
 {% endblock %}

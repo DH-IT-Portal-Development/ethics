@@ -3,13 +3,10 @@
 {% block content %}
 Beste collega,
 
-Uw aanmelding is door de ETCL ontvangen, en heeft op basis van de door u gegeven beschrijving voorlopig de status
-"niet-standaard UiL OTS onderzoek".
+Uw aanmelding is door de ETCL ontvangen, en heeft op basis van de door u gegeven beschrijving voorlopig de status "niet-standaard UiL OTS onderzoek".
 
-Dit houdt in dat uw studie op de eerstvolgende vergadering van de ETCL zal worden besproken,
-en u zeer kort daarna een beoordeling zult ontvangen.
-Zie http://etcl.wp.hum.uu.nl/agenda/ voor een overzicht van de komende vergaderingen.
-Zoals beschreven in het reglement kan het hier gaan om een goedkeuring, maar ook om een doorverwijzing naar de METC,
-een 2e beoordelingsronde waarin de ETCL nader advies zal inwinnen, of een afkeuring van de studie in huidige vorm.
+Dit houdt in dat uw studie op de eerstvolgende vergadering van de ETCL zal worden besproken, en u zeer kort daarna een beoordeling zult ontvangen.
+Zie <a href="http://etcl.wp.hum.uu.nl/agenda/">de ETCL-agenda</a> voor een overzicht van de komende vergaderingen.
+Zoals beschreven in het reglement kan het hier gaan om een goedkeuring, maar ook om een doorverwijzing naar de METC, een 2e beoordelingsronde waarin de ETCL nader advies zal inwinnen, of een afkeuring van de studie in huidige vorm.
 Houdt u a.u.b. rekening met deze mogelijkheden.
 {% endblock %}

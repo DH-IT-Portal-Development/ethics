@@ -8,9 +8,10 @@ register = template.Library()
 @register.filter
 def in_commission(current_user):
     """
-    Check whether the current user is in the 'Commissie' group
+    Check whether the current user is in the 'Commissie' or 'Secretaris' group
     """
-    return Group.objects.get(name=settings.GROUP_COMMISSION) in current_user.groups.all()
+    return Group.objects.get(name=settings.GROUP_COMMISSION) in current_user.groups.all() or \
+        Group.objects.get(name=settings.GROUP_SECRETARY) in current_user.groups.all()
 
 
 @register.filter

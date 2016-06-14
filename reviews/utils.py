@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.utils import timezone
@@ -32,8 +33,8 @@ def start_supervisor_phase(proposal):
     - Set the Review status to SUPERVISOR
     - Set date_submitted_supervisor to current date/time
     - Create a Decision for the supervisor
-    - Send an e-mail to the supervisor
     - Send an e-mail to the creator
+    - Send an e-mail to the supervisor
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.SUPERVISOR
@@ -47,14 +48,22 @@ def start_supervisor_phase(proposal):
     decision.save()
 
     subject = _('ETCL: bevestiging indienen concept-aanmelding')
-    params = {'secretary': get_secretary().get_full_name()}
+    params = {
+        'supervisor': proposal.supervisor.get_full_name(),
+        'secretary': get_secretary().get_full_name(),
+    }
     msg_plain = render_to_string('mail/concept_creator.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
 
     subject = _('ETCL: beoordelen als eindverantwoordelijke')
-    params = {'creator': proposal.created_by, 'proposal_url': 'test', 'secretary': get_secretary().get_full_name()}
+    params = {
+        'creator': proposal.created_by.get_full_name(),
+        'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
+        'secretary': get_secretary().get_full_name(),
+    }
     msg_plain = render_to_string('mail/concept_supervisor.txt', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email])
+    msg_html = render_to_string('mail/concept_supervisor.html', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
 
     return review
 
@@ -67,7 +76,7 @@ def start_assignment_phase(proposal):
     - Set date_submitted on Proposal to current date/time
     - Create a Decision for all Users in the 'Secretaris' Group
     - Send an e-mail to these Users
-    - Send an e-mail to the supervisor
+    - Send an e-mail to the creator and supervisor
     """
     secretary = get_secretary()
     reasons = auto_review(proposal)
@@ -84,19 +93,25 @@ def start_assignment_phase(proposal):
     decision.save()
 
     subject = _('ETCL: nieuwe studie ingediend')
-    params = {'review': review, 'secretary': secretary.get_full_name()}
+    params = {
+        'review': review,
+        'secretary': secretary.get_full_name()
+    }
     msg_plain = render_to_string('mail/submitted.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
-    responsible = proposal.supervisor if proposal.relation.needs_supervisor else proposal.created_by
-
     subject = _('ETCL: aanmelding ontvangen')
-    params = {'review': review, 'secretary': secretary.get_full_name()}
+    params = {
+        'secretary': secretary.get_full_name()
+    }
     if review.short_route:
         msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
     else:
         msg_plain = render_to_string('mail/submitted_longroute.txt', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [responsible.email])
+    recipients = [proposal.created_by.email]
+    if proposal.relation.needs_supervisor:
+        recipients.append(proposal.supervisor.email)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients)
 
     return review
 
@@ -108,7 +123,6 @@ def start_review_route(review, commission_users, use_short_route):
         decision.save()
 
         template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
-
         subject = _('ETCL: nieuwe studie ter beoordeling')
         params = {'reviewer': user.get_full_name(), 'secretary': get_secretary().get_full_name()}
         msg_plain = render_to_string(template, params)
@@ -117,7 +131,8 @@ def start_review_route(review, commission_users, use_short_route):
 
 def auto_review(proposal):
     """
-    Reviews a Proposal machine-wise. Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
+    Reviews a Proposal machine-wise.
+    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
     """
     reasons = []
 
@@ -137,7 +152,6 @@ def auto_review(proposal):
         if study.deception in [YES, DOUBT]:
             reasons.append(_('De studie maakt gebruik van misleiding.'))
 
-        # TODO: is this correct?
         if study.compensation.requires_review:
             reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
 
@@ -170,6 +184,10 @@ voor de leeftijdsgroep {ag}.').format(s=session.order, ag=age_group, d=session.n
 
 
 def auto_review_observation(observation):
+    """
+    Reviews an Observation machine-wise.
+    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
+    """
     reasons = []
 
     if observation.is_nonpublic_space:
@@ -182,6 +200,10 @@ def auto_review_observation(observation):
 
 
 def auto_review_task(study, task):
+    """
+    Reviews a Task machine-wise.
+    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
+    """
     reasons = []
 
     for registration in task.registrations.all():

@@ -1,7 +1,5 @@
 from django import template
 from django.apps import apps
-from django.conf import settings
-from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 
 from studies.utils import check_has_adults, check_necessity_required
@@ -45,14 +43,6 @@ def needs_details(selected_values, field='needs_details'):
             result = True
             break
     return result
-
-
-@register.filter
-def in_commission(current_user):
-    """
-    Check whether the current user is in the 'Commissie' group
-    """
-    return Group.objects.get(name=settings.GROUP_COMMISSION) in current_user.groups.all()
 
 
 @register.filter

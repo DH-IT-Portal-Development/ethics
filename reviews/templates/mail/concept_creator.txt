@@ -3,9 +3,7 @@
 {% block content %}
 Beste collega,
 
-Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker van deze studie gecontroleerd.
-Zodra deze de concept-aanmelding, evt. na aanpassingen, heeft goedgekeurd en ter toetsing bij de ETCL heeft ingediend,
-krijgt u van ons bericht.
-Indien de concept-aanmelding nog wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker
-zelf contact met u opnemen.
+Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze studie gecontroleerd.
+Zodra deze de concept-aanmelding, evt. na aanpassingen, heeft goedgekeurd en ter toetsing bij de ETCL heeft ingediend, krijgt u van ons bericht.
+Indien de concept-aanmelding nog wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker zelf contact met u opnemen.
 {% endblock %}

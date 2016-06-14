@@ -134,6 +134,9 @@ EMAIL_FROM = 'M.H.vanderKlis@uu.nl'
 GROUP_SECRETARY = 'Secretaris'
 GROUP_COMMISSION = 'Commissie'
 
+# Base URL
+BASE_URL = '127.0.0.1:8000'
+
 try:
     from ldap_settings import *
 except ImportError:

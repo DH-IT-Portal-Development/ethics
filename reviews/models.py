@@ -67,8 +67,8 @@ class Review(models.Model):
                     start_assignment_phase(self.proposal)
             # For a review by commission:
             else:
-                # Set the status to CLOSING
-                self.status = self.CLOSING
+                # Set the stage to CLOSING
+                self.stage = self.CLOSING
                 self.save()
 
     def accountable_user(self):

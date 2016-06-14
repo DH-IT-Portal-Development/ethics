@@ -3,11 +3,8 @@
 {% block content %}
 Beste collega,
 
-Uw aanmelding is door de ETCL ontvangen, en heeft op basis van de door u gegeven beschrijving voorlopig de status
-"standaard UiL OTS onderzoek". Dit houdt in dat u binnen uiterlijk {{ review_end_date }} een eerste beoordeling
-van de ETCL tegemoet mag zien.
+Uw aanmelding is door de ETCL ontvangen, en heeft op basis van de door u gegeven beschrijving voorlopig de status "standaard UiL OTS onderzoek".
+Dit houdt in dat u binnen uiterlijk twee werkweken een eerste beoordeling van de ETCL tegemoet mag zien.
 
-Zoals beschreven in het reglement kan dat een snelle goedkeuring zijn, maar het is ook mogelijk dat uw studie op grond
-van deze eerste ETCL beoordeling alsnog als "niet-standaard UiL OTS-onderzoek" wordt gekenmerkt (in welk geval de
-beoordeling langer zal duren, zie hiervoor het ETCL reglement); houdt u hier a.u.b. rekening mee.
+Zoals beschreven in het reglement kan dat een snelle goedkeuring zijn, maar het is ook mogelijk dat uw studie op grond van deze eerste ETCL beoordeling alsnog als "niet-standaard UiL OTS-onderzoek" wordt gekenmerkt (in welk geval de beoordeling langer zal duren, zie hiervoor het ETCL reglement); houdt u hier a.u.b. rekening mee.
 {% endblock %}
