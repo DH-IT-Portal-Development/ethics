@@ -4,7 +4,7 @@ from django.views import generic
 
 from braces.views import LoginRequiredMixin
 
-from core.utils import get_reviewers
+from core.utils import get_secretary, get_reviewers
 from proposals.models import Proposal
 
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
@@ -97,13 +97,20 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
             proposal.date_reviewed = timezone.now()
             proposal.save()
         if form.instance.continuation == Review.LONG_ROUTE:
-            review = Review.objects.create(proposal=proposal, date_start=timezone.now())
+            review = Review.objects.create(
+                proposal=proposal,
+                stage=Review.COMMISSION,
+                short_route=False,
+                date_start=timezone.now())
+            Decision.objects.create(review=review, reviewer=get_secretary())
             start_review_route(review, get_reviewers(), False)
         if form.instance.continuation == Review.METC:
             proposal.status = Proposal.DRAFT
             proposal.save()
             proposal.wmo.enforced_by_commission = True
             proposal.wmo.save()
+
+        form.instance.stage = Review.CLOSED
 
         return super(ReviewCloseView, self).form_valid(form)
 

@@ -44,8 +44,7 @@ def start_supervisor_phase(proposal):
     proposal.status = proposal.SUBMITTED_TO_SUPERVISOR
     proposal.save()
 
-    decision = Decision(review=review, reviewer=proposal.supervisor)
-    decision.save()
+    decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
 
     subject = _('ETCL: bevestiging indienen concept-aanmelding')
     params = {
@@ -89,8 +88,7 @@ def start_assignment_phase(proposal):
     proposal.status = proposal.SUBMITTED
     proposal.save()
 
-    decision = Decision(review=review, reviewer=secretary)
-    decision.save()
+    Decision.objects.create(review=review, reviewer=secretary)
 
     subject = _('ETCL: nieuwe studie ingediend')
     params = {
@@ -119,8 +117,7 @@ def start_assignment_phase(proposal):
 def start_review_route(review, commission_users, use_short_route):
     """Creates Decisions and sends notification e-mail to the selected Reviewers"""
     for user in commission_users:
-        decision = Decision(review=review, reviewer=user)
-        decision.save()
+        Decision.objects.create(review=review, reviewer=user)
 
         template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
         subject = _('ETCL: nieuwe studie ter beoordeling')

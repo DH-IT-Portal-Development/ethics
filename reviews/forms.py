@@ -17,7 +17,9 @@ class ReviewAssignForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        """Adds a field to select reviewers for this Proposal"""
+        """
+        - Adds a field to select reviewers for this Proposal
+        """
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
         reviewers = get_reviewers()
         self.fields['reviewers'] = forms.ModelMultipleChoiceField(

@@ -11,11 +11,13 @@ class Review(models.Model):
     ASSIGNMENT = 1
     COMMISSION = 2
     CLOSING = 3
+    CLOSED = 4
     STAGES = (
         (SUPERVISOR, _('Beoordeling door eindverantwoordelijke')),
         (ASSIGNMENT, _('Aanstelling commissieleden')),
         (COMMISSION, _('Beoordeling door commissie')),
         (CLOSING, _('Afsluiting door secretaris')),
+        (CLOSED, _('Afgesloten')),
     )
 
     GO = 0
