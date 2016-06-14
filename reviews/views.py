@@ -97,12 +97,15 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
             proposal.date_reviewed = timezone.now()
             proposal.save()
         if form.instance.continuation == Review.LONG_ROUTE:
+            # Create a new review
             review = Review.objects.create(
                 proposal=proposal,
                 stage=Review.COMMISSION,
                 short_route=False,
                 date_start=timezone.now())
+            # Create a Decision for the secretary
             Decision.objects.create(review=review, reviewer=get_secretary())
+            # Start the long review route
             start_review_route(review, get_reviewers(), False)
         if form.instance.continuation == Review.METC:
             proposal.status = Proposal.DRAFT
