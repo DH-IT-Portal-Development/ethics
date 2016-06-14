@@ -24,7 +24,7 @@ from ..utils import generate_ref_number
 ############
 class ProposalsView(LoginRequiredMixin, generic.ListView):
     title = _('Publiek archief')
-    body = _('Dit overzicht toont alle beoordeelde studies.')
+    body = _('Dit overzicht toont alle goedgekeurde studies.')
     is_modifiable = False
     is_submitted = True
     context_object_name = 'proposals'
