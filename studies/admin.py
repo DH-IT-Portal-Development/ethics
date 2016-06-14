@@ -5,7 +5,7 @@ from .models import AgeGroup, Trait, Compensation, Recruitment
 
 @admin.register(AgeGroup)
 class AgeGroupAdmin(admin.ModelAdmin):
-    list_display = ('description', 'age_min', 'age_max', )
+    list_display = ('description', 'age_min', 'age_max', 'is_adult', 'needs_details', 'max_net_duration', )
     list_display_links = ('description', )
     ordering = ['age_min']
 

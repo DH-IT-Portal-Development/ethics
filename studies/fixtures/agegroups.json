@@ -2,10 +2,11 @@
 {
     "fields": {
         "needs_details": true,
-        "age_max": 3,
         "description": "Baby",
+        "is_adult": false,
+        "max_net_duration": 20,
         "age_min": 0,
-        "max_net_duration": 20
+        "age_max": 3
     },
     "model": "studies.agegroup",
     "pk": 1
@@ -13,10 +14,11 @@
 {
     "fields": {
         "needs_details": true,
-        "age_max": 5,
         "description": "Peuter",
+        "is_adult": false,
+        "max_net_duration": 40,
         "age_min": 4,
-        "max_net_duration": 40
+        "age_max": 5
     },
     "model": "studies.agegroup",
     "pk": 2
@@ -24,10 +26,11 @@
 {
     "fields": {
         "needs_details": true,
-        "age_max": 11,
         "description": "Kind",
+        "is_adult": false,
+        "max_net_duration": 60,
         "age_min": 6,
-        "max_net_duration": 60
+        "age_max": 11
     },
     "model": "studies.agegroup",
     "pk": 3
@@ -35,10 +38,11 @@
 {
     "fields": {
         "needs_details": true,
-        "age_max": 17,
         "description": "Adolescent",
+        "is_adult": false,
+        "max_net_duration": 90,
         "age_min": 12,
-        "max_net_duration": 90
+        "age_max": 17
     },
     "model": "studies.agegroup",
     "pk": 4
@@ -46,10 +50,11 @@
 {
     "fields": {
         "needs_details": false,
-        "age_max": 69,
         "description": "Volwassene",
+        "is_adult": true,
+        "max_net_duration": 120,
         "age_min": 18,
-        "max_net_duration": 120
+        "age_max": 69
     },
     "model": "studies.agegroup",
     "pk": 5
@@ -57,10 +62,11 @@
 {
     "fields": {
         "needs_details": true,
-        "age_max": null,
         "description": "70-plusser",
+        "is_adult": true,
+        "max_net_duration": 60,
         "age_min": 70,
-        "max_net_duration": 60
+        "age_max": null
     },
     "model": "studies.agegroup",
     "pk": 6

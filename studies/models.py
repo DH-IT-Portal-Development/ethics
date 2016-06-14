@@ -13,13 +13,14 @@ from proposals.models import Proposal
 class AgeGroup(models.Model):
     """
     A model to store participant age groups.
-    The model has fields for the age range and a description.
+    The model has fields for the age range, a description and whether this age group is considered adult.
     The 'needs_details' field is used to determine whether the 'necessity' field on Study needs to be filled.
     The 'max_net_duration' field is used in the automatic review to check the target Session duration is not exceeded.
     """
     age_min = models.PositiveIntegerField()
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
+    is_adult = models.BooleanField(default=False)
     needs_details = models.BooleanField(default=False)
     max_net_duration = models.PositiveIntegerField()
 
