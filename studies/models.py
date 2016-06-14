@@ -154,7 +154,7 @@ beantwoorden door volwassen deelnemers te testen?'),
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
-        help_text=_(u'Het standaard bedrag voor vergoeding aan de deelnemers \
+        help_text=_(u'Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
 cadeautje.'),
         null=True)

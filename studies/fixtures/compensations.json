@@ -1,32 +1,42 @@
 [
 {
     "fields": {
+        "requires_review": true,
         "needs_details": false,
         "order": 1,
-        "description": "geen",
-        "requires_review": false
+        "description": "geen"
     },
     "model": "studies.compensation",
     "pk": 1
 },
 {
     "fields": {
-        "needs_details": true,
+        "requires_review": false,
+        "needs_details": false,
         "order": 2,
-        "description": "geld",
-        "requires_review": false
+        "description": "geld, standaardbedrag (10 euro per uur)"
     },
     "model": "studies.compensation",
     "pk": 2
 },
 {
     "fields": {
+        "requires_review": true,
         "needs_details": true,
         "order": 3,
-        "description": "cadeautje",
-        "requires_review": false
+        "description": "geld, ander bedrag"
     },
     "model": "studies.compensation",
     "pk": 3
+},
+{
+    "fields": {
+        "requires_review": false,
+        "needs_details": true,
+        "order": 4,
+        "description": "cadeautje"
+    },
+    "model": "studies.compensation",
+    "pk": 4
 }
 ]

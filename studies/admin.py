@@ -18,7 +18,7 @@ class TraitAdmin(admin.ModelAdmin):
 
 @admin.register(Compensation)
 class CompensationAdmin(admin.ModelAdmin):
-    list_display = ('order', 'description', 'needs_details', )
+    list_display = ('order', 'description', 'needs_details', 'requires_review', )
     list_display_links = ('description', )
     ordering = ['order']
 
