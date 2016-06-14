@@ -21,13 +21,13 @@ class FeedbackCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView
         return initial
 
     def form_valid(self, form):
-        """Sets submitter to current user"""
+        """Sets submitter to current User"""
         form.instance.submitter = self.request.user
         return super(FeedbackCreate, self).form_valid(form)
 
     def get_success_url(self):
-        feedback = self.object
-        return reverse('feedback:thanks', args=(feedback.pk,))
+        """Redirect to thank-you page"""
+        return reverse('feedback:thanks', args=(self.object.pk,))
 
 
 class FeedbackThanks(LoginRequiredMixin, generic.DetailView):

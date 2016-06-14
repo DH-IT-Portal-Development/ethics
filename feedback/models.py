@@ -4,20 +4,20 @@ from django.utils.translation import ugettext_lazy as _
 
 STATUS_CODES = (
     (1, _('Open')),
-    (2, _('Working')),
-    (3, _('Closed')),
+    (2, _('Opgepakt')),
+    (3, _('Afgehandeld')),
 )
 
 PRIORITY_CODES = (
-    (1, _('Low')),
-    (2, _('Medium')),
-    (3, _('High')),
+    (1, _('Laag')),
+    (2, _('Gemiddeld')),
+    (3, _('Hoog')),
 )
 
 
 class Feedback(models.Model):
     url = models.URLField()
-    comment = models.TextField('Opmerking')
+    comment = models.TextField(_('Feedback'))
     priority = models.IntegerField(default=1, choices=PRIORITY_CODES)
     status = models.IntegerField(default=1, choices=STATUS_CODES)
 

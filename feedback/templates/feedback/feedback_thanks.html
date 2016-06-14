@@ -1,5 +1,7 @@
 {% extends "base/base.html" %}
+
 {% load staticfiles %}
+{% load i18n %}
 
 {% block title %}
 {% trans "Bedankt voor uw feedback!" %}
@@ -8,5 +10,7 @@
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
-Klik <a href="{{ feedback.url }}">hier</a> om terug te keren naar de vorige pagina.
+{% blocktrans with url=feedback.url %}
+Klik <a href="{{ url }}">hier</a> om terug te keren naar pagina waar u gebleven was.
+{% endblocktrans %}
 {% endblock %}

@@ -1,8 +1,10 @@
 {% extends "base/base.html" %}
-{% load staticfiles %}
 
-{% block title %} 
-Feedbackoverzicht
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Feedbackoverzicht" %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
@@ -11,10 +13,10 @@ Feedbackoverzicht
 <table class="dataTable display">
     <thead>
         <tr>
-            <th>Toegevoegd op</th>
-            <th>URL</th>
-            <th>Feedback</th>
-            <th>Gegeven door</th>
+            <th>{% trans "Toegevoegd op" %}</th>
+            <th>{% trans "URL" %}</th>
+            <th>{% trans "Feedback" %}</th>
+            <th>{% trans "Gegeven door" %}</th>
         </tr>
     </thead>
     <tbody>
@@ -23,7 +25,7 @@ Feedbackoverzicht
             <td>{{ feedback.date_created|date:"j M Y, G:i" }}</td>
             <td>{{ feedback.url }}</td>
             <td>{{ feedback.comment }}</td>
-            <td>{{ feedback.submitter }}</td>
+            <td>{{ feedback.submitter.get_full_name }}</td>
         </tr>
         {% endfor %}
     </tbody>
