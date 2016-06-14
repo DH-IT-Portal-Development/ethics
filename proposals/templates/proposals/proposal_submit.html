@@ -49,7 +49,10 @@
     <div class="warning">
     {% url "studies:consent" study.pk as consent_link %}
     {% blocktrans with study_order=study.order%}
-    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}. Die kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
+    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}.
+    Die kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
+    Als u deze formulieren nog niet klaar hebt, kunt u ook op een later moment terugkeren;
+    uw studie is reeds opgeslagen en terug te vinden onder "Mijn concepten".
     {% endblocktrans %}
     </div>
 {% endif %}
