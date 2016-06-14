@@ -86,7 +86,7 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "logdata van digitaal gedrag (bijv. usability tests, forumberichten)",
+        "description": "logdata van digitaal gedrag (bijv. usability tests)",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
