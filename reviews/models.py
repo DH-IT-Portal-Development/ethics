@@ -67,6 +67,11 @@ class Review(models.Model):
                 if self.go:
                     from .utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
+                # On NO-GO, reset the Proposal status
+                # TODO: also send e-mail?
+                else:
+                    self.proposal.status = Proposal.DRAFT
+                    self.proposal.save()
             # For a review by commission:
             else:
                 # Set the stage to CLOSING
@@ -80,7 +85,7 @@ class Review(models.Model):
         return accountable_user
 
     def __unicode__(self):
-        return 'Review of %s' % self.proposal
+        return u'Review of %s' % self.proposal
 
 
 class Decision(models.Model):
@@ -104,4 +109,4 @@ class Decision(models.Model):
         self.review.update_go()
 
     def __unicode__(self):
-        return 'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
+        return u'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)

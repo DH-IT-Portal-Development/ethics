@@ -109,7 +109,8 @@ class Study(models.Model):
     age_groups = models.ManyToManyField(
         AgeGroup,
         verbose_name=_(u'Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
-        help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.'))
+        help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
+Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
         _('Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) \
 deelnemers?'),
@@ -136,10 +137,12 @@ Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
         max_length=200,
         blank=True)
     necessity = models.CharField(
-        _('Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het geselecteerde type \
-deelnemer aan de studie te laten meedoen?'),
-        help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen \
-beantwoorden door volwassen deelnemers te testen?'),
+        _('Is het, om de onderzoeksvraag beantwoord te krijgen, \
+noodzakelijk om het geselecteerde type deelnemer aan de studie te \
+laten meedoen?'),
+        help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, \
+of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers \
+te testen?'),
         max_length=1,
         choices=YES_NO_DOUBT,
         blank=True)
@@ -199,10 +202,12 @@ target="_blank">de ETCL-website</a>.')))
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
         null=True,
         validators=[MinValueValidator(1)],
-        help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens \
-een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
+        help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een \
+taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en \
+u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
-Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.'))
+Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, \
+dan geldt dat toch als één sessie.'))
     deception = models.CharField(
         _('Is er binnen bovenstaand onderzoekstraject sprake van \
 misleiding van de deelnemer?'),
@@ -317,7 +322,8 @@ geschoolde specialisten).')),
         return result
 
     def is_completed(self):
-        return self.deception != ''
+        """Checks if the whole Study has been completed"""
+        return self.design_completed() and self.risk != ''
 
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title

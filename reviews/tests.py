@@ -11,11 +11,11 @@ from proposals.models import Proposal, Relation
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
 from observations.models import Observation
-from tasks.models import Session, Task, Registration
+from tasks.models import Session, Task, Registration, RegistrationKind
 
 
 class BaseReviewTestCase(TestCase):
-    fixtures = ['relations', 'compensations', 'registrations', 'agegroups', 'groups']
+    fixtures = ['relations', 'compensations', 'registrations', 'registrationkinds', 'agegroups', 'groups']
 
     def setUp(self):
         """
@@ -35,7 +35,7 @@ class BaseReviewTestCase(TestCase):
                                                 date_start=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4))
-        self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=1))
+        self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=2))
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -231,7 +231,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 1)
 
-        s1_t1.registrations = Registration.objects.filter(requires_review=True)  # psychofysiological measurements / other
+        s1_t1.registration_kinds = RegistrationKind.objects.filter(requires_review=True)  # psychofysiological measurements / other
         s1_t1.save()
 
         reasons = auto_review_task(self.study, s1_t1)
