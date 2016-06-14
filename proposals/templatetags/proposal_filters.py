@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 
-from studies.utils import check_necessity_required
+from studies.utils import check_has_adults, check_necessity_required
 
 register = template.Library()
 
@@ -53,6 +53,12 @@ def in_commission(current_user):
     Check whether the current user is in the 'Commissie' group
     """
     return Group.objects.get(name=settings.GROUP_COMMISSION) in current_user.groups.all()
+
+
+@register.filter
+def has_adults(study):
+    age_groups = study.age_groups.values_list('id', flat=True)
+    return check_has_adults(age_groups)
 
 
 @register.filter

@@ -158,6 +158,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
             </tr>
+            {% if study|has_adults %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th><td>{{ study.legally_incapable|yesno:_("ja,nee") }}</td>
             </tr>
@@ -165,6 +166,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "legally_incapable_details" %}</th><td>{{ study.legally_incapable_details }}</td>
             </tr>
+            {% endif %}
             {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th><td>{{ study.has_traits|yesno:_("ja,nee") }}</td>

@@ -13,7 +13,7 @@ from observations.models import Observation
 
 from ..forms import StudyForm, StudyDesignForm, StudyConsentForm, StudyEndForm
 from ..models import Study
-from ..utils import check_necessity_required, get_study_progress
+from ..utils import check_has_adults, check_necessity_required, get_study_progress
 
 
 #######################
@@ -161,6 +161,15 @@ class StudyEnd(AllowErrorsMixin, UpdateView):
 ################
 # AJAX callbacks
 ################
+@csrf_exempt
+def has_adults(request):
+    """
+    This call checks whether the selected AgeGroups contain adult age groups.
+    """
+    age_groups = map(int, request.POST.getlist('age_groups[]'))
+    return JsonResponse({'result': check_has_adults(age_groups)})
+
+
 @csrf_exempt
 def necessity_required(request):
     """

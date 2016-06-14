@@ -12,6 +12,16 @@ STUDY_PROGRESS_START = 10
 STUDY_PROGRESS_TOTAL = 90
 
 
+def check_has_adults(selected_age_groups):
+    """
+    Checks whether the given AgeGroups include adults.
+    """
+    from .models import AgeGroup
+
+    adult_age_groups = AgeGroup.objects.filter(is_adult=True).values_list('id', flat=True)
+    return bool(set(selected_age_groups).intersection(adult_age_groups))
+
+
 def check_necessity_required(proposal, age_groups, has_traits, legally_incapable):
     """
     This call checks whether the necessity questions are required. They are required when:
