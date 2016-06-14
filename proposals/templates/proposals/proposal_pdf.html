@@ -397,6 +397,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
+            {% if study.has_sessions %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.get_deception_display }}</td>
             </tr>
@@ -404,6 +405,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th><td>{{ study.deception_details }}</td>
             </tr>
+            {% endif %}
             {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "negativity" %}</th><td>{{ study.get_negativity_display }}</td>

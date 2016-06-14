@@ -131,6 +131,12 @@ class StudyEnd(AllowErrorsMixin, UpdateView):
         context['progress'] = get_study_progress(self.object, True) - 10
         return context
 
+    def get_form_kwargs(self):
+        """Sets the Study as a form kwarg"""
+        kwargs = super(StudyEnd, self).get_form_kwargs()
+        kwargs['study'] = self.object
+        return kwargs
+
     def get_next_url(self):
         return reverse('studies:consent', args=(self.object.pk,))
 

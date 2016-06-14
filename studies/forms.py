@@ -131,9 +131,12 @@ class StudyEndForm(ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
+        - Set the Study for later reference
         - Remove empty label from deception/negativity/stressful/risk field and reset the choices
         - mark_safe the labels of negativity/stressful/risk
         """
+        self.study = kwargs.pop('study', None)
+
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
         self.fields['deception'].empty_label = None
@@ -152,6 +155,10 @@ class StudyEndForm(ConditionalModelForm):
         self.fields['negativity'].label = mark_safe(self.fields['negativity'].label)
         self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)
         self.fields['risk'].label = mark_safe(self.fields['risk'].label)
+
+        if not self.study.has_sessions:
+            del self.fields['deception']
+            del self.fields['deception_details']
 
     def clean(self):
         """
