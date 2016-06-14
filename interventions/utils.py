@@ -5,6 +5,9 @@ from core.utils import AvailableURL
 
 
 def intervention_url(study):
+    """
+    Returns the available URLs for an Intervention
+    """
     result = AvailableURL(title=_('Het interventieonderzoek'), margin=2)
     if study.has_intervention:
         if hasattr(study, 'intervention'):
@@ -15,6 +18,9 @@ def intervention_url(study):
 
 
 def copy_intervention_to_study(study, intervention):
+    """
+    Copies the given Intervention to the given Study
+    """
     setting = intervention.setting.all()
 
     i = intervention
