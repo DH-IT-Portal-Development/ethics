@@ -8,6 +8,7 @@ __pycache__/
 ### Project-specific ###
 media/
 etcl/ldap_settings.py
+db.sqlite3
 
 ### Coverage ###
 .coverage
