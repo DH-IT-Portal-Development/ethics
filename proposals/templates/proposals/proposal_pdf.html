@@ -42,7 +42,7 @@
 
 {% block page_header %}
 <div id="page-header">
-ETCL - <em>{{ proposal.title }}</em> (referentienummer {{ proposal.reference_number }})
+ETCL - <em>{{ proposal.title }}</em> (referentienummer {{ proposal.reference_number }}, ingediend door {{ proposal.created_by.get_full_name }})
 </div>
 {% endblock %}
 
