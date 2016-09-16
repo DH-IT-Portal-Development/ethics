@@ -284,4 +284,4 @@ bij een METC?'),
             self.status = self.NO_WMO
 
     def __unicode__(self):
-        return _('WMO %s, status %s') % (self.proposal.title, self.status)
+        return _('WMO {title}, status {status}').format(title=self.proposal.title, status=self.status)
