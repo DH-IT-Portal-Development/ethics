@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 from core.utils import get_reviewers
 from .models import Review, Decision
 
-YES_NO = [(True, _('akkoord')), (False, _('niet akkoord'))]
+YES_NO = [(True, _('goedgekeurd')), (False, _('niet goedgekeurd'))]
 SHORT_LONG = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route'))]
 
 
