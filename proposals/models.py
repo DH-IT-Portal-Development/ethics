@@ -143,11 +143,17 @@ vraag hem dan een keer in te loggen in het webportaal.'))
         null=True,
         help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke \
 sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'))
+
+    # Copying an existing Proposal
     parent = models.ForeignKey(
         'self',
         null=True,
         verbose_name=_(u'Te kopiëren studie'),
         help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'))
+    is_revision = models.BooleanField(
+        _('Is deze studie een revisie van of amendement op een ingediende studie?'),
+        default=False
+    )
 
     def continue_url(self):
         for available_url in self.available_urls():

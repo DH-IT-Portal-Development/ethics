@@ -74,7 +74,10 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['parent', 'title']
+        fields = ['parent', 'is_revision', 'title']
+        widgets = {
+            'is_revision': forms.RadioSelect(choices=YES_NO),
+        }
         error_messages = {
             'title': {
                 'unique': _('Er bestaat al een studie met deze titel.'),

@@ -7,10 +7,8 @@ from .utils import generate_ref_number
 def copy_proposal(self, form):
     from .models import Proposal
 
-    parent = form.cleaned_data['parent']
-    title = form.cleaned_data['title']
-
     # Save relationships
+    parent = form.cleaned_data['parent']
     relation = parent.relation
     applicants = parent.applicants.all()
     funding = parent.funding.all()
@@ -23,7 +21,7 @@ def copy_proposal(self, form):
     copy_proposal = parent
     copy_proposal.pk = None
     copy_proposal.reference_number = generate_ref_number(self.request.user)
-    copy_proposal.title = title
+    copy_proposal.title = form.cleaned_data['title']
     copy_proposal.created_by = self.request.user
     copy_proposal.status = Proposal.DRAFT
     copy_proposal.status_review = None
@@ -34,6 +32,7 @@ def copy_proposal(self, form):
     copy_proposal.date_reviewed_supervisor = None
     copy_proposal.date_submitted = None
     copy_proposal.date_reviewed = None
+    copy_proposal.is_revision = form.cleaned_data['is_revision']
     copy_proposal.save()
 
     # Copy references
