@@ -16,7 +16,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = [
-            'relation', 'supervisor',
+            'relation', 'in_course', 'supervisor',
             'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
             'date_start', 'title', 'summary',
@@ -24,6 +24,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         ]
         widgets = {
             'relation': forms.RadioSelect(),
+            'in_course': forms.RadioSelect(choices=YES_NO),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
             'other_stakeholders': forms.RadioSelect(choices=YES_NO),
             'summary': forms.Textarea(attrs={'cols': 50}),

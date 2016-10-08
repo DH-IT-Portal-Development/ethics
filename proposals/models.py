@@ -17,6 +17,7 @@ class Relation(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_supervisor = models.BooleanField(default=True)
+    check_in_course = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['order']
@@ -89,6 +90,9 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Namelijk'),
         max_length=200,
         blank=True)
+    in_course = models.BooleanField(
+        _('Ik vul deze portal in in de context van een cursus'),
+        default=False)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)

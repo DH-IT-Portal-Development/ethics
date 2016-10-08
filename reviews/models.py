@@ -65,8 +65,8 @@ class Review(models.Model):
                 # Update the status of the Proposal with the end date
                 self.proposal.date_reviewed_supervisor = self.date_end
                 self.proposal.save()
-                # On GO, start the assignment phase
-                if self.go:
+                # On GO and not in course, start the assignment phase
+                if self.go and not self.proposal.in_course:
                     from .utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
                 # On NO-GO, reset the Proposal status
