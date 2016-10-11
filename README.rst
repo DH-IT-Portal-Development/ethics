@@ -7,8 +7,8 @@ Ethical Committee web application in Django
 Introduction
 ------------
 
-This Django project allows a user to apply a research project for ethical review.
-It was custom-tailored for the Ethical Committee Linguistics (ETCL) of Utrecht University.
+This Django_ project allows a user to apply a research project for ethical review.
+It was custom-tailored for the `Ethical Committee Linguistics`_ (ETCL) of `Utrecht University`_.
 
 Installation
 ------------
@@ -40,7 +40,11 @@ This Django project consists of ten apps that can be divided into three categori
 Language
 --------
 
-The project's main language is Dutch.
-Under the ``locale`` folder, a preliminary English translation is provided.
-This is a work-in-progress though.
+The main language of this web application is Dutch, as it's aimed towards the mostly avid Dutch-speaking researchers of Utrecht University.
+However, since October 2016, there is a full English translation available, compiled by `Anna Asbury`_.
 Translations in other languages are welcome, of course.
+
+.. _Django: https://www.djangoproject.com/
+.. _Ethical Committee Linguistics: https://etcl.wp.hum.uu.nl
+.. _Utrecht University: https://www.uu.nl
+.. _Anna Asbury: http://www.annaasbury.com/
