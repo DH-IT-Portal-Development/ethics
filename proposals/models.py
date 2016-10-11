@@ -17,6 +17,7 @@ class Relation(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_supervisor = models.BooleanField(default=True)
+    check_in_course = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['order']
@@ -89,6 +90,9 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Namelijk'),
         max_length=200,
         blank=True)
+    in_course = models.BooleanField(
+        _('Ik vul deze portal in in de context van een cursus'),
+        default=False)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
@@ -143,11 +147,17 @@ vraag hem dan een keer in te loggen in het webportaal.'))
         null=True,
         help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke \
 sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'))
+
+    # Copying an existing Proposal
     parent = models.ForeignKey(
         'self',
         null=True,
         verbose_name=_(u'Te kopiëren studie'),
         help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'))
+    is_revision = models.BooleanField(
+        _('Is deze studie een revisie van of amendement op een ingediende studie?'),
+        default=False
+    )
 
     def continue_url(self):
         for available_url in self.available_urls():
@@ -284,4 +294,4 @@ bij een METC?'),
             self.status = self.NO_WMO
 
     def __unicode__(self):
-        return _('WMO %s, status %s') % (self.proposal.title, self.status)
+        return _('WMO {title}, status {status}').format(title=self.proposal.title, status=self.status)

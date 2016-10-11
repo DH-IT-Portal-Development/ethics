@@ -1,7 +1,7 @@
 [
 {
     "fields": {
-        "requires_review": true,
+        "requires_review": false,
         "needs_details": false,
         "order": 1,
         "description": "geen"
@@ -14,7 +14,7 @@
         "requires_review": false,
         "needs_details": false,
         "order": 2,
-        "description": "geld, standaardbedrag (10 euro per uur)"
+        "description": "geld, standaardbedrag (10 euro per uur) of minder"
     },
     "model": "studies.compensation",
     "pk": 2
@@ -24,7 +24,7 @@
         "requires_review": true,
         "needs_details": true,
         "order": 3,
-        "description": "geld, ander bedrag"
+        "description": "geld, meer dan 10 euro per uur"
     },
     "model": "studies.compensation",
     "pk": 3

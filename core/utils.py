@@ -25,8 +25,8 @@ def get_reviewers():
 
 
 def string_to_bool(s):
-    if s == 'None':
-        return None
+    if s == 'None' or s is None:
+        return False
     return s not in ['False', 'false', '0', 0]
 
 

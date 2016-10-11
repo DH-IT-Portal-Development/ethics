@@ -18,6 +18,7 @@
 {% block content %}
 <script>
 $(function() {
+    check_field_required('relation', 'check_in_course', 'in_course', 'proposals');
     check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
     depends_on_value('other_applicants', 'True', 'applicants');
     depends_on_value('other_stakeholders', 'True', 'stakeholders');

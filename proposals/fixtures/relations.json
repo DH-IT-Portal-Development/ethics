@@ -1,6 +1,7 @@
 [
 {
     "fields": {
+        "check_in_course": true,
         "needs_supervisor": true,
         "order": 1,
         "description": "als student in TLC Bachelorprogramma of -cursus"
@@ -10,6 +11,7 @@
 },
 {
     "fields": {
+        "check_in_course": true,
         "needs_supervisor": true,
         "order": 2,
         "description": "als student in TLC Masterprogramma of -cursus"
@@ -19,6 +21,7 @@
 },
 {
     "fields": {
+        "check_in_course": true,
         "needs_supervisor": true,
         "order": 3,
         "description": "als student in TLC Research Masterprogramma of -cursus"
@@ -28,6 +31,7 @@
 },
 {
     "fields": {
+        "check_in_course": false,
         "needs_supervisor": true,
         "order": 4,
         "description": "als AIO / promovendus verbonden aan het UiL OTS"
@@ -37,6 +41,7 @@
 },
 {
     "fields": {
+        "check_in_course": false,
         "needs_supervisor": false,
         "order": 5,
         "description": "als postdoc, UD, UHD, of HL verbonden aan het UiL OTS"

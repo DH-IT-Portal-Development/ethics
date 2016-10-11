@@ -21,11 +21,13 @@ class Review(models.Model):
     )
 
     GO = 0
-    NO_GO = 1
-    LONG_ROUTE = 2
-    METC = 3
+    REVISION = 1
+    NO_GO = 2
+    LONG_ROUTE = 3
+    METC = 4
     CONTINUATIONS = (
         (GO, _('Goedkeuring door ETCL')),
+        (REVISION, _('Revisie noodzakelijk')),
         (NO_GO, _('Afwijzing door ETCL')),
         (LONG_ROUTE, _('Open review met lange (4-weken) route')),
         (METC, _('Laat opnieuw beoordelen door METC')),
@@ -63,8 +65,8 @@ class Review(models.Model):
                 # Update the status of the Proposal with the end date
                 self.proposal.date_reviewed_supervisor = self.date_end
                 self.proposal.save()
-                # On GO, start the assignment phase
-                if self.go:
+                # On GO and not in course, start the assignment phase
+                if self.go and not self.proposal.in_course:
                     from .utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
                 # On NO-GO, reset the Proposal status
