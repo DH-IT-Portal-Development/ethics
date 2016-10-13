@@ -5,7 +5,8 @@
         "needs_details": false,
         "needs_supervision": false,
         "order": 1,
-        "description": "het UiL OTS lab"
+        "description_nl": "het UiL OTS lab",
+        "description_en": "the UiL OTS labs"
     },
     "model": "core.setting",
     "pk": 1
@@ -16,7 +17,8 @@
         "needs_details": false,
         "needs_supervision": false,
         "order": 2,
-        "description": "online"
+        "description_nl": "online",
+        "description_en": "online"
     },
     "model": "core.setting",
     "pk": 2
@@ -27,7 +29,8 @@
         "needs_details": false,
         "needs_supervision": true,
         "order": 3,
-        "description": "school/onderwijsinstelling"
+        "description_nl": "school/onderwijsinstelling",
+        "description_en": "school/educational institution"
     },
     "model": "core.setting",
     "pk": 3
@@ -38,7 +41,8 @@
         "needs_details": false,
         "needs_supervision": true,
         "order": 4,
-        "description": "peuterspeelzaal/dagopvang/buitenschoolse opvang"
+        "description_nl": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
+        "description_en": "nursery/day care center"
     },
     "model": "core.setting",
     "pk": 4
@@ -49,7 +53,8 @@
         "needs_details": false,
         "needs_supervision": false,
         "order": 5,
-        "description": "thuis bij de deelnemer"
+        "description_nl": "thuis bij de deelnemer",
+        "description_en": "at the participant's home"
     },
     "model": "core.setting",
     "pk": 5
@@ -60,7 +65,8 @@
         "needs_details": false,
         "needs_supervision": false,
         "order": 6,
-        "description": "studenten worden geworven als onderdeel van de cursus"
+        "description_nl": "studenten worden geworven als onderdeel van de cursus",
+        "description_en": "students who are recruited as part of a course"
     },
     "model": "core.setting",
     "pk": 6
@@ -71,7 +77,8 @@
         "needs_details": false,
         "needs_supervision": false,
         "order": 7,
-        "description": "collegezaal"
+        "description_nl": "collegezaal",
+        "description_en": "lecture hall"
     },
     "model": "core.setting",
     "pk": 7
@@ -82,7 +89,8 @@
         "needs_details": false,
         "needs_supervision": false,
         "order": 8,
-        "description": "logopediepraktijk"
+        "description_nl": "logopediepraktijk",
+        "description_en": "speech therapist"
     },
     "model": "core.setting",
     "pk": 8
@@ -93,7 +101,8 @@
         "needs_details": true,
         "needs_supervision": false,
         "order": 9,
-        "description": "zorginstelling"
+        "description_nl": "zorginstelling",
+        "description_en": "medical institution"
     },
     "model": "core.setting",
     "pk": 9
@@ -104,7 +113,8 @@
         "needs_details": true,
         "needs_supervision": false,
         "order": 10,
-        "description": "anders, namelijk"
+        "description_nl": "anders, namelijk",
+        "description_en": "otherwise, viz."
     },
     "model": "core.setting",
     "pk": 10

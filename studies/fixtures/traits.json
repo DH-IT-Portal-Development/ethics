@@ -3,7 +3,8 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "dyslexie"
+        "description_nl": "dyslexie",
+        "description_en": "dyslexia"
     },
     "model": "studies.trait",
     "pk": 1
@@ -12,7 +13,8 @@
     "fields": {
         "needs_details": false,
         "order": 2,
-        "description": "taalontwikkelingsstoornis"
+        "description_nl": "taalontwikkelingsstoornis",
+        "description_en": "language development disorder"
     },
     "model": "studies.trait",
     "pk": 2
@@ -21,7 +23,8 @@
     "fields": {
         "needs_details": false,
         "order": 3,
-        "description": "stotteren"
+        "description_nl": "stotteren",
+        "description_en": "stuttering"
     },
     "model": "studies.trait",
     "pk": 3
@@ -30,7 +33,8 @@
     "fields": {
         "needs_details": false,
         "order": 4,
-        "description": "dyspraxie"
+        "description_nl": "dyspraxie",
+        "description_en": "dyspraxia"
     },
     "model": "studies.trait",
     "pk": 4
@@ -39,7 +43,8 @@
     "fields": {
         "needs_details": false,
         "order": 5,
-        "description": "aandachtstekortstoornis (met hyperactiviteit) ook wel: AD(H)D"
+        "description_nl": "aandachtstekortstoornis (met hyperactiviteit) ook wel: AD(H)D",
+        "description_en": "attention deficit disorder (with hyperactivity) also known as: AD(H)D"
     },
     "model": "studies.trait",
     "pk": 5
@@ -48,7 +53,8 @@
     "fields": {
         "needs_details": false,
         "order": 6,
-        "description": "autismespectrumstoornissen (ASS)"
+        "description_nl": "autismespectrumstoornissen (ASS)",
+        "description_en": "autism spectrum disorder (ASD)"
     },
     "model": "studies.trait",
     "pk": 6
@@ -57,7 +63,8 @@
     "fields": {
         "needs_details": false,
         "order": 7,
-        "description": "doof (met cochleair implantaat) of slechthorend (met hoorapparaat)"
+        "description_nl": "doof (met cochleair implantaat) of slechthorend (met hoorapparaat)",
+        "description_en": "deaf (with a cochlear implantate) or hearing impaired (with a hearing aid)"
     },
     "model": "studies.trait",
     "pk": 7
@@ -66,7 +73,8 @@
     "fields": {
         "needs_details": false,
         "order": 8,
-        "description": "afasie"
+        "description_nl": "afasie",
+        "description_en": "aphasia"
     },
     "model": "studies.trait",
     "pk": 8
@@ -75,7 +83,8 @@
     "fields": {
         "needs_details": false,
         "order": 9,
-        "description": "pre/-postmatuur"
+        "description_nl": "pre-/postmatuur",
+        "description_en": "premature birth/postterm pregnancy"
     },
     "model": "studies.trait",
     "pk": 9
@@ -84,7 +93,8 @@
     "fields": {
         "needs_details": true,
         "order": 10,
-        "description": "anders, namelijk"
+        "description_nl": "anders, namelijk",
+        "description_en": "otherwise, viz."
     },
     "model": "studies.trait",
     "pk": 10

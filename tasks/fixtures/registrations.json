@@ -2,7 +2,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "audio-opname",
+        "description_nl": "audio-opname",
+        "description_en": "audio recording",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -14,7 +15,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "video-opname",
+        "description_nl": "video-opname",
+        "description_en": "video recording",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -26,7 +28,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "een vragenlijst (papier of digitaal, evt via internet)",
+        "description_nl": "een vragenlijst (papier of digitaal, evt via internet)",
+        "description_en": "a survey (on paper or digitally, possibly using internet)",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -38,7 +41,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
+        "description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
+        "description_en": "behavioral- and/or reaction time registration using Zep, Presentation, E-prime, etc.",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -50,7 +54,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "oogbewegingsregistratie via een eye-tracker",
+        "description_nl": "oogbewegingsregistratie via een eye-tracker",
+        "description_en": "eye movement registration using an eye-tracker",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -62,7 +67,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "psychofysiologische meting (bijv. EEG, fMRI, EMA)",
+        "description_nl": "psychofysiologische meting (bijv. EEG, fMRI, EMA)",
+        "description_en": "psychofysiological measurement (e.g. EEG, fMRI, EMA)",
         "needs_kind": true,
         "age_min": 18,
         "requires_review": true,
@@ -74,7 +80,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
+        "description_nl": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
+        "description_en": "manual behavioral scoring (e.g. what's pointed at, what's looked at, and for how long)",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -86,7 +93,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "logdata van digitaal gedrag (bijv. usability tests)",
+        "description_nl": "logdata van digitaal gedrag (bijv. usability tests)",
+        "description_en": "log data of digital behavior (e.g. usability tests)",
         "needs_kind": false,
         "age_min": null,
         "requires_review": false,
@@ -98,7 +106,8 @@
 {
     "fields": {
         "needs_details": true,
-        "description": "anders, namelijk",
+        "description_nl": "anders, namelijk",
+        "description_en": "otherwise, viz.",
         "needs_kind": false,
         "age_min": null,
         "requires_review": true,

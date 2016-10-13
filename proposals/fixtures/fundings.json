@@ -4,7 +4,8 @@
         "requires_review": false,
         "needs_details": false,
         "order": 1,
-        "description_nl": "uit de 1e geldstroom (bijv. UiL OTS, TLC, Ba-/Ma-/RMa-opleiding)"
+        "description_nl": "uit de 1e geldstroom (bijv. UiL OTS, TLC, Ba-/Ma-/RMa-opleiding)",
+        "description_en": "direct government funding (e.g. UiL OTS, TLC, Ba-/Ma-/RMa-education)"
     },
     "model": "proposals.funding",
     "pk": 1
@@ -14,7 +15,8 @@
         "requires_review": false,
         "needs_details": false,
         "order": 2,
-        "description_nl": "uit de 2e geldstroom (bijv. NWO, ERC)"
+        "description_nl": "uit de 2e geldstroom (bijv. NWO, ERC)",
+        "description_en": "indirect government funding (e.g. NWO, ERC)"
     },
     "model": "proposals.funding",
     "pk": 2
@@ -24,7 +26,8 @@
         "requires_review": true,
         "needs_details": true,
         "order": 3,
-        "description_nl": "uit de 3e geldstroom (bijv. marktpartijen, brancheorganisaties)"
+        "description_nl": "uit de 3e geldstroom (bijv. marktpartijen, brancheorganisaties)",
+        "description_en": "contract funding (e.g. commercial parties, branch organisations)"
     },
     "model": "proposals.funding",
     "pk": 3
@@ -34,7 +37,8 @@
         "requires_review": false,
         "needs_details": true,
         "order": 4,
-        "description_nl": "anders, namelijk"
+        "description_nl": "anders, namelijk",
+        "description_en": "otherwise, viz."
     },
     "model": "proposals.funding",
     "pk": 4

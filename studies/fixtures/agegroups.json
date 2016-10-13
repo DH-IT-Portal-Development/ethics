@@ -2,7 +2,8 @@
 {
     "fields": {
         "needs_details": true,
-        "description": "Baby",
+        "description_nl": "Baby",
+        "description_en": "Baby",
         "is_adult": false,
         "max_net_duration": 20,
         "age_min": 0,
@@ -14,7 +15,8 @@
 {
     "fields": {
         "needs_details": true,
-        "description": "Peuter",
+        "description_nl": "Peuter",
+        "description_en": "Toddler",
         "is_adult": false,
         "max_net_duration": 40,
         "age_min": 4,
@@ -26,7 +28,8 @@
 {
     "fields": {
         "needs_details": true,
-        "description": "Kind",
+        "description_nl": "Kind",
+        "description_en": "Child",
         "is_adult": false,
         "max_net_duration": 60,
         "age_min": 6,
@@ -38,7 +41,8 @@
 {
     "fields": {
         "needs_details": true,
-        "description": "Adolescent",
+        "description_nl": "Adolescent",
+        "description_en": "Adolescent",
         "is_adult": false,
         "max_net_duration": 90,
         "age_min": 12,
@@ -50,7 +54,8 @@
 {
     "fields": {
         "needs_details": false,
-        "description": "Volwassene",
+        "description_nl": "Volwassene",
+        "description_en": "Adult",
         "is_adult": true,
         "max_net_duration": 120,
         "age_min": 18,
@@ -62,7 +67,8 @@
 {
     "fields": {
         "needs_details": true,
-        "description": "70-plusser",
+        "description_nl": "70-plusser",
+        "description_en": "70 and above",
         "is_adult": true,
         "max_net_duration": 60,
         "age_min": 70,

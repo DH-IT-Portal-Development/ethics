@@ -5,7 +5,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 1,
-        "description": "EEG (electroencephalography)"
+        "description_nl": "EEG (electroencephalography)",
+        "description_en": "EEG (electroencephalography)"
     },
     "model": "tasks.registrationkind",
     "pk": 1
@@ -16,7 +17,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 2,
-        "description": "fMRI (functional magnetic resonance imaging)"
+        "description_nl": "fMRI (functional magnetic resonance imaging)",
+        "description_en": "fMRI (functional magnetic resonance imaging)"
     },
     "model": "tasks.registrationkind",
     "pk": 2
@@ -27,7 +29,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 3,
-        "description": "fNIRS (functional near-infrared spectroscopy)"
+        "description_nl": "fNIRS (functional near-infrared spectroscopy)",
+        "description_en": "fNIRS (functional near-infrared spectroscopy)"
     },
     "model": "tasks.registrationkind",
     "pk": 3
@@ -38,7 +41,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 4,
-        "description": "fEMG (facial electromyography)"
+        "description_nl": "fEMG (facial electromyography)",
+        "description_en": "fEMG (facial electromyography)"
     },
     "model": "tasks.registrationkind",
     "pk": 4
@@ -49,7 +53,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 5,
-        "description": "EMA (electromagnetic articulography)"
+        "description_nl": "EMA (electromagnetic articulography)",
+        "description_en": "EMA (electromagnetic articulography)"
     },
     "model": "tasks.registrationkind",
     "pk": 5
@@ -60,7 +65,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 6,
-        "description": "huidgeleiding (SC/GSR)"
+        "description_nl": "huidgeleiding (SC/GSR)",
+        "description_en": "skin conductance (SC/GSR)"
     },
     "model": "tasks.registrationkind",
     "pk": 6
@@ -71,7 +77,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 7,
-        "description": "ECG (electrocardiography)"
+        "description_nl": "ECG (electrocardiography)",
+        "description_en": "ECG (electrocardiography)"
     },
     "model": "tasks.registrationkind",
     "pk": 7
@@ -82,7 +89,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 8,
-        "description": "BVP (blood volume pulse)"
+        "description_nl": "BVP (blood volume pulse)",
+        "description_en": "BVP (blood volume pulse)"
     },
     "model": "tasks.registrationkind",
     "pk": 8
@@ -93,7 +101,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 9,
-        "description": "ademhaling"
+        "description_nl": "ademhaling",
+        "description_en": "breathing"
     },
     "model": "tasks.registrationkind",
     "pk": 9
@@ -104,7 +113,8 @@
         "needs_details": false,
         "registration": 6,
         "order": 10,
-        "description": "vingertemperatuur"
+        "description_nl": "vingertemperatuur",
+        "description_en": "finger temperature"
     },
     "model": "tasks.registrationkind",
     "pk": 10
@@ -115,7 +125,8 @@
         "needs_details": true,
         "registration": 6,
         "order": 11,
-        "description": "anders, namelijk"
+        "description_nl": "anders, namelijk",
+        "description_en": "otherwise, viz."
     },
     "model": "tasks.registrationkind",
     "pk": 11

@@ -1,8 +1,10 @@
 [
 {
     "fields": {
-        "answer": "Elke keer als u op de blauwe knop 'Volgende stap >>' klikt, wordt de studie opgeslagen in de database. Als u op een later tijdstip verder wilt gaan, kunt u het browserscherm sluiten en uw opgeslagen studie vinden in 'Mijn studies' => 'Mijn conceptstudies'. ",
-        "question": "Wanneer wordt mijn studie opgeslagen?",
+        "answer_nl": "Elke keer als je op de blauwe knop 'Volgende stap >>' klikt, wordt de studie opgeslagen in de database. Als je op een later tijdstip terug komt, kun je je opgeslagen studie vinden in 'Mijn studies' => 'Mijn conceptstudies'. ",
+        "answer_en": "Each time you click the blue button 'Next step >>', the study will be saved in the database. If you return at a later time, you can find your saved study in 'My studies' => 'My concept studies'",
+        "question_nl": "Wanneer wordt mijn studie opgeslagen?",
+        "question_en": "When will my study be saved?",
         "order": 1
     },
     "model": "faqs.faq",
@@ -10,8 +12,10 @@
 },
 {
     "fields": {
-        "answer": "Iedere onderzoeker moet zich eerst eenmalig aanmelden bij het webportaal. Als de onderzoeker zich heeft aangemeld, wordt hij selecteerbaar in de lijst.",
-        "question": "Ik wil een mede-onderzoeker opgeven, maar kan deze niet in de lijst selecteren. Hoe moet ik nu verder?",
+        "answer_nl": "Iedere onderzoeker moet zich eerst eenmalig aanmelden bij het webportaal. Als de onderzoeker zich heeft aangemeld, wordt hij selecteerbaar in de lijst.",
+        "answer_en": "Every researcher has to log in at the portal. Once the researcher has logged in, he will become selectable in the list.",
+        "question_nl": "Ik wil een mede-onderzoeker opgeven, maar kan deze niet in de lijst selecteren. Hoe moet ik nu verder?",
+        "question_en": "I would like to enter a fellow researcher, but I can't select him from the list. How do I continue?",
         "order": 2
     },
     "model": "faqs.faq",

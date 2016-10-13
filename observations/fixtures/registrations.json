@@ -3,7 +3,8 @@
     "fields": {
         "needs_details": false,
         "order": 1,
-        "description": "logdata"
+        "description_nl": "logdata",
+        "description_en": "log data"
     },
     "model": "observations.registration",
     "pk": 1
@@ -12,7 +13,8 @@
     "fields": {
         "needs_details": false,
         "order": 2,
-        "description": "audio-opname"
+        "description_nl": "audio-opname",
+        "description_en": "audio recording"
     },
     "model": "observations.registration",
     "pk": 2
@@ -21,7 +23,8 @@
     "fields": {
         "needs_details": false,
         "order": 3,
-        "description": "video-opname"
+        "description_nl": "video-opname",
+        "description_en": "video recording"
     },
     "model": "observations.registration",
     "pk": 3
@@ -30,7 +33,8 @@
     "fields": {
         "needs_details": false,
         "order": 4,
-        "description": "notities"
+        "description_nl": "notities",
+        "description_en": "notes"
     },
     "model": "observations.registration",
     "pk": 4
@@ -39,7 +43,8 @@
     "fields": {
         "needs_details": true,
         "order": 5,
-        "description": "anders"
+        "description_nl": "anders",
+        "description_en": "otherwise"
     },
     "model": "observations.registration",
     "pk": 5

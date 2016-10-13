@@ -4,7 +4,8 @@
         "requires_review": false,
         "needs_details": false,
         "order": 1,
-        "description": "geen"
+        "description_nl": "geen",
+        "description_en": "none"
     },
     "model": "studies.compensation",
     "pk": 1
@@ -14,7 +15,8 @@
         "requires_review": false,
         "needs_details": false,
         "order": 2,
-        "description": "geld, standaardbedrag (10 euro per uur) of minder"
+        "description_nl": "geld, standaardbedrag (10 euro per uur) of minder",
+        "description_en": "money, default compensation (10 euro per hour) or less"
     },
     "model": "studies.compensation",
     "pk": 2
@@ -24,7 +26,8 @@
         "requires_review": true,
         "needs_details": true,
         "order": 3,
-        "description": "geld, meer dan 10 euro per uur"
+        "description_nl": "geld, meer dan 10 euro per uur",
+        "description_en": "money, more than 10 euro per hour"
     },
     "model": "studies.compensation",
     "pk": 3
@@ -34,7 +37,8 @@
         "requires_review": false,
         "needs_details": true,
         "order": 4,
-        "description": "cadeautje"
+        "description_nl": "cadeautje",
+        "description_en": "present"
     },
     "model": "studies.compensation",
     "pk": 4
