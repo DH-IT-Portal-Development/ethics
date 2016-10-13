@@ -3,7 +3,7 @@
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse
 from django.views import generic
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from braces.views import LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView

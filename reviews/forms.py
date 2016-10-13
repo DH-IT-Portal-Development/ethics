@@ -1,5 +1,5 @@
 from django import forms
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from core.utils import get_reviewers
 from .models import Review, Decision
