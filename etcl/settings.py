@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'faqs',
 
     'easy_pdf',
+    'modeltranslation',
 
     'django.contrib.admin',
 )
