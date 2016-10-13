@@ -1641,7 +1641,7 @@ msgstr "{}-{} years old"
 
 #: .\studies\models.py:31
 msgid "{} jaar"
-msgstr "{} year{s} old"
+msgstr "{} years old"
 
 #: .\studies\models.py:98 .\studies\models.py:175
 #: .\studies\templates\studies\study_end.html:51
