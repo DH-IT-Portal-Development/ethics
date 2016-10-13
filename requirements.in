@@ -2,6 +2,7 @@ Django>=1.8,<1.9
 django-auth-ldap
 django-braces
 django-easy-pdf
+django-modeltranslation
 mysql-python
 xhtml2pdf
 sphinx
