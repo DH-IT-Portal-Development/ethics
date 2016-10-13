@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-16 20:45+0200\n"
+"POT-Creation-Date: 2016-10-13 21:16+0200\n"
 "PO-Revision-Date: 2016-10-06 17:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\core\forms.py:11 .\core\forms.py:20 .\core\forms.py:29 .\core\forms.py:38
-#: .\core\forms.py:48 .\proposals\forms.py:225
+#: .\core\forms.py:48 .\proposals\forms.py:229
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -39,15 +39,19 @@ msgstr "uncertain"
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: .\core\models.py:33 .\observations\models.py:65 .\proposals\models.py:89
-#: .\studies\models.py:136 .\studies\models.py:166 .\tasks\models.py:126
-#: .\tasks\models.py:134
+#: .\core\models.py:33 .\observations\models.py:65 .\proposals\models.py:90
+#: .\studies\models.py:136 .\studies\models.py:166 .\tasks\models.py:129
+#: .\tasks\models.py:137
 msgid "Namelijk"
 msgstr "Please specify"
 
 #: .\core\models.py:37
-msgid "Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?"
-msgstr "Will the task be conducted under the supervision of the teacher or another qualified person?"
+msgid ""
+"Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of "
+"een ander persoon die bevoegd is?"
+msgstr ""
+"Will the task be conducted under the supervision of the teacher or another "
+"qualified person?"
 
 #: .\core\templates\base\base.html:8 .\core\templates\base\base.html.py:41
 msgid "ETCL UiL OTS"
@@ -188,26 +192,34 @@ msgstr "Progress"
 msgid ""
 "\n"
 "    In deze webportal van de Ethische Toetsingscommissie Linguïstiek kunt u\n"
-"    alle <strong>praktische zaken</strong> rondom de ethische toetsing van uw\n"
+"    alle <strong>praktische zaken</strong> rondom de ethische toetsing van "
+"uw\n"
 "    UiL-OTS onderzoek regelen. U kunt een nieuwe studie bij de commissie\n"
-"    aanmelden, maar ook bekijken wat er allemaal eerder door uzelf is aangemeld.\n"
+"    aanmelden, maar ook bekijken wat er allemaal eerder door uzelf is "
+"aangemeld.\n"
 "    Verder kunt u alle UiL OTS studies zien die de ETCL heeft goedgekeurd.\n"
 "    Voor noodzakelijke achtergrondinformatie verwijzen we naar de\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/\" target=\"_blank\">UU-webpagina van de ETCL</a>,\n"
+"    <a href=\"http://etcl.wp.hum.uu.nl/\" target=\"_blank\">UU-webpagina van "
+"de ETCL</a>,\n"
 "    alsmede naar het\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/reglement/\" target=\"_blank\">reglement</a>.\n"
+"    <a href=\"http://etcl.wp.hum.uu.nl/reglement/\" target=\"_blank"
+"\">reglement</a>.\n"
 "    "
 msgstr ""
 "\n"
-"    This web portal for the Ethical Testing Committee for Linguistics enables you to organise\n"
-"    all <strong>practical matters</strong> relating to the ethical testing of your\n"
+"    This web portal for the Ethical Testing Committee for Linguistics "
+"enables you to organise\n"
+"    all <strong>practical matters</strong> relating to the ethical testing "
+"of your\n"
 "    UiL OTS research. You can register a new study with the committee\n"
 "    as well as viewing all your previous applications.\n"
 "    You can also see all UiL OTS studies approved by the ETCL.\n"
 "    For necessary background information please refer to the\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/\" target=\"_blank\">UU ETCL webpage</a>,\n"
+"    <a href=\"http://etcl.wp.hum.uu.nl/\" target=\"_blank\">UU ETCL webpage</"
+"a>,\n"
 "    or to the\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/reglement/\" target=\"_blank\">regulations</a>."
+"    <a href=\"http://etcl.wp.hum.uu.nl/reglement/\" target=\"_blank"
+"\">regulations</a>."
 
 #: .\core\templates\core\index.html:27
 msgid ""
@@ -219,7 +231,8 @@ msgstr ""
 "    In this portal you can do the following:"
 
 #: .\core\templates\core\index.html:34
-msgid "Een nieuwe studie aanmelden (<em>from scratch</em> in een leeg formulier)"
+msgid ""
+"Een nieuwe studie aanmelden (<em>from scratch</em> in een leeg formulier)"
 msgstr "Register a new study (<em>from scratch</em> in an empty form)"
 
 #: .\core\templates\core\index.html:37
@@ -258,21 +271,25 @@ msgstr "Give feedback on this portal"
 #, python-format
 msgid ""
 "\n"
-"    Welkom bij het portal van de ETCL. U kunt <a href=\"%(the_url)s\">hier</a> inloggen met uw Solis-ID.\n"
+"    Welkom bij het portal van de ETCL. U kunt <a href=\"%(the_url)s\">hier</"
+"a> inloggen met uw Solis-ID.\n"
 "    "
 msgstr ""
 "\n"
-"\t Welcome to the ETCL web portal. You can sign in <a href=\"%(the_url)s\">here</a> with your Solis-ID.\n"
+"\t Welcome to the ETCL web portal. You can sign in <a href=\"%(the_url)s"
+"\">here</a> with your Solis-ID.\n"
 "\t"
 
 #: .\core\templates\core\index.html:84
 msgid ""
 "\n"
-"    Klik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren naar de ETCL-website.\n"
+"    Klik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren "
+"naar de ETCL-website.\n"
 "    "
 msgstr ""
 "\n"
-"    Click <a href=\"http://etcl.wp.hum.uu.nl\">here</a> to return to the ETCL website.\n"
+"    Click <a href=\"http://etcl.wp.hum.uu.nl\">here</a> to return to the "
+"ETCL website.\n"
 "    "
 
 #: .\core\templates\registration\logged_out.html:13
@@ -283,25 +300,30 @@ msgstr "You have successfully logged out."
 #, python-format
 msgid ""
 "\n"
-"\tKlik  <a href=\"%(login_url)s\">hier</a> om opnieuw in te loggen met uw Solis-ID.\n"
+"\tKlik  <a href=\"%(login_url)s\">hier</a> om opnieuw in te loggen met uw "
+"Solis-ID.\n"
 "\t"
 msgstr ""
 "\n"
-"\tClick <a href=\"%(login_url)s\">here</a> to log in again with your Solis-ID.\n"
+"\tClick <a href=\"%(login_url)s\">here</a> to log in again with your Solis-"
+"ID.\n"
 "\t"
 
 #: .\core\templates\registration\logged_out.html:23
 msgid ""
 "\n"
-"\tKlik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren naar de ETCL-website.\n"
+"\tKlik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren naar "
+"de ETCL-website.\n"
 "\t"
 msgstr ""
 "\n"
-"\tClick <a href=\"http://etcl.wp.hum.uu.nl\">here</a> to return to the ETCL website.\n"
+"\tClick <a href=\"http://etcl.wp.hum.uu.nl\">here</a> to return to the ETCL "
+"website.\n"
 "\t"
 
 #: .\core\templates\registration\login.html:14
-msgid "Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw."
+msgid ""
+"Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw."
 msgstr "Username or password incorrect. Please try again."
 
 #: .\core\templates\registration\login.html:18
@@ -327,11 +349,11 @@ msgstr[1] "This field can contain a maximum of %(limit_value)d words."
 msgid "Alleen .pdf- of .doc(x)-bestanden zijn toegestaan."
 msgstr "Only .pdf or .doc(x) files are accepted."
 
-#: .\etcl\settings.py:107
+#: .\etcl\settings.py:108
 msgid "Nederlands"
 msgstr "Dutch"
 
-#: .\etcl\settings.py:108
+#: .\etcl\settings.py:109
 msgid "Engels"
 msgstr "English"
 
@@ -407,7 +429,8 @@ msgstr "Thanks for your feedback!"
 #, python-format
 msgid ""
 "\n"
-"Klik <a href=\"%(url)s\">hier</a> om terug te keren naar pagina waar u gebleven was.\n"
+"Klik <a href=\"%(url)s\">hier</a> om terug te keren naar pagina waar u "
+"gebleven was.\n"
 msgstr ""
 "\n"
 "Click <a href=\"%(url)s\">here</a> to return to the page you were on.\n"
@@ -449,8 +472,14 @@ msgid "Hoe wordt het effect van de interventie gemeten?"
 msgstr "How will the effect of the intervention be measured?"
 
 #: .\interventions\models.py:29
-msgid "Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina ook \"takenonderzoek\" aanvinken."
-msgstr "If you require the participant to carry out an extra task, one that is not part of the regular educational package, you should also check \"task-based research\" on the previous page."
+msgid ""
+"Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet "
+"behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina "
+"ook \"takenonderzoek\" aanvinken."
+msgstr ""
+"If you require the participant to carry out an extra task, one that is not "
+"part of the regular educational package, you should also check \"task-based "
+"research\" on the previous page."
 
 #: .\interventions\templates\interventions\intervention_form.html:7
 #: .\interventions\utils.py:11
@@ -485,28 +514,40 @@ msgid "Wordt er anoniem geobserveerd?"
 msgstr "Will the observation be anonymous?"
 
 #: .\observations\models.py:33
-msgid "Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft."
+msgid ""
+"Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft."
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: .\observations\models.py:36
 msgid "Doet de onderzoeker zich voor als behorende tot de doelgroep?"
-msgstr "Will the researcher present him/herself as belonging to the target group?"
+msgstr ""
+"Will the researcher present him/herself as belonging to the target group?"
 
 #: .\observations\models.py:39
 msgid "Wordt er geobserveerd in een niet-openbare ruimte?"
 msgstr "Will observations be made in a non-public space?"
 
 #: .\observations\models.py:40
-msgid "Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor moet worden aangemaakt."
-msgstr "For example, will observations be made in someone's home, during a mortgage negotiation, during a police interrogation or in a forum for which an account must be created."
+msgid ""
+"Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een "
+"hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor "
+"moet worden aangemaakt."
+msgstr ""
+"For example, will observations be made in someone's home, during a mortgage "
+"negotiation, during a police interrogation or in a forum for which an "
+"account must be created."
 
 #: .\observations\models.py:45
 msgid "Vindt informed consent van tevoren plaats?"
 msgstr "Will informed consent take place beforehand?"
 
 #: .\observations\models.py:49
-msgid "Heeft u toestemming nodig van een (samenwerkende) instantie om deze observatie te mogen uitvoeren?"
-msgstr "Do you need permission from a (collaborating) institution in order to carry out this observation?"
+msgid ""
+"Heeft u toestemming nodig van een (samenwerkende) instantie om deze "
+"observatie te mogen uitvoeren?"
+msgstr ""
+"Do you need permission from a (collaborating) institution in order to carry "
+"out this observation?"
 
 #: .\observations\models.py:53
 msgid "Welke instantie?"
@@ -547,208 +588,306 @@ msgstr "Recording behaviour"
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: .\proposals\forms.py:34 .\proposals\forms.py:80
+#: .\proposals\forms.py:35 .\proposals\forms.py:84
 msgid "Er bestaat al een studie met deze titel."
 msgstr "There is already an existing study with this title. "
 
-#: .\proposals\forms.py:48
+#: .\proposals\forms.py:49
 msgid "Selecteer..."
 msgstr "Select..."
 
-#: .\proposals\forms.py:63
+#: .\proposals\forms.py:64
 msgid "U dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the person with final responsibility,"
 
-#: .\proposals\forms.py:67
+#: .\proposals\forms.py:68
 msgid "U heeft geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: .\proposals\forms.py:126
+#: .\proposals\forms.py:130
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: .\proposals\forms.py:176
+#: .\proposals\forms.py:180
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: .\proposals\forms.py:177
+#: .\proposals\forms.py:181
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: .\proposals\forms.py:178
+#: .\proposals\forms.py:182
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: .\proposals\forms.py:179
+#: .\proposals\forms.py:183
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: .\proposals\forms.py:180
+#: .\proposals\forms.py:184
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: .\proposals\forms.py:219
-msgid "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn."
-msgstr "If different trajectories are used, at least two different trajectories should be filled in."
+#: .\proposals\forms.py:223
+msgid ""
+"Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
+"verschillende trajecten zijn."
+msgstr ""
+"If different trajectories are used, at least two different trajectories "
+"should be filled in."
 
-#: .\proposals\forms.py:242
+#: .\proposals\forms.py:246
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: .\proposals\forms.py:244
+#: .\proposals\forms.py:248
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: .\proposals\models.py:48
+#: .\proposals\models.py:49
 msgid "Concept"
 msgstr "Draft"
 
-#: .\proposals\models.py:50
+#: .\proposals\models.py:51
 msgid "Opgestuurd ter beoordeling door eindverantwoordelijke"
 msgstr "Sent for assessment by researcher with final responsibility"
 
-#: .\proposals\models.py:51
+#: .\proposals\models.py:52
 msgid "Opgestuurd ter beoordeling door ETCL"
 msgstr "Sent for assessment by ETCL"
 
-#: .\proposals\models.py:53
+#: .\proposals\models.py:54
 msgid "Studie is beoordeeld door ETCL"
 msgstr "Application has been assessed by ETCL"
 
-#: .\proposals\models.py:54
+#: .\proposals\models.py:55
 msgid "Studie is beoordeeld door METC"
 msgstr "Application has been assessed by METC"
 
-#: .\proposals\models.py:62
+#: .\proposals\models.py:63
 msgid "Wat is, indien bekend, de beoogde startdatum van uw studie?"
 msgstr "What is the intended start date of your study, if known?"
 
-#: .\proposals\models.py:66
+#: .\proposals\models.py:67
 msgid "Wat is de titel van uw studie?"
 msgstr "What is the title of your study?"
 
-#: .\proposals\models.py:69
-msgid "De titel die u hier opgeeft is zichtbaar voor de ETCL-leden en, wanneer de studie is goedgekeurd, ook voor alle UiL-OTS medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een studie die u heeft ingediend."
-msgstr "The title you submit here will be visible to the ETCL members and, if the study is approved, also to UiL OTS employees viewing the archive of this portal. The title cannot be identical to that of a study you have previously submitted."
+#: .\proposals\models.py:70
+msgid ""
+"De titel die u hier opgeeft is zichtbaar voor de ETCL-leden en, wanneer de "
+"studie is goedgekeurd, ook voor alle UiL-OTS medewerkers die in het archief "
+"van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel "
+"van een studie die u heeft ingediend."
+msgstr ""
+"The title you submit here will be visible to the ETCL members and, if the "
+"study is approved, also to UiL OTS employees viewing the archive of this "
+"portal. The title cannot be identical to that of a study you have previously "
+"submitted."
 
-#: .\proposals\models.py:74
-msgid "Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden."
-msgstr "Give a clear, concise description of the research question or questions. Use a maximum of 200 words."
+#: .\proposals\models.py:75
+msgid ""
+"Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. "
+"Gebruik maximaal 200 woorden."
+msgstr ""
+"Give a clear, concise description of the research question or questions. Use "
+"a maximum of 200 words."
 
-#: .\proposals\models.py:77
-msgid "Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie betrokken?"
+#: .\proposals\models.py:78
+msgid ""
+"Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie "
+"betrokken?"
 msgstr "Are there any other UiL OTS researchers involved in this study?"
 
-#: .\proposals\models.py:80
+#: .\proposals\models.py:81
 msgid "Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?"
-msgstr "Are there any other researchers from outside UiL OTS involved in this study?"
+msgstr ""
+"Are there any other researchers from outside UiL OTS involved in this study?"
 
-#: .\proposals\models.py:83
+#: .\proposals\models.py:84
 msgid "Andere betrokkenen"
 msgstr "Other people involved"
 
-#: .\proposals\models.py:87
+#: .\proposals\models.py:88
 msgid "Hoe wordt dit onderzoek gefinancierd?"
 msgstr "How is this study funded?"
 
-#: .\proposals\models.py:93 .\reviews\models.py:95
+#: .\proposals\models.py:94
+msgid "Ik vul deze portal in in de context van een cursus"
+msgstr ""
+
+#: .\proposals\models.py:97 .\reviews\models.py:97
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
-#: .\proposals\models.py:99
+#: .\proposals\models.py:103
 msgid "Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?"
 msgstr "Will all participant groups essentially follow the same trajectory?"
 
-#: .\proposals\models.py:100
-msgid "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde moment een verschillende interventie-variant krijgen (specificeer dan wel bij de beschrijving van de interventie welke varianten precies gebruikt worden)."
-msgstr "Where the differences are small, and irrelevant in terms of burden or risk, essentially this is the same trajectory. An example would be a task-based study in which one group receives the first half of a set of short stories to read from task X, and the other group receives the other half of task X, or an intervention study in which three comparable groups receive a different variant of the intervention at the same time (in which case the variants of the intervention used should be specified in the description)."
+#: .\proposals\models.py:104
+msgid ""
+"Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is "
+"sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek "
+"waarin de ene groep in taak X de ene helft van een set verhaaltjes te lezen "
+"krijgt, en de andere groep in taak X de andere helft. Of aan "
+"interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde moment "
+"een verschillende interventie-variant krijgen (specificeer dan wel bij de "
+"beschrijving van de interventie welke varianten precies gebruikt worden)."
+msgstr ""
+"Where the differences are small, and irrelevant in terms of burden or risk, "
+"essentially this is the same trajectory. An example would be a task-based "
+"study in which one group receives the first half of a set of short stories "
+"to read from task X, and the other group receives the other half of task X, "
+"or an intervention study in which three comparable groups receive a "
+"different variant of the intervention at the same time (in which case the "
+"variants of the intervention used should be specified in the description)."
 
-#: .\proposals\models.py:109
+#: .\proposals\models.py:113
 msgid "Hoeveel verschillende trajecten zijn er?"
 msgstr "How many different trajectories are there?"
 
-#: .\proposals\models.py:128
+#: .\proposals\models.py:132
 msgid "In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?"
 msgstr "In what capacity are you involved in this UiL OTS study?"
 
-#: .\proposals\models.py:135
+#: .\proposals\models.py:139
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: .\proposals\models.py:137
-msgid "Als uw medeonderzoeker niet in de lijst voorkomt, vraag hem dan een keer in te loggen in het webportaal."
-msgstr "If your fellow researcher does not appear in the list, ask him/her to log into the web portal."
-
 #: .\proposals\models.py:141
+msgid ""
+"Als uw medeonderzoeker niet in de lijst voorkomt, vraag hem dan een keer in "
+"te loggen in het webportaal."
+msgstr ""
+"If your fellow researcher does not appear in the list, ask him/her to log "
+"into the web portal."
+
+#: .\proposals\models.py:145
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
-#: .\proposals\models.py:144
-msgid "Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL."
-msgstr "At the end of the procedure, it is possible to send this application to the researcher with final responsibility for verification. The researcher with final responsibility can then make adjustments and submit the study to the ETCL. "
+#: .\proposals\models.py:148
+msgid ""
+"Aan het einde van de procedure kunt u deze studie ter verificatie naar uw "
+"eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie "
+"vervolgens kunnen aanpassen en indienen bij de ETCL."
+msgstr ""
+"At the end of the procedure, it is possible to send this application to the "
+"researcher with final responsibility for verification. The researcher with "
+"final responsibility can then make adjustments and submit the study to the "
+"ETCL. "
 
-#: .\proposals\models.py:149
+#: .\proposals\models.py:155
 msgid "Te kopiëren studie"
 msgstr "Application to be copied"
 
-#: .\proposals\models.py:150
+#: .\proposals\models.py:156
 msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
 msgstr "This field shows only studies in which you are involved."
 
-#: .\proposals\models.py:205
+#: .\proposals\models.py:158
+#, fuzzy
+#| msgid "Is deze sessie een kopie van een voorgaande sessie?"
+msgid "Is deze studie een revisie van of amendement op een ingediende studie?"
+msgstr "Is this session a copy of a previous session?"
+
+#: .\proposals\models.py:215
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: .\proposals\models.py:206
+#: .\proposals\models.py:216
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: .\proposals\models.py:207
+#: .\proposals\models.py:217
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: .\proposals\models.py:211
-msgid "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?"
-msgstr "Will the data collection take place at the UMC Utrecht or another institution for which an assessment by a METC is required?"
+#: .\proposals\models.py:221
+msgid ""
+"Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
+"waar toetsing door een METC verplicht is gesteld?"
+msgstr ""
+"Will the data collection take place at the UMC Utrecht or another "
+"institution for which an assessment by a METC is required?"
 
-#: .\proposals\models.py:218 .\studies\models.py:126 .\studies\models.py:156
+#: .\proposals\models.py:228 .\studies\models.py:126 .\studies\models.py:156
 #: .\studies\models.py:287
 msgid "Licht toe"
 msgstr "Explain"
 
-#: .\proposals\models.py:221
+#: .\proposals\models.py:231
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: .\proposals\models.py:225
-msgid "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?"
-msgstr "Is the nature of the research question medical (as defined by the Medical Research Involving Human Subjects Act (WMO))?"
+#: .\proposals\models.py:235
+msgid ""
+"Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
+"door de WMO)?"
+msgstr ""
+"Is the nature of the research question medical (as defined by the Medical "
+"Research Involving Human Subjects Act (WMO))?"
 
-#: .\proposals\models.py:227
-msgid "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid (etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)"
-msgstr "The definition of medical research is as follows: Medical research is research which aims to answer a question in the area of disease and health (aetiology, pathogenesis, symptoms, diagnosis, prevention, outcome or treatment of disease) by systematically gathering and studying data. The research aims to contribute to medical knowledge which is also valid for populations outside the direct research population. (Memo from the Central Committee on Research Involving Human Subjects, Definition of medical research, 2005, ccmo.nl)"
+#: .\proposals\models.py:237
+msgid ""
+"De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
+"wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
+"van een vraag op het gebied van ziekte en gezondheid (etiologie, "
+"pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of "
+"behandeling van ziekte), door het op systematische wijze vergaren en "
+"bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische "
+"kennis die ook geldend is voor populaties buiten de directe "
+"onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk "
+"onderzoek, 2005, ccmo.nl)"
+msgstr ""
+"The definition of medical research is as follows: Medical research is "
+"research which aims to answer a question in the area of disease and health "
+"(aetiology, pathogenesis, symptoms, diagnosis, prevention, outcome or "
+"treatment of disease) by systematically gathering and studying data. The "
+"research aims to contribute to medical knowledge which is also valid for "
+"populations outside the direct research population. (Memo from the Central "
+"Committee on Research Involving Human Subjects, Definition of medical "
+"research, 2005, ccmo.nl)"
 
-#: .\proposals\models.py:240
-msgid "Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
-msgstr "Will the participants undergo treatment or will rules of conduct be imposed on them (as defined by the WMO)?"
-
-#: .\proposals\models.py:242
-msgid "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, slechts dan kan \"nee\" ingevuld worden."
-msgstr "Treatment or imposed rules of conduct vary from taking tissue from a participant to requiring the participant to press a button. The answer \"no\" can only be given in observational studies in which no instructions are given to the participants, and they are observed exclusively in their lives as they would normally have acted without observation."
+#: .\proposals\models.py:250
+msgid ""
+"Worden de deelnemers aan een handeling onderworpen of worden hen "
+"gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
+msgstr ""
+"Will the participants undergo treatment or will rules of conduct be imposed "
+"on them (as defined by the WMO)?"
 
 #: .\proposals\models.py:252
-msgid "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
-msgstr "Your study must be assessed by a METC, but it still needs to be registered with the ETCL. Has an application for this study already been submitted to a METC?"
+msgid ""
+"Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
+"weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. "
+"Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, "
+"deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had "
+"plaatsgevonden zonder de observatie, slechts dan kan \"nee\" ingevuld worden."
+msgstr ""
+"Treatment or imposed rules of conduct vary from taking tissue from a "
+"participant to requiring the participant to press a button. The answer \"no"
+"\" can only be given in observational studies in which no instructions are "
+"given to the participants, and they are observed exclusively in their lives "
+"as they would normally have acted without observation."
 
-#: .\proposals\models.py:257
+#: .\proposals\models.py:262
+msgid ""
+"Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
+"ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
+msgstr ""
+"Your study must be assessed by a METC, but it still needs to be registered "
+"with the ETCL. Has an application for this study already been submitted to a "
+"METC?"
+
+#: .\proposals\models.py:267
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: .\proposals\models.py:260
+#: .\proposals\models.py:270
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: .\proposals\models.py:287
+#: .\proposals\models.py:297
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -787,7 +926,9 @@ msgid "Studie kopiëren"
 msgstr "Copy application"
 
 #: .\proposals\templates\proposals\proposal_copy.html:14
-msgid "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden."
+msgid ""
+"U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren "
+"aangepast worden."
 msgstr "You can copy a study here. All fields can be edited after copying."
 
 #: .\proposals\templates\proposals\proposal_copy.html:18
@@ -801,7 +942,7 @@ msgstr "Copy"
 msgid "Algemene informatie over de studie"
 msgstr "General information about the study"
 
-#: .\proposals\templates\proposals\proposal_form.html:42
+#: .\proposals\templates\proposals\proposal_form.html:44
 msgid "Aantal woorden:"
 msgstr "Number of words:"
 
@@ -868,8 +1009,10 @@ msgstr "unknown"
 #: .\proposals\templates\proposals\proposal_pdf.html:103
 #: .\proposals\templates\proposals\proposal_pdf_empty.html:95
 #: .\proposals\templates\proposals\wmo_form.html:7
-msgid "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?"
-msgstr "Ethical testing by a Medical Ethical Testing Committee (METC) required?"
+msgid ""
+"Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?"
+msgstr ""
+"Ethical testing by a Medical Ethical Testing Committee (METC) required?"
 
 #: .\proposals\templates\proposals\proposal_pdf.html:126
 #: .\proposals\templates\proposals\proposal_pdf_empty.html:114
@@ -944,7 +1087,8 @@ msgstr "Register a new study"
 msgid ""
 "\n"
 "    U wilt een nieuwe studie ter toetsing bij de ETCL aanmelden.\n"
-"    Het is daarvoor <em>noodzakelijk</em> dat u goed bekend bent met het ETCL\n"
+"    Het is daarvoor <em>noodzakelijk</em> dat u goed bekend bent met het "
+"ETCL\n"
 "    reglement (waarin bijvoorbeeld de ETCL definities van 'studie').\n"
 "    U kunt uzelf en de commissieleden veel tijd besparen door uzelf eerst\n"
 "    goed te informeren.\n"
@@ -960,25 +1104,32 @@ msgstr ""
 #: .\proposals\templates\proposals\proposal_start.html:23
 msgid ""
 "\n"
-"    Om een studie t.a.v. <em>informed consent</em>, belasting en risico's voor\n"
+"    Om een studie t.a.v. <em>informed consent</em>, belasting en risico's "
+"voor\n"
 "    de deelnemers, en data-management procedures goed te kunnen beoordelen\n"
 "    heeft de ETCL een gedetailleerde specificatie van de studie nodig.\n"
-"    Na enkele inleidende vragen dient u o.a. op te geven wie er aan deelnemen,\n"
+"    Na enkele inleidende vragen dient u o.a. op te geven wie er aan "
+"deelnemen,\n"
 "    en welk(e) soort(en) onderzoek de studie omvat: observatieonderzoek,\n"
 "    interventieonderzoek en/of takenonderzoek.\n"
-"    Voor elke onderzoekssoort dient u vervolgens op te geven hoe dit onderzoek\n"
-"    in uw studie precies is vormgegeven. Na dit alles zult u gevraagd worden\n"
+"    Voor elke onderzoekssoort dient u vervolgens op te geven hoe dit "
+"onderzoek\n"
+"    in uw studie precies is vormgegeven. Na dit alles zult u gevraagd "
+"worden\n"
 "    een inschatting te geven van de belasting van, en risico's voor, de\n"
 "    deelnemers, en dient u vervolgens alle voor uw studie aangepaste\n"
 "    formulieren ten bate van <em>informed consent</em> te uploaden.\n"
 "    "
 msgstr ""
 "\n"
-"    In order to properly assess a study with respect to <em>informed consent</em>,\n"
+"    In order to properly assess a study with respect to <em>informed "
+"consent</em>,\n"
 "    burden and risks to participants, and data-management procedures\n"
 "    the ETCL needs a detailed description of the study.\n"
-"    After a few introductory questions you are required to state among other things who will participate,\n"
-"    and what kind(s) of research the study includes: observational research,\n"
+"    After a few introductory questions you are required to state among other "
+"things who will participate,\n"
+"    and what kind(s) of research the study includes: observational "
+"research,\n"
 "    intervention research and/or task-based research.\n"
 "    For each type of research you are then required to state\n"
 "    what form it takes in your study. You will then be asked\n"
@@ -1016,9 +1167,12 @@ msgid ""
 msgstr ""
 "\n"
 "    Depending on the complexity of your research the specification may take\n"
-"    considerable time. However, you can always interrupt the registration, save it,\n"
-"    and finish it later. Your description will only be visible to the ETCL and,\n"
-"    if approved, to your colleagues within the UiL OTS. The participants will\n"
+"    considerable time. However, you can always interrupt the registration, "
+"save it,\n"
+"    and finish it later. Your description will only be visible to the ETCL "
+"and,\n"
+"    if approved, to your colleagues within the UiL OTS. The participants "
+"will\n"
 "    not see anything you specify here.\n"
 "    "
 
@@ -1038,7 +1192,8 @@ msgstr ""
 "\n"
 "    When filling in the forms please avoid using abbreviations the ETCL\n"
 "    might not be familiar with.\n"
-"    If you have questions, first consult the <a href=\"%(regulations)s\" target=\"_blank\">regulations</a>,\n"
+"    If you have questions, first consult the <a href=\"%(regulations)s\" "
+"target=\"_blank\">regulations</a>,\n"
 "    and if necessary contact the ETCL secretary (%(secretary_name)s,\n"
 "   <a href=\"mailto:%(secretary_mail)s\">%(secretary_mail)s</a>).\n"
 "    "
@@ -1060,62 +1215,79 @@ msgstr ""
 #: .\proposals\templates\proposals\proposal_submit.html:23
 msgid ""
 "\n"
-"    U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen.\n"
+"    U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor "
+"versturen.\n"
 "    "
 msgstr ""
 "\n"
-"    You can now send your draft application to your supervisor for assessment."
+"    You can now send your draft application to your supervisor for "
+"assessment."
 
 #: .\proposals\templates\proposals\proposal_submit.html:27
 msgid ""
 "\n"
-"    Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding\n"
+"    Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd "
+"kunt u de aanmelding\n"
 "    nu ter beoordeling naar de ETCL versturen.\n"
 "    "
 msgstr ""
 "\n"
-"    If you are sure your study is adequately specified, you can now submit the application\n"
+"    If you are sure your study is adequately specified, you can now submit "
+"the application\n"
 "    to the ETCL for assessment.\n"
 "    "
 
 #: .\proposals\templates\proposals\proposal_submit.html:34
 msgid ""
 "\n"
-"    Als u de concept-aanmelding eerst nog even wilt nakijken kan dat door via \"Terug naar begin\n"
-"    van de studie\" alle pagina's nog even door te lopen, of gebruik te maken van de knop \n"
+"    Als u de concept-aanmelding eerst nog even wilt nakijken kan dat door "
+"via \"Terug naar begin\n"
+"    van de studie\" alle pagina's nog even door te lopen, of gebruik te "
+"maken van de knop \n"
 "    \"Toon navigatie\" in de rechterbovenhoek.\n"
 "    "
 msgstr ""
 "\n"
-"    If you would still like to check the draft application you can do so via \"Back to the beginning\n"
-"    of the study\" to go through all pages again, or use the \"Show navigation\" button in the top\n"
+"    If you would still like to check the draft application you can do so via "
+"\"Back to the beginning\n"
+"    of the study\" to go through all pages again, or use the \"Show "
+"navigation\" button in the top\n"
 "    right-hand corner.\n"
 "    "
 
 #: .\proposals\templates\proposals\proposal_submit.html:41
 msgid ""
 "\n"
-"    Als u de concept-aanmelding nu nog niet wilt versturen kunt u gewoon teruggaan naar de startpagina;\n"
-"    de concept-aanvraag wordt dan bewaard voor evt. latere wijziging en indiening.\n"
+"    Als u de concept-aanmelding nu nog niet wilt versturen kunt u gewoon "
+"teruggaan naar de startpagina;\n"
+"    de concept-aanvraag wordt dan bewaard voor evt. latere wijziging en "
+"indiening.\n"
 "    "
 msgstr ""
 "\n"
-"    If you are not yet ready to submit the draft application you can return to the start page;\n"
-"    the draft application can be saved for any later changes and submission.\n"
+"    If you are not yet ready to submit the draft application you can return "
+"to the start page;\n"
+"    the draft application can be saved for any later changes and "
+"submission.\n"
 "    "
 
 #: .\proposals\templates\proposals\proposal_submit.html:51
 #, python-format
 msgid ""
 "\n"
-"    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject %(study_order)s.\n"
-"    Die kunt u op <a href=\"%(consent_link)s\">deze pagina</a> alsnog toevoegen.\n"
-"    Als u deze formulieren nog niet klaar hebt, kunt u ook op een later moment terugkeren;\n"
-"    uw studie is reeds opgeslagen en terug te vinden onder \"Mijn concepten\".\n"
+"    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd "
+"voor traject %(study_order)s.\n"
+"    Die kunt u op <a href=\"%(consent_link)s\">deze pagina</a> alsnog "
+"toevoegen.\n"
+"    Als u deze formulieren nog niet klaar hebt, kunt u ook op een later "
+"moment terugkeren;\n"
+"    uw studie is reeds opgeslagen en terug te vinden onder \"Mijn concepten"
+"\".\n"
 "    "
 msgstr ""
 "\n"
-"    You have not yet added a declaration of consent or information letter for trajectory %(study_order)s.\n"
+"    You have not yet added a declaration of consent or information letter "
+"for trajectory %(study_order)s.\n"
 "    You can add these on <a href=\"%(consent_link)s\">this page</a>.\n"
 "    If these forms are not yet ready, you can return later;\n"
 "    your study has already been saved and can be found under \"My drafts\".\n"
@@ -1130,31 +1302,46 @@ msgid "Concept-aanmelding verstuurd"
 msgstr "Draft application submitted"
 
 #: .\proposals\templates\proposals\proposal_submitted.html:14
-msgid "Uw concept-aanmelding is verstuurd. U ontvangt een e-mail ter bevestiging."
-msgstr "Your draft application has been submitted. You will receive a confirmation email."
+msgid ""
+"Uw concept-aanmelding is verstuurd. U ontvangt een e-mail ter bevestiging."
+msgstr ""
+"Your draft application has been submitted. You will receive a confirmation "
+"email."
 
 #: .\proposals\templates\proposals\proposal_submitted.html:16
 #, python-format
 msgid ""
 "\n"
-"    Klik <a href=\"%(submitted_url)s\">hier</a> om uw ingediende studies in te zien.\n"
+"    Klik <a href=\"%(submitted_url)s\">hier</a> om uw ingediende studies in "
+"te zien.\n"
 "    "
 msgstr ""
 "\n"
-"    Click <a href=\"%(submitted_url)s\">here</a> to see your submitted studies.\n"
+"    Click <a href=\"%(submitted_url)s\">here</a> to see your submitted "
+"studies.\n"
 "    "
 
 #: .\proposals\templates\proposals\study_start.html:17
-msgid "U kunt de aard van de studie nu in detail op de volgende pagina's specificeren."
-msgstr "You can now describe the nature of the study in detail on the following pages."
+msgid ""
+"U kunt de aard van de studie nu in detail op de volgende pagina's "
+"specificeren."
+msgstr ""
+"You can now describe the nature of the study in detail on the following "
+"pages."
 
 #: .\proposals\templates\proposals\study_start.html:18
-msgid "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren."
-msgstr "You can now describe the nature of <em>each trajectory</em> of the study on the following pages."
+msgid ""
+"U kunt de aard van de studie nu <em>per traject</em> in detail op de "
+"volgende pagina's specificeren."
+msgstr ""
+"You can now describe the nature of <em>each trajectory</em> of the study on "
+"the following pages."
 
 #: .\proposals\templates\proposals\study_start.html:21
-msgid "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."
-msgstr "Give each trajectory below a descriptive title of a maximum of 15 characters."
+msgid ""
+"Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."
+msgstr ""
+"Give each trajectory below a descriptive title of a maximum of 15 characters."
 
 #: .\proposals\templates\proposals\study_start.html:62
 msgid ""
@@ -1162,10 +1349,12 @@ msgid ""
 "    In de meeste UiL OTS studies doorlopen alle deelnemers een in essentie\n"
 "    vergelijkbaar traject.\n"
 "    Bijvoorbeeld eerst een observatiefase, dan een interventiefase\n"
-"    (waarin een van twee typen interventies), en dan weer een observatiefase.\n"
+"    (waarin een van twee typen interventies), en dan weer een "
+"observatiefase.\n"
 "    Of: een takensessie met drie verschillende reactietijd-taken gevolgd\n"
 "    door twee vragenlijsten.\n"
-"    Kleine verschillen tussen wat de verschillende deelnemers in zo'n traject\n"
+"    Kleine verschillen tussen wat de verschillende deelnemers in zo'n "
+"traject\n"
 "    ten deel valt (bijv. in een between-subjects interventiedesign met les\n"
 "    uit een nieuw lesboek of uit het oude lesboek, of between-subjects\n"
 "    RT-takendesigns met een instructie richting snelle of juist accurate\n"
@@ -1178,12 +1367,17 @@ msgstr ""
 "    For example, they might begin with an observation phase, followed by\n"
 "    an intervention phase (including one of two types of interventions),\n"
 "    followed by another observation phase.\n"
-"    Or there might be a task session with three different reaction-time tasks\n"
+"    Or there might be a task session with three different reaction-time "
+"tasks\n"
 "    followed by two questionnaires.\n"
-"    Small differences between what participants are allocated in such a trajectory\n"
-"    (e.g. a between-subjects intervention design with a lesson from a new textbook\n"
-"    or from the old textbook, or between-subject RT-task designs with instructions\n"
-"    for fast or accurate performance) can be referred to as variants of the same\n"
+"    Small differences between what participants are allocated in such a "
+"trajectory\n"
+"    (e.g. a between-subjects intervention design with a lesson from a new "
+"textbook\n"
+"    or from the old textbook, or between-subject RT-task designs with "
+"instructions\n"
+"    for fast or accurate performance) can be referred to as variants of the "
+"same\n"
 "    trajectory.\n"
 "    "
 
@@ -1191,11 +1385,13 @@ msgstr ""
 msgid ""
 "\n"
 "    Soms zal het echter voorkomen dat verschillende deelnemersgroepen echt\n"
-"    heel verschillende trajecten doorlopen, met bijvoorbeeld een verschillend\n"
+"    heel verschillende trajecten doorlopen, met bijvoorbeeld een "
+"verschillend\n"
 "    aantal sessies, meer taken of hele andere taken.\n"
 "    Denk aan een situatie waarin oudere kinderen een takensessie met drie\n"
 "    verschillende reactietijdtaken en twee vragenlijsten doorlopen, en\n"
-"    jongere kinderen slechts twee korte reactietijd-taken en één vragenlijst\n"
+"    jongere kinderen slechts twee korte reactietijd-taken en één "
+"vragenlijst\n"
 "    doen.\n"
 "    Of aan de situate binnen een interventiestudie waarbij niet alleen de\n"
 "    leerlingen worden bestudeerd maar óók de leraar een vragenlijst moet\n"
@@ -1224,8 +1420,12 @@ msgstr ""
 "    "
 
 #: .\proposals\templates\proposals\wmo_application.html:28
-msgid "Zolang uw studie nog niet is beoordeeld door de METC, kunt u niet verder in het aanmeldingsproces."
-msgstr "Until your study has been assessed by the METC, you cannot continue with the registration process."
+msgid ""
+"Zolang uw studie nog niet is beoordeeld door de METC, kunt u niet verder in "
+"het aanmeldingsproces."
+msgstr ""
+"Until your study has been assessed by the METC, you cannot continue with the "
+"registration process."
 
 #: .\proposals\templates\proposals\wmo_check.html:7
 msgid "WMO-check"
@@ -1302,12 +1502,12 @@ msgid "Uw studie zal moeten worden beoordeeld door de METC."
 msgstr "Your study will require assessment by a METC."
 
 #: .\reviews\forms.py:7
-msgid "akkoord"
-msgstr "approved"
+msgid "goedgekeurd"
+msgstr ""
 
 #: .\reviews\forms.py:7
-msgid "niet akkoord"
-msgstr "rejected"
+msgid "niet goedgekeurd"
+msgstr ""
 
 #: .\reviews\forms.py:8
 msgid "korte (2-weken) route"
@@ -1341,32 +1541,38 @@ msgstr "Conclusion by secretary"
 msgid "Afgesloten"
 msgstr "Concluded"
 
-#: .\reviews\models.py:28
+#: .\reviews\models.py:29
 msgid "Goedkeuring door ETCL"
 msgstr "Approval by ETCL"
 
-#: .\reviews\models.py:29
+#: .\reviews\models.py:30
+#, fuzzy
+#| msgid "Noodzakelijkheid"
+msgid "Revisie noodzakelijk"
+msgstr "Necessity"
+
+#: .\reviews\models.py:31
 msgid "Afwijzing door ETCL"
 msgstr "Rejection by ETCL"
 
-#: .\reviews\models.py:30
+#: .\reviews\models.py:32
 msgid "Open review met lange (4-weken) route"
 msgstr "Open review on long (4-week) route"
 
-#: .\reviews\models.py:31
+#: .\reviews\models.py:33
 msgid "Laat opnieuw beoordelen door METC"
 msgstr "Submit for reassessment by METC"
 
-#: .\reviews\models.py:35
+#: .\reviews\models.py:37
 msgid "Route"
 msgstr "Route"
 
-#: .\reviews\models.py:36 .\reviews\models.py:92
+#: .\reviews\models.py:38 .\reviews\models.py:94
 #: .\reviews\templates\reviews\review_table.html:7
 msgid "Beslissing"
 msgstr "Decision"
 
-#: .\reviews\models.py:37
+#: .\reviews\models.py:39
 msgid "Afhandeling"
 msgstr "Action"
 
@@ -1375,12 +1581,17 @@ msgid "Uitkomst automatische review"
 msgstr "Result of automatic review"
 
 #: .\reviews\templates\reviews\auto_review.html:7
-msgid "Volgens de automatische review kan dit voorstel de <em>korte (2-weken) route</em> volgen."
-msgstr "According to the automatic review this proposal can follow the <em>short (2-week route)</em>."
+msgid ""
+"Volgens de automatische review kan dit voorstel de <em>korte (2-weken) "
+"route</em> volgen."
+msgstr ""
+"According to the automatic review this proposal can follow the <em>short (2-"
+"week route)</em>."
 
 #: .\reviews\templates\reviews\auto_review.html:9
 msgid "Volgens de automatische review moet dit voorstel nader worden bekeken."
-msgstr "According to the automatic review this proposal must be examined further."
+msgstr ""
+"According to the automatic review this proposal must be examined further."
 
 #: .\reviews\templates\reviews\auto_review.html:13
 msgid "Redenen"
@@ -1391,8 +1602,12 @@ msgid "Studie beoordelen"
 msgstr "Assess study"
 
 #: .\reviews\templates\reviews\decision_form.html:17
-msgid "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie."
-msgstr "If you approve the study, it will be sent for assessment by the ethical committee."
+msgid ""
+"Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd "
+"naar de ethische commissie."
+msgstr ""
+"If you approve the study, it will be sent for assessment by the ethical "
+"committee."
 
 #: .\reviews\templates\reviews\decision_form.html:22
 msgid "Beslissing opslaan"
@@ -1444,11 +1659,13 @@ msgstr "Appoint committee members"
 #, python-format
 msgid ""
 "\n"
-"    Kies hier de geschikte route en commissieleden voor de studie <em>%(title)s</em>.\n"
+"    Kies hier de geschikte route en commissieleden voor de studie <em>"
+"%(title)s</em>.\n"
 "    "
 msgstr ""
 "\n"
-"    Choose the appropriate route and committee members for the study <em>%(title)s</em> here.\n"
+"    Choose the appropriate route and committee members for the study <em>"
+"%(title)s</em> here.\n"
 "    "
 
 #: .\reviews\templates\reviews\review_close_form.html:7
@@ -1460,11 +1677,13 @@ msgstr "Conclude review"
 #, python-format
 msgid ""
 "\n"
-"\tSluit hier de review voor de studie <em>%(title)s</em> af. Hieronder volgen de individuele beslissingen.\n"
+"\tSluit hier de review voor de studie <em>%(title)s</em> af. Hieronder "
+"volgen de individuele beslissingen.\n"
 "\t"
 msgstr ""
 "\n"
-"\tConclude the review of the study <em>%(title)s</em> here. The individual decisions follow below.\n"
+"\tConclude the review of the study <em>%(title)s</em> here. The individual "
+"decisions follow below.\n"
 "\t"
 
 #: .\reviews\templates\reviews\review_close_form.html:18
@@ -1584,40 +1803,82 @@ msgstr "The study makes use of misrepresentation."
 
 #: .\reviews\utils.py:153
 msgid "De beloning van deelnemers wijkt af van de UiL OTS standaardregeling."
-msgstr "The compensation to participants differs from that of the UiL OTS standard regulations."
+msgstr ""
+"The compensation to participants differs from that of the UiL OTS standard "
+"regulations."
 
 #: .\reviews\utils.py:156
-msgid "De studie selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen."
-msgstr "The study selects participants based on particular characteristics which might entail increased vulnerability."
+msgid ""
+"De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
+"verhoogde kwetsbaarheid met zich meebrengen."
+msgstr ""
+"The study selects participants based on particular characteristics which "
+"might entail increased vulnerability."
 
 #: .\reviews\utils.py:162
-msgid "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek)."
-msgstr "The study consists of several sessions, i.e. the participant takes part on multiple days (as in a longitudinal study)."
+msgid ""
+"De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
+"dagen deel (zoals bij longitudinaal onderzoek)."
+msgstr ""
+"The study consists of several sessions, i.e. the participant takes part on "
+"multiple days (as in a longitudinal study)."
 
 #: .\reviews\utils.py:165
-msgid "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen."
-msgstr "The researcher states (or considers it possible) that the study in part or in its entirety is so burdensome that despite acquiring informed consent it might raise questions."
+msgid ""
+"De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
+"of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
+"consent vragen zou kunnen oproepen."
+msgstr ""
+"The researcher states (or considers it possible) that the study in part or "
+"in its entirety is so burdensome that despite acquiring informed consent it "
+"might raise questions."
 
 #: .\reviews\utils.py:169
-msgid "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op psychische of fysieke schade bij deelname aan de studie meer dan minimaal zijn."
-msgstr "The researcher states (or considers it possible) that the risks of psychological or physical harm in participating in the study are more than minimal."
+msgid ""
+"De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
+"psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
+"zijn."
+msgstr ""
+"The researcher states (or considers it possible) that the risks of "
+"psychological or physical harm in participating in the study are more than "
+"minimal."
 
 #: .\reviews\utils.py:176
 #, python-brace-format
-msgid "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-taak elementen ({d} minuten), is groter dan het streefmaximum ({max_d} minuten) voor de leeftijdsgroep {ag}."
-msgstr "The total duration of the tasks in session{s}, excluding breaks and other non-task elements ({d} minutes) is greater than the task duration limit ({max_d} minutes) for the age group {ag}."
+msgid ""
+"De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
+"taak elementen ({d} minuten), is groter dan het streefmaximum ({max_d} "
+"minuten) voor de leeftijdsgroep {ag}."
+msgstr ""
+"The total duration of the tasks in session{s}, excluding breaks and other "
+"non-task elements ({d} minutes) is greater than the task duration limit "
+"({max_d} minutes) for the age group {ag}."
 
 #: .\reviews\utils.py:192
-msgid "De studie observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf."
-msgstr "The study observes participants in a non-public space and works with retrospective informed consent."
+msgid ""
+"De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
+"informed consent achteraf."
+msgstr ""
+"The study observes participants in a non-public space and works with "
+"retrospective informed consent."
 
 #: .\reviews\utils.py:194
-msgid "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen."
-msgstr "The researcher acts under cover in a non-public space with an administrator (e.g. a digital discussion group), and takes part actively in the discussion and/or collects data which can be traced back to individuals."
+msgid ""
+"De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
+"ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
+"deel en/of verzamelt data die te herleiden zijn tot individuele personen."
+msgstr ""
+"The researcher acts under cover in a non-public space with an administrator "
+"(e.g. a digital discussion group), and takes part actively in the discussion "
+"and/or collects data which can be traced back to individuals."
 
 #: .\reviews\utils.py:211
-msgid "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar."
-msgstr "The study uses psychophysiological measurements on children under {} year{s} old."
+msgid ""
+"De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
+"jaar."
+msgstr ""
+"The study uses psychophysiological measurements on children under {} year{s} "
+"old."
 
 #: .\reviews\utils.py:216
 msgid "De studie maakt gebruik van {}"
@@ -1666,32 +1927,64 @@ msgid "Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?"
 msgstr "What is/are the age category/ies of your participants?"
 
 #: .\studies\models.py:112
-msgid "De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen."
-msgstr "If the intended age group is 5-7 year-olds, for example, then you should fill in 4-5 and 6-11."
+msgid ""
+"De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én "
+"6-11 invullen."
+msgstr ""
+"If the intended age group is 5-7 year-olds, for example, then you should "
+"fill in 4-5 and 6-11."
 
 #: .\studies\models.py:115
-msgid "Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
-msgstr "Does your study make use of (adult) participants <u>incapable</u> of informed consent?"
+msgid ""
+"Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
+msgstr ""
+"Does your study make use of (adult) participants <u>incapable</u> of "
+"informed consent?"
 
 #: .\studies\models.py:117
-msgid "Wilsonbekwame volwassenen zijn volwassenen die waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen."
-msgstr "Adults incapable of giving informed consent are adults who can reasonably be assumed to be insufficiently capable of judging what their potential participation would entail, and/or who for other reasons can be assumed not to be able to provide informed consent (e.g. because they cannot properly express their own opinion). Here informed consent should always be obtained from a relevant representative."
+msgid ""
+"Wilsonbekwame volwassenen zijn volwassenen die waarvan redelijkerwijs mag "
+"worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele "
+"deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen "
+"dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat "
+"ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval "
+"altijd informed consent van een relevante vertegenwoordiger te worden "
+"verkregen."
+msgstr ""
+"Adults incapable of giving informed consent are adults who can reasonably be "
+"assumed to be insufficiently capable of judging what their potential "
+"participation would entail, and/or who for other reasons can be assumed not "
+"to be able to provide informed consent (e.g. because they cannot properly "
+"express their own opinion). Here informed consent should always be obtained "
+"from a relevant representative."
 
 #: .\studies\models.py:129
-msgid "Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is dit in uw studie bij (een deel van) de deelnemers het geval?"
-msgstr "Participants can be included based on particular characteristics. Is this the case with (some of) the participants in your study?"
+msgid ""
+"Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is "
+"dit in uw studie bij (een deel van) de deelnemers het geval?"
+msgstr ""
+"Participants can be included based on particular characteristics. Is this "
+"the case with (some of) the participants in your study?"
 
 #: .\studies\models.py:134
 msgid "Selecteer de bijzondere kenmerken van uw proefpersonen"
 msgstr "Select the special characteristics of your participants"
 
 #: .\studies\models.py:140
-msgid "Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het geselecteerde type deelnemer aan de studie te laten meedoen?"
-msgstr "In order to answer the research question, is it necessary for the selected type of participants to participate in the study?"
+msgid ""
+"Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het "
+"geselecteerde type deelnemer aan de studie te laten meedoen?"
+msgstr ""
+"In order to answer the research question, is it necessary for the selected "
+"type of participants to participate in the study?"
 
 #: .\studies\models.py:143
-msgid "Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers te testen?"
-msgstr "For example, is it necessary to test children, or would it be possible to answer the research question by testing adults?"
+msgid ""
+"Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag "
+"ook kunnen beantwoorden door volwassen deelnemers te testen?"
+msgstr ""
+"For example, is it necessary to test children, or would it be possible to "
+"answer the research question by testing adults?"
 
 #: .\studies\models.py:150
 msgid "Leg uit waarom"
@@ -1703,15 +1996,22 @@ msgstr "How will the participants be recruited?"
 
 #: .\studies\models.py:160
 msgid "Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?"
-msgstr "What compensation will participants receive for taking part in this study?"
+msgstr ""
+"What compensation will participants receive for taking part in this study?"
 
 #: .\studies\models.py:161
-msgid "Het standaardbedrag voor vergoeding aan de deelnemers is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een cadeautje."
-msgstr "The standard sum for compensation of participants is €10 per hour. Minors are not permitted to receive money, but can be given a gift."
+msgid ""
+"Het standaardbedrag voor vergoeding aan de deelnemers is €10,- per uur. "
+"Minderjarigen mogen geen geld ontvangen, maar wel een cadeautje."
+msgstr ""
+"The standard sum for compensation of participants is €10 per hour. Minors "
+"are not permitted to receive money, but can be given a gift."
 
 #: .\studies\models.py:183
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
-msgstr "Please upload the informed consent declaration here (in .pdf or .doc(x)-format)"
+msgstr ""
+"Please upload the informed consent declaration here (in .pdf or .doc(x)-"
+"format)"
 
 #: .\studies\models.py:187
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
@@ -1722,56 +2022,167 @@ msgid "Maakt u gebruik van passieve informed consent?"
 msgstr "Will you use passive informed consent?"
 
 #: .\studies\models.py:193
-msgid "Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. U kunt de templates vinden op <a href=\"https://etcl.wp.hum.uu.nl/toestemmingsverklaringen/\" target=\"_blank\">de ETCL-website</a>."
-msgstr "If you recruit children from an institution (including schools) without their parents' signature, gaining permission from the management of the institution instead, this constitutes passive informed consent. You can find the templates on <a href=\"https://etcl.wp.hum.uu.nl/toestemmingsverklaringen/\" target=\"_blank\">the ETCL website</a>."
+msgid ""
+"Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders "
+"niet laat ondertekenen, maar in plaats daarvan de leiding van die "
+"instelling, dan maakt u gebruik van passieve informed consent. U kunt de "
+"templates vinden op <a href=\"https://etcl.wp.hum.uu.nl/"
+"toestemmingsverklaringen/\" target=\"_blank\">de ETCL-website</a>."
+msgstr ""
+"If you recruit children from an institution (including schools) without "
+"their parents' signature, gaining permission from the management of the "
+"institution instead, this constitutes passive informed consent. You can find "
+"the templates on <a href=\"https://etcl.wp.hum.uu.nl/"
+"toestemmingsverklaringen/\" target=\"_blank\">the ETCL website</a>."
 
 #: .\studies\models.py:202
 msgid "Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?"
 msgstr "How many sessions of tasks will the participants take part in?"
 
 #: .\studies\models.py:205
-msgid "Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie."
-msgstr "When the participant is asked to perform a task / multiple tasks during a first visit to the lab and to return on a later day to perform the same task(s) or a different task / multiple different tasks, we consider the experiment to consist of two sessions. If multiple tasks are executed on the same day, with breaks in between, this is still considered to be one session."
+msgid ""
+"Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen "
+"tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer "
+"terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken "
+"we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met "
+"pauzes daartussen, dan geldt dat toch als één sessie."
+msgstr ""
+"When the participant is asked to perform a task / multiple tasks during a "
+"first visit to the lab and to return on a later day to perform the same "
+"task(s) or a different task / multiple different tasks, we consider the "
+"experiment to consist of two sessions. If multiple tasks are executed on the "
+"same day, with breaks in between, this is still considered to be one session."
 
 #: .\studies\models.py:212
-msgid "Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer?"
-msgstr "Does the above research trajectory involve misrepresentation to the participant?"
+msgid ""
+"Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de "
+"deelnemer?"
+msgstr ""
+"Does the above research trajectory involve misrepresentation to the "
+"participant?"
 
 #: .\studies\models.py:214
-msgid "Misleiding is het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. Denk aan zaken als een bewust misleidende \"cover story\" voor het experiment; het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat hierbij niet om fillers."
-msgstr "Misrepresentation is intentional provision of inaccurate information as to the aim and/or important aspects of proceedings during the study. Examples would include an intentionally misleading cover story for the experiment, falsely suggesting that other participants are collaborating, offering a crucial memory task without announcing it, or giving false feedback. Fillers do not count as misrepresentation."
+msgid ""
+"Misleiding is het doelbewust verschaffen van inaccurate informatie over het "
+"doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. "
+"Denk aan zaken als een bewust misleidende \"cover story\" voor het "
+"experiment; het ten onrechte suggereren dat er met andere deelnemers wordt "
+"samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of "
+"het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat "
+"hierbij niet om fillers."
+msgstr ""
+"Misrepresentation is intentional provision of inaccurate information as to "
+"the aim and/or important aspects of proceedings during the study. Examples "
+"would include an intentionally misleading cover story for the experiment, "
+"falsely suggesting that other participants are collaborating, offering a "
+"crucial memory task without announcing it, or giving false feedback. Fillers "
+"do not count as misrepresentation."
 
 #: .\studies\models.py:225
-msgid "Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft."
-msgstr "Give an explanation and describe how and when the participant will be debriefed."
+msgid ""
+"Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden "
+"gedebrieft."
+msgstr ""
+"Give an explanation and describe how and when the participant will be "
+"debriefed."
 
 #: .\studies\models.py:229
-msgid "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens</em> de deelname niet-triviale negatieve emoties kunnen opwekken? Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie taken."
-msgstr "Does the above research trajectory include elements which could arouse non-trivially negative emotions <em>during</em> participation? For example, consider emotionally probing questions, insulting utterances, negative feedback, and frustrating, difficult, (very) long and/or (very) boring tasks."
+msgid ""
+"Bevat bovenstaand onderzoekstraject elementen die <em>tijdens</em> de "
+"deelname niet-triviale negatieve emoties kunnen opwekken? Denk hierbij "
+"bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, "
+"negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie "
+"taken."
+msgstr ""
+"Does the above research trajectory include elements which could arouse non-"
+"trivially negative emotions <em>during</em> participation? For example, "
+"consider emotionally probing questions, insulting utterances, negative "
+"feedback, and frustrating, difficult, (very) long and/or (very) boring tasks."
 
 #: .\studies\models.py:238
 msgid "Licht uw antwoord toe."
 msgstr "Explain your answer."
 
 #: .\studies\models.py:241
-msgid "Bevat bovenstaand onderzoekstraject elementen die tijdens de deelname zodanig belastend zijn dat deze <em>ondanks de verkregen informed consent</em> vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf, of bij ouders of andere vertegenwoordigers?"
-msgstr "Does the research trajectory above contain elements which are so burdensome that, <em>despite having obtained informed consent</em>, they could raise questions (or even cause outrage), for example from colleagues, the participants themselves, or parents or other representatives? "
+msgid ""
+"Bevat bovenstaand onderzoekstraject elementen die tijdens de deelname "
+"zodanig belastend zijn dat deze <em>ondanks de verkregen informed consent</"
+"em> vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij "
+"collega-onderzoekers, bij de deelnemers zelf, of bij ouders of andere "
+"vertegenwoordigers?"
+msgstr ""
+"Does the research trajectory above contain elements which are so burdensome "
+"that, <em>despite having obtained informed consent</em>, they could raise "
+"questions (or even cause outrage), for example from colleagues, the "
+"participants themselves, or parents or other representatives?"
 
 #: .\studies\models.py:246
-msgid "Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en uitputtende taak, een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek."
-msgstr "This might be the case in 'inhumanely' long and exhausting tasks or a very confrontational questionnaire, or continual destructive feedback, for example, but it might also include a perceived invasion of privacy, or other lack of respect. Please note, this is a question of the burden perceived by the participant during the study, not psychological or physical damage incurred."
+msgid ""
+"Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en "
+"uitputtende taak, een zeer confronterende vragenlijst, of voortdurend "
+"vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of "
+"een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de "
+"door de deelnemer ervaren belasting tijdens het onderzoek, niet om de "
+"opgelopen psychische of fysieke schade door het onderzoek."
+msgstr ""
+"This might be the case in 'inhumanely' long and exhausting tasks or a very "
+"confrontational questionnaire, or continual destructive feedback, for "
+"example, but it might also include a perceived invasion of privacy, or other "
+"lack of respect. Please note, this is a question of the burden perceived by "
+"the participant during the study, not psychological or physical damage "
+"incurred."
 
 #: .\studies\models.py:257
-msgid "Licht uw antwoord toe. Geef concrete voorbeelden van de relevante aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen."
-msgstr "Explain your answer. Give concrete examples of the relevant aspects of your study (e.g. representative examples of potentially very offensive words or utterances in the task, or of very confrontational questions in a questionnaire), so that the committee can form a proper picture."
+msgid ""
+"Licht uw antwoord toe. Geef concrete voorbeelden van de relevante aspecten "
+"van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende "
+"woorden of uitspraken in de taak, of van zeer confronterende vragen in een "
+"vragenlijst), zodat de commissie zich een goed beeld kan vormen."
+msgstr ""
+"Explain your answer. Give concrete examples of the relevant aspects of your "
+"study (e.g. representative examples of potentially very offensive words or "
+"utterances in the task, or of very confrontational questions in a "
+"questionnaire), so that the committee can form a proper picture."
 
 #: .\studies\models.py:264
-msgid "Zijn de risico's op psychische, fysieke, of andere (bijv. economische, juridische) schade door deelname aan bovenstaand onderzoekstraject <em>meer dan</em> minimaal? D.w.z. ligt de kans op en/of omvang van mogelijke schade bij de deelnemers duidelijk <em>boven</em> het \"achtergrondrisico\"?"
-msgstr "Are the risks of psychological, physical or other (e.g. economic, legal) damage due to participation in the research trajectory above <em>more than</em> minimal? I.e. is the chance of and/or magnitude of potential damage to participants clearly <em>above</em> that of the \"background risk\"?"
+msgid ""
+"Zijn de risico's op psychische, fysieke, of andere (bijv. economische, "
+"juridische) schade door deelname aan bovenstaand onderzoekstraject <em>meer "
+"dan</em> minimaal? D.w.z. ligt de kans op en/of omvang van mogelijke schade "
+"bij de deelnemers duidelijk <em>boven</em> het \"achtergrondrisico\"?"
+msgstr ""
+"Are the risks of psychological, physical or other (e.g. economic, legal) "
+"damage due to participation in the research trajectory above <em>more than</"
+"em> minimal? I.e. is the chance of and/or magnitude of potential damage to "
+"participants clearly <em>above</em> that of the \"background risk\"?"
 
 #: .\studies\models.py:269
-msgid "Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, economische schade door data-koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-<em>assessment</em>, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, onder begeleiding van adequaat geschoolde specialisten)."
-msgstr "Background risk is that which healthy average citizens in the relevant age category normally encounter in their daily lives. Consider the damage of consequences to the participant or others if particular information becomes available, e.g. in terms of self-image, stigmatisation by others, economic damage due to linking of data etc. The background risk of psychological and physical damage also encompasses e.g. the risks of ‘routine’ tests, studies or procedures which take place in everyday pedagogical, psychological or medical contexts (such as a final academic exam, a driving test, a stress resistance assessment, an intelligence or personality test, or a heartrate measurement after physical exertion; all under the supervision of adequately trained specialists where relevant). "
+msgid ""
+"Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante "
+"leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. "
+"Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen "
+"beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van "
+"zelfbeeld, stigmatisering door anderen, economische schade door data-"
+"koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke "
+"schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -"
+"onderzoeken of -procedures die in alledaagse didactische, psychologische of "
+"medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een "
+"stressbestendigheids-<em>assessment</em>, een intelligentie- of "
+"persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
+"alles, waar relevant, onder begeleiding van adequaat geschoolde "
+"specialisten)."
+msgstr ""
+"Background risk is that which healthy average citizens in the relevant age "
+"category normally encounter in their daily lives. Consider the damage of "
+"consequences to the participant or others if particular information becomes "
+"available, e.g. in terms of self-image, stigmatisation by others, economic "
+"damage due to linking of data etc. The background risk of psychological and "
+"physical damage also encompasses e.g. the risks of ‘routine’ tests, studies "
+"or procedures which take place in everyday pedagogical, psychological or "
+"medical contexts (such as a final academic exam, a driving test, a stress "
+"resistance assessment, an intelligence or personality test, or a heartrate "
+"measurement after physical exertion; all under the supervision of adequately "
+"trained specialists where relevant). "
 
 #: .\studies\models.py:329
 #, python-format
@@ -1781,36 +2192,71 @@ msgstr "Study details for proposal %s"
 #: .\studies\templates\studies\session_start.html:21
 msgid ""
 "\n"
-"    In de volgende vragen gaan we nader in op wat u in uw takenonderzoek van uw deelnemers zal verlangen. Daarbij gelden de volgende definities:\n"
+"    In de volgende vragen gaan we nader in op wat u in uw takenonderzoek van "
+"uw deelnemers zal verlangen. Daarbij gelden de volgende definities:\n"
 "    "
 msgstr ""
 "\n"
-"    The following questions probe further into the demands of your task-based study on your participants. The following definitions apply:\n"
+"    The following questions probe further into the demands of your task-"
+"based study on your participants. The following definitions apply:\n"
 "    "
 
 #: .\studies\templates\studies\session_start.html:26
 msgid ""
 "\n"
-"    <strong>Sessie:</strong> Het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een deelnemer vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de deelnemer ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes.\n"
+"    <strong>Sessie:</strong> Het geheel van de voor uw studie benodigde "
+"betrokkenheid die u op één dag van een deelnemer vraagt. Bij een "
+"labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt "
+"vanaf het moment dat u de deelnemer ontvangt tot het moment dat u afscheid "
+"neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat "
+"alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de "
+"afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde "
+"pauzes.\n"
 "    "
 msgstr ""
 "\n"
-"    <strong>Session</strong>: The entirety of the commitment which you require of a participant in one day. In lab-based research, for example, that means everything which happens as part of the research from the moment you welcome the participant to the moment you part company from them, including any necessary breaks. In an internet survey this means everything which happens as part of the research from the welcome screen to the conclusion of the (series of) survey(s), again including any necessary breaks.\n"
+"    <strong>Session</strong>: The entirety of the commitment which you "
+"require of a participant in one day. In lab-based research, for example, "
+"that means everything which happens as part of the research from the moment "
+"you welcome the participant to the moment you part company from them, "
+"including any necessary breaks. In an internet survey this means everything "
+"which happens as part of the research from the welcome screen to the "
+"conclusion of the (series of) survey(s), again including any necessary "
+"breaks.\n"
 "    "
 
 #: .\studies\templates\studies\session_start.html:31
 msgid ""
 "\n"
-"    <strong>Taak:</strong> Een coherente verzameling handelingen die u via een gesproken of geschreven taak-instructie aan de deelnemer oplegt, en ook als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: \"Beluister de volgende 200 zinnetjes en druk op een knop als u een fout ontdekt\", \"Vul persoonlijkheidsvragenlijst X in\", \"Speel 10 minuten met uw kind zoals u dat thuis doet\"). Indien de specifieke opdracht aan de deelnemer per item varieert (bijvoorbeeld: \"bij een Nederlandse zin beoordeelt u de betekenis, bij een Engelse zin de grammatica\"), beschouw dit dan gewoon als één taak.\n"
+"    <strong>Taak:</strong> Een coherente verzameling handelingen die u via "
+"een gesproken of geschreven taak-instructie aan de deelnemer oplegt, en ook "
+"als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: "
+"\"Beluister de volgende 200 zinnetjes en druk op een knop als u een fout "
+"ontdekt\", \"Vul persoonlijkheidsvragenlijst X in\", \"Speel 10 minuten met "
+"uw kind zoals u dat thuis doet\"). Indien de specifieke opdracht aan de "
+"deelnemer per item varieert (bijvoorbeeld: \"bij een Nederlandse zin "
+"beoordeelt u de betekenis, bij een Engelse zin de grammatica\"), beschouw "
+"dit dan gewoon als één taak.\n"
 "    "
 msgstr ""
 "\n"
-"    <strong>Task</strong>: In the ETCL context this refers to a coherent collection of actions which you instruct the participant to perform via a spoken or written set of instructions, and which would also be described as a ‘task’ in an article (e.g. \"Listen to the following 200 sentences and press a button when you hear a mistake\", \"Fill in personality questionnaire X\", \"Play with your child for 10 minutes as you would at home\"). If the specific task varies from item to item, with a single instruction covering all items (e.g., ‘for a Dutch sentence judge the meaning, for an English sentence judge the grammar’), this should be treated as one task.\n"
+"    <strong>Task</strong>: In the ETCL context this refers to a coherent "
+"collection of actions which you instruct the participant to perform via a "
+"spoken or written set of instructions, and which would also be described as "
+"a ‘task’ in an article (e.g. \"Listen to the following 200 sentences and "
+"press a button when you hear a mistake\", \"Fill in personality "
+"questionnaire X\", \"Play with your child for 10 minutes as you would at home"
+"\"). If the specific task varies from item to item, with a single "
+"instruction covering all items (e.g., ‘for a Dutch sentence judge the "
+"meaning, for an English sentence judge the grammar’), this should be treated "
+"as one task.\n"
 "    "
 
 #: .\studies\templates\studies\session_start.html:38
-msgid "Voor elke sessie stellen we in de komende schermen steeds dezelfde vragen."
-msgstr "For each session we will ask the same questions in the following pages."
+msgid ""
+"Voor elke sessie stellen we in de komende schermen steeds dezelfde vragen."
+msgstr ""
+"For each session we will ask the same questions in the following pages."
 
 #: .\studies\templates\studies\study_design.html:7 .\studies\utils.py:73
 msgid "De onderzoekstype(n)"
@@ -1819,57 +2265,98 @@ msgstr "Type(s) of research"
 #: .\studies\templates\studies\study_design.html:21
 msgid ""
 "\n"
-"    De ETCL onderscheidt 3 typen UiL OTS onderzoek (die evt. ook samen in één studie voor kunnen komen):\n"
+"    De ETCL onderscheidt 3 typen UiL OTS onderzoek (die evt. ook samen in "
+"één studie voor kunnen komen):\n"
 "    "
 msgstr ""
 "\n"
-"    The ETCL distinguishes 3 types of UiL OTS research (which may all be used within one study):\n"
+"    The ETCL distinguishes 3 types of UiL OTS research (which may all be "
+"used within one study):\n"
 "    "
 
 #: .\studies\templates\studies\study_design.html:28
 msgid ""
 "\n"
 "        <strong>Interventieonderzoek</strong>:\n"
-"        Onderzoek waarin mensen <em>in hun normale leven in bepaalde contexten doen wat ze daar normaliter ook doen, maar waar de onderzoeker d.m.v. een interventie iets in de context manipuleert</em> (bijv. een ander lesboek, een andere behandeling, of een anders vormgegeven website, etc.).\n"
-"        De effecten van die interventie kunnen gelijktijdig worden geobserveerd, maar kunnen bijv. ook achteraf worden vastgesteld d.m.v. reguliere toetsen aan het einde van een lesjaar.\n"
+"        Onderzoek waarin mensen <em>in hun normale leven in bepaalde "
+"contexten doen wat ze daar normaliter ook doen, maar waar de onderzoeker d.m."
+"v. een interventie iets in de context manipuleert</em> (bijv. een ander "
+"lesboek, een andere behandeling, of een anders vormgegeven website, etc.).\n"
+"        De effecten van die interventie kunnen gelijktijdig worden "
+"geobserveerd, maar kunnen bijv. ook achteraf worden vastgesteld d.m.v. "
+"reguliere toetsen aan het einde van een lesjaar.\n"
 "        "
 msgstr ""
 "\n"
 "        <strong>Interventional research</strong>:\n"
-"        Research in which people <em>act as they normally would in specific contexts in their everyday lives, but in which the researcher intervenes to manipulate something in the context</em> (e.g. a different textbook, a different treatment, or a differently designed website, etc.).\n"
-"        The effects of that intervention can be observed at the time, but can also be established in retrospect, for example, through regular testing at the end of the academic year.\n"
+"        Research in which people <em>act as they normally would in specific "
+"contexts in their everyday lives, but in which the researcher intervenes to "
+"manipulate something in the context</em> (e.g. a different textbook, a "
+"different treatment, or a differently designed website, etc.).\n"
+"        The effects of that intervention can be observed at the time, but "
+"can also be established in retrospect, for example, through regular testing "
+"at the end of the academic year.\n"
 "    "
 
 #: .\studies\templates\studies\study_design.html:37
 msgid ""
 "\n"
 "        <strong>Observatieonderzoek</strong>:\n"
-"        Onderzoek waarin mensen <em>in hun normale leven in bepaalde contexten worden geobserveerd</em>, bijvoorbeeld op scholen of in andere institutionele settings, in de digitale publieke ruimte, of bij de deelnemer thuis, <em>zonder dat de onderzoeker daar op enige wijze op ingrijpt</em>.\n"
-"        Het gedrag wordt zichtbaar of onzichtbaar via video/audio-opnames, notities, of <em>logging</em> van digitale handelingen geregistreerd, maar ook de producten van dat gedrag kunnen bestudeerd worden.\n"
+"        Onderzoek waarin mensen <em>in hun normale leven in bepaalde "
+"contexten worden geobserveerd</em>, bijvoorbeeld op scholen of in andere "
+"institutionele settings, in de digitale publieke ruimte, of bij de deelnemer "
+"thuis, <em>zonder dat de onderzoeker daar op enige wijze op ingrijpt</em>.\n"
+"        Het gedrag wordt zichtbaar of onzichtbaar via video/audio-opnames, "
+"notities, of <em>logging</em> van digitale handelingen geregistreerd, maar "
+"ook de producten van dat gedrag kunnen bestudeerd worden.\n"
 "        "
 msgstr ""
 "\n"
 "        <strong>Observational research</strong>:\n"
-"        Research in which people <em>are observed in specific contexts in their normal lives</em>, such as in schools or in other institutional settings, in a digital public space, or in the participant’s home, <em>without the researcher intervening in any way</em>.\n"
-"        The behaviour is visibly or invisibly registered through video/audio recordings, notes, or logging of digital actions, but the products of that behaviour may also be studied.\n"
+"        Research in which people <em>are observed in specific contexts in "
+"their normal lives</em>, such as in schools or in other institutional "
+"settings, in a digital public space, or in the participant’s home, "
+"<em>without the researcher intervening in any way</em>.\n"
+"        The behaviour is visibly or invisibly registered through video/audio "
+"recordings, notes, or logging of digital actions, but the products of that "
+"behaviour may also be studied.\n"
 "        "
 
 #: .\studies\templates\studies\study_design.html:46
 msgid ""
 "\n"
 "        <strong>Taakonderzoek</strong>:\n"
-"        Onderzoek waarbij aan mensen <em>van onderzoekswege (extra) taken of gedragsregels worden opgelegd, via bepaalde taakinstructies</em> (\"speel 10 minuten met uw kind zoals u dat thuis ook zou doen\", \"vul deze internetsurvey in\", \"lees deze verhaaltjes aandachtig door\", \"beluister/beoordeel deze zinnen\", \"vertel eens iets over uw vakantie\", etc.).\n"
-"        Er wordt dus iets van mensen gevraagd wat ze in hun normale leven niet (of niet dáár, dán, op déze wijze) zouden doen.\n"
-"        Onderzoek in het Uil OTS-lab is vanwege de locatie per definitie altijd taakonderzoek (óók als de deelnemers na ontvangst alleen maar worden geobserveerd), maar ook onderzoek waarin mensen worden geïnterviewed, of gevraagd worden thuis of op straat een vragenlijst in te vullen is taakonderzoek.\n"
-"        Bij interventieonderzoek gelden eventuele extra taken ook als taakonderzoek.\n"
+"        Onderzoek waarbij aan mensen <em>van onderzoekswege (extra) taken of "
+"gedragsregels worden opgelegd, via bepaalde taakinstructies</em> (\"speel 10 "
+"minuten met uw kind zoals u dat thuis ook zou doen\", \"vul deze "
+"internetsurvey in\", \"lees deze verhaaltjes aandachtig door\", \"beluister/"
+"beoordeel deze zinnen\", \"vertel eens iets over uw vakantie\", etc.).\n"
+"        Er wordt dus iets van mensen gevraagd wat ze in hun normale leven "
+"niet (of niet dáár, dán, op déze wijze) zouden doen.\n"
+"        Onderzoek in het Uil OTS-lab is vanwege de locatie per definitie "
+"altijd taakonderzoek (óók als de deelnemers na ontvangst alleen maar worden "
+"geobserveerd), maar ook onderzoek waarin mensen worden geïnterviewed, of "
+"gevraagd worden thuis of op straat een vragenlijst in te vullen is "
+"taakonderzoek.\n"
+"        Bij interventieonderzoek gelden eventuele extra taken ook als "
+"taakonderzoek.\n"
 "        "
 msgstr ""
 "\n"
 "        <strong>Task-based research</strong>:\n"
-"        Research in which people are <em>assigned extra tasks or behavioural rules for the study through particular instructions</em> (\"play with your child for 10 minutes as you would at home\", \"fill in this internet survey\", \"read these stories carefully\", \"listen to / judge these sentences\", \"tell us about your holiday\",  etc.).\n"
-"        People are thus asked to do something they would not do in their normal lives (or would not do in that way).\n"
-"        Research at the UiL OTS lab is always task-based by definition, due to the location (even if after arrival the participants are only observed). Research in which people are interviewed, or asked to fill in a questionnaire at home or in the street, is also task-based research.\n"
-"        In interventional research any extra tasks also count as task-based research.\n"
+"        Research in which people are <em>assigned extra tasks or behavioural "
+"rules for the study through particular instructions</em> (\"play with your "
+"child for 10 minutes as you would at home\", \"fill in this internet survey"
+"\", \"read these stories carefully\", \"listen to / judge these sentences\", "
+"\"tell us about your holiday\",  etc.).\n"
+"        People are thus asked to do something they would not do in their "
+"normal lives (or would not do in that way).\n"
+"        Research at the UiL OTS lab is always task-based by definition, due "
+"to the location (even if after arrival the participants are only observed). "
+"Research in which people are interviewed, or asked to fill in a "
+"questionnaire at home or in the street, is also task-based research.\n"
+"        In interventional research any extra tasks also count as task-based "
+"research.\n"
 "        "
 
 #: .\studies\templates\studies\study_design.html:61
@@ -1914,12 +2401,14 @@ msgstr ""
 #: .\studies\templates\studies\study_design.html:93
 msgid ""
 "\n"
-"        Voor elk door u aangekruiste type onderzoek kunt u op de hiernavolgende pagina's\n"
+"        Voor elk door u aangekruiste type onderzoek kunt u op de "
+"hiernavolgende pagina's\n"
 "        de relevante informatie verschaffen.\n"
 "        "
 msgstr ""
 "\n"
-"        For each type of research selected you can supply the relevant information\n"
+"        For each type of research selected you can supply the relevant "
+"information\n"
 "        on the following pages.\n"
 "        "
 
@@ -2076,20 +2565,40 @@ msgstr "Session to be copied"
 
 #: .\tasks\forms.py:128
 msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
-msgstr "The total duration of the session must be at least as long as the net duration of the session. "
+msgstr ""
+"The total duration of the session must be at least as long as the net "
+"duration of the session. "
 
 #: .\tasks\models.py:14
 msgid "Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?"
-msgstr "How many tasks will each participant have to carry out in this session?"
+msgstr ""
+"How many tasks will each participant have to carry out in this session?"
 
 #: .\tasks\models.py:17
-msgid "Wanneer u bijvoorbeeld eerst de deelnemer observeert en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven \"2\" in. Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak."
-msgstr "For example, if you first observe the participant and then require him/her to complete a questionnaire, please fill in \"2\" above. Putting on electrodes, session debriefing and a short (<3 minute) exit interview are not counted as tasks. "
+msgid ""
+"Wanneer u bijvoorbeeld eerst de deelnemer observeert en de deelnemer "
+"vervolgens een vragenlijst afneemt, dan vult u hierboven \"2\" in. "
+"Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview "
+"gelden niet als een taak."
+msgstr ""
+"For example, if you first observe the participant and then require him/her "
+"to complete a questionnaire, please fill in \"2\" above. Putting on "
+"electrodes, session debriefing and a short (<3 minute) exit interview are "
+"not counted as tasks. "
 
 #: .\tasks\models.py:21
 #, python-format
-msgid "De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)"
-msgstr "The estimated net task duration of your session, based on your specification of each task, comes to <strong>%d minutes </strong>. How long does the <em>the total session</em> take, including welcome, instructions for each task, breaks between tasks, and debriefing? (in case of a lab visit from entering the lab until leaving)"
+msgid ""
+"De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave "
+"per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de totale "
+"sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, "
+"en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)"
+msgstr ""
+"The estimated net task duration of your session, based on your specification "
+"of each task, comes to <strong>%d minutes</strong>. How long does the "
+"<em>the total session</em> take, including welcome, instructions for each "
+"task, breaks between tasks, and debriefing? (in case of a lab visit from "
+"entering the lab until leaving)"
 
 #: .\tasks\models.py:73
 msgid "Sessie {}"
@@ -2100,30 +2609,58 @@ msgid "Wat is de naam van de taak?"
 msgstr "What is the title of the task?"
 
 #: .\tasks\models.py:111
-msgid "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de beantwoording van uw onderzoeksvragen bijdraagt."
-msgstr "Describe the task which the participant is required to undertake and briefly explain how this task (and any manipulations within it) contribute to an answer to your research question."
+msgid ""
+"Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe deze "
+"taak (en de eventuele manipulaties daarbinnen) aan de beantwoording van uw "
+"onderzoeksvragen bijdraagt. Geef, kort, een paar voorbeelden (of "
+"beschrijvingen) van het type stimuli dat u van plan bent aan de deelnemer "
+"aan te bieden. Het moet voor de commissieleden duidelijk zijn wat u precies "
+"gaat doen."
+msgstr ""
+"Describe the task which the participant is required to undertake and briefly "
+"explain how this task (and any manipulations within it) contribute to an "
+"answer to your research question. Add a few (short) examples (or "
+"description) of the type of stimuli you are planning to show the participant. "
+"The committee members need to be in the clear on your exact plans."
 
-#: .\tasks\models.py:115
-msgid "Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), geef dan het redelijkerwijs te verwachten maximum op."
-msgstr "What is the duration of this task from beginning to end in <strong>minutes</strong> (excluding instructions but including practice session)? If the duration of the task varies between participants (self-paced task or task-to-criterion), indicate the maximum duration that can reasonably be expected."
+#: .\tasks\models.py:118
+msgid ""
+"Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, "
+"dus vanaf het moment dat de taak van start gaat tot en met het einde van de "
+"taak (exclusief instructie maar inclusief oefensessie)? Indien de taakduur "
+"per deelnemer varieert (self-paced taak of task-to-criterion), geef dan "
+"<strong>het redelijkerwijs te verwachten maximum op</strong>."
+msgstr ""
+"What is the duration of this task from beginning to end in <strong>minutes</"
+"strong> (excluding instructions but including practice session)? If the "
+"duration of the task varies between participants (self-paced task or task-to-"
+"criterion), <strong>indicate the maximum duration that can reasonably be expected</strong>."
 
-#: .\tasks\models.py:124
-msgid "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
-msgstr "How will the behaviour or the state of the participant be recorded in this task?"
+#: .\tasks\models.py:127
+msgid ""
+"Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak "
+"vastgelegd?"
+msgstr ""
+"How will the behaviour or the state of the participant be recorded in this "
+"task?"
 
-#: .\tasks\models.py:131
+#: .\tasks\models.py:134
 msgid "Kies het soort meting"
 msgstr "Select the type of measurement"
 
-#: .\tasks\models.py:138
-msgid "Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?"
-msgstr "Will the participant receive feedback on his/her behaviour or state during or after this task?"
+#: .\tasks\models.py:141
+msgid ""
+"Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of "
+"toestand?"
+msgstr ""
+"Will the participant receive feedback on his/her behaviour or state during "
+"or after this task?"
 
-#: .\tasks\models.py:140
+#: .\tasks\models.py:143
 msgid "Beschrijf hoe de feedback wordt gegeven."
 msgstr "Describe how the feedback will be given."
 
-#: .\tasks\models.py:163
+#: .\tasks\models.py:166
 msgid "Taak {} in sessie {}"
 msgstr "Task {} in session {}"
 
@@ -2194,18 +2731,21 @@ msgid "Taak bewerken"
 msgstr "Edit task"
 
 #: .\tasks\templates\tasks\task_start.html:33
-msgid "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen."
+msgid ""
+"Voor elke taak stellen we in de komende schermen steeds dezelfde vragen."
 msgstr "We will ask the same questions for each task on the next few pages."
 
 #: .\tasks\templates\tasks\task_title.html:6
 #, python-format
 msgid ""
 "\n"
-"    Traject %(study_order)s (<em>%(study_name)s</em>), sessie %(session_order)s, taak %(order)s\n"
+"    Traject %(study_order)s (<em>%(study_name)s</em>), sessie "
+"%(session_order)s, taak %(order)s\n"
 "    "
 msgstr ""
 "\n"
-"    Trajectory %(study_order)s (<em>%(study_name)s</em>), session %(session_order)s, task %(order)s\n"
+"    Trajectory %(study_order)s (<em>%(study_name)s</em>), session "
+"%(session_order)s, task %(order)s\n"
 "    "
 
 #: .\tasks\templates\tasks\task_title.html:12
@@ -2252,6 +2792,12 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
+#~ msgid "akkoord"
+#~ msgstr "approved"
+
+#~ msgid "niet akkoord"
+#~ msgstr "rejected"
+
 #~ msgid "Working"
 #~ msgstr "Working"
 
@@ -2271,7 +2817,9 @@ msgstr "Task deleted"
 #~ msgstr "Not yet a..."
 
 #~ msgid "Totale studieduur moet minstens gelijk zijn aan netto studieduur."
-#~ msgstr "The total duration of the study has to be at least as long as the netto duration of the study."
+#~ msgstr ""
+#~ "The total duration of the study has to be at least as long as the netto "
+#~ "duration of the study."
 
 #~ msgid "WMO: geen beoordeling door METC noodzakelijk"
 #~ msgstr "WMO: no assessment by METC needed"
@@ -2302,38 +2850,89 @@ msgstr "Task deleted"
 #~ msgid "Wat is de beoogde einddatum van uw studie?"
 #~ msgstr "What is the title of your study?"
 
-#~ msgid "Kies s.v.p. een titel die niet volledig identiek is aan die van eerder ingediende studies."
-#~ msgstr "Please choose a titled that is not completely identical to that of previously submitted studies."
+#~ msgid ""
+#~ "Kies s.v.p. een titel die niet volledig identiek is aan die van eerder "
+#~ "ingediende studies."
+#~ msgstr ""
+#~ "Please choose a titled that is not completely identical to that of "
+#~ "previously submitted studies."
 
-#~ msgid "Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen, en (b) een korte beschrijving van de beoogde methode, d.w.z. een mini-versie van de toekomstige Methode-sectie, met informatie over deelnemers, materiaal (taken, stimuli), design, en procedure. Het gaat er hier vooral om dat de relatie tussen de onderzoeksvraag of -vragen en de beoogde methode voldoende helder is; verderop in deze aanmelding zal voor specifieke ingrediënten van de methode meer gedetailleerde informatie worden gevraagd."
-#~ msgstr "Please write down a summary of 200-300 words, which includes (a) a clear and concise description of the research question(s), and (b) a short description of the intended methodology, that is, a (very) short version of the future methodology section, including information on participants, material (tasks, stimuli), design and procedure. Specifically, the relationship between the research question(s) and the intended methodology must be sufficiently clear. More information about the specifics of the methodology will be requested later on in this application."
+#~ msgid ""
+#~ "Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een "
+#~ "duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen, en "
+#~ "(b) een korte beschrijving van de beoogde methode, d.w.z. een mini-versie "
+#~ "van de toekomstige Methode-sectie, met informatie over deelnemers, "
+#~ "materiaal (taken, stimuli), design, en procedure. Het gaat er hier vooral "
+#~ "om dat de relatie tussen de onderzoeksvraag of -vragen en de beoogde "
+#~ "methode voldoende helder is; verderop in deze aanmelding zal voor "
+#~ "specifieke ingrediënten van de methode meer gedetailleerde informatie "
+#~ "worden gevraagd."
+#~ msgstr ""
+#~ "Please write down a summary of 200-300 words, which includes (a) a clear "
+#~ "and concise description of the research question(s), and (b) a short "
+#~ "description of the intended methodology, that is, a (very) short version "
+#~ "of the future methodology section, including information on participants, "
+#~ "material (tasks, stimuli), design and procedure. Specifically, the "
+#~ "relationship between the research question(s) and the intended "
+#~ "methodology must be sufficiently clear. More information about the "
+#~ "specifics of the methodology will be requested later on in this "
+#~ "application."
 
 #~ msgid "Wat is uw relatie tot het UiL OTS?"
 #~ msgstr "What is your relationship with UiL OTS?"
 
-#~ msgid "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken."
-#~ msgstr "An act or a rule of conduct varies from collecting tissue of a participant to requiring the participant to press a button/key."
+#~ msgid ""
+#~ "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
+#~ "weefsel bij een deelnemer tot de deelnemer een knop/toets in laten "
+#~ "drukken."
+#~ msgstr ""
+#~ "An act or a rule of conduct varies from collecting tissue of a "
+#~ "participant to requiring the participant to press a button/key."
 
 #, fuzzy
-#~| msgid "Geef hieronder aan binnen welke leeftijdscategorie uw deelnemers vallen, er zijn meerdere antwoorden mogelijk"
-#~ msgid "Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, er zijn meerdere antwoorden mogelijk"
-#~ msgstr "Indicate below to which age categories the participants belong; it is possible to select multiple answers"
+#~| msgid ""
+#~| "Geef hieronder aan binnen welke leeftijdscategorie uw deelnemers vallen, "
+#~| "er zijn meerdere antwoorden mogelijk"
+#~ msgid ""
+#~ "Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, er zijn "
+#~ "meerdere antwoorden mogelijk"
+#~ msgstr ""
+#~ "Indicate below to which age categories the participants belong; it is "
+#~ "possible to select multiple answers"
 
-#~ msgid "tekst over dat vergoeding in redelijke verhouding moet zijn met belasting pp. En kinderen geen geld"
+#~ msgid ""
+#~ "tekst over dat vergoeding in redelijke verhouding moet zijn met belasting "
+#~ "pp. En kinderen geen geld"
 #~ msgstr "-"
 
 #~ msgid "Hoeveel sessies telt deze studie?"
 #~ msgstr "How many sessions comprises this study?"
 
 #, fuzzy
-#~| msgid "De totale geschatte netto studieduur van uw sessie komt op basis van uw opgave per sessie uit op <strong>X minuten</strong>. Schat de totale tijd die uw deelnemers aan de gehele studie zullen besteden."
-#~ msgid "De netto duur van uw studie komt op basis van uw opgegeven tijd, uit op <strong>%d minuten</strong>. Wat is de totale duur van de gehele studie? Schat de totale tijd die de deelnemers kwijt zijn aan de studie."
-#~ msgstr "Based on  the duration that you have specified per session, the estimated total netto duration of the session of your study is: <strong>X minuten</strong>. Give an estimation of the total amount of time that your participants will need to complete the study."
+#~| msgid ""
+#~| "De totale geschatte netto studieduur van uw sessie komt op basis van uw "
+#~| "opgave per sessie uit op <strong>X minuten</strong>. Schat de totale "
+#~| "tijd die uw deelnemers aan de gehele studie zullen besteden."
+#~ msgid ""
+#~ "De netto duur van uw studie komt op basis van uw opgegeven tijd, uit op "
+#~ "<strong>%d minuten</strong>. Wat is de totale duur van de gehele studie? "
+#~ "Schat de totale tijd die de deelnemers kwijt zijn aan de studie."
+#~ msgstr ""
+#~ "Based on  the duration that you have specified per session, the estimated "
+#~ "total netto duration of the session of your study is: <strong>X minuten</"
+#~ "strong>. Give an estimation of the total amount of time that your "
+#~ "participants will need to complete the study."
 
 #, fuzzy
-#~| msgid "Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessie bij elkaar opgeteld, exclusief reistijd."
-#~ msgid "Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle sessies bij elkaar opgeteld, exclusief reistijd."
-#~ msgstr "This is the estimated total bruto time the participant needs for all culminated sessions, traveling time excluded."
+#~| msgid ""
+#~| "Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle "
+#~| "sessie bij elkaar opgeteld, exclusief reistijd."
+#~ msgid ""
+#~ "Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle "
+#~ "sessies bij elkaar opgeteld, exclusief reistijd."
+#~ msgstr ""
+#~ "This is the estimated total bruto time the participant needs for all "
+#~ "culminated sessions, traveling time excluded."
 
 #~ msgid "Status"
 #~ msgstr "State"
@@ -2354,27 +2953,92 @@ msgstr "Task deleted"
 #~ msgid "%s (kopie)"
 #~ msgstr "%s (copy)"
 
-#~ msgid "Is dit een studie waarbij dezelfde deelnemers op meerdere dagen deelnemen aan een sessie? (bijvoorbeeld een longitudinale studie, of een kortlopende studie waar deelnemers op twee of meer verschillende dagen getest worden)"
-#~ msgstr "Is this a study in which the same participants have to participate in a session on multiple days? (For example a longitudinal study, or a short-term study in which participants need to be tested on different (two or more) days)"
+#~ msgid ""
+#~ "Is dit een studie waarbij dezelfde deelnemers op meerdere dagen deelnemen "
+#~ "aan een sessie? (bijvoorbeeld een longitudinale studie, of een "
+#~ "kortlopende studie waar deelnemers op twee of meer verschillende dagen "
+#~ "getest worden)"
+#~ msgstr ""
+#~ "Is this a study in which the same participants have to participate in a "
+#~ "session on multiple days? (For example a longitudinal study, or a short-"
+#~ "term study in which participants need to be tested on different (two or "
+#~ "more) days)"
 
-#~ msgid "Is het totaal van sessies als geheel belastend voor de deelnemer op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de deelnemers zelf, bij derden)? Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, de mate waarin deelnemers zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare deelnemersgroep."
-#~ msgstr "Is the total of sessions as a whole a burden for the participants in such a way that it could raise questions (for example from colleagues, from the participants, a third party)? Examples are the nature of the stimuli, the duration of the task, whether performing the task is tedious or asks for a great amount of mental/physical effort, the degree in which the participants might feel uncomfortable at giving certain answers (for example in the case of a questionnaire concerning depression) or certain behavior, et cetera. In answering this question, keep in mind the group of participants that you as a researcher consider as the most vulnerable or that can carry the least amount of pressure/burden."
+#~ msgid ""
+#~ "Is het totaal van sessies als geheel belastend voor de deelnemer op een "
+#~ "manier die, ondanks de verkregen informed consent, vragen zou kunnen "
+#~ "oproepen (bijvoorbeeld bij collegas, bij de deelnemers zelf, bij derden)? "
+#~ "Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid "
+#~ "of (mentale/fysieke) veeleisendheid van de taak, de mate waarin "
+#~ "deelnemers zich ongemakkelijk kunnen voelen bij het geven van bepaalde "
+#~ "antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga "
+#~ "bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt "
+#~ "als de voor deze taak meest kwetsbare c.q. minst belastbare "
+#~ "deelnemersgroep."
+#~ msgstr ""
+#~ "Is the total of sessions as a whole a burden for the participants in such "
+#~ "a way that it could raise questions (for example from colleagues, from "
+#~ "the participants, a third party)? Examples are the nature of the stimuli, "
+#~ "the duration of the task, whether performing the task is tedious or asks "
+#~ "for a great amount of mental/physical effort, the degree in which the "
+#~ "participants might feel uncomfortable at giving certain answers (for "
+#~ "example in the case of a questionnaire concerning depression) or certain "
+#~ "behavior, et cetera. In answering this question, keep in mind the group "
+#~ "of participants that you as a researcher consider as the most vulnerable "
+#~ "or that can carry the least amount of pressure/burden."
 
 #~ msgid "Waarom denkt u dat?"
 #~ msgstr "Why do you think that is the case?"
 
 #, fuzzy
-#~| msgid "Is de kans dat de deelnemer fysieke schade oploopt tijdens het afnemen van het experiment groter dan de kans op fysieke schade in het dagelijks leven?"
-#~ msgid "Is de kans dat de deelnemer fysieke schade oploopt tijdens het afnemen van de taak groter dan de kans op fysieke schade in het dagelijks leven?"
-#~ msgstr "Is the chance on physical damage for the participant higher during the experiment than in daily life?"
+#~| msgid ""
+#~| "Is de kans dat de deelnemer fysieke schade oploopt tijdens het afnemen "
+#~| "van het experiment groter dan de kans op fysieke schade in het dagelijks "
+#~| "leven?"
+#~ msgid ""
+#~ "Is de kans dat de deelnemer fysieke schade oploopt tijdens het afnemen "
+#~ "van de taak groter dan de kans op fysieke schade in het dagelijks leven?"
+#~ msgstr ""
+#~ "Is the chance on physical damage for the participant higher during the "
+#~ "experiment than in daily life?"
 
 #, fuzzy
-#~| msgid "Is de kans dat de deelnemer psychische schade oploopt tijdens het afnemen van het experiment groter dan de kans op psychische schade in het dagelijks leven?"
-#~ msgid "Is de kans dat de deelnemer psychische schade oploopt tijdens het afnemen van de taak groter dan de kans op psychische schade in het dagelijks leven?"
-#~ msgstr "Is the chance on psychological damage for the participant higher during the experiment than in daily life?"
+#~| msgid ""
+#~| "Is de kans dat de deelnemer psychische schade oploopt tijdens het "
+#~| "afnemen van het experiment groter dan de kans op psychische schade in "
+#~| "het dagelijks leven?"
+#~ msgid ""
+#~ "Is de kans dat de deelnemer psychische schade oploopt tijdens het afnemen "
+#~ "van de taak groter dan de kans op psychische schade in het dagelijks "
+#~ "leven?"
+#~ msgstr ""
+#~ "Is the chance on psychological damage for the participant higher during "
+#~ "the experiment than in daily life?"
 
-#~ msgid "Is het geheel van taken en overige activiteiten in de sessie als geheel belastend voor de deelnemer op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de deelnemers zelf, bij derden)? Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, de mate waarin deelnemers zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare deelnemersgroep."
-#~ msgstr "Is the total of tasks and further activities during the session as a whole a burden for the participants in such a way that it could raise questions, in spite of the obtained informed consent (for example from colleagues, from the participants, a third party)? Examples are the nature of the stimuli, the duration of the task, whether performing the task is tedious or asks for a great amount of mental/physical effort, the degree in which the participants might feel uncomfortable at giving certain answers (for example in the case of a questionnaire concerning depression) or certain behavior, et cetera. In answering this question, keep in mind the group of participants that you as a researcher consider as the most vulnerable or that can carry the least amount of pressure/burden."
+#~ msgid ""
+#~ "Is het geheel van taken en overige activiteiten in de sessie als geheel "
+#~ "belastend voor de deelnemer op een manier die, ondanks de verkregen "
+#~ "informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, "
+#~ "bij de deelnemers zelf, bij derden)? Denk hierbij aan zaken als de aard "
+#~ "van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid "
+#~ "van de taak, de mate waarin deelnemers zich ongemakkelijk kunnen voelen "
+#~ "bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of "
+#~ "bepaald gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van "
+#~ "wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c."
+#~ "q. minst belastbare deelnemersgroep."
+#~ msgstr ""
+#~ "Is the total of tasks and further activities during the session as a "
+#~ "whole a burden for the participants in such a way that it could raise "
+#~ "questions, in spite of the obtained informed consent (for example from "
+#~ "colleagues, from the participants, a third party)? Examples are the "
+#~ "nature of the stimuli, the duration of the task, whether performing the "
+#~ "task is tedious or asks for a great amount of mental/physical effort, the "
+#~ "degree in which the participants might feel uncomfortable at giving "
+#~ "certain answers (for example in the case of a questionnaire concerning "
+#~ "depression) or certain behavior, et cetera. In answering this question, "
+#~ "keep in mind the group of participants that you as a researcher consider "
+#~ "as the most vulnerable or that can carry the least amount of pressure/"
+#~ "burden."
 
 #~ msgid "Session {} at proposal {}"
 #~ msgstr "Session {} at proposal {}"
@@ -2382,11 +3046,37 @@ msgstr "Task deleted"
 #~ msgid "Bestand"
 #~ msgstr "File"
 
-#~ msgid "Wat is de naam of korte beschrijving van de taak? (geef alleen een naam als daarmee volledig duidelijk is waar het om gaat, bijv \"lexicale decisietaak\")"
-#~ msgstr "What is the name or short description of the taks? (only give up a name if this name makes it completely clear what the task is about, for example 'lexical decision task')"
+#~ msgid ""
+#~ "Wat is de naam of korte beschrijving van de taak? (geef alleen een naam "
+#~ "als daarmee volledig duidelijk is waar het om gaat, bijv \"lexicale "
+#~ "decisietaak\")"
+#~ msgstr ""
+#~ "What is the name or short description of the taks? (only give up a name "
+#~ "if this name makes it completely clear what the task is about, for "
+#~ "example 'lexical decision task')"
 
-#~ msgid "Is deze taak belastend voor de deelnemer op een manier die, ondanks de verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, bij de deelnemers zelf, bij derden)? Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid van de taak, de mate waarin deelnemers zich ongemakkelijk kunnen voelen bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. En ga bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c.q. minst belastbare deelnemersgroep."
-#~ msgstr "Is this task a burden for the participants in such a way that it could raise questions, in spite of the obtained informed consent (for example from colleagues, from the participants, a third party)? Examples are the nature of the stimuli, the duration of the task, whether performing the task is tedious or asks for a great amount of mental/physical effort, the degree in which the participants might feel uncomfortable at giving certain answers (for example in the case of a questionnaire concerning depression) or certain behavior, et cetera. In answering this question, keep in mind the group of participants that you as a researcher consider as the most vulnerable or that can carry the least amount of pressure/burden."
+#~ msgid ""
+#~ "Is deze taak belastend voor de deelnemer op een manier die, ondanks de "
+#~ "verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij "
+#~ "collegas, bij de deelnemers zelf, bij derden)? Denk hierbij aan zaken als "
+#~ "de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) "
+#~ "veeleisendheid van de taak, de mate waarin deelnemers zich ongemakkelijk "
+#~ "kunnen voelen bij het geven van bepaalde antwoorden (bijv. "
+#~ "depressievragenlijst) of bepaald gedrag, etcetera. En ga bij het "
+#~ "beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de "
+#~ "voor deze taak meest kwetsbare c.q. minst belastbare deelnemersgroep."
+#~ msgstr ""
+#~ "Is this task a burden for the participants in such a way that it could "
+#~ "raise questions, in spite of the obtained informed consent (for example "
+#~ "from colleagues, from the participants, a third party)? Examples are the "
+#~ "nature of the stimuli, the duration of the task, whether performing the "
+#~ "task is tedious or asks for a great amount of mental/physical effort, the "
+#~ "degree in which the participants might feel uncomfortable at giving "
+#~ "certain answers (for example in the case of a questionnaire concerning "
+#~ "depression) or certain behavior, et cetera. In answering this question, "
+#~ "keep in mind the group of participants that you as a researcher consider "
+#~ "as the most vulnerable or that can carry the least amount of pressure/"
+#~ "burden."
 
 #~ msgid "Home"
 #~ msgstr "Home"
@@ -2415,8 +3105,22 @@ msgstr "Task deleted"
 #~ msgid "Aanvraag is beoordeeld naar ETCL"
 #~ msgstr "Application is assessed for ETCL"
 
-#~ msgid "deelnemers kunnen geselecteerd worden op bepaalde bijzondere kenmerken die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie op verbale beledigingen; patiënten met afasie die een gesprek moeten voeren, ook al gaat het gesprek over alledaagse dingen). Is dit in uw studie bij (een deel van) de deelnemers het geval?"
-#~ msgstr "It may be the case that participants are selected based on certain deviating/special characteristics that possibly go with a increased risk on vulnerability or reduced capacity with respect to aspects of the proposed study (e.g. children that are bullied in the past in a study on the neural response on verbal insults; patients with aphasia that have to engage in an conversation, even if the topics are everyday matters). Is this the case in your study with (a part of) the participants?"
+#~ msgid ""
+#~ "deelnemers kunnen geselecteerd worden op bepaalde bijzondere kenmerken "
+#~ "die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde "
+#~ "belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: "
+#~ "kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie "
+#~ "op verbale beledigingen; patiënten met afasie die een gesprek moeten "
+#~ "voeren, ook al gaat het gesprek over alledaagse dingen). Is dit in uw "
+#~ "studie bij (een deel van) de deelnemers het geval?"
+#~ msgstr ""
+#~ "It may be the case that participants are selected based on certain "
+#~ "deviating/special characteristics that possibly go with a increased risk "
+#~ "on vulnerability or reduced capacity with respect to aspects of the "
+#~ "proposed study (e.g. children that are bullied in the past in a study on "
+#~ "the neural response on verbal insults; patients with aphasia that have to "
+#~ "engage in an conversation, even if the topics are everyday matters). Is "
+#~ "this the case in your study with (a part of) the participants?"
 
 #~ msgid "Voorbeelddocumenten"
 #~ msgstr "Example documents"
