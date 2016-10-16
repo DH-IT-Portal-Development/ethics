@@ -113,6 +113,9 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
             proposal.wmo.enforced_by_commission = True
             proposal.wmo.save()
 
+        proposal.in_archive = form.cleaned_data['in_archive']
+        proposal.save()
+
         form.instance.stage = Review.CLOSED
 
         return super(ReviewCloseView, self).form_valid(form)

@@ -1,10 +1,10 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from core.utils import get_reviewers
+from core.utils import YES_NO, get_reviewers
 from .models import Review, Decision
 
-YES_NO = [(True, _('goedgekeurd')), (False, _('niet goedgekeurd'))]
+APPROVAL = [(True, _('goedgekeurd')), (False, _('niet goedgekeurd'))]
 SHORT_LONG = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route'))]
 
 
@@ -28,9 +28,11 @@ class ReviewAssignForm(forms.ModelForm):
 
 
 class ReviewCloseForm(forms.ModelForm):
+    in_archive = forms.BooleanField(initial=True, required=False)
+
     class Meta:
         model = Review
-        fields = ['continuation']
+        fields = ['continuation', 'in_archive']
         widgets = {
             'continuation': forms.RadioSelect(),
         }
@@ -38,11 +40,15 @@ class ReviewCloseForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Remove long route option if this was already the long route.
+        - Set the label for in_archive
         """
         short_route = kwargs.pop('short_route', False)
         super(ReviewCloseForm, self).__init__(*args, **kwargs)
         if not short_route:
             self.fields['continuation'].choices = [x for x in Review.CONTINUATIONS if x[0] != Review.LONG_ROUTE]
+
+        self.fields['in_archive'].label = _('Voeg deze studie toe aan het UiL OTS archief')
+        self.fields['in_archive'].widget = forms.RadioSelect(choices=YES_NO)
 
 
 class DecisionForm(forms.ModelForm):
@@ -50,7 +56,7 @@ class DecisionForm(forms.ModelForm):
         model = Decision
         fields = ['go', 'comments']
         widgets = {
-            'go': forms.RadioSelect(choices=YES_NO),
+            'go': forms.RadioSelect(choices=APPROVAL),
         }
 
     def __init__(self, *args, **kwargs):
