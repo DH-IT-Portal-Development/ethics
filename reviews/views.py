@@ -66,7 +66,19 @@ class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
     def form_valid(self, form):
         """Updates the Review stage and start the selected Review route for the selected Users."""
         form.instance.stage = Review.COMMISSION
-        start_review_route(form.instance, form.cleaned_data['reviewers'], form.instance.short_route)
+
+        review = self.object
+        current_reviewers = set(review.current_reviewers())
+        selected_reviewers = set(form.cleaned_data['reviewers'])
+        new_reviewers = selected_reviewers - current_reviewers
+        obsolete_reviewers = current_reviewers - selected_reviewers - {get_secretary()}
+
+        # Create a new Decision for new reviewers
+        start_review_route(form.instance, new_reviewers, form.instance.short_route)
+
+        # Remove the Decision for obsolete reviewers
+        Decision.objects.filter(review=review, reviewer__in=obsolete_reviewers).delete()
+
         return super(ReviewAssignView, self).form_valid(form)
 
 

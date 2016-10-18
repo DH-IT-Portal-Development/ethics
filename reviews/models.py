@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
@@ -85,6 +86,9 @@ class Review(models.Model):
         if self.proposal.relation.needs_supervisor:
             accountable_user = self.proposal.supervisor
         return accountable_user
+
+    def current_reviewers(self):
+        return get_user_model().objects.filter(decision__review=self)
 
     def __unicode__(self):
         return u'Review of %s' % self.proposal

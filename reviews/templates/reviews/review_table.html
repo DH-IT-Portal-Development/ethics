@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load core_filters %}
 
 <table class="dataTable display">
     <thead>
@@ -20,3 +21,9 @@
         {% endfor %}
     </tbody>
 </table>
+
+{% if user|is_secretary and review.stage == review.COMMISSION %}
+<a class="pure-button pure-button-primary" href="{% url 'reviews:assign' review.id %}">
+    {% trans "Verander aangestelde commissieleden" %}
+</a>
+{% endif %}

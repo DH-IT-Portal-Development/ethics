@@ -21,9 +21,11 @@ class ReviewAssignForm(forms.ModelForm):
         - Adds a field to select reviewers for this Proposal
         """
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
-        reviewers = get_reviewers()
+        current_reviewers = self.instance.current_reviewers()
+        selectable_reviewers = get_reviewers()
         self.fields['reviewers'] = forms.ModelMultipleChoiceField(
-            queryset=reviewers,
+            initial=current_reviewers,
+            queryset=selectable_reviewers,
             widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}))
 
 
