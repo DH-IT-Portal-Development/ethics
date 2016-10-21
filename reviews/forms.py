@@ -4,7 +4,6 @@ from django.utils.translation import ugettext_lazy as _
 from core.utils import YES_NO, get_reviewers
 from .models import Review, Decision
 
-APPROVAL = [(True, _('goedgekeurd')), (False, _('niet goedgekeurd'))]
 SHORT_LONG = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route'))]
 
 
@@ -58,10 +57,12 @@ class DecisionForm(forms.ModelForm):
         model = Decision
         fields = ['go', 'comments']
         widgets = {
-            'go': forms.RadioSelect(choices=APPROVAL),
+            'go': forms.RadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
-        """Sets the go field as required"""
+        """Removes the empty label for the go field, and sets it as required"""
         super(DecisionForm, self).__init__(*args, **kwargs)
+        self.fields['go'].empty_label = None
+        self.fields['go'].choices = Decision.APPROVAL
         self.fields['go'].required = True

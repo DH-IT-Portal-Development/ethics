@@ -26,7 +26,7 @@ class DecisionOpenListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
-        return Decision.objects.filter(reviewer=self.request.user, go=None)
+        return Decision.objects.filter(reviewer=self.request.user, go='')
 
 
 class SupervisorView(LoginRequiredMixin, generic.ListView):

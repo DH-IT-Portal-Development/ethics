@@ -35,7 +35,7 @@
             <td>{{ review.proposal.title }}</td>
             <td>{{ review.get_stage_display }}</td>
             <td>{{ review.date_start|date:"j M Y" }}</td>
-            <td>{{ decision.go|yesno:"go,no go,open" }}</td>
+            <td>{{ decision.get_go_display|default:_("open") }}</td>
             <td>{% if review.stage == review.CLOSED %} {{ review.get_continuation_display }} {% endif %}</td>
             <td>
                 <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>

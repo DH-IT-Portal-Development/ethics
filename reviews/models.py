@@ -52,9 +52,9 @@ class Review(models.Model):
         closed_decisions = 0
         final_go = True
         for decision in self.decision_set.all():
-            if decision.go is not None:
+            if decision.go != '':
                 closed_decisions += 1
-                final_go &= decision.go
+                final_go &= decision.go == Decision.APPROVED
 
         if all_decisions == closed_decisions:
             self.go = final_go
@@ -95,7 +95,20 @@ class Review(models.Model):
 
 
 class Decision(models.Model):
-    go = models.NullBooleanField(_('Beslissing'), default=None)
+    APPROVED = 'Y'
+    NOT_APPROVED = 'N'
+    NEEDS_REVISION = '?'
+    APPROVAL = (
+        (APPROVED, _('goedgekeurd')),
+        (NOT_APPROVED, _('niet goegekeurd')),
+        (NEEDS_REVISION, _('revisie noodzakelijk')),
+    )
+
+    go = models.CharField(
+        _('Beslissing'),
+        max_length=1,
+        choices=APPROVAL,
+        blank=True)
     date_decision = models.DateTimeField(blank=True, null=True)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),

@@ -69,7 +69,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, None)
 
         decision = Decision.objects.filter(review=review)[0]
-        decision.go = True
+        decision.go = Decision.APPROVED
         decision.save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)
@@ -103,17 +103,17 @@ class CommissionTestCase(BaseReviewTestCase):
         decisions = Decision.objects.filter(review=review)
         self.assertEqual(len(decisions), 2)
 
-        decisions[0].go = True
+        decisions[0].go = Decision.APPROVED
         decisions[0].save()
         review.refresh_from_db()
         self.assertEqual(review.go, None)  # undecided
 
-        decisions[1].go = False
+        decisions[1].go = Decision.NOT_APPROVED
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, False)  # no go
 
-        decisions[1].go = True
+        decisions[1].go = Decision.APPROVED
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
