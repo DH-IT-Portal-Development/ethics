@@ -11,8 +11,11 @@
 
 {% block content %}
 <p>
-    U kunt nu een go of no-go geven voor de studie <em>{{ decision.review.proposal.title }}</em>.
-    De studie is <a href="{% url 'proposals:pdf' decision.review.proposal.id %}" target="_blank">hier</a> in te zien.
+    {% url 'proposals:pdf' decision.review.proposal.id as pdf_url %}
+    {% blocktrans with title=decision.review.proposal.title %}
+    U kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>.
+    De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien.
+    {% endblocktrans %}
     {% if decision.review.stage == review.SUPERVISOR %}
     {% trans "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
     {% endif %}
