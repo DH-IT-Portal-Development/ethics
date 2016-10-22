@@ -126,10 +126,10 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <h2>{% trans "Aanmelding bij de METC" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th><td>{{ wmo.metc_application }}</td>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th><td>{{ wmo.metc_application|yesno:_("ja,nee") }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</th><td>{{ wmo.metc_decision }}</td>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</th><td>{{ wmo.metc_decision|yesno:_("ja,nee") }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th><td><a href="{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
