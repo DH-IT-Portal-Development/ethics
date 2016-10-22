@@ -2,7 +2,7 @@ from django.conf.urls import url
 
 from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalSubmit, ProposalSubmitted, \
-    ProposalCopy, ProposalAsPdf, EmptyPDF
+    ProposalCopy, ProposalDifference, ProposalAsPdf, EmptyPDF
 from .views.study_views import StudyStart
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoApplication, WmoCheck, check_wmo
 
@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
 
     url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
+    url(r'^diff/(?P<pk>\d+)/$', ProposalDifference.as_view(), name='pdf'),
 
     url(r'^pdf/(?P<pk>\d+)/$', ProposalAsPdf.as_view(), name='pdf'),
     url(r'^pdf_empty/$', EmptyPDF.as_view(), name='empty_pdf'),
