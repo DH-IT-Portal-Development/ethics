@@ -17,7 +17,12 @@
             <td>{{ task.name }}</td>
             <td>{{ task.duration }}</td>
             <td>{{ task.registrations.all|unordered_list }}</td>
-            <td>{{ task.feedback|yesno:_("ja,nee,twijfel") }}</td>
+            <td>
+                <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
+                {% if task.feedback %}
+                <span class="help">{{ task.feedback_details }}</span>
+                {% endif %}
+            </td>
             <td>
                 <a href="{% url 'tasks:update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Taak bewerken' %}"></a>
                 {% if session.tasks_number > 1 %}
@@ -28,3 +33,23 @@
         {% endfor %}
     </tbody>
 </table>
+
+<script>
+$(function() {
+    var label = $('.label');
+    var help = $('.help');
+    if (help.length > 0) {
+        label.after(' <img src="{% static 'core/images/information.png' %}">');
+        label.next().qtip({
+            content: {
+                text: help.html(),
+            },
+            hide: {
+                fixed: true,
+                delay: 500,
+            },
+        });
+        help.remove();
+    }
+});
+</script>
