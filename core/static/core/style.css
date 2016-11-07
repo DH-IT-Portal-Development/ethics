@@ -38,6 +38,20 @@ body {
     margin-bottom: 1em;
 }
 
+.proposals-diff {
+    table-layout: fixed;
+    width: 100%;
+    text-align: left;
+}
+
+.proposals-diff-question {
+    width: 50%;
+}
+
+.proposals-diff-answer {
+    width: 25%;
+}
+
 /* Form specifics */
 input[name=title] {
     width: 20em;

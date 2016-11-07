@@ -9,6 +9,7 @@ def copy_proposal(self, form):
 
     # Save relationships
     parent = form.cleaned_data['parent']
+    parent_pk = parent.pk
     relation = parent.relation
     applicants = parent.applicants.all()
     funding = parent.funding.all()
@@ -39,7 +40,7 @@ def copy_proposal(self, form):
     copy_proposal.relation = relation
     copy_proposal.applicants = applicants
     copy_proposal.funding = funding
-    copy_proposal.parent = parent
+    copy_proposal.parent.pk = parent_pk
     copy_proposal.save()
 
     # Copy linked models
