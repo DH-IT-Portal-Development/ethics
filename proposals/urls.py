@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
 
     url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
-    url(r'^diff/(?P<pk>\d+)/$', ProposalDifference.as_view(), name='pdf'),
+    url(r'^diff/(?P<pk>\d+)/$', ProposalDifference.as_view(), name='diff'),
 
     url(r'^pdf/(?P<pk>\d+)/$', ProposalAsPdf.as_view(), name='pdf'),
     url(r'^pdf_empty/$', EmptyPDF.as_view(), name='empty_pdf'),

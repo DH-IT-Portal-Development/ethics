@@ -260,9 +260,10 @@
     {% endif %}
 </table>
 
-{% if study.has_intervention %}
-{% with intervention=study.intervention p_intervention=p_study.intervention %}
+{% if study.has_intervention or p_study.has_intervention %}
 <h2>{% trans "Het interventieonderzoek" %}</h2>
+{% if study.has_intervention and p_study.has_intervention %}
+{% with intervention=study.intervention p_intervention=p_study.intervention %}
 {% include "studies/study_title.html" %}
 <table class="proposals-diff pure-table pure-table-horizontal">
     <tr>
@@ -333,11 +334,21 @@
     {% endif %}
 </table>
 {% endwith %}
+{% elif study.has_intervention and not p_study.has_intervention %}
+<div class="warning">
+{% trans "De revisie bevat interventieonderzoek, terwijl de originele studie dat niet bevat." %}
+</div>
+{% elif not study.has_intervention and p_study.has_intervention %}
+<div class="warning">
+{% trans "De revisie bevat geen interventieonderzoek, terwijl de originele studie dat wel bevat." %}
+</div>
+{% endif %}
 {% endif %}
 
-{% if study.has_observation %}
-{% with observation=study.observation p_observation=p_study.observation %}
+{% if study.has_observation or p_study.has_observation %}
 <h2>{% trans "Het observatieonderzoek" %}</h2>
+{% if study.has_observation and p_study.has_observation %}
+{% with observation=study.observation p_observation=p_study.observation %}
 {% include "studies/study_title.html" %}
 <table class="proposals-diff pure-table pure-table-horizontal">
     <tr>
@@ -427,10 +438,20 @@
     {% endif %}
 </table>
 {% endwith %}
+{% elif study.has_observation and not p_study.has_observation %}
+<div class="warning">
+{% trans "De revisie bevat observatieonderzoek, terwijl de originele studie dat niet bevat." %}
+</div>
+{% elif not study.has_observation and p_study.has_observation %}
+<div class="warning">
+{% trans "De revisie bevat geen observatieonderzoek, terwijl de originele studie dat wel bevat." %}
+</div>
+{% endif %}
 {% endif %}
 
-{% if study.has_sessions %}
+{% if study.has_sessions or p_study.has_sessions %}
 <h2>{% trans "Het takenonderzoek" %}</h2>
+{% if study.has_sessions and p_study.has_sessions %}
 {% include "studies/study_title.html" %}
 <table class="proposals-diff pure-table pure-table-horizontal">
     <tr>
@@ -560,6 +581,15 @@
 </table>
 {% endfor %}
 {% endfor %}
+{% elif study.has_sessions and not p_study.has_sessions %}
+<div class="warning">
+{% trans "De revisie bevat takenonderzoek, terwijl de originele studie dat niet bevat." %}
+</div>
+{% elif not study.has_sessions and p_study.has_sessions %}
+<div class="warning">
+{% trans "De revisie bevat geen takenonderzoek, terwijl de originele studie dat wel bevat." %}
+</div>
+{% endif %}
 {% endif %}
 
 <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
@@ -670,7 +700,7 @@ $(function() {
     // Color changes between proposals as red
     $('td:nth-child(2)').each(function() {
         if ($(this).text() !== $(this).next().text()) {
-            $(this).next().css('background-color', 'orange');
+            $(this).next().addClass('diff');
         }
     });
 });

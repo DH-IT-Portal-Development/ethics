@@ -38,6 +38,7 @@ body {
     margin-bottom: 1em;
 }
 
+/* Displaying the differences between Proposals */
 .proposals-diff {
     table-layout: fixed;
     width: 100%;
@@ -50,6 +51,10 @@ body {
 
 .proposals-diff-answer {
     width: 25%;
+}
+
+.proposals-diff td.diff {
+    background-color: orange;
 }
 
 /* Form specifics */
@@ -91,6 +96,7 @@ form table {
     text-shadow: 1px 1px 0 #fff;
 }
 
+/* Bigger font for qtip's content */
 .qtip-content {
     font-size: 1.1em;
 }
