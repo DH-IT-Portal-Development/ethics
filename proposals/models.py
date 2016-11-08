@@ -161,12 +161,20 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
     )
 
     def continue_url(self):
-        for available_url in self.available_urls():
-            if available_url.url and not available_url.is_title:
-                result = available_url.url
+        """Returns the next URL for this Proposal"""
+        available_urls = self.available_urls()
+        # For copies, always start at the first available URL
+        if self.parent:
+            result = available_urls[0].url
+        # Otherwise, loop through the available URLs to find the last non-title with an URL
+        else:
+            for available_url in available_urls:
+                if available_url.url and not available_url.is_title:
+                    result = available_url.url
         return result
 
     def available_urls(self):
+        """Returns the available URLs for this Proposal"""
         return available_urls(self)
 
     def first_study(self):
