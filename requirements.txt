@@ -20,7 +20,7 @@ mysql-python==1.2.5
 Pillow==3.4.2             # via reportlab, xhtml2pdf
 Pygments==2.1.3           # via sphinx
 pyPdf2==1.26.0            # via xhtml2pdf
-python-ldap==2.4.27       # via django-auth-ldap
+python-ldap==2.4.28       # via django-auth-ldap
 pytz==2016.7              # via babel
 reportlab==3.3.0          # via xhtml2pdf
 six==1.10.0               # via html5lib, sphinx
