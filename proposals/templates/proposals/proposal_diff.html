@@ -4,10 +4,13 @@
 {% load proposal_filters %}
 
 {% block title %}
-{% trans "Verschillen" %}
+{% trans "Overzicht van wijzigingen" %}
 {% endblock %}
 
 {% block content %}
+<p>
+    {% trans "Dit overzicht toont de gemaakte wijzigingen in de revisie/het amendement ten opzichte van de originele studie." %}
+</p>
 {% with p_proposal=proposal.parent %}
 <h2>{% trans "Algemene informatie over de studie" %}</h2>
 <table class="proposals-diff pure-table pure-table-horizontal">
@@ -694,6 +697,12 @@
 </table>
 {% endif %}
 {% endwith %}
+
+<p>
+    <button class="pure-button" onclick="window.history.back();">
+        {% trans "Terug naar de vorige pagina" %}
+    </button>
+</p>
 
 <script>
 $(function() {

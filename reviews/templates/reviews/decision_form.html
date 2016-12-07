@@ -25,7 +25,7 @@
 <p class="warning">
     {% url 'proposals:diff' proposal.id as diff_url %}
     {% blocktrans %}
-    Dit is een revisie van of amendement op een vorige studie. De verschillen met de vorige studie zijn <a href="{{ diff_url }}" target="_blank">hier</a> in te zien.
+    Dit is een revisie van of amendement op een vorige studie. De verschillen met de vorige studie zijn <a href="{{ diff_url }}">hier</a> in te zien.
     {% endblocktrans %}
 </p>
 {% endif %}
