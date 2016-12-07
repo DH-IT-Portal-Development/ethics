@@ -37,16 +37,22 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
+        - Remove summary for pre-assessment Proposals
         - Remove empty label from relation field
         - Don't allow to pick yourself or a superuser as supervisor
         - Add a None-option for supervisor
         - Don't allow to pick a superuser as applicant
         """
+        is_pre_asssessment = kwargs.pop('is_pre_assessment', False)
+
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
         self.fields['supervisor'].choices = get_users_as_list(get_user_model().objects.exclude(pk=self.user.pk).exclude(is_superuser=True))
         self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + self.fields['supervisor'].choices
         self.fields['applicants'].choices = get_users_as_list(get_user_model().objects.exclude(is_superuser=True))
+
+        if is_pre_asssessment:
+            del self.fields['summary']
 
     def clean(self):
         """

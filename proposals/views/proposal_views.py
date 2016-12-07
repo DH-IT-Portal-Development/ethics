@@ -123,6 +123,19 @@ class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
         return context
 
 
+class ProposalCreatePreAssessment(ProposalCreate):
+    def get_form_kwargs(self):
+        """Sets the Proposal as a form kwarg"""
+        kwargs = super(ProposalCreatePreAssessment, self).get_form_kwargs()
+        kwargs['is_pre_assessment'] = True
+        return kwargs
+
+    def form_valid(self, form):
+        """Sets is_pre_assessment to True"""
+        form.instance.is_pre_assessment = True
+        return super(ProposalCreatePreAssessment, self).form_valid(form)
+
+
 class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
     def get_context_data(self, **kwargs):
         """Adds 'create'/'no_back' to template context"""
@@ -130,6 +143,10 @@ class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
         context['create'] = False
         context['no_back'] = True
         return context
+
+
+class ProposalUpdatePreAssessment(ProposalUpdate):
+    pass
 
 
 class ProposalDelete(DeleteView):
@@ -152,6 +169,10 @@ class ProposalStart(generic.TemplateView):
         context['secretary'] = get_secretary()
         context['regulations'] = 'https://etcl.wp.hum.uu.nl/reglement/'
         return context
+
+
+class ProposalStartPreAssessment(ProposalStart):
+    template_name = 'proposals/proposal_start_preassessment.html'
 
 
 class ProposalSubmit(AllowErrorsMixin, UpdateView):

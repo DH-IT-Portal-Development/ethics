@@ -97,6 +97,7 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
     in_archive = models.BooleanField(default=False)
+    is_pre_assessment = models.BooleanField(default=False)
     pdf = models.FileField(blank=True)
 
     # Fields with respect to Studies

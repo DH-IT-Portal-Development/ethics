@@ -1,8 +1,9 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView, MyCompletedView, MyProposalsView, \
-    ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalSubmit, ProposalSubmitted, \
-    ProposalCopy, ProposalAsPdf, EmptyPDF
+    ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, ProposalSubmit, \
+    ProposalSubmitted, ProposalCopy, ProposalAsPdf, EmptyPDF, \
+    ProposalCreatePreAssessment, ProposalUpdatePreAssessment, ProposalStartPreAssessment
 from .views.study_views import StudyStart
 from .views.wmo_views import WmoCreate, WmoUpdate, WmoApplication, WmoCheck, check_wmo
 
@@ -15,11 +16,20 @@ urlpatterns = [
     url(r'^my_archive/$', MyProposalsView.as_view(), name='my_archive'),
 
     # Proposal
-    url(r'^create/$', ProposalCreate.as_view(), name='create'),
-    url(r'^update/(?P<pk>\d+)/$', ProposalUpdate.as_view(), name='update'),
+    url(r'^create/', include([
+        url(r'^$', ProposalCreate.as_view(), name='create'),
+        url(r'^pre$', ProposalCreatePreAssessment.as_view(), name='create_pre'),
+    ])),
+    url(r'^update/(?P<pk>\d+)/', include([
+        url(r'^$', ProposalUpdate.as_view(), name='update'),
+        url(r'^pre$', ProposalUpdatePreAssessment.as_view(), name='update_pre'),
+    ])),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
 
-    url(r'^start/$', ProposalStart.as_view(), name='start'),
+    url(r'^start/', include([
+        url(r'^$', ProposalStart.as_view(), name='start'),
+        url(r'^pre/$', ProposalStartPreAssessment.as_view(), name='start_pre'),
+    ])),
     url(r'^study_start/(?P<pk>\d+)/$', StudyStart.as_view(), name='study_start'),
     url(r'^submit/(?P<pk>\d+)/$', ProposalSubmit.as_view(), name='submit'),
     url(r'^submitted/$', ProposalSubmitted.as_view(), name='submitted'),
