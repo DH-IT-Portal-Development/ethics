@@ -161,6 +161,9 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         default=False
     )
 
+    def accountable_user(self):
+        return self.supervisor if self.relation.needs_supervisor else self.created_by
+
     def continue_url(self):
         for available_url in self.available_urls():
             if available_url.url and not available_url.is_title:

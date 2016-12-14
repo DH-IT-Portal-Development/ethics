@@ -43,7 +43,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         - Add a None-option for supervisor
         - Don't allow to pick a superuser as applicant
         """
-        is_pre_asssessment = kwargs.pop('is_pre_assessment', False)
+        is_pre_assessment = kwargs.pop('is_pre_assessment', False)
 
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
@@ -51,7 +51,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + self.fields['supervisor'].choices
         self.fields['applicants'].choices = get_users_as_list(get_user_model().objects.exclude(is_superuser=True))
 
-        if is_pre_asssessment:
+        if is_pre_assessment:
             del self.fields['summary']
 
     def clean(self):

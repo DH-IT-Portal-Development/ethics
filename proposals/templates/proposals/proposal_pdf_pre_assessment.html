@@ -1,0 +1,131 @@
+{% extends "easy_pdf/base.html" %}
+
+{% load i18n %}
+{% load proposal_filters %}
+
+{% block extra_style %}
+    <style type="text/css">
+        #content table {
+            border-top-width: .5px;
+            border-top-style: solid;
+            border-top-color: #cbcbcb;
+            border-right-width: .5px;
+            border-right-style: solid;
+            border-right-color: #cbcbcb;
+            border-bottom-width: .5px;
+            border-bottom-style: solid;
+            border-bottom-color: #cbcbcb;
+            border-left-width: .5px;
+            border-left-style: solid;
+            border-left-color: #cbcbcb;
+        }
+
+        #content th, td {
+            font-weight: normal;
+            text-align: left;
+            padding-top: 3px;
+            padding-right: 3px;
+            padding-bottom: 3px;
+            padding-left: 3px;
+        }
+
+        #content th {
+            font-weight: normal;
+            text-align: left;
+        }
+
+        #content li {
+            line-height: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block page_header %}
+<div id="page-header">
+ETCL - Aanvraag voor voortoetsing <em>{{ proposal.title }}</em> (referentienummer {{ proposal.reference_number }}, ingediend door {{ proposal.created_by.get_full_name }})
+</div>
+{% endblock %}
+
+{% block page_foot %}
+Pagina <pdf:pagenumber /> van <pdf:pagecount />
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <div class="main">
+        <h1>Referentienummer {{ proposal.reference_number }}</h1>
+        <h2>{% trans "Algemene informatie over de studie" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th><td>{{ proposal.relation }}</td>
+            </tr>
+            {% if proposal.relation.needs_supervisor %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th><td>{{ proposal.supervisor.get_full_name }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th><td>{{ proposal.other_applicants|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if proposal.other_applicants %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th><td>{{ proposal.applicants.all|unordered_list }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</th><td>{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if proposal.other_stakeholders %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "stakeholders" %}</th><td>{{ proposal.stakeholders }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th><td>{{ proposal.title }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>
+            </tr>
+            {% if proposal.funding.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td>{{ proposal.funding_details }}</td>
+            </tr>
+            {% endif %}
+        </table>
+
+        {% with wmo=proposal.wmo %}
+        <h2>{% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{{ wmo.get_metc_display }}</td>
+            </tr>
+            {% if wmo.metc == 'Y' %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th><td>{{ wmo.metc_details }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</th><td>{{ wmo.metc_institution }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</th><td>{{ wmo.get_is_medical_display }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "wmo" "is_behavioristic" %}</th><td>{{ wmo.get_is_behavioristic_display }}</td>
+            </tr>
+            {% endif %}
+        </table>
+        {% endwith %}
+
+        <h2>{% trans "Aanvraag voor voortoetsing versturen" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th><td>{{ proposal.comments }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
