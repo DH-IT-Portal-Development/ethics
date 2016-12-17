@@ -1918,7 +1918,7 @@ msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
 msgstr ""
-"The study uses psychophysiological measurements on children under {} year{s} "
+"The study uses psychophysiological measurements on children under {} year(s) "
 "old."
 
 #: reviews/utils.py:216
