@@ -97,6 +97,7 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
     in_archive = models.BooleanField(default=False)
+    is_pre_assessment = models.BooleanField(default=False)
     pdf = models.FileField(blank=True)
 
     # Fields with respect to Studies
@@ -159,6 +160,9 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         _('Is deze studie een revisie van of amendement op een ingediende studie?'),
         default=False
     )
+
+    def accountable_user(self):
+        return self.supervisor if self.relation.needs_supervisor else self.created_by
 
     def continue_url(self):
         """Returns the next URL for this Proposal"""

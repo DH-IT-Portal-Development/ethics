@@ -82,10 +82,7 @@ class Review(models.Model):
                 self.save()
 
     def accountable_user(self):
-        accountable_user = self.proposal.created_by
-        if self.proposal.relation.needs_supervisor:
-            accountable_user = self.proposal.supervisor
-        return accountable_user
+        return self.proposal.accountable_user()
 
     def current_reviewers(self):
         return get_user_model().objects.filter(decision__review=self)

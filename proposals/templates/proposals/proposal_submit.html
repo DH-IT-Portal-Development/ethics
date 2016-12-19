@@ -3,8 +3,14 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %} 
+{% block title %}
+{% if proposal.is_pre_assessment %}
+{% trans "Aanvraag voor voortoetsing klaar voor versturen" %}
+{% elif proposal.relation.needs_supervisor %}
 {% trans "Concept-aanmelding klaar voor versturen" %}
+{% else %}
+{% trans "Aanmelding klaar voor versturen" %}
+{% endif %}
 {% endblock %}
 
 {% block progress %}100{% endblock %}
@@ -15,15 +21,27 @@
 
 {% block content %}
 <p>
+    {% if proposal.is_pre_assessment %}
+    {% blocktrans %}
+    Uw aanvraag voor voortoetsing is compleet.
+    {% endblocktrans %}
+    {% blocktrans %}
+    Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
+    nu ter beoordeling naar de ETCL versturen.
+    {% endblocktrans %}
+
+    {% elif proposal.relation.needs_supervisor %}
     {% blocktrans %}
     Uw concept-aanmelding is compleet.
     {% endblocktrans %}
-
-    {% if proposal.relation.needs_supervisor %}
     {% blocktrans %}
     U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen.
     {% endblocktrans %}
+
     {% else %}
+    {% blocktrans %}
+    Uw aanmelding is compleet.
+    {% endblocktrans %}
     {% blocktrans %}
     Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
     nu ter beoordeling naar de ETCL versturen.
@@ -32,18 +50,19 @@
 </p>
 <p>
     {% blocktrans %}
-    Als u de concept-aanmelding eerst nog even wilt nakijken kan dat door via "Terug naar begin
+    Als u de aanmelding eerst nog even wilt nakijken kan dat door via "Terug naar begin
     van de studie" alle pagina's nog even door te lopen, of gebruik te maken van de knop 
     "Toon navigatie" in de rechterbovenhoek.
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans %}
-    Als u de concept-aanmelding nu nog niet wilt versturen kunt u gewoon teruggaan naar de startpagina;
+    Als u de aanmelding nu nog niet wilt versturen kunt u gewoon teruggaan naar de startpagina;
     de concept-aanvraag wordt dan bewaard voor evt. latere wijziging en indiening.
     {% endblocktrans %}
 </p>
 
+{% if not proposal.is_pre_assessment %}
 {% for study in proposal.study_set.all %}
 {% if not study.informed_consent or not study.briefing %}
     <div class="warning">
@@ -57,10 +76,13 @@
     </div>
 {% endif %}
 {% endfor %}
+{% endif %}
 
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% if proposal.relation.needs_supervisor %}
+    {% if proposal.is_pre_assessment %}
+    {% include "base/form_buttons.html" with next_text=_("Aanvraag voor voortoetsing versturen") %}
+    {% elif proposal.relation.needs_supervisor %}
     {% include "base/form_buttons.html" with next_text=_("Concept-aanmelding versturen") %}
     {% else %}
     {% include "base/form_buttons.html" with next_text=_("Aanmelding versturen") %}

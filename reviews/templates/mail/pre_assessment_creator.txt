@@ -1,0 +1,7 @@
+{% extends "mail/base.txt" %}
+
+{% block content %}
+Beste collega,
+
+Uw aanvraag voor voortoetsing is ingediend. U ontvangt van de ETCL binnenkort verder bericht.
+{% endblock %}

@@ -93,6 +93,25 @@ class WmoCheck(generic.FormView):
 
 
 ################
+# Pre-assessment
+################
+class PreAssessmentMixin(object):
+    def get_next_url(self):
+        return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
+
+    def get_back_url(self):
+        return reverse('proposals:update_pre', args=(self.object.proposal.pk,))
+
+
+class WmoCreatePreAssessment(PreAssessmentMixin, WmoCreate):
+    pass
+
+
+class WmoUpdatePreAssessment(PreAssessmentMixin, WmoUpdate):
+    pass
+
+
+################
 # AJAX callbacks
 ################
 @csrf_exempt

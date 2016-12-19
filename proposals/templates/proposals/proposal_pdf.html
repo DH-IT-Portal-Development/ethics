@@ -55,7 +55,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
     <div class="main">
         <h1>Referentienummer {{ proposal.reference_number }}</h1>
         <h2>{% trans "Algemene informatie over de studie" %}</h2>
-        <table id="test">
+        <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th><td>{{ proposal.relation }}</td>
             </tr>
@@ -450,7 +450,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         </table>
         {% endfor %}
 
-        <h2>{% trans "Concept-aanmelding versturen" %}</h2>
+        <h2>{% trans "Aanmelding versturen" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th><td>{{ proposal.comments }}</td>

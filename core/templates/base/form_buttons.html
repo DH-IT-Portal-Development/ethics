@@ -13,9 +13,15 @@
 		{% trans "Terug naar startpagina" %}
 	</a>
 	{% if proposal %}
+	{% if proposal.is_pre_assessment %}
+	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update_pre' proposal.pk %}">
+		{% trans "Terug naar begin studie" %}
+	</a>
+	{% else %}
 	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update' proposal.pk %}">
 		{% trans "Terug naar begin studie" %}
 	</a>
+	{% endif %}
 	{% endif %}
 	{% if study %}
 	<a class="pure-button pure-button-secondary" href="{% url 'studies:update' study.pk %}">

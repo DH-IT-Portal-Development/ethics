@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
 
-from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 
 from braces.views import LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
-from easy_pdf.rendering import render_to_pdf
 
 from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
 from core.utils import get_secretary
@@ -16,7 +14,7 @@ from reviews.utils import start_review
 from ..copy import copy_proposal
 from ..forms import ProposalForm, ProposalSubmitForm, ProposalCopyForm
 from ..models import Proposal
-from ..utils import generate_ref_number
+from ..utils import generate_ref_number, generate_pdf, end_pre_assessment
 
 
 ############
@@ -97,9 +95,9 @@ class ProposalMixin(UserFormKwargsMixin):
     def get_next_url(self):
         proposal = self.object
         if hasattr(proposal, 'wmo'):
-            return reverse('proposals:wmo_update', args=(proposal.id,))
+            return reverse('proposals:wmo_update', args=(proposal.pk,))
         else:
-            return reverse('proposals:wmo_create', args=(proposal.id,))
+            return reverse('proposals:wmo_create', args=(proposal.pk,))
 
 
 class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
@@ -168,21 +166,19 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         success_url = super(ProposalSubmit, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
-
-            pdf = ContentFile(render_to_pdf('proposals/proposal_pdf.html', {'proposal': proposal}))
-            proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
-
+            generate_pdf(proposal, 'proposals/proposal_pdf.html')
             start_review(proposal)
         return success_url
 
     def get_next_url(self):
-        return reverse('proposals:submitted')
+        return reverse('proposals:submitted', args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse('studies:consent', args=(self.object.last_study().pk,))
 
 
-class ProposalSubmitted(generic.TemplateView):
+class ProposalSubmitted(generic.DetailView):
+    model = Proposal
     template_name = 'proposals/proposal_submitted.html'
 
 
@@ -210,3 +206,59 @@ class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_diff.html'
+
+
+################
+# Pre-assessment
+################
+class ProposalStartPreAssessment(ProposalStart):
+    template_name = 'proposals/proposal_start_pre_assessment.html'
+
+
+class PreAssessmentMixin(ProposalMixin):
+    def get_form_kwargs(self):
+        """Sets the Proposal as a form kwarg"""
+        kwargs = super(PreAssessmentMixin, self).get_form_kwargs()
+        kwargs['is_pre_assessment'] = True
+        return kwargs
+
+    def get_next_url(self):
+        proposal = self.object
+        if hasattr(proposal, 'wmo'):
+            return reverse('proposals:wmo_update_pre', args=(proposal.pk,))
+        else:
+            return reverse('proposals:wmo_create_pre', args=(proposal.pk,))
+
+
+class ProposalCreatePreAssessment(PreAssessmentMixin, ProposalCreate):
+    def form_valid(self, form):
+        """Sets is_pre_assessment to True"""
+        form.instance.is_pre_assessment = True
+        return super(ProposalCreatePreAssessment, self).form_valid(form)
+
+
+class ProposalUpdatePreAssessment(PreAssessmentMixin, ProposalUpdate):
+    pass
+
+
+class ProposalSubmitPreAssessment(ProposalSubmit):
+    def form_valid(self, form):
+        """
+        - Save the PDF on the Proposal
+        """
+        success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
+        if 'save_back' not in self.request.POST:
+            proposal = self.get_object()
+            generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')
+            end_pre_assessment(proposal)
+        return success_url
+
+    def get_next_url(self):
+        return reverse('proposals:submitted_pre', args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse('proposals:wmo_update_pre', args=(self.object.pk,))
+
+
+class ProposalSubmittedPreAssessment(ProposalSubmitted):
+    template_name = 'proposals/proposal_submitted.html'
