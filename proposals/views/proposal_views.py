@@ -207,5 +207,6 @@ class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
     template_name = 'proposals/proposal_pdf_empty.html'
 
 
-class ProposalDifference(LoginRequiredMixin, generic.TemplateView):
+class ProposalDifference(LoginRequiredMixin, generic.DetailView):
+    model = Proposal
     template_name = 'proposals/proposal_diff.html'

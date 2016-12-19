@@ -10,6 +10,10 @@
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
+{% static "proposals/images/page_white_go.png" as img_next %}
+{% static "proposals/images/arrow_divide.png" as img_diff %}
+{% static "proposals/images/delete.png" as img_delete %}
+{% static "core/images/page_white_acrobat.png" as img_pdf %}
 <p>
     {{ body }}
 </p>
@@ -17,15 +21,26 @@
 <ul>
     {% if modifiable %}
     <li>
-        Klik op <img src="{% static 'proposals/images/page_white_go.png' %}" title="Naar volgende stap"> om naar de volgende stap in het proces te gaan. 
+        {% blocktrans %}
+        Klik op <img src="{{ img_next }}" title="Naar volgende stap"> om naar de volgende stap in het proces te gaan.
+        {% endblocktrans %}
     </li>
     <li>
-        Klik op <img src="{% static 'proposals/images/delete.png' %}" title="Verwijderen"> om uw studie te verwijderen.
+        {% blocktrans %}
+        Klik op <img src="{{ img_diff }}" title="Toon verschillen"> om de verschillen met de voorgaande versie te zien (alleen beschikbaar voor revisies/amendementen).
+        {% endblocktrans %}
+    </li>
+    <li>
+        {% blocktrans %}
+        Klik op <img src="{{ img_delete }}" title="Verwijderen"> om uw studie te verwijderen.
+        {% endblocktrans %}
     </li>
     {% endif %}
     {% if submitted %}
     <li>
-        Klik op <img src="{% static 'core/images/page_white_acrobat.png' %}" title="Inzien"> om een ingediende studie in te zien.
+        {% blocktrans %}
+        Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
+        {% endblocktrans %}
     </li>
     {% endif %}
 </ul>
@@ -46,12 +61,15 @@
             <td>{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
                 {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-                <a href="{{ proposal.continue_url }}"><img src="{% static 'proposals/images/page_white_go.png' %}" title="{% trans 'Naar volgende stap' %}"></a>
-                <a href="{% url 'proposals:delete' proposal.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Verwijderen' %}"></a>
+                <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}" title="{% trans 'Naar volgende stap' %}"></a>
+                {% if proposal.is_revision %}
+                <a href="{% url 'proposals:diff' proposal.id %}"><img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}"></a>
+                {% endif %}
+                <a href="{% url 'proposals:delete' proposal.id %}"><img src="{{ img_delete }}" title="{% trans 'Verwijderen' %}"></a>
                 {% elif proposal.pdf %}
-                <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Inzien' %}"></a>
+                <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
                 {% else %}
-                <a href="{% url 'proposals:pdf' proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Inzien' %}"></a>
+                <a href="{% url 'proposals:pdf' proposal.id %}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
                 {% endif %}
             </td>
         </tr>
