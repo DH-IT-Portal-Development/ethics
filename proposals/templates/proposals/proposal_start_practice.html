@@ -1,0 +1,73 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Een nieuwe studie aanmelden (oefenportaal)" %}
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
+
+{% block content %}
+<p class="warning">
+    {% trans "Dit is het oefenportaal." %}
+</p>
+<p>
+    {% blocktrans %}
+    U wilt een nieuwe studie ter toetsing bij de ETCL aanmelden.
+    Het is daarvoor <em>noodzakelijk</em> dat u goed bekend bent met het ETCL
+    reglement (waarin bijvoorbeeld de ETCL definities van 'studie').
+    U kunt uzelf en de commissieleden veel tijd besparen door uzelf eerst
+    goed te informeren.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Om een studie t.a.v. <em>informed consent</em>, belasting en risico's voor
+    de deelnemers, en data-management procedures goed te kunnen beoordelen
+    heeft de ETCL een gedetailleerde specificatie van de studie nodig.
+    Na enkele inleidende vragen dient u o.a. op te geven wie er aan deelnemen,
+    en welk(e) soort(en) onderzoek de studie omvat: observatieonderzoek,
+    interventieonderzoek en/of takenonderzoek.
+    Voor elke onderzoekssoort dient u vervolgens op te geven hoe dit onderzoek
+    in uw studie precies is vormgegeven. Na dit alles zult u gevraagd worden
+    een inschatting te geven van de belasting van, en risico's voor, de
+    deelnemers, en dient u vervolgens alle voor uw studie aangepaste
+    formulieren ten bate van <em>informed consent</em> te uploaden.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Als u met verschillende deelnemersgroepen werkt die een verschillend
+    onderzoekstraject doorlopen (de ene groep krijgt bijvoorbeeld twee
+    taken, de andere drie) zult u elk traject apart op bovengenoemde wijze
+    moeten beschrijven.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Afhankelijk van de complexiteit van uw onderzoek kan de specificatie
+    zeker enige tijd in beslag nemen. U kunt de aanmelding echter altijd
+    onderbreken, bewaren, en op een later moment afmaken. Uw specificatie
+    wordt alleen zichtbaar voor de ETCL en, indien goedgekeurd, voor uw
+    collega's binnen het UiL OTS. De deelnemers zien uiteraard niets van
+    wat u hier specificeert.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans with secretary_name=secretary.get_full_name secretary_mail=secretary.email %}
+    Gebruik bij het invullen s.v.p. geen afkortingen waar de ETCL wellicht
+    niet mee bekend is.
+    Raadpleeg bij vragen eerst het
+    <a href="{{ regulations }}" target="_blank">reglement</a>,
+    en neem eventueel daarna contact op met de ETCL secretaris
+    ({{ secretary_name }},
+    <a href="mailto:{{ secretary_mail }}">{{ secretary_mail }}</a>).
+    {% endblocktrans %}
+</p>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    {% include "base/form_buttons.html" %}
+</form>
+{% endblock %}

@@ -62,7 +62,7 @@
     {% endblocktrans %}
 </p>
 
-{% if not proposal.is_pre_assessment %}
+{% if not proposal.is_pre_assessment and not proposal.is_practice %}
 {% for study in proposal.study_set.all %}
 {% if not study.informed_consent or not study.briefing %}
     <div class="warning">

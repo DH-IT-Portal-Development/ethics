@@ -40,7 +40,8 @@ def available_urls(proposal):
             submit_url.url = reverse('proposals:submit_pre', args=(proposal.pk,))
         urls.append(submit_url)
     else:
-        urls.append(AvailableURL(url=reverse('proposals:update', args=(proposal.pk,)),
+        update_url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
+        urls.append(AvailableURL(url=reverse(update_url, args=(proposal.pk,)),
                                  title=_('Algemene informatie over de studie'), margin=0))
 
         wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'), margin=0)

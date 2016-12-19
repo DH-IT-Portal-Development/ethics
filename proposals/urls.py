@@ -5,7 +5,8 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MySubmittedView
     ProposalStart, ProposalSubmit, ProposalSubmitted, \
     ProposalCopy, ProposalDifference, ProposalAsPdf, EmptyPDF, \
     ProposalCreatePreAssessment, ProposalUpdatePreAssessment, \
-    ProposalStartPreAssessment, ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment
+    ProposalStartPreAssessment, ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
+    ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice    
 from .views.study_views import StudyStart
 from .views.wmo_views import WmoCreate, WmoUpdate, \
     WmoApplication, WmoCheck, check_wmo, \
@@ -23,16 +24,19 @@ urlpatterns = [
     url(r'^create/', include([
         url(r'^$', ProposalCreate.as_view(), name='create'),
         url(r'^pre/$', ProposalCreatePreAssessment.as_view(), name='create_pre'),
+        url(r'^practice/(?P<reason>\d+)/$', ProposalCreatePractice.as_view(), name='create_practice'),
     ])),
     url(r'^update/(?P<pk>\d+)/', include([
         url(r'^$', ProposalUpdate.as_view(), name='update'),
         url(r'^pre/$', ProposalUpdatePreAssessment.as_view(), name='update_pre'),
+        url(r'^practice/$', ProposalUpdatePractice.as_view(), name='update_practice'),
     ])),
     url(r'^delete/(?P<pk>\d+)/$', ProposalDelete.as_view(), name='delete'),
 
     url(r'^start/', include([
         url(r'^$', ProposalStart.as_view(), name='start'),
         url(r'^pre/$', ProposalStartPreAssessment.as_view(), name='start_pre'),
+        url(r'^practice/$', ProposalStartPractice.as_view(), name='start_practice'),
     ])),
     url(r'^submit/(?P<pk>\d+)/', include([
         url(r'^$', ProposalSubmit.as_view(), name='submit'),

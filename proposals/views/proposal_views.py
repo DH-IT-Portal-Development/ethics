@@ -12,7 +12,7 @@ from core.utils import get_secretary
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalSubmitForm, ProposalCopyForm
+from ..forms import ProposalForm, ProposalSubmitForm, ProposalCopyForm, ProposalStartPracticeForm
 from ..models import Proposal
 from ..utils import generate_ref_number, generate_pdf, end_pre_assessment
 
@@ -262,3 +262,43 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
 
 class ProposalSubmittedPreAssessment(ProposalSubmitted):
     template_name = 'proposals/proposal_submitted.html'
+
+
+##########
+# Practice
+##########
+class ProposalStartPractice(generic.FormView):
+    template_name = 'proposals/proposal_start_practice.html'
+    form_class = ProposalStartPracticeForm
+
+    def get_context_data(self, **kwargs):
+        """Adds 'no_back' to template context"""
+        context = super(ProposalStartPractice, self).get_context_data(**kwargs)
+        context['no_back'] = True
+        return context
+
+    def get_success_url(self):
+        """Go to the creation for a practice proposal"""
+        return reverse('proposals:create_practice', args=(self.request.POST['practice_reason'],))
+
+
+class ProposalCreatePractice(ProposalCreate):
+    def get_form_kwargs(self):
+        """Sets in_course as a form kwarg"""
+        kwargs = super(ProposalCreatePractice, self).get_form_kwargs()
+        kwargs['in_course'] = self.kwargs['reason'] == Proposal.COURSE
+        return kwargs
+
+    def form_valid(self, form):
+        """Sets in_course and is_exploration"""
+        form.instance.in_course = self.kwargs['reason'] == Proposal.COURSE
+        form.instance.is_exploration = self.kwargs['reason'] == Proposal.EXPLORATION
+        return super(ProposalCreatePractice, self).form_valid(form)
+
+
+class ProposalUpdatePractice(ProposalUpdate):
+    def get_form_kwargs(self):
+        """Sets in_course as a form kwarg"""
+        kwargs = super(ProposalUpdatePractice, self).get_form_kwargs()
+        kwargs['in_course'] = self.object.in_course
+        return kwargs

@@ -9,7 +9,7 @@ from braces.forms import UserKwargModelFormMixin
 from core.forms import ConditionalModelForm
 from core.models import YES_NO_DOUBT, YES, NO, DOUBT
 from core.utils import YES_NO, get_users_as_list
-from .models import Proposal, Wmo
+from .models import Proposal, Wmo, Relation
 
 
 class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
@@ -37,12 +37,14 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
-        - Remove summary for pre-assessment Proposals
         - Remove empty label from relation field
         - Don't allow to pick yourself or a superuser as supervisor
         - Add a None-option for supervisor
         - Don't allow to pick a superuser as applicant
+        - If this is a practice Proposal, limit the relation choices
+        - Remove summary for pre-assessment Proposals
         """
+        in_course = kwargs.pop('in_course', False)
         is_pre_assessment = kwargs.pop('is_pre_assessment', False)
 
         super(ProposalForm, self).__init__(*args, **kwargs)
@@ -50,6 +52,10 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         self.fields['supervisor'].choices = get_users_as_list(get_user_model().objects.exclude(pk=self.user.pk).exclude(is_superuser=True))
         self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + self.fields['supervisor'].choices
         self.fields['applicants'].choices = get_users_as_list(get_user_model().objects.exclude(is_superuser=True))
+
+        if in_course:
+            self.fields['relation'].queryset = Relation.objects.filter(check_in_course=True)
+            self.fields['supervisor'].label = _('Docent')
 
         if is_pre_assessment:
             del self.fields['summary']
@@ -75,6 +81,13 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 
         self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders')
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
+
+
+class ProposalStartPracticeForm(forms.Form):
+    practice_reason = forms.ChoiceField(
+        label=_('Ik vul de portal in'),
+        choices=Proposal.PRACTICE_REASONS,
+        widget=forms.RadioSelect())
 
 
 class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
@@ -246,8 +259,9 @@ class ProposalSubmitForm(forms.ModelForm):
         """
         super(ProposalSubmitForm, self).clean()
 
-        for study in self.instance.study_set.all():
-            if not study.informed_consent:
-                self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
-            if not study.briefing:
-                self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+        if not self.instance.is_pre_assessment and not self.instance.is_practice():
+            for study in self.instance.study_set.all():
+                if not study.informed_consent:
+                    self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
+                if not study.briefing:
+                    self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))

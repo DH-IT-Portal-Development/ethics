@@ -4,6 +4,7 @@ from django import forms
 
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO
+from studies.models import Study
 from .models import Observation
 
 
@@ -30,11 +31,19 @@ class ObservationForm(ConditionalModelForm):
             'registrations': forms.CheckboxSelectMultiple(),
         }
 
+    def __init__(self, *args, **kwargs):
+        """
+        - Set the Study for later reference
+        """
+        self.study = kwargs.pop('study', None)
+
+        super(ObservationForm, self).__init__(*args, **kwargs)
+
     def clean(self):
         """
         Check for conditional requirements:
         - If a setting which needs details has been checked, make sure the details are filled
-        - If the Observation needs_approval, check if approval_institution is provided
+        - If the Observation needs_approval, check if approval_institution/approval_document are provided
         - If a registration which needs details has been checked, make sure the details are filled
         """
         cleaned_data = super(ObservationForm, self).clean()
@@ -43,3 +52,7 @@ class ObservationForm(ConditionalModelForm):
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
         self.check_dependency(cleaned_data, 'needs_approval', 'approval_institution')
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
+
+        # Approval document only needs to be added for non-practice Proposals
+        if not self.study.proposal.is_practice():
+            self.check_dependency(cleaned_data, 'needs_approval', 'approval_document')

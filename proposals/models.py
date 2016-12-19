@@ -55,6 +55,13 @@ class Proposal(models.Model):
         (WMO_DECISION_MADE, _('Studie is beoordeeld door METC')),
     )
 
+    COURSE = '1'
+    EXPLORATION = '2'
+    PRACTICE_REASONS = (
+        (COURSE, _('in het kader van een cursus')), 
+        (EXPLORATION, _('om de portal te exploreren')),
+    )
+
     # Fields of a proposal
     reference_number = models.CharField(
         max_length=16,
@@ -90,14 +97,17 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Namelijk'),
         max_length=200,
         blank=True)
-    in_course = models.BooleanField(
-        _('Ik vul deze portal in in de context van een cursus'),
-        default=False)
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
     in_archive = models.BooleanField(default=False)
     is_pre_assessment = models.BooleanField(default=False)
+    in_course = models.BooleanField(
+        _('Ik vul de portal in in het kader van een cursus'),
+        default=False)
+    is_exploration = models.BooleanField(
+        _('Ik vul de portal in om de portal te exploreren'),
+        default=False)
     pdf = models.FileField(blank=True)
 
     # Fields with respect to Studies
@@ -160,6 +170,9 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         _('Is deze studie een revisie van of amendement op een ingediende studie?'),
         default=False
     )
+
+    def is_practice(self):
+        return self.in_course or self.is_exploration
 
     def accountable_user(self):
         return self.supervisor if self.relation.needs_supervisor else self.created_by

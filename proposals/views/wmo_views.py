@@ -35,7 +35,9 @@ class WmoMixin(object):
             return reverse('proposals:wmo_application', args=(wmo.pk,))
 
     def get_back_url(self):
-        return reverse('proposals:update', args=(self.object.proposal.pk,))
+        proposal = self.get_proposal()
+        url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
+        return reverse(url, args=(proposal.pk,))
 
     def get_proposal(self):
         raise NotImplementedError
