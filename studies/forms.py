@@ -74,10 +74,9 @@ class StudyForm(ConditionalModelForm):
         Check whether necessity_reason was required and if so, if it has been filled out.
         """
         age_groups = cleaned_data['age_groups'].values_list('id', flat=True) if 'age_groups' in cleaned_data else []
-        if check_necessity_required(self.proposal,
-                                    age_groups,
-                                    cleaned_data['has_traits'],
-                                    cleaned_data['legally_incapable']):
+        has_traits = bool(cleaned_data['has_traits'])
+        legally_incapable = bool(cleaned_data['legally_incapable'])
+        if check_necessity_required(self.proposal, age_groups, has_traits, legally_incapable):
             if not cleaned_data['necessity_reason']:
                 error = forms.ValidationError(_('Dit veld is verplicht'), code='required')
                 self.add_error('necessity_reason', error)
