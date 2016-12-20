@@ -55,6 +55,11 @@
         {% block notitle %}
             <h2>{% block title %}{% endblock %}</h2>
         {% endblock %}
+        {% if is_practice or proposal.is_practice or study.proposal.is_practice or session.study.proposal.is_practice or task.session.study.proposal.is_practice %}
+        <p class="warning">
+            {% trans "Dit is het oefenportaal." %}
+        </p>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </div>

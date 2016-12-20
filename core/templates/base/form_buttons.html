@@ -17,6 +17,10 @@
 	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update_pre' proposal.pk %}">
 		{% trans "Terug naar begin studie" %}
 	</a>
+	{% elif proposal.is_practice %}
+	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update_practice' proposal.pk %}">
+		{% trans "Terug naar begin studie" %}
+	</a>
 	{% else %}
 	<a class="pure-button pure-button-secondary" href="{% url 'proposals:update' proposal.pk %}">
 		{% trans "Terug naar begin studie" %}

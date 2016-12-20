@@ -272,8 +272,9 @@ class ProposalStartPractice(generic.FormView):
     form_class = ProposalStartPracticeForm
 
     def get_context_data(self, **kwargs):
-        """Adds 'no_back' to template context"""
+        """Adds 'is_practice'/'no_back' to template context"""
         context = super(ProposalStartPractice, self).get_context_data(**kwargs)
+        context['is_practice'] = True
         context['no_back'] = True
         return context
 
@@ -283,6 +284,12 @@ class ProposalStartPractice(generic.FormView):
 
 
 class ProposalCreatePractice(ProposalCreate):
+    def get_context_data(self, **kwargs):
+        """Adds 'is_practice' to template context"""
+        context = super(ProposalCreatePractice, self).get_context_data(**kwargs)
+        context['is_practice'] = True
+        return context
+
     def get_form_kwargs(self):
         """Sets in_course as a form kwarg"""
         kwargs = super(ProposalCreatePractice, self).get_form_kwargs()
