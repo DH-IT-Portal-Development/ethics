@@ -216,6 +216,23 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
                     break
         return current_session
 
+    def type(self):
+        """
+        Returns the type of a Study: either normal, revision, amendment, pre-assessment or practice
+        """
+        result = _('Normaal')
+        if self.parent:
+            if self.parent.status_review:
+                result = _('Amendement')
+            else:
+                result = _('Revisie')
+        elif self.is_pre_assessment:
+            result = _('Voortoetsing')
+        elif self.is_practice():
+            result = _('Oefening')
+
+        return result
+
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)
 
