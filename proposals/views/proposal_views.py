@@ -244,9 +244,12 @@ class ProposalUpdatePreAssessment(PreAssessmentMixin, ProposalUpdate):
 class ProposalSubmitPreAssessment(ProposalSubmit):
     def form_valid(self, form):
         """
-        - Save the PDF on the Proposal
+        Performs actions after saving the form
+        - Save the preassessment PDF on the Proposal
+        - End the preassessment phase
         """
-        success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
+        # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
+        success_url = super(UpdateView, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')
