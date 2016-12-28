@@ -208,9 +208,9 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     template_name = 'proposals/proposal_diff.html'
 
 
-################
-# Pre-assessment
-################
+########################
+# Preliminary assessment
+########################
 class ProposalStartPreAssessment(ProposalStart):
     template_name = 'proposals/proposal_start_pre_assessment.html'
 

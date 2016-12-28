@@ -94,9 +94,9 @@ class WmoCheck(generic.FormView):
     template_name = 'proposals/wmo_check.html'
 
 
-################
-# Pre-assessment
-################
+########################
+# Preliminary assessment
+########################
 class PreAssessmentMixin(object):
     def get_next_url(self):
         return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))

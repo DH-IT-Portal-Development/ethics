@@ -231,7 +231,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
     def type(self):
         """
-        Returns the type of a Study: either normal, revision, amendment, pre-assessment or practice
+        Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
         """
         result = _('Normaal')
         if self.parent:

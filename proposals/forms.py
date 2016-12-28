@@ -42,7 +42,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         - Add a None-option for supervisor
         - Don't allow to pick a superuser as applicant
         - If this is a practice Proposal, limit the relation choices
-        - Remove summary for pre-assessment Proposals
+        - Remove summary for preliminary assessment Proposals
         """
         in_course = kwargs.pop('in_course', False)
         is_pre_assessment = kwargs.pop('is_pre_assessment', False)
@@ -107,7 +107,7 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         """
         Filters the Proposals to only show those where:
         - the current User is an applicant.
-        - the Proposal is not a pre-assessment or practice Proposal.
+        - the Proposal is not a preliminary assessment or practice Proposal.
         """
         super(ProposalCopyForm, self).__init__(*args, **kwargs)
         self.fields['parent'].queryset = Proposal.objects. \

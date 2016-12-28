@@ -104,7 +104,7 @@ def generate_pdf(proposal, template):
 
 def end_pre_assessment(proposal):
     """
-    Ends the pre-assessment by sending mails to the creator of the Proposal and the secretary,
+    Ends the preliminary assessment by sending mails to the creator of the Proposal and the secretary,
     and setting the Proposal status to submitted.
     :param proposal: the current Proposal
     """
