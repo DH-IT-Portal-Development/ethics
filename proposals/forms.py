@@ -58,6 +58,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
             self.fields['supervisor'].label = _('Docent')
 
         if is_pre_assessment:
+            self.fields['relation'].queryset = Relation.objects.filter(check_pre_assessment=True)
             del self.fields['summary']
 
     def clean(self):

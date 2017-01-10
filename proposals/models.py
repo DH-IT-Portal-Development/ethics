@@ -18,6 +18,7 @@ class Relation(models.Model):
     description = models.CharField(max_length=200)
     needs_supervisor = models.BooleanField(default=True)
     check_in_course = models.BooleanField(default=True)
+    check_pre_assessment = models.BooleanField(default=True)
 
     class Meta:
         ordering = ['order']

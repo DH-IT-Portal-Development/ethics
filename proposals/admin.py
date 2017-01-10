@@ -5,7 +5,7 @@ from .models import Relation, Funding
 
 @admin.register(Relation)
 class RelationAdmin(admin.ModelAdmin):
-    list_display = ('order', 'description', 'needs_supervisor', )
+    list_display = ('order', 'description', 'needs_supervisor', 'check_in_course', 'check_pre_assessment', )
     list_display_links = ('description', )
     ordering = ['order']
 
