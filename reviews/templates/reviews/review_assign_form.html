@@ -10,6 +10,11 @@
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
+<script>
+$(function() {
+    depends_on_list_value('short_route', ['True', 'False'], 'reviewers');
+});
+</script>
 <p>
     {% blocktrans with title=review.proposal.title %}
     Kies hier de geschikte route en commissieleden voor de studie <em>{{ title }}</em>.
@@ -17,7 +22,7 @@
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Commissieleden aanstellen' %}" />
+    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}" />
     <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
 </form>
 {% include "reviews/auto_review.html" %}

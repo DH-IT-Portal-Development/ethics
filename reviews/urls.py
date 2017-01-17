@@ -1,6 +1,10 @@
 from django.conf.urls import url
 
-from .views import DecisionOpenListView, DecisionListView, ReviewDetailView, ReviewAssignView, ReviewCloseView, DecisionUpdateView
+from .views import \
+    DecisionOpenListView, DecisionListView,\
+    ReviewDetailView, \
+    ReviewAssignView, ReviewCloseView, \
+    DecisionUpdateView
 
 urlpatterns = [
     url(r'^$', DecisionListView.as_view(), name='home'),

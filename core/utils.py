@@ -43,7 +43,7 @@ def is_empty(value):
     For unicode strings, also check if the value is not empty.
     """
     result = False
-    if value is None:
+    if value is None or not value:
         result = True
     if isinstance(value, unicode) and not value.strip():
         result = True

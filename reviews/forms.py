@@ -1,18 +1,19 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from core.forms import ConditionalModelForm
 from core.utils import YES_NO, get_reviewers
 from .models import Review, Decision
 
-SHORT_LONG = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route'))]
+SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route')), (None, _('direct naar revisie'))]
 
 
-class ReviewAssignForm(forms.ModelForm):
+class ReviewAssignForm(ConditionalModelForm):
     class Meta:
         model = Review
         fields = ['short_route']
         widgets = {
-            'short_route': forms.RadioSelect(choices=SHORT_LONG),
+            'short_route': forms.RadioSelect(choices=SHORT_LONG_REVISE),
         }
 
     def __init__(self, *args, **kwargs):
@@ -20,12 +21,23 @@ class ReviewAssignForm(forms.ModelForm):
         - Adds a field to select reviewers for this Proposal
         """
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
-        current_reviewers = self.instance.current_reviewers()
-        selectable_reviewers = get_reviewers()
         self.fields['reviewers'] = forms.ModelMultipleChoiceField(
-            initial=current_reviewers,
-            queryset=selectable_reviewers,
-            widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}))
+            initial=self.instance.current_reviewers(),
+            queryset=get_reviewers(),
+            widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}),
+            required=False
+        )
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If short_route is True/False, make sure reviewers have been selected
+        """
+        cleaned_data = super(ReviewAssignForm, self).clean()
+
+        print cleaned_data
+
+        self.check_dependency_list(cleaned_data, 'short_route', 'reviewers', f1_value_list=[True, False])
 
 
 class ReviewCloseForm(forms.ModelForm):

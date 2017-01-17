@@ -35,7 +35,7 @@ class Review(models.Model):
     )
 
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
-    short_route = models.BooleanField(_('Route'), default=True)
+    short_route = models.NullBooleanField(_('Route'), default=None)
     go = models.NullBooleanField(_('Beslissing'), default=None)
     continuation = models.PositiveIntegerField(_('Afhandeling'), choices=CONTINUATIONS, default=GO)
 

@@ -65,19 +65,33 @@ class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
 
     def form_valid(self, form):
         """Updates the Review stage and start the selected Review route for the selected Users."""
-        form.instance.stage = Review.COMMISSION
-
+        route = form.instance.short_route
         review = self.object
-        current_reviewers = set(review.current_reviewers())
-        selected_reviewers = set(form.cleaned_data['reviewers'])
-        new_reviewers = selected_reviewers - current_reviewers
-        obsolete_reviewers = current_reviewers - selected_reviewers - {get_secretary()}
 
-        # Create a new Decision for new reviewers
-        start_review_route(form.instance, new_reviewers, form.instance.short_route)
+        if route is not None:
+            # Start a short/long route
+            form.instance.stage = Review.COMMISSION
 
-        # Remove the Decision for obsolete reviewers
-        Decision.objects.filter(review=review, reviewer__in=obsolete_reviewers).delete()
+            current_reviewers = set(review.current_reviewers())
+            selected_reviewers = set(form.cleaned_data['reviewers'])
+            new_reviewers = selected_reviewers - current_reviewers
+            obsolete_reviewers = current_reviewers - selected_reviewers - {get_secretary()}
+
+            # Create a new Decision for new reviewers
+            start_review_route(form.instance, new_reviewers, route)
+
+            # Remove the Decision for obsolete reviewers
+            Decision.objects.filter(review=review, reviewer__in=obsolete_reviewers).delete()
+        else:
+            # Directly mark this Proposal as closed: applicants should start a revision Proposal
+            for decision in Decision.objects.filter(review=review):
+                decision.go = Decision.NEEDS_REVISION
+                decision.date_decision = timezone.now()
+                decision.save()
+
+            form.instance.continuation = Review.REVISION
+            form.instance.date_end = timezone.now()
+            form.instance.stage = Review.CLOSED
 
         return super(ReviewAssignView, self).form_valid(form)
 
@@ -108,7 +122,7 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
             proposal.status_review = form.instance.continuation == Review.GO
             proposal.date_reviewed = timezone.now()
             proposal.save()
-        if form.instance.continuation == Review.LONG_ROUTE:
+        elif form.instance.continuation == Review.LONG_ROUTE:
             # Create a new review
             review = Review.objects.create(
                 proposal=proposal,
@@ -119,7 +133,7 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
             Decision.objects.create(review=review, reviewer=get_secretary())
             # Start the long review route
             start_review_route(review, get_reviewers(), False)
-        if form.instance.continuation == Review.METC:
+        elif form.instance.continuation == Review.METC:
             proposal.status = Proposal.DRAFT
             proposal.save()
             proposal.wmo.enforced_by_commission = True
