@@ -28,6 +28,9 @@ class UtilsTest(TestCase):
         self.assertFalse(is_empty(True))
         self.assertFalse(is_empty(False))
 
+        self.assertTrue(is_empty([]))
+        self.assertFalse(is_empty(['']))
+
         self.assertTrue(is_empty(u''))
         self.assertTrue(is_empty(u'  '))
         self.assertFalse(is_empty(u' test '))

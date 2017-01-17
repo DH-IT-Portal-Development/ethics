@@ -40,10 +40,12 @@ def get_users_as_list(users):
 def is_empty(value):
     """
     Checks if value is filled out (!= None).
-    For unicode strings, also check if the value is not empty.
+    For lists and unicode strings, also check if the value is not empty.
     """
     result = False
-    if value is None or not value:
+    if value is None:
+        result = True
+    if isinstance(value, list) and not value:
         result = True
     if isinstance(value, unicode) and not value.strip():
         result = True
