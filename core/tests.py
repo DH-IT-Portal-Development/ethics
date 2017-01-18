@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.test import TestCase
 
+from .models import Setting
 from .utils import is_empty
 from .validators import MaxWordsValidator
 
@@ -29,6 +30,7 @@ class UtilsTest(TestCase):
         self.assertFalse(is_empty(False))
 
         self.assertTrue(is_empty([]))
+        self.assertTrue(is_empty(Setting.objects.none()))
         self.assertFalse(is_empty(['']))
 
         self.assertTrue(is_empty(u''))

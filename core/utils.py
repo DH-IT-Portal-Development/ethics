@@ -45,7 +45,7 @@ def is_empty(value):
     result = False
     if value is None:
         result = True
-    if isinstance(value, list) and not value:
+    if hasattr(value, '__len__') and len(value) == 0:
         result = True
     if isinstance(value, unicode) and not value.strip():
         result = True

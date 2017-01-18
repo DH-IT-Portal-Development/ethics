@@ -35,8 +35,6 @@ class ReviewAssignForm(ConditionalModelForm):
         """
         cleaned_data = super(ReviewAssignForm, self).clean()
 
-        print cleaned_data
-
         self.check_dependency_list(cleaned_data, 'short_route', 'reviewers', f1_value_list=[True, False])
 
 
