@@ -59,6 +59,8 @@ def start_supervisor_phase(proposal):
         'creator': proposal.created_by.get_full_name(),
         'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
         'secretary': get_secretary().get_full_name(),
+        'revision': proposal.is_revision,
+        'revision_type': proposal.type(),
     }
     msg_plain = render_to_string('mail/concept_supervisor.txt', params)
     msg_html = render_to_string('mail/concept_supervisor.html', params)
