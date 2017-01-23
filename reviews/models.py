@@ -41,6 +41,7 @@ class Review(models.Model):
 
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(blank=True, null=True)
+    date_should_end = models.DateField(blank=True, null=True)
 
     proposal = models.ForeignKey(Proposal)
 

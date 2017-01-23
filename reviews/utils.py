@@ -79,9 +79,13 @@ def start_assignment_phase(proposal):
     """
     secretary = get_secretary()
     reasons = auto_review(proposal)
+    short_route = len(reasons) == 0
+
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.ASSIGNMENT
-    review.short_route = len(reasons) == 0
+    review.short_route = short_route
+    if short_route:
+        review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
     review.save()
 
     proposal.date_submitted = timezone.now()
@@ -92,15 +96,16 @@ def start_assignment_phase(proposal):
 
     subject = _('ETCL: nieuwe studie ingediend')
     params = {
+        'secretary': secretary.get_full_name(),
         'review': review,
-        'secretary': secretary.get_full_name()
     }
     msg_plain = render_to_string('mail/submitted.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
     subject = _('ETCL: aanmelding ontvangen')
     params = {
-        'secretary': secretary.get_full_name()
+        'secretary': secretary.get_full_name(),
+        'review_date': review.date_should_end,
     }
     if review.short_route:
         msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
@@ -121,7 +126,11 @@ def start_review_route(review, commission_users, use_short_route):
 
         template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
         subject = _('ETCL: nieuwe studie ter beoordeling')
-        params = {'reviewer': user.get_full_name(), 'secretary': get_secretary().get_full_name()}
+        params = {
+            'secretary': get_secretary().get_full_name(),
+            'reviewer': user.get_full_name(),
+            'review_date': review.date_should_end,
+        }
         msg_plain = render_to_string(template, params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
 

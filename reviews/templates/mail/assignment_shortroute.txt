@@ -4,7 +4,7 @@
 Beste {{ reviewer }},
 
 Er is een nieuwe studie ter toetsing aangeboden, welke in de automatische screening de status "standaard UiL OTS onderzoek" heeft gekregen.
-Dit betekent dat de studie binnen uiterlijk twee werkweken vanaf nu door de ETCL-secretaris én 1 ander commissielid beoordeeld moet worden.
+Dit betekent dat de studie binnen uiterlijk twee werkweken ({{ review_date|date:"j F Y" }}) door de ETCL-secretaris én 1 ander commissielid beoordeeld moet worden.
 
 Op basis van inhoudelijke overwegingen en/of goede spreiding van aanvragen over commissieleden is de keuze daarbij op jou gevallen.
 Kan jij binnen uiterlijk bovengenoemde termijn in de portal aangeven of je vindt dat deze studie goedgekeurd kan worden of een langer beoordelingstraject moet in gaan?

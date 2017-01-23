@@ -135,6 +135,9 @@ EMAIL_FROM = 'M.H.vanderKlis@uu.nl'
 GROUP_SECRETARY = 'Secretaris'
 GROUP_COMMISSION = 'Commissie'
 
+# Short route duration
+SHORT_ROUTE_WEEKS = 2
+
 # Base URL
 BASE_URL = '127.0.0.1:8000'
 
