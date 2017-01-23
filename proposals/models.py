@@ -235,7 +235,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
         """
         result = _('Normaal')
-        if self.parent:
+        if self.is_revision and self.parent:
             if self.parent.status_review:
                 result = _('Amendement')
             else:
