@@ -41,8 +41,7 @@ $(function() {
             wordCount = this.value.match(/\S+/g).length;
         }
         $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
-        }, false);
-    });
+    }, false);
 });
 </script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
