@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.views import generic
 
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
 from core.utils import get_secretary, get_reviewers
 from proposals.models import Proposal
@@ -13,20 +14,32 @@ from .models import Review, Decision
 from .utils import start_review_route
 
 
-class DecisionListView(LoginRequiredMixin, generic.ListView):
+class DecisionListView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
+    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
     def get_queryset(self):
         """Returns all Decisions of the current User"""
         return Decision.objects.filter(reviewer=self.request.user)
 
 
-class DecisionOpenListView(LoginRequiredMixin, generic.ListView):
+class DecisionMyOpenView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
+    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
         return Decision.objects.filter(reviewer=self.request.user, go='')
+
+
+class DecisionOpenView(GroupRequiredMixin, generic.ListView):
+    context_object_name = 'decisions'
+    template_name = 'reviews/decision_list_open.html'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_queryset(self):
+        """Returns all open Decisions of all Users"""
+        return Decision.objects.filter(go='')
 
 
 class SupervisorView(LoginRequiredMixin, generic.ListView):
@@ -35,14 +48,6 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """Returns all the current open Decisions for the current User"""
         return Decision.objects.filter(review__date_end=None, review__stage=Review.SUPERVISOR, reviewer=self.request.user)
-
-
-class CommissionView(LoginRequiredMixin, generic.ListView):
-    context_object_name = 'decisions'
-
-    def get_queryset(self):
-        """Returns all the current open Decisions for the current User"""
-        return Decision.objects.all()  # filter(review__date_end=None, review__stage=Review.COMMISSION, reviewer=self.request.user)
 
 
 class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.DetailView):
@@ -61,7 +66,7 @@ class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
     template_name = 'reviews/review_assign_form.html'
 
     def get_success_url(self):
-        return reverse('reviews:home')
+        return reverse('reviews:my_open')
 
     def form_valid(self, form):
         """Updates the Review stage and start the selected Review route for the selected Users."""
@@ -102,7 +107,7 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
     template_name = 'reviews/review_close_form.html'
 
     def get_success_url(self):
-        return reverse('reviews:home')
+        return reverse('reviews:my_archive')
 
     def get_form_kwargs(self):
         kwargs = super(ReviewCloseView, self).get_form_kwargs()
@@ -155,7 +160,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
     form_class = DecisionForm
 
     def get_success_url(self):
-        return reverse('reviews:home')
+        return reverse('reviews:my_archive')
 
     def form_valid(self, form):
         """Save the decision date"""

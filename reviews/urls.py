@@ -1,14 +1,15 @@
 from django.conf.urls import url
 
 from .views import \
-    DecisionOpenListView, DecisionListView,\
+    DecisionListView, DecisionMyOpenView, DecisionOpenView, \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, \
     DecisionUpdateView
 
 urlpatterns = [
-    url(r'^$', DecisionListView.as_view(), name='home'),
-    url(r'^open/$', DecisionOpenListView.as_view(), name='open'),
+    url(r'^$', DecisionListView.as_view(), name='my_archive'),
+    url(r'^my_open/$', DecisionMyOpenView.as_view(), name='my_open'),
+    url(r'^open/$', DecisionOpenView.as_view(), name='open'),
 
     url(r'^show/(?P<pk>\d+)/$', ReviewDetailView.as_view(), name='detail'),
 

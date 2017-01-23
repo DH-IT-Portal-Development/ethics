@@ -43,11 +43,16 @@
             <a href="#" class="pure-menu-link">{% trans "Commissie" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:home' %}">{% trans "Mijn besluiten" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:my_open' %}">{% trans "Mijn openstaande besluiten" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:open' %}">{% trans "Openstaande besluiten" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:my_archive' %}">{% trans "Al mijn besluiten" %}</a>
                 </li>
+                {% if user|is_secretary %}
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:open' %}">{% trans "Alle openstaande besluiten" %}</a>
+                </li>
+                {% endif %}
             </ul>
         </li>
         {% endif %}
