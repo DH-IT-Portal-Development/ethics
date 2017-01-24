@@ -102,13 +102,21 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
     in_archive = models.BooleanField(default=False)
+
     is_pre_assessment = models.BooleanField(default=False)
+    pre_assessment_pdf = models.FileField(
+        _('Voeg hier een korte beschrijving van uw studie toe \
+(in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc])
+
     in_course = models.BooleanField(
         _('Ik vul de portal in in het kader van een cursus'),
         default=False)
     is_exploration = models.BooleanField(
         _('Ik vul de portal in om de portal te exploreren'),
         default=False)
+
     pdf = models.FileField(blank=True)
 
     # Fields with respect to Studies

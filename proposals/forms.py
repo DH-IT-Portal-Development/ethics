@@ -19,7 +19,8 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
             'relation', 'supervisor',
             'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
-            'date_start', 'title', 'summary',
+            'date_start', 'title',
+            'summary', 'pre_assessment_pdf',
             'funding', 'funding_details',
         ]
         widgets = {
@@ -43,15 +44,18 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         - Don't allow to pick a superuser as applicant
         - If this is a practice Proposal, limit the relation choices
         - Remove summary for preliminary assessment Proposals
+        - Set pre_assessment_pdf required for preliminary assessment Proposals, otherwise remove
         """
         in_course = kwargs.pop('in_course', False)
         is_pre_assessment = kwargs.pop('is_pre_assessment', False)
 
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
-        self.fields['supervisor'].choices = get_users_as_list(get_user_model().objects.exclude(pk=self.user.pk).exclude(is_superuser=True))
-        self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + self.fields['supervisor'].choices
-        self.fields['applicants'].choices = get_users_as_list(get_user_model().objects.exclude(is_superuser=True))
+
+        applicants = get_user_model().objects.exclude(is_superuser=True)
+        supervisors = applicants.exclude(pk=self.user.pk)
+        self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + get_users_as_list(supervisors)
+        self.fields['applicants'].choices = get_users_as_list(applicants)
 
         if in_course:
             self.fields['relation'].queryset = Relation.objects.filter(check_in_course=True)
@@ -59,7 +63,10 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 
         if is_pre_assessment:
             self.fields['relation'].queryset = Relation.objects.filter(check_pre_assessment=True)
+            self.fields['pre_assessment_pdf'].required = True
             del self.fields['summary']
+        else:
+            del self.fields['pre_assessment_pdf']
 
     def clean(self):
         """
