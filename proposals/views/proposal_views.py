@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,8 +29,10 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
 
     def get_queryset(self):
-        """Returns all the proposals that have been decided positively upon"""
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE, status_review=True, in_archive=True)
+        """Returns all the Proposals that have been decided positively upon"""
+        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
+                                       status_review=True,
+                                       in_archive=True)
 
     def get_context_data(self, **kwargs):
         context = super(ProposalsView, self).get_context_data(**kwargs)
@@ -47,8 +50,9 @@ class MyConceptsView(ProposalsView):
     is_submitted = False
 
     def get_queryset(self):
-        """Returns all non-submitted proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
+        """Returns all non-submitted Proposals for the current User"""
+        return Proposal.objects.filter(applicants=self.request.user,
+                                       status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
 
 class MySubmittedView(ProposalsView):
@@ -58,8 +62,10 @@ class MySubmittedView(ProposalsView):
     is_submitted = True
 
     def get_queryset(self):
-        """Returns all submitted proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR, status__lt=Proposal.DECISION_MADE)
+        """Returns all submitted Proposals for the current User"""
+        return Proposal.objects.filter(applicants=self.request.user,
+                                       status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
+                                       status__lt=Proposal.DECISION_MADE)
 
 
 class MyCompletedView(ProposalsView):
@@ -69,8 +75,9 @@ class MyCompletedView(ProposalsView):
     is_submitted = True
 
     def get_queryset(self):
-        """Returns all completed proposals for the current user"""
-        return Proposal.objects.filter(applicants=self.request.user).filter(status__gte=Proposal.DECISION_MADE)
+        """Returns all completed Proposals for the current User"""
+        return Proposal.objects.filter(applicants=self.request.user,
+                                       status__gte=Proposal.DECISION_MADE)
 
 
 class MyProposalsView(ProposalsView):
@@ -80,8 +87,23 @@ class MyProposalsView(ProposalsView):
     is_submitted = True
 
     def get_queryset(self):
-        """Returns all proposals for the current user"""
+        """Returns all Proposals for the current User"""
         return Proposal.objects.filter(applicants=self.request.user)
+
+
+class MyPracticeView(ProposalsView):
+    title = _('Mijn oefenstudies')
+    body = _('Dit overzicht toont alle oefenstudies waar u als student, \
+onderzoeker of eindverantwoordelijke bij betrokken bent.')
+    is_modifiable = True
+    is_submitted = True
+
+    def get_queryset(self):
+        """Returns all practice Proposals for the current User"""
+        return Proposal.objects.filter(Q(in_course=True) | Q(is_exploration=True),
+                                       Q(applicants=self.request.user) |
+                                       (Q(supervisor=self.request.user) &
+                                        Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR)))
 
 
 ##########################

@@ -63,7 +63,9 @@
             <td>{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
                 {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
+                {% if user in proposal.applicants.all %}
                 <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}" title="{% trans 'Naar volgende stap' %}"></a>
+                {% endif %}
                 {% if proposal.is_revision %}
                 <a href="{% url 'proposals:diff' proposal.id %}"><img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}"></a>
                 {% endif %}
