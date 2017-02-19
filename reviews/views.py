@@ -11,7 +11,7 @@ from proposals.models import Proposal
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
 from .mixins import UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
-from .utils import start_review_route
+from .utils import start_review_route, notify_secretary
 
 
 class DecisionListView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView):
@@ -163,6 +163,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
         return reverse('reviews:my_archive')
 
     def form_valid(self, form):
-        """Save the decision date"""
+        """Save the decision date and send e-mail to secretary"""
         form.instance.date_decision = timezone.now()
+        notify_secretary(form.instance)
         return super(DecisionUpdateView, self).form_valid(form)

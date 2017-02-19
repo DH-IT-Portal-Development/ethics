@@ -137,6 +137,17 @@ def start_review_route(review, commission_users, use_short_route):
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
 
 
+def notify_secretary(decision):
+    template = 'mail/decision_notify.txt'
+    subject = _('ETCL: nieuwe beoordeling toegevoegd')
+    params = {
+        'secretary': get_secretary().get_full_name(),
+        'decision': decision,
+    }
+    msg_plain = render_to_string(template, params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [get_secretary().email])
+
+
 def auto_review(proposal):
     """
     Reviews a Proposal machine-wise.

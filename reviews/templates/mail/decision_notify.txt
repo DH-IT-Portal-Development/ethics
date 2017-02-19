@@ -1,0 +1,9 @@
+{% extends "mail/base.txt" %}
+
+{% block content %}
+Er is zojuist een nieuwe beoordeling toegevoegd door {{ decision.reviewer.get_full_name }}
+bij studie {{ decision.review.proposal.reference_number }}.
+
+Beoordeling: {{ decision.get_go_display }}
+Opmerkingen: {{ decision.comments|default:"geen" }}
+{% endblock %}
