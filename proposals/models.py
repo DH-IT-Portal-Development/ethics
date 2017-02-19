@@ -105,8 +105,7 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
 
     is_pre_assessment = models.BooleanField(default=False)
     pre_assessment_pdf = models.FileField(
-        _('Voeg hier een korte beschrijving van uw studie toe \
-(in .pdf of .doc(x)-formaat)'),
+        _('Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc])
 
