@@ -297,8 +297,9 @@ class ProposalStartPractice(generic.FormView):
     form_class = ProposalStartPracticeForm
 
     def get_context_data(self, **kwargs):
-        """Adds 'is_practice'/'no_back' to template context"""
+        """Adds 'secretary', 'is_practice' and 'no_back' to template context"""
         context = super(ProposalStartPractice, self).get_context_data(**kwargs)
+        context['secretary'] = get_secretary()
         context['is_practice'] = True
         context['no_back'] = True
         return context
