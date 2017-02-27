@@ -87,7 +87,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th><td>{{ proposal.title }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "pre_assessment_pdf" %}</th><td><a href="{{ proposal.pre_assessment_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "proposals" "proposal" "pre_assessment_pdf" %}</th><td><a href="{{ request.scheme }}://{{ request.get_host }}{{ proposal.pre_assessment_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>

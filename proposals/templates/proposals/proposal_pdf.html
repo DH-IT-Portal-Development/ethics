@@ -136,7 +136,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if not proposal.is_practice %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th><td><a href="{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th><td><a href="{{ request.scheme }}://{{ request.get_host }}{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
         </table>
@@ -307,7 +307,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if not proposal.is_practice %}
             <tr>
-                <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th><td><a href="{{ observation.approval_document.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th><td><a href="{{ request.scheme }}://{{ request.get_host }}{{ observation.approval_document.url }}" target="_blank">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
             {% endif %}
@@ -447,10 +447,10 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
         <table>
             {% if not proposal.is_practice %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th><td><a href="{{ study.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th><td><a href="{{ request.scheme }}://{{ request.get_host }}{{ study.informed_consent.url }}">{% trans "Download" %}</a></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "briefing" %}</th><td><a href="{{ study.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "study" "briefing" %}</th><td><a href="{{ request.scheme }}://{{ request.get_host }}{{ study.briefing.url }}">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
             <tr>
