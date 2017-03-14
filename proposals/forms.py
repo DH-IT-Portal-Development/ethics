@@ -69,6 +69,8 @@ van het UiL OTS worden opgenomen.')
             self.fields['relation'].queryset = Relation.objects.filter(check_pre_assessment=True)
             self.fields['pre_assessment_pdf'].required = True
             del self.fields['summary']
+            del self.fields['funding']
+            del self.fields['funding_details']
         else:
             del self.fields['pre_assessment_pdf']
 
