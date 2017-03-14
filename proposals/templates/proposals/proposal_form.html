@@ -32,16 +32,19 @@ $(function() {
         minDate: 'now',
     });
 
-    // Adds a running word count to the summary
+    // Add a running word count to the summary
     var summary = $("#id_summary");
-    summary.after("<span id='wordcount' />");
-    summary[0].addEventListener("input", function() {
-        var wordCount = 0; 
-        if (this.value.trim()) {
-            wordCount = this.value.match(/\S+/g).length;
-        }
-        $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
-    }, false);
+    if (summary.length)
+    {
+        summary.after("<span id='wordcount' />");
+        summary[0].addEventListener("input", function() {
+            var wordCount = 0;
+            if (this.value.trim()) {
+                wordCount = this.value.match(/\S+/g).length;
+            }
+            $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
+        }, false);
+    }
 });
 </script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
