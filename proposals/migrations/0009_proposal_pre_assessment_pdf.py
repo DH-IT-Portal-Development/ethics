@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='proposal',
             name='pre_assessment_pdf',
-            field=models.FileField(blank=True, upload_to=b'', verbose_name='Voeg hier een korte beschrijving van uw studie toe (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc]),
+            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc]),
         ),
     ]
