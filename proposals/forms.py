@@ -60,6 +60,10 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         if in_course:
             self.fields['relation'].queryset = Relation.objects.filter(check_in_course=True)
             self.fields['supervisor'].label = _('Docent')
+            self.fields['supervisor'].help_text = _('Vul hier de docent van \
+de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop \
+de studie inkijken in de portal. De studie zal niet in het semipublieke archief \
+van het UiL OTS worden opgenomen.')
 
         if is_pre_assessment:
             self.fields['relation'].queryset = Relation.objects.filter(check_pre_assessment=True)
