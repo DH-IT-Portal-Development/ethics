@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.conf import settings
+from django.core import mail
 from django.contrib.auth.models import User, Group
 from django.test import TestCase
 
@@ -21,11 +22,11 @@ class BaseReviewTestCase(TestCase):
         """
         Sets up the Users and a default Proposal to use in the tests below.
         """
-        self.secretary = User.objects.create_user('secretary', 'test@test.com', 'secret')
+        self.secretary = User.objects.create_user('secretary', 'test@test.com', 'secret', first_name='The', last_name='Secretary')
         self.c1 = User.objects.create_user('c1', 'test@test.com', 'secret')
         self.c2 = User.objects.create_user('c2', 'test@test.com', 'secret')
-        self.user = User.objects.create_user('user', 'test@test.com', 'secret')
-        self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret')
+        self.user = User.objects.create_user('user', 'test@test.com', 'secret', first_name='John', last_name='Doe')
+        self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret', first_name='Jane', last_name='Roe')
 
         self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
         self.c1.groups.add(Group.objects.get(name=settings.GROUP_COMMISSION))
@@ -50,6 +51,10 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
 
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(mail.outbox[0].subject, 'ETCL: bevestiging indienen concept-aanmelding')
+        self.assertEqual(mail.outbox[1].subject, 'ETCL: beoordelen als eindverantwoordelijke')
+
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
         self.proposal.relation = Relation.objects.get(pk=5)
         self.proposal.save()
@@ -58,6 +63,10 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
+
+        self.assertEqual(len(mail.outbox), 4)
+        self.assertEqual(mail.outbox[2].subject, 'ETCL: nieuwe studie ingediend')
+        self.assertEqual(mail.outbox[3].subject, 'ETCL: aanmelding ontvangen')
 
 
 class SupervisorTestCase(BaseReviewTestCase):
@@ -68,11 +77,19 @@ class SupervisorTestCase(BaseReviewTestCase):
         review = start_review(self.proposal)
         self.assertEqual(review.go, None)
 
+        self.assertEqual(len(mail.outbox), 2)
+        self.assertEqual(mail.outbox[0].subject, 'ETCL: bevestiging indienen concept-aanmelding')
+        self.assertEqual(mail.outbox[1].subject, 'ETCL: beoordelen als eindverantwoordelijke')
+
         decision = Decision.objects.filter(review=review)[0]
         decision.go = Decision.APPROVED
         decision.save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)
+
+        self.assertEqual(len(mail.outbox), 4)
+        self.assertEqual(mail.outbox[2].subject, 'ETCL: nieuwe studie ingediend')
+        self.assertEqual(mail.outbox[3].subject, 'ETCL: aanmelding ontvangen')
 
 
 class AssignmentTestCase(BaseReviewTestCase):

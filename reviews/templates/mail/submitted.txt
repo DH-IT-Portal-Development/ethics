@@ -1,4 +1,4 @@
-{% extends "mail/base.txt" %}
+{% extends "mail/base-internal.txt" %}
 
 {% block content %}
 Er is een nieuwe studie ingediend (referentienummer: {{ review.proposal.reference_number }}, eindverantwoordelijke: {{ review.accountable_user.get_full_name }}).

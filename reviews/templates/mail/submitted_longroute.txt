@@ -1,12 +1,25 @@
 {% extends "mail/base.txt" %}
 
-{% block content %}
+{% block content_nl %}
 Beste collega,
 
-Uw aanmelding is door de ETCL ontvangen, en heeft op basis van de door u gegeven beschrijving voorlopig de status "niet-standaard UiL OTS onderzoek".
+Uw aanmelding is door de ETCL ontvangen. De automatische screening van de portal heeft op basis van de door u gegeven beschrijving voorlopig de status "niet-standaard UiL OTS onderzoek", zie appendix B van het reglement (http://etcl.wp.hum.uu.nl/reglement/) voor hulp bij het inschatten van wat valt onder niet-standaard UiL OTS onderzoek.
 
-Dit houdt in dat uw studie op de eerstvolgende vergadering van de ETCL zal worden besproken, en u zeer kort daarna een beoordeling zult ontvangen.
-Zie <a href="http://etcl.wp.hum.uu.nl/agenda/">de ETCL-agenda</a> voor een overzicht van de komende vergaderingen.
-Zoals beschreven in het reglement kan het hier gaan om een goedkeuring, maar ook om een doorverwijzing naar de METC, een 2e beoordelingsronde waarin de ETCL nader advies zal inwinnen, of een afkeuring van de studie in huidige vorm.
-Houdt u a.u.b. rekening met deze mogelijkheden.
+Dit houdt in dat uw studie op de eerstvolgende vergadering van de ETCL zal worden besproken, zie de ETCL-agenda (http://etcl.wp.hum.uu.nl/agenda/) voor een overzicht van de komende vergaderingen. Zeer kort na de vergadering zult u de beoordeling ontvangen.
+
+Zoals beschreven in het reglement kan het hier gaan om een goedkeuring, maar ook om een doorverwijzing naar de METC, een tweede beoordelingsronde waarin de ETCL nader advies van derden zal inwinnen, of een afkeuring van de studie in huidige vorm.
+
+Houdt u a.u.b. rekening met deze mogelijkheden en hun verschillende tijdspaden.
+{% endblock %}
+
+{% block content_en %}
+Dear colleague,
+
+The EtCL has received your application. The automatic screening of the portal has given your study the status of "non-standard UiL OTS research", see appendix B in the regulations (http://etcl.wp.hum.uu.nl/regulations/) for information.
+
+This means that your study will be discussed during the next EtCL meeting, see the ETCL agenda (http://etcl.wp.hum.uu.nl/agenda/) for an overview of upcoming meetings. Shortly after the meeting you will receive the assessment.
+
+As stated in the EtCL regulations, one possible outcome is that your study will be approved as is; a second possibility is that your study needs to be reviewed by the METC; a third, that a second review will be needed with the help/advise of an internal or external party. Finally, the EtCL could decide not to approve the study in its current design.
+
+Please be aware of these possibilities and the different time paths involved.
 {% endblock %}

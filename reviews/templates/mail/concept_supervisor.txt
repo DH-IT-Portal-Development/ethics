@@ -1,12 +1,27 @@
 {% extends "mail/base.txt" %}
 
-{% block content %}
+{% block content_nl %}
 Beste collega,
 
 {{ creator }} heeft binnen de ETCL-webportal een concept-aanmelding opgesteld voor een studie waarbij u als de eindverantwoordelijke onderzoeker bent aangewezen.
-U kunt deze concept-aanmelding bekijken via {{ proposal_url }}, eventueel na aanpassingen, formeel ter toetsing bij de ETCL indienen.
+U kunt deze concept-aanmelding bekijken via {{ proposal_url }}, eventueel na aanpassingen van uzelf of {{ creator }}, formeel ter toetsing bij de ETCL indienen.
+Indien {{ creator }} wordt geacht de aanpassingen te maken, dient u de studie formeel af te keuren en zelf {{ creator }} hiervan op de hoogte stellen.
+
 {% if revision %}
 Let op: het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanmelding.
 Op het webportaal kunt u de wijzigingen ten opzichte van de vorige aanmelding inzien.
+{% endif %}
+{% endblock %}
+
+{% block content_en %}
+Dear colleague,
+
+{{ creator }} has created, within the portal of the EtCL, a draft application for a study for which you are appointed as the supervisor.
+You can review this draft application via {{ proposal_url }} and submit this study to the EtCL after you have approved it. Note that in case minor revisions are necessary, you can adjust the study yourself before submitting it.
+In case the application needs to be revised more substantially by {{ creator }}, we ask you to formally disapprove it in order for {{ creator }} to be able to revise it. In such a case, we ask you to inform {{ creator }} about this.
+
+{% if revision %}
+Please note that this involves a {{ revision_type | lower}} of a previous application.
+On the web portal you can check the differences between the current and previous application.
 {% endif %}
 {% endblock %}

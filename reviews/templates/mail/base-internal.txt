@@ -1,0 +1,7 @@
+{% block content %}
+{% endblock %}
+
+Namens de ETCL, met de vriendelijke groeten,
+
+de ETCL secretaris
+{{ secretary }}

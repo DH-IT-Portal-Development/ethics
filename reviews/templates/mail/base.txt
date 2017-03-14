@@ -1,6 +1,14 @@
-{% block content %}
-{% endblock %}
-Namens de ETCL, met de vriendelijke groeten,
+[English version below]
 
-de ETCL secretaris
+{% block content_nl %}
+{% endblock %}
+
+~~~~~
+
+{% block content_en %}
+{% endblock %}
+
+Kind regards on behalf of the EtCL,
+
+the secretary of the EtCL
 {{ secretary }}

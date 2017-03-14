@@ -1,4 +1,4 @@
-{% extends "mail/base.txt" %}
+{% extends "mail/base-internal.txt" %}
 
 {% block content %}
 Er is zojuist een nieuwe beoordeling toegevoegd door {{ decision.reviewer.get_full_name }}

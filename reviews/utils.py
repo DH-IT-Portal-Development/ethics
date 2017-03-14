@@ -111,12 +111,14 @@ def start_assignment_phase(proposal):
     }
     if review.short_route:
         msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
+        msg_html = render_to_string('mail/submitted_shortroute.html', params)
     else:
         msg_plain = render_to_string('mail/submitted_longroute.txt', params)
+        msg_html = render_to_string('mail/submitted_longroute.html', params)
     recipients = [proposal.created_by.email]
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
 
     return review
 
