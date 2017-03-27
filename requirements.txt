@@ -4,9 +4,9 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-alabaster==0.7.9          # via sphinx
-babel==2.3.4              # via sphinx
-django-auth-ldap==1.2.9
+alabaster==0.7.10         # via sphinx
+babel==2.4.0              # via sphinx
+django-auth-ldap==1.2.10
 django-braces==1.11.0
 django-easy-pdf==0.1.0
 django-modeltranslation==0.12
@@ -15,17 +15,17 @@ docutils==0.13.1          # via sphinx
 html5lib==0.9999999       # rq.filter: ==0.9999999
 imagesize==0.7.1          # via sphinx
 Jinja2==2.9.5             # via sphinx
-MarkupSafe==0.23          # via jinja2
+MarkupSafe==1.0           # via jinja2
 mysql-python==1.2.5
 olefile==0.44             # via pillow
-pillow==4.0.0             # via reportlab, xhtml2pdf
+Pillow==4.0.0             # via reportlab, xhtml2pdf
 Pygments==2.2.0           # via sphinx
 pyPdf2==1.26.0            # via xhtml2pdf
 python-ldap==2.4.32       # via django-auth-ldap
 pytz==2016.10             # via babel
-reportlab==3.3.0          # via xhtml2pdf
+reportlab==3.4.0          # via xhtml2pdf
 requests==2.13.0          # via sphinx
-six==1.10.0               # via html5lib, sphinx
+six==1.10.0               # via html5lib, packaging, sphinx
 snowballstemmer==1.2.1    # via sphinx
-sphinx==1.5.2
+sphinx==1.5.3
 xhtml2pdf==0.0.6
