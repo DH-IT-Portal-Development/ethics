@@ -31,6 +31,7 @@ class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    needs_name = models.BooleanField(default=True)
     requires_review = models.BooleanField(default=False)
 
     class Meta:
@@ -98,6 +99,11 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Namelijk'),
         max_length=200,
         blank=True)
+    funding_name = models.CharField(
+        _('Wat is de naam van het gefinancierde project?'),
+        max_length=200,
+        blank=True,
+        help_text=_('De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.'))
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)

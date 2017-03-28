@@ -21,7 +21,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
             'other_stakeholders', 'stakeholders',
             'date_start', 'title',
             'summary', 'pre_assessment_pdf',
-            'funding', 'funding_details',
+            'funding', 'funding_details', 'funding_name'
         ]
         widgets = {
             'relation': forms.RadioSelect(),
@@ -71,6 +71,7 @@ van het UiL OTS worden opgenomen.')
             del self.fields['summary']
             del self.fields['funding']
             del self.fields['funding_details']
+            del self.fields['funding_name']
         else:
             del self.fields['pre_assessment_pdf']
 
@@ -95,6 +96,7 @@ van het UiL OTS worden opgenomen.')
 
         self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders')
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
+        self.check_dependency_multiple(cleaned_data, 'funding', 'needs_name', 'funding_name')
 
 
 class ProposalStartPracticeForm(forms.Form):

@@ -3,6 +3,7 @@
     "fields": {
         "requires_review": false,
         "needs_details": false,
+        "needs_name": false,
         "order": 1,
         "description_nl": "uit de 1e geldstroom (bijv. UiL OTS, TLC, Ba-/Ma-/RMa-opleiding)",
         "description_en": "direct government funding (e.g. UiL OTS, TLC, Ba-/Ma-/RMa-education)"
@@ -14,6 +15,7 @@
     "fields": {
         "requires_review": false,
         "needs_details": false,
+        "needs_name": true,
         "order": 2,
         "description_nl": "uit de 2e geldstroom (bijv. NWO, ERC)",
         "description_en": "indirect government funding (e.g. NWO, ERC)"
@@ -25,6 +27,7 @@
     "fields": {
         "requires_review": true,
         "needs_details": true,
+        "needs_name": true,
         "order": 3,
         "description_nl": "uit de 3e geldstroom (bijv. marktpartijen, brancheorganisaties)",
         "description_en": "contract funding (e.g. commercial parties, branch organisations)"
@@ -36,6 +39,7 @@
     "fields": {
         "requires_review": false,
         "needs_details": true,
+        "needs_name": false,
         "order": 4,
         "description_nl": "anders, namelijk",
         "description_en": "otherwise, viz."

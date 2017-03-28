@@ -97,6 +97,11 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td>{{ proposal.funding_details }}</td>
             </tr>
             {% endif %}
+            {% if proposal.funding.all|needs_name %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th><td>{{ proposal.funding_name }}</td>
+            </tr>
+            {% endif %}
         </table>
 
         {% with wmo=proposal.wmo %}
