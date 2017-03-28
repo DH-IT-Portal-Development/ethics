@@ -4,7 +4,7 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MyPracticeView,
     MySubmittedView, MyCompletedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, \
     ProposalStart, ProposalSubmit, ProposalSubmitted, \
-    ProposalCopy, ProposalDifference, ProposalAsPdf, EmptyPDF, \
+    ProposalCopy, ProposalCopyRevision, ProposalDifference, ProposalAsPdf, EmptyPDF, \
     ProposalCreatePreAssessment, ProposalUpdatePreAssessment, \
     ProposalStartPreAssessment, ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice    
@@ -51,7 +51,10 @@ urlpatterns = [
 
     url(r'^study_start/(?P<pk>\d+)/$', StudyStart.as_view(), name='study_start'),
 
-    url(r'^copy/$', ProposalCopy.as_view(), name='copy'),
+    url(r'^copy/', include([
+        url(r'^$', ProposalCopy.as_view(), name='copy'),
+        url(r'^revision/$', ProposalCopyRevision.as_view(), name='copy_revision'),
+    ])),
     url(r'^diff/(?P<pk>\d+)/$', ProposalDifference.as_view(), name='diff'),
 
     url(r'^pdf/(?P<pk>\d+)/$', ProposalAsPdf.as_view(), name='pdf'),

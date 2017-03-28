@@ -216,6 +216,14 @@ class ProposalCopy(UserFormKwargsMixin, CreateView):
         return super(ProposalCopy, self).form_valid(form)
 
 
+class ProposalCopyRevision(ProposalCopy):
+    def get_initial(self):
+        """Sets initial value of is_revision to True"""
+        initial = super(ProposalCopyRevision, self).get_initial()
+        initial['is_revision'] = True
+        return initial
+
+
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_pdf.html'
