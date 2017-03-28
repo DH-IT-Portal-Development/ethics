@@ -72,7 +72,7 @@ class Proposal(models.Model):
         blank=True,
         null=True)
     title = models.CharField(
-        _('Wat is de titel van uw studie?'),
+        _('Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.'),
         max_length=200,
         unique=True,
         help_text=_('De titel die u hier opgeeft is zichtbaar voor de \
@@ -156,7 +156,8 @@ bij deze UiL OTS studie?'))
         related_name='created_by')
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
+        verbose_name=_('Uitvoerende(n) (inclusief uzelf). \
+Uitvoerende(n) kunnen pas worden toegevoegd als ze eerst een keer zelf zijn ingelogd.'),
         related_name='applicants',
         help_text=_('Als uw medeonderzoeker niet in de lijst voorkomt, \
 vraag hem dan een keer in te loggen in het webportaal.'))

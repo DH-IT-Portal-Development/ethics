@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-14 08:14+0100\n"
-"PO-Revision-Date: 2017-03-27 14:38+0200\n"
+"POT-Creation-Date: 2017-03-28 12:26+0200\n"
+"PO-Revision-Date: 2017-03-28 12:29+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 
 #: core/forms.py:11 core/forms.py:20 core/forms.py:29 core/forms.py:38
-#: core/forms.py:48 proposals/forms.py:262
+#: core/forms.py:48 proposals/forms.py:264
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -365,11 +365,11 @@ msgstr[1] "This field can contain a maximum of %(limit_value)d words."
 msgid "Alleen .pdf- of .doc(x)-bestanden zijn toegestaan."
 msgstr "Only .pdf or .doc(x) files are accepted."
 
-#: etcl/settings.py:106
+#: etcl/settings.py:108
 msgid "Nederlands"
 msgstr "Dutch"
 
-#: etcl/settings.py:107
+#: etcl/settings.py:109
 msgid "Engels"
 msgstr "English"
 
@@ -608,7 +608,7 @@ msgstr "Recording behaviour"
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/forms.py:35 proposals/forms.py:114
+#: proposals/forms.py:35 proposals/forms.py:116
 msgid "Er bestaat al een studie met deze titel."
 msgstr "There is already an existing study with this title. "
 
@@ -630,43 +630,43 @@ msgstr ""
 "taking. The professor is able to look at your study in the portal. This "
 "study will not be published in the semipublic archive of the UiL OTS."
 
-#: proposals/forms.py:87
+#: proposals/forms.py:89
 msgid "U dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the researcher with final responsibility."
 
-#: proposals/forms.py:91
+#: proposals/forms.py:93
 msgid "U heeft geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:100
+#: proposals/forms.py:102
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:163
+#: proposals/forms.py:165
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:213
+#: proposals/forms.py:215
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:214
+#: proposals/forms.py:216
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:215
+#: proposals/forms.py:217
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:216
+#: proposals/forms.py:218
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:217
+#: proposals/forms.py:219
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:256
+#: proposals/forms.py:258
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -674,11 +674,11 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:280
+#: proposals/forms.py:282
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:282
+#: proposals/forms.py:284
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -715,8 +715,12 @@ msgid "Wat is, indien bekend, de beoogde startdatum van uw studie?"
 msgstr "What is the intended start date of your study, if known?"
 
 #: proposals/models.py:75
-msgid "Wat is de titel van uw studie?"
-msgstr "What is the title of your study?"
+msgid ""
+"Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle "
+"formele correspondentie."
+msgstr ""
+"What is the title of your study? This title will be used in all formal "
+"correspondence."
 
 #: proposals/models.py:78
 msgid ""
@@ -804,10 +808,14 @@ msgid "In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?"
 msgstr "In what capacity are you involved in this UiL OTS study?"
 
 #: proposals/models.py:159
-msgid "Uitvoerende(n) (inclusief uzelf)"
-msgstr "Researcher(s) carrying out the study (including yourself)"
+msgid ""
+"Uitvoerende(n) (inclusief uzelf). Uitvoerende(n) kunnen pas worden "
+"toegevoegd als ze eerst een keer zelf zijn ingelogd."
+msgstr ""
+"Researcher(s) carrying out the study (including yourself). Researcher(s) can "
+"only be added after they have logged in once before."
 
-#: proposals/models.py:161
+#: proposals/models.py:162
 msgid ""
 "Als uw medeonderzoeker niet in de lijst voorkomt, vraag hem dan een keer in "
 "te loggen in het webportaal."
@@ -815,11 +823,11 @@ msgstr ""
 "If your fellow researcher does not appear in the list, ask him/her to log "
 "into the web portal."
 
-#: proposals/models.py:165
+#: proposals/models.py:166
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
-#: proposals/models.py:168
+#: proposals/models.py:169
 msgid ""
 "Aan het einde van de procedure kunt u deze studie ter verificatie naar uw "
 "eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie "
@@ -830,52 +838,52 @@ msgstr ""
 "final responsibility can then make adjustments and submit the study to the "
 "ETCL. "
 
-#: proposals/models.py:175
+#: proposals/models.py:176
 msgid "Te kopiëren studie"
 msgstr "Application to be copied"
 
-#: proposals/models.py:176
+#: proposals/models.py:177
 msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
 msgstr "This field shows only studies in which you are involved."
 
-#: proposals/models.py:178
+#: proposals/models.py:179
 msgid "Is deze studie een revisie van of amendement op een ingediende studie?"
 msgstr ""
 "Is this session a revision or an amendment of a previously submitted study?"
 
-#: proposals/models.py:244
+#: proposals/models.py:245
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:247
+#: proposals/models.py:248
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:249
+#: proposals/models.py:250
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:251
+#: proposals/models.py:252
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:253
+#: proposals/models.py:254
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:266
+#: proposals/models.py:267
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:267
+#: proposals/models.py:268
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:268
+#: proposals/models.py:269
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:272
+#: proposals/models.py:273
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -883,16 +891,16 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:279 studies/models.py:126 studies/models.py:156
+#: proposals/models.py:280 studies/models.py:126 studies/models.py:156
 #: studies/models.py:287
 msgid "Licht toe"
 msgstr "Explain"
 
-#: proposals/models.py:282
+#: proposals/models.py:283
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:286
+#: proposals/models.py:287
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -900,7 +908,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:288
+#: proposals/models.py:289
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -921,7 +929,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:301
+#: proposals/models.py:302
 msgid ""
 "Worden de deelnemers aan een handeling onderworpen of worden hen "
 "gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
@@ -929,7 +937,7 @@ msgstr ""
 "Will the participants undergo treatment or will rules of conduct be imposed "
 "on them (as defined by the WMO)?"
 
-#: proposals/models.py:303
+#: proposals/models.py:304
 msgid ""
 "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
 "weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. "
@@ -943,7 +951,7 @@ msgstr ""
 "given to the participants, and they are observed exclusively in their lives "
 "as they would normally have acted without observation."
 
-#: proposals/models.py:313
+#: proposals/models.py:314
 msgid ""
 "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
 "ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
@@ -952,15 +960,15 @@ msgstr ""
 "with the ETCL. Has an application for this study already been submitted to a "
 "METC?"
 
-#: proposals/models.py:318
+#: proposals/models.py:319
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:321
+#: proposals/models.py:322
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:348
+#: proposals/models.py:349
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -1258,7 +1266,7 @@ msgstr "Informed consent forms for the study"
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
-#: proposals/templates/proposals/proposal_form.html:43
+#: proposals/templates/proposals/proposal_form.html:45
 msgid "Aantal woorden:"
 msgstr "Number of words:"
 
@@ -2315,37 +2323,37 @@ msgstr "ETCL: new application submitted"
 msgid "ETCL: aanmelding ontvangen"
 msgstr "ETCL: application received"
 
-#: reviews/utils.py:130
+#: reviews/utils.py:132
 msgid "ETCL: nieuwe studie ter beoordeling"
 msgstr "ETCL: new study for assessment"
 
-#: reviews/utils.py:142
+#: reviews/utils.py:144
 msgid "ETCL: nieuwe beoordeling toegevoegd"
 msgstr "ETCL: new decision added"
 
-#: reviews/utils.py:160
+#: reviews/utils.py:162
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:163
+#: reviews/utils.py:165
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:166
+#: reviews/utils.py:168
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:172
+#: reviews/utils.py:174
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:175
+#: reviews/utils.py:177
 msgid "De beloning van deelnemers wijkt af van de UiL OTS standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the UiL OTS standard "
 "regulations."
 
-#: reviews/utils.py:178
+#: reviews/utils.py:180
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -2353,7 +2361,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:184
+#: reviews/utils.py:186
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -2361,7 +2369,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:187
+#: reviews/utils.py:189
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -2371,7 +2379,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:191
+#: reviews/utils.py:193
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -2381,7 +2389,7 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:198
+#: reviews/utils.py:200
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -2392,7 +2400,7 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:214
+#: reviews/utils.py:216
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -2400,7 +2408,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:216
+#: reviews/utils.py:218
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -2410,7 +2418,7 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:233
+#: reviews/utils.py:235
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -2418,7 +2426,7 @@ msgstr ""
 "The study uses psychophysiological measurements on children under {} year(s) "
 "old."
 
-#: reviews/utils.py:238
+#: reviews/utils.py:240
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
@@ -3394,6 +3402,12 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Wat is de titel van uw studie?"
+#~ msgstr "What is the title of your study?"
+
+#~ msgid "Uitvoerende(n) (inclusief uzelf)"
+#~ msgstr "Researcher(s) carrying out the study (including yourself)"
 
 #~ msgid "ja,nee,twijfel"
 #~ msgstr "yes,no,uncertain"
