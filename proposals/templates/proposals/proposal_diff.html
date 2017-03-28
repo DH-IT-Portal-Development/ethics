@@ -82,7 +82,7 @@
         <td>{{ proposal.funding_details }}</td>
     </tr>
     {% endif %}
-    {% if proposal.funding.all|needs_name or p_proposal.funding.all|needs_name %}
+    {% if proposal.funding.all|needs_details:"needs_name" or p_proposal.funding.all|needs_details:"needs_name" %}
     <tr>
         <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th>
         <td>{{ p_proposal.funding_name }}</td>
