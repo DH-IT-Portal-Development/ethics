@@ -1338,7 +1338,7 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_pdf)s\" title=\"Show\">to show a submitted "
+"        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
 "study.\n"
 "        "
 
