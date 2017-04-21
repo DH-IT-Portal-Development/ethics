@@ -183,13 +183,14 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
     def form_valid(self, form):
         """
         - Save the PDF on the Proposal
-        - Start the review process on submission
+        - Start the review process on submission (though not for practice Proposals)
         """
         success_url = super(ProposalSubmit, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf.html')
-            start_review(proposal)
+            if not proposal.is_practice():
+                start_review(proposal)
         return success_url
 
     def get_next_url(self):
