@@ -144,6 +144,11 @@ gebruikt worden).'))
     status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
     status_review = models.NullBooleanField(default=None)
 
+    # Confirmation
+    confirmation_comments = models.TextField(
+        _('Ruimte voor eventuele opmerkingen'),
+        blank=True)
+
     # Dates for bookkeeping
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -151,6 +156,7 @@ gebruikt worden).'))
     date_reviewed_supervisor = models.DateTimeField(null=True)
     date_submitted = models.DateTimeField(null=True)
     date_reviewed = models.DateTimeField(null=True)
+    date_confirmed = models.DateTimeField(null=True)
 
     # References to other models
     relation = models.ForeignKey(

@@ -147,7 +147,12 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
         proposal.in_archive = form.cleaned_data['in_archive']
         proposal.save()
 
-        form.instance.stage = Review.CLOSED
+        if form.cleaned_data['confirmation_sent']:
+            proposal.confirmation_comments = form.cleaned_data['confirmation_comments']
+            proposal.date_confirmed = timezone.now()
+            proposal.save()
+
+            form.instance.stage = Review.CLOSED
 
         return super(ReviewCloseView, self).form_valid(form)
 

@@ -38,14 +38,14 @@
             <td>{{ decision.get_go_display|default:_("open") }}</td>
             <td>{% if review.stage == review.CLOSED %} {{ review.get_continuation_display }} {% endif %}</td>
             <td>
-                <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
-                <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
+                <a href="{% url 'proposals:pdf' review.proposal.pk %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
+                <a href="{% url 'reviews:detail' review.pk %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
                 {% if user|is_secretary and review.stage == review.ASSIGNMENT %}
-                    <a href="{% url 'reviews:assign' review.id %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
+                    <a href="{% url 'reviews:assign' review.pk %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
                 {% elif not review.date_end %}
-                    <a href="{% url 'reviews:decide' decision.id %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                    <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
                 {% elif user|is_secretary and review.stage == review.CLOSING %}
-                    <a href="{% url 'reviews:close' review.id %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
+                    <a href="{% url 'reviews:close' review.pk %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
                 {% endif %}
             </td>
         </tr>

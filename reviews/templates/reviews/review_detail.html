@@ -31,6 +31,18 @@ Beslissingen bij aanmelding <em>{{ proposal }}</em>
         Afhandeling: {{ continuation }}.
         {% endblocktrans %}
     </li>
+    {% if review.proposal.date_confirmed %}
+    <li>
+        {% blocktrans with date_confirmed=review.proposal.date_confirmed|date:"j F Y, G:i" %}
+        Bevestiging verzonden op {{ date_confirmed }}.
+        {% endblocktrans %}
+        {% if review.proposal.confirmation_comments %}
+        {% blocktrans with comments=review.proposal.confirmation_comments %}
+        Opmerkingen: {{ comments }}.
+        {% endblocktrans %}
+        {% endif %}
+    </li>
+    {% endif %}
     {% endif %}
 </ul>
 
