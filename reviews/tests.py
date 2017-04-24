@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.test import TestCase
 
 from .models import Review, Decision
-from .utils import start_review, auto_review, auto_review_observation, auto_review_task
+from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
 from core.models import YES, DOUBT
 from proposals.models import Proposal, Relation
 from proposals.utils import generate_ref_number
@@ -117,6 +117,8 @@ class CommissionTestCase(BaseReviewTestCase):
         review.stage = Review.COMMISSION
         review.refresh_from_db()
 
+        self.assertEqual(len(mail.outbox), 2)
+
         decisions = Decision.objects.filter(review=review)
         self.assertEqual(len(decisions), 2)
 
@@ -126,9 +128,15 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, None)  # undecided
 
         decisions[1].go = Decision.NOT_APPROVED
+        c = 'Let\'s test "escaping" of < and >'
+        decisions[1].comments = c
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, False)  # no go
+
+        notify_secretary(decisions[1])
+        self.assertEqual(len(mail.outbox), 3)
+        self.assertIn(c, mail.outbox[2].body)
 
         decisions[1].go = Decision.APPROVED
         decisions[1].save()
