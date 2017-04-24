@@ -6,4 +6,4 @@ django-modeltranslation
 mysql-python
 xhtml2pdf
 sphinx
-html5lib==0.9999999
+html5lib
