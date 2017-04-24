@@ -21,7 +21,7 @@ You can review this draft application via {{ proposal_url }} and submit this stu
 In case the application needs to be revised more substantially by {{ creator }}, we ask you to formally disapprove it in order for {{ creator }} to be able to revise it. In such a case, we ask you to inform {{ creator }} about this.
 
 {% if revision %}
-Please note that this involves a {{ revision_type | lower}} of a previous application.
+Please note that this involves a {{ revision_type | lower }} of a previous application.
 On the web portal you can check the differences between the current and previous application.
 {% endif %}
 {% endblock %}
