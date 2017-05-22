@@ -28,7 +28,7 @@ class AgeGroup(models.Model):
         if self.age_max:
             return _('{}-{} jaar').format(self.age_min, self.age_max)
         else:
-            return _('{} jaar').format(self.age_min)
+            return _('{} jaar en ouder').format(self.age_min)
 
 
 class Trait(models.Model):
