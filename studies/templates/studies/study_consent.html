@@ -16,6 +16,11 @@
 {% endblock %}
 
 {% block content %}
+<script>
+$(function() {
+    depends_on_value('passive_consent', 'True', 'passive_consent_details');
+});
+</script>
 {% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>

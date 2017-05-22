@@ -98,17 +98,27 @@ class StudyDesignForm(forms.ModelForm):
             self.add_error('has_sessions', forms.ValidationError(msg, code='required'))
 
 
-class StudyConsentForm(forms.ModelForm):
+class StudyConsentForm(ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
             'informed_consent',
             'briefing',
             'passive_consent',
+            'passive_consent_details',
         ]
         widgets = {
             'passive_consent': forms.RadioSelect(choices=YES_NO),
         }
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If passive_consent is set to yes, make sure passive_consent_details has been filled out
+        """
+        cleaned_data = super(StudyConsentForm, self).clean()
+
+        self.check_dependency(cleaned_data, 'passive_consent', 'passive_consent_details')
 
 
 class StudyEndForm(ConditionalModelForm):

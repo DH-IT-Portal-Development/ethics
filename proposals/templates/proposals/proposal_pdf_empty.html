@@ -364,6 +364,9 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th><td>{% show_yesno %}</td>
             </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th><td></td>
+            </tr>
         </table>
 
         <pdf:nextpage />

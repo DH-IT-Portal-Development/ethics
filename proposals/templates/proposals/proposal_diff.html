@@ -685,6 +685,13 @@
         <td>{{ p_study.passive_consent|yesno:_("ja,nee") }}</td>
         <td>{{ study.passive_consent|yesno:_("ja,nee") }}</td>
     </tr>
+    {% if study.passive_consent or p_study.passive_consent %}
+    <tr>
+        <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th>
+        <td>{{ p_study.passive_consent_details }}</td>
+        <td>{{ study.passive_consent_details }}</td>
+    </tr>
+    {% endif %}
 </table>
 {% endfor %}
 {% endfor %}
