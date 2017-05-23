@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -9,6 +9,7 @@ from tasks.models import Session, Task
 from studies.models import Study
 from .models import Proposal, Relation, Wmo
 from .utils import generate_ref_number
+from .views.proposal_views import MyProposalsView
 
 
 class BaseProposalTestCase(TestCase):
@@ -20,6 +21,8 @@ class BaseProposalTestCase(TestCase):
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                           date_start=datetime.now(),
                                           created_by=self.user, relation=self.relation)
+        self.p1.applicants.add(self.user)
+        self.p1.save()
 
 
 class ProposalTestCase(BaseProposalTestCase):
@@ -76,6 +79,48 @@ class ProposalTestCase(BaseProposalTestCase):
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)
+
+
+class ProposalsViewTestCase(BaseProposalTestCase):
+    def setUp(self):
+        super(ProposalsViewTestCase, self).setUp()
+        self.factory = RequestFactory()
+
+    def test_supervisor(self):
+        request = self.factory.get('/proposals/my_archive')
+        request.user = self.user
+
+        response = MyProposalsView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertSequenceEqual(response.context_data['proposals'], [self.p1])
+
+        # Add a Proposal for another User
+        user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
+        p2 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2),
+                                     date_start=datetime.now(),
+                                     created_by=user2, relation=self.relation)
+        p2.applicants.add(user2)
+        p2.save()
+
+        # Sanity test: response should still be the same
+        response = MyProposalsView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertSequenceEqual(response.context_data['proposals'], [self.p1])
+
+        # Second user should only see his Proposal
+        request.user = user2
+        response = MyProposalsView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertSequenceEqual(response.context_data['proposals'], [p2])
+
+        # If we set self.user to be the supervisor, he should see both Proposals
+        p2.supervisor = self.user
+        p2.save()
+
+        request.user = self.user
+        response = MyProposalsView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertSequenceEqual(response.context_data['proposals'], [self.p1, p2])
 
 
 class WmoTestCase(BaseProposalTestCase):

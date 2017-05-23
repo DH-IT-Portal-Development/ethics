@@ -42,6 +42,9 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         context['submitted'] = self.is_submitted
         return context
 
+    def get_my_proposals(self):
+        return Proposal.objects.filter(Q(applicants=self.request.user) | Q(supervisor=self.request.user))
+
 
 class MyConceptsView(ProposalsView):
     title = _('Mijn conceptstudies')
@@ -51,8 +54,7 @@ class MyConceptsView(ProposalsView):
 
     def get_queryset(self):
         """Returns all non-submitted Proposals for the current User"""
-        return Proposal.objects.filter(applicants=self.request.user,
-                                       status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
+        return self.get_my_proposals().filter(status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
 
 class MySubmittedView(ProposalsView):
@@ -63,9 +65,8 @@ class MySubmittedView(ProposalsView):
 
     def get_queryset(self):
         """Returns all submitted Proposals for the current User"""
-        return Proposal.objects.filter(applicants=self.request.user,
-                                       status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
-                                       status__lt=Proposal.DECISION_MADE)
+        return self.get_my_proposals().filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
+                                              status__lt=Proposal.DECISION_MADE)
 
 
 class MyCompletedView(ProposalsView):
@@ -76,8 +77,7 @@ class MyCompletedView(ProposalsView):
 
     def get_queryset(self):
         """Returns all completed Proposals for the current User"""
-        return Proposal.objects.filter(applicants=self.request.user,
-                                       status__gte=Proposal.DECISION_MADE)
+        return self.get_my_proposals().filter(status__gte=Proposal.DECISION_MADE)
 
 
 class MyProposalsView(ProposalsView):
@@ -88,7 +88,7 @@ class MyProposalsView(ProposalsView):
 
     def get_queryset(self):
         """Returns all Proposals for the current User"""
-        return Proposal.objects.filter(applicants=self.request.user)
+        return self.get_my_proposals()
 
 
 class MyPracticeView(ProposalsView):
