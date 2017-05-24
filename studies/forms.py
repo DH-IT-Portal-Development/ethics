@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from core.forms import ConditionalModelForm
 from core.models import YES_NO_DOUBT, YES, DOUBT
 from core.utils import YES_NO
+from core.validators import validate_pdf_or_doc
 from .models import Study
 from .utils import check_necessity_required
 
@@ -182,6 +183,15 @@ class StudyEndForm(ConditionalModelForm):
         self.check_dependency_list(cleaned_data, 'negativity', 'negativity_details', f1_value_list=[YES, DOUBT])
         self.check_dependency_list(cleaned_data, 'stressful', 'stressful_details', f1_value_list=[YES, DOUBT])
         self.check_dependency_list(cleaned_data, 'risk', 'risk_details', f1_value_list=[YES, DOUBT])
+
+
+class StudyUpdateAttachmentsForm(forms.ModelForm):
+    class Meta:
+        model = Study
+        fields = [
+            'informed_consent',
+            'briefing',
+        ]
 
 
 class SessionStartForm(forms.ModelForm):

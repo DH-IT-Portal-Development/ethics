@@ -66,13 +66,15 @@ Beslissingen bij aanmelding <em>{{ proposal }}</em>
 {% include "studies/study_title.html" %}
 <ul>
     <li>
-        <a href="{{ study.informed_consent.url }}" target="_blank">
-            {% trans "Informed consent" %}
+        <a href="{{ study.informed_consent.url }}" target="_blank">{% trans "Informed consent" %}</a>
+        <a href="{% url 'studies:attachments' study.pk %}">
+            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     <li>
-        <a href="{{ study.briefing.url }}" target="_blank">
-            {% trans "Briefing" %}
+        <a href="{{ study.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
+        <a href="{% url 'studies:attachments' study.pk %}">
+            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     {% if study.has_observation and study.observation.needs_approval %}

@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import JsonResponse
+from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
@@ -11,7 +13,7 @@ from proposals.models import Proposal
 from interventions.models import Intervention
 from observations.models import Observation
 
-from ..forms import StudyForm, StudyDesignForm, StudyConsentForm, StudyEndForm
+from ..forms import StudyForm, StudyDesignForm, StudyConsentForm, StudyEndForm, StudyUpdateAttachmentsForm
 from ..models import Study
 from ..utils import check_has_adults, check_necessity_required, get_study_progress
 
@@ -156,6 +158,19 @@ class StudyEnd(AllowErrorsMixin, UpdateView):
             pk = study.pk
 
         return reverse(next_url, args=(pk,))
+
+
+class StudyUpdateAttachments(generic.UpdateView):
+    """
+    Allows the secretary to change the attachments on Study level
+    """
+    model = Study
+    template_name = 'studies/study_update_attachments.html'
+    form_class = StudyUpdateAttachmentsForm
+    group_required = settings.GROUP_SECRETARY
+
+    def get_success_url(self):
+        return self.request.POST.get('next', '/')
 
 
 ################
