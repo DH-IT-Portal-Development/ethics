@@ -40,12 +40,10 @@ class ReviewAssignForm(ConditionalModelForm):
 
 class ReviewCloseForm(forms.ModelForm):
     in_archive = forms.BooleanField(initial=True, required=False)
-    confirmation_sent = forms.BooleanField(initial=False, required=False)
-    confirmation_comments = forms.CharField(required=False)
 
     class Meta:
         model = Review
-        fields = ['continuation', 'in_archive', 'confirmation_sent', 'confirmation_comments']
+        fields = ['continuation', 'in_archive']
         widgets = {
             'continuation': forms.RadioSelect(),
         }
@@ -62,12 +60,6 @@ class ReviewCloseForm(forms.ModelForm):
 
         self.fields['in_archive'].label = _('Voeg deze studie toe aan het UiL OTS archief')
         self.fields['in_archive'].widget = forms.RadioSelect(choices=YES_NO)
-
-        self.fields['confirmation_sent'].label = _('Bevestiging verstuurd?')
-        self.fields['confirmation_sent'].widget = forms.RadioSelect(choices=YES_NO)
-
-        self.fields['confirmation_comments'].label = _('Ruimte voor opmerkingen')
-        self.fields['confirmation_comments'].widget = forms.Textarea()
 
 
 class DecisionForm(forms.ModelForm):

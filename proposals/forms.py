@@ -130,6 +130,12 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
             filter(applicants=self.user, is_pre_assessment=False, in_course=False, is_exploration=False)
 
 
+class ProposalConfirmationForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['date_confirmed', 'confirmation_comments']
+
+
 class WmoForm(ConditionalModelForm):
     class Meta:
         model = Wmo

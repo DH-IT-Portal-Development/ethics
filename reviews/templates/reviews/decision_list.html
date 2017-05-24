@@ -36,7 +36,19 @@
             <td>{{ review.get_stage_display }}</td>
             <td>{{ review.date_start|date:"j M Y" }}</td>
             <td>{{ decision.get_go_display|default:_("open") }}</td>
-            <td>{% if review.stage == review.CLOSED %} {{ review.get_continuation_display }} {% endif %}</td>
+            <td>
+                {% if review.stage == review.CLOSED %}
+                {{ review.get_continuation_display }}
+                {% if review.continuation == review.GO %}
+                <br>
+                {% if review.proposal.date_confirmed %}
+                {% trans "Bevestigingsbrief verstuurd" %}
+                {% else %}
+                {% trans "Bevestigingsbrief nog niet verstuurd" %}
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </td>
             <td>
                 <a href="{% url 'proposals:pdf' review.proposal.pk %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
                 <a href="{% url 'reviews:detail' review.pk %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
@@ -46,6 +58,8 @@
                     <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
                 {% elif user|is_secretary and review.stage == review.CLOSING %}
                     <a href="{% url 'reviews:close' review.pk %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
+                {% elif user|is_secretary and review.stage == review.CLOSED and review.continuation == review.GO %}
+                    <a href="{% url 'proposals:confirmation' review.proposal.pk %}"><img src="{% static 'reviews/images/report_go.png' %}" title="{% trans 'Bevestigingsbrief versturen' %}"></a>
                 {% endif %}
             </td>
         </tr>

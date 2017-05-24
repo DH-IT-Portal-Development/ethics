@@ -156,7 +156,9 @@ gebruikt worden).'))
     date_reviewed_supervisor = models.DateTimeField(null=True)
     date_submitted = models.DateTimeField(null=True)
     date_reviewed = models.DateTimeField(null=True)
-    date_confirmed = models.DateTimeField(null=True)
+    date_confirmed = models.DateField(
+        _('Datum bevestigingsbrief verstuurd'),
+        null=True)
 
     # References to other models
     relation = models.ForeignKey(

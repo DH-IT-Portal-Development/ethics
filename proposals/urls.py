@@ -3,7 +3,7 @@ from django.conf.urls import url, include
 from .views.proposal_views import ProposalsView, MyConceptsView, MyPracticeView, \
     MySubmittedView, MyCompletedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, \
-    ProposalStart, ProposalSubmit, ProposalSubmitted, \
+    ProposalStart, ProposalSubmit, ProposalSubmitted, ProposalConfirmation, \
     ProposalCopy, ProposalCopyRevision, ProposalDifference, ProposalAsPdf, EmptyPDF, \
     ProposalCreatePreAssessment, ProposalUpdatePreAssessment, \
     ProposalStartPreAssessment, ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
@@ -48,6 +48,8 @@ urlpatterns = [
         url(r'^$', ProposalSubmitted.as_view(), name='submitted'),
         url(r'^pre/$', ProposalSubmittedPreAssessment.as_view(), name='submitted_pre'),
     ])),
+
+    url(r'^confirm/(?P<pk>\d+)/$', ProposalConfirmation.as_view(), name='confirmation'),
 
     url(r'^study_start/(?P<pk>\d+)/$', StudyStart.as_view(), name='study_start'),
 

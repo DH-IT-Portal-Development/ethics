@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %} 
+{% trans "Bevestigingsbrief versturen" %}
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
+
+{% block content %}
+<script>
+$(function() {
+    var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
+    $("#id_date_confirmed").datepicker({
+        dateFormat: date_format,
+        maxDate: 'now',
+    });
+});
+</script>
+<p>
+    {% blocktrans with title=review.proposal.title %}
+    Geef hieronder aan wanneer de bevestigingsbrief voor de studie <em>{{ title }}</em> is verstuurd.
+    {% endblocktrans %}
+</p>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Bevestigingsbrief verstuurd' %}" />
+    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+</form>
+{% endblock %}

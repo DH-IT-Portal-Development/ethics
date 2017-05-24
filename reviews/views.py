@@ -14,7 +14,7 @@ from .models import Review, Decision
 from .utils import start_review_route, notify_secretary
 
 
-class DecisionListView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView):
+class DecisionListView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
     group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
@@ -23,7 +23,7 @@ class DecisionListView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView)
         return Decision.objects.filter(reviewer=self.request.user)
 
 
-class DecisionMyOpenView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView):
+class DecisionMyOpenView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
     group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
@@ -57,13 +57,14 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
     model = Review
 
 
-class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.UpdateView):
+class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """
     model = Review
     form_class = ReviewAssignForm
     template_name = 'reviews/review_assign_form.html'
+    group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
         return reverse('reviews:my_open')
@@ -101,10 +102,11 @@ class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
         return super(ReviewAssignView, self).form_valid(form)
 
 
-class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
     model = Review
     form_class = ReviewCloseForm
     template_name = 'reviews/review_close_form.html'
+    group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
         return reverse('reviews:my_archive')
@@ -147,12 +149,7 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
         proposal.in_archive = form.cleaned_data['in_archive']
         proposal.save()
 
-        if form.cleaned_data['confirmation_sent']:
-            proposal.confirmation_comments = form.cleaned_data['confirmation_comments']
-            proposal.date_confirmed = timezone.now()
-            proposal.save()
-
-            form.instance.stage = Review.CLOSED
+        form.instance.stage = Review.CLOSED
 
         return super(ReviewCloseView, self).form_valid(form)
 

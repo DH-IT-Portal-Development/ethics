@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='proposal',
             name='date_confirmed',
-            field=models.DateTimeField(null=True),
+            field=models.DateField(null=True, verbose_name='Datum bevestigingsbrief verstuurd'),
         ),
     ]

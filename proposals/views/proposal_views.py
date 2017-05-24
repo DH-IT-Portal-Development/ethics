@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 
-from braces.views import LoginRequiredMixin, UserFormKwargsMixin
+from braces.views import GroupRequiredMixin, LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
 from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
@@ -13,7 +14,8 @@ from core.utils import get_secretary
 from reviews.utils import start_review
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalSubmitForm, ProposalCopyForm, ProposalStartPracticeForm
+from ..forms import ProposalForm, ProposalSubmitForm, ProposalConfirmationForm, \
+    ProposalCopyForm, ProposalStartPracticeForm
 from ..models import Proposal
 from ..utils import generate_ref_number, generate_pdf, end_pre_assessment
 
@@ -203,6 +205,16 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
 class ProposalSubmitted(generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_submitted.html'
+
+
+class ProposalConfirmation(GroupRequiredMixin, generic.UpdateView):
+    model = Proposal
+    template_name = 'proposals/proposal_confirmation.html'
+    form_class = ProposalConfirmationForm
+    group_required = settings.GROUP_SECRETARY
+
+    def get_success_url(self):
+        return reverse('reviews:my_archive')
 
 
 class ProposalCopy(UserFormKwargsMixin, CreateView):
