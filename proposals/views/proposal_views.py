@@ -117,6 +117,7 @@ class ProposalMixin(UserFormKwargsMixin):
     success_message = _('Studie %(title)s bewerkt')
 
     def get_next_url(self):
+        """If the Proposal has a Wmo model attached, go to update, else, go to create"""
         proposal = self.object
         if hasattr(proposal, 'wmo'):
             return reverse('proposals:wmo_update', args=(proposal.pk,))
@@ -159,6 +160,7 @@ class ProposalDelete(DeleteView):
     success_message = _('Studie verwijderd')
 
     def get_success_url(self):
+        """After deletion, return to the concepts overview"""
         return reverse('proposals:my_concepts')
 
 
@@ -196,9 +198,11 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         return success_url
 
     def get_next_url(self):
+        """After submission, go to the thank-you view"""
         return reverse('proposals:submitted', args=(self.object.pk,))
 
     def get_back_url(self):
+        """Return to the consent form overview of the last Study"""
         return reverse('studies:consent', args=(self.object.last_study().pk,))
 
 
@@ -214,6 +218,7 @@ class ProposalConfirmation(GroupRequiredMixin, generic.UpdateView):
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
+        """On confirmation, return to the Review archive"""
         return reverse('reviews:my_archive')
 
 
@@ -266,6 +271,7 @@ class PreAssessmentMixin(ProposalMixin):
         return kwargs
 
     def get_next_url(self):
+        """If the Proposal has a Wmo model attached, go to update, else, go to create"""
         proposal = self.object
         if hasattr(proposal, 'wmo'):
             return reverse('proposals:wmo_update_pre', args=(proposal.pk,))
@@ -300,9 +306,11 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         return success_url
 
     def get_next_url(self):
+        """After submission, go to the thank-you view"""
         return reverse('proposals:submitted_pre', args=(self.object.pk,))
 
     def get_back_url(self):
+        """Return to the Wmo overview"""
         return reverse('proposals:wmo_update_pre', args=(self.object.pk,))
 
 
@@ -326,7 +334,7 @@ class ProposalStartPractice(generic.FormView):
         return context
 
     def get_success_url(self):
-        """Go to the creation for a practice proposal"""
+        """Go to the creation for a practice Proposal"""
         return reverse('proposals:create_practice', args=(self.request.POST['practice_reason'],))
 
 

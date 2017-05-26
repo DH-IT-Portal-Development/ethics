@@ -28,6 +28,10 @@ class WmoMixin(object):
         return context
 
     def get_next_url(self):
+        """
+        If no Wmo is necessary, continue to definition of Study,
+        else, start the Wmo application.
+        """
         wmo = self.object
         if wmo.status == Wmo.NO_WMO:
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
@@ -35,6 +39,7 @@ class WmoMixin(object):
             return reverse('proposals:wmo_application', args=(wmo.pk,))
 
     def get_back_url(self):
+        """Return to the Proposal overview, or practice overview if we are in practice mode"""
         proposal = self.get_proposal()
         url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
         return reverse(url, args=(proposal.pk,))
@@ -79,6 +84,7 @@ class WmoApplication(UpdateView):
         return context
 
     def get_next_url(self):
+        """Continue to the definition of a Study if we have completed the Wmo application"""
         wmo = self.object
         if wmo.status == Wmo.WAITING:
             return reverse('proposals:wmo_application', args=(wmo.pk,))
@@ -86,6 +92,7 @@ class WmoApplication(UpdateView):
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
 
     def get_back_url(self):
+        """Return to the Wmo overview"""
         return reverse('proposals:wmo_update', args=(self.object.pk,))
 
 
@@ -99,9 +106,11 @@ class WmoCheck(generic.FormView):
 ########################
 class PreAssessmentMixin(object):
     def get_next_url(self):
+        """Different continue URL for pre-assessment Proposals"""
         return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
 
     def get_back_url(self):
+        """Different return URL for pre-assessment Proposals"""
         return reverse('proposals:update_pre', args=(self.object.proposal.pk,))
 
 
@@ -132,11 +141,14 @@ def check_wmo(request):
     message_class = 'info'
     needs_metc = False
 
+    # On doubt, contact secretary.
     if doubt:
         secretary = get_secretary().get_full_name()
         message = _('Neem contact op met {secretary} om de twijfels weg te nemen.').format(secretary=secretary)
         message_class = 'warning'
         needs_metc = True
+    # Otherwise, METC review is necessary for METC studies (obviously) and
+    # studies that have medical research questions or define user behavior
     elif is_metc or (is_medical and is_behavioristic):
         message = _('Uw studie zal moeten worden beoordeeld door de METC.')
         message_class = 'warning'

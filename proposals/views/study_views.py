@@ -47,4 +47,5 @@ class StudyStart(AllowErrorsMixin, UpdateView):
         return reverse('studies:update', args=(proposal.first_study().pk,))
 
     def get_back_url(self):
+        """Return to the Wmo overview"""
         return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))
