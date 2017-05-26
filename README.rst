@@ -13,8 +13,17 @@ It was custom-tailored for the `Ethical Committee Linguistics`_ (ETCL) of `Utrec
 Installation
 ------------
 
-Cloning the git repository, installing the requirements with pip and modifying the settings file should get you going.
-Detailed instructions will be provided later on.
+Installation of this Django project is quite straightforward:
+
+- Clone the git repository
+- Install the requirements (in a virtualenv) using `pip install -r requirements.txt`.
+- Modify the settings file (`etcl/settings.py`) to your liking.
+- Run the database migrations using `python manage.py migrate`.
+- Load all fixtures using `python manage.py loaddata`.
+- Create a superuser (`python manage.py create_superuser`) and add additional users in the admin interface
+- You are ready to roll!
+
+For deployment on a virtual machine, there is a Puppet module available on request.
 
 Structure
 ---------
@@ -37,6 +46,12 @@ This Django project consists of ten apps that can be divided into three categori
     - *feedback*: Allows users to give feedback on the application: with what parts did they struggle?
     - *faqs*: Provides users with answers to frequently asked questions about the application.
 
+Tests
+-----
+
+The project contains a test bed that mainly focuses on the server side.
+The tests can be run using `python manage.py test`.
+
 Language
 --------
 
@@ -44,7 +59,17 @@ The main language of this web application is Dutch, as it's aimed towards the mo
 However, since October 2016, there is a full English translation available, compiled by `Anna Asbury`_.
 Translations in other languages are welcome, of course.
 
+Tooling
+-------
+
+The project uses a few tools to simplify the development workflow:
+
+- `pip-tools`_ for computing requirements, see `requirements.in`.
+- `Travis CI`_ for automatically building and running of tests, see `.travis.yml`.
+
 .. _Django: https://www.djangoproject.com/
 .. _Ethical Committee Linguistics: https://etcl.wp.hum.uu.nl
 .. _Utrecht University: https://www.uu.nl
 .. _Anna Asbury: http://www.annaasbury.com/
+.. _pip-tools: https://github.com/jazzband/pip-tools
+.. _Travis CI: https://travis-ci.org/
