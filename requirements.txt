@@ -6,7 +6,9 @@
 #
 alabaster==0.7.10         # via sphinx
 babel==2.4.0              # via sphinx
-django-auth-ldap==1.2.11
+certifi==2017.4.17        # via requests
+chardet==3.0.3            # via requests
+django-auth-ldap==1.2.12
 django-braces==1.11.0
 django-easy-pdf==0.1.1
 django-modeltranslation==0.12.1
@@ -14,20 +16,24 @@ Django==1.8.18            # rq.filter: >=1.8,<1.9
 docutils==0.13.1          # via sphinx
 html5lib==1.0b10
 httplib2==0.10.3          # via xhtml2pdf
+idna==2.5                 # via requests
 imagesize==0.7.1          # via sphinx
 Jinja2==2.9.6             # via sphinx
 MarkupSafe==1.0           # via jinja2
 mysql-python==1.2.5
 olefile==0.44             # via pillow
-Pillow==4.1.0             # via reportlab, xhtml2pdf
+Pillow==4.1.1             # via reportlab, xhtml2pdf
 Pygments==2.2.0           # via sphinx
 pyPdf2==1.26.0            # via xhtml2pdf
-python-ldap==2.4.32       # via django-auth-ldap
+python-ldap==2.4.38       # via django-auth-ldap
 pytz==2017.2              # via babel
 reportlab==3.4.0          # via django-easy-pdf, xhtml2pdf
-requests==2.13.0          # via sphinx
+requests==2.16.5          # via sphinx
 six==1.10.0               # via html5lib, packaging, setuptools, sphinx, xhtml2pdf
 snowballstemmer==1.2.1    # via sphinx
-sphinx==1.5.5
+sphinx==1.6.2
+sphinxcontrib-websupport==1.0.1  # via sphinx
+typing==3.6.1             # via sphinx
+urllib3==1.21.1           # via requests
 webencodings==0.5.1       # via html5lib
 xhtml2pdf==0.2b1
