@@ -48,9 +48,14 @@ class SessionStart(AllowErrorsMixin, UpdateView):
         return super(SessionStart, self).form_valid(form)
 
     def get_next_url(self):
+        """Continue to the addition of Tasks"""
         return reverse('tasks:start', args=(self.object.first_session().pk,))
 
     def get_back_url(self):
+        """
+        Depending on whether this Study contains an Observation or Intervention part,
+        return to this part. Otherwise, return to the Study design overview.
+        """
         study = self.object
         next_url = 'studies:design'
         pk = study.pk
@@ -63,4 +68,5 @@ class SessionStart(AllowErrorsMixin, UpdateView):
         return reverse(next_url, args=(pk,))
 
     def get_success_message(self, cleaned_data):
+        """Fill the success message using the cleaned_data"""
         return self.success_message % dict(cleaned_data, title=self.object.proposal.title)

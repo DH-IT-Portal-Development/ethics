@@ -49,6 +49,7 @@ class StudyUpdate(AllowErrorsMixin, UpdateView):
             return reverse('studies:consent', args=(prev_study.pk,))
 
     def get_next_url(self):
+        """Continue to the Study design overview"""
         return reverse('studies:design', args=(self.object.pk,))
 
 
@@ -68,6 +69,10 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         return context
 
     def get_next_url(self):
+        """
+        Depending on whether this Study contains an Observation, Intervention or Session part,
+        continue to this part. Otherwise, continue to the Study start overview.
+        """
         study = self.object
         next_url = 'studies:design_end'
         pk = study.pk
@@ -88,6 +93,9 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
+        """
+        Return to the Study overview
+        """
         return reverse('studies:update', args=(self.kwargs['pk'],))
 
 
@@ -170,6 +178,7 @@ class StudyUpdateAttachments(generic.UpdateView):
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
+        """Continue to the URL specified in the 'next' POST parameter"""
         return self.request.POST.get('next', '/')
 
 
