@@ -60,7 +60,7 @@ class Proposal(models.Model):
     COURSE = '1'
     EXPLORATION = '2'
     PRACTICE_REASONS = (
-        (COURSE, _('in het kader van een cursus')), 
+        (COURSE, _('in het kader van een cursus')),
         (EXPLORATION, _('om de portal te exploreren')),
     )
 

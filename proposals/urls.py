@@ -7,7 +7,7 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MyPracticeView,
     ProposalCopy, ProposalCopyRevision, ProposalDifference, ProposalAsPdf, EmptyPDF, \
     ProposalCreatePreAssessment, ProposalUpdatePreAssessment, \
     ProposalStartPreAssessment, ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
-    ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice    
+    ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice
 from .views.study_views import StudyStart
 from .views.wmo_views import WmoCreate, WmoUpdate, \
     WmoApplication, WmoCheck, check_wmo, \
