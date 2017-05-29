@@ -7,7 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 from core.forms import ConditionalModelForm
 from core.models import YES_NO_DOUBT, YES, DOUBT
 from core.utils import YES_NO
-from core.validators import validate_pdf_or_doc
 from .models import Study
 from .utils import check_necessity_required
 

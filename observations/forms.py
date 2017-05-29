@@ -4,7 +4,6 @@ from django import forms
 
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO
-from studies.models import Study
 from .models import Observation
 
 
