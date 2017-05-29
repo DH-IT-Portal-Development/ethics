@@ -109,8 +109,8 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
     def get_next_url(self):
         proposal = self.object.proposal
         if self.object.order < proposal.studies_number:
-            next = self.object.order + 1
-            next_study = Study.objects.get(proposal=proposal, order=next)
+            next_order = self.object.order + 1
+            next_study = Study.objects.get(proposal=proposal, order=next_order)
             return reverse('studies:update', args=(next_study.pk,))
         else:
             return reverse('proposals:submit', args=(proposal.pk,))
