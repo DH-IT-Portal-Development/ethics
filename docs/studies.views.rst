@@ -18,15 +18,7 @@ studies.views.study_views module
 .. automodule:: studies.views.study_views
     :members:
     :undoc-members:
-    :show-inheritance:
-
-studies.views.survey_views module
----------------------------------
-
-.. automodule:: studies.views.survey_views
-    :members:
-    :undoc-members:
-    :show-inheritance:
+    :show-inheritance:git staut
 
 
 Module contents

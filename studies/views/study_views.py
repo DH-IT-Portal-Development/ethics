@@ -189,10 +189,10 @@ def has_adults(request):
 def necessity_required(request):
     """
     This call checks whether the necessity questions are required. They are required when:
-    - The researcher requires a supervisor AND one of these cases applies:
-        - A selected AgeGroup requires details.
-        - Participants have been selected on certain traits.
-        - Participants are legally incapable.
+    * The researcher requires a supervisor AND one of these cases applies:
+    ** A selected AgeGroup requires details.
+    ** Participants have been selected on certain traits.
+    ** Participants are legally incapable.
     """
     proposal = Proposal.objects.get(pk=request.POST.get('proposal_pk'))
     age_groups = map(int, request.POST.getlist('age_groups[]'))
