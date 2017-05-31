@@ -239,14 +239,11 @@ class StudyStartForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the Proposal for later reference
-        - Set studies_similar as required
         - Set initial data for the study_name fields
         """
         self.proposal = kwargs.pop('proposal', None)
 
         super(StudyStartForm, self).__init__(*args, **kwargs)
-
-        self.fields['studies_similar'].required = True
 
         for n, study in enumerate(self.proposal.study_set.all()):
             study_name = 'study_name_' + str(n + 1)
@@ -255,12 +252,15 @@ class StudyStartForm(forms.ModelForm):
     def clean(self):
         """
         Check for conditional requirements:
+        - If studies_similar is not set, add a required error
         - If studies_similar is set to False, make sure studies_number is set (and higher than 2)
         - If studies_number is set, make sure the corresponding name fields are filled.
         """
         cleaned_data = super(StudyStartForm, self).clean()
 
-        if not cleaned_data['studies_similar']:
+        if cleaned_data['studies_similar'] is None:
+            self.add_error('studies_similar', _('Dit veld is verplicht.'))
+        elif not cleaned_data['studies_similar']:
             nr_studies = cleaned_data['studies_number']
             if cleaned_data['studies_number'] < 2:
                 self.add_error('studies_number', _('Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
