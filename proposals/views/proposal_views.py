@@ -255,6 +255,12 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.Detail
     model = Proposal
     template_name = 'proposals/proposal_pdf.html'
 
+    def get_context_data(self, **kwargs):
+        """Adds 'BASE_URL' to template context"""
+        context = super(ProposalAsPdf, self).get_context_data(**kwargs)
+        context['BASE_URL'] = settings.BASE_URL
+        return context
+
 
 class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
     template_name = 'proposals/proposal_pdf_empty.html'

@@ -99,7 +99,8 @@ def generate_pdf(proposal, template):
     :param proposal: the current Proposal
     :param template: the template for the PDF
     """
-    pdf = ContentFile(render_to_pdf(template, {'proposal': proposal}))
+    context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL}
+    pdf = ContentFile(render_to_pdf(template, context))
     proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
 
 
