@@ -76,6 +76,7 @@ instructies per taak, pauzes tussen taken, en debriefing? \
 class Registration(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
+    is_local = models.BooleanField(default=False)
     needs_details = models.BooleanField(default=False)
     needs_kind = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
@@ -83,6 +84,7 @@ class Registration(models.Model):
 
     class Meta:
         ordering = ['order']
+        verbose_name = _('Vastlegging gedrag')
 
     def __unicode__(self):
         return self.description

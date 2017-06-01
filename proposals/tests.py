@@ -4,16 +4,17 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from core.models import YES, NO
-from tasks.models import Session, Task
-from studies.models import Study
+from core.models import Setting, YES, NO
+from interventions.models import Intervention
+from tasks.models import Session, Task, Registration
+from studies.models import Study, Recruitment
 from .models import Proposal, Relation, Wmo
-from .utils import generate_ref_number
+from .utils import generate_ref_number, check_local_facilities
 from .views.proposal_views import MyProposalsView
 
 
 class BaseProposalTestCase(TestCase):
-    fixtures = ['relations', 'compensations']
+    fixtures = ['relations', 'compensations', 'recruitments', 'settings', 'registrations']
 
     def setUp(self):
         self.user = User.objects.create_user(username='test0101', email='test@test.com', password='secret')
@@ -79,6 +80,60 @@ class ProposalTestCase(BaseProposalTestCase):
 
         s1_t1.delete()
         self.assertEqual(proposal.current_session(), s1)
+
+    def test_check_local_facilities(self):
+        # By default there are no local facilities in use
+        self.assertEqual(len(check_local_facilities(self.p1)), 0)
+
+        # If we create a Study and add local Recruitment, facilities should be returned
+        s = Study.objects.create(proposal=self.p1, order=1)
+        s.save()
+
+        recruitments = Recruitment.objects.filter(is_local=True)
+        s.recruitment = recruitments
+        s.save()
+
+        facs = check_local_facilities(self.p1)
+        self.assertEqual(len(facs), 1)
+        self.assertSetEqual(facs[Recruitment._meta.verbose_name], set([r.description for r in recruitments]))
+
+        # If we remove local Recruitment, we should again return no facilities
+        s.recruitment = Recruitment.objects.filter(is_local=False)
+        s.save()
+        self.assertEqual(len(check_local_facilities(self.p1)), 0)
+
+        # If we add an Invervention part, we should return facilities when we add local Settings
+        s.has_intervention = True
+        s.save()
+        i = Intervention.objects.create(study=s, amount_per_week=1, duration=1)
+        self.assertEqual(len(check_local_facilities(self.p1)), 0)
+
+        settings = Setting.objects.filter(is_local=True)
+        i.setting = settings
+        i.save()
+
+        facs = check_local_facilities(self.p1)
+        self.assertEqual(len(facs), 1)
+        self.assertSetEqual(facs[Setting._meta.verbose_name], set([st.description for st in settings]))
+
+        # If we add a Sessions part, we should return facilities when we add local Registrations
+        s.has_sessions = True
+        s.sessions_number = 2
+        s.save()
+        s1 = Session.objects.create(study=s, order=1)
+
+        s1.tasks_number = 2
+        s1.save()
+
+        s1_t1 = Task.objects.create(session=s1, order=1, name='t1')
+
+        registrations = Registration.objects.filter(is_local=True)
+        s1_t1.registrations = registrations
+        s1_t1.save()
+
+        facs = check_local_facilities(self.p1)
+        self.assertEqual(len(facs), 2)
+        self.assertSetEqual(facs[Registration._meta.verbose_name], set([r.description for r in registrations]))
 
 
 class ProposalsViewTestCase(BaseProposalTestCase):

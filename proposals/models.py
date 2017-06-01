@@ -107,6 +107,22 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
+    inform_local_staff = models.NullBooleanField(
+        _(u'<p>U hebt aangegeven dat u gebruik wilt gaan maken van één \
+van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
+en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op \
+de hoogte willen worden gesteld van aankomende studies. \
+Daarom vragen wij hier u toestemming om delen van deze aanvraag door te \
+sturen naar het lab supportteam.</p> \
+<p>Vindt u het goed dat de volgende delen uit de aanvraag \
+worden doorgestuurd:</p> \
+- Uw naam en de namen van de andere betrokkenen <br/> \
+- De eindverantwoordelijke van de studie <br/> \
+- De titel van de studie <br/> \
+- De beoogde startdatum <br/> \
+- Van welke faciliteiten u gebruik wilt maken (database, lab, \
+Zep software)'),
+        default=None)
     in_archive = models.BooleanField(default=False)
 
     is_pre_assessment = models.BooleanField(default=False)

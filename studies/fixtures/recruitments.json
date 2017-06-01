@@ -1,44 +1,52 @@
 [
 {
     "fields": {
+        "is_local": true,
         "needs_details": false,
-        "requires_review": false,
-        "order": 1,
+        "description": "UiL OTS databestand",
+        "description_en": "UiL OTS database",
         "description_nl": "UiL OTS databestand",
-        "description_en": "UiL OTS database"
+        "requires_review": false,
+        "order": 1
     },
     "model": "studies.recruitment",
     "pk": 1
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": true,
-        "requires_review": true,
-        "order": 2,
+        "description": "eigen netwerk",
+        "description_en": "own network",
         "description_nl": "eigen netwerk",
-        "description_en": "own network"
+        "requires_review": true,
+        "order": 2
     },
     "model": "studies.recruitment",
     "pk": 2
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": false,
-        "requires_review": true,
-        "order": 3,
+        "description": "scholen, KDV, BSO",
+        "description_en": "schools, nurseries, day care centers",
         "description_nl": "scholen, KDV, BSO",
-        "description_en": "schools, nurseries, day care centers"
+        "requires_review": true,
+        "order": 3
     },
     "model": "studies.recruitment",
     "pk": 3
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": true,
-        "requires_review": true,
-        "order": 4,
+        "description": "anders",
+        "description_en": "otherwise",
         "description_nl": "anders",
-        "description_en": "otherwise"
+        "requires_review": true,
+        "order": 4
     },
     "model": "studies.recruitment",
     "pk": 4

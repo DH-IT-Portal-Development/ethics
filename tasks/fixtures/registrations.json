@@ -1,10 +1,12 @@
 [
 {
     "fields": {
+        "is_local": false,
         "needs_details": false,
-        "description_nl": "audio-opname",
-        "description_en": "audio recording",
+        "description": "audio-opname",
         "needs_kind": false,
+        "description_en": "audio recording",
+        "description_nl": "audio-opname",
         "age_min": null,
         "requires_review": false,
         "order": 1
@@ -14,10 +16,12 @@
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": false,
-        "description_nl": "video-opname",
-        "description_en": "video recording",
+        "description": "video-opname",
         "needs_kind": false,
+        "description_en": "video recording",
+        "description_nl": "video-opname",
         "age_min": null,
         "requires_review": false,
         "order": 2
@@ -27,10 +31,12 @@
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": false,
-        "description_nl": "een vragenlijst (papier of digitaal, evt via internet)",
-        "description_en": "a survey (on paper or digitally, possibly using internet)",
+        "description": "een vragenlijst (papier of digitaal, evt via internet)",
         "needs_kind": false,
+        "description_en": "a survey (on paper or digitally, possibly using internet)",
+        "description_nl": "een vragenlijst (papier of digitaal, evt via internet)",
         "age_min": null,
         "requires_review": false,
         "order": 3
@@ -40,10 +46,12 @@
 },
 {
     "fields": {
+        "is_local": true,
         "needs_details": false,
-        "description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
-        "description_en": "behavioral- and/or reaction time registration using Zep, Presentation, E-prime, etc.",
+        "description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
         "needs_kind": false,
+        "description_en": "behavioral- and/or reaction time registration using Zep, Presentation, E-prime, etc.",
+        "description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
         "age_min": null,
         "requires_review": false,
         "order": 4
@@ -53,10 +61,12 @@
 },
 {
     "fields": {
+        "is_local": true,
         "needs_details": false,
-        "description_nl": "oogbewegingsregistratie via een eye-tracker",
-        "description_en": "eye movement registration using an eye-tracker",
+        "description": "oogbewegingsregistratie via een eye-tracker",
         "needs_kind": false,
+        "description_en": "eye movement registration using an eye-tracker",
+        "description_nl": "oogbewegingsregistratie via een eye-tracker",
         "age_min": null,
         "requires_review": false,
         "order": 5
@@ -66,10 +76,12 @@
 },
 {
     "fields": {
+        "is_local": true,
         "needs_details": false,
-        "description_nl": "psychofysiologische meting (bijv. EEG, fMRI, EMA)",
-        "description_en": "psychofysiological measurement (e.g. EEG, fMRI, EMA)",
+        "description": "psychofysiologische meting (bijv. EEG, fMRI, EMA)",
         "needs_kind": true,
+        "description_en": "psychofysiological measurement (e.g. EEG, fMRI, EMA)",
+        "description_nl": "psychofysiologische meting (bijv. EEG, fMRI, EMA)",
         "age_min": 18,
         "requires_review": true,
         "order": 6
@@ -79,10 +91,12 @@
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": false,
-        "description_nl": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
-        "description_en": "manual behavioral scoring (e.g. what's pointed at, what's looked at, and for how long)",
+        "description": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
         "needs_kind": false,
+        "description_en": "manual behavioral scoring (e.g. what's pointed at, what's looked at, and for how long)",
+        "description_nl": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
         "age_min": null,
         "requires_review": false,
         "order": 7
@@ -92,10 +106,12 @@
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": false,
-        "description_nl": "logdata van digitaal gedrag (bijv. usability tests)",
-        "description_en": "log data of digital behavior (e.g. usability tests)",
+        "description": "logdata van digitaal gedrag (bijv. usability tests)",
         "needs_kind": false,
+        "description_en": "log data of digital behavior (e.g. usability tests)",
+        "description_nl": "logdata van digitaal gedrag (bijv. usability tests)",
         "age_min": null,
         "requires_review": false,
         "order": 8
@@ -105,10 +121,12 @@
 },
 {
     "fields": {
+        "is_local": false,
         "needs_details": true,
-        "description_nl": "anders, namelijk",
-        "description_en": "otherwise, viz.",
+        "description": "anders, namelijk",
         "needs_kind": false,
+        "description_en": "otherwise, viz.",
+        "description_nl": "anders, namelijk",
         "age_min": null,
         "requires_review": true,
         "order": 9

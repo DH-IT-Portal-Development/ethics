@@ -2,6 +2,7 @@
 
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from braces.forms import UserKwargModelFormMixin
@@ -10,6 +11,7 @@ from core.forms import ConditionalModelForm
 from core.models import YES_NO_DOUBT, YES, NO, DOUBT
 from core.utils import YES_NO, get_users_as_list
 from .models import Proposal, Wmo, Relation
+from .utils import check_local_facilities
 
 
 class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
@@ -275,14 +277,32 @@ class StudyStartForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['comments']
+        fields = ['comments', 'inform_local_staff']
+        widgets = {
+            'inform_local_staff': forms.RadioSelect(choices=YES_NO),
+        }
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Mark the label of inform_local_staff as safe
+        - Check if the inform_local_staff question should be asked
+        """
+        self.proposal = kwargs.pop('proposal', None)
+
+        super(ProposalSubmitForm, self).__init__(*args, **kwargs)
+
+        self.fields['inform_local_staff'].label = mark_safe(self.fields['inform_local_staff'].label)
+
+        if not check_local_facilities(self.proposal):
+            del self.fields['inform_local_staff']
 
     def clean(self):
         """
         Check if the Proposal is complete:
         - Do all Studies have informed consent/briefing?
+        - If the inform_local_staff question is asked, it is required
         """
-        super(ProposalSubmitForm, self).clean()
+        cleaned_data = super(ProposalSubmitForm, self).clean()
 
         if not self.instance.is_pre_assessment and not self.instance.is_practice():
             for study in self.instance.study_set.all():
@@ -290,3 +310,6 @@ class ProposalSubmitForm(forms.ModelForm):
                     self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
                 if not study.briefing:
                     self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+
+        if check_local_facilities(self.proposal) and cleaned_data['inform_local_staff'] is None:
+            self.add_error('inform_local_staff', _('Dit veld is verplicht.'))

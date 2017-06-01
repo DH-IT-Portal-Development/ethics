@@ -1,0 +1,16 @@
+{% extends "mail/base-internal.txt" %}
+
+{% block content %}
+Beste labmanagers,
+
+Er is zojuist een nieuwe studie ter beoordeling ingediend.
+De studie maakt gebruik van enkele labfaciliteiten, en daarom volgt hieronder een korte samenvatting van deze studie.
+
+Titel studie: {{ proposal.title }}
+Referentienummer: {{ proposal.reference_number }}
+Betrokkenen: {{ applicants|join:", " }}
+Eindverantwoordelijke: {{ proposal.accountable_user.get_full_name }}
+Beoogde startdatum: {{ proposal.date_start|date:"j M Y" }}
+Benodigde faciliteiten: {% for t, f in facilities %}
+- {{ t }}: {{ f|join:", "}}{% endfor %}
+{% endblock %}

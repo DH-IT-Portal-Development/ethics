@@ -1,120 +1,140 @@
 [
 {
     "fields": {
-        "requires_review": false,
+        "is_local": true,
         "needs_details": false,
-        "needs_supervision": false,
-        "order": 1,
+        "description": "het UiL OTS lab",
+        "description_en": "the UiL OTS labs",
         "description_nl": "het UiL OTS lab",
-        "description_en": "the UiL OTS labs"
+        "needs_supervision": false,
+        "requires_review": false,
+        "order": 1
     },
     "model": "core.setting",
     "pk": 1
 },
 {
     "fields": {
-        "requires_review": false,
+        "is_local": false,
         "needs_details": false,
-        "needs_supervision": false,
-        "order": 2,
+        "description": "online",
+        "description_en": "online",
         "description_nl": "online",
-        "description_en": "online"
+        "needs_supervision": false,
+        "requires_review": false,
+        "order": 2
     },
     "model": "core.setting",
     "pk": 2
 },
 {
     "fields": {
-        "requires_review": false,
+        "is_local": false,
         "needs_details": false,
-        "needs_supervision": true,
-        "order": 3,
+        "description": "school/onderwijsinstelling",
+        "description_en": "school/educational institution",
         "description_nl": "school/onderwijsinstelling",
-        "description_en": "school/educational institution"
+        "needs_supervision": true,
+        "requires_review": false,
+        "order": 3
     },
     "model": "core.setting",
     "pk": 3
 },
 {
     "fields": {
-        "requires_review": false,
+        "is_local": false,
         "needs_details": false,
-        "needs_supervision": true,
-        "order": 4,
+        "description": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
+        "description_en": "nursery/day care center",
         "description_nl": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
-        "description_en": "nursery/day care center"
+        "needs_supervision": true,
+        "requires_review": false,
+        "order": 4
     },
     "model": "core.setting",
     "pk": 4
 },
 {
     "fields": {
-        "requires_review": true,
+        "is_local": false,
         "needs_details": false,
-        "needs_supervision": false,
-        "order": 5,
+        "description": "thuis bij de deelnemer",
+        "description_en": "at the participant's home",
         "description_nl": "thuis bij de deelnemer",
-        "description_en": "at the participant's home"
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 5
     },
     "model": "core.setting",
     "pk": 5
 },
 {
     "fields": {
-        "requires_review": true,
+        "is_local": false,
         "needs_details": false,
-        "needs_supervision": false,
-        "order": 6,
+        "description": "studenten worden geworven als onderdeel van de cursus",
+        "description_en": "students who are recruited as part of a course",
         "description_nl": "studenten worden geworven als onderdeel van de cursus",
-        "description_en": "students who are recruited as part of a course"
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 6
     },
     "model": "core.setting",
     "pk": 6
 },
 {
     "fields": {
-        "requires_review": true,
+        "is_local": false,
         "needs_details": false,
-        "needs_supervision": false,
-        "order": 7,
+        "description": "collegezaal",
+        "description_en": "lecture hall",
         "description_nl": "collegezaal",
-        "description_en": "lecture hall"
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 7
     },
     "model": "core.setting",
     "pk": 7
 },
 {
     "fields": {
-        "requires_review": false,
+        "is_local": false,
         "needs_details": false,
-        "needs_supervision": false,
-        "order": 8,
+        "description": "logopediepraktijk",
+        "description_en": "speech therapist",
         "description_nl": "logopediepraktijk",
-        "description_en": "speech therapist"
+        "needs_supervision": false,
+        "requires_review": false,
+        "order": 8
     },
     "model": "core.setting",
     "pk": 8
 },
 {
     "fields": {
-        "requires_review": true,
+        "is_local": false,
         "needs_details": true,
-        "needs_supervision": false,
-        "order": 9,
+        "description": "zorginstelling",
+        "description_en": "medical institution",
         "description_nl": "zorginstelling",
-        "description_en": "medical institution"
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 9
     },
     "model": "core.setting",
     "pk": 9
 },
 {
     "fields": {
-        "requires_review": true,
+        "is_local": false,
         "needs_details": true,
-        "needs_supervision": false,
-        "order": 10,
+        "description": "anders, namelijk",
+        "description_en": "otherwise, viz.",
         "description_nl": "anders, namelijk",
-        "description_en": "otherwise, viz."
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 10
     },
     "model": "core.setting",
     "pk": 10

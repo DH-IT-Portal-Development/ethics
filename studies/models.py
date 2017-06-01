@@ -71,16 +71,19 @@ class Recruitment(models.Model):
     """
     A model to store forms of participant recruitment.
     The model has fields to keep a certain order and a description.
+    The 'is_local' field is used to determine whether the 'inform_local_staff' field on Proposal needs to be filled.
     The 'needs_details' field is used to determine whether the 'recruitment_details' field on Study needs to be filled.
     The 'requires_review' field is used in the automatic review to tag anomalous forms of recruitment.
     """
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
+    is_local = models.BooleanField(default=False)
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['order']
+        verbose_name = _('Werving')
 
     def __unicode__(self):
         return self.description

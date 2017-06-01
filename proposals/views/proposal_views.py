@@ -17,7 +17,7 @@ from ..copy import copy_proposal
 from ..forms import ProposalForm, ProposalSubmitForm, ProposalConfirmationForm, \
     ProposalCopyForm, ProposalStartPracticeForm
 from ..models import Proposal
-from ..utils import generate_ref_number, generate_pdf, end_pre_assessment
+from ..utils import generate_ref_number, generate_pdf, end_pre_assessment, notify_local_staff
 
 
 ############
@@ -184,6 +184,12 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
     template_name = 'proposals/proposal_submit.html'
     success_message = _('Studie verzonden')
 
+    def get_form_kwargs(self):
+        """Sets the Proposal as a form kwarg"""
+        kwargs = super(ProposalSubmit, self).get_form_kwargs()
+        kwargs['proposal'] = self.get_object()
+        return kwargs
+
     def form_valid(self, form):
         """
         - Save the PDF on the Proposal
@@ -195,6 +201,9 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
             generate_pdf(proposal, 'proposals/proposal_pdf.html')
             if not proposal.is_practice():
                 start_review(proposal)
+
+                if proposal.inform_local_staff:
+                    notify_local_staff(proposal)
         return success_url
 
     def get_next_url(self):
@@ -265,7 +274,7 @@ class ProposalStartPreAssessment(ProposalStart):
 
 class PreAssessmentMixin(ProposalMixin):
     def get_form_kwargs(self):
-        """Sets the Proposal as a form kwarg"""
+        """Sets is_pre_assessment as a form kwarg"""
         kwargs = super(PreAssessmentMixin, self).get_form_kwargs()
         kwargs['is_pre_assessment'] = True
         return kwargs
