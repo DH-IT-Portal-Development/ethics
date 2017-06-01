@@ -226,7 +226,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td>{{ intervention.setting_details }}</td>
             </tr>
             {% endif %}
-            {% if intervention.setting.all|needs_details:"needs_supervision" %}
+            {% if study.has_children and intervention.setting.all|needs_details:"needs_supervision" %}
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
             </tr>
@@ -274,7 +274,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th><td>{{ observation.setting_details }}</td>
             </tr>
             {% endif %}
-            {% if observation.setting.all|needs_details:"needs_supervision" %}
+            {% if study.has_children and observation.setting.all|needs_details:"needs_supervision" %}
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{{ observation.supervision|yesno:_("ja,nee") }}</td>
             </tr>
@@ -344,7 +344,7 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
                 <th>{% get_verbose_field_name "tasks" "session" "setting_details" %}</th><td>{{ session.setting_details }}</td>
             </tr>
             {% endif %}
-            {% if session.setting.all|needs_details:"needs_supervision" %}
+            {% if study.has_children and session.setting.all|needs_details:"needs_supervision" %}
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th><td>{{ session.supervision|yesno:_("ja,nee") }}</td>
             </tr>

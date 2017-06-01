@@ -311,6 +311,10 @@ geschoolde specialisten).')),
         """Returns the last Session in this Study"""
         return self.session_set.order_by('-order')[0]
 
+    def has_children(self):
+        """Returns whether the Study contains non-adult AgeGroups"""
+        return self.age_groups.filter(is_adult=False).exists()
+
     def design_started(self):
         """Checks if the design phase has started"""
         return any([self.has_intervention, self.has_observation, self.has_sessions])

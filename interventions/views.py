@@ -26,6 +26,12 @@ class InterventionMixin(object):
         context['progress'] = get_study_progress(study) + 7
         return context
 
+    def get_form_kwargs(self):
+        """Sets the Study as a form kwarg"""
+        kwargs = super(InterventionMixin, self).get_form_kwargs()
+        kwargs['study'] = self.get_study()
+        return kwargs
+
     def get_next_url(self):
         study = self.get_study()
         next_url = 'studies:design_end'

@@ -293,7 +293,7 @@
         <td>{{ intervention.setting_details }}</td>
     </tr>
     {% endif %}
-    {% if intervention.setting.all|needs_details:"needs_supervision" or p_intervention.setting.all|needs_details:"needs_supervision" %}
+    {% if study.has_children and intervention.setting.all|needs_details:"needs_supervision" or p_study.has_children and p_intervention.setting.all|needs_details:"needs_supervision" %}
     <tr>
         <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th>
         <td>{{ p_intervention.supervision|yesno:_("ja,nee") }}</td>
@@ -378,7 +378,7 @@
         <td>{{ observation.setting_details }}</td>
     </tr>
     {% endif %}
-    {% if observation.setting.all|needs_details:"needs_supervision" or p_observation.setting.all|needs_details:"needs_supervision" %}
+    {% if study.has_children and observation.setting.all|needs_details:"needs_supervision" or p_study.has_children and p_observation.setting.all|needs_details:"needs_supervision" %}
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th>
         <td>{{ p_observation.supervision|yesno:_("ja,nee") }}</td>
@@ -497,7 +497,7 @@
         <td>{{ session.setting_details }}</td>
     </tr>
     {% endif %}
-    {% if session.setting.all|needs_details:"needs_supervision" or p_session.setting.all|needs_details:"needs_supervision" %}
+    {% if study.has_children and session.setting.all|needs_details:"needs_supervision" or p_study.has_children and p_session.setting.all|needs_details:"needs_supervision" %}
     <tr>
         <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th>
         <td>{{ p_session.supervision|yesno:_("ja,nee") }}</td>

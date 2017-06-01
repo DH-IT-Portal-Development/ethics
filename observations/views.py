@@ -27,7 +27,7 @@ class ObservationMixin(object):
         return context
 
     def get_form_kwargs(self):
-        """Sets the study as a form kwarg"""
+        """Sets the Study as a form kwarg"""
         kwargs = super(ObservationMixin, self).get_form_kwargs()
         kwargs['study'] = self.get_study()
         return kwargs

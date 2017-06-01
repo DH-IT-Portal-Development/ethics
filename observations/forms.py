@@ -33,22 +33,27 @@ class ObservationForm(ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
+        - Don't ask the supervision question when there are only adult AgeGroups in this Study
         """
         self.study = kwargs.pop('study', None)
 
         super(ObservationForm, self).__init__(*args, **kwargs)
 
+        if not self.study.has_children():
+            del self.fields['supervision']
+
     def clean(self):
         """
         Check for conditional requirements:
-        - If a setting which needs details has been checked, make sure the details are filled
+        - If a setting which needs details or supervision has been checked, make sure the details are filled
         - If the Observation needs_approval, check if approval_institution/approval_document are provided
         - If a registration which needs details has been checked, make sure the details are filled
         """
         cleaned_data = super(ObservationForm, self).clean()
 
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
-        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
+        if self.study.has_children():
+            self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
         self.check_dependency(cleaned_data, 'needs_approval', 'approval_institution')
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
 

@@ -37,6 +37,7 @@ class TaskStartForm(ConditionalModelForm):
         - The field tasks_number is not required by default (only if is_copy is set to False)
         - Only allow to choose earlier Sessions
         - Remove option to copy altogether from first Session
+        - Don't ask the supervision question when there are only adult AgeGroups in this Study
         """
         super(TaskStartForm, self).__init__(*args, **kwargs)
         self.fields['tasks_number'].required = False
@@ -47,17 +48,21 @@ class TaskStartForm(ConditionalModelForm):
             del self.fields['is_copy']
             del self.fields['parent_session']
 
+        if not self.study.has_children():
+            del self.fields['supervision']
+
     def clean(self):
         """
         Check for conditional requirements:
-        - If a setting which needs details has been checked, make sure the details are filled
+        - If a setting which needs details or supervision has been checked, make sure the details are filled
         - If is_copy is True, parent_session is required
         - If is_copy is False, tasks_number is required
         """
         cleaned_data = super(TaskStartForm, self).clean()
 
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
-        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
+        if self.study.has_children():
+            self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
 
         self.check_dependency(cleaned_data, 'is_copy', 'parent_session')
         if not cleaned_data.get('is_copy') and not cleaned_data.get('tasks_number'):
