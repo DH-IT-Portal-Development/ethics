@@ -33,8 +33,8 @@
             <td>{{ review.proposal.title }}</td>
             <td>{{ decision.reviewer.get_full_name }}</td>
             <td>{{ review.get_stage_display }}</td>
-            <td>{{ review.date_start|date:"j M Y" }}</td>
-            <td>{{ review.date_should_end|date:"j M Y" }}</td>
+            <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_start|date:"j M Y" }}</td>
+            <td data-order="{{ review.date_should_end|date:'c' }}">{{ review.date_should_end|date:"j M Y" }}</td>
             <td>
                 <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
                 {% if review.stage != review.SUPERVISOR %}

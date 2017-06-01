@@ -60,7 +60,7 @@
             <td>{{ proposal.reference_number }}</td>
             <td>{{ proposal.title }}</td>
             <td>{{ proposal.type }}</td>
-            <td>{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
+            <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
                 {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
                 {% if user in proposal.applicants.all %}
