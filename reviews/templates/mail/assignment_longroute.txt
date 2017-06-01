@@ -5,5 +5,5 @@ Beste {{ reviewer }},
 
 Er is een nieuwe studie ter toetsing aangeboden.
 Deze studie zal op de eerstvolgende ETCL vergadering besproken worden.
-Na inloggen op/bij de portal kunt u onder "besluiten" de aanmelding inzien.
+Na inloggen op/bij de portal kunt u onder "Commissie => Mijn openstaande besluiten" de aanmelding inzien.
 {% endblock %}

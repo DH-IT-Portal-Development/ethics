@@ -8,7 +8,7 @@ Dit betekent dat de studie binnen uiterlijk twee werkweken ({{ review_date|date:
 
 Op basis van inhoudelijke overwegingen en/of goede spreiding van aanvragen over commissieleden is de keuze daarbij op jou gevallen.
 Kan jij binnen uiterlijk bovengenoemde termijn in de portal aangeven of je vindt dat deze studie goedgekeurd kan worden of een langer beoordelingstraject moet in gaan?
-Na inloggen in de portal kan je de aanmelding onder "(te nemen/genomen) besluiten" inzien.
+Na inloggen in de portal kan je de aanmelding onder "Commissie => Mijn openstaande besluiten" inzien.
 
 Mocht je door omstandigheden niet in staat zijn de studie binnen deze tijd te beoordelen, laat me dat dan per omgaande weten.
 Alvast dank.
