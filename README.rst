@@ -58,6 +58,7 @@ Language
 The main language of this web application is Dutch, as it's aimed towards the mostly avid Dutch-speaking researchers of Utrecht University.
 However, since October 2016, there is a full English translation available, compiled by `Anna Asbury`_.
 Translations in other languages are welcome, of course.
+Translations can be easily created using `python manage.py makemessages` and edited using e.g. `Poedit`_.
 
 Tooling
 -------
@@ -66,10 +67,13 @@ The project uses a few tools to simplify the development workflow:
 
 - `pip-tools`_ for computing requirements, see `requirements.in`.
 - `Travis CI`_ for automatically building and running of tests, see `.travis.yml`.
+- `coverage.py`_ for test coverage reports, install coverage.py and then run `coverage run --source='.' manage.py test` and `coverage html` to generate the coverage report.
 
 .. _Django: https://www.djangoproject.com/
 .. _Ethical Committee Linguistics: https://etcl.wp.hum.uu.nl
 .. _Utrecht University: https://www.uu.nl
 .. _Anna Asbury: http://www.annaasbury.com/
+.. _Poedit: https://poedit.net/
 .. _pip-tools: https://github.com/jazzband/pip-tools
 .. _Travis CI: https://travis-ci.org/
+.. _coverage.py: http://coverage.readthedocs.io/
