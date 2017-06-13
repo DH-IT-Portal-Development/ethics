@@ -98,7 +98,7 @@ class MyPracticeView(ProposalsView):
     body = _('Dit overzicht toont alle oefenstudies waar u als student, \
 onderzoeker of eindverantwoordelijke bij betrokken bent.')
     is_modifiable = True
-    is_submitted = True
+    is_submitted = False
 
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
