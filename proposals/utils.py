@@ -99,9 +99,16 @@ def generate_pdf(proposal, template):
     :param proposal: the current Proposal
     :param template: the template for the PDF
     """
+    # Change language to English for this PDF, but save the current language to reset it later
+    current_language = get_language()
+    activate('en')
+
     context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL}
     pdf = ContentFile(render_to_pdf(template, context))
     proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
+
+    # Reset the current language
+    activate(current_language)
 
 
 def end_pre_assessment(proposal):
@@ -179,7 +186,7 @@ def notify_local_staff(proposal):
     """
     # Change language to Dutch for this e-mail, but save the current language to reset it later
     current_language = get_language()
-    activate('nl-NL')
+    activate('nl')
 
     secretary = get_secretary()
 
