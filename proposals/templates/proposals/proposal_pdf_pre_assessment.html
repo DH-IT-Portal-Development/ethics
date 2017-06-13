@@ -38,18 +38,24 @@
 
 {% block page_header %}
 <div id="page-header">
-ETCL - Aanvraag voor voortoetsing <em>{{ proposal.title }}</em> (referentienummer {{ proposal.reference_number }}, ingediend door {{ proposal.created_by.get_full_name }})
+    {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name %}
+    ETCL - Aanvraag voor voortoetsing <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
+    {% endblocktrans %}
 </div>
 {% endblock %}
 
 {% block page_foot %}
-Pagina <pdf:pagenumber /> van <pdf:pagecount />
+Page <pdf:pagenumber /> of <pdf:pagecount />
 {% endblock %}
 
 {% block content %}
 <div id="content">
     <div class="main">
-        <h1>Referentienummer {{ proposal.reference_number }}</h1>
+        <h1>
+            {% blocktrans with reference_number=proposal.reference_number %}
+            Referentienummer {{ reference_number }}
+            {% endblocktrans %}
+        </h1>
         <h2>{% trans "Algemene informatie over de studie" %}</h2>
         <table>
             <tr>

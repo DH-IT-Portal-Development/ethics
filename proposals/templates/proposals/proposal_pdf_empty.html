@@ -38,18 +38,24 @@
 
 {% block page_header %}
 <div id="page-header">
-ETCL - <em>naam aanvraag</em> (referentienummer <em>referentienummer</em>)
+    {% blocktrans %}
+    ETCL - <em>naam aanvraag</em> (referentienummer <em>referentienummer</em>)
+    {% endblocktrans %}
 </div>
 {% endblock %}
 
 {% block page_foot %}
-Pagina <pdf:pagenumber /> van <pdf:pagecount />
+Page <pdf:pagenumber /> of <pdf:pagecount />
 {% endblock %}
 
 {% block content %}
 <div id="content">
     <div class="main">
-        <h1>Referentienummer <em>referentienummer</em></h1>
+        <h1>
+            {% blocktrans %}
+            Referentienummer <em>referentienummer</em>
+            {% endblocktrans %}
+        </h1>
         <h2>{% trans "Algemene informatie over de studie" %}</h2>
         <table>
             <tr>
