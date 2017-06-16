@@ -78,7 +78,7 @@ class StudyForm(ConditionalModelForm):
         legally_incapable = bool(cleaned_data['legally_incapable'])
         if check_necessity_required(self.proposal, age_groups, has_traits, legally_incapable):
             if not cleaned_data['necessity_reason']:
-                error = forms.ValidationError(_('Dit veld is verplicht'), code='required')
+                error = forms.ValidationError(_('Dit veld is verplicht.'), code='required')
                 self.add_error('necessity_reason', error)
 
 

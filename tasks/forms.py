@@ -69,7 +69,7 @@ class TaskStartForm(ConditionalModelForm):
 
         self.check_dependency(cleaned_data, 'is_copy', 'parent_session')
         if not cleaned_data.get('is_copy') and not cleaned_data.get('tasks_number'):
-            self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht'), code='required'))
+            self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht.'), code='required'))
 
 
 class TaskForm(ConditionalModelForm):
