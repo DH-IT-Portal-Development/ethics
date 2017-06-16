@@ -34,11 +34,14 @@ class TaskStartForm(ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         """
+        - Set the Study for later reference
         - The field tasks_number is not required by default (only if is_copy is set to False)
         - Only allow to choose earlier Sessions
         - Remove option to copy altogether from first Session
         - Don't ask the supervision question when there are only adult AgeGroups in this Study
         """
+        self.study = kwargs.pop('study', None)
+
         super(TaskStartForm, self).__init__(*args, **kwargs)
         self.fields['tasks_number'].required = False
         self.fields['parent_session'].queryset = Session.objects.filter(study=self.instance.study.pk,

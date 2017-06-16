@@ -54,6 +54,12 @@ class TaskStart(AllowErrorsMixin, UpdateView):
     template_name = 'tasks/task_start.html'
     success_message = _('%(tasks_number)s ta(a)k(en) aangemaakt')
 
+    def get_form_kwargs(self):
+        """Sets the Study as a form kwarg"""
+        kwargs = super(TaskStart, self).get_form_kwargs()
+        kwargs['study'] = self.object.study
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super(TaskStart, self).get_context_data(**kwargs)
         context['progress'] = get_session_progress(self.object)
