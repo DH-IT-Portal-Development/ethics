@@ -81,7 +81,6 @@ def start_assignment_phase(proposal):
     - Send an e-mail to the creator and supervisor
     - Send an e-mail to the local staff
     """
-    secretary = get_secretary()
     reasons = auto_review(proposal)
     short_route = len(reasons) == 0
 
@@ -96,15 +95,10 @@ def start_assignment_phase(proposal):
     proposal.status = proposal.SUBMITTED
     proposal.save()
 
+    secretary = get_secretary()
     Decision.objects.create(review=review, reviewer=secretary)
 
-    subject = _('ETCL: nieuwe studie ingediend')
-    params = {
-        'secretary': secretary.get_full_name(),
-        'review': review,
-    }
-    msg_plain = render_to_string('mail/submitted.txt', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
+    notify_secretary_assignment(review)
 
     subject = _('ETCL: aanmelding ontvangen')
     params = {
@@ -129,7 +123,9 @@ def start_assignment_phase(proposal):
 
 
 def start_review_route(review, commission_users, use_short_route):
-    """Creates Decisions and sends notification e-mail to the selected Reviewers"""
+    """
+    Creates Decisions and sends notification e-mail to the selected Reviewers
+    """
     for user in commission_users:
         Decision.objects.create(review=review, reviewer=user)
 
@@ -144,15 +140,32 @@ def start_review_route(review, commission_users, use_short_route):
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
 
 
+def notify_secretary_assignment(review):
+    """
+    Notifies the secretary a Proposal is ready for assigment
+    """
+    secretary = get_secretary()
+    subject = _('ETCL: nieuwe studie ingediend')
+    params = {
+        'secretary': secretary.get_full_name(),
+        'review': review,
+    }
+    msg_plain = render_to_string('mail/submitted.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
+
+
 def notify_secretary(decision):
-    template = 'mail/decision_notify.txt'
+    """
+    Notifies a secretary a Decision has been made by one of the members in the Commission
+    """
+    secretary = get_secretary()
     subject = _('ETCL: nieuwe beoordeling toegevoegd')
     params = {
-        'secretary': get_secretary().get_full_name(),
+        'secretary': secretary.get_full_name(),
         'decision': decision,
     }
-    msg_plain = render_to_string(template, params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [get_secretary().email])
+    msg_plain = render_to_string('mail/decision_notify.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
 
 def auto_review(proposal):
