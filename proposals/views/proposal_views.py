@@ -17,7 +17,7 @@ from ..copy import copy_proposal
 from ..forms import ProposalForm, ProposalSubmitForm, ProposalConfirmationForm, \
     ProposalCopyForm, ProposalStartPracticeForm
 from ..models import Proposal
-from ..utils import generate_ref_number, generate_pdf, end_pre_assessment, notify_local_staff
+from ..utils import generate_ref_number, generate_pdf, end_pre_assessment
 
 
 ############
@@ -201,9 +201,6 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
             generate_pdf(proposal, 'proposals/proposal_pdf.html')
             if not proposal.is_practice():
                 start_review(proposal)
-
-                if proposal.inform_local_staff:
-                    notify_local_staff(proposal)
         return success_url
 
     def get_next_url(self):

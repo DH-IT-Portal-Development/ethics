@@ -10,6 +10,7 @@ from django.utils import timezone
 from core.models import YES, DOUBT
 from core.utils import get_secretary
 from tasks.models import Task
+from proposals.utils import notify_local_staff
 from .models import Review, Decision
 
 
@@ -78,6 +79,7 @@ def start_assignment_phase(proposal):
     - Create a Decision for all Users in the 'Secretaris' Group
     - Send an e-mail to these Users
     - Send an e-mail to the creator and supervisor
+    - Send an e-mail to the local staff
     """
     secretary = get_secretary()
     reasons = auto_review(proposal)
@@ -119,6 +121,9 @@ def start_assignment_phase(proposal):
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
+
+    if proposal.inform_local_staff:
+        notify_local_staff(proposal)
 
     return review
 
