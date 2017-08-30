@@ -55,7 +55,7 @@ class ProposalTestCase(BaseProposalTestCase):
 
         wmo = Wmo.objects.create(proposal=proposal, metc=YES)
         self.assertEqual(proposal.wmo.status, Wmo.WAITING)
-        wmo.metc = False
+        wmo.metc = NO
         wmo.save()
         self.assertEqual(proposal.wmo.status, Wmo.NO_WMO)
         #self.assertEqual(proposal.continue_url(), '/studies/create/1/')
