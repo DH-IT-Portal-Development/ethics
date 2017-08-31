@@ -136,7 +136,8 @@ EMAIL_LOCAL_STAFF = 'M.H.vanderKlis@uu.nl'
 GROUP_SECRETARY = 'Secretaris'
 GROUP_COMMISSION = 'Commissie'
 
-# Short route duration
+# Route durations
+PREASSESSMENT_ROUTE_WEEKS = 1
 SHORT_ROUTE_WEEKS = 2
 
 # Base URL

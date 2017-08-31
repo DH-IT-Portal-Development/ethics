@@ -80,6 +80,7 @@ def start_assignment_phase(proposal):
     - Send an e-mail to these Users
     - Send an e-mail to the creator and supervisor
     - Send an e-mail to the local staff
+    :param proposal: the current Proposal
     """
     reasons = auto_review(proposal)
     short_route = len(reasons) == 0
@@ -122,6 +123,47 @@ def start_assignment_phase(proposal):
     return review
 
 
+def start_review_pre_assessment(proposal):
+    """
+    Starts the preliminary assessment Review:
+    - Set the Review status to ASSIGNMENT
+    - Set date_submitted on Proposal to current date/time
+    - Create a Decision for all Users in the 'Secretaris' Group
+    - Send an e-mail to these Users
+    - Send an e-mail to the creator
+    :param proposal: the current Proposal
+    """
+    review = Review.objects.create(proposal=proposal, date_start=timezone.now())
+    review.stage = Review.ASSIGNMENT
+    review.short_route = True
+    review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.PREASSESSMENT_ROUTE_WEEKS)
+    review.save()
+
+    proposal.date_submitted = timezone.now()
+    proposal.status = proposal.SUBMITTED
+    proposal.save()
+
+    secretary = get_secretary()
+    Decision.objects.create(review=review, reviewer=secretary)
+
+    subject = _('ETCL: nieuwe aanvraag voor voortoetsing')
+    params = {
+        'secretary': secretary.get_full_name(),
+        'proposal': proposal,
+        'proposal_pdf': settings.BASE_URL + proposal.pdf.url,
+    }
+    msg_plain = render_to_string('mail/pre_assessment_secretary.txt', params)
+    msg_html = render_to_string('mail/pre_assessment_secretary.html', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email], html_message=msg_html)
+
+    subject = _('ETCL: bevestiging indienen aanvraag voor voortoetsing')
+    params = {
+        'secretary': secretary.get_full_name(),
+    }
+    msg_plain = render_to_string('mail/pre_assessment_creator.txt', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
+
+
 def start_review_route(review, commission_users, use_short_route):
     """
     Creates Decisions and sends notification e-mail to the selected Reviewers
@@ -135,6 +177,7 @@ def start_review_route(review, commission_users, use_short_route):
             'secretary': get_secretary().get_full_name(),
             'reviewer': user.get_full_name(),
             'review_date': review.date_should_end,
+            'is_pre_assessment': review.proposal.is_pre_assessment,
         }
         msg_plain = render_to_string(template, params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])

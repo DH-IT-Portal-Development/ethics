@@ -53,9 +53,9 @@ class ReviewCloseForm(forms.ModelForm):
         - Remove long route option if this was already the long route.
         - Set the label for in_archive
         """
-        short_route = kwargs.pop('short_route', False)
+        allow_long_route_continuation = kwargs.pop('allow_long_route_continuation', False)
         super(ReviewCloseForm, self).__init__(*args, **kwargs)
-        if not short_route:
+        if not allow_long_route_continuation:
             self.fields['continuation'].choices = [x for x in Review.CONTINUATIONS if x[0] != Review.LONG_ROUTE]
 
         self.fields['in_archive'].label = _('Voeg deze studie toe aan het UiL OTS archief')

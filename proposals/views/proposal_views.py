@@ -11,13 +11,13 @@ from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
 from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
 from core.utils import get_secretary
-from reviews.utils import start_review
+from reviews.utils import start_review, start_review_pre_assessment
 
 from ..copy import copy_proposal
 from ..forms import ProposalForm, ProposalSubmitForm, ProposalConfirmationForm, \
     ProposalCopyForm, ProposalStartPracticeForm
 from ..models import Proposal
-from ..utils import generate_ref_number, generate_pdf, end_pre_assessment
+from ..utils import generate_ref_number, generate_pdf
 
 
 ############
@@ -310,11 +310,11 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         - End the preassessment phase
         """
         # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
-        success_url = super(UpdateView, self).form_valid(form)
+        success_url = super(ProposalSubmit, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')
-            end_pre_assessment(proposal)
+            start_review_pre_assessment(proposal)
         return success_url
 
     def get_next_url(self):

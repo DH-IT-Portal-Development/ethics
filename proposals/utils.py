@@ -111,36 +111,6 @@ def generate_pdf(proposal, template):
     activate(current_language)
 
 
-def end_pre_assessment(proposal):
-    """
-    Ends the preliminary assessment by sending mails to the creator of the Proposal and the secretary,
-    and setting the Proposal status to submitted.
-    :param proposal: the current Proposal
-    """
-    secretary = get_secretary()
-
-    proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
-    proposal.save()
-
-    subject = _('ETCL: bevestiging indienen aanvraag voor voortoetsing')
-    params = {
-        'secretary': secretary.get_full_name(),
-    }
-    msg_plain = render_to_string('mail/pre_assessment_creator.txt', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
-
-    subject = _('ETCL: nieuwe aanvraag voor voortoetsing')
-    params = {
-        'secretary': secretary.get_full_name(),
-        'proposal': proposal,
-        'proposal_pdf': settings.BASE_URL + proposal.pdf.url,
-    }
-    msg_plain = render_to_string('mail/pre_assessment_secretary.txt', params)
-    msg_html = render_to_string('mail/pre_assessment_secretary.html', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email], html_message=msg_html)
-
-
 def check_local_facilities(proposal):
     """
     Checks whether local lab facilities are used in the given Proposal

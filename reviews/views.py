@@ -112,13 +112,28 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         return reverse('reviews:my_archive')
 
     def get_form_kwargs(self):
+        """
+        Adds allow_long_route_continuation to the form_kwargs.
+        The long route continuation is only allowed for short route Reviews
+        that are not of preliminary assessment Proposals.
+        """
+        review = self.get_object()
+
         kwargs = super(ReviewCloseView, self).get_form_kwargs()
-        kwargs['short_route'] = self.get_object().short_route
+        kwargs['allow_long_route_continuation'] = review.short_route and not review.proposal.is_pre_assessment
         return kwargs
 
     def get_initial(self):
+        """
+        Set initial values:
+        - continuation to GO if review was positive
+        - in_archive to True as long as we are not dealing with preliminary assessment
+        """
+        review = self.get_object()
+
         initial = super(ReviewCloseView, self).get_initial()
-        initial['continuation'] = Review.GO if self.get_object().go else Review.NO_GO
+        initial['continuation'] = Review.GO if review.go else Review.NO_GO
+        initial['in_archive'] = not review.proposal.is_pre_assessment
         return initial
 
     def form_valid(self, form):

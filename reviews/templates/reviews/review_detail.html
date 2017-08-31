@@ -44,23 +44,41 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
     </li>
     {% endif %}
     {% endif %}
+    {% if review.proposal.is_pre_assessment %}
+    <li>
+        <em>
+        {% blocktrans %}
+        Dit is een aanvraag voor voortoetsing.
+        {% endblocktrans %}
+        </em>
+    </li>
+    {% endif %}
 </ul>
 
 {% include "reviews/review_table.html" %}
 
+{% if not review.proposal.is_pre_assessment %}
 {% include "reviews/auto_review.html" %}
+{% endif %}
 
 <h2>{% trans "Formulieren bij aanmelding" %}</h2>
 
-{% if review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
 <ul>
+    {% if review.proposal.is_pre_assessment %}
+    <li>
+        <a href="{{ review.proposal.pre_assessment_pdf.url }}" target="_blank">
+            {% trans "Aanvraag bij voortoetsing" %}
+        </a>
+    </li>
+    {% endif %}
+    {% if review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
     <li>
         <a href="{{ review.proposal.wmo.metc_decision_pdf.url }}" target="_blank">
             {% trans "Beslissing METC" %}
         </a>
     </li>
+    {% endif %}
 </ul>
-{% endif %}
 
 {% for study in review.proposal.study_set.all %}
 {% include "studies/study_title.html" %}
