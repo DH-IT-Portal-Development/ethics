@@ -91,18 +91,6 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "pre_assessment_pdf" %}</th><td><a href="{{ BASE_URL }}{{ proposal.pre_assessment_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
             </tr>
-            <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>
-            </tr>
-            {% if proposal.funding.all|needs_details %}
-            <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td>{{ proposal.funding_details }}</td>
-            </tr>
-            {% endif %}
-            {% if proposal.funding.all|needs_details:"needs_name" %}
-            <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th><td>{{ proposal.funding_name }}</td>
-            </tr>
             {% endif %}
         </table>
 
