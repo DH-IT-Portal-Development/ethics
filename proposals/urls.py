@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 
 from .views.proposal_views import ProposalsView, MyConceptsView, MyPracticeView, \
-    MySubmittedView, MyCompletedView, MyProposalsView, \
+    MySubmittedView, MyCompletedView, MySupervisedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, \
     ProposalStart, ProposalSubmit, ProposalSubmitted, ProposalConfirmation, \
     ProposalCopy, ProposalCopyRevision, ProposalDifference, ProposalAsPdf, EmptyPDF, \
@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^my_practice/$', MyPracticeView.as_view(), name='my_practice'),
     url(r'^my_submitted/$', MySubmittedView.as_view(), name='my_submitted'),
     url(r'^my_completed/$', MyCompletedView.as_view(), name='my_completed'),
+    url(r'^my_supervised/$', MySupervisedView.as_view(), name='my_supervised'),
     url(r'^my_archive/$', MyProposalsView.as_view(), name='my_archive'),
 
     # Proposal

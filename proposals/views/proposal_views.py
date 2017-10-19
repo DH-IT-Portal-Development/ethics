@@ -82,6 +82,17 @@ class MyCompletedView(ProposalsView):
         return self.get_my_proposals().filter(status__gte=Proposal.DECISION_MADE)
 
 
+class MySupervisedView(ProposalsView):
+    title = _('Mijn studies als eindverantwoordelijke')
+    body = _('Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
+    is_modifiable = True
+    is_submitted = True
+
+    def get_queryset(self):
+        """Returns all Proposals supervised by the current User"""
+        return Proposal.objects.filter(supervisor=self.request.user)
+
+
 class MyProposalsView(ProposalsView):
     title = _('Mijn studies')
     body = _('Dit overzicht toont al uw studies.')

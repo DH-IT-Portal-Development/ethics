@@ -70,18 +70,21 @@
             <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             {% endif %}
             <td>
+                {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
+                <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                {% endif %}
                 {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
                 {% if user in proposal.applicants.all %}
                 <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}" title="{% trans 'Naar volgende stap' %}"></a>
                 {% endif %}
                 {% if proposal.is_revision %}
-                <a href="{% url 'proposals:diff' proposal.id %}"><img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}"></a>
+                <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}"></a>
                 {% endif %}
-                <a href="{% url 'proposals:delete' proposal.id %}"><img src="{{ img_delete }}" title="{% trans 'Verwijderen' %}"></a>
+                <a href="{% url 'proposals:delete' proposal.pk %}"><img src="{{ img_delete }}" title="{% trans 'Verwijderen' %}"></a>
                 {% elif proposal.pdf %}
                 <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
                 {% else %}
-                <a href="{% url 'proposals:pdf' proposal.id %}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
+                <a href="{% url 'proposals:pdf' proposal.pk %}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
                 {% endif %}
             </td>
         </tr>

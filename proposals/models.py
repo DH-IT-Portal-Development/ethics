@@ -285,6 +285,13 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
         return result
 
+    def supervisor_decision(self):
+        """Returns the Decision of the supervisor for this Proposal (if any and in current stage)"""
+        from reviews.models import Review, Decision
+
+        if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
+            return Decision.objects.get(review__proposal=self, review__stage=Review.SUPERVISOR)
+
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)
 
