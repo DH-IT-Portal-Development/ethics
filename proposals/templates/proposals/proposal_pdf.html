@@ -241,6 +241,11 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
             </tr>
+            {% if not intervention.supervision %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th><td>{{ intervention.leader_has_coc|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% endif %}
             {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th><td>{{ intervention.period }}</td>
@@ -289,6 +294,11 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{{ observation.supervision|yesno:_("ja,nee") }}</td>
             </tr>
+            {% if not observation.supervision %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</th><td>{{ observation.leader_has_coc|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% endif %}
             {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "days" %}</th><td>{{ observation.days }}</td>
@@ -359,6 +369,11 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th><td>{{ session.supervision|yesno:_("ja,nee") }}</td>
             </tr>
+            {% if not session.supervision %}
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "leader_has_coc" %}</th><td>{{ session.leader_has_coc|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% endif %}
             {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td>{{ session.tasks_number }}</td>

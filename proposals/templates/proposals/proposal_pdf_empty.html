@@ -194,6 +194,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th><td></td>
             </tr>
             <tr>
@@ -232,6 +235,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "days" %}</th><td></td>
@@ -286,6 +292,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th><td>{% show_yesno %}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "tasks" "session" "leader_has_coc" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td></td>

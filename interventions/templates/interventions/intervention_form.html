@@ -18,15 +18,13 @@
 {% block content %}
 <script>
 $(function() {
-    check_field_required('setting', 'needs_details', 'setting_details', 'core');
-    check_field_required('setting', 'needs_supervision', 'supervision', 'core');
-
     depends_on_value('has_controls', 'True', 'controls_description');
     
     add_title('setting', "{% trans 'Setting' %}");
     add_title('period', "{% trans 'Beschrijving van de interventie' %}");
 });
 </script>
+{% include "core/setting_checks.html" %}
 {% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>

@@ -24,12 +24,13 @@ class TaskStartForm(ConditionalModelForm):
     class Meta:
         model = Session
         fields = [
-            'setting', 'setting_details', 'supervision',
+            'setting', 'setting_details', 'supervision', 'leader_has_coc',
             'tasks_number',
         ]
         widgets = {
             'setting': forms.CheckboxSelectMultiple(),
             'supervision': forms.RadioSelect(choices=YES_NO),
+            'leader_has_coc': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -53,6 +54,7 @@ class TaskStartForm(ConditionalModelForm):
 
         if not self.study.has_children():
             del self.fields['supervision']
+            del self.fields['leader_has_coc']
 
     def clean(self):
         """
@@ -66,6 +68,7 @@ class TaskStartForm(ConditionalModelForm):
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
         if self.study.has_children():
             self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
+            self.check_dependency(cleaned_data, 'supervision', 'leader_has_coc', f1_value=False)
 
         self.check_dependency(cleaned_data, 'is_copy', 'parent_session')
         if not cleaned_data.get('is_copy') and not cleaned_data.get('tasks_number'):

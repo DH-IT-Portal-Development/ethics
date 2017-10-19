@@ -18,8 +18,6 @@
 {% block content %}
 <script>
 $(function() {
-    check_field_required('setting', 'needs_details', 'setting_details', 'core');
-    check_field_required('setting', 'needs_supervision', 'supervision', 'core');
     depends_on_value('is_nonpublic_space', 'True', 'has_advanced_consent');
     depends_on_value('needs_approval', 'True', 'approval_institution');
     depends_on_value('needs_approval', 'True', 'approval_document');
@@ -32,6 +30,7 @@ $(function() {
     add_title('registrations', "{% trans 'Registratie gedrag' %}");
 });
 </script>
+{% include "core/setting_checks.html" %}
 {% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
