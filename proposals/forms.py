@@ -274,6 +274,12 @@ class StudyStartForm(forms.ModelForm):
                     self.add_error(study_name, _('Dit veld is verplicht.'))
 
 
+class ProposalDataManagementForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = []
+
+
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal

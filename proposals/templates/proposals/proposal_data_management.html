@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Datamanagement" %}
+{% endblock %}
+
+{% block progress %}99{% endblock %}
+
+{% block sidebar %}
+{% include "base/sidebar.html" %}
+{% endblock %}
+
+{% block content %}
+<p>
+    {% blocktrans %}
+    Een zeer belangrijk ingrediënt van ethisch verantwoord onderzoek met deelnemers,
+    is dat er op adequate wijze met de verzamelde onderzoeks- en persoonsgegevens wordt omgegaan.
+    In het algemeen geldt dat onderzoekers zich wat betreft de opslag van data
+    en het beschikbaar maken van data voor andere onderzoekers gepast behoren te gedragen,
+    en zich dienen houden aan geldende wet- en regelgeving.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Wanneer je persoonsgegevens verzamelt moet je je aan de Wet bescherming persoonsgegevens (Wbp) houden.
+    Deze wet komt per 25 mei 2018 te vervallen. Vanaf dan geldt de AVG (Algemene Verordening Gegevensbescherming).
+    Deze verordening is in lijn met de Europese privacywetgeving.
+    {% endblocktrans %}
+    <br>
+    {% blocktrans %}
+    Voor meer informatie over hoe om te gaan met persoonsgegevens, zie
+    <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/europese-privacywetgeving/algemene-verordening-gegevensbescherming" target="_blank">Autoriteit Persoonsgegevens (AP)</a>.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Hoe er moet worden omgegaan met (onderzoeks)data volgens de richtlijnen van de VSNU kun je
+    <a href="http://www.vsnu.nl/code-pers-gegevens.html" target="_blank">hier</a> vinden.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans %}
+    Steeds vaker zullen subsidieverstrekkers eisen dat je een (zeer) gedetailleerd datamanagement plan (DMP) schrijft.
+    Ook vanuit de UU gaat dit de regel worden.
+    Een DMP houdt in dat je hebt nagedacht over wat voor soort type data je gaat verzamelen en over hoe gevoelig die data is.
+    De opslag van die data wordt medebepaald door de sensitiviteit van die data.
+    Het DMP gaat ook over hoe ziet de infrastructuur van mijn mappen/bestanden eruit;
+    hoe zorg ik ervoor dat ik alles makkelijk kan vinden
+    en dat ook anderen makkelijk hun weg erin kunnen vinden (denk aan hergebruik/ delen van data).
+    Meer informatie over wat een DMP precies inhoudt en hoe er een te schrijven vind je
+    <a href="https://www.uu.nl/en/research/research-data-management/what-we-do/data-management-plan" target="_blank">hier</a>.
+    {% endblocktrans %}
+    <br>
+    {% blocktrans %}
+    Voor meer informatie over de UU-richtlijnen en wetten voor onderzoeksdata, zie ook:
+    <a href="http://libguides.library.uu.nl/onderzoeksdata" target="_blank">http://libguides.library.uu.nl/onderzoeksdata</a>.
+    {% endblocktrans %}
+</p>
+
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    {% include "base/form_buttons.html" %}
+</form>
+{% endblock %}

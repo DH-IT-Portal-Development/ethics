@@ -65,9 +65,12 @@ def available_urls(proposal):
         if proposal.studies_number > 1:
             urls.append(AvailableURL(title='', is_title=True))
 
+        data_management_url = AvailableURL(title=_('Datamanagement'), margin=0)
         submit_url = AvailableURL(title=_('Concept-aanmelding klaar voor versturen'), margin=0)
         if proposal.last_study() and proposal.last_study().is_completed():
+            data_management_url.url = reverse('proposals:data_management', args=(proposal.pk, ))
             submit_url.url = reverse('proposals:submit', args=(proposal.pk,))
+        urls.append(data_management_url)
         urls.append(submit_url)
 
     return urls

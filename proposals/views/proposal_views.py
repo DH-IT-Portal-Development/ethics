@@ -14,8 +14,8 @@ from core.utils import get_secretary
 from reviews.utils import start_review, start_review_pre_assessment
 
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalSubmitForm, ProposalConfirmationForm, \
-    ProposalCopyForm, ProposalStartPracticeForm
+from ..forms import ProposalForm, ProposalDataManagementForm, ProposalSubmitForm, \
+    ProposalConfirmationForm, ProposalCopyForm, ProposalStartPracticeForm
 from ..models import Proposal
 from ..utils import generate_ref_number, generate_pdf
 
@@ -189,6 +189,20 @@ class ProposalStart(generic.TemplateView):
         return context
 
 
+class ProposalDataManagement(UpdateView):
+    model = Proposal
+    form_class = ProposalDataManagementForm
+    template_name = 'proposals/proposal_data_management.html'
+
+    def get_next_url(self):
+        """Continue to the submission view"""
+        return reverse('proposals:submit', args=(self.object.pk,))
+
+    def get_back_url(self):
+        """Return to the consent form overview of the last Study"""
+        return reverse('studies:consent', args=(self.object.last_study().pk,))
+
+
 class ProposalSubmit(AllowErrorsMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
@@ -219,8 +233,8 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         return reverse('proposals:submitted', args=(self.object.pk,))
 
     def get_back_url(self):
-        """Return to the consent form overview of the last Study"""
-        return reverse('studies:consent', args=(self.object.last_study().pk,))
+        """Return to the data management view"""
+        return reverse('proposals:data_management', args=(self.object.pk,))
 
 
 class ProposalSubmitted(generic.DetailView):

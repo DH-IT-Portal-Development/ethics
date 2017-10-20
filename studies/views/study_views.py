@@ -115,15 +115,20 @@ class StudyConsent(AllowErrorsMixin, UpdateView):
         return context
 
     def get_next_url(self):
+        """
+        If there is another Study in this Proposal, continue to that one.
+        Otherwise, go to the data management view.
+        """
         proposal = self.object.proposal
         if self.object.order < proposal.studies_number:
             next_order = self.object.order + 1
             next_study = Study.objects.get(proposal=proposal, order=next_order)
             return reverse('studies:update', args=(next_study.pk,))
         else:
-            return reverse('proposals:submit', args=(proposal.pk,))
+            return reverse('proposals:data_management', args=(proposal.pk,))
 
     def get_back_url(self):
+        """Return to the Study design view"""
         return reverse('studies:design_end', args=(self.object.pk,))
 
 
