@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-31 21:43+0200\n"
-"PO-Revision-Date: 2017-08-31 21:45+0200\n"
+"POT-Creation-Date: 2017-10-26 20:36+0200\n"
+"PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: .\core\forms.py:11 .\core\forms.py:20 .\core\forms.py:29 .\core\forms.py:38
 #: .\core\forms.py:48 .\proposals\forms.py:264 .\proposals\forms.py:274
-#: .\proposals\forms.py:315 .\studies\forms.py:81 .\tasks\forms.py:72
+#: .\proposals\forms.py:321 .\studies\forms.py:81 .\tasks\forms.py:75
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -36,8 +36,8 @@ msgid "twijfel"
 msgstr "uncertain"
 
 #: .\core\models.py:24
-#: .\interventions\templates\interventions\intervention_form.html:26
-#: .\observations\templates\observations\observation_form.html:28
+#: .\interventions\templates\interventions\intervention_form.html:23
+#: .\observations\templates\observations\observation_form.html:26
 #: .\studies\templates\studies\study_end.html:63
 #: .\studies\templates\studies\study_end.html:93
 msgid "Setting"
@@ -60,6 +60,28 @@ msgid ""
 msgstr ""
 "Will the task be conducted under the supervision of the teacher or another "
 "qualified person?"
+
+#: .\core\models.py:43
+msgid "Is de testleider in het bezit van een VOG?"
+msgstr ""
+"Does the test leader hold a Certificate of Conduct (Verklaring Omtrent "
+"Gedrag, VOG)?"
+
+#: .\core\models.py:44
+msgid ""
+"Iedereen die op een school werkt moet in het bezit         zijn van een "
+"Verklaring Omtrent Gedrag (VOG, zie         <a href=\"https://www.justis.nl/"
+"producten/vog/\"         target=\"_blank\">https://www.justis.nl/producten/"
+"vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te "
+"vragen.         De ETCL neemt hierin een adviserende rol en wil de "
+"onderzoekers         waarschuwen dat de school om een VOG kan vragen."
+msgstr ""
+"Anybody who works at a school needs to be able to show a Certificate of "
+"Conduct (VOG, see <a href=\"https://www.justis.nl/producten/vog/\" target="
+"\"_blank\">https://www.justis.nl/producten/vog/</a>). It is the "
+"responsibility of the school to verify if the employees have such a VOG. The "
+"role of the EtCL in this matter is just to inform the researchers that the "
+"school probably will ask about this certificate."
 
 #: .\core\templates\base\base.html:8 .\core\templates\base\base.html.py:40
 msgid "ETCL UiL OTS"
@@ -102,7 +124,7 @@ msgid "Startpagina"
 msgstr "Start page"
 
 #: .\core\templates\base\menu.html:11 .\core\templates\core\index.html:31
-#: .\proposals\views\proposal_views.py:86
+#: .\proposals\views\proposal_views.py:97
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -118,7 +140,7 @@ msgstr "Copy existing application"
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
-#: .\core\templates\base\menu.html:23 .\proposals\views\proposal_views.py:97
+#: .\core\templates\base\menu.html:23 .\proposals\views\proposal_views.py:108
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
@@ -140,7 +162,7 @@ msgstr "UiL OTS archive"
 
 #: .\core\templates\base\menu.html:40
 msgid "Alle UiL OTS-studies bekijken"
-msgstr "View all UiL OTS studies"
+msgstr "View all UiL OTS applications"
 
 #: .\core\templates\base\menu.html:46
 msgid "Commissie"
@@ -162,15 +184,15 @@ msgstr "All pending decisions"
 msgid "Help"
 msgstr "Help"
 
-#: .\core\templates\base\menu.html:66 .\core\templates\core\index.html:67
+#: .\core\templates\base\menu.html:66 .\core\templates\core\index.html:70
 msgid "ETCL website"
 msgstr "ETCL website"
 
-#: .\core\templates\base\menu.html:69 .\core\templates\core\index.html:70
+#: .\core\templates\base\menu.html:69 .\core\templates\core\index.html:73
 msgid "ETCL reglement"
 msgstr "ETCL regulations"
 
-#: .\core\templates\base\menu.html:72 .\core\templates\core\index.html:73
+#: .\core\templates\base\menu.html:72 .\core\templates\core\index.html:76
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
@@ -281,25 +303,29 @@ msgstr "View my submitted applications"
 
 #: .\core\templates\core\index.html:52
 msgid "Mijn afgehandelde studies bekijken"
-msgstr "View my processed studies"
+msgstr "View my processed applications"
 
 #: .\core\templates\core\index.html:55
+msgid "Mijn studies als eindverantwoordelijke bekijken"
+msgstr "View my supervised applications"
+
+#: .\core\templates\core\index.html:58
 msgid "Al mijn studies bekijken"
-msgstr "View all my studies"
+msgstr "View all my applications"
 
-#: .\core\templates\core\index.html:61
+#: .\core\templates\core\index.html:64
 msgid "Alle afgehandelde en goedgekeurde UiL OTS-studies bekijken"
-msgstr "View all processed and approved UiL OTS studies"
+msgstr "View all processed and approved UiL OTS applications"
 
-#: .\core\templates\core\index.html:76
+#: .\core\templates\core\index.html:79
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: .\core\templates\core\index.html:79
+#: .\core\templates\core\index.html:82
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: .\core\templates\core\index.html:85
+#: .\core\templates\core\index.html:88
 #, python-format
 msgid ""
 "\n"
@@ -312,7 +338,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: .\core\templates\core\index.html:90
+#: .\core\templates\core\index.html:93
 msgid ""
 "\n"
 "    Klik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren "
@@ -432,7 +458,7 @@ msgstr "You can leave feedback on the ETCL portal here."
 
 #: .\feedback\templates\feedback\feedback_form.html:20
 #: .\proposals\templates\proposals\proposal_confirmation.html:30
-#: .\proposals\templates\proposals\proposal_diff.html:717
+#: .\proposals\templates\proposals\proposal_diff.html:738
 #: .\reviews\templates\reviews\decision_form.html:35
 #: .\reviews\templates\reviews\review_assign_form.html:31
 #: .\reviews\templates\reviews\review_close_form.html:29
@@ -524,7 +550,7 @@ msgstr ""
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
-#: .\interventions\templates\interventions\intervention_form.html:27
+#: .\interventions\templates\interventions\intervention_form.html:24
 msgid "Beschrijving van de interventie"
 msgstr "Description of the intervention"
 
@@ -594,25 +620,25 @@ msgstr "How will the behaviour be recorded?"
 
 #: .\observations\templates\observations\observation_form.html:7
 #: .\observations\utils.py:8
-#: .\proposals\templates\proposals\proposal_diff.html:359
-#: .\proposals\templates\proposals\proposal_pdf.html:277
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:225
+#: .\proposals\templates\proposals\proposal_diff.html:366
+#: .\proposals\templates\proposals\proposal_pdf.html:282
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:228
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
-#: .\observations\templates\observations\observation_form.html:29
+#: .\observations\templates\observations\observation_form.html:27
 msgid "Details observatie"
 msgstr "Details of observation"
 
-#: .\observations\templates\observations\observation_form.html:30
+#: .\observations\templates\observations\observation_form.html:28
 msgid "Anonimiteit"
 msgstr "Anonymity"
 
-#: .\observations\templates\observations\observation_form.html:31
+#: .\observations\templates\observations\observation_form.html:29
 msgid "Toestemming"
 msgstr "Permission"
 
-#: .\observations\templates\observations\observation_form.html:32
+#: .\observations\templates\observations\observation_form.html:30
 msgid "Registratie gedrag"
 msgstr "Recording behaviour"
 
@@ -686,11 +712,11 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: .\proposals\forms.py:310
+#: .\proposals\forms.py:316
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: .\proposals\forms.py:312
+#: .\proposals\forms.py:318
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -893,7 +919,7 @@ msgstr "Application to be copied"
 
 #: .\proposals\models.py:207
 msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
-msgstr "This field shows only studies in which you are involved."
+msgstr "This field shows only applications in which you are involved."
 
 #: .\proposals\models.py:209
 msgid "Is deze studie een revisie van of amendement op een ingediende studie?"
@@ -920,19 +946,19 @@ msgstr "Preliminary assessment"
 msgid "Oefening"
 msgstr "Practice"
 
-#: .\proposals\models.py:297
+#: .\proposals\models.py:304
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: .\proposals\models.py:298
+#: .\proposals\models.py:305
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: .\proposals\models.py:299
+#: .\proposals\models.py:306
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: .\proposals\models.py:303
+#: .\proposals\models.py:310
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -940,16 +966,16 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: .\proposals\models.py:310 .\studies\models.py:129 .\studies\models.py:159
+#: .\proposals\models.py:317 .\studies\models.py:129 .\studies\models.py:159
 #: .\studies\models.py:295
 msgid "Licht toe"
 msgstr "Explain"
 
-#: .\proposals\models.py:313
+#: .\proposals\models.py:320
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: .\proposals\models.py:317
+#: .\proposals\models.py:324
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -957,7 +983,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: .\proposals\models.py:319
+#: .\proposals\models.py:326
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -978,7 +1004,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: .\proposals\models.py:332
+#: .\proposals\models.py:339
 msgid ""
 "Worden de deelnemers aan een handeling onderworpen of worden hen "
 "gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
@@ -986,7 +1012,7 @@ msgstr ""
 "Will the participants undergo treatment or will rules of conduct be imposed "
 "on them (as defined by the WMO)?"
 
-#: .\proposals\models.py:334
+#: .\proposals\models.py:341
 msgid ""
 "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
 "weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. "
@@ -1000,7 +1026,7 @@ msgstr ""
 "given to the participants, and they are observed exclusively in their lives "
 "as they would normally have acted without observation."
 
-#: .\proposals\models.py:344
+#: .\proposals\models.py:351
 msgid ""
 "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
 "ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
@@ -1009,15 +1035,15 @@ msgstr ""
 "with the ETCL. Has an application for this study already been submitted to a "
 "METC?"
 
-#: .\proposals\models.py:349
+#: .\proposals\models.py:356
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: .\proposals\models.py:352
+#: .\proposals\models.py:359
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: .\proposals\models.py:379
+#: .\proposals\models.py:386
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -1038,7 +1064,7 @@ msgstr ""
 "    "
 
 #: .\proposals\templates\proposals\proposal_confirm_delete.html:18
-#: .\proposals\templates\proposals\proposal_list.html:80
+#: .\proposals\templates\proposals\proposal_list.html:83
 #: .\tasks\templates\tasks\session_confirm_delete.html:14
 #: .\tasks\templates\tasks\task_confirm_delete.html:14
 msgid "Verwijderen"
@@ -1088,6 +1114,137 @@ msgstr "You can copy a study here. All fields can be edited after copying."
 msgid "Kopiëren"
 msgstr "Copy"
 
+#: .\proposals\templates\proposals\proposal_data_management.html:7
+#: .\proposals\utils.py:68
+msgid "Datamanagement"
+msgstr "Data management"
+
+#: .\proposals\templates\proposals\proposal_data_management.html:18
+msgid ""
+"\n"
+"    Een zeer belangrijk ingrediënt van ethisch verantwoord onderzoek met "
+"deelnemers,\n"
+"    is dat er op adequate wijze met de verzamelde onderzoeks- en "
+"persoonsgegevens wordt omgegaan.\n"
+"    In het algemeen geldt dat onderzoekers zich wat betreft de opslag van "
+"data\n"
+"    en het beschikbaar maken van data voor andere onderzoekers gepast "
+"behoren te gedragen,\n"
+"    en zich dienen houden aan geldende wet- en regelgeving.\n"
+"    "
+msgstr ""
+"\n"
+"    A very important ingredient of ethically responsible research involving "
+"participants\n"
+"    is that the research data and personal data collected are handled "
+"properly.\n"
+"    As a general principle researchers should behave appropriately in "
+"storing data\n"
+"    and making it available for other researchers, and should observe the "
+"applicable laws.\n"
+"    "
+
+#: .\proposals\templates\proposals\proposal_data_management.html:27
+msgid ""
+"\n"
+"    Wanneer je persoonsgegevens verzamelt moet je je aan de Wet bescherming "
+"persoonsgegevens (Wbp) houden.\n"
+"    Deze wet komt per 25 mei 2018 te vervallen. Vanaf dan geldt de AVG "
+"(Algemene Verordening Gegevensbescherming).\n"
+"    Deze verordening is in lijn met de Europese privacywetgeving.\n"
+"    "
+msgstr ""
+"\n"
+"    If you collect personal, identifiable data, you need to take Dutch law "
+"into account: \n"
+"    the Dutch Personal Data Protection Act - Wet bescherming "
+"persoonsgegevens (Wbp).\n"
+"    From 25th May this act is replaced by a regulatory instrument which is "
+"in line with the EU General Data Protection Regulation.\n"
+"    "
+
+#: .\proposals\templates\proposals\proposal_data_management.html:33
+msgid ""
+"\n"
+"    Voor meer informatie over hoe om te gaan met persoonsgegevens, zie\n"
+"    <a href=\"https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/"
+"europese-privacywetgeving/algemene-verordening-gegevensbescherming\" target="
+"\"_blank\">Autoriteit Persoonsgegevens (AP)</a>.\n"
+"    "
+msgstr ""
+"\n"
+"    For more information see <a href=\"https://www."
+"autoriteitpersoonsgegevens.nl/en\" target=\"_blank\">this website</a>.\n"
+"    The Dutch version of <a href=\"https://www.autoriteitpersoonsgegevens.nl/"
+"nl/onderwerpen/europese-privacywetgeving\" target=\"_blank\">the website</a> "
+"gives more comprehensive information. \n"
+"    "
+
+#: .\proposals\templates\proposals\proposal_data_management.html:39
+msgid ""
+"\n"
+"    Hoe er moet worden omgegaan met (onderzoeks)data volgens de richtlijnen "
+"van de VSNU kun je\n"
+"    <a href=\"http://www.vsnu.nl/code-pers-gegevens.html\" target=\"_blank"
+"\">hier</a> vinden.\n"
+"    "
+msgstr ""
+"\n"
+"    Other sources of how to deal with (personal) data can be found\n"
+"    <a href=\"http://www.vsnu.nl/code-pers-gegevens.html\" target=\"_blank"
+"\">here</a>.\n"
+"    "
+
+#: .\proposals\templates\proposals\proposal_data_management.html:45
+msgid ""
+"\n"
+"    Steeds vaker zullen subsidieverstrekkers eisen dat je een (zeer) "
+"gedetailleerd datamanagement plan (DMP) schrijft.\n"
+"    Ook vanuit de UU gaat dit de regel worden.\n"
+"    Een DMP houdt in dat je hebt nagedacht over wat voor soort type data je "
+"gaat verzamelen en over hoe gevoelig die data is.\n"
+"    De opslag van die data wordt medebepaald door de sensitiviteit van die "
+"data.\n"
+"    Het DMP gaat ook over hoe ziet de infrastructuur van mijn mappen/"
+"bestanden eruit;\n"
+"    hoe zorg ik ervoor dat ik alles makkelijk kan vinden\n"
+"    en dat ook anderen makkelijk hun weg erin kunnen vinden (denk aan "
+"hergebruik/ delen van data).\n"
+"    Meer informatie over wat een DMP precies inhoudt en hoe er een te "
+"schrijven vind je\n"
+"    <a href=\"https://www.uu.nl/en/research/research-data-management/what-we-"
+"do/data-management-plan\" target=\"_blank\">hier</a>.\n"
+"    "
+msgstr ""
+"\n"
+"    The UU and most funding agencies require that researchers create a Data "
+"Management Plan (DMP).\n"
+"    A DMP outlines all key aspects of collecting, storing and managing "
+"research data during and after a project.\n"
+"    If done properly it will help the researcher during the research process "
+"as well as with data sharing during the project and with data reuse after "
+"the research project has ended.\n"
+"    More information can be found \n"
+"    <a href=\"https://www.uu.nl/en/research/research-data-management/what-we-"
+"do/data-management-plan\" target=\"_blank\">hier</a>.\n"
+"    "
+
+#: .\proposals\templates\proposals\proposal_data_management.html:57
+msgid ""
+"\n"
+"    Voor meer informatie over de UU-richtlijnen en wetten voor "
+"onderzoeksdata, zie ook:\n"
+"    <a href=\"http://libguides.library.uu.nl/onderzoeksdata\" target=\"_blank"
+"\">http://libguides.library.uu.nl/onderzoeksdata</a>.\n"
+"    "
+msgstr ""
+"\n"
+"    For more information about UU guidelines and laws about research data, "
+"see also:\n"
+"    <a href=\"http://libguides.library.uu.nl/onderzoeksdata\" target=\"_blank"
+"\">http://libguides.library.uu.nl/onderzoeksdata</a>.\n"
+"    "
+
 #: .\proposals\templates\proposals\proposal_diff.html:7
 msgid "Overzicht van wijzigingen"
 msgstr "Summary of changes"
@@ -1115,14 +1272,14 @@ msgstr "General information about the study"
 #: .\proposals\templates\proposals\proposal_diff.html:169
 #: .\proposals\templates\proposals\proposal_diff.html:194
 #: .\proposals\templates\proposals\proposal_diff.html:281
-#: .\proposals\templates\proposals\proposal_diff.html:366
-#: .\proposals\templates\proposals\proposal_diff.html:469
-#: .\proposals\templates\proposals\proposal_diff.html:485
-#: .\proposals\templates\proposals\proposal_diff.html:519
-#: .\proposals\templates\proposals\proposal_diff.html:583
-#: .\proposals\templates\proposals\proposal_diff.html:610
-#: .\proposals\templates\proposals\proposal_diff.html:670
-#: .\proposals\templates\proposals\proposal_diff.html:703
+#: .\proposals\templates\proposals\proposal_diff.html:373
+#: .\proposals\templates\proposals\proposal_diff.html:483
+#: .\proposals\templates\proposals\proposal_diff.html:499
+#: .\proposals\templates\proposals\proposal_diff.html:540
+#: .\proposals\templates\proposals\proposal_diff.html:604
+#: .\proposals\templates\proposals\proposal_diff.html:631
+#: .\proposals\templates\proposals\proposal_diff.html:691
+#: .\proposals\templates\proposals\proposal_diff.html:724
 msgid "Originele studie"
 msgstr "Original study"
 
@@ -1132,14 +1289,14 @@ msgstr "Original study"
 #: .\proposals\templates\proposals\proposal_diff.html:170
 #: .\proposals\templates\proposals\proposal_diff.html:195
 #: .\proposals\templates\proposals\proposal_diff.html:282
-#: .\proposals\templates\proposals\proposal_diff.html:367
-#: .\proposals\templates\proposals\proposal_diff.html:470
-#: .\proposals\templates\proposals\proposal_diff.html:486
-#: .\proposals\templates\proposals\proposal_diff.html:520
-#: .\proposals\templates\proposals\proposal_diff.html:584
-#: .\proposals\templates\proposals\proposal_diff.html:611
-#: .\proposals\templates\proposals\proposal_diff.html:671
-#: .\proposals\templates\proposals\proposal_diff.html:704
+#: .\proposals\templates\proposals\proposal_diff.html:374
+#: .\proposals\templates\proposals\proposal_diff.html:484
+#: .\proposals\templates\proposals\proposal_diff.html:500
+#: .\proposals\templates\proposals\proposal_diff.html:541
+#: .\proposals\templates\proposals\proposal_diff.html:605
+#: .\proposals\templates\proposals\proposal_diff.html:632
+#: .\proposals\templates\proposals\proposal_diff.html:692
+#: .\proposals\templates\proposals\proposal_diff.html:725
 msgid "Revisie/amendement"
 msgstr "Revision/amendment"
 
@@ -1157,28 +1314,24 @@ msgstr "Revision/amendment"
 #: .\proposals\templates\proposals\proposal_diff.html:206
 #: .\proposals\templates\proposals\proposal_diff.html:218
 #: .\proposals\templates\proposals\proposal_diff.html:219
-#: .\proposals\templates\proposals\proposal_diff.html:299
-#: .\proposals\templates\proposals\proposal_diff.html:300
-#: .\proposals\templates\proposals\proposal_diff.html:335
-#: .\proposals\templates\proposals\proposal_diff.html:336
-#: .\proposals\templates\proposals\proposal_diff.html:384
-#: .\proposals\templates\proposals\proposal_diff.html:385
-#: .\proposals\templates\proposals\proposal_diff.html:400
-#: .\proposals\templates\proposals\proposal_diff.html:401
-#: .\proposals\templates\proposals\proposal_diff.html:405
-#: .\proposals\templates\proposals\proposal_diff.html:406
-#: .\proposals\templates\proposals\proposal_diff.html:410
-#: .\proposals\templates\proposals\proposal_diff.html:411
-#: .\proposals\templates\proposals\proposal_diff.html:416
-#: .\proposals\templates\proposals\proposal_diff.html:417
-#: .\proposals\templates\proposals\proposal_diff.html:422
-#: .\proposals\templates\proposals\proposal_diff.html:423
-#: .\proposals\templates\proposals\proposal_diff.html:503
-#: .\proposals\templates\proposals\proposal_diff.html:504
-#: .\proposals\templates\proposals\proposal_diff.html:565
-#: .\proposals\templates\proposals\proposal_diff.html:566
-#: .\proposals\templates\proposals\proposal_diff.html:685
-#: .\proposals\templates\proposals\proposal_diff.html:686
+#: .\proposals\templates\proposals\proposal_diff.html:342
+#: .\proposals\templates\proposals\proposal_diff.html:343
+#: .\proposals\templates\proposals\proposal_diff.html:391
+#: .\proposals\templates\proposals\proposal_diff.html:392
+#: .\proposals\templates\proposals\proposal_diff.html:414
+#: .\proposals\templates\proposals\proposal_diff.html:415
+#: .\proposals\templates\proposals\proposal_diff.html:419
+#: .\proposals\templates\proposals\proposal_diff.html:420
+#: .\proposals\templates\proposals\proposal_diff.html:424
+#: .\proposals\templates\proposals\proposal_diff.html:425
+#: .\proposals\templates\proposals\proposal_diff.html:430
+#: .\proposals\templates\proposals\proposal_diff.html:431
+#: .\proposals\templates\proposals\proposal_diff.html:436
+#: .\proposals\templates\proposals\proposal_diff.html:437
+#: .\proposals\templates\proposals\proposal_diff.html:586
+#: .\proposals\templates\proposals\proposal_diff.html:587
+#: .\proposals\templates\proposals\proposal_diff.html:706
+#: .\proposals\templates\proposals\proposal_diff.html:707
 #: .\proposals\templates\proposals\proposal_pdf.html:78
 #: .\proposals\templates\proposals\proposal_pdf.html:86
 #: .\proposals\templates\proposals\proposal_pdf.html:144
@@ -1187,16 +1340,19 @@ msgstr "Revision/amendment"
 #: .\proposals\templates\proposals\proposal_pdf.html:180
 #: .\proposals\templates\proposals\proposal_pdf.html:189
 #: .\proposals\templates\proposals\proposal_pdf.html:242
-#: .\proposals\templates\proposals\proposal_pdf.html:264
-#: .\proposals\templates\proposals\proposal_pdf.html:290
-#: .\proposals\templates\proposals\proposal_pdf.html:300
-#: .\proposals\templates\proposals\proposal_pdf.html:303
-#: .\proposals\templates\proposals\proposal_pdf.html:306
+#: .\proposals\templates\proposals\proposal_pdf.html:246
+#: .\proposals\templates\proposals\proposal_pdf.html:269
+#: .\proposals\templates\proposals\proposal_pdf.html:295
+#: .\proposals\templates\proposals\proposal_pdf.html:299
 #: .\proposals\templates\proposals\proposal_pdf.html:310
-#: .\proposals\templates\proposals\proposal_pdf.html:314
-#: .\proposals\templates\proposals\proposal_pdf.html:360
-#: .\proposals\templates\proposals\proposal_pdf.html:398
-#: .\proposals\templates\proposals\proposal_pdf.html:469
+#: .\proposals\templates\proposals\proposal_pdf.html:313
+#: .\proposals\templates\proposals\proposal_pdf.html:316
+#: .\proposals\templates\proposals\proposal_pdf.html:320
+#: .\proposals\templates\proposals\proposal_pdf.html:324
+#: .\proposals\templates\proposals\proposal_pdf.html:370
+#: .\proposals\templates\proposals\proposal_pdf.html:374
+#: .\proposals\templates\proposals\proposal_pdf.html:413
+#: .\proposals\templates\proposals\proposal_pdf.html:484
 #: .\proposals\templates\proposals\proposal_pdf_pre_assessment.html:70
 #: .\proposals\templates\proposals\proposal_pdf_pre_assessment.html:78
 #: .\tasks\templates\tasks\task_list.html:21
@@ -1229,16 +1385,16 @@ msgstr "Registration with the METC"
 
 #: .\proposals\templates\proposals\proposal_diff.html:154
 #: .\proposals\templates\proposals\proposal_diff.html:157
-#: .\proposals\templates\proposals\proposal_diff.html:433
-#: .\proposals\templates\proposals\proposal_diff.html:434
-#: .\proposals\templates\proposals\proposal_diff.html:675
-#: .\proposals\templates\proposals\proposal_diff.html:676
-#: .\proposals\templates\proposals\proposal_diff.html:680
-#: .\proposals\templates\proposals\proposal_diff.html:681
+#: .\proposals\templates\proposals\proposal_diff.html:447
+#: .\proposals\templates\proposals\proposal_diff.html:448
+#: .\proposals\templates\proposals\proposal_diff.html:696
+#: .\proposals\templates\proposals\proposal_diff.html:697
+#: .\proposals\templates\proposals\proposal_diff.html:701
+#: .\proposals\templates\proposals\proposal_diff.html:702
 #: .\proposals\templates\proposals\proposal_pdf.html:151
-#: .\proposals\templates\proposals\proposal_pdf.html:322
-#: .\proposals\templates\proposals\proposal_pdf.html:462
-#: .\proposals\templates\proposals\proposal_pdf.html:465
+#: .\proposals\templates\proposals\proposal_pdf.html:332
+#: .\proposals\templates\proposals\proposal_pdf.html:477
+#: .\proposals\templates\proposals\proposal_pdf.html:480
 #: .\proposals\templates\proposals\proposal_pdf_pre_assessment.html:92
 msgid "Download"
 msgstr "Download"
@@ -1257,7 +1413,20 @@ msgstr "One or more trajectories?"
 msgid "De deelnemers"
 msgstr "Participants"
 
-#: .\proposals\templates\proposals\proposal_diff.html:349
+#: .\proposals\templates\proposals\proposal_diff.html:299
+#: .\proposals\templates\proposals\proposal_diff.html:300
+#: .\proposals\templates\proposals\proposal_diff.html:305
+#: .\proposals\templates\proposals\proposal_diff.html:306
+#: .\proposals\templates\proposals\proposal_diff.html:397
+#: .\proposals\templates\proposals\proposal_diff.html:398
+#: .\proposals\templates\proposals\proposal_diff.html:517
+#: .\proposals\templates\proposals\proposal_diff.html:518
+#: .\proposals\templates\proposals\proposal_diff.html:523
+#: .\proposals\templates\proposals\proposal_diff.html:524
+msgid "ja,nee,"
+msgstr "yes,no,"
+
+#: .\proposals\templates\proposals\proposal_diff.html:356
 msgid ""
 "De revisie bevat interventieonderzoek, terwijl de originele studie dat niet "
 "bevat."
@@ -1265,7 +1434,7 @@ msgstr ""
 "This revision involves intervention research, whereas the original study "
 "does not."
 
-#: .\proposals\templates\proposals\proposal_diff.html:353
+#: .\proposals\templates\proposals\proposal_diff.html:360
 msgid ""
 "De revisie bevat geen interventieonderzoek, terwijl de originele studie dat "
 "wel bevat."
@@ -1273,7 +1442,7 @@ msgstr ""
 "This revision does not involve intervention research, whereas the original "
 "study does include this."
 
-#: .\proposals\templates\proposals\proposal_diff.html:453
+#: .\proposals\templates\proposals\proposal_diff.html:467
 msgid ""
 "De revisie bevat observatieonderzoek, terwijl de originele studie dat niet "
 "bevat."
@@ -1281,7 +1450,7 @@ msgstr ""
 "This revision involves observation research, whereas the original study does "
 "not."
 
-#: .\proposals\templates\proposals\proposal_diff.html:457
+#: .\proposals\templates\proposals\proposal_diff.html:471
 msgid ""
 "De revisie bevat geen observatieonderzoek, terwijl de originele studie dat "
 "wel bevat."
@@ -1289,29 +1458,29 @@ msgstr ""
 "This revision does not involve intervention research, whereas the original "
 "study does involve this."
 
-#: .\proposals\templates\proposals\proposal_diff.html:463
-#: .\proposals\templates\proposals\proposal_pdf.html:339
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:272
+#: .\proposals\templates\proposals\proposal_diff.html:477
+#: .\proposals\templates\proposals\proposal_pdf.html:349
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:278
 #: .\studies\templates\studies\session_start.html:7
 #: .\tasks\templates\tasks\task_form.html:7
 #: .\tasks\templates\tasks\task_start.html:7 .\tasks\utils.py:33
 msgid "Het takenonderzoek"
 msgstr "Task-based research"
 
-#: .\proposals\templates\proposals\proposal_diff.html:579
-#: .\proposals\templates\proposals\proposal_pdf.html:408
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:325
+#: .\proposals\templates\proposals\proposal_diff.html:600
+#: .\proposals\templates\proposals\proposal_pdf.html:423
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:334
 #: .\tasks\templates\tasks\task_end.html:7
 msgid "Overzicht van het takenonderzoek"
 msgstr "Overview of task-based research"
 
-#: .\proposals\templates\proposals\proposal_diff.html:596
+#: .\proposals\templates\proposals\proposal_diff.html:617
 msgid ""
 "De revisie bevat takenonderzoek, terwijl de originele studie dat niet bevat."
 msgstr ""
 "This revision involves tasks research, whereas the original study does not."
 
-#: .\proposals\templates\proposals\proposal_diff.html:600
+#: .\proposals\templates\proposals\proposal_diff.html:621
 msgid ""
 "De revisie bevat geen takenonderzoek, terwijl de originele studie dat wel "
 "bevat."
@@ -1319,21 +1488,21 @@ msgstr ""
 "This revision does not involve tasks research, whereas the original study "
 "does involve this."
 
-#: .\proposals\templates\proposals\proposal_diff.html:605
-#: .\proposals\templates\proposals\proposal_pdf.html:418
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:333
+#: .\proposals\templates\proposals\proposal_diff.html:626
+#: .\proposals\templates\proposals\proposal_pdf.html:433
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:342
 #: .\studies\templates\studies\study_end.html:7 .\studies\utils.py:82
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: .\proposals\templates\proposals\proposal_diff.html:665
-#: .\proposals\templates\proposals\proposal_pdf.html:457
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:362
+#: .\proposals\templates\proposals\proposal_diff.html:686
+#: .\proposals\templates\proposals\proposal_pdf.html:472
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:371
 #: .\studies\templates\studies\study_consent.html:7 .\studies\utils.py:87
 msgid "Informed consent formulieren voor het onderzoek"
 msgstr "Informed consent forms for the study"
 
-#: .\proposals\templates\proposals\proposal_diff.html:699
+#: .\proposals\templates\proposals\proposal_diff.html:720
 #: .\proposals\templates\proposals\proposal_submit.html:86
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
@@ -1437,16 +1606,21 @@ msgstr "Last edited"
 msgid "Acties"
 msgstr "Actions"
 
-#: .\proposals\templates\proposals\proposal_list.html:75
+#: .\proposals\templates\proposals\proposal_list.html:74
+#: .\reviews\templates\reviews\decision_list.html:50
+msgid "Beslissen"
+msgstr "Decide"
+
+#: .\proposals\templates\proposals\proposal_list.html:78
 msgid "Naar volgende stap"
 msgstr "To next step"
 
-#: .\proposals\templates\proposals\proposal_list.html:78
+#: .\proposals\templates\proposals\proposal_list.html:81
 msgid "Toon verschillen"
 msgstr "Show differences"
 
-#: .\proposals\templates\proposals\proposal_list.html:82
-#: .\proposals\templates\proposals\proposal_list.html:84
+#: .\proposals\templates\proposals\proposal_list.html:85
+#: .\proposals\templates\proposals\proposal_list.html:87
 msgid "Inzien"
 msgstr "Show"
 
@@ -1486,8 +1660,8 @@ msgstr ""
 "            Reference number %(reference_number)s\n"
 "            "
 
-#: .\proposals\templates\proposals\proposal_pdf.html:479
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:379
+#: .\proposals\templates\proposals\proposal_pdf.html:494
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:388
 #: .\proposals\templates\proposals\proposal_submit.html:88
 msgid "Aanmelding versturen"
 msgstr "Submit application"
@@ -1513,11 +1687,11 @@ msgstr ""
 "            Reference number <em>reference number</em>\n"
 "            "
 
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:279
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:285
 msgid "Sessie"
 msgstr "Session"
 
-#: .\proposals\templates\proposals\proposal_pdf_empty.html:294
+#: .\proposals\templates\proposals\proposal_pdf_empty.html:303
 msgid "Taak"
 msgstr "Task"
 
@@ -1763,7 +1937,7 @@ msgid "Aanvraag voor voortoetsing klaar voor versturen"
 msgstr "Application for preliminary assessment ready to submit"
 
 #: .\proposals\templates\proposals\proposal_submit.html:10
-#: .\proposals\utils.py:68
+#: .\proposals\utils.py:69
 msgid "Concept-aanmelding klaar voor versturen"
 msgstr "Draft application ready to submit"
 
@@ -1922,7 +2096,7 @@ msgid ""
 msgstr ""
 "\n"
 "    Click <a href=\"%(submitted_url)s\">here</a> to see your submitted "
-"studies.\n"
+"applications.\n"
 "    "
 
 #: .\proposals\templates\proposals\study_start.html:17
@@ -2043,7 +2217,7 @@ msgstr "Start again"
 msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
-#: .\proposals\utils.py:163 .\reviews\utils.py:191
+#: .\proposals\utils.py:166 .\reviews\utils.py:191
 msgid "ETCL: nieuwe studie ingediend"
 msgstr "ETCL: new application submitted"
 
@@ -2053,7 +2227,7 @@ msgstr "Public archive"
 
 #: .\proposals\views\proposal_views.py:28
 msgid "Dit overzicht toont alle goedgekeurde studies."
-msgstr "This overview shows all approved studies."
+msgstr "This overview shows all approved applications."
 
 #: .\proposals\views\proposal_views.py:53
 msgid "Dit overzicht toont al uw nog niet ingediende studies."
@@ -2067,32 +2241,40 @@ msgstr "This overview shows all the applications you have submitted."
 msgid "Dit overzicht toont al uw beoordeelde studies."
 msgstr "This overview shows all your applications that have been assessed."
 
+#: .\proposals\views\proposal_views.py:86
+msgid "Mijn studies als eindverantwoordelijke"
+msgstr "My supervised applications"
+
 #: .\proposals\views\proposal_views.py:87
+msgid "Dit overzicht toont al uw studies waar u eindverantwoordelijke bent."
+msgstr "This overview shows all your supervised applications."
+
+#: .\proposals\views\proposal_views.py:98
 msgid "Dit overzicht toont al uw studies."
 msgstr "This overview shows all your applications."
 
-#: .\proposals\views\proposal_views.py:98
+#: .\proposals\views\proposal_views.py:109
 msgid ""
 "Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
 msgstr ""
-"This overview shows all practice studies in which you are involved as a "
+"This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: .\proposals\views\proposal_views.py:117
+#: .\proposals\views\proposal_views.py:128
 #, python-format
 msgid "Studie %(title)s bewerkt"
 msgstr "Application %(title)s edited"
 
-#: .\proposals\views\proposal_views.py:160
+#: .\proposals\views\proposal_views.py:171
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: .\proposals\views\proposal_views.py:185
+#: .\proposals\views\proposal_views.py:210
 msgid "Studie verzonden"
 msgstr "Application submitted"
 
-#: .\proposals\views\proposal_views.py:234
+#: .\proposals\views\proposal_views.py:259
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -2306,10 +2488,6 @@ msgstr "Details"
 msgid "Aanstellen"
 msgstr "Appoint"
 
-#: .\reviews\templates\reviews\decision_list.html:50
-msgid "Beslissen"
-msgstr "Decide"
-
 #: .\reviews\templates\reviews\decision_list.html:52
 msgid "Afsluiten"
 msgstr "Conclude"
@@ -2479,7 +2657,7 @@ msgstr "Consent document for observational study"
 
 #: .\reviews\templates\reviews\review_list.html:7
 msgid "Te beoordelen studies"
-msgstr "Studies for assessment"
+msgstr "To be assessed applications"
 
 #: .\reviews\templates\reviews\review_list.html:32
 msgid "Review inzien"
@@ -3400,7 +3578,7 @@ msgstr "All fields can be edited after copying."
 msgid "Te kopiëren sessie"
 msgstr "Session to be copied"
 
-#: .\tasks\forms.py:136
+#: .\tasks\forms.py:139
 msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
 msgstr ""
 "The total duration of the session must be at least as long as the net "
@@ -3565,7 +3743,7 @@ msgstr "Feedback?"
 msgid "Taak bewerken"
 msgstr "Edit task"
 
-#: .\tasks\templates\tasks\task_start.html:33
+#: .\tasks\templates\tasks\task_start.html:32
 msgid ""
 "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen."
 msgstr "We will ask the same questions for each task on the next few pages."
