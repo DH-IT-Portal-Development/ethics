@@ -20,7 +20,7 @@ Installation of this Django project is quite straightforward:
 - Modify the settings file (`etcl/settings.py`) to your liking.
 - Run the database migrations using `python manage.py migrate`.
 - Load all fixtures using `python manage.py loaddata`.
-- Create a superuser (`python manage.py create_superuser`) and add additional users in the admin interface
+- Create a superuser (`python manage.py createsuperuser`) and add additional users in the admin interface
 - You are ready to roll!
 
 For deployment on a virtual machine, there is a Puppet module available on request.
