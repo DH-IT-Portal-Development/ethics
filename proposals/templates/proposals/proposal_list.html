@@ -74,7 +74,7 @@
                 <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
                 {% endif %}
                 {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-                {% if user in proposal.applicants.all %}
+                {% if user in proposal.applicants.all or user == proposal.supervisor %}
                 <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}" title="{% trans 'Naar volgende stap' %}"></a>
                 {% endif %}
                 {% if proposal.is_revision %}
