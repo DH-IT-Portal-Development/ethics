@@ -290,7 +290,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         from reviews.models import Review, Decision
 
         if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
-            decisions = Decision.objects.filter(review__proposal=self, review__stage=Review.SUPERVISOR)
+            decisions = Decision.objects.filter(review__proposal=self, review__stage=Review.SUPERVISOR).order_by('-pk')
 
             return decisions[0]
 
