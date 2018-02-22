@@ -59,7 +59,8 @@ def study_types_to_string(study_types):
         result.append(str(k) + ' - ' + ', '.join(v))
     return result[0].split(' - ')[1] if len(result) == 1 else '; '.join(result)
 
-class UnicodeWriter:
+
+class UnicodeWriter(object):
     """
     A CSV writer which will write rows to CSV file "f",
     which is encoded in the given encoding.
