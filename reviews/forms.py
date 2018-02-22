@@ -28,15 +28,6 @@ class ReviewAssignForm(ConditionalModelForm):
             required=False
         )
 
-    def clean(self):
-        """
-        Check for conditional requirements:
-        - If short_route is True/False, make sure reviewers have been selected
-        """
-        cleaned_data = super(ReviewAssignForm, self).clean()
-
-        self.check_dependency_list(cleaned_data, 'short_route', 'reviewers', f1_value_list=[True, False])
-
 
 class ReviewCloseForm(forms.ModelForm):
     in_archive = forms.BooleanField(initial=True, required=False)
