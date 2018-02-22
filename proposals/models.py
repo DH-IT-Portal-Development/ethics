@@ -290,7 +290,9 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         from reviews.models import Review, Decision
 
         if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
-            return Decision.objects.get(review__proposal=self, review__stage=Review.SUPERVISOR)
+            decisions = Decision.objects.filter(review__proposal=self, review__stage=Review.SUPERVISOR).order_by('-pk')
+
+            return decisions[0]
 
     def __unicode__(self):
         return '%s (%s)' % (self.title, self.created_by)

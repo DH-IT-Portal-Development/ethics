@@ -2,8 +2,12 @@
 
 {% load i18n %}
 
-{% block title %} 
+{% block title %}
+{% if user.is_authenticated %}
+{% trans "Startpagina" %} - {{ user.get_full_name }}
+{% else %}
 {% trans "Startpagina" %}
+{% endif %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}

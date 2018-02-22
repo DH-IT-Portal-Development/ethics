@@ -126,4 +126,4 @@ class Decision(models.Model):
         self.review.update_go()
 
     def __unicode__(self):
-        return u'Decision by %s on %s: %s' % (self.reviewer.username, self.review.proposal, self.go)
+        return u'Decision #%d by %s on %s: %s' % (self.pk, self.reviewer.username, self.review.proposal, self.go)
