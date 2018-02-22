@@ -176,8 +176,17 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
     model = Decision
     form_class = DecisionForm
 
+    def is_reviewer(self):
+        if self.request.user.is_superuser:
+            return True
+        user_groups = self.request.user.groups.values_list("name", flat=True)
+        return {settings.GROUP_SECRETARY, settings.GROUP_COMMISSION}.intersection(set(user_groups))
+
     def get_success_url(self):
-        return reverse('reviews:my_archive')
+        if self.is_reviewer():
+            return reverse('reviews:my_archive')
+        else:
+            return reverse('proposals:my_archive')
 
     def form_valid(self, form):
         """Save the decision date and send e-mail to secretary"""
