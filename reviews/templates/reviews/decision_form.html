@@ -13,10 +13,16 @@
 {% with proposal=decision.review.proposal %}
 <p>
     {% url 'proposals:pdf' proposal.id as pdf_url %}
+    {% url 'proposals:update' proposal.id as update_url %}
     {% blocktrans with title=proposal.title %}
     U kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>.
     De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien.
     {% endblocktrans %}
+    {% if user == proposal.supervisor %}
+    {% blocktrans %}
+    Als supervisor kan je deze studie <a href="{{ update_url }}" target="_blank">hier</a> aanpassen.
+    {% endblocktrans %}
+    {% endif %}
     {% if decision.review.stage == review.SUPERVISOR %}
     {% trans "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
     {% endif %}

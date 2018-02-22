@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'j8dwfg6kvg=fnfs33s0x(t&0pfe)p9$3dm943)6hvurj6@=+4j'
 DEBUG = True
 ALLOWED_HOSTS = []
-INTERNAL_IPS = ['127.0.0.1']
+INTERNAL_IPS = ['127.0.0.1', 'localhost']
 WSGI_APPLICATION = 'etcl.wsgi.application'
 
 
@@ -128,9 +128,10 @@ MEDIA_URL = '/media/'
 
 # E-mail settings
 EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-EMAIL_FROM = 'M.H.vanderKlis@uu.nl'
-EMAIL_LOCAL_STAFF = 'M.H.vanderKlis@uu.nl'
+EMAIL_PORT = 2525
+EMAIL_FROM = 'T.D.Mees@uu.nl'
+EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
+
 
 # Group names
 GROUP_SECRETARY = 'Secretaris'

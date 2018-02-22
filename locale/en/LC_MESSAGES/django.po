@@ -2424,6 +2424,19 @@ msgstr ""
 "\"_blank\">here</a>.\n"
 "    "
 
+#: .\reviews\templates\reviews\decision_form.html:16
+#, python-format
+msgid ""
+"\n"
+"    Als supervisor kan je deze studie <a href=\"%(update_url)s\" target="
+"\"_blank\">hier</a> aanpassen.\n"
+"    "
+msgstr ""
+"\n"
+"    As supervisor, you can edit the study <a href=\"%(update_url)s\" target="
+"\"_blank\">here</a>.\n"
+"    "
+
 #: .\reviews\templates\reviews\decision_form.html:21
 msgid ""
 "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd "

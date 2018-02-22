@@ -41,7 +41,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from relation field
-        - Don't allow to pick yourself or a superuser as supervisor
+        - Don't allow to pick yourself or a superuser as supervisor, unless you already are
         - Add a None-option for supervisor
         - Don't allow to pick a superuser as applicant
         - If this is a practice Proposal, limit the relation choices
@@ -55,7 +55,15 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         self.fields['relation'].empty_label = None
 
         applicants = get_user_model().objects.exclude(is_superuser=True)
+
         supervisors = applicants.exclude(pk=self.user.pk)
+
+        instance = kwargs.get('instace')
+
+        # If you are already defined as a supervisor, we have to set it to you
+        if instance is not None and instance.supervisor == self.user:
+            supervisors = [self.user]
+
         self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + get_users_as_list(supervisors)
         self.fields['applicants'].choices = get_users_as_list(applicants)
 
