@@ -3,6 +3,11 @@
 {% block content_nl %}
 {% endblock %}
 
+Namens de ETCL, met de vriendelijke groeten,
+
+de ETCL secretaris
+{{ secretary }}
+
 ~~~~~
 
 {% block content_en %}
