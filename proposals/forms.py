@@ -58,7 +58,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 
         supervisors = applicants.exclude(pk=self.user.pk)
 
-        instance = kwargs.get('instace')
+        instance = kwargs.get('instance')
 
         # If you are already defined as a supervisor, we have to set it to you
         if instance is not None and instance.supervisor == self.user:
