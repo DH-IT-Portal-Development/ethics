@@ -176,9 +176,13 @@ msgstr "My pending decisions"
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: .\core\templates\base\menu.html:56
-msgid "Alle openstaande besluiten"
-msgstr "All pending decisions"
+#: .\core\templates\base\menu.html:59
+msgid "Alle openstaande besluiten commissieleden"
+msgstr "All pending decisions committee members"
+
+#: .\core\templates\base\menu.html:62
+msgid "Alle openstaande besluiten eindverantwoordelijken"
+msgstr "All pending decisions supervisors"
 
 #: .\core\templates\base\menu.html:63
 msgid "Help"
@@ -1265,6 +1269,17 @@ msgstr ""
 #: .\proposals\utils.py:30 .\proposals\utils.py:46
 msgid "Algemene informatie over de studie"
 msgstr "General information about the study"
+
+#: .\proposals\templates\proposals\proposal_form.html:51
+msgid "\n"
+"        Je past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat het formulier geschreven is vanuit\n"
+"        zijn/haar oogpunt.\n"
+"    "
+msgstr "\n"
+"        You are editting a study from a student/PhD candidate under your supervision. Please note that this form is"
+"        written from their point\n"
+"        of view.\n"
+"    "
 
 #: .\proposals\templates\proposals\proposal_diff.html:19
 #: .\proposals\templates\proposals\proposal_diff.html:100
@@ -2415,13 +2430,13 @@ msgid ""
 "\n"
 "    U kunt nu een go of no-go geven voor de studie <em>%(title)s</em>.\n"
 "    De studie is <a href=\"%(pdf_url)s\" target=\"_blank\">hier</a> in te "
-"zien.\n"
+"zien (downloadt als PDF).\n"
 "    "
 msgstr ""
 "\n"
 "    You can now give a go or no-go for the study <em>%(title)s</em>.\n"
-"    You can see the details on this study <a href=\"%(pdf_url)s\" target="
-"\"_blank\">here</a>.\n"
+"    You can see the details of this study <a href=\"%(pdf_url)s\" target="
+"\"_blank\">here</a> (downloads as PDF).\n"
 "    "
 
 #: .\reviews\templates\reviews\decision_form.html:16
@@ -2506,8 +2521,12 @@ msgid "Afsluiten"
 msgstr "Conclude"
 
 #: .\reviews\templates\reviews\decision_list_open.html:8
-msgid "Openstaande besluiten"
-msgstr "Pending decisions"
+msgid "Openstaande besluiten commissieleden"
+msgstr "Pending decisions committee members"
+
+#: .\reviews\templates\reviews\decision_supervisor_list_open.html:8
+msgid "Openstaande besluiten eindverantwoordelijken"
+msgstr "Pending decisions supervisors"
 
 #: .\reviews\templates\reviews\decision_list_open.html:21
 #: .\reviews\templates\reviews\review_table.html:7

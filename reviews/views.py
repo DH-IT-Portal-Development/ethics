@@ -38,11 +38,29 @@ class DecisionOpenView(GroupRequiredMixin, generic.ListView):
     group_required = settings.GROUP_SECRETARY
 
     def get_queryset(self):
-        """Returns all open Decisions of all Users"""
-        return Decision.objects.filter(go='')
+        """Returns all open Committee Decisions of all Users"""
+        return Decision.objects.filter(go='').exclude(review__stage=Review.SUPERVISOR)
+
+
+class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
+    """
+    This page displays all proposals to be reviewed by supervisors. Not to be confused with SupervisorView, which
+    displays all open reviews for a specific supervisor. Viewable for the secretary only!
+    """
+    context_object_name = 'decisions'
+    template_name = 'reviews/decision_supervisor_list_open.html'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_queryset(self):
+        """Returns all open Supervisor Decisions of all Users"""
+        return Decision.objects.filter(go='', review__stage=Review.SUPERVISOR)
 
 
 class SupervisorView(LoginRequiredMixin, generic.ListView):
+    """
+        This page displays all proposals to be reviewed by a specific supervisors. Not to be confused with
+        SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
+        """
     context_object_name = 'decisions'
 
     def get_queryset(self):

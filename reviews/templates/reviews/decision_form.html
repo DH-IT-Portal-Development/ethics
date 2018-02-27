@@ -16,7 +16,7 @@
     {% url 'proposals:update' proposal.id as update_url %}
     {% blocktrans with title=proposal.title %}
     U kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>.
-    De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien.
+    De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
     {% endblocktrans %}
     {% if user == proposal.supervisor %}
     {% blocktrans %}
