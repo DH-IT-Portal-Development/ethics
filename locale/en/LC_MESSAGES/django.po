@@ -2420,7 +2420,7 @@ msgid ""
 msgstr ""
 "\n"
 "    You can now give a go or no-go for the study <em>%(title)s</em>.\n"
-"    You can see the details on this study <a href=\"%(pdf_url)s\" target="
+"    You can see the details of this study <a href=\"%(pdf_url)s\" target="
 "\"_blank\">here</a>.\n"
 "    "
 
