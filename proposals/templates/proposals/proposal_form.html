@@ -48,6 +48,14 @@ $(function() {
     }
 });
 </script>
+{% if not create and is_supervisor  %}
+    {% blocktrans %}
+        Je past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat het formulier geschreven is vanuit
+        zijn/haar oogpunt.
+    {% endblocktrans %}
+    <br/>
+    <br/>
+{% endif %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
     {% include "base/form_buttons.html" %}

@@ -163,6 +163,8 @@ class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
         context['create'] = False
         context['no_back'] = True
+        context['is_supervisor'] = self.object.supervisor == self.request.user
+
         return context
 
 

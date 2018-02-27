@@ -1266,6 +1266,17 @@ msgstr ""
 msgid "Algemene informatie over de studie"
 msgstr "General information about the study"
 
+#: .\proposals\templates\proposals\proposal_form.html:51
+msgid "\n"
+"        Je past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat het formulier geschreven is vanuit\n"
+"        zijn/haar oogpunt.\n"
+"    "
+msgstr "\n"
+"        You are editting a study from a student/PhD candidate under your supervision. Please note that this form is"
+"        written from their point\n"
+"        of view.\n"
+"    "
+
 #: .\proposals\templates\proposals\proposal_diff.html:19
 #: .\proposals\templates\proposals\proposal_diff.html:100
 #: .\proposals\templates\proposals\proposal_diff.html:138
