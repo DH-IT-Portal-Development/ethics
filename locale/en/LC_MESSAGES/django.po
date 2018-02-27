@@ -176,9 +176,13 @@ msgstr "My pending decisions"
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: .\core\templates\base\menu.html:56
-msgid "Alle openstaande besluiten"
-msgstr "All pending decisions"
+#: .\core\templates\base\menu.html:59
+msgid "Alle openstaande besluiten commissieleden"
+msgstr "All pending decisions committee members"
+
+#: .\core\templates\base\menu.html:62
+msgid "Alle openstaande besluiten eindverantwoordelijken"
+msgstr "All pending decisions supervisors"
 
 #: .\core\templates\base\menu.html:63
 msgid "Help"
@@ -2517,8 +2521,12 @@ msgid "Afsluiten"
 msgstr "Conclude"
 
 #: .\reviews\templates\reviews\decision_list_open.html:8
-msgid "Openstaande besluiten"
-msgstr "Pending decisions"
+msgid "Openstaande besluiten commissieleden"
+msgstr "Pending decisions committee members"
+
+#: .\reviews\templates\reviews\decision_supervisor_list_open.html:8
+msgid "Openstaande besluiten eindverantwoordelijken"
+msgstr "Pending decisions supervisors"
 
 #: .\reviews\templates\reviews\decision_list_open.html:21
 #: .\reviews\templates\reviews\review_table.html:7
