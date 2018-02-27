@@ -56,7 +56,10 @@
                 </li>
                 {% if user|is_secretary %}
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:open' %}">{% trans "Alle openstaande besluiten" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:open' %}">{% trans "Alle openstaande besluiten commissieleden" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
                 </li>
                 {% endif %}
             </ul>
