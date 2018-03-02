@@ -83,6 +83,26 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
 {% for study in review.proposal.study_set.all %}
 {% include "studies/study_title.html" %}
 <ul>
+    {% if study.passive_consent %}
+    <li>
+        <a href="{{ study.director_consent_declaration.url }}" target="_blank">{% trans "Consent declaratie directeur/departementshoofd" %}</a>
+        <a href="{% url 'studies:attachments' study.pk %}">
+            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
+        </a>
+    </li>
+    <li>
+        <a href="{{ study.director_consent_information.url }}" target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
+        <a href="{% url 'studies:attachments' study.pk %}">
+            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
+        </a>
+    </li>
+    <li>
+        <a href="{{ study.parents_information.url }}" target="_blank">{% trans "Informatiebrief ouders" %}</a>
+        <a href="{% url 'studies:attachments' study.pk %}">
+            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
+        </a>
+    </li>
+    {% else %}
     <li>
         <a href="{{ study.informed_consent.url }}" target="_blank">{% trans "Informed consent" %}</a>
         <a href="{% url 'studies:attachments' study.pk %}">
@@ -95,6 +115,7 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
+    {% endif %}
     {% if study.has_observation and study.observation.needs_approval %}
     <li>
         <a href="{{ study.observation.approval_document.url }}" target="_blank">
