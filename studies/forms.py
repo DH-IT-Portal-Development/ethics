@@ -122,6 +122,9 @@ class StudyConsentForm(ConditionalModelForm):
         cleaned_data = super(StudyConsentForm, self).clean()
 
         self.check_dependency(cleaned_data, 'passive_consent', 'passive_consent_details')
+        self.check_dependency(cleaned_data, 'passive_consent', 'director_consent_declaration')
+        self.check_dependency(cleaned_data, 'passive_consent', 'director_consent_information')
+        self.check_dependency(cleaned_data, 'passive_consent', 'parents_information')
 
 
 class StudyEndForm(ConditionalModelForm):
