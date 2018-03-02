@@ -226,7 +226,7 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf.html')
-            if not proposal.is_practice():
+            if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
                 start_review(proposal)
         return success_url
 

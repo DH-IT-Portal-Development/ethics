@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.views import generic
+from django.http import HttpResponseRedirect
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
@@ -53,7 +54,11 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Supervisor Decisions of all Users"""
-        return Decision.objects.filter(go='', review__stage=Review.SUPERVISOR)
+        return Decision.objects.filter(
+            go='',
+            review__stage=Review.SUPERVISOR,
+            review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR
+        )
 
 
 class SupervisorView(LoginRequiredMixin, generic.ListView):
