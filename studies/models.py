@@ -205,6 +205,29 @@ sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
 toegestaan en draagt niet de voorkeur van de commissie.'),
         blank=True)
 
+    director_consent_declaration = models.FileField(
+        ('Please upload the declaration of consent for the school director/head'
+         ' of the department (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc],
+        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
+                   'you can upload the unsigned document and send the document when it is signed to the'
+                   ' secretary of the EtCL')
+    )
+
+    director_consent_information = models.FileField(
+        ('Please upload the the information letter for the school '
+         'director/head of the department (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc]
+    )
+
+    parents_information = models.FileField(
+        ('Please upload the information letter for the parents here (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc]
+    )
+
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),

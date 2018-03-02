@@ -102,10 +102,13 @@ class StudyConsentForm(ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
+            'passive_consent',
             'informed_consent',
             'briefing',
-            'passive_consent',
             'passive_consent_details',
+            'director_consent_declaration',
+            'director_consent_information',
+            'parents_information'
         ]
         widgets = {
             'passive_consent': forms.RadioSelect(choices=YES_NO),
