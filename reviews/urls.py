@@ -4,16 +4,13 @@ from .views import \
     DecisionListView, DecisionMyOpenView, SupervisorDecisionOpenView, DecisionOpenView, \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, \
-    DecisionUpdateView, \
-    SendReminder
+    DecisionUpdateView
 
 urlpatterns = [
     url(r'^$', DecisionListView.as_view(), name='my_archive'),
     url(r'^my_open/$', DecisionMyOpenView.as_view(), name='my_open'),
     url(r'^open/$', DecisionOpenView.as_view(), name='open'),
     url(r'^open_supervisors/$', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),
-
-    url(r'^send_reminder/(?P<pk>\d+)/$', SendReminder.as_view(), name="send_reminder"),
 
     url(r'^show/(?P<pk>\d+)/$', ReviewDetailView.as_view(), name='detail'),
 

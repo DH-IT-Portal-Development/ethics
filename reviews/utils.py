@@ -13,6 +13,7 @@ from tasks.models import Task
 from proposals.utils import notify_local_staff
 from .models import Review, Decision
 
+import datetime
 
 def start_review(proposal):
     """
@@ -70,22 +71,34 @@ def start_supervisor_phase(proposal):
     return review
 
 
-def remind_supervisor(proposal):
+def remind_reviewers():
     """
-    Sends an email to the supervisor to remind them to review a proposal.
+    Sends an email to a reviewer to remind them to review a proposal.
+    The reminders are only sent for proposals that are on the short track and need to be reviewed in the next 2 days
     """
 
-    decision = proposal.supervisor_decision()
+    today = datetime.date.today()
+    next_two_days = today + datetime.timedelta(days=2)
 
-    subject = _('ETCL: beoordelen als eindverantwoordelijke (Herrinering)')
-    params = {
-        'creator': proposal.created_by.get_full_name(),
-        'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
-        'secretary': get_secretary().get_full_name()
-    }
-    msg_plain = render_to_string('mail/reminder.txt', params)
-    msg_html = render_to_string('mail/reminder.html', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
+    decisions = Decision.objects.filter(
+        review__stage=Review.COMMISSION,
+        review__short_route=True,
+        review__date_should_end__gte=today,
+        review__date_should_end__lte=next_two_days
+    )
+
+    for decision in decisions:
+        print(decision.review.date_should_end)
+        proposal = decision.review.proposal
+        subject = 'ETCL: beoordelen studie (Herrinering)'
+        params = {
+            'creator': proposal.created_by.get_full_name(),
+            'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
+            'secretary': get_secretary().get_full_name()
+        }
+        msg_plain = render_to_string('mail/reminder.txt', params)
+        msg_html = render_to_string('mail/reminder.html', params)
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, [decision.reviewer.email], html_message=msg_html)
 
 
 def start_assignment_phase(proposal):
