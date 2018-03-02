@@ -56,9 +56,6 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 
         applicants = get_user_model().objects.all()
 
-        if not self.user.is_superuser:
-            applicants = applicants.exclude(is_superuser=True)
-
         supervisors = applicants.exclude(pk=self.user.pk)
 
         instance = kwargs.get('instance')
