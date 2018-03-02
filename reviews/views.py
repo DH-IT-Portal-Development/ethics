@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.views import generic
+from django.http import HttpResponseRedirect
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
@@ -11,7 +12,7 @@ from proposals.models import Proposal
 from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
 from .mixins import UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
-from .utils import start_review_route, notify_secretary
+from .utils import start_review_route, notify_secretary, remind_supervisor
 
 
 class DecisionListView(GroupRequiredMixin, generic.ListView):
@@ -53,7 +54,26 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Supervisor Decisions of all Users"""
-        return Decision.objects.filter(go='', review__stage=Review.SUPERVISOR)
+        return Decision.objects.filter(
+            go='',
+            review__stage=Review.SUPERVISOR,
+            review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR
+        )
+
+
+class SendReminder(GroupRequiredMixin, generic.View):
+    group_required = settings.GROUP_SECRETARY
+    context_object_name = 'decisions'
+    model = Proposal
+
+    def get(self, request, *args, **kwargs):
+
+        pk = self.kwargs.get('pk')
+        proposal = Proposal.objects.get(pk=pk)
+
+        remind_supervisor(proposal)
+
+        return HttpResponseRedirect(reverse('reviews:open_supervisors'))
 
 
 class SupervisorView(LoginRequiredMixin, generic.ListView):

@@ -1,0 +1,15 @@
+{% extends "mail/base.txt" %}
+
+{% block content_nl %}
+Beste collega,
+
+Je moet met spoed de studie van {{ creator }} beoordelen. De deadline voor beoordeling is (bijna) verlopen.
+U kunt deze concept-aanmelding beoordelen via {{ proposal_url }}
+{% endblock %}
+
+{% block content_en %}
+Dear colleague,
+
+You must urgently review {{creator}}'s study. The deadline for assessment has (almost) expired.
+You can review this draft application via {{ proposal_url }}
+{% endblock %}

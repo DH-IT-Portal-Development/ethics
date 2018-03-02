@@ -70,6 +70,24 @@ def start_supervisor_phase(proposal):
     return review
 
 
+def remind_supervisor(proposal):
+    """
+    Sends an email to the supervisor to remind them to review a proposal.
+    """
+
+    decision = proposal.supervisor_decision()
+
+    subject = _('ETCL: beoordelen als eindverantwoordelijke (Herrinering)')
+    params = {
+        'creator': proposal.created_by.get_full_name(),
+        'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
+        'secretary': get_secretary().get_full_name()
+    }
+    msg_plain = render_to_string('mail/reminder.txt', params)
+    msg_html = render_to_string('mail/reminder.html', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
+
+
 def start_assignment_phase(proposal):
     """
     Starts the assignment phase:

@@ -2714,6 +2714,10 @@ msgstr "ETCL: confirmation of draft application submission"
 msgid "ETCL: beoordelen als eindverantwoordelijke"
 msgstr "ETCL: assess as researcher with final responsibility"
 
+#: .\reviews\utils.py:80
+msgid "ETCL: beoordelen als eindverantwoordelijke (Herrinering)"
+msgstr "ETCL: assess as researcher with final responsibility (Reminder)"
+
 #: .\reviews\utils.py:104
 msgid "ETCL: aanmelding ontvangen"
 msgstr "ETCL: application received"
