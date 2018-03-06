@@ -469,10 +469,10 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% endif %}
         </table>
 
-        <h2>{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
+        <h2>{% trans "Informed consent formulieren" %}</h2>
         {% include "studies/study_title.html" %}
         <table>
-            {% if not proposal.is_practice %}
+            {% if not proposal.is_practice and study.informed_consent %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study.informed_consent.url }}">{% trans "Download" %}</a></td>
             </tr>
@@ -486,6 +486,15 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% if study.passive_consent %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th><td>{{ study.passive_consent_details }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_information.url }}">{% trans "Download" %}</a></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "parents_information" %}</th><td><a href="{{ BASE_URL }}{{ study.parents_information.url }}">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
         </table>

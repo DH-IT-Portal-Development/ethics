@@ -190,9 +190,8 @@ cadeautje.'),
         _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc])
-    passive_consent = models.BooleanField(
+    passive_consent = models.NullBooleanField(
         _('Maakt u gebruik van passieve informed consent?'),
-        default=False,
         help_text=mark_safe(_('Wanneer u kinderen via een instelling \
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
@@ -204,6 +203,27 @@ target="_blank">de ETCL-website</a>.')))
 sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
 toegestaan en draagt niet de voorkeur van de commissie.'),
         blank=True)
+
+    director_consent_declaration = models.FileField(
+        _('Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
+        blank=True,
+        validators=[validate_pdf_or_doc],
+        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
+                   'you can upload the unsigned document and send the document when it is signed to the'
+                   ' secretary of the EtCL')
+    )
+
+    director_consent_information = models.FileField(
+        _('Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc]
+    )
+
+    parents_information = models.FileField(
+        _('Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc]
+    )
 
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
@@ -336,6 +356,12 @@ geschoolde specialisten).')),
     def is_completed(self):
         """Checks if the whole Study has been completed"""
         return self.design_completed() and self.risk != ''
+
+    def has_missing_forms(self):
+        if self.passive_consent:
+            return not self.director_consent_declaration or not self.director_consent_information or self.parents_information
+        else:
+            return not self.informed_consent or not self.briefing
 
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title

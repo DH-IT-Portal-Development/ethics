@@ -102,10 +102,13 @@ class StudyConsentForm(ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
+            'passive_consent',
             'informed_consent',
             'briefing',
-            'passive_consent',
             'passive_consent_details',
+            'director_consent_declaration',
+            'director_consent_information',
+            'parents_information'
         ]
         widgets = {
             'passive_consent': forms.RadioSelect(choices=YES_NO),
@@ -117,6 +120,10 @@ class StudyConsentForm(ConditionalModelForm):
         - If passive_consent is set to yes, make sure passive_consent_details has been filled out
         """
         cleaned_data = super(StudyConsentForm, self).clean()
+
+        if cleaned_data.get('passive_consent') is None:
+            msg = _(u'Dit veld is verplicht.')
+            self.add_error('passive_consent', forms.ValidationError(msg, code='required'))
 
         self.check_dependency(cleaned_data, 'passive_consent', 'passive_consent_details')
 

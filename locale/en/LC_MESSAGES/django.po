@@ -2669,7 +2669,33 @@ msgstr "Application for preliminary assessment"
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: .\reviews\templates\reviews\review_detail.html:87
+#: .\reviews\templates\reviews\review_detail.html:88
+msgid "Consent declaratie directeur/departementshoofd"
+msgstr "Declaration of consent school director/head of the department"
+
+#: .\reviews\templates\reviews\review_detail.html:94
+msgid "Consent informatiebrief directeur/departementshoofd"
+msgstr "Information letter school director/head of the department"
+
+#: .\reviews\templates\reviews\review_detail.html:100
+msgid "Informatiebrief ouders"
+msgstr "Information letter for the parents"
+
+#: .\reviews\models.py:209
+msgid "Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)"
+msgstr "Please upload the declaration of consent for the school director/head"
+        " of the department (in .pdf of .doc(x)-format)"
+
+#: .\reviews\models.py:218
+msgid "Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)"
+msgstr "Please upload the the information letter for the school "
+       "director/head of the department (in .pdf of .doc(x)-format)"
+
+#: .\reviews\models.py:224
+msgid "Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)"
+msgstr "Please upload the the information letter for parents here (in .pdf of .doc(x)-format)"
+
+#: .\reviews\templates\reviews\review_detail.html:107
 msgid "Informed consent"
 msgstr "Informed consent"
 
@@ -2678,7 +2704,7 @@ msgstr "Informed consent"
 msgid "Formulier wijzigen"
 msgstr "Change forms"
 
-#: .\reviews\templates\reviews\review_detail.html:93
+#: .\reviews\templates\reviews\review_detail.html:113
 msgid "Briefing"
 msgstr "Briefing"
 
