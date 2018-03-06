@@ -19,5 +19,6 @@ class FundingAdmin(admin.ModelAdmin):
 
 @admin.register(Proposal)
 class ProposalAdmin(admin.ModelAdmin):
-    list_display = ('reference_number', 'title', 'created_by')
+    list_display = ('reference_number', 'title', 'created_by', 'supervisor')
     list_display_links = ('reference_number', )
+    ordering = ['reference_number']
