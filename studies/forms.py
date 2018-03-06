@@ -122,7 +122,7 @@ class StudyConsentForm(ConditionalModelForm):
         cleaned_data = super(StudyConsentForm, self).clean()
 
         if not cleaned_data.get('passive_consent') or self.passive_consent is None:
-            msg = _(u'U dient minstens één van de opties te selecteren')
+            msg = _(u'Dit veld is verplicht.')
             self.add_error('passive_consent', forms.ValidationError(msg, code='required'))
 
         self.check_dependency(cleaned_data, 'passive_consent', 'passive_consent_details')
