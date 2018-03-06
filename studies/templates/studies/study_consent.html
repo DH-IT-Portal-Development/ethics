@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %} 
-{% trans "Informed consent formulieren voor het onderzoek" %}
+{% trans "Informed consent formulieren" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -19,6 +19,11 @@
 <script>
 $(function() {
     depends_on_value('passive_consent', 'True', 'passive_consent_details');
+    depends_on_value('passive_consent', 'True', 'director_consent_declaration');
+    depends_on_value('passive_consent', 'True', 'director_consent_information');
+    depends_on_value('passive_consent', 'True', 'parents_information');
+    depends_on_value('passive_consent', 'False', 'informed_consent');
+    depends_on_value('passive_consent', 'False', 'briefing');
 });
 </script>
 {% include "studies/study_title.html" %}
