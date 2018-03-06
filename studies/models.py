@@ -358,5 +358,11 @@ geschoolde specialisten).')),
         """Checks if the whole Study has been completed"""
         return self.design_completed() and self.risk != ''
 
+    def has_missing_forms(self):
+        if self.passive_consent:
+            return not self.director_consent_declaration or not self.director_consent_information or not self.parents_information
+        else:
+            return not self.informed_consent or not self.briefing
+
     def __unicode__(self):
         return _('Study details for proposal %s') % self.proposal.title
