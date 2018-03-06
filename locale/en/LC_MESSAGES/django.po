@@ -1230,7 +1230,7 @@ msgstr ""
 "the research project has ended.\n"
 "    More information can be found \n"
 "    <a href=\"https://www.uu.nl/en/research/research-data-management/what-we-"
-"do/data-management-plan\" target=\"_blank\">hier</a>.\n"
+"do/data-management-plan\" target=\"_blank\">here</a>.\n"
 "    "
 
 #: .\proposals\templates\proposals\proposal_data_management.html:57
@@ -1277,7 +1277,7 @@ msgid "\n"
 "    "
 msgstr "\n"
 "        You are editing a study from a student/PhD candidate under your supervision. Please note that this form should"
-"        be filled in as if you were that students/PhD candidate."
+"        be filled in as if you were that student/PhD candidate."
 "    "
 
 #: .\proposals\templates\proposals\proposal_diff.html:19
