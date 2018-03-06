@@ -320,10 +320,18 @@ class ProposalSubmitForm(forms.ModelForm):
 
         if not self.instance.is_pre_assessment and not self.instance.is_practice():
             for study in self.instance.study_set.all():
-                if not study.informed_consent:
-                    self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
-                if not study.briefing:
-                    self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+                if study.passive_consent:
+                    if not study.director_consent_declaration:
+                        self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
+                    if not study.director_consent_information:
+                        self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+                    if not study.parents_information:
+                        self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+                else:
+                    if not study.informed_consent:
+                        self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
+                    if not study.briefing:
+                        self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
 
         if check_local_facilities(self.proposal) and cleaned_data['inform_local_staff'] is None:
             self.add_error('inform_local_staff', _('Dit veld is verplicht.'))
