@@ -42,6 +42,11 @@
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS-studies bekijken" %}</a>
                 </li>
+                {% if user|in_commission %}
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:archive_export' %}">{% trans "Site-export" %}</a>
+                </li>
+                {% endif %}
             </ul>
         </li>
         {% if user|in_commission %}

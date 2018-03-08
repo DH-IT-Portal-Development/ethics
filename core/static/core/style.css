@@ -157,3 +157,8 @@ td li {
     border: 1px solid blue;
     list-style-type: none;
 }
+
+.exportTable td, .exportTable th
+{
+    padding: 2px
+}

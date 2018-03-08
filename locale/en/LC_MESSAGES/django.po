@@ -906,6 +906,13 @@ msgstr ""
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
+#: .\proposals\models.py:196
+msgid "Indiendende onderzoeker"
+msgstr "Researcher with final responsibility"
+
+msgid "Website export tekst"
+msgstr "Website export text"
+
 #: .\proposals\models.py:199
 msgid ""
 "Aan het einde van de procedure kunt u deze studie ter verificatie naar uw "
