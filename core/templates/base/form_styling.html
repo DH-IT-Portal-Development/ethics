@@ -83,11 +83,11 @@ $(function() {
         $(this).attr('tabindex', index + 1)
     });
 
-    // Will set select boxes to use Chosen and set a width, except for the language element
-    $('select').chosen({
+    // Will set select boxes to use Select2 and set a width, with a custom width for the language element
+    $('select').select2({
         width: '20em'
     });
-    $('select[name="language"] + .chosen-container').width('100%');
+    $('select[name="language"] + .select2-container').width('110px');
 
     // Will make every form table a pure-table
     $('form table').addClass('pure-table pure-table-horizontal');
