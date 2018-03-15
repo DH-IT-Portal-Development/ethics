@@ -12,6 +12,7 @@ from core.models import YES_NO_DOUBT, YES, NO, DOUBT
 from core.utils import YES_NO, get_users_as_list
 from .models import Proposal, Wmo, Relation
 from .utils import check_local_facilities
+from .widgets import SelectMultipleUser
 
 
 class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
@@ -30,7 +31,8 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
             'other_applicants': forms.RadioSelect(choices=YES_NO),
             'other_stakeholders': forms.RadioSelect(choices=YES_NO),
             'summary': forms.Textarea(attrs={'cols': 50}),
-            'funding': forms.CheckboxSelectMultiple()
+            'funding': forms.CheckboxSelectMultiple(),
+            'applicants': SelectMultipleUser()
         }
         error_messages = {
             'title': {
