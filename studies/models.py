@@ -359,7 +359,7 @@ geschoolde specialisten).')),
 
     def has_missing_forms(self):
         if self.passive_consent:
-            return not self.director_consent_declaration or not self.director_consent_information or self.parents_information
+            return not self.director_consent_declaration or not self.director_consent_information or not self.parents_information
         else:
             return not self.informed_consent or not self.briefing
 

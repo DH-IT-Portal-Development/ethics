@@ -31,6 +31,25 @@ $(function() {
     $("#id_date_start").datepicker({
         dateFormat: date_format,
         minDate: 'now',
+    })
+    
+    // AJAX applicants
+    $('select#id_applicants').select2({
+      ajax: {
+        url: '{% url 'core:user_search' %}',
+        dataType: 'json',
+        data: function (params) {
+          return {
+            q: params.term || '*',
+            page: params.page || 1
+          }
+        },
+        delay: 500,
+        error: function (err) {
+            console.log(err)
+        },
+        cache: true
+      }
     });
 
     // Add a running word count to the summary
