@@ -20,13 +20,14 @@ from observations.models import Observation
 from interventions.models import Intervention
 from tasks.models import Session, Task
 
+import ldap
+
 # We set up a custom LDAP connection here, separate from the Django auth one
 try:
     # This will trigger an exception if LDAP is not configured
     from ldap_settings import *
 
-    # If it is configured, we load in the ldap module, open a connection and bind our credentials to it.
-    import ldap
+    # If it is configured, we open a connection and bind our credentials to it.
     ldap_connection = ldap.initialize(AUTH_LDAP_SERVER_URI)
     ldap_connection.bind(AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
 
