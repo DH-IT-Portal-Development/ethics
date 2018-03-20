@@ -9,7 +9,8 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MyPracticeView,
     ProposalCreatePreAssessment, ProposalUpdatePreAssessment, \
     ProposalStartPreAssessment, ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
-    HideFromArchiveView
+    HideFromArchiveView, ProposalsExportView
+
 from .views.study_views import StudyStart
 from .views.wmo_views import WmoCreate, WmoUpdate, \
     WmoApplication, WmoCheck, check_wmo, \
@@ -19,8 +20,10 @@ urlpatterns = [
     # List views
     url(r'^archive/', include([
         url(r'^$', ProposalsView.as_view(), name='archive'),
+        url(r'^export/(?P<pk>\d+)?$', ProposalsExportView.as_view(), name='archive_export'),
         url(r'^hide/(?P<pk>\d+)/$', HideFromArchiveView.as_view(), name='archive_hide')
     ])),
+
     url(r'^my_concepts/$', MyConceptsView.as_view(), name='my_concepts'),
     url(r'^my_practice/$', MyPracticeView.as_view(), name='my_practice'),
     url(r'^my_submitted/$', MySubmittedView.as_view(), name='my_submitted'),

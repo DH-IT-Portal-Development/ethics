@@ -51,6 +51,9 @@
                 {% elif user|is_secretary and review.stage == review.CLOSING %}
                     <a href="{% url 'reviews:close' review.pk %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
                 {% elif user|is_secretary and review.stage == review.CLOSED and review.continuation == review.GO %}
+                    <a href="{% url 'proposals:archive_export' review.proposal.pk %}">
+                        <img src="{% static 'reviews/images/website.png' %}" title="{% trans 'Website export tekst' %}">
+                    </a>
                     <a href="{% url 'proposals:confirmation' review.proposal.pk %}">
                         {% if not review.proposal.date_confirmed %}
                         <img src="{% static 'reviews/images/report_go.png' %}" title="{% trans 'Bevestigingsbrief versturen' %}">
