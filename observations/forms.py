@@ -63,3 +63,11 @@ class ObservationForm(ConditionalModelForm):
         # Approval document only needs to be added for non-practice Proposals
         if not self.study.proposal.is_practice():
             self.check_dependency(cleaned_data, 'needs_approval', 'approval_document')
+
+
+class ObservationUpdateAttachmentsForm(forms.ModelForm):
+    class Meta:
+        model = Observation
+        fields = [
+            'approval_document',
+        ]

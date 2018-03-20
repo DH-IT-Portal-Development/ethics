@@ -2,10 +2,11 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from core.views import CreateView, UpdateView, AllowErrorsMixin
+from etcl import settings
 from studies.models import Study
 from studies.utils import get_study_progress
 
-from .forms import ObservationForm
+from .forms import ObservationForm, ObservationUpdateAttachmentsForm
 from .models import Observation
 
 
@@ -51,6 +52,13 @@ class ObservationMixin(object):
 
     def get_study(self):
         raise NotImplementedError
+
+
+class AttachmentsUpdate(UpdateView):
+    model = Observation
+    template_name = 'observations/observation_update_attachments.html'
+    form_class = ObservationUpdateAttachmentsForm
+    group_required = settings.GROUP_SECRETARY
 
 
 class ObservationCreate(ObservationMixin, AllowErrorsMixin, CreateView):

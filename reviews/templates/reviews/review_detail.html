@@ -121,6 +121,9 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
         <a href="{{ study.observation.approval_document.url }}" target="_blank">
             {% trans "Toestemmingsdocument observatiestudie" %}
         </a>
+        <a href="{% url 'observations:attachments' study.observation.pk %}">
+            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
+        </a>
     </li>
     {% endif %}
 </ul>
