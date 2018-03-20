@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.test import TestCase, RequestFactory
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from core.models import Setting, YES, NO
@@ -14,10 +14,15 @@ from .views.proposal_views import MyProposalsView
 
 
 class BaseProposalTestCase(TestCase):
-    fixtures = ['relations', 'compensations', 'recruitments', 'settings', 'registrations']
+    fixtures = ['relations', 'compensations', 'recruitments', 'settings', 'registrations', 'groups']
 
     def setUp(self):
         self.user = User.objects.create_user(username='test0101', email='test@test.com', password='secret')
+        self.secretary = User.objects.create_user(
+            username='secretarytest010101',
+            email='test@test.nl',
+            password='more_secret')
+        Group.objects.get(name='Secretaris').user_set.add(self.secretary)
         self.relation = Relation.objects.get(pk=4)
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                           date_start=datetime.now(),

@@ -17,6 +17,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
+#: .\proposals\templates\proposals\proposal_list.html:86
+msgid "Verberg"
+msgstr "Hide"
+
 #: .\core\forms.py:11 .\core\forms.py:20 .\core\forms.py:29 .\core\forms.py:38
 #: .\core\forms.py:48 .\proposals\forms.py:264 .\proposals\forms.py:274
 #: .\proposals\forms.py:321 .\studies\forms.py:81 .\tasks\forms.py:75
@@ -1581,6 +1585,19 @@ msgstr ""
 "\n"
 "        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
 "study.\n"
+"        "
+
+#: .\proposals\templates\proposals\proposal_list.html:49
+#, python-format
+msgid ""
+"\n"
+"        Klik op <img src=\"%(img_hide)s\" title=\"Verbergen\"> om een ingediende "
+"studie te verbergen uit het archief.\n"
+"        "
+msgstr ""
+"\n"
+"        Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted "
+"study from the archive.\n"
 "        "
 
 #: .\proposals\templates\proposals\proposal_list.html:50

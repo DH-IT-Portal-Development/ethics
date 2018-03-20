@@ -14,6 +14,7 @@
 {% static "proposals/images/arrow_divide.png" as img_diff %}
 {% static "proposals/images/delete.png" as img_delete %}
 {% static "core/images/page_white_acrobat.png" as img_pdf %}
+{% static "proposals/images/folder_delete.png" as img_hide %}
 <p>
     {{ body }}
 </p>
@@ -40,6 +41,13 @@
     <li>
         {% blocktrans %}
         Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
+        {% endblocktrans %}
+    </li>
+    {% endif %}
+    {% if is_secretary %}
+    <li>
+        {% blocktrans %}
+        Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende studie te verbergen uit het archief.
         {% endblocktrans %}
     </li>
     {% endif %}
@@ -79,6 +87,11 @@
                 <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
                 {% else %}
                 <a href="{% url 'proposals:pdf' proposal.pk %}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
+                {% endif %}
+                {% if proposal.in_archive and is_secretary %}
+                    <a href="{% url 'proposals:archive_hide' proposal.pk %}">
+                        <img src="{{ img_hide }}" title="{% trans 'Verberg' %}">
+                    </a>
                 {% endif %}
             </td>
         </tr>

@@ -34,7 +34,8 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         """Returns all the Proposals that have been decided positively upon"""
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
-                                       in_archive=True)
+                                       in_archive=True,
+                                       public=True)
 
     def get_context_data(self, **kwargs):
         context = super(ProposalsView, self).get_context_data(**kwargs)
@@ -42,10 +43,26 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         context['body'] = self.body
         context['modifiable'] = self.is_modifiable
         context['submitted'] = self.is_submitted
+        context['is_secretary'] = self.request.user == get_secretary()
+
         return context
 
     def get_my_proposals(self):
         return Proposal.objects.filter(Q(applicants=self.request.user) | Q(supervisor=self.request.user))
+
+
+class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
+    group_required = settings.GROUP_SECRETARY
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        pk = kwargs.get('pk')
+
+        proposal = Proposal.objects.get(pk=pk)
+        proposal.public = False
+        proposal.save()
+
+        return reverse('proposals:archive')
 
 
 class MyConceptsView(ProposalsView):
