@@ -125,6 +125,8 @@ Zep software)'),
         default=None)
     in_archive = models.BooleanField(default=False)
 
+    public = models.BooleanField(default=True)
+
     is_pre_assessment = models.BooleanField(default=False)
     pre_assessment_pdf = models.FileField(
         _('Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)'),
