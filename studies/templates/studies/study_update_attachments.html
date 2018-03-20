@@ -10,6 +10,16 @@
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
+<script>
+$(function() {
+    depends_on_hidden_value('passive_consent', 'True', 'passive_consent_details');
+    depends_on_hidden_value('passive_consent', 'True', 'director_consent_declaration');
+    depends_on_hidden_value('passive_consent', 'True', 'director_consent_information');
+    depends_on_hidden_value('passive_consent', 'True', 'parents_information');
+    depends_on_hidden_value('passive_consent', 'False', 'informed_consent');
+    depends_on_hidden_value('passive_consent', 'False', 'briefing');
+});
+</script>
 <p>
     {% blocktrans with title=study.proposal.title ref_number=study.proposal.reference_number order=study.order %}
     Op deze pagina kunt u de formulieren aanpassen behorende bij de studie {{ title }}

@@ -195,9 +195,16 @@ class StudyUpdateAttachmentsForm(forms.ModelForm):
     class Meta:
         model = Study
         fields = [
+            'passive_consent',
             'informed_consent',
             'briefing',
+            'director_consent_declaration',
+            'director_consent_information',
+            'parents_information'
         ]
+        widgets = {
+            'passive_consent': forms.HiddenInput
+        }
 
 
 class SessionStartForm(forms.ModelForm):
