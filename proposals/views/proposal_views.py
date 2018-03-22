@@ -51,6 +51,23 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         return Proposal.objects.filter(Q(applicants=self.request.user) | Q(supervisor=self.request.user))
 
 
+class ProposalsExportView(GroupRequiredMixin, generic.ListView):
+    context_object_name = 'proposals'
+    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
+    template_name_suffix = '_export_list'
+
+    def get_queryset(self):
+        """Returns all the Proposals that have been decided positively upon, or a single one if specified in the URL"""
+        pk = self.kwargs.get('pk')
+
+        if pk is not None:
+            return Proposal.objects.filter(pk=pk)
+
+        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
+                                       status_review=True,
+                                       in_archive=True)
+
+
 class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
     group_required = settings.GROUP_SECRETARY
     permanent = False

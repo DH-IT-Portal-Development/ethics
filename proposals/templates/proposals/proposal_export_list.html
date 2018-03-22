@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}
+Goedgekeurde studies
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
+
+{% block content %}
+<table class="display exportTable">
+    <tr>
+        <th>{% trans "Referentienummer" %}</th>
+        <th>{% trans "Indiener" %}</th>
+        <th>{% trans "Eindverantwoordelijke onderzoeker" %}</th>
+    </tr>
+    {% for proposal in proposals %}
+    <tr>
+        <td>{{ proposal.reference_number }}</td>
+        <td>{{ proposal.created_by.get_full_name }}</td>
+        {% if proposal.supervisor %}
+        <td>{{ proposal.supervisor.get_full_name }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
