@@ -892,11 +892,9 @@ msgstr "In what capacity are you involved in this UiL OTS study?"
 
 #: .\proposals\models.py:189
 msgid ""
-"Uitvoerende(n) (inclusief uzelf). Uitvoerende(n) kunnen pas worden "
-"toegevoegd als ze eerst een keer zelf zijn ingelogd."
+"Uitvoerende(n) (inclusief uzelf)."
 msgstr ""
-"Researcher(s) carrying out the study (including yourself). Researcher(s) can "
-"only be added after they have logged in once before."
+"Researcher(s) carrying out the study (including yourself). "
 
 #: .\proposals\models.py:192
 msgid ""

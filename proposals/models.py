@@ -188,11 +188,10 @@ bij deze UiL OTS studie?'))
         related_name='created_by')
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('Uitvoerende(n) (inclusief uzelf). \
-Uitvoerende(n) kunnen pas worden toegevoegd als ze eerst een keer zelf zijn ingelogd.'),
-        related_name='applicants',
-        help_text=_('Als uw medeonderzoeker niet in de lijst voorkomt, \
-vraag hem dan een keer in te loggen in het webportaal.'))
+        verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
+        related_name='applicants',)
+        #help_text=_('Als uw medeonderzoeker niet in de lijst voorkomt, \
+#vraag hem dan een keer in te loggen in het webportaal.'))
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
