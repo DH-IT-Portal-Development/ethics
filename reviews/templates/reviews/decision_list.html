@@ -21,6 +21,7 @@
             <th>{% trans "Titel studie" %}</th>
             <th>{% trans "Fase" %}</th>
             <th>{% trans "Datum ingediend" %}</th>
+            <th>{% trans "Gewenste einddatum" %}</th>
             <th>{% trans "Mijn besluit" %}</th>
             <th>{% trans "Afhandeling" %}</th>
             <th>{% trans "Acties" %}</th>
@@ -35,6 +36,7 @@
             <td>{{ review.proposal.title }}</td>
             <td>{{ review.get_stage_display }}</td>
             <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_start|date:"j M Y" }}</td>
+            <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_should_end|date:"j M Y" }}</td>
             <td>{{ decision.get_go_display|default:_("open") }}</td>
             <td>
                 {% if review.stage == review.CLOSED %}
