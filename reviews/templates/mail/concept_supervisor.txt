@@ -7,6 +7,8 @@ Beste collega,
 U kunt deze concept-aanmelding bekijken via {{ proposal_url }}, eventueel na aanpassingen van uzelf of {{ creator }}, formeel ter toetsing bij de ETCL indienen.
 Indien {{ creator }} wordt geacht de aanpassingen te maken, dient u de studie formeel af te keuren en zelf {{ creator }} hiervan op de hoogte stellen.
 
+U kunt al uw aanmeldingen als supervisor en hun status via {{ my_supervised }}> bekijken.
+
 {% if revision %}
 Let op: het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanmelding.
 Op het webportaal kunt u de wijzigingen ten opzichte van de vorige aanmelding inzien.
@@ -19,6 +21,8 @@ Dear colleague,
 {{ creator }} has created, within the portal of the EtCL, a draft application for a study for which you are appointed as the supervisor.
 You can review this draft application via {{ proposal_url }} and submit this study to the EtCL after you have approved it. Note that in case minor revisions are necessary, you can adjust the study yourself before submitting it.
 In case the application needs to be revised more substantially by {{ creator }}, we ask you to formally disapprove it in order for {{ creator }} to be able to revise it. In such a case, we ask you to inform {{ creator }} about this.
+
+You can view all your supervised applications and their status here: {{ my_supervised }}.
 
 {% if revision %}
 Please note that this involves a {{ revision_type | lower }} of a previous application.
