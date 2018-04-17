@@ -21,17 +21,6 @@ class SelectMultipleUser(forms.Select):
     allow_multiple_selected = True
     ldap = LDAPBackend()
 
-    def render(self, name, value, attrs=None, choices=()):
-        if value is None:
-            value = []
-        final_attrs = self.build_attrs(attrs, name=name)
-        output = [format_html('<select multiple="multiple"{}>', flatatt(final_attrs))]
-        options = self.render_options(choices, value)
-        if options:
-            output.append(options)
-        output.append('</select>')
-        return mark_safe('\n'.join(output))
-
     def value_from_datadict(self, data, files, name):
         # Get the right values
         if isinstance(data, MultiValueDict):

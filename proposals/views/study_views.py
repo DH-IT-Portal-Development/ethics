@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from core.views import AllowErrorsMixin, UpdateView
 from studies.models import Study

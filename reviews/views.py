@@ -1,8 +1,7 @@
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
-from django.http import HttpResponseRedirect
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 

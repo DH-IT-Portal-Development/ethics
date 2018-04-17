@@ -196,7 +196,7 @@ class WmoTestCase(BaseProposalTestCase):
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)
 
-        self.wmo.metc_decision = YES
+        self.wmo.metc_decision = True
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)

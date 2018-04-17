@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
