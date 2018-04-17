@@ -11,8 +11,8 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    url(r'^accounts/login/$', auth_views.login, name='login'),
-    url(r'^accounts/logout/$', auth_views.logout, name='logout'),
+    url(r'^accounts/login/$', auth_views.LoginView.as_view(), name='login'),
+    url(r'^accounts/logout/$', auth_views.LogoutView.as_view(), name='logout'),
 
     url(r'^', include('core.urls')),
     url(r'^proposals/', include('proposals.urls')),
