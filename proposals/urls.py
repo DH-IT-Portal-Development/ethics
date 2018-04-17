@@ -16,6 +16,8 @@ from .views.wmo_views import WmoCreate, WmoUpdate, \
     WmoApplication, WmoCheck, check_wmo, \
     WmoCreatePreAssessment, WmoUpdatePreAssessment
 
+app_name = 'proposals'
+
 urlpatterns = [
     # List views
     url(r'^archive/', include([

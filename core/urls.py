@@ -2,6 +2,8 @@ from django.conf.urls import url
 
 from .views import HomeView, check_requires, user_search, UserSearchView
 
+app_name = 'core'
+
 urlpatterns = [
     # Home
     url(r'^$', HomeView.as_view(), name='home'),

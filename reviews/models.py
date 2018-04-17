@@ -43,7 +43,7 @@ class Review(models.Model):
     date_end = models.DateTimeField(blank=True, null=True)
     date_should_end = models.DateField(blank=True, null=True)
 
-    proposal = models.ForeignKey(Proposal)
+    proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
     def update_go(self):
         """
@@ -112,8 +112,8 @@ class Decision(models.Model):
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
 
-    review = models.ForeignKey(Review)
-    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('review', 'reviewer',)

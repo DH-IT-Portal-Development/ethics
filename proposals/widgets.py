@@ -1,6 +1,6 @@
 from django import forms
 from django.forms.utils import flatatt
-from django.utils.datastructures import MultiValueDict, MergeDict
+from django.utils.datastructures import MultiValueDict
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
@@ -34,7 +34,7 @@ class SelectMultipleUser(forms.Select):
 
     def value_from_datadict(self, data, files, name):
         # Get the right values
-        if isinstance(data, (MultiValueDict, MergeDict)):
+        if isinstance(data, MultiValueDict):
             values = data.getlist(name)
         else:
             values = data.get(name, None)

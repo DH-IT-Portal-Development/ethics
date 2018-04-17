@@ -182,10 +182,12 @@ gebruikt worden).'))
     relation = models.ForeignKey(
         Relation,
         verbose_name=_('In welke hoedanigheid bent u betrokken \
-bij deze UiL OTS studie?'))
+bij deze UiL OTS studie?'),
+        on_delete=models.CASCADE)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='created_by')
+        related_name='created_by',
+        on_delete=models.CASCADE)
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
@@ -198,7 +200,8 @@ bij deze UiL OTS studie?'))
         blank=True,
         null=True,
         help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke \
-sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'))
+sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'),
+        on_delete=models.CASCADE)
 
     # Copying an existing Proposal
     parent = models.ForeignKey(
@@ -369,7 +372,7 @@ bij een METC?'),
     enforced_by_commission = models.BooleanField(default=False)
 
     # References
-    proposal = models.OneToOneField(Proposal, primary_key=True)
+    proposal = models.OneToOneField(Proposal, primary_key=True, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a WMO"""

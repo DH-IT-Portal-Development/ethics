@@ -24,4 +24,4 @@ class Feedback(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateField(auto_now=True)
 
-    submitter = models.ForeignKey(settings.AUTH_USER_MODEL)
+    submitter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

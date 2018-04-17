@@ -8,22 +8,23 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    url(r'^accounts/login/$', 'django.contrib.auth.views.login', name='login'),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', name='logout'),
+    url(r'^accounts/login/$', auth_views.login, name='login'),
+    url(r'^accounts/logout/$', auth_views.logout, name='logout'),
 
-    url(r'^', include('core.urls', namespace='core')),
-    url(r'^proposals/', include('proposals.urls', namespace='proposals')),
-    url(r'^studies/', include('studies.urls', namespace='studies')),
-    url(r'^tasks/', include('tasks.urls', namespace='tasks')),
-    url(r'^observations/', include('observations.urls', namespace='observations')),
-    url(r'^interventions/', include('interventions.urls', namespace='interventions')),
-    url(r'^reviews/', include('reviews.urls', namespace='reviews')),
-    url(r'^feedback/', include('feedback.urls', namespace='feedback')),
-    url(r'^faqs/', include('faqs.urls', namespace='faqs')),
+    url(r'^', include('core.urls')),
+    url(r'^proposals/', include('proposals.urls')),
+    url(r'^studies/', include('studies.urls')),
+    url(r'^tasks/', include('tasks.urls')),
+    url(r'^observations/', include('observations.urls')),
+    url(r'^interventions/', include('interventions.urls')),
+    url(r'^reviews/', include('reviews.urls')),
+    url(r'^feedback/', include('feedback.urls')),
+    url(r'^faqs/', include('faqs.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

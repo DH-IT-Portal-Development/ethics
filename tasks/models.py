@@ -26,7 +26,7 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         null=True)
 
     # References
-    study = models.ForeignKey(Study)
+    study = models.ForeignKey(Study, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['order']
@@ -95,7 +95,7 @@ class RegistrationKind(models.Model):
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
-    registration = models.ForeignKey(Registration)
+    registration = models.ForeignKey(Registration, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['order']
@@ -146,7 +146,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
         blank=True)
 
     # References
-    session = models.ForeignKey(Session)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['order']

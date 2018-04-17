@@ -3,6 +3,8 @@ from django.conf.urls import url
 from .views.session_views import TaskStart, TaskEnd, SessionDelete
 from .views.task_views import TaskUpdate, TaskDelete
 
+app_name = 'tasks'
+
 urlpatterns = [
     # Session(s)
     url(r'^session/delete/(?P<pk>\d+)/$', SessionDelete.as_view(), name='session_delete'),
