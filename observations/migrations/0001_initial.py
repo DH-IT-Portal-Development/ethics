@@ -60,6 +60,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='observation',
             name='study',
-            field=models.OneToOneField(to='studies.Study'),
+            field=models.OneToOneField(to='studies.Study', on_delete=models.CASCADE),
         ),
     ]

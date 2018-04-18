@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
@@ -371,7 +371,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         - End the preassessment phase
         """
         # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
-        success_url = super(ProposalSubmit, self).form_valid(form)
+        success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')

@@ -1,6 +1,8 @@
 from django.conf.urls import url
 
-from .views import HomeView, check_requires, user_search, UserSearchView
+from .views import HomeView, check_requires, UserSearchView
+
+app_name = 'core'
 
 urlpatterns = [
     # Home

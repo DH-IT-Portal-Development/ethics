@@ -32,18 +32,18 @@ class Migration(migrations.Migration):
                 ('continuation', models.PositiveIntegerField(default=0, verbose_name='Afhandeling', choices=[(0, 'Goedkeuring door ETCL'), (1, 'Afwijzing door ETCL'), (2, 'Open review met lange (4-weken) route'), (3, 'Laat opnieuw beoordelen door METC')])),
                 ('date_start', models.DateTimeField()),
                 ('date_end', models.DateTimeField(null=True, blank=True)),
-                ('proposal', models.ForeignKey(to='proposals.Proposal')),
+                ('proposal', models.ForeignKey(to='proposals.Proposal', on_delete=models.CASCADE)),
             ],
         ),
         migrations.AddField(
             model_name='decision',
             name='review',
-            field=models.ForeignKey(to='reviews.Review'),
+            field=models.ForeignKey(to='reviews.Review', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='decision',
             name='reviewer',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
         ),
         migrations.AlterUniqueTogether(
             name='decision',

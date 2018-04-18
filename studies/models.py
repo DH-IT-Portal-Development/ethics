@@ -164,7 +164,8 @@ te testen?'),
         help_text=_(u'Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
 cadeautje.'),
-        null=True)
+        null=True,
+        on_delete=models.CASCADE)
     compensation_details = models.CharField(
         _('Namelijk'),
         max_length=200,
@@ -317,7 +318,7 @@ geschoolde specialisten).')),
         blank=True)
 
     # References
-    proposal = models.ForeignKey(Proposal)
+    proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['order']

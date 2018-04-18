@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
                 ('metc_decision_pdf', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc])),
                 ('status', models.PositiveIntegerField(default=0, choices=[(0, 'Geen beoordeling door METC noodzakelijk'), (1, 'In afwachting beslissing METC'), (2, 'Beslissing METC ge\xfcpload')])),
                 ('enforced_by_commission', models.BooleanField(default=False)),
-                ('proposal', models.OneToOneField(primary_key=True, serialize=False, to='proposals.Proposal')),
+                ('proposal', models.OneToOneField(primary_key=True, serialize=False, to='proposals.Proposal', on_delete=models.CASCADE)),
             ],
         ),
         migrations.AddField(
@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='proposal',
             name='created_by',
-            field=models.ForeignKey(related_name='created_by', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='created_by', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='proposal',
@@ -99,16 +99,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='proposal',
             name='parent',
-            field=models.ForeignKey(verbose_name='Te kopi\xebren studie', to='proposals.Proposal', help_text='Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.', null=True),
+            field=models.ForeignKey(verbose_name='Te kopi\xebren studie', on_delete=models.CASCADE, to='proposals.Proposal', help_text='Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.', null=True),
         ),
         migrations.AddField(
             model_name='proposal',
             name='relation',
-            field=models.ForeignKey(verbose_name='In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?', to='proposals.Relation'),
+            field=models.ForeignKey(verbose_name='In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?', to='proposals.Relation', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='proposal',
             name='supervisor',
-            field=models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, help_text='Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.', null=True, verbose_name='Eindverantwoordelijke onderzoeker'),
+            field=models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, help_text='Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.', null=True, verbose_name='Eindverantwoordelijke onderzoeker', on_delete=models.CASCADE),
         ),
     ]

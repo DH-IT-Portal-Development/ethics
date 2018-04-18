@@ -6,6 +6,8 @@ from .views import \
     ReviewAssignView, ReviewCloseView, \
     DecisionUpdateView
 
+app_name = 'reviews'
+
 urlpatterns = [
     url(r'^$', DecisionListView.as_view(), name='my_archive'),
     url(r'^my_open/$', DecisionMyOpenView.as_view(), name='my_open'),

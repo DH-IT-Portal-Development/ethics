@@ -31,4 +31,6 @@ dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet \
 u op de vorige pagina ook "takenonderzoek" aanvinken.'))
 
     # References
-    study = models.OneToOneField(Study)
+    study = models.OneToOneField(
+        Study,
+        on_delete=models.CASCADE)

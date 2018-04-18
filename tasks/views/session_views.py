@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
