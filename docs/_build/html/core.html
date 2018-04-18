@@ -4,23 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>core package &#8212; ETCL 1.0 documentation</title>
-    
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '1.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -34,8 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -66,15 +54,15 @@
 <dl class="class">
 <dt id="core.admin.SettingAdmin">
 <em class="property">class </em><code class="descclassname">core.admin.</code><code class="descname">SettingAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="headerlink" href="#core.admin.SettingAdmin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
 <dl class="attribute">
 <dt id="core.admin.SettingAdmin.list_display">
-<code class="descname">list_display</code><em class="property"> = (‘order’, ‘description’, ‘needs_details’, ‘needs_supervision’, ‘requires_review’)</em><a class="headerlink" href="#core.admin.SettingAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<code class="descname">list_display</code><em class="property"> = ('order', 'description', 'is_local', 'needs_details', 'needs_supervision', 'requires_review')</em><a class="headerlink" href="#core.admin.SettingAdmin.list_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="core.admin.SettingAdmin.list_display_links">
-<code class="descname">list_display_links</code><em class="property"> = (‘description’,)</em><a class="headerlink" href="#core.admin.SettingAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#core.admin.SettingAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -84,7 +72,7 @@
 
 <dl class="attribute">
 <dt id="core.admin.SettingAdmin.ordering">
-<code class="descname">ordering</code><em class="property"> = [‘order’]</em><a class="headerlink" href="#core.admin.SettingAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#core.admin.SettingAdmin.ordering" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -94,41 +82,41 @@
 <span id="core-forms-module"></span><h2>core.forms module<a class="headerlink" href="#module-core.forms" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="core.forms.ConditionalModelForm">
-<em class="property">class </em><code class="descclassname">core.forms.</code><code class="descname">ConditionalModelForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id=u’id_%s’</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class ‘django.forms.utils.ErrorList’&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.forms.models.ModelForm</span></code></p>
+<em class="property">class </em><code class="descclassname">core.forms.</code><code class="descname">ConditionalModelForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <dl class="attribute">
 <dt id="core.forms.ConditionalModelForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = OrderedDict()</em><a class="headerlink" href="#core.forms.ConditionalModelForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {}</em><a class="headerlink" href="#core.forms.ConditionalModelForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="core.forms.ConditionalModelForm.check_dependency">
-<code class="descname">check_dependency</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f2</em>, <em>f1_value=True</em>, <em>error_message=”</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_dependency</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f2</em>, <em>f1_value=True</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="core.forms.ConditionalModelForm.check_dependency_list">
-<code class="descname">check_dependency_list</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f2</em>, <em>f1_value_list</em>, <em>error_message=”</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_list" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_dependency_list</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f2</em>, <em>f1_value_list</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="core.forms.ConditionalModelForm.check_dependency_multiple">
-<code class="descname">check_dependency_multiple</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f1_field</em>, <em>f2</em>, <em>error_message=”</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_multiple" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_dependency_multiple</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f1_field</em>, <em>f2</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_multiple" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="core.forms.ConditionalModelForm.check_dependency_singular">
-<code class="descname">check_dependency_singular</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f1_field</em>, <em>f2</em>, <em>error_message=”</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_singular" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_dependency_singular</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f1_field</em>, <em>f2</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_singular" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="core.forms.ConditionalModelForm.check_empty">
-<code class="descname">check_empty</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>error_message=”</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_empty" title="Permalink to this definition">¶</a></dt>
+<code class="descname">check_empty</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="headerlink" href="#core.forms.ConditionalModelForm.check_empty" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="core.forms.ConditionalModelForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = OrderedDict()</em><a class="headerlink" href="#core.forms.ConditionalModelForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#core.forms.ConditionalModelForm.declared_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -143,18 +131,18 @@
 <span id="core-models-module"></span><h2>core.models module<a class="headerlink" href="#module-core.models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="core.models.Setting">
-<em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Setting</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>needs_details</em>, <em>needs_supervision</em>, <em>requires_review</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Setting" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Setting</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>is_local</em>, <em>needs_details</em>, <em>needs_supervision</em>, <em>requires_review</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <dl class="exception">
 <dt id="core.models.Setting.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#core.models.Setting.DoesNotExist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="core.models.Setting.MultipleObjectsReturned">
 <em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#core.models.Setting.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -168,15 +156,68 @@
 <dd><p>A descriptor used for the original translated field.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="core.models.Setting.description_en">
+<code class="descname">description_en</code><a class="headerlink" href="#core.models.Setting.description_en" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.models.Setting.description_nl">
+<code class="descname">description_nl</code><a class="headerlink" href="#core.models.Setting.description_nl" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="core.models.Setting.get_deferred_fields">
 <code class="descname">get_deferred_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.models.Setting.get_deferred_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="core.models.Setting.id">
+<code class="descname">id</code><a class="headerlink" href="#core.models.Setting.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="core.models.Setting.intervention_set">
 <code class="descname">intervention_set</code><a class="headerlink" href="#core.models.Setting.intervention_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.models.Setting.is_local">
+<code class="descname">is_local</code><a class="headerlink" href="#core.models.Setting.is_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.models.Setting.needs_details">
+<code class="descname">needs_details</code><a class="headerlink" href="#core.models.Setting.needs_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.models.Setting.needs_supervision">
+<code class="descname">needs_supervision</code><a class="headerlink" href="#core.models.Setting.needs_supervision" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="core.models.Setting.objects">
@@ -186,7 +227,25 @@
 <dl class="attribute">
 <dt id="core.models.Setting.observation_set">
 <code class="descname">observation_set</code><a class="headerlink" href="#core.models.Setting.observation_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.models.Setting.order">
+<code class="descname">order</code><a class="headerlink" href="#core.models.Setting.order" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="core.models.Setting.refresh_from_db">
@@ -194,16 +253,34 @@
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="core.models.Setting.requires_review">
+<code class="descname">requires_review</code><a class="headerlink" href="#core.models.Setting.requires_review" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="core.models.Setting.session_set">
 <code class="descname">session_set</code><a class="headerlink" href="#core.models.Setting.session_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="core.models.SettingModel">
 <em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">SettingModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.models.SettingModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <dl class="class">
 <dt id="core.models.SettingModel.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#core.models.SettingModel.Meta" title="Permalink to this definition">¶</a></dt>
@@ -215,9 +292,41 @@
 </dd></dl>
 
 <dl class="attribute">
+<dt id="core.models.SettingModel.leader_has_coc">
+<code class="descname">leader_has_coc</code><a class="headerlink" href="#core.models.SettingModel.leader_has_coc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="core.models.SettingModel.setting">
 <code class="descname">setting</code><a class="headerlink" href="#core.models.SettingModel.setting" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.models.SettingModel.setting_details">
+<code class="descname">setting_details</code><a class="headerlink" href="#core.models.SettingModel.setting_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.models.SettingModel.supervision">
+<code class="descname">supervision</code><a class="headerlink" href="#core.models.SettingModel.supervision" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -226,8 +335,8 @@
 <span id="core-tests-module"></span><h2>core.tests module<a class="headerlink" href="#module-core.tests" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="core.tests.UtilsTest">
-<em class="property">class </em><code class="descclassname">core.tests.</code><code class="descname">UtilsTest</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="headerlink" href="#core.tests.UtilsTest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<em class="property">class </em><code class="descclassname">core.tests.</code><code class="descname">UtilsTest</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#core.tests.UtilsTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.test.testcases.TestCase</span></code></p>
 <dl class="method">
 <dt id="core.tests.UtilsTest.test_is_empty">
 <code class="descname">test_is_empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.tests.UtilsTest.test_is_empty" title="Permalink to this definition">¶</a></dt>
@@ -237,8 +346,8 @@
 
 <dl class="class">
 <dt id="core.tests.ValidatorTest">
-<em class="property">class </em><code class="descclassname">core.tests.</code><code class="descname">ValidatorTest</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="headerlink" href="#core.tests.ValidatorTest" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<em class="property">class </em><code class="descclassname">core.tests.</code><code class="descname">ValidatorTest</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#core.tests.ValidatorTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.test.testcases.TestCase</span></code></p>
 <dl class="method">
 <dt id="core.tests.ValidatorTest.test_max_words_validator">
 <code class="descname">test_max_words_validator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.tests.ValidatorTest.test_max_words_validator" title="Permalink to this definition">¶</a></dt>
@@ -255,7 +364,7 @@
 <dl class="class">
 <dt id="core.utils.AvailableURL">
 <em class="property">class </em><code class="descclassname">core.utils.</code><code class="descname">AvailableURL</code><span class="sig-paren">(</span><em>title</em>, <em>margin=0</em>, <em>url=None</em>, <em>is_title=False</em><span class="sig-paren">)</span><a class="headerlink" href="#core.utils.AvailableURL" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -293,7 +402,7 @@ For lists and unicode strings, also check if the value is not empty.</p>
 <dl class="class">
 <dt id="core.validators.MaxWordsValidator">
 <em class="property">class </em><code class="descclassname">core.validators.</code><code class="descname">MaxWordsValidator</code><span class="sig-paren">(</span><em>limit_value</em>, <em>message=None</em><span class="sig-paren">)</span><a class="headerlink" href="#core.validators.MaxWordsValidator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.validators.BaseValidator</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.validators.BaseValidator</span></code></p>
 <dl class="method">
 <dt id="core.validators.MaxWordsValidator.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#core.validators.MaxWordsValidator.clean" title="Permalink to this definition">¶</a></dt>
@@ -301,7 +410,7 @@ For lists and unicode strings, also check if the value is not empty.</p>
 
 <dl class="attribute">
 <dt id="core.validators.MaxWordsValidator.code">
-<code class="descname">code</code><em class="property"> = ‘max_words’</em><a class="headerlink" href="#core.validators.MaxWordsValidator.code" title="Permalink to this definition">¶</a></dt>
+<code class="descname">code</code><em class="property"> = 'max_words'</em><a class="headerlink" href="#core.validators.MaxWordsValidator.code" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -311,7 +420,7 @@ For lists and unicode strings, also check if the value is not empty.</p>
 
 <dl class="attribute">
 <dt id="core.validators.MaxWordsValidator.message">
-<code class="descname">message</code><em class="property"> = &lt;django.utils.functional.__proxy__ object&gt;</em><a class="headerlink" href="#core.validators.MaxWordsValidator.message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">message</code><em class="property"> = u''</em><a class="headerlink" href="#core.validators.MaxWordsValidator.message" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -327,7 +436,7 @@ For lists and unicode strings, also check if the value is not empty.</p>
 <dl class="class">
 <dt id="core.views.AllowErrorsMixin">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">AllowErrorsMixin</code><a class="headerlink" href="#core.views.AllowErrorsMixin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="core.views.AllowErrorsMixin.form_invalid">
 <code class="descname">form_invalid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.AllowErrorsMixin.form_invalid" title="Permalink to this definition">¶</a></dt>
@@ -339,7 +448,7 @@ For lists and unicode strings, also check if the value is not empty.</p>
 <dl class="class">
 <dt id="core.views.CreateView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">CreateView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.CreateView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.contrib.messages.views.SuccessMessageMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.edit.CreateView</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.messages.views.SuccessMessageMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.CreateView</span></code></p>
 <p>Generic create view including success message and login required mixins</p>
 <dl class="method">
 <dt id="core.views.CreateView.get_success_url">
@@ -352,22 +461,24 @@ For lists and unicode strings, also check if the value is not empty.</p>
 <dl class="class">
 <dt id="core.views.DeleteView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">DeleteView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.DeleteView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="#core.views.UserAllowedMixin" title="core.views.UserAllowedMixin"><code class="xref py py-class docutils literal"><span class="pre">core.views.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.edit.DeleteView</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="#core.views.UserAllowedMixin" title="core.views.UserAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.DeleteView</span></code></p>
 <p>Generic delete view including login required and user allowed mixin and alternative for success message</p>
 <dl class="method">
 <dt id="core.views.DeleteView.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.DeleteView.delete" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calls the delete() method on the fetched object and then
+redirects to the success URL.</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="core.views.HomeView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">HomeView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.HomeView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.base.TemplateView</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.TemplateView</span></code></p>
 <dl class="attribute">
 <dt id="core.views.HomeView.template_name">
-<code class="descname">template_name</code><em class="property"> = ‘core/index.html’</em><a class="headerlink" href="#core.views.HomeView.template_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">template_name</code><em class="property"> = 'core/index.html'</em><a class="headerlink" href="#core.views.HomeView.template_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -375,7 +486,7 @@ For lists and unicode strings, also check if the value is not empty.</p>
 <dl class="class">
 <dt id="core.views.UpdateView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">UpdateView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.UpdateView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal"><span class="pre">django.contrib.messages.views.SuccessMessageMixin</span></code>, <a class="reference internal" href="#core.views.UserAllowedMixin" title="core.views.UserAllowedMixin"><code class="xref py py-class docutils literal"><span class="pre">core.views.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.edit.UpdateView</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.messages.views.SuccessMessageMixin</span></code>, <a class="reference internal" href="#core.views.UserAllowedMixin" title="core.views.UserAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.UpdateView</span></code></p>
 <p>Generic update view including success message, user allowed and login required mixins</p>
 <dl class="method">
 <dt id="core.views.UpdateView.get_success_url">
@@ -388,7 +499,7 @@ For lists and unicode strings, also check if the value is not empty.</p>
 <dl class="class">
 <dt id="core.views.UserAllowedMixin">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">UserAllowedMixin</code><a class="headerlink" href="#core.views.UserAllowedMixin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></p>
 <dl class="method">
 <dt id="core.views.UserAllowedMixin.get_object">
 <code class="descname">get_object</code><span class="sig-paren">(</span><em>queryset=None</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.UserAllowedMixin.get_object" title="Permalink to this definition">¶</a></dt>
@@ -403,6 +514,22 @@ a PermissionDenied is raised.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="core.views.UserSearchView">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">UserSearchView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.UserSearchView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></p>
+<dl class="method">
+<dt id="core.views.UserSearchView.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.UserSearchView.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="core.views.UserSearchView.render_to_response">
+<code class="descname">render_to_response</code><span class="sig-paren">(</span><em>context</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.UserSearchView.render_to_response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="core.views.check_requires">
 <code class="descclassname">core.views.</code><code class="descname">check_requires</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.check_requires" title="Permalink to this definition">¶</a></dt>
@@ -410,9 +537,41 @@ a PermissionDenied is raised.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="core.views.escape_ldap_input">
+<code class="descclassname">core.views.</code><code class="descname">escape_ldap_input</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.escape_ldap_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function escapes the user input such that all values are seen as text, not filter instructions.</p>
+<p>TL;DR: prevents LDAP injection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>string</em>) – The to be escaped string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return string:</th><td class="field-body">The escaped string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="core.views.format_user_info">
+<code class="descclassname">core.views.</code><code class="descname">format_user_info</code><span class="sig-paren">(</span><em>lst</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.format_user_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>This will format a user object into a displayable format</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="core.views.success_url">
 <code class="descclassname">core.views.</code><code class="descname">success_url</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.success_url" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="function">
+<dt id="core.views.user_search">
+<code class="descclassname">core.views.</code><code class="descname">user_search</code><span class="sig-paren">(</span><em>query</em>, <em>page</em><span class="sig-paren">)</span><a class="headerlink" href="#core.views.user_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function searches through users for a given query. Page 1 will return registered users, or if there are none,
+LDAP users. Page 2 will return LDAP users.</p>
+<p>The double behaviour of page 1 has to be this weird because of the way Select2 handles empty pages.</p>
+<p>If a page returns LDAP users, or there is no LDAP connection available, we will mark the page as the last page.</p>
+</dd></dl>
 
 </div>
 <div class="section" id="module-core">
@@ -461,12 +620,14 @@ a PermissionDenied is raised.</p>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -477,7 +638,7 @@ a PermissionDenied is raised.</p>
       &copy;2017, Martijn van der Klis.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
