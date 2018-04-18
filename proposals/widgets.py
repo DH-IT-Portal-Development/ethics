@@ -1,8 +1,5 @@
 from django import forms
-from django.forms.utils import flatatt
 from django.utils.datastructures import MultiValueDict
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
 
 try:
     from django_auth_ldap.backend import LDAPBackend

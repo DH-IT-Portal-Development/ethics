@@ -77,7 +77,7 @@ class ProposalTestCase(BaseProposalTestCase):
         s1.save()
 
         s1_t1 = Task.objects.create(session=s1, order=1, name='t1')
-        s1_t2 = Task.objects.create(session=s1, order=2, name='t2')
+        Task.objects.create(session=s1, order=2, name='t2')
 
         s1.tasks_duration = 45
         s1.save()
