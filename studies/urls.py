@@ -4,6 +4,8 @@ from .views.session_views import SessionStart
 from .views.study_views import StudyUpdate, StudyDesign, StudyConsent, StudyUpdateAttachments, StudyEnd, \
     has_adults, necessity_required
 
+app_name = 'studies'
+
 urlpatterns = [
     # Study
     url(r'^update/(?P<pk>\d+)/$', StudyUpdate.as_view(), name='update'),

@@ -2,7 +2,7 @@
 
 from django.conf import settings
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.utils import timezone
@@ -63,6 +63,7 @@ def start_supervisor_phase(proposal):
         'secretary': get_secretary().get_full_name(),
         'revision': proposal.is_revision,
         'revision_type': proposal.type(),
+        'my_supervised': settings.BASE_URL + reverse('proposals:my_supervised')
     }
     msg_plain = render_to_string('mail/concept_supervisor.txt', params)
     msg_html = render_to_string('mail/concept_supervisor.html', params)

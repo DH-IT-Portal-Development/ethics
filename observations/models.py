@@ -67,4 +67,6 @@ om deze observatie te mogen uitvoeren?'),
         blank=True)
 
     # References
-    study = models.OneToOneField(Study)
+    study = models.OneToOneField(
+        Study,
+        on_delete=models.CASCADE)
