@@ -33,7 +33,7 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
     </li>
     {% if review.proposal.date_confirmed %}
     <li>
-        {% blocktrans with date_confirmed=review.proposal.date_confirmed|date:"j F Y, G:i" %}
+        {% blocktrans with date_confirmed=review.proposal.date_confirmed|date:"j F Y" %}
         Bevestiging verzonden op {{ date_confirmed }}.
         {% endblocktrans %}
         {% if review.proposal.confirmation_comments %}
