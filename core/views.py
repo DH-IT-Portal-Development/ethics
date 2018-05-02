@@ -83,7 +83,7 @@ def user_search(query, page):
 
     # We need results from the LDAP if either, this is page 2, or page 1 has no results for now
     # We put this in a variable because we're going to reuse this later on
-    ldap_results_needed = (page == u'2' or len(users) < 3)
+    ldap_results_needed = (page == u'2' or len(users) == 0)
 
     # If we can use the LDAP and we need LDAP results
     if ldap_available and ldap_results_needed:
