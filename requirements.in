@@ -3,7 +3,7 @@ django-auth-ldap
 django-braces
 django-easy-pdf
 django-modeltranslation
-mysql-python
+mysqlclient
 xhtml2pdf
 sphinx
 html5lib
