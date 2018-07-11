@@ -208,7 +208,8 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         'self',
         null=True,
         verbose_name=_(u'Te kopiëren studie'),
-        help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'))
+        help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'),
+        on_delete=models.CASCADE)
     is_revision = models.BooleanField(
         _('Is deze studie een revisie van of amendement op een ingediende studie?'),
         default=False
