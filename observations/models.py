@@ -18,7 +18,7 @@ class Registration(models.Model):
         ordering = ['order']
 
     def __str__(self):
-        return self.de
+        return self.description
 
 
 class Observation(SettingModel):
