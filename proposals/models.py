@@ -1,9 +1,11 @@
 # -*- encoding: utf-8 -*-
+from __future__ import unicode_literals
 
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from core.models import YES_NO_DOUBT, YES
 from core.validators import MaxWordsValidator, validate_pdf_or_doc
@@ -13,6 +15,7 @@ from .utils import available_urls
 SUMMARY_MAX_WORDS = 200
 
 
+@python_2_unicode_compatible
 class Relation(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -23,10 +26,11 @@ class Relation(models.Model):
     class Meta:
         ordering = ['order']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
 
+@python_2_unicode_compatible
 class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -37,10 +41,11 @@ class Funding(models.Model):
     class Meta:
         ordering = ['order']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
 
+@python_2_unicode_compatible
 class Proposal(models.Model):
     DRAFT = 1
     SUBMITTED_TO_SUPERVISOR = 40
@@ -108,7 +113,7 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)
     inform_local_staff = models.NullBooleanField(
-        _(u'<p>U hebt aangegeven dat u gebruik wilt gaan maken van één \
+        _('<p>U hebt aangegeven dat u gebruik wilt gaan maken van één \
 van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
 en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op \
 de hoogte willen worden gesteld van aankomende studies. \
@@ -145,7 +150,7 @@ Zep software)'),
     # Fields with respect to Studies
     studies_similar = models.NullBooleanField(
         _('Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
-        help_text=_(u'Daar waar de verschillen klein en qua belasting of \
+        help_text=_('Daar waar de verschillen klein en qua belasting of \
 risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk \
 hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
 een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
@@ -207,7 +212,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
     parent = models.ForeignKey(
         'self',
         null=True,
-        verbose_name=_(u'Te kopiëren studie'),
+        verbose_name=_('Te kopiëren studie'),
         help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'),
         on_delete=models.CASCADE)
     is_revision = models.BooleanField(
@@ -299,10 +304,10 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
             return decisions[0]
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (%s)' % (self.title, self.created_by)
 
-
+@python_2_unicode_compatible
 class Wmo(models.Model):
     NO_WMO = 0
     WAITING = 1
@@ -310,7 +315,7 @@ class Wmo(models.Model):
     WMO_STATUSES = (
         (NO_WMO, _('Geen beoordeling door METC noodzakelijk')),
         (WAITING, _('In afwachting beslissing METC')),
-        (JUDGED, _(u'Beslissing METC geüpload')),
+        (JUDGED, _('Beslissing METC geüpload')),
     )
 
     metc = models.CharField(
@@ -389,5 +394,5 @@ bij een METC?'),
         else:
             self.status = self.NO_WMO
 
-    def __unicode__(self):
+    def __str__(self):
         return _('WMO {title}, status {status}').format(title=self.proposal.title, status=self.status)

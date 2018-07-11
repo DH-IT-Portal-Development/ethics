@@ -4,12 +4,14 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 from core.models import YES_NO_DOUBT
 from core.validators import validate_pdf_or_doc
 from proposals.models import Proposal
 
 
+@python_2_unicode_compatible
 class AgeGroup(models.Model):
     """
     A model to store participant age groups.
@@ -24,13 +26,14 @@ class AgeGroup(models.Model):
     needs_details = models.BooleanField(default=False)
     max_net_duration = models.PositiveIntegerField()
 
-    def __unicode__(self):
+    def __str__(self):
         if self.age_max:
             return _('{}-{} jaar').format(self.age_min, self.age_max)
         else:
             return _('{} jaar en ouder').format(self.age_min)
 
 
+@python_2_unicode_compatible
 class Trait(models.Model):
     """
     A model to store participant traits.
@@ -44,10 +47,11 @@ class Trait(models.Model):
     class Meta:
         ordering = ['order']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
 
+@python_2_unicode_compatible
 class Compensation(models.Model):
     """
     A model to store forms of participant compensation.
@@ -63,10 +67,11 @@ class Compensation(models.Model):
     class Meta:
         ordering = ['order']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
 
+@python_2_unicode_compatible
 class Recruitment(models.Model):
     """
     A model to store forms of participant recruitment.
@@ -85,10 +90,11 @@ class Recruitment(models.Model):
         ordering = ['order']
         verbose_name = _('Werving')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
 
+@python_2_unicode_compatible
 class Study(models.Model):
     """
     A model to store a study within a Proposal.
@@ -111,8 +117,8 @@ class Study(models.Model):
 
     age_groups = models.ManyToManyField(
         AgeGroup,
-        verbose_name=_(u'Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
-        help_text=_(u'De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
+        verbose_name=_('Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
+        help_text=_('De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
 Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
         _('Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) \
@@ -129,7 +135,7 @@ vertegenwoordiger te worden verkregen.'),
         _('Licht toe'),
         blank=True)
     has_traits = models.NullBooleanField(
-        _(u'Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
+        _('Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
     traits = models.ManyToManyField(
         Trait,
@@ -161,7 +167,7 @@ te testen?'),
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
-        help_text=_(u'Het standaardbedrag voor vergoeding aan de deelnemers \
+        help_text=_('Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
 cadeautje.'),
         null=True,
@@ -231,7 +237,7 @@ toegestaan en draagt niet de voorkeur van de commissie.'),
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
         null=True,
         validators=[MinValueValidator(1)],
-        help_text=_(u'Wanneer u bijvoorbeeld eerst de deelnemer een \
+        help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer een \
 taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en \
 u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
@@ -364,5 +370,5 @@ geschoolde specialisten).')),
         else:
             return not self.informed_consent or not self.briefing
 
-    def __unicode__(self):
+    def __str__(self):
         return _('Study details for proposal %s') % self.proposal.title

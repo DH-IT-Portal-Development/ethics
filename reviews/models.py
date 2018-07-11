@@ -1,12 +1,16 @@
+from __future__ import unicode_literals
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
+from django.utils.encoding import python_2_unicode_compatible
 
 from proposals.models import Proposal
 
 
+@python_2_unicode_compatible
 class Review(models.Model):
     SUPERVISOR = 0
     ASSIGNMENT = 1
@@ -88,10 +92,11 @@ class Review(models.Model):
     def current_reviewers(self):
         return get_user_model().objects.filter(decision__review=self)
 
-    def __unicode__(self):
-        return u'Review of %s' % self.proposal
+    def __str__(self):
+        return 'Review of %s' % self.proposal
 
 
+@python_2_unicode_compatible
 class Decision(models.Model):
     APPROVED = 'Y'
     NOT_APPROVED = 'N'
@@ -125,5 +130,5 @@ class Decision(models.Model):
         super(Decision, self).save(*args, **kwargs)
         self.review.update_go()
 
-    def __unicode__(self):
-        return u'Decision #%d by %s on %s: %s' % (self.pk, self.reviewer.username, self.review.proposal, self.go)
+    def __str__(self):
+        return 'Decision #%d by %s on %s: %s' % (self.pk, self.reviewer.username, self.review.proposal, self.go)
