@@ -38,8 +38,8 @@ def copy_proposal(self, form):
 
     # Copy references
     copy_proposal.relation = relation
-    copy_proposal.applicants = applicants
-    copy_proposal.funding = funding
+    copy_proposal.applicants.set(applicants)
+    copy_proposal.funding.set(funding)
     copy_proposal.parent = Proposal.objects.get(pk=parent_pk)
     copy_proposal.save()
 

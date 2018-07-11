@@ -112,10 +112,10 @@ def copy_study_to_proposal(proposal, study):
     s.proposal = proposal
     s.save()
 
-    s.age_groups = age_groups
-    s.traits = traits
+    s.age_groups.set(age_groups)
+    s.traits.set(traits)
     s.compensation = compensation
-    s.recruitment = recruitment
+    s.recruitment.set(recruitment)
     s.save()
 
     if intervention:
