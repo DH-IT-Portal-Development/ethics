@@ -693,13 +693,31 @@
     </tr>
     <tr>
         <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th>
+        {% if p_study.informed_consent %}
         <td><a href="{{ p_study.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if study.informed_consent %}
         <td><a href="{{ study.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+        {% else %}
+        <td></td>
+        {% endif %}
     </tr>
     <tr>
         <th>{% get_verbose_field_name "studies" "study" "briefing" %}</th>
+        {% if p_study.briefing %}
         <td><a href="{{ p_study.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+        {% else %}
+        <td></td>
+        {% endif %}
+
+        {% if study.briefing %}
         <td><a href="{{ study.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+        {% else %}
+        <td></td>
+        {% endif %}
     </tr>
     <tr>
         <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th>
