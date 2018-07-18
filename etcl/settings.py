@@ -144,6 +144,6 @@ SHORT_ROUTE_WEEKS = 2
 BASE_URL = '127.0.0.1:8000'
 
 try:
-    from ldap_settings import *
+    from .ldap_settings import *
 except ImportError:
     print('Proceeding without LDAP settings')
