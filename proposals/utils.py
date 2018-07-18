@@ -105,9 +105,15 @@ def generate_pdf(proposal, template):
     current_language = get_language()
     activate('en')
 
-    context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL}
-    pdf = ContentFile(render_to_pdf(template, context))
-    proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
+    # This try catch does not actually handle any errors. It only makes sure the language is properly reset before
+    # reraising the exception.
+    try:
+        context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL}
+        pdf = ContentFile(render_to_pdf(template, context))
+        proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
+    except Exception as e:
+        activate(current_language)
+        raise e
 
     # Reset the current language
     activate(current_language)
