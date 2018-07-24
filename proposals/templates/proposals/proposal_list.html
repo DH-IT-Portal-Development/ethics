@@ -59,6 +59,8 @@
             <th>{% trans "Titel studie" %}</th>
             <th>{% trans "Soort studie" %}</th>
             <th>{% trans "Datum ingediend" %}</th>
+            <th>{% trans "Indiener" %}</th>
+            <th>{% trans "Eindverantwoordelijke onderzoeker" %}</th>
             <th>{% trans "Laatst bijgewerkt" %}</th>
             <th>{% trans "Acties" %}</th>
         </tr>
@@ -70,6 +72,8 @@
             <td>{{ proposal.title }}</td>
             <td>{{ proposal.type }}</td>
             <td data-order="{{ proposal.date_submitted|date:'c' }}">{{ proposal.date_submitted|date:"j M Y, G:i" }}</td>
+            <td>{{ proposal.created_by.get_full_name }}</td>
+            <td>{{ proposal.supervisor.get_full_name }}</td>
             <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
             <td>
                 {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
