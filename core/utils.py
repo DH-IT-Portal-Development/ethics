@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
+import django.utils.six as six
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 
@@ -40,13 +41,13 @@ def get_users_as_list(users):
 def is_empty(value):
     """
     Checks if value is filled out (!= None).
-    For lists and unicode strings, also check if the value is not empty.
+    For lists and strings, also check if the value is not empty.
     """
     result = False
     if value is None:
         result = True
     if hasattr(value, '__len__') and len(value) == 0:
         result = True
-    if isinstance(value, unicode) and not value.strip():
+    if isinstance(value, six.text_type) and not value.strip():
         result = True
     return result

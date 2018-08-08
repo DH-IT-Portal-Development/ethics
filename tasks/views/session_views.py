@@ -92,13 +92,13 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             current = session.task_set.count() or 0
 
             # Create Tasks
-            for n in xrange(current, nr_tasks):
+            for n in range(current, nr_tasks):
                 order = n + 1
                 task = Task(session=session, order=order)
                 task.save()
 
             # Delete Tasks
-            for n in xrange(nr_tasks, current):
+            for n in range(nr_tasks, current):
                 order = n + 1
                 task = Task.objects.get(session=session, order=order)
                 task.delete()

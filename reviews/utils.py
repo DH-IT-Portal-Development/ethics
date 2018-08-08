@@ -275,7 +275,7 @@ def auto_review(proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.sessions_number > 1:
+        if study.sessions_number and study.sessions_number > 1:
             reasons.append(_('De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek).'))
 
         if study.stressful in [YES, DOUBT]:

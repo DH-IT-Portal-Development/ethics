@@ -276,7 +276,7 @@ class StudyStartForm(forms.ModelForm):
             nr_studies = cleaned_data['studies_number']
             if cleaned_data['studies_number'] < 2:
                 self.add_error('studies_number', _('Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
-            for n in xrange(nr_studies):
+            for n in range(nr_studies):
                 if n >= 5:
                     break
                 study_name = 'study_name_' + str(n + 1)
