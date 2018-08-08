@@ -380,7 +380,7 @@ geschoolde specialisten).')),
 
     def has_missing_sessions(self):
         if self.has_intervention:
-            return self.intervention.contains_schools() and not self.has_sessions
+            return self.intervention.settings_contains_schools() and not self.has_sessions
 
         return False
 

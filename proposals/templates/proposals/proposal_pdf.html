@@ -334,7 +334,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th><td>{{ intervention.controls_description }}</td>
             </tr>
             {% endif %}
-            {% if not intervention.contains_schools %}
+            {% if not intervention.settings_contains_schools %}
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "extra_task" %}</th><td>{{ intervention.extra_task|yesno:_("ja,nee") }}</td>
             </tr>

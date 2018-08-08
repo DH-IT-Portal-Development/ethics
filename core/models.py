@@ -54,6 +54,6 @@ van de leraar of een ander persoon die bevoegd is?')
     class Meta:
         abstract = True
 
-    def contains_schools(self):
+    def settings_contains_schools(self):
         """If the current settings contains any that are marked as schools."""
         return self.setting.filter(is_school=True).exists();
