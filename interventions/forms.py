@@ -10,16 +10,18 @@ class InterventionForm(ConditionalModelForm):
         model = Intervention
         fields = [
             'setting', 'setting_details', 'supervision', 'leader_has_coc',
-            'period', 'amount_per_week', 'duration',
+            'period', 'multiple_sessions', 'session_frequency', 'duration',
             'experimenter', 'description',
             'has_controls', 'controls_description',
-            'measurement',
+            'measurement', 'extra_task'
         ]
         widgets = {
             'setting': forms.CheckboxSelectMultiple(),
             'supervision': forms.RadioSelect(choices=YES_NO),
+            'multiple_sessions': forms.RadioSelect(choices=YES_NO),
             'leader_has_coc': forms.RadioSelect(choices=YES_NO),
             'has_controls': forms.RadioSelect(choices=YES_NO),
+            'extra_task': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -40,6 +42,7 @@ class InterventionForm(ConditionalModelForm):
         Check for conditional requirements:
         - If a setting which needs details or supervision has been checked, make sure the details are filled
         - If has_controls is True, controls_description is required
+        - If multiple_sessions is True, session_frequency is required
         """
         cleaned_data = super(InterventionForm, self).clean()
 
@@ -48,3 +51,4 @@ class InterventionForm(ConditionalModelForm):
             self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
             self.check_dependency(cleaned_data, 'supervision', 'leader_has_coc', f1_value=False)
         self.check_dependency(cleaned_data, 'has_controls', 'controls_description')
+        self.check_dependency(cleaned_data, 'multiple_sessions', 'session_frequency')

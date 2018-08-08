@@ -19,15 +19,48 @@
 <script>
 $(function() {
     depends_on_value('has_controls', 'True', 'controls_description');
-    
+    depends_on_value('multiple_sessions', 'True', 'session_frequency');
+    depends_on_value('extra_task', 'True', 'extra_info');
+
     add_title('setting', "{% trans 'Setting' %}");
     add_title('period', "{% trans 'Beschrijving van de interventie' %}");
+    add_title('extra_task', "{% trans 'Extra taak' %}");
+
+
+    // Logic for extra task display
+    $('input[name=setting]').change(function() {
+            var checked_inputs = $('input[name=setting]:checked').map(function() {
+                return this.value;
+            }).get();
+
+            var url = "{% url 'core:check_requires' %}";
+            var params = {'value': checked_inputs, 'app': 'core', 'model': 'setting', 'field': 'is_school'};
+            $.post(url, params, function(data) {
+                $('#id_extra_task').parents('tr').toggle(data.result);
+                // Toggle header as well
+                $('#id_extra_task').parents('tr').prev().toggle(data.result);
+            });
+        });
+
+    $('input[name=setting]').change();
 });
 </script>
 {% include "core/setting_checks.html" %}
 {% include "studies/study_title.html" %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <th>
+                <label for="id_extra_info"></label>
+            </th>
+            <td id="id_extra_info">
+                {% blocktrans %}
+                Je zult binnen dit traject van de leerling nog een onderzoekstype moeten selecteren. Ga naar de navigatiemogelijkheid rechts bovenaan deze pagina (toon navigatie) en selecteer ‘de onderzoekstypen. Wanneer je op die pagina bent aangekomen selecteer je naast interventie (die staat al aangevinkt) ook ‘takenonderzoek’. Vul de vragen in die onder dit kopje verschijnen.
+                {% endblocktrans %}
+            </td>
+        </tr>
+    </table>
     {% with proposal=study.proposal %}
     {% include "base/form_buttons.html" %}
     {% endwith %}
