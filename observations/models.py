@@ -3,7 +3,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils.safestring import mark_safe
 
 from core.models import SettingModel
 from core.validators import validate_pdf_or_doc
