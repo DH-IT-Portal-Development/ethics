@@ -18,7 +18,7 @@ class ObservationForm(ConditionalModelForm):
             'is_anonymous', 'is_anonymous_details', 'is_in_target_group',
             'is_in_target_group_details', 'is_nonpublic_space', 'is_nonpublic_space_details',
             'has_advanced_consent',
-            'needs_approval', 'approval_institution', 'approval_document',
+            'needs_approval', 'approval_institution',
             'registrations', 'registrations_details',
         ]
         widgets = {
@@ -55,7 +55,6 @@ class ObservationForm(ConditionalModelForm):
         """
         Check for conditional requirements:
         - If a setting which needs details or supervision has been checked, make sure the details are filled
-        - If the Observation needs_approval, check if approval_institution/approval_document are provided
         - If a registration which needs details has been checked, make sure the details are filled
         - For all default anonymity questions, if true, the appropiate explain fields need to be filled
         """
@@ -73,9 +72,6 @@ class ObservationForm(ConditionalModelForm):
         self.check_dependency(cleaned_data, 'is_nonpublic_space', 'is_nonpublic_space_details')
 
 
-        # Approval document only needs to be added for non-practice Proposals
-        if not self.study.proposal.is_practice():
-            self.check_dependency(cleaned_data, 'needs_approval', 'approval_document')
 
 
 class ObservationUpdateAttachmentsForm(forms.ModelForm):
