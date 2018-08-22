@@ -236,52 +236,11 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         {% with intervention=study.intervention %}
         <h2>{% trans "Het interventieonderzoek" %}</h2>
         {% include "studies/study_title.html" %}
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{{ intervention.setting.all|unordered_list }}</td>
-            </tr>
-            {% if intervention.setting.all|needs_details %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td>{{ intervention.setting_details }}</td>
-            </tr>
-            {% endif %}
-            {% if study.has_children and intervention.setting.all|needs_details:"needs_supervision" %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if not intervention.supervision %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th><td>{{ intervention.leader_has_coc|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% endif %}
-            {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th><td>{{ intervention.period }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "amount_per_week" %}</th><td>{{ intervention.amount_per_week }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "duration" %}</th><td>{{ intervention.duration }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "measurement" %}</th><td>{{ intervention.measurement }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "experimenter" %}</th><td>{{ intervention.experimenter }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td>{{ intervention.description }}</td>
-            </tr>
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th><td>{{ intervention.has_controls|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if intervention.has_controls %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th><td>{{ intervention.controls_description }}</td>
-            </tr>
-            {% endif %}
-        </table>
+        {% if intervention.version == 1 %}
+            {% include 'proposals/pdf/intervention_v1.html' %}
+        {% elif intervention.version == 2 %}
+            {% include 'proposals/pdf/intervention_v2.html' %}
+        {% endif %}
         {% endwith %}
         {% endif %}
 

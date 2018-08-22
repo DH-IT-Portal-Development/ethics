@@ -2,6 +2,7 @@
 
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
@@ -19,6 +20,9 @@ class AgeGroup(models.Model):
     The 'needs_details' field is used to determine whether the 'necessity' field on Study needs to be filled.
     The 'max_net_duration' field is used in the automatic review to check the target Session duration is not exceeded.
     """
+    class Meta:
+        ordering = ('age_min',)
+
     age_min = models.PositiveIntegerField()
     age_max = models.PositiveIntegerField(blank=True, null=True)
     description = models.CharField(max_length=200)
@@ -342,6 +346,10 @@ geschoolde specialisten).')),
         """Returns whether the Study contains non-adult AgeGroups"""
         return self.age_groups.filter(is_adult=False).exists()
 
+    def has_participants_below_age(self, age):
+        """Returns whether the Study contains AgeGroups with ages below the specified age"""
+        return self.age_groups.filter(Q(age_min__lt=age) & Q(age_max__lt=age)).exists()
+
     def design_started(self):
         """Checks if the design phase has started"""
         return any([self.has_intervention, self.has_observation, self.has_sessions])
@@ -369,6 +377,13 @@ geschoolde specialisten).')),
             return not self.director_consent_declaration or not self.director_consent_information or not self.parents_information
         else:
             return not self.informed_consent or not self.briefing
+
+    def has_missing_sessions(self):
+        if self.has_intervention and self.intervention.extra_task:
+            return self.intervention.settings_contains_schools() and not self.has_sessions
+
+        return False
+
 
     def __str__(self):
         return _('Study details for proposal %s') % self.proposal.title

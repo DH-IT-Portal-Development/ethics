@@ -19,6 +19,7 @@ class Setting(models.Model):
     needs_details = models.BooleanField(default=False)
     needs_supervision = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
+    is_school = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['order']
@@ -52,3 +53,7 @@ van de leraar of een ander persoon die bevoegd is?')
 
     class Meta:
         abstract = True
+
+    def settings_contains_schools(self):
+        """If the current settings contains any that are marked as schools."""
+        return self.setting.filter(is_school=True).exists();
