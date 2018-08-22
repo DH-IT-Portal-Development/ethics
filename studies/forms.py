@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from core.forms import ConditionalModelForm
 from core.models import YES_NO_DOUBT, YES, DOUBT
 from core.utils import YES_NO
-from .models import Study
+from .models import Study, AgeGroup
 from .utils import check_necessity_required
 
 
@@ -46,6 +46,8 @@ class StudyForm(ConditionalModelForm):
         self.fields['compensation'].empty_label = None
         self.fields['necessity'].empty_label = None
         self.fields['necessity'].choices = YES_NO_DOUBT
+
+        self.fields['age_groups'].queryset = AgeGroup.objects.filter(is_active=True)
 
     def clean(self):
         """

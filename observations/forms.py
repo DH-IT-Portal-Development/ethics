@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
+from django.utils.safestring import mark_safe
 
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO
@@ -12,17 +13,17 @@ class ObservationForm(ConditionalModelForm):
         model = Observation
         fields = [
             'setting', 'setting_details', 'supervision', 'leader_has_coc',
-            'days', 'mean_hours',
-            'is_anonymous', 'is_in_target_group',
-            'is_nonpublic_space', 'has_advanced_consent',
-            'needs_approval', 'approval_institution', 'approval_document',
+            'details_who', 'details_why', 'details_frequency',
+            'is_anonymous', 'is_anonymous_details', 'is_in_target_group',
+            'is_in_target_group_details', 'is_nonpublic_space', 'is_nonpublic_space_details',
+            'has_advanced_consent',
+            'needs_approval', 'approval_institution',
             'registrations', 'registrations_details',
         ]
         widgets = {
             'setting': forms.CheckboxSelectMultiple(),
             'supervision': forms.RadioSelect(choices=YES_NO),
             'leader_has_coc': forms.RadioSelect(choices=YES_NO),
-            'mean_hours': forms.NumberInput(attrs={'step': 0.25}),
             'is_anonymous': forms.RadioSelect(choices=YES_NO),
             'is_in_target_group': forms.RadioSelect(choices=YES_NO),
             'is_nonpublic_space': forms.RadioSelect(choices=YES_NO),
@@ -40,6 +41,11 @@ class ObservationForm(ConditionalModelForm):
 
         super(ObservationForm, self).__init__(*args, **kwargs)
 
+        self.fields['details_who'].label = mark_safe(self.fields['details_who'].label)
+        self.fields['details_why'].label = mark_safe(self.fields['details_why'].label)
+        self.fields['details_frequency'].label = mark_safe(self.fields['details_frequency'].label)
+
+
         if not self.study.has_children():
             del self.fields['supervision']
             del self.fields['leader_has_coc']
@@ -48,8 +54,8 @@ class ObservationForm(ConditionalModelForm):
         """
         Check for conditional requirements:
         - If a setting which needs details or supervision has been checked, make sure the details are filled
-        - If the Observation needs_approval, check if approval_institution/approval_document are provided
         - If a registration which needs details has been checked, make sure the details are filled
+        - For all default anonymity questions, if true, the appropiate explain fields need to be filled
         """
         cleaned_data = super(ObservationForm, self).clean()
 
@@ -60,9 +66,11 @@ class ObservationForm(ConditionalModelForm):
         self.check_dependency(cleaned_data, 'needs_approval', 'approval_institution')
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
 
-        # Approval document only needs to be added for non-practice Proposals
-        if not self.study.proposal.is_practice():
-            self.check_dependency(cleaned_data, 'needs_approval', 'approval_document')
+        self.check_dependency(cleaned_data, 'is_anonymous', 'is_anonymous_details')
+        self.check_dependency(cleaned_data, 'is_in_target_group', 'is_in_target_group_details')
+        self.check_dependency(cleaned_data, 'is_nonpublic_space', 'is_nonpublic_space_details')
+
+
 
 
 class ObservationUpdateAttachmentsForm(forms.ModelForm):

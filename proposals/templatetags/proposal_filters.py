@@ -15,7 +15,7 @@ def get_verbose_field_name(app_label, model_name, field_name, value=None):
     verbose_name = apps.get_model(app_label, model_name)._meta.get_field(field_name).verbose_name
     if value is not None:
         verbose_name %= value
-    return verbose_name
+    return mark_safe(verbose_name)
 
 
 @register.filter

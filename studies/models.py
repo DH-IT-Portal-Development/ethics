@@ -19,6 +19,8 @@ class AgeGroup(models.Model):
     The model has fields for the age range, a description and whether this age group is considered adult.
     The 'needs_details' field is used to determine whether the 'necessity' field on Study needs to be filled.
     The 'max_net_duration' field is used in the automatic review to check the target Session duration is not exceeded.
+    The 'is_active' field is used for when the age groups need to be redefined. Create new ones for the groups that need
+    to be redefined, and set the old ones to inactive. This is needed to preserve old proposals for the archive.
     """
     class Meta:
         ordering = ('age_min',)
@@ -29,6 +31,7 @@ class AgeGroup(models.Model):
     is_adult = models.BooleanField(default=False)
     needs_details = models.BooleanField(default=False)
     max_net_duration = models.PositiveIntegerField()
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         if self.age_max:
