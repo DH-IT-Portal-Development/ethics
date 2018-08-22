@@ -379,7 +379,7 @@ geschoolde specialisten).')),
             return not self.informed_consent or not self.briefing
 
     def has_missing_sessions(self):
-        if self.has_intervention:
+        if self.has_intervention and self.intervention.extra_task:
             return self.intervention.settings_contains_schools() and not self.has_sessions
 
         return False
