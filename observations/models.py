@@ -22,13 +22,11 @@ class Registration(models.Model):
 
 
 class Observation(SettingModel):
-    days = models.PositiveIntegerField(
-        _('Op hoeveel dagen wordt er geobserveerd (per deelnemer)?'))
-    mean_hours = models.DecimalField(
-        _('Hoeveel uur wordt er gemiddeld per dag geobserveerd?'),
-        max_digits=4,
-        decimal_places=2,
-        validators=[MaxValueValidator(24)])
+
+    # This is used internally to provide backwards compatibility with the old version of this model. All old fields are
+    # still used if this is 1.
+    version = models.PositiveIntegerField('INTERNAL - Describes which version of the intervention model is used',
+                                          default=2)
 
     is_anonymous = models.BooleanField(
         _('Wordt er anoniem geobserveerd?'),
@@ -66,6 +64,17 @@ om deze observatie te mogen uitvoeren?'),
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,
+        blank=True)
+
+
+    # Legacy, only used in v1
+    days = models.PositiveIntegerField(
+        _('Op hoeveel dagen wordt er geobserveerd (per deelnemer)?'), blank=True)
+    mean_hours = models.DecimalField(
+        _('Hoeveel uur wordt er gemiddeld per dag geobserveerd?'),
+        max_digits=4,
+        decimal_places=2,
+        validators=[MaxValueValidator(24)],
         blank=True)
 
     # References

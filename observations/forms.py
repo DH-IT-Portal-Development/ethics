@@ -22,7 +22,6 @@ class ObservationForm(ConditionalModelForm):
             'setting': forms.CheckboxSelectMultiple(),
             'supervision': forms.RadioSelect(choices=YES_NO),
             'leader_has_coc': forms.RadioSelect(choices=YES_NO),
-            'mean_hours': forms.NumberInput(attrs={'step': 0.25}),
             'is_anonymous': forms.RadioSelect(choices=YES_NO),
             'is_in_target_group': forms.RadioSelect(choices=YES_NO),
             'is_nonpublic_space': forms.RadioSelect(choices=YES_NO),
