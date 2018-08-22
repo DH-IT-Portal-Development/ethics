@@ -38,7 +38,7 @@ function intersect(a, b)
 }
 
 // Checks whether a field is required given the selected inputs
-function check_field_required(input_name, field_name, required_input, app_name, model_name)
+function check_field_required(input_name, field_name, required_input, app_name, model_name, header=false)
 {
     model_name = typeof model_name !== 'undefined' ? model_name : input_name;
 
@@ -51,6 +51,10 @@ function check_field_required(input_name, field_name, required_input, app_name, 
         var params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
         $.post(url, params, function(data) {
             $('#id_' + required_input).parents('tr').toggle(data.result);
+            if(header)
+            {
+                $('#id_' + required_input).parents('tr').prev().toggle(data.result);
+            }
         });
     });
     $('input[name=' + input_name + ']').change();
