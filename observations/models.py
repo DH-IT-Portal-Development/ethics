@@ -3,6 +3,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.safestring import mark_safe
 
 from core.models import SettingModel
 from core.validators import validate_pdf_or_doc
@@ -25,8 +26,28 @@ class Observation(SettingModel):
 
     # This is used internally to provide backwards compatibility with the old version of this model. All old fields are
     # still used if this is 1.
-    version = models.PositiveIntegerField('INTERNAL - Describes which version of the intervention model is used',
+    version = models.PositiveIntegerField('INTERNAL - Describes which version of the observation model is used',
                                           default=2)
+
+    details_who = models.TextField(
+        _('Beschrijf <b>wie</b> er wordt geobserveerd.'),
+        help_text=_('Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt'
+                    ' geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie '
+                    'tussen leraar en leerling in kaart brengen.')
+
+    )
+
+    details_why = models.TextField(
+        _('Beschrijf <b>waarom</b> er wordt geobserveerd.'),
+        help_text=_('Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen '
+                    'in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste '
+                    'manier en in begrijpelijke taal?')
+    )
+
+    details_frequency = models.TextField(
+        _('Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd.'),
+        help_text=_('Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd.')
+    )
 
     is_anonymous = models.BooleanField(
         _('Wordt er anoniem geobserveerd?'),

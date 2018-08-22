@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from core.forms import ConditionalModelForm
 from core.utils import YES_NO
@@ -12,7 +14,7 @@ class ObservationForm(ConditionalModelForm):
         model = Observation
         fields = [
             'setting', 'setting_details', 'supervision', 'leader_has_coc',
-            'days', 'mean_hours',
+            'details_who', 'details_why', 'details_frequency',
             'is_anonymous', 'is_in_target_group',
             'is_nonpublic_space', 'has_advanced_consent',
             'needs_approval', 'approval_institution', 'approval_document',
@@ -38,6 +40,11 @@ class ObservationForm(ConditionalModelForm):
         self.study = kwargs.pop('study', None)
 
         super(ObservationForm, self).__init__(*args, **kwargs)
+
+        self.fields['details_who'].label = mark_safe(self.fields['details_who'].label)
+        self.fields['details_why'].label = mark_safe(self.fields['details_why'].label)
+        self.fields['details_frequency'].label = mark_safe(self.fields['details_frequency'].label)
+
 
         if not self.study.has_children():
             del self.fields['supervision']
