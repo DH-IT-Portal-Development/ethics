@@ -22,6 +22,10 @@ $(function() {
     depends_on_value('needs_approval', 'True', 'approval_institution');
     depends_on_value('needs_approval', 'True', 'approval_document');
     check_field_required('registrations', 'needs_details', 'registrations_details', 'observations', 'Registration');
+
+    depends_on_value('is_anonymous', 'True', 'is_anonymous_details');
+    depends_on_value('is_in_target_group', 'True', 'is_in_target_group_details');
+    depends_on_value('is_nonpublic_space', 'True', 'is_nonpublic_space_details');
     
     add_title('setting', "{% trans 'Setting' %}");
     add_title('details_who', "{% trans 'Details observatie' %}");

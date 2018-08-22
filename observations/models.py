@@ -53,15 +53,30 @@ class Observation(SettingModel):
         _('Wordt er anoniem geobserveerd?'),
         help_text=_('Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.'),
         default=False)
+    is_anonymous_details = models.TextField(
+        _('Licht toe'),
+        blank=True
+    )
+
     is_in_target_group = models.BooleanField(
         _('Doet de onderzoeker zich voor als behorende tot de doelgroep?'),
         default=False)
+    is_in_target_group_details = models.TextField(
+        _('Licht toe'),
+        blank=True
+    )
+
     is_nonpublic_space = models.BooleanField(
         _('Wordt er geobserveerd in een niet-openbare ruimte?'),
         help_text=_('Bijvoorbeeld er wordt geobserveerd bij iemand thuis, \
 tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar \
 een account voor moet worden aangemaakt.'),
         default=False)
+    is_nonpublic_space_details = models.TextField(
+        _('Licht toe'),
+        blank=True
+    )
+
     has_advanced_consent = models.BooleanField(
         _('Vindt informed consent van tevoren plaats?'),
         default=True)
@@ -90,13 +105,16 @@ om deze observatie te mogen uitvoeren?'),
 
     # Legacy, only used in v1
     days = models.PositiveIntegerField(
-        _('Op hoeveel dagen wordt er geobserveerd (per deelnemer)?'), blank=True)
+        _('Op hoeveel dagen wordt er geobserveerd (per deelnemer)?'),
+        blank=True,
+        null=True)
     mean_hours = models.DecimalField(
         _('Hoeveel uur wordt er gemiddeld per dag geobserveerd?'),
         max_digits=4,
         decimal_places=2,
         validators=[MaxValueValidator(24)],
-        blank=True)
+        blank=True,
+        null=True)
 
     # References
     study = models.OneToOneField(

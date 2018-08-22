@@ -15,8 +15,9 @@ class ObservationForm(ConditionalModelForm):
         fields = [
             'setting', 'setting_details', 'supervision', 'leader_has_coc',
             'details_who', 'details_why', 'details_frequency',
-            'is_anonymous', 'is_in_target_group',
-            'is_nonpublic_space', 'has_advanced_consent',
+            'is_anonymous', 'is_anonymous_details', 'is_in_target_group',
+            'is_in_target_group_details', 'is_nonpublic_space', 'is_nonpublic_space_details',
+            'has_advanced_consent',
             'needs_approval', 'approval_institution', 'approval_document',
             'registrations', 'registrations_details',
         ]
@@ -56,6 +57,7 @@ class ObservationForm(ConditionalModelForm):
         - If a setting which needs details or supervision has been checked, make sure the details are filled
         - If the Observation needs_approval, check if approval_institution/approval_document are provided
         - If a registration which needs details has been checked, make sure the details are filled
+        - For all default anonymity questions, if true, the appropiate explain fields need to be filled
         """
         cleaned_data = super(ObservationForm, self).clean()
 
@@ -65,6 +67,11 @@ class ObservationForm(ConditionalModelForm):
             self.check_dependency(cleaned_data, 'supervision', 'leader_has_coc', f1_value=False)
         self.check_dependency(cleaned_data, 'needs_approval', 'approval_institution')
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
+
+        self.check_dependency(cleaned_data, 'is_anonymous', 'is_anonymous_details')
+        self.check_dependency(cleaned_data, 'is_in_target_group', 'is_in_target_group_details')
+        self.check_dependency(cleaned_data, 'is_nonpublic_space', 'is_nonpublic_space_details')
+
 
         # Approval document only needs to be added for non-practice Proposals
         if not self.study.proposal.is_practice():
