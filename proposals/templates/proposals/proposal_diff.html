@@ -274,82 +274,21 @@
 <h2>{% trans "Het interventieonderzoek" %}</h2>
 {% if study.has_intervention and p_study.has_intervention %}
 {% with intervention=study.intervention p_intervention=p_study.intervention %}
+{% if intervention.version == p_intervention.version %}
 {% include "studies/study_title.html" %}
-<table class="proposals-diff pure-table pure-table-horizontal">
-    <tr>
-        <th class="proposals-diff-question"></th>
-        <th class="proposals-diff-answer">{% trans "Originele studie" %}</th>
-        <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th>
-        <td>{{ p_intervention.setting.all|unordered_list }}</td>
-        <td>{{ intervention.setting.all|unordered_list }}</td>
-    </tr>
-    {% if intervention.setting.all|needs_details or p_intervention.setting.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th>
-        <td>{{ p_intervention.setting_details }}</td>
-        <td>{{ intervention.setting_details }}</td>
-    </tr>
-    {% endif %}
-    {% if study.has_children and intervention.setting.all|needs_details:"needs_supervision" or p_study.has_children and p_intervention.setting.all|needs_details:"needs_supervision" %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th>
-        <td>{{ p_intervention.supervision|yesno:_("ja,nee,") }}</td>
-        <td>{{ intervention.supervision|yesno:_("ja,nee,") }}</td>
-    </tr>
-    {% if not intervention.supervision or not p_intervention.supervision %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th>
-        <td>{{ p_intervention.leader_has_coc|yesno:_("ja,nee,") }}</td>
-        <td>{{ intervention.leader_has_coc|yesno:_("ja,nee,") }}</td>
-    </tr>
-    {% endif %}
-    {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th>
-        <td>{{ p_intervention.period }}</td>
-        <td>{{ intervention.period }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "amount_per_week" %}</th>
-        <td>{{ p_intervention.amount_per_week }}</td>
-        <td>{{ intervention.amount_per_week }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "duration" %}</th>
-        <td>{{ p_intervention.duration }}</td>
-        <td>{{ intervention.duration }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "measurement" %}</th>
-        <td>{{ p_intervention.measurement }}</td>
-        <td>{{ intervention.measurement }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "experimenter" %}</th>
-        <td>{{ p_intervention.experimenter }}</td>
-        <td>{{ intervention.experimenter }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th>
-        <td>{{ p_intervention.description }}</td>
-        <td>{{ intervention.description }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th>
-        <td>{{ p_intervention.has_controls|yesno:_("ja,nee") }}</td>
-        <td>{{ intervention.has_controls|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% if intervention.has_controls or p_intervention.has_controls %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th>
-        <td>{{ p_intervention.controls_description }}</td>
-        <td>{{ intervention.controls_description }}</td>
-    </tr>
-    {% endif %}
-</table>
+    {{ p_intervention.id }}
+
+{% if intervention.version == 1 %}
+    {% include "proposals/diff/intervention_v1.html" %}
+{% elif intervention.version == 2 %}
+    {% include "proposals/diff/intervention_v2.html" %}
+{% endif %}
+
+{% else %}
+<div class="warning">
+{% trans "De revisie en de originele studie hebben beide een interventieonderzoek, maar deze zijn niet te vergelijken. Dit komt doordat de revisie een andere versie van het formulier gebruikt." %}
+</div>
+{% endif %}
 {% endwith %}
 {% elif study.has_intervention and not p_study.has_intervention %}
 <div class="warning">
@@ -366,101 +305,20 @@
 <h2>{% trans "Het observatieonderzoek" %}</h2>
 {% if study.has_observation and p_study.has_observation %}
 {% with observation=study.observation p_observation=p_study.observation %}
+{% if observation.version == p_observation.version %}
 {% include "studies/study_title.html" %}
-<table class="proposals-diff pure-table pure-table-horizontal">
-    <tr>
-        <th class="proposals-diff-question"></th>
-        <th class="proposals-diff-answer">{% trans "Originele studie" %}</th>
-        <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th>
-        <td>{{ p_observation.setting.all|unordered_list }}</td>
-        <td>{{ observation.setting.all|unordered_list }}</td>
-    </tr>
-    {% if observation.setting.all|needs_details or p_observation.setting.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th>
-        <td>{{ p_observation.setting_details }}</td>
-        <td>{{ observation.setting_details }}</td>
-    </tr>
-    {% endif %}
-    {% if study.has_children and observation.setting.all|needs_details:"needs_supervision" or p_study.has_children and p_observation.setting.all|needs_details:"needs_supervision" %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th>
-        <td>{{ p_observation.supervision|yesno:_("ja,nee") }}</td>
-        <td>{{ observation.supervision|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% if not observation.supervision or not p_observation.supervision %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</th>
-        <td>{{ p_observation.leader_has_coc|yesno:_("ja,nee,") }}</td>
-        <td>{{ observation.leader_has_coc|yesno:_("ja,nee,") }}</td>
-    </tr>
-    {% endif %}
-    {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "days" %}</th>
-        <td>{{ p_observation.days }}</td>
-        <td>{{ observation.days }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "mean_hours" %}</th>
-        <td>{{ p_observation.mean_hours }}</td>
-        <td>{{ observation.mean_hours }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_anonymous" %}</th>
-        <td>{{ p_observation.is_anonymous|yesno:_("ja,nee") }}</td>
-        <td>{{ observation.is_anonymous|yesno:_("ja,nee") }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_in_target_group" %}</th>
-        <td>{{ p_observation.is_in_target_group|yesno:_("ja,nee") }}</td>
-        <td>{{ observation.is_in_target_group|yesno:_("ja,nee") }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_nonpublic_space" %}</th>
-        <td>{{ p_observation.is_nonpublic_space|yesno:_("ja,nee") }}</td>
-        <td>{{ observation.is_nonpublic_space|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% if observation.is_nonpublic_space or p_observation.is_nonpublic_space %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th>
-        <td>{{ p_observation.has_advanced_consent|yesno:_("ja,nee") }}</td>
-        <td>{{ observation.has_advanced_consent|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "needs_approval" %}</th>
-        <td>{{ p_observation.needs_approval|yesno:_("ja,nee") }}</td>
-        <td>{{ observation.needs_approval|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% if observation.needs_approval or p_observation.is_nonpublic_space %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th>
-        <td>{{ p_observation.approval_institution }}</td>
-        <td>{{ observation.approval_institution }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th>
-        <td><a href="{{ p_observation.approval_document.url }}" target="_blank">{% trans "Download" %}</a></td>
-        <td><a href="{{ observation.approval_document.url }}" target="_blank">{% trans "Download" %}</a></td>
-    </tr>
-    {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "registrations" %}</th>
-        <td>{{ p_observation.registrations.all|unordered_list }}</td>
-        <td>{{ observation.registrations.all|unordered_list }}</td>
-    </tr>
-    {% if observation.registrations.all|needs_details or p_observation.registrations.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "registrations_details" %}</th>
-        <td>{{ p_observation.registrations_details }}</td>
-        <td>{{ observation.registrations_details }}</td>
-    </tr>
-    {% endif %}
-</table>
+
+{% if intervention.version == 1 %}
+    {% include "proposals/diff/observation_v1.html" %}
+{% elif intervention.version == 2 %}
+    {% include "proposals/diff/observation_v2.html" %}
+{% endif %}
+
+{% else %}
+<div class="warning">
+{% trans "De revisie en de originele studie hebben beide een observatieonderzoek, maar deze zijn niet te vergelijken. Dit komt doordat de revisie een andere versie van het formulier gebruikt." %}
+</div>
+{% endif %}
 {% endwith %}
 {% elif study.has_observation and not p_study.has_observation %}
 <div class="warning">
