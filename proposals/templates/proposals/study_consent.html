@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+{% load core_filters %}
+
+{% block title %} 
+{% trans "Informed consent formulieren" %}
+{% endblock %}
+
+{% block progress %}{{ progress }}{% endblock %}
+
+{% block sidebar %}
+{% include "base/sidebar.html" %}
+{% endblock %}
+
+{% block content %}
+<script>
+    $(function() {
+        {% for form in formset %}
+            depends_on_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-passive_consent_details');
+            depends_on_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-director_consent_declaration');
+            depends_on_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-director_consent_information');
+            depends_on_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-parents_information');
+            depends_on_value('{{ form.prefix }}-passive_consent', 'False', '{{ form.prefix }}-informed_consent');
+            depends_on_value('{{ form.prefix }}-passive_consent', 'False', '{{ form.prefix }}-briefing');
+        {% endfor %}
+    });
+</script>
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {% with study=form.instance %}
+        {% include 'studies/study_title.html' %}
+        {% endwith %}
+
+        <table>
+            {{ form.as_table }}
+        </table>
+    {% endfor %}
+    {% include "base/form_buttons.html" %}
+</form>
+{% endblock %}

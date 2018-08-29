@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views.session_views import SessionStart
-from .views.study_views import StudyUpdate, StudyDesign, StudyConsent, StudyUpdateAttachments, StudyEnd, \
+from .views.study_views import StudyUpdate, StudyDesign, StudyUpdateAttachments, StudyEnd, \
     has_adults, necessity_required
 
 app_name = 'studies'
@@ -12,8 +12,6 @@ urlpatterns = [
 
     url(r'^design/(?P<pk>\d+)/$', StudyDesign.as_view(), name='design'),
     url(r'^end/(?P<pk>\d+)/$', StudyEnd.as_view(), name='design_end'),
-
-    url(r'^consent/(?P<pk>\d+)/$', StudyConsent.as_view(), name='consent'),
 
     url(r'^attachments/(?P<pk>\d+)/$', StudyUpdateAttachments.as_view(), name='attachments'),
 

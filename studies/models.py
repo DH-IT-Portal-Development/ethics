@@ -387,6 +387,19 @@ geschoolde specialisten).')),
 
         return False
 
+    def research_settings_contains_schools(self):
+        """ Checks if any research track contains a school in it's setting """
+        if self.has_intervention and self.intervention.settings_contains_schools():
+            return True
+
+        if self.has_sessions and self.session_set.filter(setting__is_school=True).exists():
+            return True
+
+        if self.has_observation and self.observation.settings_contains_schools():
+            return True
+
+        return False
+
 
     def __str__(self):
         return _('Study details for proposal %s') % self.proposal.title
