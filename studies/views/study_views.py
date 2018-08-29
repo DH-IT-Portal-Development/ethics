@@ -6,9 +6,8 @@ from django.http import JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
-from django.forms import formset_factory
 
-from core.views import AllowErrorsMixin, UpdateView, FormSetUpdateView
+from core.views import AllowErrorsMixin, UpdateView
 from core.utils import string_to_bool
 from proposals.models import Proposal
 from interventions.models import Intervention

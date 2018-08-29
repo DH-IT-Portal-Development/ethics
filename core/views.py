@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from django.forms import formset_factory, modelformset_factory
+from django.forms import modelformset_factory
 
 from braces.views import LoginRequiredMixin
 
