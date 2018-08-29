@@ -408,6 +408,14 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "studies" "study" "parents_information" %}</th><td><a href="{{ BASE_URL }}{{ study.parents_information.url }}">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
+            {%  if study.needs_additional_external_forms %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_information.url }}">{% trans "Download" %}</a></td>
+            </tr>
+            {% endif %}
         </table>
         {% endfor %}
 
