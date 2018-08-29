@@ -15,7 +15,7 @@ class StudyForm(ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
-            'age_groups',
+            'age_groups', 'passive_consent', 'passive_consent_details',
             'legally_incapable', 'legally_incapable_details',
             'has_traits', 'traits', 'traits_details',
             'necessity', 'necessity_reason',
@@ -24,6 +24,7 @@ class StudyForm(ConditionalModelForm):
         ]
         widgets = {
             'age_groups': forms.CheckboxSelectMultiple(),
+            'passive_consent': forms.RadioSelect(choices=YES_NO),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
             'has_traits': forms.RadioSelect(choices=YES_NO),
             'traits': forms.CheckboxSelectMultiple(),
@@ -53,6 +54,7 @@ class StudyForm(ConditionalModelForm):
         """
         Check for conditional requirements:
         - Check whether necessity was required
+        - Check all passive_consent fields are filled in correctly when needed
         - Check that legally_incapable has a value
         - If legally_incapable is set, make sure the details are filled
         - Check that has_traits has a value
@@ -64,6 +66,7 @@ class StudyForm(ConditionalModelForm):
         cleaned_data = super(StudyForm, self).clean()
 
         self.necessity_required(cleaned_data)
+        self.passive_consent(cleaned_data)
         self.check_dependency(cleaned_data, 'legally_incapable', 'legally_incapable_details')
         self.check_empty(cleaned_data, 'has_traits')
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
@@ -82,6 +85,22 @@ class StudyForm(ConditionalModelForm):
             if not cleaned_data['necessity_reason']:
                 error = forms.ValidationError(_('Dit veld is verplicht.'), code='required')
                 self.add_error('necessity_reason', error)
+
+    def passive_consent(self, cleaned_data):
+        """Checks whether the passive consent fields are filled in correctly"""
+        if not 'age_groups' in cleaned_data:
+            return
+
+        if cleaned_data['age_groups'].filter(is_adult=False).exists():
+            if not 'passive_consent' in cleaned_data:
+                error = forms.ValidationError(_('Dit veld is verplicht.'), code='required')
+                self.add_error('passive_consent', error)
+
+
+            if cleaned_data['passive_consent'] and not cleaned_data['passive_consent_details']:
+                error = forms.ValidationError(_('Dit veld is verplicht.'), code='required')
+                self.add_error('passive_consent_details', error)
+
 
 
 class StudyDesignForm(forms.ModelForm):
@@ -107,13 +126,12 @@ class StudyConsentForm(ConditionalModelForm):
             'passive_consent',
             'informed_consent',
             'briefing',
-            'passive_consent_details',
             'director_consent_declaration',
             'director_consent_information',
             'parents_information'
         ]
         widgets = {
-            'passive_consent': forms.RadioSelect(choices=YES_NO),
+            'passive_consent': forms.HiddenInput
         }
 
     def clean(self):
@@ -122,12 +140,6 @@ class StudyConsentForm(ConditionalModelForm):
         - If passive_consent is set to yes, make sure passive_consent_details has been filled out
         """
         cleaned_data = super(StudyConsentForm, self).clean()
-
-        if cleaned_data.get('passive_consent') is None:
-            msg = _(u'Dit veld is verplicht.')
-            self.add_error('passive_consent', forms.ValidationError(msg, code='required'))
-
-        self.check_dependency(cleaned_data, 'passive_consent', 'passive_consent_details')
 
 
 class StudyEndForm(ConditionalModelForm):

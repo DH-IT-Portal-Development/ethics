@@ -379,7 +379,11 @@ geschoolde specialisten).')),
         if self.passive_consent:
             return not self.director_consent_declaration or not self.director_consent_information or not self.parents_information
         else:
-            return not self.informed_consent or not self.briefing
+            has_missing = False
+            if self.needs_additional_external_forms():
+                has_missing = not self.director_consent_declaration or not self.director_consent_information
+
+            return not self.informed_consent or not self.briefing or has_missing
 
     def has_missing_sessions(self):
         if self.has_intervention and self.intervention.extra_task:
@@ -399,6 +403,16 @@ geschoolde specialisten).')),
             return True
 
         return False
+
+    def needs_additional_external_forms(self):
+        """This method checks if the school/other external institution forms are needed when passive consent is false"""
+        if self.passive_consent:
+            return False
+
+        if self.has_observation and self.observation.needs_approval:
+            return True
+
+        return self.research_settings_contains_schools() and not self.has_participants_below_age(16)
 
 
     def __str__(self):
