@@ -19,7 +19,8 @@ class Setting(models.Model):
     needs_details = models.BooleanField(default=False)
     needs_supervision = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
-    is_school = models.BooleanField(default=False)
+    # Variable is called is_school because in the early requirement it was only in schools. Now it's been extended and thus renamed
+    is_school = models.BooleanField("Needs external permission", default=False)
 
     class Meta:
         ordering = ['order']
