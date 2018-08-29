@@ -84,11 +84,6 @@ def study_urls(study, prev_study_completed):
         end_url.url = reverse('studies:design_end', args=(study.pk,))
     urls.append(end_url)
 
-    consent_url = AvailableURL(title=_('Informed consent formulieren voor het onderzoek'), margin=1)
-    if study.is_completed():
-        consent_url.url = reverse('studies:consent', args=(study.pk,))
-    urls.append(consent_url)
-
     return urls
 
 

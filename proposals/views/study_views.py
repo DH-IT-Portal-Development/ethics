@@ -1,9 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 from django.urls import reverse
+from django.utils.translation import ugettext as _
 
-from core.views import AllowErrorsMixin, UpdateView
+from core.views import AllowErrorsMixin, UpdateView, FormSetUpdateView
 from studies.models import Study
+from studies.forms import StudyConsentForm
 from ..forms import StudyStartForm
 from ..models import Proposal
 
@@ -49,3 +51,39 @@ class StudyStart(AllowErrorsMixin, UpdateView):
     def get_back_url(self):
         """Return to the Wmo overview"""
         return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))
+
+
+class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
+    """
+    Allows the applicant to add informed consent to their Studies
+    """
+    success_message = _('Consent opgeslagen')
+    template_name = 'proposals/study_consent.html'
+    form = StudyConsentForm
+
+    def get_context_data(self, **kwargs):
+        """Setting the progress on the context"""
+        context = super(StudyConsent, self).get_context_data(**kwargs)
+
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        context['proposal'] = proposal # Used by the progress bar
+
+        return context
+
+    def get_queryset(self):
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        return Study.objects.filter(proposal=proposal)
+
+    def get_next_url(self):
+        """
+        If there is another Study in this Proposal, continue to that one.
+        Otherwise, go to the data management view.
+        """
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        return reverse('proposals:data_management', args=(proposal.pk,))
+
+    def get_back_url(self):
+        """Return to the Study design view"""
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        return reverse('studies:design_end', args=(proposal.last_study().pk,))
+

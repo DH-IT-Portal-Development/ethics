@@ -7,15 +7,18 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ImproperlyConfigured
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib.auth.models import User
+from django.shortcuts import render
+from django.forms import formset_factory, modelformset_factory
 
 from braces.views import LoginRequiredMixin
 
 from proposals.models import Proposal
+from studies.models import Study
 from observations.models import Observation
 from interventions.models import Intervention
 from tasks.models import Session, Task
@@ -219,6 +222,48 @@ class UserAllowedMixin(SingleObjectMixin):
 
         return obj
 
+class FormSetUserAllowedMixin(UserAllowedMixin):
+
+    def check_allowed(self):
+        """
+        Allows access to a proposal based on the status of a Proposal
+        and the position of the User. He can be:
+        - in the 'SECRETARY' or 'COMMISSION' group
+        - an applicant of this Proposal
+        - a supervisor of this Proposal
+        If the status of the Proposal is not in line with the status of the User,
+        a PermissionDenied is raised.
+        """
+
+        for obj in self.objects:
+
+            if isinstance(obj, Proposal):
+                proposal = obj
+            elif isinstance(obj, Observation) or isinstance(obj, Intervention) or isinstance(obj, Session):
+                proposal = obj.study.proposal
+            elif isinstance(obj, Task):
+                proposal = obj.session.study.proposal
+            else:
+                proposal = obj.proposal
+
+            applicants = proposal.applicants.all()
+            if proposal.supervisor:
+                supervisor = get_user_model().objects.filter(pk=proposal.supervisor.pk)
+            else:
+                supervisor = get_user_model().objects.none()
+            commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
+            commission |= get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
+
+            if proposal.status >= Proposal.SUBMITTED:
+                if self.request.user not in commission:
+                    raise PermissionDenied
+            elif proposal.status >= Proposal.SUBMITTED_TO_SUPERVISOR:
+                if self.request.user not in supervisor:
+                    raise PermissionDenied
+            else:
+                if self.request.user not in applicants | supervisor:
+                    raise PermissionDenied
+
 
 class CreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     """Generic create view including success message and login required mixins"""
@@ -233,6 +278,57 @@ class UpdateView(LoginRequiredMixin, SuccessMessageMixin, UserAllowedMixin, gene
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
+class FormSetUpdateView(FormSetUserAllowedMixin, LoginRequiredMixin, SuccessMessageMixin, generic.View):
+    """ Generic update view that uses a formset. This allows you to edit multiple forms of the same type on the
+    same page.
+    """
+    form = None
+    _formset = None
+    queryset = None
+
+    def __init__(self, *args, **kwargs):
+        super(FormSetUpdateView, self).__init__(*args, **kwargs)
+
+        self._formset = modelformset_factory(Study, form=self.form, extra=0)
+
+    def get(self, request, *args, **kwargs):
+        self._on_request()
+        return render(request, self.template_name, self.get_context_data())
+
+    def post(self, request, *args, **kwargs):
+        self._on_request()
+
+        formset = self._formset(request.POST, request.FILES, queryset=self.objects)
+        if formset.is_valid():
+            formset.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return render(request, self.template_name, self.get_context_data(formset=formset))
+
+    def _on_request(self):
+        self.objects = self.get_queryset()
+        self.check_allowed()
+
+    def get_queryset(self):
+        if self.queryset is None:
+            raise ImproperlyConfigured("Either override get_queryset, or provide a queryset class variable")
+
+        return self.queryset
+
+    def get_success_url(self):
+        """Sets the success_url based on the submit button pressed"""
+        return success_url(self)
+
+    def get_context_data(self, **kwargs):
+        if 'view' not in kwargs:
+            kwargs['view'] = self
+
+        kwargs['objects'] = self.objects
+
+        if 'formset' not in kwargs:
+            kwargs['formset'] = self._formset(queryset=self.objects)
+
+        return kwargs
 
 class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
     """Generic delete view including login required and user allowed mixin and alternative for success message"""

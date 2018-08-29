@@ -3178,7 +3178,7 @@ msgstr ""
 #: studies/models.py:200
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
-"Please upload the informed consent declaration here (in .pdf or .doc(x)-"
+"Please upload the declaration of consent here (in .pdf or .doc(x)-"
 "format)"
 
 #: studies/models.py:204
