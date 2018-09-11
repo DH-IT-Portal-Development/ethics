@@ -18,15 +18,15 @@
 <script>
     $(function() {
         {% for form in formset %}
-            {% if form.instance.needs_additional_external_forms %}
-                add_title('{{ form.prefix }}-director_consent_declaration', '{% trans 'Toestemmingsverklaring van de schoolleider/hoofd van het departement' %}')
-            {% else %}
-                depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-director_consent_declaration');
+            add_title('{{ form.prefix }}-informed_consent', 'Informed consent participant')
+            add_title('{{ form.prefix }}-director_consent_declaration', '{% trans 'Toestemmingsverklaring van de schoolleider/hoofd van het departement' %}')
+            {% if not form.instance.needs_additional_external_forms %}
+                depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-director_consent_declaration', true);
                 depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-director_consent_information');
             {% endif %}
-                depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-parents_information');
-                depends_on_hidden_value('{{ form.prefix }}-passive_consent', ['False', ''], '{{ form.prefix }}-informed_consent');
-                depends_on_hidden_value('{{ form.prefix }}-passive_consent', ['False', ''], '{{ form.prefix }}-briefing');
+            depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-parents_information');
+            depends_on_hidden_value('{{ form.prefix }}-passive_consent', ['False', ''], '{{ form.prefix }}-informed_consent', true);
+            depends_on_hidden_value('{{ form.prefix }}-passive_consent', ['False', ''], '{{ form.prefix }}-briefing');
         {% endfor %}
     });
 </script>
