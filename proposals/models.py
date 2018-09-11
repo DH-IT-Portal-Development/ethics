@@ -305,7 +305,9 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
             return decisions[0]
 
     def __str__(self):
-        return '%s (%s)' % (self.title, self.created_by)
+        if self.is_practice():
+            return '{} ({}) (Practice)'.format(self.title, self.created_by)
+        return '{} ({})'.format(self.title, self.created_by)
 
 @python_2_unicode_compatible
 class Wmo(models.Model):

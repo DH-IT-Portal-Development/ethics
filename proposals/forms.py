@@ -135,11 +135,10 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         """
         Filters the Proposals to only show those where:
         - the current User is an applicant.
-        - the Proposal is not a preliminary assessment or practice Proposal.
         """
         super(ProposalCopyForm, self).__init__(*args, **kwargs)
         self.fields['parent'].queryset = Proposal.objects. \
-            filter(applicants=self.user, is_pre_assessment=False, in_course=False, is_exploration=False)
+            filter(applicants=self.user, is_pre_assessment=False)
 
 
 class ProposalConfirmationForm(forms.ModelForm):
