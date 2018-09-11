@@ -14,7 +14,18 @@ function depends_on_value(a, a_value, b)
 function depends_on_hidden_value(a, a_value, b)
 {
     $('input[name=' + a + ']').change(function() {
-        var check = $('input[name=' + a + ']').val() === a_value;
+        var values = a_value;
+        if(!Array.isArray(values))
+        {
+            values = [a_value]
+        }
+        var check = false
+
+        values.forEach(function (val) {
+            if( $('input[name=' + a + ']').val() === val )
+                check = true;
+        })
+
         $('#id_' + b).parents('tr').toggle(check);
     });
     $('input[name=' + a + ']').change();
