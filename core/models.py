@@ -58,3 +58,7 @@ van de leraar of een ander persoon die bevoegd is?')
     def settings_contains_schools(self):
         """If the current settings contains any that are marked as schools."""
         return self.setting.filter(is_school=True).exists();
+
+    def settings_requires_review(self):
+        """If the current settings contain any that requires review"""
+        return self.setting.filter(requires_review=True)

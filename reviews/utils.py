@@ -251,8 +251,13 @@ def auto_review(proposal):
     reasons = []
 
     for study in proposal.study_set.all():
+
         if study.has_intervention:
             reasons.append(_('De studie is een interventiestudie.'))
+
+            for setting in study.intervention.settings_requires_review():
+                reasons.append(
+                    _('De studie heeft een interventiestudie met deelnemers in de volgende setting: {s}').format(s=setting))
 
         if study.legally_incapable:
             reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
@@ -288,6 +293,10 @@ fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
 
         if study.has_sessions:
             for session in study.session_set.all():
+                for setting in session.settings_requires_review():
+                    reasons.append(
+                        _('De studie heeft sessies met deelnemers in de volgende setting: {s}').format(s=setting))
+
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
                         reasons.append(_('De totale duur van de taken in sessie {s}, exclusief pauzes \
@@ -303,6 +312,10 @@ def auto_review_observation(observation):
     Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
     """
     reasons = []
+
+    if observation.settings_requires_review():
+        for setting in observation.settings_requires_review():
+            reasons.append(_('De studie observeert deelnemers in de volgende setting: {s}').format(s=setting))
 
     if observation.is_nonpublic_space:
         if not observation.has_advanced_consent:
