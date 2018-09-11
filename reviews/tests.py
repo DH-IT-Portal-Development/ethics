@@ -12,6 +12,7 @@ from proposals.models import Proposal, Relation
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
 from observations.models import Observation
+from interventions.models import Intervention
 from tasks.models import Session, Task, Registration, RegistrationKind
 
 
@@ -150,6 +151,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 0)
 
         self.study.has_intervention = True
+        self.study.intervention = Intervention.objects.create(version=2, multiple_sessions=False, duration=2, study=self.study)
         self.study.save()
 
         reasons = auto_review(self.proposal)
