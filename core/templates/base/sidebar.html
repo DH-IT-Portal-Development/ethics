@@ -20,6 +20,9 @@ $(function() {
     $('.close-progress').click(function() {
         $('.progress').trigger('sidebar:close');
     });
+    $('.sideBarLink').click(function () {
+        return confirm("{% trans "Enige gemaakte wijzigingen zijn nog niet opgeslagen! Weet je zeker dat je verder wilt gaan? (Opslaan kan door op 'volgende stap' te drukken.)" %}");
+    });
 });
 </script>
 
@@ -32,7 +35,7 @@ $(function() {
         {% if not a.is_title %}
         <li>
             {% if a.url %}
-            <a class="margin-{{ a.margin }}" href="{{ a.url }}">{{ a.title }}</a>
+            <a class="margin-{{ a.margin }} sideBarLink" href="{{ a.url }}">{{ a.title }}</a>
             {% else %}
             <span class="margin-{{ a.margin }}">{{ a.title }}</span>
             {% endif %}

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-11 14:42+0200\n"
+"POT-Creation-Date: 2018-09-11 15:49+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -235,15 +235,23 @@ msgstr "ETCL website"
 msgid "Inloggen"
 msgstr "Log in"
 
-#: core/templates/base/sidebar.html:26
+#: core/templates/base/sidebar.html:24
+msgid ""
+"Enige gemaakte wijzigingen zijn nog niet opgeslagen! Weet je zeker dat je "
+"verder wilt gaan? (Opslaan kan door op 'volgende stap' te drukken.)"
+msgstr ""
+"Any changes to this form have not been saved yet! Are you sure you want "
+"to leave this page? (You can save the form by pressing 'next step'.)"
+
+#: core/templates/base/sidebar.html:29
 msgid "Toon navigatie"
 msgstr "Show navigation"
 
-#: core/templates/base/sidebar.html:28
+#: core/templates/base/sidebar.html:31
 msgid "Sluit navigatie"
 msgstr "Close navigation"
 
-#: core/templates/base/sidebar.html:29
+#: core/templates/base/sidebar.html:32
 msgid "Voortgang"
 msgstr "Progress"
 
@@ -3062,8 +3070,7 @@ msgstr ""
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
-"The study contains sessions with participants in the following setting: "
-"{s}"
+"The study contains sessions with participants in the following setting: {s}"
 
 #: reviews/utils.py:302
 #, python-brace-format
