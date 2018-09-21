@@ -93,14 +93,12 @@ msgid "Dit is het oefenportaal."
 msgstr "This is the practice portal."
 
 #: core/templates/base/form_buttons.html:5
-msgid "<< Vorige stap"
-msgstr "<< Previous step"
+msgid "<< Opslaan en vorige stap"
+msgstr "<< Save and go back to previous step"
 
 #: core/templates/base/form_buttons.html:7
-#: proposals/templates/proposals/proposal_start.html:67
-#: proposals/templates/proposals/proposal_start_pre_assessment.html:52
-msgid "Volgende stap >>"
-msgstr "Next step >>"
+msgid "Opslaan en volgende stap >>"
+msgstr "Save and go to next step >>"
 
 #: core/templates/base/form_buttons.html:13
 msgid "Terug naar startpagina"
