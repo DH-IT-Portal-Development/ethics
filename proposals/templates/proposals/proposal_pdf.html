@@ -1,6 +1,7 @@
 {% extends "easy_pdf/base.html" %}
 
 {% load i18n %}
+{% load core_filters %}
 {% load proposal_filters %}
 
 {% block extra_style %}
@@ -382,13 +383,14 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
 
         <h2>{% trans "Informed consent formulieren" %}</h2>
         {% include "studies/study_title.html" %}
+            {% get_study_documents study_documents study %}
         <table>
-            {% if not proposal.is_practice and study.informed_consent %}
+            {% if not proposal.is_practice and study_documents.informed_consent %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study.informed_consent.url }}">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ study.briefing.url }}">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.briefing.url }}">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
             <tr>
@@ -399,25 +401,45 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th><td>{{ study.passive_consent_details }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "documents" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_information.url }}">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "documents" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_information.url }}">{% trans "Download" %}</a></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "parents_information" %}</th><td><a href="{{ BASE_URL }}{{ study.parents_information.url }}">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "documents" "parents_information" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.parents_information.url }}">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
-            {%  if study.needs_additional_external_forms %}
+            {%  if study.needs_additional_external_forms and study_documents.director_consent_declaration %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "documents" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study.director_consent_information.url }}">{% trans "Download" %}</a></td>
+                <th>{% get_verbose_field_name "studies" "documents" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_information.url }}">{% trans "Download" %}</a></td>
             </tr>
             {% endif %}
         </table>
         {% endfor %}
+
+        {% if documents.extra %}
+            {% counter extra_form_counter 1 %}
+            {% for extra_documents in documents.extra %}
+            <h2>{% trans 'Extra formulieren' %} {{ extra_form_counter }}</h2>
+            <table>
+                {% if extra_documents.informed_consent %}
+                    <tr>
+                        <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
+                    </tr>
+                {% endif %}
+                {% if extra_documents.briefing %}
+                    <tr>
+                        <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.briefing.url }}">{% trans "Download" %}</a></td>
+                    </tr>
+                {% endif %}
+            </table>
+            {{ extra_form_counter.increment }}
+            {% endfor %}
+        {% endif %}
 
         <h2>{% trans "Aanmelding versturen" %}</h2>
         <table>

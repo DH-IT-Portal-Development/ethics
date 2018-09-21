@@ -1,6 +1,8 @@
 {% extends "base/base.html" %}
 
 {% load staticfiles %}
+{% load proposal_filters %}
+{% load core_filters %}
 {% load i18n %}
 
 {% block title %} 
@@ -82,50 +84,51 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
 
 {% for study in review.proposal.study_set.all %}
 {% include "studies/study_title.html" %}
+{% get_study_documents study_documents study %}
 <ul>
     {% if study.passive_consent %}
     <li>
-        <a href="{{ study.director_consent_declaration.url }}" target="_blank">{% trans "Consent declaratie directeur/departementshoofd" %}</a>
-        <a href="{% url 'studies:attachments' study.pk %}">
+        <a href="{{ study_documents.director_consent_declaration.url }}" target="_blank">{% trans "Consent declaratie directeur/departementshoofd" %}</a>
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     <li>
-        <a href="{{ study.director_consent_information.url }}" target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
-        <a href="{% url 'studies:attachments' study.pk %}">
+        <a href="{{ study_documents.director_consent_information.url }}" target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     <li>
-        <a href="{{ study.parents_information.url }}" target="_blank">{% trans "Informatiebrief ouders" %}</a>
-        <a href="{% url 'studies:attachments' study.pk %}">
+        <a href="{{ study_documents.parents_information.url }}" target="_blank">{% trans "Informatiebrief ouders" %}</a>
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     {% else %}
     <li>
-        <a href="{{ study.informed_consent.url }}" target="_blank">{% trans "Informed consent" %}</a>
-        <a href="{% url 'studies:attachments' study.pk %}">
+        <a href="{{ study_documents.informed_consent.url }}" target="_blank">{% trans "Informed consent" %}</a>
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     <li>
-        <a href="{{ study.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
-        <a href="{% url 'studies:attachments' study.pk %}">
+        <a href="{{ study_documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     {% endif %}
     {% if study.needs_additional_external_forms %}
     <li>
-        <a href="{{ study.director_consent_information.url }}" target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
-        <a href="{% url 'studies:attachments' study.pk %}">
+        <a href="{{ study_documents.director_consent_information.url }}" target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     <li>
-        <a href="{{ study.parents_information.url }}" target="_blank">{% trans "Informatiebrief ouders" %}</a>
-        <a href="{% url 'studies:attachments' study.pk %}">
+        <a href="{{ study_documents.parents_information.url }}" target="_blank">{% trans "Informatiebrief ouders" %}</a>
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
@@ -135,12 +138,35 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
         <a href="{{ study.observation.approval_document.url }}" target="_blank">
             {% trans "Toestemmingsdocument observatiestudie" %}
         </a>
-        <a href="{% url 'observations:attachments' study.observation.pk %}">
+        <a href="{% url 'observations:attachments' study_documents.pk %}">
             <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
         </a>
     </li>
     {% endif %}
 </ul>
 {% endfor %}
-
+    {% counter extra_form_counter 1 %}
+    {% get_extra_documents extra_documents review.proposal %}
+    {% for documents in extra_documents %}
+        <h3>{% trans 'Extra formulieren' %} {{ extra_form_counter }}</h3>
+        {{ extra_form_counter.increment }}
+        <ul>
+            {% if documents.informed_consent %}
+            <li>
+                <a href="{{ documents.informed_consent.url }}" target="_blank">{% trans "Informed consent" %}</a>
+                <a href="{% url 'studies:attachments' documents.pk %}">
+                    <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
+                </a>
+            </li>
+            {% endif %}
+            {% if documents.briefing %}
+            <li>
+                <a href="{{ study_documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
+                <a href="{% url 'studies:attachments' documents.pk %}">
+                    <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    {% endfor %}
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from studies.utils import copy_study_to_proposal
+from studies.utils import copy_study_to_proposal, copy_documents_to_proposal
 from .utils import generate_ref_number
 
 
@@ -52,5 +52,7 @@ def copy_proposal(self, form):
 
     for study in copy_studies:
         copy_study_to_proposal(copy_proposal, study)
+
+    copy_documents_to_proposal(parent_pk, copy_proposal)
 
     return copy_proposal

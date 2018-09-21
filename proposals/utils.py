@@ -15,7 +15,6 @@ from easy_pdf.rendering import render_to_pdf
 from core.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
-
 def available_urls(proposal):
     """
     Returns the available URLs for the given Proposal.
@@ -106,14 +105,28 @@ def generate_pdf(proposal, template):
     :param proposal: the current Proposal
     :param template: the template for the PDF
     """
+    # Local import, as otherwise a circular import will happen because the proposal model imports this file
+    # (And the document model imports the proposal model)
+    from studies.models import Documents
+
     # Change language to English for this PDF, but save the current language to reset it later
     current_language = get_language()
     activate('en')
 
+    documents = {
+        'extra': []
+    }
+
+    for document in Documents.objects.filter(proposal=proposal).all():
+        if document.study:
+            documents[document.study.pk] = document
+        else:
+            documents['extra'].append(document)
+
     # This try catch does not actually handle any errors. It only makes sure the language is properly reset before
     # reraising the exception.
     try:
-        context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL}
+        context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL, 'documents': documents}
         pdf = ContentFile(render_to_pdf(template, context))
         proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
     except Exception as e:

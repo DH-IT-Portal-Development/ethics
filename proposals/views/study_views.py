@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from core.views import AllowErrorsMixin, UpdateView, FormSetUpdateView
-from studies.models import Study
+from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
 from ..forms import StudyStartForm
 from ..models import Proposal
@@ -60,6 +60,16 @@ class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
     success_message = _('Consent opgeslagen')
     template_name = 'proposals/study_consent.html'
     form = StudyConsentForm
+    extra = 2
+
+    def get(self, request, *args, **kwargs):
+        """A bit of a hacky override to ensure only 2 extra document forms apart from the study document forms are presented"""
+
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+
+        self.extra = (len(proposal.study_set.all()) + self.extra) - len(self.get_queryset().all())
+
+        return super(StudyConsent, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         """Setting the progress on the context"""
@@ -68,11 +78,18 @@ class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
         context['proposal'] = proposal # Used by the progress bar
 
+        initial = []
+
+        for i in range( self.extra ):
+            initial.append({'proposal': proposal.pk})
+
+        context['formset'].initial_extra = initial
+
         return context
 
     def get_queryset(self):
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        return Study.objects.filter(proposal=proposal)
+        return Documents.objects.filter(proposal=proposal)
 
     def get_next_url(self):
         """

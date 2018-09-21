@@ -14,7 +14,7 @@ from interventions.models import Intervention
 from observations.models import Observation
 
 from ..forms import StudyForm, StudyDesignForm, StudyConsentForm, StudyEndForm, StudyUpdateAttachmentsForm
-from ..models import Study
+from ..models import Study, Documents
 from ..utils import check_has_adults, check_necessity_required, get_study_progress
 
 
@@ -153,7 +153,7 @@ class StudyUpdateAttachments(generic.UpdateView):
     """
     Allows the secretary to change the attachments on Study level
     """
-    model = Study
+    model = Documents
     template_name = 'studies/study_update_attachments.html'
     form_class = StudyUpdateAttachmentsForm
     group_required = settings.GROUP_SECRETARY

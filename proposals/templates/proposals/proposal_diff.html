@@ -543,6 +543,10 @@
 
 <h2>{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
 {% include "studies/study_title.html" %}
+
+{% get_study_documents documents study %}
+{% get_study_documents p_documents p_study %}
+
 <table class="proposals-diff pure-table pure-table-horizontal">
     <tr>
         <th class="proposals-diff-question"></th>
@@ -550,29 +554,29 @@
         <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
     </tr>
     <tr>
-        <th>{% get_verbose_field_name "studies" "study" "informed_consent" %}</th>
-        {% if p_study.informed_consent %}
-        <td><a href="{{ p_study.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+        <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th>
+        {% if p_documents.informed_consent %}
+        <td><a href="{{ p_documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
         {% else %}
         <td></td>
         {% endif %}
 
-        {% if study.informed_consent %}
-        <td><a href="{{ study.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+        {% if documents.informed_consent %}
+        <td><a href="{{ documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
         {% else %}
         <td></td>
         {% endif %}
     </tr>
     <tr>
-        <th>{% get_verbose_field_name "studies" "study" "briefing" %}</th>
-        {% if p_study.briefing %}
-        <td><a href="{{ p_study.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+        <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th>
+        {% if p_documents.briefing %}
+        <td><a href="{{ p_documents.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
         {% else %}
         <td></td>
         {% endif %}
 
-        {% if study.briefing %}
-        <td><a href="{{ study.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+        {% if documents.briefing %}
+        <td><a href="{{ documents.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
         {% else %}
         <td></td>
         {% endif %}
