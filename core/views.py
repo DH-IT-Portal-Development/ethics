@@ -18,7 +18,6 @@ from django.forms import modelformset_factory
 from braces.views import LoginRequiredMixin
 
 from proposals.models import Proposal
-from studies.models import Study
 from observations.models import Observation
 from interventions.models import Intervention
 from tasks.models import Session, Task
