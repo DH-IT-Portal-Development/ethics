@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from core.forms import ConditionalModelForm
 from core.models import YES_NO_DOUBT, YES, DOUBT
 from core.utils import YES_NO
-from .models import Study, AgeGroup
+from .models import Study, AgeGroup, Documents
 from .utils import check_necessity_required
 
 
@@ -121,9 +121,10 @@ class StudyDesignForm(forms.ModelForm):
 
 class StudyConsentForm(ConditionalModelForm):
     class Meta:
-        model = Study
+        model = Documents
         fields = [
-            'passive_consent',
+            'proposal',
+            'study',
             'informed_consent',
             'briefing',
             'director_consent_declaration',
@@ -131,14 +132,11 @@ class StudyConsentForm(ConditionalModelForm):
             'parents_information'
         ]
         widgets = {
-            'passive_consent': forms.HiddenInput
+            'proposal': forms.HiddenInput,
+            'study': forms.HiddenInput
         }
 
     def clean(self):
-        """
-        Check for conditional requirements:
-        - If passive_consent is set to yes, make sure passive_consent_details has been filled out
-        """
         cleaned_data = super(StudyConsentForm, self).clean()
 
 
@@ -207,9 +205,9 @@ class StudyEndForm(ConditionalModelForm):
 
 class StudyUpdateAttachmentsForm(forms.ModelForm):
     class Meta:
-        model = Study
+        model = Documents
         fields = [
-            'passive_consent',
+            #'passive_consent',
             'informed_consent',
             'briefing',
             'director_consent_declaration',
@@ -217,7 +215,7 @@ class StudyUpdateAttachmentsForm(forms.ModelForm):
             'parents_information'
         ]
         widgets = {
-            'passive_consent': forms.HiddenInput
+            #'passive_consent': forms.HiddenInput
         }
 
 

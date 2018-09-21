@@ -18,7 +18,6 @@ from django.forms import modelformset_factory
 from braces.views import LoginRequiredMixin
 
 from proposals.models import Proposal
-from studies.models import Study
 from observations.models import Observation
 from interventions.models import Intervention
 from tasks.models import Session, Task
@@ -285,11 +284,7 @@ class FormSetUpdateView(FormSetUserAllowedMixin, LoginRequiredMixin, SuccessMess
     form = None
     _formset = None
     queryset = None
-
-    def __init__(self, *args, **kwargs):
-        super(FormSetUpdateView, self).__init__(*args, **kwargs)
-
-        self._formset = modelformset_factory(Study, form=self.form, extra=0)
+    extra = 0
 
     def get(self, request, *args, **kwargs):
         self._on_request()
@@ -299,13 +294,22 @@ class FormSetUpdateView(FormSetUserAllowedMixin, LoginRequiredMixin, SuccessMess
         self._on_request()
 
         formset = self._formset(request.POST, request.FILES, queryset=self.objects)
+        self.pre_validation(formset)
         if formset.is_valid():
-            formset.save()
+            self.save_form(formset)
             return HttpResponseRedirect(self.get_success_url())
         else:
             return render(request, self.template_name, self.get_context_data(formset=formset))
 
+    def pre_validation(self, formset):
+        "This method can be overridden to manipulate the formset before validation"
+        pass
+
+    def save_form(self, formset):
+        formset.save()
+
     def _on_request(self):
+        self._formset = modelformset_factory(self.form._meta.model, form=self.form, extra=self.extra)
         self.objects = self.get_queryset()
         self.check_allowed()
 

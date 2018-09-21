@@ -100,7 +100,6 @@ class Recruitment(models.Model):
     def __str__(self):
         return self.description
 
-
 @python_2_unicode_compatible
 class Study(models.Model):
     """
@@ -196,14 +195,6 @@ cadeautje.'),
         default=False)
 
     # Fields with respect to informed consent
-    informed_consent = models.FileField(
-        _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc])
-    briefing = models.FileField(
-        _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc])
     passive_consent = models.NullBooleanField(
         _('Maakt u gebruik van passieve informed consent?'),
         help_text=mark_safe(_('Wanneer u kinderen via een instelling \
@@ -217,27 +208,6 @@ target="_blank">de ETCL-website</a>.')))
 sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
 toegestaan en draagt niet de voorkeur van de commissie.'),
         blank=True)
-
-    director_consent_declaration = models.FileField(
-        _('Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
-        blank=True,
-        validators=[validate_pdf_or_doc],
-        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
-                   'you can upload the unsigned document and send the document when it is signed to the'
-                   ' secretary of the EtCL')
-    )
-
-    director_consent_information = models.FileField(
-        _('Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc]
-    )
-
-    parents_information = models.FileField(
-        _('Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
-        blank=True,
-        validators=[validate_pdf_or_doc]
-    )
 
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
@@ -376,14 +346,15 @@ geschoolde specialisten).')),
         return self.design_completed() and self.risk != ''
 
     def has_missing_forms(self):
+        documents = self.get_documents_object()
         if self.passive_consent:
-            return not self.director_consent_declaration or not self.director_consent_information or not self.parents_information
+            return not documents.director_consent_declaration or not documents.director_consent_information or not documents.parents_information
         else:
             has_missing = False
             if self.needs_additional_external_forms():
-                has_missing = not self.director_consent_declaration or not self.director_consent_information
+                has_missing = not documents.director_consent_declaration or not documents.director_consent_information
 
-            return not self.informed_consent or not self.briefing or has_missing
+            return not documents.informed_consent or not documents.briefing or has_missing
 
     def has_missing_sessions(self):
         if self.has_intervention and self.intervention.extra_task:
@@ -415,5 +386,71 @@ geschoolde specialisten).')),
         return self.research_settings_contains_schools() and not self.has_participants_below_age(16)
 
 
+    def get_documents_object(self):
+        """Gets the document object for this study"""
+        # The self.proposal should be a bit redundant, but semantically nice
+        return Documents.objects.get(study=self, proposal=self.proposal)
+
     def __str__(self):
         return _('Study details for proposal %s') % self.proposal.title
+
+
+@python_2_unicode_compatible
+class Documents(models.Model):
+    """
+    A model to store consent forms for a study and/or a proposal
+    """
+
+    study = models.OneToOneField(Study, on_delete=models.CASCADE, blank=True, null=True)
+    proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
+
+    informed_consent = models.FileField(
+        _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc])
+    briefing = models.FileField(
+        _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc])
+
+    director_consent_declaration = models.FileField(
+        _(
+            'Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
+        blank=True,
+        validators=[validate_pdf_or_doc],
+        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
+                   'you can upload the unsigned document and send the document when it is signed to the'
+                   ' secretary of the EtCL')
+    )
+
+    director_consent_information = models.FileField(
+        _('Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc]
+    )
+
+    parents_information = models.FileField(
+        _('Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc]
+    )
+
+    def save(self, *args, **kwargs):
+        """
+        To be a bit cleaner we do not save if this object is new, not connected to a study and if the document fields are
+        empty.
+
+        The edit consent form page contains 2 extra forms, but those are optional. However, Django creates instances
+        for these forms anyway, so we have to
+
+        """
+        if not self.study and not self.informed_consent and not self.briefing and not self.pk:
+            return
+
+        super(Documents, self).save(*args, **kwargs)
+
+
+    def __str__(self):
+        if self.study:
+            return "Documents object for study '{}', proposal '{}'".format(self.study, self.proposal)
+        return "(Extra) Documents object for proposal '{}'".format(self.proposal)
