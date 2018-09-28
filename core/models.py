@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import python_2_unicode_compatible
 
 YES = 'Y'
 NO = 'N'
@@ -10,7 +11,7 @@ YES_NO_DOUBT = (
     (DOUBT, _('twijfel')),
 )
 
-
+@python_2_unicode_compatible
 class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -18,14 +19,15 @@ class Setting(models.Model):
     needs_details = models.BooleanField(default=False)
     needs_supervision = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
+    # Variable is called is_school because in the early requirement it was only in schools. Now it's been extended and thus renamed
+    is_school = models.BooleanField("Needs external permission", default=False)
 
     class Meta:
         ordering = ['order']
         verbose_name = _('Setting')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
-
 
 class SettingModel(models.Model):
     setting = models.ManyToManyField(
@@ -52,3 +54,11 @@ van de leraar of een ander persoon die bevoegd is?')
 
     class Meta:
         abstract = True
+
+    def settings_contains_schools(self):
+        """If the current settings contains any that are marked as schools."""
+        return self.setting.filter(is_school=True).exists();
+
+    def settings_requires_review(self):
+        """If the current settings contain any that requires review"""
+        return self.setting.filter(requires_review=True)

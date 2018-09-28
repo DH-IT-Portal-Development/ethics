@@ -1,6 +1,6 @@
 import codecs
 import csv
-import cStringIO
+import io
 from collections import defaultdict
 
 from django.core.management.base import BaseCommand
@@ -58,7 +58,7 @@ class Command(BaseCommand):
 
                     reviews = Review.objects.filter(proposal=proposal, stage=Review.CLOSED)
                     if reviews.count() > 1:
-                        print 'Meer dan 1 Review voor Proposal {}'.format(proposal.reference_number)
+                        print('Meer dan 1 Review voor Proposal {}'.format(proposal.reference_number))
                     for review in reviews:
                         row.extend(['kort' if review.short_route else 'lang',
                                     review.get_continuation_display(),
@@ -85,7 +85,7 @@ class UnicodeWriter(object):
 
     def __init__(self, f, dialect=csv.excel, encoding='utf-8', **kwds):
         # Redirect output to a queue
-        self.queue = cStringIO.StringIO()
+        self.queue = io.StringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
         self.stream = f
         self.encoder = codecs.getincrementalencoder(encoding)()

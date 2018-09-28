@@ -46,7 +46,7 @@
         "is_adult": false,
         "max_net_duration": 90,
         "age_min": 12,
-        "age_max": 17
+        "age_max": 15
     },
     "model": "studies.agegroup",
     "pk": 4
@@ -76,5 +76,18 @@
     },
     "model": "studies.agegroup",
     "pk": 6
+},
+{
+    "fields": {
+        "needs_details": false,
+        "description_nl": "Jong volwassene",
+        "description_en": "Young adult",
+        "is_adult": true,
+        "max_net_duration": 90,
+        "age_min": 16,
+        "age_max": 17
+    },
+    "model": "studies.agegroup",
+    "pk": 7
 }
 ]

@@ -20,9 +20,10 @@ def copy_observation_to_study(study, observation):
 
     o = observation
     o.pk = None
+    o.version = 2
     o.study = study
     o.save()
 
-    o.setting = setting
-    o.registrations = registrations.all()
+    o.setting.set(setting)
+    o.registrations.set(registrations.all())
     o.save()

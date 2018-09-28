@@ -14,7 +14,7 @@ from interventions.models import Intervention
 from observations.models import Observation
 
 from ..forms import StudyForm, StudyDesignForm, StudyConsentForm, StudyEndForm, StudyUpdateAttachmentsForm
-from ..models import Study
+from ..models import Study, Documents
 from ..utils import check_has_adults, check_necessity_required, get_study_progress
 
 
@@ -46,7 +46,7 @@ class StudyUpdate(AllowErrorsMixin, UpdateView):
         else:
             prev = self.object.order - 1
             prev_study = Study.objects.get(proposal=proposal, order=prev)
-            return reverse('studies:consent', args=(prev_study.pk,))
+            return reverse('studies:design_end', args=(prev_study.pk,))
 
     def get_next_url(self):
         """Continue to the Study design overview"""
@@ -98,40 +98,6 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         """
         return reverse('studies:update', args=(self.kwargs['pk'],))
 
-
-class StudyConsent(AllowErrorsMixin, UpdateView):
-    """
-    Allows the applicant to add informed consent to their Study
-    """
-    model = Study
-    form_class = StudyConsentForm
-    success_message = _('Consent opgeslagen')
-    template_name = 'studies/study_consent.html'
-
-    def get_context_data(self, **kwargs):
-        """Setting the progress on the context"""
-        context = super(StudyConsent, self).get_context_data(**kwargs)
-        context['progress'] = get_study_progress(self.object, True) - 3
-        return context
-
-    def get_next_url(self):
-        """
-        If there is another Study in this Proposal, continue to that one.
-        Otherwise, go to the data management view.
-        """
-        proposal = self.object.proposal
-        if self.object.order < proposal.studies_number:
-            next_order = self.object.order + 1
-            next_study = Study.objects.get(proposal=proposal, order=next_order)
-            return reverse('studies:update', args=(next_study.pk,))
-        else:
-            return reverse('proposals:data_management', args=(proposal.pk,))
-
-    def get_back_url(self):
-        """Return to the Study design view"""
-        return reverse('studies:design_end', args=(self.object.pk,))
-
-
 class StudyEnd(AllowErrorsMixin, UpdateView):
     """
     Completes a Study
@@ -153,7 +119,17 @@ class StudyEnd(AllowErrorsMixin, UpdateView):
         return kwargs
 
     def get_next_url(self):
-        return reverse('studies:consent', args=(self.object.pk,))
+        """
+        If there is another Study in this Proposal, continue to that one.
+        Otherwise, go to the data management view.
+        """
+        proposal = self.object.proposal
+        if self.object.order < proposal.studies_number:
+            next_order = self.object.order + 1
+            next_study = Study.objects.get(proposal=proposal, order=next_order)
+            return reverse('studies:update', args=(next_study.pk,))
+        else:
+            return reverse('proposals:consent', args=(proposal.pk,))
 
     def get_back_url(self):
         study = self.object
@@ -177,7 +153,7 @@ class StudyUpdateAttachments(generic.UpdateView):
     """
     Allows the secretary to change the attachments on Study level
     """
-    model = Study
+    model = Documents
     template_name = 'studies/study_update_attachments.html'
     form_class = StudyUpdateAttachmentsForm
     group_required = settings.GROUP_SECRETARY

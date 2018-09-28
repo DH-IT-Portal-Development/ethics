@@ -1,6 +1,6 @@
 from django.utils import timezone
 
-from studies.utils import copy_study_to_proposal
+from studies.utils import copy_study_to_proposal, copy_documents_to_proposal
 from .utils import generate_ref_number
 
 
@@ -33,13 +33,15 @@ def copy_proposal(self, form):
     copy_proposal.date_reviewed_supervisor = None
     copy_proposal.date_submitted = None
     copy_proposal.date_reviewed = None
+    copy_proposal.is_exploration = False
+    copy_proposal.in_course = False
     copy_proposal.is_revision = form.cleaned_data['is_revision']
     copy_proposal.save()
 
     # Copy references
     copy_proposal.relation = relation
-    copy_proposal.applicants = applicants
-    copy_proposal.funding = funding
+    copy_proposal.applicants.set(applicants)
+    copy_proposal.funding.set(funding)
     copy_proposal.parent = Proposal.objects.get(pk=parent_pk)
     copy_proposal.save()
 
@@ -50,5 +52,7 @@ def copy_proposal(self, form):
 
     for study in copy_studies:
         copy_study_to_proposal(copy_proposal, study)
+
+    copy_documents_to_proposal(parent_pk, copy_proposal)
 
     return copy_proposal

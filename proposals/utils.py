@@ -15,7 +15,6 @@ from easy_pdf.rendering import render_to_pdf
 from core.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
-
 def available_urls(proposal):
     """
     Returns the available URLs for the given Proposal.
@@ -64,11 +63,16 @@ def available_urls(proposal):
         if proposal.studies_number > 1:
             urls.append(AvailableURL(title='', is_title=True))
 
+        consent_url = AvailableURL(title=_('Informed consent formulieren'), margin=0)
         data_management_url = AvailableURL(title=_('Datamanagement'), margin=0)
         submit_url = AvailableURL(title=_('Concept-aanmelding klaar voor versturen'), margin=0)
+
         if proposal.last_study() and proposal.last_study().is_completed():
+            consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
             data_management_url.url = reverse('proposals:data_management', args=(proposal.pk, ))
             submit_url.url = reverse('proposals:submit', args=(proposal.pk,))
+
+        urls.append(consent_url)
         urls.append(data_management_url)
         urls.append(submit_url)
 
@@ -101,13 +105,33 @@ def generate_pdf(proposal, template):
     :param proposal: the current Proposal
     :param template: the template for the PDF
     """
+    # Local import, as otherwise a circular import will happen because the proposal model imports this file
+    # (And the document model imports the proposal model)
+    from studies.models import Documents
+
     # Change language to English for this PDF, but save the current language to reset it later
     current_language = get_language()
     activate('en')
 
-    context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL}
-    pdf = ContentFile(render_to_pdf(template, context))
-    proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
+    documents = {
+        'extra': []
+    }
+
+    for document in Documents.objects.filter(proposal=proposal).all():
+        if document.study:
+            documents[document.study.pk] = document
+        else:
+            documents['extra'].append(document)
+
+    # This try catch does not actually handle any errors. It only makes sure the language is properly reset before
+    # reraising the exception.
+    try:
+        context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL, 'documents': documents}
+        pdf = ContentFile(render_to_pdf(template, context))
+        proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
+    except Exception as e:
+        activate(current_language)
+        raise e
 
     # Reset the current language
     activate(current_language)

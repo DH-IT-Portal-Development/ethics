@@ -66,7 +66,7 @@
 {% for study in proposal.study_set.all %}
 {% if study.has_missing_forms %}
     <div class="warning">
-    {% url "studies:consent" study.pk as consent_link %}
+    {% url "proposals:consent" proposal.pk as consent_link %}
     {% blocktrans with study_order=study.order%}
     U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}.
     Die kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
@@ -75,6 +75,15 @@
     {% endblocktrans %}
     </div>
 {% endif %}
+    {% if  study.has_missing_sessions %}
+        <div class="warning">
+        {% url "studies:design" study.pk as study_link %}
+        {% blocktrans with study_order=study.order%}
+        U heeft aangeven dat uw interventie een extra taak heeft, maar nog geen taakonderzoek toegevoegd voor traject {{ study_order }}.
+        Die kunt u op <a href="{{ study_link }}">deze pagina</a> alsnog aanmaken.
+        {% endblocktrans %}
+        </div>
+    {% endif %}
 {% endfor %}
 {% endif %}
 

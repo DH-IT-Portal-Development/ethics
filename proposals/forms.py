@@ -135,11 +135,10 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         """
         Filters the Proposals to only show those where:
         - the current User is an applicant.
-        - the Proposal is not a preliminary assessment or practice Proposal.
         """
         super(ProposalCopyForm, self).__init__(*args, **kwargs)
         self.fields['parent'].queryset = Proposal.objects. \
-            filter(applicants=self.user, is_pre_assessment=False, in_course=False, is_exploration=False)
+            filter(applicants=self.user, is_pre_assessment=False)
 
 
 class ProposalConfirmationForm(forms.ModelForm):
@@ -276,7 +275,7 @@ class StudyStartForm(forms.ModelForm):
             nr_studies = cleaned_data['studies_number']
             if cleaned_data['studies_number'] < 2:
                 self.add_error('studies_number', _('Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
-            for n in xrange(nr_studies):
+            for n in range(nr_studies):
                 if n >= 5:
                     break
                 study_name = 'study_name_' + str(n + 1)
@@ -318,21 +317,24 @@ class ProposalSubmitForm(forms.ModelForm):
         - Do all Studies have informed consent/briefing?
         - If the inform_local_staff question is asked, it is required
         """
+        from studies.models import Documents
+
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
         if not self.instance.is_pre_assessment and not self.instance.is_practice():
             for study in self.instance.study_set.all():
+                documents = Documents.objects.get(study=study)
                 if study.passive_consent:
-                    if not study.director_consent_declaration:
+                    if not documents.director_consent_declaration:
                         self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
-                    if not study.director_consent_information:
+                    if not documents.director_consent_information:
                         self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
-                    if not study.parents_information:
+                    if not documents.parents_information:
                         self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
                 else:
-                    if not study.informed_consent:
+                    if not documents.informed_consent:
                         self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
-                    if not study.briefing:
+                    if not documents.briefing:
                         self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
 
         if check_local_facilities(self.proposal) and cleaned_data['inform_local_staff'] is None:

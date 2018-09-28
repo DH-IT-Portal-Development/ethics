@@ -5,15 +5,32 @@ function depends_on_value(a, a_value, b)
 {
     $('input[name=' + a + ']').change(function() {
         var check = $('input[name=' + a + ']:checked').val() === a_value;
+
         $('#id_' + b).parents('tr').toggle(check);
     });
     $('input[name=' + a + ']').change();
 }
 
-function depends_on_hidden_value(a, a_value, b)
+function depends_on_hidden_value(a, a_value, b, header=false)
 {
     $('input[name=' + a + ']').change(function() {
-        var check = $('input[name=' + a + ']').val() === a_value;
+        var values = a_value;
+        if(!Array.isArray(values))
+        {
+            values = [a_value]
+        }
+        var check = false
+
+        values.forEach(function (val) {
+            if( $('input[name=' + a + ']').val() === val )
+                check = true;
+        })
+
+        if(header)
+        {
+            $('#id_' + b).parents('tr').prev().toggle(check);
+        }
+
         $('#id_' + b).parents('tr').toggle(check);
     });
     $('input[name=' + a + ']').change();
@@ -38,7 +55,7 @@ function intersect(a, b)
 }
 
 // Checks whether a field is required given the selected inputs
-function check_field_required(input_name, field_name, required_input, app_name, model_name)
+function check_field_required(input_name, field_name, required_input, app_name, model_name, header=false)
 {
     model_name = typeof model_name !== 'undefined' ? model_name : input_name;
 
@@ -51,6 +68,10 @@ function check_field_required(input_name, field_name, required_input, app_name, 
         var params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
         $.post(url, params, function(data) {
             $('#id_' + required_input).parents('tr').toggle(data.result);
+            if(header)
+            {
+                $('#id_' + required_input).parents('tr').prev().toggle(data.result);
+            }
         });
     });
     $('input[name=' + input_name + ']').change();

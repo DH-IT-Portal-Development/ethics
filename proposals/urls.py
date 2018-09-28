@@ -11,7 +11,7 @@ from .views.proposal_views import ProposalsView, MyConceptsView, MyPracticeView,
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
     HideFromArchiveView, ProposalsExportView
 
-from .views.study_views import StudyStart
+from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
     WmoApplication, WmoCheck, check_wmo, \
     WmoCreatePreAssessment, WmoUpdatePreAssessment
@@ -66,6 +66,7 @@ urlpatterns = [
     url(r'^confirm/(?P<pk>\d+)/$', ProposalConfirmation.as_view(), name='confirmation'),
 
     url(r'^study_start/(?P<pk>\d+)/$', StudyStart.as_view(), name='study_start'),
+    url(r'^consent/(?P<pk>\d+)/$', StudyConsent.as_view(), name='consent'),
 
     url(r'^copy/', include([
         url(r'^$', ProposalCopy.as_view(), name='copy'),

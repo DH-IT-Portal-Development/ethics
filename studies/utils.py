@@ -84,11 +84,6 @@ def study_urls(study, prev_study_completed):
         end_url.url = reverse('studies:design_end', args=(study.pk,))
     urls.append(end_url)
 
-    consent_url = AvailableURL(title=_('Informed consent formulieren voor het onderzoek'), margin=1)
-    if study.is_completed():
-        consent_url.url = reverse('studies:consent', args=(study.pk,))
-    urls.append(consent_url)
-
     return urls
 
 
@@ -99,6 +94,7 @@ def copy_study_to_proposal(proposal, study):
     :param study: the current Study
     :return: the Proposal appended with the details of the given Study.
     """
+    old_pk = study.pk
     age_groups = study.age_groups.all()
     traits = study.traits.all()
     compensation = study.compensation
@@ -112,10 +108,12 @@ def copy_study_to_proposal(proposal, study):
     s.proposal = proposal
     s.save()
 
-    s.age_groups = age_groups
-    s.traits = traits
+    print(s is study)
+    print(s == study)
+    s.age_groups.set(age_groups)
+    s.traits.set(traits)
     s.compensation = compensation
-    s.recruitment = recruitment
+    s.recruitment.set(recruitment)
     s.save()
 
     if intervention:
@@ -124,3 +122,26 @@ def copy_study_to_proposal(proposal, study):
         copy_observation_to_study(s, observation)
     for session in sessions:
         copy_session_to_study(s, session)
+
+    copy_documents_to_study(old_pk, s)
+
+def copy_documents_to_study(study_old, study):
+    from .models import Documents
+
+    print(study_old)
+    documents = Documents.objects.get(study__pk=study_old)
+
+    d = documents
+    d.pk = None
+    d.proposal = study.proposal
+    d.study = study
+    d.save()
+
+def copy_documents_to_proposal(proposal_old, proposal):
+    from .models import Documents
+
+    for documents in Documents.objects.filter(proposal__pk=proposal_old, study=None):
+        d = documents
+        d.pk = None
+        d.proposal = proposal
+        d.save()
