@@ -21,6 +21,8 @@
 <script>
 $(function() {
     depends_on_value('confirmation_sent', 'True', 'confirmation_comments');
+    depends_on_value('continuation', '0', 'has_minor_revision')
+    depends_on_value('has_minor_revision', 'True', 'minor_revision_description')
 });
 </script>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}

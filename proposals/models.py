@@ -183,6 +183,9 @@ gebruikt worden).'))
         _('Datum bevestigingsbrief verstuurd'),
         null=True)
 
+    has_minor_revision = models.BooleanField(_('Is er een revisie geweest na het indienen van deze studie?'), default=False)
+    minor_revision_description = models.TextField(_('Leg uit'), null=True, blank=True)
+
     # References to other models
     relation = models.ForeignKey(
         Relation,
