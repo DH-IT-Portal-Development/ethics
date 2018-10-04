@@ -9,10 +9,11 @@
     <title>core.templatetags package &#8212; ETCL 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="etcl package" href="etcl.html" />
@@ -29,6 +30,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="core-templatetags-package">
@@ -38,6 +41,49 @@
 </div>
 <div class="section" id="module-core.templatetags.core_filters">
 <span id="core-templatetags-core-filters-module"></span><h2>core.templatetags.core_filters module<a class="headerlink" href="#module-core.templatetags.core_filters" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="core.templatetags.core_filters.Counter">
+<em class="property">class </em><code class="descclassname">core.templatetags.core_filters.</code><code class="descname">Counter</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#core.templatetags.core_filters.Counter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Very simple counter used in the counter tag</p>
+<dl class="method">
+<dt id="core.templatetags.core_filters.Counter.increment">
+<code class="descname">increment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#core.templatetags.core_filters.Counter.increment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this to increment the counter. Please note that you should use {{ c.incement }}, not {% c.increment %},
+as this is not a tag method
+:return: Empty string</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.templatetags.core_filters.SetVarNode">
+<em class="property">class </em><code class="descclassname">core.templatetags.core_filters.</code><code class="descname">SetVarNode</code><span class="sig-paren">(</span><em>var_name</em>, <em>var_value</em><span class="sig-paren">)</span><a class="headerlink" href="#core.templatetags.core_filters.SetVarNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.template.base.Node</span></code></p>
+<p>This is a very simple node that just assigns a given value to a given variable in the template context</p>
+<dl class="method">
+<dt id="core.templatetags.core_filters.SetVarNode.render">
+<code class="descname">render</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="headerlink" href="#core.templatetags.core_filters.SetVarNode.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the node rendered as a string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="core.templatetags.core_filters.counter">
+<code class="descclassname">core.templatetags.core_filters.</code><code class="descname">counter</code><span class="sig-paren">(</span><em>parser</em>, <em>token</em><span class="sig-paren">)</span><a class="headerlink" href="#core.templatetags.core_filters.counter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a counter object under a specified variable name, optionally with a starting number. By default it starts
+counting at 0.</p>
+<p>Usage:
+{% counter VAR_NAME %}
+or
+{% counter VAR_NAME STARTING_VALUE %} (to specify the starting value, must be an int or int in a string)</p>
+<p>To increment:
+{{ VAR_NAME.increment }}</p>
+<p>To display the value:
+{{ VAR_NAME }}</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="core.templatetags.core_filters.in_commission">
 <code class="descclassname">core.templatetags.core_filters.</code><code class="descname">in_commission</code><span class="sig-paren">(</span><em>current_user</em><span class="sig-paren">)</span><a class="headerlink" href="#core.templatetags.core_filters.in_commission" title="Permalink to this definition">¶</a></dt>
@@ -50,6 +96,12 @@
 <dd><p>Check whether the current user is in the ‘Secretary’ group</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="core.templatetags.core_filters.set_var">
+<code class="descclassname">core.templatetags.core_filters.</code><code class="descname">set_var</code><span class="sig-paren">(</span><em>parser</em>, <em>token</em><span class="sig-paren">)</span><a class="headerlink" href="#core.templatetags.core_filters.set_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>{% set some_var = ‘123’ %}</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-core.templatetags">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-core.templatetags" title="Permalink to this headline">¶</a></h2>
@@ -58,19 +110,55 @@
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">core.templatetags package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-core.templatetags.core_filters">core.templatetags.core_filters module</a></li>
-<li><a class="reference internal" href="#module-core.templatetags">Module contents</a></li>
+<h1 class="logo"><a href="index.html">ETCL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="core.html">core package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="core.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">core.templatetags package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-core.templatetags.core_filters">core.templatetags.core_filters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-core.templatetags">Module contents</a></li>
 </ul>
 </li>
 </ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.admin">core.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.forms">core.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.models">core.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.tests">core.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.urls">core.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.utils">core.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.validators">core.validators module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core.views">core.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -82,13 +170,6 @@
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/core.templatetags.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -109,8 +190,8 @@
       &copy;2017, Martijn van der Klis.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/core.templatetags.rst.txt"

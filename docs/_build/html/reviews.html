@@ -9,10 +9,11 @@
     <title>reviews package &#8212; ETCL 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="studies package" href="studies.html" />
@@ -29,6 +30,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="reviews-package">
@@ -80,7 +83,8 @@
 <dl class="class">
 <dt id="reviews.forms.DecisionForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#reviews.forms.DecisionForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="reviews.forms.DecisionForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['go', 'comments']</em><a class="headerlink" href="#reviews.forms.DecisionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -93,14 +97,14 @@
 
 <dl class="attribute">
 <dt id="reviews.forms.DecisionForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'go': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa57b790&gt;}</em><a class="headerlink" href="#reviews.forms.DecisionForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'go': &lt;django.forms.widgets.RadioSelect object&gt;}</em><a class="headerlink" href="#reviews.forms.DecisionForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="reviews.forms.DecisionForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'comments': &lt;django.forms.fields.CharField object at 0x7fe6fa57bb50&gt;, 'go': &lt;django.forms.fields.TypedChoiceField object at 0x7fe6fa57ba50&gt;}</em><a class="headerlink" href="#reviews.forms.DecisionForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'comments': &lt;django.forms.fields.CharField object&gt;, 'go': &lt;django.forms.fields.TypedChoiceField object&gt;}</em><a class="headerlink" href="#reviews.forms.DecisionForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -122,7 +126,8 @@
 <dl class="class">
 <dt id="reviews.forms.ReviewAssignForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="reviews.forms.ReviewAssignForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['short_route']</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -135,14 +140,14 @@
 
 <dl class="attribute">
 <dt id="reviews.forms.ReviewAssignForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'short_route': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa57b1d0&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'short_route': &lt;django.forms.widgets.RadioSelect object&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="reviews.forms.ReviewAssignForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'short_route': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa57b510&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'short_route': &lt;django.forms.fields.NullBooleanField object&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewAssignForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -164,7 +169,8 @@
 <dl class="class">
 <dt id="reviews.forms.ReviewCloseForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="reviews.forms.ReviewCloseForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['continuation', 'in_archive']</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -177,19 +183,19 @@
 
 <dl class="attribute">
 <dt id="reviews.forms.ReviewCloseForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'continuation': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa57b6d0&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'continuation': &lt;django.forms.widgets.RadioSelect object&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="reviews.forms.ReviewCloseForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'continuation': &lt;django.forms.fields.TypedChoiceField object at 0x7fe6fa57b7d0&gt;, 'in_archive': &lt;django.forms.fields.BooleanField object at 0x7fe6fa57b650&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'continuation': &lt;django.forms.fields.TypedChoiceField object&gt;, 'in_archive': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="reviews.forms.ReviewCloseForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'in_archive': &lt;django.forms.fields.BooleanField object at 0x7fe6fa57b650&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">declared_fields</code><em class="property"> = {'in_archive': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#reviews.forms.ReviewCloseForm.declared_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -236,7 +242,7 @@ as well as whether the Review is still open.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <dl class="attribute">
 <dt id="reviews.models.Decision.APPROVAL">
-<code class="descname">APPROVAL</code><em class="property"> = (('Y', u'goedgekeurd'), ('N', u'niet goegekeurd'), ('?', u'revisie noodzakelijk'))</em><a class="headerlink" href="#reviews.models.Decision.APPROVAL" title="Permalink to this definition">¶</a></dt>
+<code class="descname">APPROVAL</code><em class="property"> = (('Y', 'goedgekeurd'), ('N', 'niet goegekeurd'), ('?', 'revisie noodzakelijk'))</em><a class="headerlink" href="#reviews.models.Decision.APPROVAL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -378,7 +384,7 @@ object the first time, the query is executed.</p>
 
 <dl class="attribute">
 <dt id="reviews.models.Review.CONTINUATIONS">
-<code class="descname">CONTINUATIONS</code><em class="property"> = ((0, u'Goedkeuring door ETCL'), (1, u'Revisie noodzakelijk'), (2, u'Afwijzing door ETCL'), (3, u'Open review met lange (4-weken) route'), (4, u'Laat opnieuw beoordelen door METC'))</em><a class="headerlink" href="#reviews.models.Review.CONTINUATIONS" title="Permalink to this definition">¶</a></dt>
+<code class="descname">CONTINUATIONS</code><em class="property"> = ((0, 'Goedkeuring door ETCL'), (1, 'Revisie noodzakelijk'), (2, 'Afwijzing door ETCL'), (3, 'Open review met lange (4-weken) route'), (4, 'Laat opnieuw beoordelen door METC'))</em><a class="headerlink" href="#reviews.models.Review.CONTINUATIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="exception">
@@ -420,7 +426,7 @@ object the first time, the query is executed.</p>
 
 <dl class="attribute">
 <dt id="reviews.models.Review.STAGES">
-<code class="descname">STAGES</code><em class="property"> = ((0, u'Beoordeling door eindverantwoordelijke'), (1, u'Aanstelling commissieleden'), (2, u'Beoordeling door commissie'), (3, u'Afsluiting door secretaris'), (4, u'Afgesloten'))</em><a class="headerlink" href="#reviews.models.Review.STAGES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">STAGES</code><em class="property"> = ((0, 'Beoordeling door eindverantwoordelijke'), (1, 'Aanstelling commissieleden'), (2, 'Beoordeling door commissie'), (3, 'Afsluiting door secretaris'), (4, 'Afgesloten'))</em><a class="headerlink" href="#reviews.models.Review.STAGES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1028,26 +1034,46 @@ SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">reviews package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-reviews.admin">reviews.admin module</a></li>
-<li><a class="reference internal" href="#module-reviews.forms">reviews.forms module</a></li>
-<li><a class="reference internal" href="#module-reviews.mixins">reviews.mixins module</a></li>
-<li><a class="reference internal" href="#module-reviews.models">reviews.models module</a></li>
-<li><a class="reference internal" href="#module-reviews.tests">reviews.tests module</a></li>
-<li><a class="reference internal" href="#module-reviews.urls">reviews.urls module</a></li>
-<li><a class="reference internal" href="#module-reviews.utils">reviews.utils module</a></li>
-<li><a class="reference internal" href="#module-reviews.views">reviews.views module</a></li>
-<li><a class="reference internal" href="#module-reviews">Module contents</a></li>
+<h1 class="logo"><a href="index.html">ETCL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">reviews package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.admin">reviews.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.forms">reviews.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.mixins">reviews.mixins module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.models">reviews.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.tests">reviews.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.urls">reviews.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.utils">reviews.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews.views">reviews.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-reviews">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">tasks package</a></li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -1057,13 +1083,6 @@ SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/reviews.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -1084,8 +1103,8 @@ SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
       &copy;2017, Martijn van der Klis.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/reviews.rst.txt"

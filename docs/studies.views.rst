@@ -18,7 +18,7 @@ studies.views.study_views module
 .. automodule:: studies.views.study_views
     :members:
     :undoc-members:
-    :show-inheritance:git staut
+    :show-inheritance:git status
 
 
 Module contents

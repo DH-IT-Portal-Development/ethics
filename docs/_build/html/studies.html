@@ -9,10 +9,11 @@
     <title>studies package &#8212; ETCL 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="studies.views package" href="studies.views.html" />
@@ -29,6 +30,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="studies-package">
@@ -58,7 +61,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
 <dl class="attribute">
 <dt id="studies.admin.AgeGroupAdmin.list_display">
-<code class="descname">list_display</code><em class="property"> = ('description', 'age_min', 'age_max', 'is_adult', 'needs_details', 'max_net_duration')</em><a class="headerlink" href="#studies.admin.AgeGroupAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<code class="descname">list_display</code><em class="property"> = ('description', 'age_min', 'is_active', 'age_max', 'is_adult', 'needs_details', 'max_net_duration')</em><a class="headerlink" href="#studies.admin.AgeGroupAdmin.list_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -161,7 +164,8 @@
 <dl class="class">
 <dt id="studies.forms.SessionStartForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#studies.forms.SessionStartForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="studies.forms.SessionStartForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['sessions_number']</em><a class="headerlink" href="#studies.forms.SessionStartForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -176,7 +180,7 @@
 
 <dl class="attribute">
 <dt id="studies.forms.SessionStartForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'sessions_number': &lt;django.forms.fields.IntegerField object at 0x7fe6fa5a9c90&gt;}</em><a class="headerlink" href="#studies.forms.SessionStartForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'sessions_number': &lt;django.forms.fields.IntegerField object&gt;}</em><a class="headerlink" href="#studies.forms.SessionStartForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -193,39 +197,42 @@
 
 <dl class="class">
 <dt id="studies.forms.StudyConsentForm">
-<em class="property">class </em><code class="descclassname">studies.forms.</code><code class="descname">StudyConsentForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyConsentForm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">studies.forms.</code><code class="descname">StudyConsentForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyConsentForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.html#core.forms.ConditionalModelForm" title="core.forms.ConditionalModelForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.forms.ConditionalModelForm</span></code></a></p>
 <dl class="class">
 <dt id="studies.forms.StudyConsentForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#studies.forms.StudyConsentForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="studies.forms.StudyConsentForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['passive_consent', 'informed_consent', 'briefing', 'passive_consent_details', 'director_consent_declaration', 'director_consent_information', 'parents_information']</em><a class="headerlink" href="#studies.forms.StudyConsentForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fields</code><em class="property"> = ['proposal', 'study', 'informed_consent', 'briefing', 'director_consent_declaration', 'director_consent_information', 'parents_information']</em><a class="headerlink" href="#studies.forms.StudyConsentForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyConsentForm.Meta.model">
 <code class="descname">model</code><a class="headerlink" href="#studies.forms.StudyConsentForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="#studies.models.Documents" title="studies.models.Documents"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Documents</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyConsentForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'passive_consent': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa599190&gt;}</em><a class="headerlink" href="#studies.forms.StudyConsentForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'proposal': &lt;class 'django.forms.widgets.HiddenInput'&gt;, 'study': &lt;class 'django.forms.widgets.HiddenInput'&gt;}</em><a class="headerlink" href="#studies.forms.StudyConsentForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyConsentForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'briefing': &lt;django.forms.fields.FileField object at 0x7fe6fa599410&gt;, 'director_consent_declaration': &lt;django.forms.fields.FileField object at 0x7fe6fa599710&gt;, 'director_consent_information': &lt;django.forms.fields.FileField object at 0x7fe6fa599810&gt;, 'informed_consent': &lt;django.forms.fields.FileField object at 0x7fe6fa599390&gt;, 'parents_information': &lt;django.forms.fields.FileField object at 0x7fe6fa599910&gt;, 'passive_consent': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa599510&gt;, 'passive_consent_details': &lt;django.forms.fields.CharField object at 0x7fe6fa599650&gt;}</em><a class="headerlink" href="#studies.forms.StudyConsentForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'briefing': &lt;django.forms.fields.FileField object&gt;, 'director_consent_declaration': &lt;django.forms.fields.FileField object&gt;, 'director_consent_information': &lt;django.forms.fields.FileField object&gt;, 'informed_consent': &lt;django.forms.fields.FileField object&gt;, 'parents_information': &lt;django.forms.fields.FileField object&gt;, 'proposal': &lt;django.forms.models.ModelChoiceField object&gt;, 'study': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#studies.forms.StudyConsentForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="studies.forms.StudyConsentForm.clean">
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyConsentForm.clean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check for conditional requirements:
-- If passive_consent is set to yes, make sure passive_consent_details has been filled out</p>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named ‘__all__’.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -242,12 +249,13 @@
 
 <dl class="class">
 <dt id="studies.forms.StudyDesignForm">
-<em class="property">class </em><code class="descclassname">studies.forms.</code><code class="descname">StudyDesignForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyDesignForm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">studies.forms.</code><code class="descname">StudyDesignForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyDesignForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <dl class="class">
 <dt id="studies.forms.StudyDesignForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#studies.forms.StudyDesignForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="studies.forms.StudyDesignForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['has_intervention', 'has_observation', 'has_sessions']</em><a class="headerlink" href="#studies.forms.StudyDesignForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -262,7 +270,7 @@
 
 <dl class="attribute">
 <dt id="studies.forms.StudyDesignForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'has_intervention': &lt;django.forms.fields.BooleanField object at 0x7fe6fa58fe90&gt;, 'has_observation': &lt;django.forms.fields.BooleanField object at 0x7fe6fa58ff10&gt;, 'has_sessions': &lt;django.forms.fields.BooleanField object at 0x7fe6fa599050&gt;}</em><a class="headerlink" href="#studies.forms.StudyDesignForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'has_intervention': &lt;django.forms.fields.BooleanField object&gt;, 'has_observation': &lt;django.forms.fields.BooleanField object&gt;, 'has_sessions': &lt;django.forms.fields.BooleanField object&gt;}</em><a class="headerlink" href="#studies.forms.StudyDesignForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -291,7 +299,8 @@
 <dl class="class">
 <dt id="studies.forms.StudyEndForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#studies.forms.StudyEndForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="studies.forms.StudyEndForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['deception', 'deception_details', 'negativity', 'negativity_details', 'stressful', 'stressful_details', 'risk', 'risk_details']</em><a class="headerlink" href="#studies.forms.StudyEndForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -304,14 +313,14 @@
 
 <dl class="attribute">
 <dt id="studies.forms.StudyEndForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'deception': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa599a50&gt;, 'negativity': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa599a10&gt;, 'risk': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa599b10&gt;, 'stressful': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa599ad0&gt;}</em><a class="headerlink" href="#studies.forms.StudyEndForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'deception': &lt;django.forms.widgets.RadioSelect object&gt;, 'negativity': &lt;django.forms.widgets.RadioSelect object&gt;, 'risk': &lt;django.forms.widgets.RadioSelect object&gt;, 'stressful': &lt;django.forms.widgets.RadioSelect object&gt;}</em><a class="headerlink" href="#studies.forms.StudyEndForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyEndForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'deception': &lt;django.forms.fields.TypedChoiceField object at 0x7fe6fa599c50&gt;, 'deception_details': &lt;django.forms.fields.CharField object at 0x7fe6fa599d90&gt;, 'negativity': &lt;django.forms.fields.TypedChoiceField object at 0x7fe6fa599e50&gt;, 'negativity_details': &lt;django.forms.fields.CharField object at 0x7fe6fa599f90&gt;, 'risk': &lt;django.forms.fields.TypedChoiceField object at 0x7fe6fa5a9290&gt;, 'risk_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5a93d0&gt;, 'stressful': &lt;django.forms.fields.TypedChoiceField object at 0x7fe6fa5a9090&gt;, 'stressful_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5a91d0&gt;}</em><a class="headerlink" href="#studies.forms.StudyEndForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'deception': &lt;django.forms.fields.TypedChoiceField object&gt;, 'deception_details': &lt;django.forms.fields.CharField object&gt;, 'negativity': &lt;django.forms.fields.TypedChoiceField object&gt;, 'negativity_details': &lt;django.forms.fields.CharField object&gt;, 'risk': &lt;django.forms.fields.TypedChoiceField object&gt;, 'risk_details': &lt;django.forms.fields.CharField object&gt;, 'stressful': &lt;django.forms.fields.TypedChoiceField object&gt;, 'stressful_details': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#studies.forms.StudyEndForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -343,9 +352,10 @@
 <dl class="class">
 <dt id="studies.forms.StudyForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#studies.forms.StudyForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="studies.forms.StudyForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['age_groups', 'legally_incapable', 'legally_incapable_details', 'has_traits', 'traits', 'traits_details', 'necessity', 'necessity_reason', 'recruitment', 'recruitment_details', 'compensation', 'compensation_details']</em><a class="headerlink" href="#studies.forms.StudyForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fields</code><em class="property"> = ['age_groups', 'passive_consent', 'passive_consent_details', 'legally_incapable', 'legally_incapable_details', 'has_traits', 'traits', 'traits_details', 'necessity', 'necessity_reason', 'recruitment', 'recruitment_details', 'compensation', 'compensation_details']</em><a class="headerlink" href="#studies.forms.StudyForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -356,14 +366,14 @@
 
 <dl class="attribute">
 <dt id="studies.forms.StudyForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'age_groups': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0x7fe6fa5b06d0&gt;, 'compensation': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa5b0910&gt;, 'has_traits': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa5b0810&gt;, 'legally_incapable': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa5b07d0&gt;, 'necessity': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa5b0890&gt;, 'recruitment': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0x7fe6fa5b08d0&gt;, 'traits': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0x7fe6fa5b0850&gt;}</em><a class="headerlink" href="#studies.forms.StudyForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'age_groups': &lt;django.forms.widgets.CheckboxSelectMultiple object&gt;, 'compensation': &lt;django.forms.widgets.RadioSelect object&gt;, 'has_traits': &lt;django.forms.widgets.RadioSelect object&gt;, 'legally_incapable': &lt;django.forms.widgets.RadioSelect object&gt;, 'necessity': &lt;django.forms.widgets.RadioSelect object&gt;, 'passive_consent': &lt;django.forms.widgets.RadioSelect object&gt;, 'recruitment': &lt;django.forms.widgets.CheckboxSelectMultiple object&gt;, 'traits': &lt;django.forms.widgets.CheckboxSelectMultiple object&gt;}</em><a class="headerlink" href="#studies.forms.StudyForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'age_groups': &lt;django.forms.models.ModelMultipleChoiceField object at 0x7fe6fa5b0bd0&gt;, 'compensation': &lt;django.forms.models.ModelChoiceField object at 0x7fe6fa58fb10&gt;, 'compensation_details': &lt;django.forms.fields.CharField object at 0x7fe6fa58fd10&gt;, 'has_traits': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa5b0f90&gt;, 'legally_incapable': &lt;django.forms.fields.BooleanField object at 0x7fe6fa5b0e50&gt;, 'legally_incapable_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5b0ed0&gt;, 'necessity': &lt;django.forms.fields.TypedChoiceField object at 0x7fe6fa58f510&gt;, 'necessity_reason': &lt;django.forms.fields.CharField object at 0x7fe6fa58f610&gt;, 'recruitment': &lt;django.forms.models.ModelMultipleChoiceField object at 0x7fe6fa58f790&gt;, 'recruitment_details': &lt;django.forms.fields.CharField object at 0x7fe6fa58f9d0&gt;, 'traits': &lt;django.forms.models.ModelMultipleChoiceField object at 0x7fe6fa58f190&gt;, 'traits_details': &lt;django.forms.fields.CharField object at 0x7fe6fa58f410&gt;}</em><a class="headerlink" href="#studies.forms.StudyForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'age_groups': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'compensation': &lt;django.forms.models.ModelChoiceField object&gt;, 'compensation_details': &lt;django.forms.fields.CharField object&gt;, 'has_traits': &lt;django.forms.fields.NullBooleanField object&gt;, 'legally_incapable': &lt;django.forms.fields.BooleanField object&gt;, 'legally_incapable_details': &lt;django.forms.fields.CharField object&gt;, 'necessity': &lt;django.forms.fields.TypedChoiceField object&gt;, 'necessity_reason': &lt;django.forms.fields.CharField object&gt;, 'passive_consent': &lt;django.forms.fields.NullBooleanField object&gt;, 'passive_consent_details': &lt;django.forms.fields.CharField object&gt;, 'recruitment': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'recruitment_details': &lt;django.forms.fields.CharField object&gt;, 'traits': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'traits_details': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#studies.forms.StudyForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -371,6 +381,7 @@
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyForm.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check for conditional requirements:
 - Check whether necessity was required
+- Check all passive_consent fields are filled in correctly when needed
 - Check that legally_incapable has a value
 - If legally_incapable is set, make sure the details are filled
 - Check that has_traits has a value
@@ -396,36 +407,43 @@
 <dd><p>Check whether necessity_reason was required and if so, if it has been filled out.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="studies.forms.StudyForm.passive_consent">
+<code class="descname">passive_consent</code><span class="sig-paren">(</span><em>cleaned_data</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyForm.passive_consent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the passive consent fields are filled in correctly</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="studies.forms.StudyUpdateAttachmentsForm">
-<em class="property">class </em><code class="descclassname">studies.forms.</code><code class="descname">StudyUpdateAttachmentsForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">studies.forms.</code><code class="descname">StudyUpdateAttachmentsForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
 <dl class="class">
 <dt id="studies.forms.StudyUpdateAttachmentsForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="studies.forms.StudyUpdateAttachmentsForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['passive_consent', 'informed_consent', 'briefing', 'director_consent_declaration', 'director_consent_information', 'parents_information']</em><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fields</code><em class="property"> = ['informed_consent', 'briefing', 'director_consent_declaration', 'director_consent_information', 'parents_information']</em><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyUpdateAttachmentsForm.Meta.model">
 <code class="descname">model</code><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.Meta.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="#studies.models.Documents" title="studies.models.Documents"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Documents</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyUpdateAttachmentsForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'passive_consent': &lt;class 'django.forms.widgets.HiddenInput'&gt;}</em><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {}</em><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="studies.forms.StudyUpdateAttachmentsForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'briefing': &lt;django.forms.fields.FileField object at 0x7fe6fa5a9650&gt;, 'director_consent_declaration': &lt;django.forms.fields.FileField object at 0x7fe6fa5a9850&gt;, 'director_consent_information': &lt;django.forms.fields.FileField object at 0x7fe6fa5a9910&gt;, 'informed_consent': &lt;django.forms.fields.FileField object at 0x7fe6fa5a95d0&gt;, 'parents_information': &lt;django.forms.fields.FileField object at 0x7fe6fa5a9a50&gt;, 'passive_consent': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa5a9750&gt;}</em><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'briefing': &lt;django.forms.fields.FileField object&gt;, 'director_consent_declaration': &lt;django.forms.fields.FileField object&gt;, 'director_consent_information': &lt;django.forms.fields.FileField object&gt;, 'informed_consent': &lt;django.forms.fields.FileField object&gt;, 'parents_information': &lt;django.forms.fields.FileField object&gt;}</em><a class="headerlink" href="#studies.forms.StudyUpdateAttachmentsForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -450,7 +468,9 @@
 <p>A model to store participant age groups.
 The model has fields for the age range, a description and whether this age group is considered adult.
 The ‘needs_details’ field is used to determine whether the ‘necessity’ field on Study needs to be filled.
-The ‘max_net_duration’ field is used in the automatic review to check the target Session duration is not exceeded.</p>
+The ‘max_net_duration’ field is used in the automatic review to check the target Session duration is not exceeded.
+The ‘is_active’ field is used for when the age groups need to be redefined. Create new ones for the groups that need
+to be redefined, and set the old ones to inactive. This is needed to preserve old proposals for the archive.</p>
 <dl class="exception">
 <dt id="studies.models.AgeGroup.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.AgeGroup.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -510,6 +530,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="studies.models.AgeGroup.id">
 <code class="descname">id</code><a class="headerlink" href="#studies.models.AgeGroup.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.is_active">
+<code class="descname">is_active</code><a class="headerlink" href="#studies.models.AgeGroup.is_active" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -669,6 +696,170 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="class">
+<dt id="studies.models.Documents">
+<em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Documents</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model to store consent forms for a study and/or a proposal</p>
+<dl class="exception">
+<dt id="studies.models.Documents.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Documents.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.Documents.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#studies.models.Documents.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.briefing">
+<code class="descname">briefing</code><a class="headerlink" href="#studies.models.Documents.briefing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Returns a
+FieldFile when accessed so you can do stuff like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assigns a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.director_consent_declaration">
+<code class="descname">director_consent_declaration</code><a class="headerlink" href="#studies.models.Documents.director_consent_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Returns a
+FieldFile when accessed so you can do stuff like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assigns a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.director_consent_information">
+<code class="descname">director_consent_information</code><a class="headerlink" href="#studies.models.Documents.director_consent_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Returns a
+FieldFile when accessed so you can do stuff like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assigns a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.id">
+<code class="descname">id</code><a class="headerlink" href="#studies.models.Documents.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.informed_consent">
+<code class="descname">informed_consent</code><a class="headerlink" href="#studies.models.Documents.informed_consent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Returns a
+FieldFile when accessed so you can do stuff like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assigns a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#studies.models.Documents.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.parents_information">
+<code class="descname">parents_information</code><a class="headerlink" href="#studies.models.Documents.parents_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Returns a
+FieldFile when accessed so you can do stuff like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assigns a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.proposal">
+<code class="descname">proposal</code><a class="headerlink" href="#studies.models.Documents.proposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.proposal_id">
+<code class="descname">proposal_id</code><a class="headerlink" href="#studies.models.Documents.proposal_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Documents.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Documents.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be a bit cleaner we do not save if this object is new, not connected to a study and if the document fields are
+empty.</p>
+<p>The edit consent form page contains 2 extra forms, but those are optional. However, Django creates instances
+for these forms anyway, so we have to</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.study">
+<code class="descname">study</code><a class="headerlink" href="#studies.models.Documents.study" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.study_id">
+<code class="descname">study_id</code><a class="headerlink" href="#studies.models.Documents.study_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="studies.models.Recruitment">
 <em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Recruitment</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Recruitment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
@@ -790,7 +981,7 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 A Study consists of participant details, experiment design and consent forms.</p>
 <dl class="attribute">
 <dt id="studies.models.Study.DESIGNS">
-<code class="descname">DESIGNS</code><em class="property"> = ((0, u'Observatieonderzoek'), (1, u'Interventieonderzoek'), (2, u'Taakonderzoek'))</em><a class="headerlink" href="#studies.models.Study.DESIGNS" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DESIGNS</code><em class="property"> = ((0, 'Observatieonderzoek'), (1, 'Interventieonderzoek'), (2, 'Taakonderzoek'))</em><a class="headerlink" href="#studies.models.Study.DESIGNS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="exception">
@@ -834,23 +1025,6 @@ a many-to-many relation.</p>
 instances.</p>
 <p>Most of the implementation is delegated to a dynamically defined manager
 class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="studies.models.Study.briefing">
-<code class="descname">briefing</code><a class="headerlink" href="#studies.models.Study.briefing" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -907,37 +1081,16 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="studies.models.Study.director_consent_declaration">
-<code class="descname">director_consent_declaration</code><a class="headerlink" href="#studies.models.Study.director_consent_declaration" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+<dt id="studies.models.Study.documents">
+<code class="descname">documents</code><a class="headerlink" href="#studies.models.Study.documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the reverse side of a one-to-one
+relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="studies.models.Study.director_consent_information">
-<code class="descname">director_consent_information</code><a class="headerlink" href="#studies.models.Study.director_consent_information" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
+<p><code class="docutils literal notranslate"><span class="pre">place.restaurant</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseOneToOneDescriptor</span></code> instance.</p>
 </dd></dl>
 
 <dl class="method">
@@ -950,6 +1103,12 @@ FieldFile when accessed so you can do stuff like:</p>
 <dt id="studies.models.Study.get_deception_display">
 <code class="descname">get_deception_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.get_deception_display" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.get_documents_object">
+<code class="descname">get_documents_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.get_documents_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the document object for this study</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="studies.models.Study.get_necessity_display">
@@ -989,11 +1148,22 @@ object the first time, the query is executed.</p>
 <code class="descname">has_missing_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.has_missing_forms" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="method">
+<dt id="studies.models.Study.has_missing_sessions">
+<code class="descname">has_missing_sessions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.has_missing_sessions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="studies.models.Study.has_observation">
 <code class="descname">has_observation</code><a class="headerlink" href="#studies.models.Study.has_observation" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.has_participants_below_age">
+<code class="descname">has_participants_below_age</code><span class="sig-paren">(</span><em>age</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.has_participants_below_age" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the Study contains AgeGroups with ages below the specified age</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1015,23 +1185,6 @@ object the first time, the query is executed.</p>
 <code class="descname">id</code><a class="headerlink" href="#studies.models.Study.id" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="studies.models.Study.informed_consent">
-<code class="descname">informed_consent</code><a class="headerlink" href="#studies.models.Study.informed_consent" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -1094,6 +1247,12 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="studies.models.Study.needs_additional_external_forms">
+<code class="descname">needs_additional_external_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.needs_additional_external_forms" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks if the school/other external institution forms are needed when passive consent is false</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="studies.models.Study.negativity">
 <code class="descname">negativity</code><a class="headerlink" href="#studies.models.Study.negativity" title="Permalink to this definition">¶</a></dt>
@@ -1131,23 +1290,6 @@ relation.</p>
 <code class="descname">order</code><a class="headerlink" href="#studies.models.Study.order" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="studies.models.Study.parents_information">
-<code class="descname">parents_information</code><a class="headerlink" href="#studies.models.Study.parents_information" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -1205,6 +1347,12 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <code class="descname">recruitment_details</code><a class="headerlink" href="#studies.models.Study.recruitment_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.research_settings_contains_schools">
+<code class="descname">research_settings_contains_schools</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.research_settings_contains_schools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if any research track contains a school in it’s setting</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1427,6 +1575,16 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 </dd></dl>
 
 <dl class="function">
+<dt id="studies.utils.copy_documents_to_proposal">
+<code class="descclassname">studies.utils.</code><code class="descname">copy_documents_to_proposal</code><span class="sig-paren">(</span><em>proposal_old</em>, <em>proposal</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.utils.copy_documents_to_proposal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="studies.utils.copy_documents_to_study">
+<code class="descclassname">studies.utils.</code><code class="descname">copy_documents_to_study</code><span class="sig-paren">(</span><em>study_old</em>, <em>study</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.utils.copy_documents_to_study" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="studies.utils.copy_study_to_proposal">
 <code class="descclassname">studies.utils.</code><code class="descname">copy_study_to_proposal</code><span class="sig-paren">(</span><em>proposal</em>, <em>study</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.utils.copy_study_to_proposal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copies the given Study to the given Proposal.
@@ -1457,25 +1615,48 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">studies package</a><ul>
-<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-studies.admin">studies.admin module</a></li>
-<li><a class="reference internal" href="#module-studies.forms">studies.forms module</a></li>
-<li><a class="reference internal" href="#module-studies.models">studies.models module</a></li>
-<li><a class="reference internal" href="#module-studies.tests">studies.tests module</a></li>
-<li><a class="reference internal" href="#module-studies.urls">studies.urls module</a></li>
-<li><a class="reference internal" href="#module-studies.utils">studies.utils module</a></li>
-<li><a class="reference internal" href="#module-studies">Module contents</a></li>
+<h1 class="logo"><a href="index.html">ETCL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">studies package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="studies.views.html">studies.views package</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-studies.admin">studies.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-studies.forms">studies.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-studies.models">studies.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-studies.tests">studies.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-studies.urls">studies.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-studies.utils">studies.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-studies">Module contents</a></li>
 </ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -1485,13 +1666,6 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/studies.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -1512,8 +1686,8 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
       &copy;2017, Martijn van der Klis.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/studies.rst.txt"

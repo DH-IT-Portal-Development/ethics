@@ -10,10 +10,11 @@
     <title>Index &#8212; ETCL 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -28,6 +29,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
 
@@ -217,7 +220,7 @@
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalsView.body">(proposals.views.proposal_views.ProposalsView attribute)</a>
 </li>
       </ul></li>
-      <li><a href="studies.html#studies.models.Study.briefing">briefing (studies.models.Study attribute)</a>
+      <li><a href="studies.html#studies.models.Documents.briefing">briefing (studies.models.Documents attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -225,6 +228,8 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="core.html#core.views.FormSetUserAllowedMixin.check_allowed">check_allowed() (core.views.FormSetUserAllowedMixin method)</a>
+</li>
       <li><a href="core.html#core.forms.ConditionalModelForm.check_dependency">check_dependency() (core.forms.ConditionalModelForm method)</a>
 </li>
       <li><a href="core.html#core.forms.ConditionalModelForm.check_dependency_list">check_dependency_list() (core.forms.ConditionalModelForm method)</a>
@@ -323,12 +328,12 @@
 </li>
       <li><a href="reviews.html#reviews.tests.CommissionTestCase">CommissionTestCase (class in reviews.tests)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="core.html#core.validators.MaxWordsValidator.compare">compare() (core.validators.MaxWordsValidator method)</a>
 </li>
       <li><a href="studies.html#studies.models.Compensation">Compensation (class in studies.models)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="studies.html#studies.models.Study.compensation">compensation (studies.models.Study attribute)</a>
 </li>
       <li><a href="studies.html#studies.models.Compensation.DoesNotExist">Compensation.DoesNotExist</a>
@@ -371,6 +376,10 @@
 </li>
       <li><a href="interventions.html#interventions.models.Intervention.controls_description">controls_description (interventions.models.Intervention attribute)</a>
 </li>
+      <li><a href="studies.html#studies.utils.copy_documents_to_proposal">copy_documents_to_proposal() (in module studies.utils)</a>
+</li>
+      <li><a href="studies.html#studies.utils.copy_documents_to_study">copy_documents_to_study() (in module studies.utils)</a>
+</li>
       <li><a href="interventions.html#interventions.utils.copy_intervention_to_study">copy_intervention_to_study() (in module interventions.utils)</a>
 </li>
       <li><a href="observations.html#observations.utils.copy_observation_to_study">copy_observation_to_study() (in module observations.utils)</a>
@@ -404,6 +413,10 @@
       <li><a href="core.html#module-core.validators">core.validators (module)</a>
 </li>
       <li><a href="core.html#module-core.views">core.views (module)</a>
+</li>
+      <li><a href="core.templatetags.html#core.templatetags.core_filters.Counter">Counter (class in core.templatetags.core_filters)</a>
+</li>
+      <li><a href="core.templatetags.html#core.templatetags.core_filters.counter">counter() (in module core.templatetags.core_filters)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.COURSE">COURSE (proposals.models.Proposal attribute)</a>
 </li>
@@ -639,9 +652,25 @@
 </li>
       <li><a href="studies.html#studies.models.Study.DESIGNS">DESIGNS (studies.models.Study attribute)</a>
 </li>
-      <li><a href="studies.html#studies.models.Study.director_consent_declaration">director_consent_declaration (studies.models.Study attribute)</a>
+      <li><a href="observations.html#observations.models.Observation.details_frequency">details_frequency (observations.models.Observation attribute)</a>
 </li>
-      <li><a href="studies.html#studies.models.Study.director_consent_information">director_consent_information (studies.models.Study attribute)</a>
+      <li><a href="observations.html#observations.models.Observation.details_who">details_who (observations.models.Observation attribute)</a>
+</li>
+      <li><a href="observations.html#observations.models.Observation.details_why">details_why (observations.models.Observation attribute)</a>
+</li>
+      <li><a href="studies.html#studies.models.Documents.director_consent_declaration">director_consent_declaration (studies.models.Documents attribute)</a>
+</li>
+      <li><a href="studies.html#studies.models.Documents.director_consent_information">director_consent_information (studies.models.Documents attribute)</a>
+</li>
+      <li><a href="studies.html#studies.models.Documents">Documents (class in studies.models)</a>
+</li>
+      <li><a href="studies.html#studies.models.Study.documents">documents (studies.models.Study attribute)</a>
+</li>
+      <li><a href="studies.html#studies.models.Documents.DoesNotExist">Documents.DoesNotExist</a>
+</li>
+      <li><a href="studies.html#studies.models.Documents.MultipleObjectsReturned">Documents.MultipleObjectsReturned</a>
+</li>
+      <li><a href="proposals.html#proposals.models.Proposal.documents_set">documents_set (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.DRAFT">DRAFT (proposals.models.Proposal attribute)</a>
 </li>
@@ -671,12 +700,12 @@
 </li>
       <li><a href="etcl.html#module-etcl">etcl (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="etcl.html#module-etcl.ldap_settings">etcl.ldap_settings (module)</a>
 </li>
       <li><a href="etcl.html#module-etcl.settings">etcl.settings (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="etcl.html#module-etcl.urls">etcl.urls (module)</a>
 </li>
       <li><a href="etcl.html#module-etcl.wsgi">etcl.wsgi (module)</a>
@@ -684,6 +713,16 @@
       <li><a href="interventions.html#interventions.models.Intervention.experimenter">experimenter (interventions.models.Intervention attribute)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.EXPLORATION">EXPLORATION (proposals.models.Proposal attribute)</a>
+</li>
+      <li><a href="core.html#core.views.FormSetUpdateView.extra">extra (core.views.FormSetUpdateView attribute)</a>
+
+      <ul>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.extra">(proposals.views.study_views.StudyConsent attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="interventions.html#interventions.models.Intervention.extra_task">extra_task (interventions.models.Intervention attribute)</a>
+</li>
+      <li><a href="proposals.templatetags.html#proposals.templatetags.proposal_filters.ExtraDocumentsNode">ExtraDocumentsNode (class in proposals.templatetags.proposal_filters)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -819,6 +858,12 @@
         <li><a href="reviews.html#reviews.tests.BaseReviewTestCase.fixtures">(reviews.tests.BaseReviewTestCase attribute)</a>
 </li>
       </ul></li>
+      <li><a href="core.html#core.views.FormSetUpdateView.form">form (core.views.FormSetUpdateView attribute)</a>
+
+      <ul>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.form">(proposals.views.study_views.StudyConsent attribute)</a>
+</li>
+      </ul></li>
       <li><a href="feedback.html#feedback.views.FeedbackCreate.form_class">form_class (feedback.views.FeedbackCreate attribute)</a>
 
       <ul>
@@ -901,6 +946,10 @@
       </ul></li>
       <li><a href="core.html#core.views.format_user_info">format_user_info() (in module core.views)</a>
 </li>
+      <li><a href="core.html#core.views.FormSetUpdateView">FormSetUpdateView (class in core.views)</a>
+</li>
+      <li><a href="core.html#core.views.FormSetUserAllowedMixin">FormSetUserAllowedMixin (class in core.views)</a>
+</li>
       <li><a href="proposals.html#proposals.models.Funding">Funding (class in proposals.models)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.funding">funding (proposals.models.Proposal attribute)</a>
@@ -925,8 +974,14 @@
 </li>
       <li><a href="proposals.html#proposals.utils.generate_ref_number">generate_ref_number() (in module proposals.utils)</a>
 </li>
-      <li><a href="core.html#core.views.UserSearchView.get">get() (core.views.UserSearchView method)</a>
+      <li><a href="core.html#core.views.FormSetUpdateView.get">get() (core.views.FormSetUpdateView method)</a>
+
+      <ul>
+        <li><a href="core.html#core.views.UserSearchView.get">(core.views.UserSearchView method)</a>
 </li>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.get">(proposals.views.study_views.StudyConsent method)</a>
+</li>
+      </ul></li>
       <li><a href="interventions.html#interventions.views.InterventionMixin.get_back_url">get_back_url() (interventions.views.InterventionMixin method)</a>
 
       <ul>
@@ -937,6 +992,8 @@
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalSubmit.get_back_url">(proposals.views.proposal_views.ProposalSubmit method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalSubmitPreAssessment.get_back_url">(proposals.views.proposal_views.ProposalSubmitPreAssessment method)</a>
+</li>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.get_back_url">(proposals.views.study_views.StudyConsent method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.study_views.StudyStart.get_back_url">(proposals.views.study_views.StudyStart method)</a>
 </li>
@@ -955,9 +1012,11 @@
         <li><a href="tasks.views.html#tasks.views.task_views.TaskUpdate.get_back_url">(tasks.views.task_views.TaskUpdate method)</a>
 </li>
       </ul></li>
-      <li><a href="interventions.html#interventions.views.InterventionMixin.get_context_data">get_context_data() (interventions.views.InterventionMixin method)</a>
+      <li><a href="core.html#core.views.FormSetUpdateView.get_context_data">get_context_data() (core.views.FormSetUpdateView method)</a>
 
       <ul>
+        <li><a href="interventions.html#interventions.views.InterventionMixin.get_context_data">(interventions.views.InterventionMixin method)</a>
+</li>
         <li><a href="observations.html#observations.views.ObservationMixin.get_context_data">(observations.views.ObservationMixin method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalAsPdf.get_context_data">(proposals.views.proposal_views.ProposalAsPdf method)</a>
@@ -973,6 +1032,8 @@
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalUpdate.get_context_data">(proposals.views.proposal_views.ProposalUpdate method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalsView.get_context_data">(proposals.views.proposal_views.ProposalsView method)</a>
+</li>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.get_context_data">(proposals.views.study_views.StudyConsent method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.wmo_views.WmoApplication.get_context_data">(proposals.views.wmo_views.WmoApplication method)</a>
 </li>
@@ -1017,6 +1078,10 @@
         <li><a href="tasks.html#tasks.models.RegistrationKind.get_deferred_fields">(tasks.models.RegistrationKind method)</a>
 </li>
       </ul></li>
+      <li><a href="studies.html#studies.models.Study.get_documents_object">get_documents_object() (studies.models.Study method)</a>
+</li>
+      <li><a href="proposals.templatetags.html#proposals.templatetags.proposal_filters.get_extra_documents">get_extra_documents() (in module proposals.templatetags.proposal_filters)</a>
+</li>
       <li><a href="interventions.html#interventions.views.InterventionMixin.get_form_kwargs">get_form_kwargs() (interventions.views.InterventionMixin method)</a>
 
       <ul>
@@ -1090,6 +1155,8 @@
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalSubmitPreAssessment.get_next_url">(proposals.views.proposal_views.ProposalSubmitPreAssessment method)</a>
 </li>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.get_next_url">(proposals.views.study_views.StudyConsent method)</a>
+</li>
         <li><a href="proposals.views.html#proposals.views.study_views.StudyStart.get_next_url">(proposals.views.study_views.StudyStart method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.wmo_views.PreAssessmentMixin.get_next_url">(proposals.views.wmo_views.PreAssessmentMixin method)</a>
@@ -1141,9 +1208,11 @@
         <li><a href="proposals.views.html#proposals.views.wmo_views.WmoUpdate.get_proposal">(proposals.views.wmo_views.WmoUpdate method)</a>
 </li>
       </ul></li>
-      <li><a href="proposals.views.html#proposals.views.proposal_views.MyCompletedView.get_queryset">get_queryset() (proposals.views.proposal_views.MyCompletedView method)</a>
+      <li><a href="core.html#core.views.FormSetUpdateView.get_queryset">get_queryset() (core.views.FormSetUpdateView method)</a>
 
       <ul>
+        <li><a href="proposals.views.html#proposals.views.proposal_views.MyCompletedView.get_queryset">(proposals.views.proposal_views.MyCompletedView method)</a>
+</li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.MyConceptsView.get_queryset">(proposals.views.proposal_views.MyConceptsView method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.MyPracticeView.get_queryset">(proposals.views.proposal_views.MyPracticeView method)</a>
@@ -1157,6 +1226,8 @@
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalsExportView.get_queryset">(proposals.views.proposal_views.ProposalsExportView method)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalsView.get_queryset">(proposals.views.proposal_views.ProposalsView method)</a>
+</li>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.get_queryset">(proposals.views.study_views.StudyConsent method)</a>
 </li>
         <li><a href="reviews.html#reviews.views.DecisionListView.get_queryset">(reviews.views.DecisionListView method)</a>
 </li>
@@ -1205,6 +1276,8 @@
         <li><a href="observations.html#observations.views.ObservationUpdate.get_study">(observations.views.ObservationUpdate method)</a>
 </li>
       </ul></li>
+      <li><a href="proposals.templatetags.html#proposals.templatetags.proposal_filters.get_study_documents">get_study_documents() (in module proposals.templatetags.proposal_filters)</a>
+</li>
       <li><a href="studies.html#studies.utils.get_study_progress">get_study_progress() (in module studies.utils)</a>
 </li>
       <li><a href="studies.views.html#studies.views.session_views.SessionStart.get_success_message">get_success_message() (studies.views.session_views.SessionStart method)</a>
@@ -1212,6 +1285,8 @@
       <li><a href="core.html#core.views.CreateView.get_success_url">get_success_url() (core.views.CreateView method)</a>
 
       <ul>
+        <li><a href="core.html#core.views.FormSetUpdateView.get_success_url">(core.views.FormSetUpdateView method)</a>
+</li>
         <li><a href="core.html#core.views.UpdateView.get_success_url">(core.views.UpdateView method)</a>
 </li>
         <li><a href="feedback.html#feedback.views.FeedbackCreate.get_success_url">(feedback.views.FeedbackCreate method)</a>
@@ -1283,11 +1358,15 @@
 </li>
       <li><a href="studies.html#studies.models.Study.has_intervention">has_intervention (studies.models.Study attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="studies.html#studies.models.Study.has_missing_forms">has_missing_forms() (studies.models.Study method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="studies.html#studies.models.Study.has_missing_sessions">has_missing_sessions() (studies.models.Study method)</a>
+</li>
       <li><a href="studies.html#studies.models.Study.has_observation">has_observation (studies.models.Study attribute)</a>
+</li>
+      <li><a href="studies.html#studies.models.Study.has_participants_below_age">has_participants_below_age() (studies.models.Study method)</a>
 </li>
       <li><a href="studies.html#studies.models.Study.has_sessions">has_sessions (studies.models.Study attribute)</a>
 </li>
@@ -1330,6 +1409,8 @@
 </li>
         <li><a href="studies.html#studies.models.Compensation.id">(studies.models.Compensation attribute)</a>
 </li>
+        <li><a href="studies.html#studies.models.Documents.id">(studies.models.Documents attribute)</a>
+</li>
         <li><a href="studies.html#studies.models.Recruitment.id">(studies.models.Recruitment attribute)</a>
 </li>
         <li><a href="studies.html#studies.models.Study.id">(studies.models.Study attribute)</a>
@@ -1351,9 +1432,11 @@
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.in_course">in_course (proposals.models.Proposal attribute)</a>
 </li>
+      <li><a href="core.templatetags.html#core.templatetags.core_filters.Counter.increment">increment() (core.templatetags.core_filters.Counter method)</a>
+</li>
       <li><a href="proposals.html#proposals.models.Proposal.inform_local_staff">inform_local_staff (proposals.models.Proposal attribute)</a>
 </li>
-      <li><a href="studies.html#studies.models.Study.informed_consent">informed_consent (studies.models.Study attribute)</a>
+      <li><a href="studies.html#studies.models.Documents.informed_consent">informed_consent (studies.models.Documents attribute)</a>
 </li>
       <li><a href="interventions.html#interventions.models.Intervention">Intervention (class in interventions.models)</a>
 </li>
@@ -1381,12 +1464,12 @@
 </li>
       <li><a href="interventions.html#module-interventions.forms">interventions.forms (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interventions.html#module-interventions.models">interventions.models (module)</a>
 </li>
       <li><a href="interventions.html#module-interventions.tests">interventions.tests (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="interventions.html#module-interventions.urls">interventions.urls (module)</a>
 </li>
       <li><a href="interventions.html#module-interventions.utils">interventions.utils (module)</a>
@@ -1395,9 +1478,13 @@
 </li>
       <li><a href="interventions.html#interventions.views.InterventionUpdate">InterventionUpdate (class in interventions.views)</a>
 </li>
+      <li><a href="studies.html#studies.models.AgeGroup.is_active">is_active (studies.models.AgeGroup attribute)</a>
+</li>
       <li><a href="studies.html#studies.models.AgeGroup.is_adult">is_adult (studies.models.AgeGroup attribute)</a>
 </li>
       <li><a href="observations.html#observations.models.Observation.is_anonymous">is_anonymous (observations.models.Observation attribute)</a>
+</li>
+      <li><a href="observations.html#observations.models.Observation.is_anonymous_details">is_anonymous_details (observations.models.Observation attribute)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Wmo.is_behavioristic">is_behavioristic (proposals.models.Wmo attribute)</a>
 </li>
@@ -1414,6 +1501,8 @@
       <li><a href="proposals.html#proposals.models.Proposal.is_exploration">is_exploration (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="observations.html#observations.models.Observation.is_in_target_group">is_in_target_group (observations.models.Observation attribute)</a>
+</li>
+      <li><a href="observations.html#observations.models.Observation.is_in_target_group_details">is_in_target_group_details (observations.models.Observation attribute)</a>
 </li>
       <li><a href="core.html#core.models.Setting.is_local">is_local (core.models.Setting attribute)</a>
 
@@ -1443,6 +1532,8 @@
       </ul></li>
       <li><a href="observations.html#observations.models.Observation.is_nonpublic_space">is_nonpublic_space (observations.models.Observation attribute)</a>
 </li>
+      <li><a href="observations.html#observations.models.Observation.is_nonpublic_space_details">is_nonpublic_space_details (observations.models.Observation attribute)</a>
+</li>
       <li><a href="proposals.html#proposals.models.Proposal.is_practice">is_practice() (proposals.models.Proposal method)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.is_pre_assessment">is_pre_assessment (proposals.models.Proposal attribute)</a>
@@ -1450,6 +1541,8 @@
       <li><a href="reviews.html#reviews.views.DecisionUpdateView.is_reviewer">is_reviewer() (reviews.views.DecisionUpdateView method)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.is_revision">is_revision (proposals.models.Proposal attribute)</a>
+</li>
+      <li><a href="core.html#core.models.Setting.is_school">is_school (core.models.Setting attribute)</a>
 </li>
       <li><a href="core.templatetags.html#core.templatetags.core_filters.is_secretary">is_secretary() (in module core.templatetags.core_filters)</a>
 </li>
@@ -1783,6 +1876,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="interventions.html#interventions.models.Intervention.multiple_sessions">multiple_sessions (interventions.models.Intervention attribute)</a>
+</li>
       <li><a href="proposals.views.html#proposals.views.proposal_views.MyCompletedView">MyCompletedView (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="proposals.views.html#proposals.views.proposal_views.MyConceptsView">MyConceptsView (class in proposals.views.proposal_views)</a>
@@ -1817,6 +1912,8 @@
         <li><a href="studies.html#studies.forms.StudyForm.necessity_required">(studies.forms.StudyForm method)</a>
 </li>
       </ul></li>
+      <li><a href="studies.html#studies.models.Study.needs_additional_external_forms">needs_additional_external_forms() (studies.models.Study method)</a>
+</li>
       <li><a href="observations.html#observations.models.Observation.needs_approval">needs_approval (observations.models.Observation attribute)</a>
 </li>
       <li><a href="core.html#core.models.Setting.needs_details">needs_details (core.models.Setting attribute)</a>
@@ -1906,6 +2003,8 @@
 </li>
         <li><a href="studies.html#studies.models.Compensation.objects">(studies.models.Compensation attribute)</a>
 </li>
+        <li><a href="studies.html#studies.models.Documents.objects">(studies.models.Documents attribute)</a>
+</li>
         <li><a href="studies.html#studies.models.Recruitment.objects">(studies.models.Recruitment attribute)</a>
 </li>
         <li><a href="studies.html#studies.models.Study.objects">(studies.models.Study attribute)</a>
@@ -1951,10 +2050,10 @@
 </li>
       <li><a href="observations.html#module-observations.admin">observations.admin (module)</a>
 </li>
-      <li><a href="observations.html#module-observations.forms">observations.forms (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="observations.html#module-observations.forms">observations.forms (module)</a>
+</li>
       <li><a href="observations.html#module-observations.models">observations.models (module)</a>
 </li>
       <li><a href="observations.html#module-observations.tests">observations.tests (module)</a>
@@ -2041,9 +2140,11 @@
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.parent_id">parent_id (proposals.models.Proposal attribute)</a>
 </li>
-      <li><a href="studies.html#studies.models.Study.parents_information">parents_information (studies.models.Study attribute)</a>
+      <li><a href="studies.html#studies.models.Documents.parents_information">parents_information (studies.models.Documents attribute)</a>
 </li>
       <li><a href="studies.html#studies.models.Study.passive_consent">passive_consent (studies.models.Study attribute)</a>
+</li>
+      <li><a href="studies.html#studies.forms.StudyForm.passive_consent">passive_consent() (studies.forms.StudyForm method)</a>
 </li>
       <li><a href="studies.html#studies.models.Study.passive_consent_details">passive_consent_details (studies.models.Study attribute)</a>
 </li>
@@ -2053,9 +2154,13 @@
 </li>
       <li><a href="proposals.views.html#proposals.views.proposal_views.HideFromArchiveView.permanent">permanent (proposals.views.proposal_views.HideFromArchiveView attribute)</a>
 </li>
+      <li><a href="core.html#core.views.FormSetUpdateView.post">post() (core.views.FormSetUpdateView method)</a>
+</li>
       <li><a href="proposals.html#proposals.models.Proposal.PRACTICE_REASONS">PRACTICE_REASONS (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.pre_assessment_pdf">pre_assessment_pdf (proposals.models.Proposal attribute)</a>
+</li>
+      <li><a href="core.html#core.views.FormSetUpdateView.pre_validation">pre_validation() (core.views.FormSetUpdateView method)</a>
 </li>
       <li><a href="proposals.views.html#proposals.views.proposal_views.PreAssessmentMixin">PreAssessmentMixin (class in proposals.views.proposal_views)</a>
 
@@ -2074,6 +2179,8 @@
       <ul>
         <li><a href="reviews.html#reviews.models.Review.proposal">(reviews.models.Review attribute)</a>
 </li>
+        <li><a href="studies.html#studies.models.Documents.proposal">(studies.models.Documents attribute)</a>
+</li>
         <li><a href="studies.html#studies.models.Study.proposal">(studies.models.Study attribute)</a>
 </li>
       </ul></li>
@@ -2085,6 +2192,8 @@
 
       <ul>
         <li><a href="reviews.html#reviews.models.Review.proposal_id">(reviews.models.Review attribute)</a>
+</li>
+        <li><a href="studies.html#studies.models.Documents.proposal_id">(studies.models.Documents attribute)</a>
 </li>
         <li><a href="studies.html#studies.models.Study.proposal_id">(studies.models.Study attribute)</a>
 </li>
@@ -2117,14 +2226,14 @@
 </li>
       <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalCreate">ProposalCreate (class in proposals.views.proposal_views)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalCreatePractice">ProposalCreatePractice (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalCreatePreAssessment">ProposalCreatePreAssessment (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalDataManagement">ProposalDataManagement (class in proposals.views.proposal_views)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="proposals.html#proposals.forms.ProposalDataManagementForm">ProposalDataManagementForm (class in proposals.forms)</a>
 </li>
       <li><a href="proposals.html#proposals.forms.ProposalDataManagementForm.Meta">ProposalDataManagementForm.Meta (class in proposals.forms)</a>
@@ -2209,6 +2318,8 @@
 <h2 id="Q">Q</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="core.html#core.views.FormSetUpdateView.queryset">queryset (core.views.FormSetUpdateView attribute)</a>
+</li>
       <li><a href="faqs.html#faqs.models.Faq.question">question (faqs.models.Faq attribute)</a>
 </li>
   </ul></td>
@@ -2313,16 +2424,24 @@
 </li>
       <li><a href="proposals.html#proposals.models.Relation.DoesNotExist">Relation.DoesNotExist</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="proposals.html#proposals.models.Relation.MultipleObjectsReturned">Relation.MultipleObjectsReturned</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.relation_id">relation_id (proposals.models.Proposal attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="proposals.html#proposals.admin.RelationAdmin">RelationAdmin (class in proposals.admin)</a>
 </li>
       <li><a href="reviews.html#reviews.utils.remind_reviewers">remind_reviewers() (in module reviews.utils)</a>
 </li>
+      <li><a href="core.templatetags.html#core.templatetags.core_filters.SetVarNode.render">render() (core.templatetags.core_filters.SetVarNode method)</a>
+
+      <ul>
+        <li><a href="proposals.templatetags.html#proposals.templatetags.proposal_filters.ExtraDocumentsNode.render">(proposals.templatetags.proposal_filters.ExtraDocumentsNode method)</a>
+</li>
+        <li><a href="proposals.templatetags.html#proposals.templatetags.proposal_filters.StudyDocumentsNode.render">(proposals.templatetags.proposal_filters.StudyDocumentsNode method)</a>
+</li>
+      </ul></li>
       <li><a href="core.html#core.views.UserSearchView.render_to_response">render_to_response() (core.views.UserSearchView method)</a>
 </li>
       <li><a href="core.html#core.models.Setting.requires_review">requires_review (core.models.Setting attribute)</a>
@@ -2339,6 +2458,8 @@
         <li><a href="tasks.html#tasks.models.RegistrationKind.requires_review">(tasks.models.RegistrationKind attribute)</a>
 </li>
       </ul></li>
+      <li><a href="studies.html#studies.models.Study.research_settings_contains_schools">research_settings_contains_schools() (studies.models.Study method)</a>
+</li>
       <li><a href="reviews.html#reviews.models.Review">Review (class in reviews.models)</a>
 </li>
       <li><a href="reviews.html#reviews.models.Decision.review">review (reviews.models.Decision attribute)</a>
@@ -2408,7 +2529,11 @@
       <ul>
         <li><a href="reviews.html#reviews.models.Decision.save">(reviews.models.Decision method)</a>
 </li>
+        <li><a href="studies.html#studies.models.Documents.save">(studies.models.Documents method)</a>
+</li>
       </ul></li>
+      <li><a href="core.html#core.views.FormSetUpdateView.save_form">save_form() (core.views.FormSetUpdateView method)</a>
+</li>
       <li><a href="tasks.html#tasks.models.Session">Session (class in tasks.models)</a>
 </li>
       <li><a href="tasks.html#tasks.models.Task.session">session (tasks.models.Task attribute)</a>
@@ -2416,6 +2541,8 @@
       <li><a href="tasks.html#tasks.models.Session.DoesNotExist">Session.DoesNotExist</a>
 </li>
       <li><a href="tasks.html#tasks.models.Session.MultipleObjectsReturned">Session.MultipleObjectsReturned</a>
+</li>
+      <li><a href="interventions.html#interventions.models.Intervention.session_frequency">session_frequency (interventions.models.Intervention attribute)</a>
 </li>
       <li><a href="tasks.html#tasks.models.Task.session_id">session_id (tasks.models.Task attribute)</a>
 </li>
@@ -2438,6 +2565,8 @@
       <li><a href="studies.html#studies.forms.SessionStartForm">SessionStartForm (class in studies.forms)</a>
 </li>
       <li><a href="studies.html#studies.forms.SessionStartForm.Meta">SessionStartForm.Meta (class in studies.forms)</a>
+</li>
+      <li><a href="core.templatetags.html#core.templatetags.core_filters.set_var">set_var() (in module core.templatetags.core_filters)</a>
 </li>
       <li><a href="core.html#core.models.Setting">Setting (class in core.models)</a>
 </li>
@@ -2463,6 +2592,10 @@
 </li>
       <li><a href="core.html#core.models.SettingModel.Meta">SettingModel.Meta (class in core.models)</a>
 </li>
+      <li><a href="core.html#core.models.SettingModel.settings_contains_schools">settings_contains_schools() (core.models.SettingModel method)</a>
+</li>
+      <li><a href="core.html#core.models.SettingModel.settings_requires_review">settings_requires_review() (core.models.SettingModel method)</a>
+</li>
       <li><a href="proposals.html#proposals.tests.BaseProposalTestCase.setUp">setUp() (proposals.tests.BaseProposalTestCase method)</a>
 
       <ul>
@@ -2473,6 +2606,8 @@
         <li><a href="reviews.html#reviews.tests.BaseReviewTestCase.setUp">(reviews.tests.BaseReviewTestCase method)</a>
 </li>
       </ul></li>
+      <li><a href="core.templatetags.html#core.templatetags.core_filters.SetVarNode">SetVarNode (class in core.templatetags.core_filters)</a>
+</li>
       <li><a href="reviews.html#reviews.models.Review.short_route">short_route (reviews.models.Review attribute)</a>
 </li>
       <li><a href="proposals.templatetags.html#proposals.templatetags.proposal_filters.show_all">show_all() (in module proposals.templatetags.proposal_filters)</a>
@@ -2531,10 +2666,10 @@
 </li>
       <li><a href="studies.html#module-studies.utils">studies.utils (module)</a>
 </li>
-      <li><a href="studies.views.html#module-studies.views">studies.views (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="studies.views.html#module-studies.views">studies.views (module)</a>
+</li>
       <li><a href="studies.views.html#module-studies.views.session_views">studies.views.session_views (module)</a>
 </li>
       <li><a href="proposals.html#proposals.models.Proposal.studies_number">studies_number (proposals.models.Proposal attribute)</a>
@@ -2548,6 +2683,8 @@
       <ul>
         <li><a href="observations.html#observations.models.Observation.study">(observations.models.Observation attribute)</a>
 </li>
+        <li><a href="studies.html#studies.models.Documents.study">(studies.models.Documents attribute)</a>
+</li>
         <li><a href="tasks.html#tasks.models.Session.study">(tasks.models.Session attribute)</a>
 </li>
       </ul></li>
@@ -2559,6 +2696,8 @@
 
       <ul>
         <li><a href="observations.html#observations.models.Observation.study_id">(observations.models.Observation attribute)</a>
+</li>
+        <li><a href="studies.html#studies.models.Documents.study_id">(studies.models.Documents attribute)</a>
 </li>
         <li><a href="tasks.html#tasks.models.Session.study_id">(tasks.models.Session attribute)</a>
 </li>
@@ -2577,6 +2716,8 @@
       </ul></li>
       <li><a href="studies.html#studies.utils.study_urls">study_urls() (in module studies.utils)</a>
 </li>
+      <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent">StudyConsent (class in proposals.views.study_views)</a>
+</li>
       <li><a href="studies.html#studies.forms.StudyConsentForm">StudyConsentForm (class in studies.forms)</a>
 </li>
       <li><a href="studies.html#studies.forms.StudyConsentForm.Meta">StudyConsentForm.Meta (class in studies.forms)</a>
@@ -2584,6 +2725,8 @@
       <li><a href="studies.html#studies.forms.StudyDesignForm">StudyDesignForm (class in studies.forms)</a>
 </li>
       <li><a href="studies.html#studies.forms.StudyDesignForm.Meta">StudyDesignForm.Meta (class in studies.forms)</a>
+</li>
+      <li><a href="proposals.templatetags.html#proposals.templatetags.proposal_filters.StudyDocumentsNode">StudyDocumentsNode (class in proposals.templatetags.proposal_filters)</a>
 </li>
       <li><a href="studies.html#studies.forms.StudyEndForm">StudyEndForm (class in studies.forms)</a>
 </li>
@@ -2625,6 +2768,8 @@
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalMixin.success_message">(proposals.views.proposal_views.ProposalMixin attribute)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalSubmit.success_message">(proposals.views.proposal_views.ProposalSubmit attribute)</a>
+</li>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.success_message">(proposals.views.study_views.StudyConsent attribute)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.wmo_views.WmoCreate.success_message">(proposals.views.wmo_views.WmoCreate attribute)</a>
 </li>
@@ -2764,6 +2909,8 @@
 </li>
         <li><a href="proposals.views.html#proposals.views.proposal_views.ProposalSubmittedPreAssessment.template_name">(proposals.views.proposal_views.ProposalSubmittedPreAssessment attribute)</a>
 </li>
+        <li><a href="proposals.views.html#proposals.views.study_views.StudyConsent.template_name">(proposals.views.study_views.StudyConsent attribute)</a>
+</li>
         <li><a href="proposals.views.html#proposals.views.study_views.StudyStart.template_name">(proposals.views.study_views.StudyStart attribute)</a>
 </li>
         <li><a href="proposals.views.html#proposals.views.wmo_views.WmoApplication.template_name">(proposals.views.wmo_views.WmoApplication attribute)</a>
@@ -2899,10 +3046,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="core.html#core.validators.validate_pdf_or_doc">validate_pdf_or_doc() (in module core.validators)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="core.html#core.tests.ValidatorTest">ValidatorTest (class in core.tests)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="interventions.html#interventions.models.Intervention.version">version (interventions.models.Intervention attribute)</a>
+
+      <ul>
+        <li><a href="observations.html#observations.models.Observation.version">(observations.models.Observation attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -2999,10 +3152,35 @@
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ETCL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
@@ -3029,8 +3207,8 @@
       &copy;2017, Martijn van der Klis.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
 

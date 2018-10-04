@@ -9,10 +9,11 @@
     <title>tasks package &#8212; ETCL 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="tasks.views package" href="tasks.views.html" />
@@ -29,6 +30,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="tasks-package">
@@ -114,7 +117,8 @@
 <dl class="class">
 <dt id="tasks.forms.TaskEndForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#tasks.forms.TaskEndForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="tasks.forms.TaskEndForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['tasks_duration']</em><a class="headerlink" href="#tasks.forms.TaskEndForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -129,7 +133,7 @@
 
 <dl class="attribute">
 <dt id="tasks.forms.TaskEndForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'tasks_duration': &lt;django.forms.fields.IntegerField object at 0x7fe6fa5cb590&gt;}</em><a class="headerlink" href="#tasks.forms.TaskEndForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'tasks_duration': &lt;django.forms.fields.IntegerField object&gt;}</em><a class="headerlink" href="#tasks.forms.TaskEndForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -157,7 +161,8 @@
 <dl class="class">
 <dt id="tasks.forms.TaskForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#tasks.forms.TaskForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="tasks.forms.TaskForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['name', 'description', 'duration', 'registrations', 'registrations_details', 'registration_kinds', 'registration_kinds_details', 'feedback', 'feedback_details']</em><a class="headerlink" href="#tasks.forms.TaskForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -170,14 +175,14 @@
 
 <dl class="attribute">
 <dt id="tasks.forms.TaskForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'feedback': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa5c3590&gt;, 'registration_kinds': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0x7fe6fa5c3550&gt;, 'registrations': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0x7fe6fa5c3450&gt;}</em><a class="headerlink" href="#tasks.forms.TaskForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'feedback': &lt;django.forms.widgets.RadioSelect object&gt;, 'registration_kinds': &lt;django.forms.widgets.CheckboxSelectMultiple object&gt;, 'registrations': &lt;django.forms.widgets.CheckboxSelectMultiple object&gt;}</em><a class="headerlink" href="#tasks.forms.TaskForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="tasks.forms.TaskForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'description': &lt;django.forms.fields.CharField object at 0x7fe6fa5c3810&gt;, 'duration': &lt;django.forms.fields.IntegerField object at 0x7fe6fa5c3890&gt;, 'feedback': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa5cb310&gt;, 'feedback_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5cb390&gt;, 'name': &lt;django.forms.fields.CharField object at 0x7fe6fa5c36d0&gt;, 'registration_kinds': &lt;django.forms.models.ModelMultipleChoiceField object at 0x7fe6fa5c3f90&gt;, 'registration_kinds_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5cb210&gt;, 'registrations': &lt;django.forms.models.ModelMultipleChoiceField object at 0x7fe6fa5c3b90&gt;, 'registrations_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5c3e10&gt;}</em><a class="headerlink" href="#tasks.forms.TaskForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'description': &lt;django.forms.fields.CharField object&gt;, 'duration': &lt;django.forms.fields.IntegerField object&gt;, 'feedback': &lt;django.forms.fields.NullBooleanField object&gt;, 'feedback_details': &lt;django.forms.fields.CharField object&gt;, 'name': &lt;django.forms.fields.CharField object&gt;, 'registration_kinds': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'registration_kinds_details': &lt;django.forms.fields.CharField object&gt;, 'registrations': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'registrations_details': &lt;django.forms.fields.CharField object&gt;}</em><a class="headerlink" href="#tasks.forms.TaskForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -210,7 +215,8 @@
 <dl class="class">
 <dt id="tasks.forms.TaskStartForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="tasks.forms.TaskStartForm.Meta.fields">
 <code class="descname">fields</code><em class="property"> = ['setting', 'setting_details', 'supervision', 'leader_has_coc', 'tasks_number']</em><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -223,14 +229,14 @@
 
 <dl class="attribute">
 <dt id="tasks.forms.TaskStartForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'leader_has_coc': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa5b7d10&gt;, 'setting': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0x7fe6fa5b7c50&gt;, 'supervision': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa5b7cd0&gt;}</em><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'leader_has_coc': &lt;django.forms.widgets.RadioSelect object&gt;, 'setting': &lt;django.forms.widgets.CheckboxSelectMultiple object&gt;, 'supervision': &lt;django.forms.widgets.RadioSelect object&gt;}</em><a class="headerlink" href="#tasks.forms.TaskStartForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="tasks.forms.TaskStartForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'is_copy': &lt;django.forms.fields.BooleanField object at 0x7fe6fa5b7950&gt;, 'leader_has_coc': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa5c3290&gt;, 'parent_session': &lt;django.forms.models.ModelChoiceField object at 0x7fe6fa5b7bd0&gt;, 'setting': &lt;django.forms.models.ModelMultipleChoiceField object at 0x7fe6fa5b7e50&gt;, 'setting_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5c3110&gt;, 'supervision': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa5c3210&gt;, 'tasks_number': &lt;django.forms.fields.IntegerField object at 0x7fe6fa5c3390&gt;}</em><a class="headerlink" href="#tasks.forms.TaskStartForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'is_copy': &lt;django.forms.fields.BooleanField object&gt;, 'leader_has_coc': &lt;django.forms.fields.NullBooleanField object&gt;, 'parent_session': &lt;django.forms.models.ModelChoiceField object&gt;, 'setting': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'setting_details': &lt;django.forms.fields.CharField object&gt;, 'supervision': &lt;django.forms.fields.NullBooleanField object&gt;, 'tasks_number': &lt;django.forms.fields.IntegerField object&gt;}</em><a class="headerlink" href="#tasks.forms.TaskStartForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -244,7 +250,7 @@
 
 <dl class="attribute">
 <dt id="tasks.forms.TaskStartForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {'is_copy': &lt;django.forms.fields.BooleanField object at 0x7fe6fa5b7950&gt;, 'parent_session': &lt;django.forms.models.ModelChoiceField object at 0x7fe6fa5b7bd0&gt;}</em><a class="headerlink" href="#tasks.forms.TaskStartForm.declared_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">declared_fields</code><em class="property"> = {'is_copy': &lt;django.forms.fields.BooleanField object&gt;, 'parent_session': &lt;django.forms.models.ModelChoiceField object&gt;}</em><a class="headerlink" href="#tasks.forms.TaskStartForm.declared_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -863,26 +869,49 @@ object the first time, the query is executed.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">tasks package</a><ul>
-<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-tasks.admin">tasks.admin module</a></li>
-<li><a class="reference internal" href="#module-tasks.forms">tasks.forms module</a></li>
-<li><a class="reference internal" href="#module-tasks.mixins">tasks.mixins module</a></li>
-<li><a class="reference internal" href="#module-tasks.models">tasks.models module</a></li>
-<li><a class="reference internal" href="#module-tasks.tests">tasks.tests module</a></li>
-<li><a class="reference internal" href="#module-tasks.urls">tasks.urls module</a></li>
-<li><a class="reference internal" href="#module-tasks.utils">tasks.utils module</a></li>
-<li><a class="reference internal" href="#module-tasks">Module contents</a></li>
+<h1 class="logo"><a href="index.html">ETCL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tasks package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tasks.views.html">tasks.views package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks.admin">tasks.admin module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks.forms">tasks.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks.mixins">tasks.mixins module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks.models">tasks.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks.tests">tasks.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks.urls">tasks.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks.utils">tasks.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tasks">Module contents</a></li>
 </ul>
 </li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -892,13 +921,6 @@ object the first time, the query is executed.</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/tasks.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -919,8 +941,8 @@ object the first time, the query is executed.</p>
       &copy;2017, Martijn van der Klis.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/tasks.rst.txt"

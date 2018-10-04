@@ -9,10 +9,11 @@
     <title>interventions package &#8212; ETCL 1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="observations package" href="observations.html" />
@@ -29,6 +30,8 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="interventions-package">
@@ -45,9 +48,10 @@
 <dl class="class">
 <dt id="interventions.forms.InterventionForm.Meta">
 <em class="property">class </em><code class="descname">Meta</code><a class="headerlink" href="#interventions.forms.InterventionForm.Meta" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="attribute">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
 <dt id="interventions.forms.InterventionForm.Meta.fields">
-<code class="descname">fields</code><em class="property"> = ['setting', 'setting_details', 'supervision', 'leader_has_coc', 'period', 'amount_per_week', 'duration', 'experimenter', 'description', 'has_controls', 'controls_description', 'measurement']</em><a class="headerlink" href="#interventions.forms.InterventionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fields</code><em class="property"> = ['setting', 'setting_details', 'supervision', 'leader_has_coc', 'period', 'multiple_sessions', 'session_frequency', 'duration', 'experimenter', 'description', 'has_controls', 'controls_description', 'measurement', 'extra_task']</em><a class="headerlink" href="#interventions.forms.InterventionForm.Meta.fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -58,14 +62,14 @@
 
 <dl class="attribute">
 <dt id="interventions.forms.InterventionForm.Meta.widgets">
-<code class="descname">widgets</code><em class="property"> = {'has_controls': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa55eb90&gt;, 'leader_has_coc': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa55eb50&gt;, 'setting': &lt;django.forms.widgets.CheckboxSelectMultiple object at 0x7fe6fa55ea90&gt;, 'supervision': &lt;django.forms.widgets.RadioSelect object at 0x7fe6fa55eb10&gt;}</em><a class="headerlink" href="#interventions.forms.InterventionForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">widgets</code><em class="property"> = {'extra_task': &lt;django.forms.widgets.RadioSelect object&gt;, 'has_controls': &lt;django.forms.widgets.RadioSelect object&gt;, 'leader_has_coc': &lt;django.forms.widgets.RadioSelect object&gt;, 'multiple_sessions': &lt;django.forms.widgets.RadioSelect object&gt;, 'setting': &lt;django.forms.widgets.CheckboxSelectMultiple object&gt;, 'supervision': &lt;django.forms.widgets.RadioSelect object&gt;}</em><a class="headerlink" href="#interventions.forms.InterventionForm.Meta.widgets" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.forms.InterventionForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {'amount_per_week': &lt;django.forms.fields.IntegerField object at 0x7fe6fa570410&gt;, 'controls_description': &lt;django.forms.fields.CharField object at 0x7fe6fa570a90&gt;, 'description': &lt;django.forms.fields.CharField object at 0x7fe6fa570810&gt;, 'duration': &lt;django.forms.fields.IntegerField object at 0x7fe6fa570610&gt;, 'experimenter': &lt;django.forms.fields.CharField object at 0x7fe6fa570790&gt;, 'has_controls': &lt;django.forms.fields.BooleanField object at 0x7fe6fa570910&gt;, 'leader_has_coc': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa570250&gt;, 'measurement': &lt;django.forms.fields.CharField object at 0x7fe6fa570b50&gt;, 'period': &lt;django.forms.fields.CharField object at 0x7fe6fa570350&gt;, 'setting': &lt;django.forms.models.ModelMultipleChoiceField object at 0x7fe6fa55ee10&gt;, 'setting_details': &lt;django.forms.fields.CharField object at 0x7fe6fa5700d0&gt;, 'supervision': &lt;django.forms.fields.NullBooleanField object at 0x7fe6fa5701d0&gt;}</em><a class="headerlink" href="#interventions.forms.InterventionForm.base_fields" title="Permalink to this definition">¶</a></dt>
+<code class="descname">base_fields</code><em class="property"> = {'controls_description': &lt;django.forms.fields.CharField object&gt;, 'description': &lt;django.forms.fields.CharField object&gt;, 'duration': &lt;django.forms.fields.IntegerField object&gt;, 'experimenter': &lt;django.forms.fields.CharField object&gt;, 'extra_task': &lt;django.forms.fields.BooleanField object&gt;, 'has_controls': &lt;django.forms.fields.BooleanField object&gt;, 'leader_has_coc': &lt;django.forms.fields.NullBooleanField object&gt;, 'measurement': &lt;django.forms.fields.CharField object&gt;, 'multiple_sessions': &lt;django.forms.fields.BooleanField object&gt;, 'period': &lt;django.forms.fields.CharField object&gt;, 'session_frequency': &lt;django.forms.fields.CharField object&gt;, 'setting': &lt;django.forms.models.ModelMultipleChoiceField object&gt;, 'setting_details': &lt;django.forms.fields.CharField object&gt;, 'supervision': &lt;django.forms.fields.NullBooleanField object&gt;}</em><a class="headerlink" href="#interventions.forms.InterventionForm.base_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -73,7 +77,8 @@
 <code class="descname">clean</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#interventions.forms.InterventionForm.clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check for conditional requirements:
 - If a setting which needs details or supervision has been checked, make sure the details are filled
-- If has_controls is True, controls_description is required</p>
+- If has_controls is True, controls_description is required
+- If multiple_sessions is True, session_frequency is required</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -93,7 +98,7 @@
 <span id="interventions-models-module"></span><h2>interventions.models module<a class="headerlink" href="#module-interventions.models" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="interventions.models.Intervention">
-<em class="property">class </em><code class="descclassname">interventions.models.</code><code class="descname">Intervention</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>period</em>, <em>amount_per_week</em>, <em>duration</em>, <em>experimenter</em>, <em>description</em>, <em>has_controls</em>, <em>controls_description</em>, <em>measurement</em>, <em>study</em><span class="sig-paren">)</span><a class="headerlink" href="#interventions.models.Intervention" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">interventions.models.</code><code class="descname">Intervention</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>version</em>, <em>period</em>, <em>multiple_sessions</em>, <em>session_frequency</em>, <em>duration</em>, <em>experimenter</em>, <em>description</em>, <em>has_controls</em>, <em>controls_description</em>, <em>measurement</em>, <em>extra_task</em>, <em>amount_per_week</em>, <em>study</em><span class="sig-paren">)</span><a class="headerlink" href="#interventions.models.Intervention" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
 <dl class="exception">
 <dt id="interventions.models.Intervention.DoesNotExist">
@@ -143,6 +148,13 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="interventions.models.Intervention.extra_task">
+<code class="descname">extra_task</code><a class="headerlink" href="#interventions.models.Intervention.extra_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="interventions.models.Intervention.has_controls">
 <code class="descname">has_controls</code><a class="headerlink" href="#interventions.models.Intervention.has_controls" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
@@ -164,6 +176,13 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="interventions.models.Intervention.multiple_sessions">
+<code class="descname">multiple_sessions</code><a class="headerlink" href="#interventions.models.Intervention.multiple_sessions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="interventions.models.Intervention.objects">
 <code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#interventions.models.Intervention.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -171,6 +190,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="interventions.models.Intervention.period">
 <code class="descname">period</code><a class="headerlink" href="#interventions.models.Intervention.period" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.session_frequency">
+<code class="descname">session_frequency</code><a class="headerlink" href="#interventions.models.Intervention.session_frequency" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -206,6 +232,13 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="attribute">
 <dt id="interventions.models.Intervention.study_id">
 <code class="descname">study_id</code><a class="headerlink" href="#interventions.models.Intervention.study_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.version">
+<code class="descname">version</code><a class="headerlink" href="#interventions.models.Intervention.version" title="Permalink to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -301,7 +334,7 @@ object the first time, the query is executed.</p>
 
 <dl class="attribute">
 <dt id="interventions.views.InterventionMixin.success_message">
-<code class="descname">success_message</code><em class="property"> = u'Interventie opgeslagen'</em><a class="headerlink" href="#interventions.views.InterventionMixin.success_message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">success_message</code><em class="property"> = 'Interventie opgeslagen'</em><a class="headerlink" href="#interventions.views.InterventionMixin.success_message" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -327,24 +360,44 @@ object the first time, the query is executed.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">interventions package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-interventions.forms">interventions.forms module</a></li>
-<li><a class="reference internal" href="#module-interventions.models">interventions.models module</a></li>
-<li><a class="reference internal" href="#module-interventions.tests">interventions.tests module</a></li>
-<li><a class="reference internal" href="#module-interventions.urls">interventions.urls module</a></li>
-<li><a class="reference internal" href="#module-interventions.utils">interventions.utils module</a></li>
-<li><a class="reference internal" href="#module-interventions.views">interventions.views module</a></li>
-<li><a class="reference internal" href="#module-interventions">Module contents</a></li>
+<h1 class="logo"><a href="index.html">ETCL</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">interventions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-interventions.forms">interventions.forms module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-interventions.models">interventions.models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-interventions.tests">interventions.tests module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-interventions.urls">interventions.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-interventions.utils">interventions.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-interventions.views">interventions.views module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-interventions">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tasks.html">tasks package</a></li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -354,13 +407,6 @@ object the first time, the query is executed.</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/interventions.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -381,8 +427,8 @@ object the first time, the query is executed.</p>
       &copy;2017, Martijn van der Klis.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/interventions.rst.txt"
