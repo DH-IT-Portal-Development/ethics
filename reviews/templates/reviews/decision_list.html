@@ -42,7 +42,11 @@
             <td>{{ decision.get_go_display|default:_("open") }}</td>
             <td>
                 {% if review.stage == review.CLOSED %}
-                {{ review.get_continuation_display }}
+                    {% if review.proposal.has_minor_revision %}
+                        {{ review.get_continuation_display }}{% trans ', met revisie' %}
+                    {% else %}
+                        {{ review.get_continuation_display }}
+                    {% endif %}
                 {% endif %}
             </td>
             <td>

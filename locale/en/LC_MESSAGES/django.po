@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 14:30+0200\n"
+"POT-Creation-Date: 2018-10-04 13:23+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -483,7 +483,7 @@ msgstr "You can leave feedback on the ETCL portal here."
 #: proposals/templates/proposals/proposal_diff.html:618
 #: reviews/templates/reviews/decision_form.html:41
 #: reviews/templates/reviews/review_assign_form.html:31
-#: reviews/templates/reviews/review_close_form.html:29
+#: reviews/templates/reviews/review_close_form.html:31
 #: studies/templates/studies/study_update_attachments.html:23
 msgid "Terug naar de vorige pagina"
 msgstr "Back to the previous page"
@@ -618,9 +618,8 @@ msgstr ""
 "\n"
 "You will have to choose an additional type of research within this "
 "trajectory; the pupils will also perform task-based research. Go to the "
-"previous page by  clicking 'Save and go back to previous step'. Select "
-"‘task-based research’ and fill out the new "
-"questions in the portal. \n"
+"previous page by  clicking 'Save and go back to previous step'. Select ‘task-"
+"based research’ and fill out the new questions in the portal. \n"
 "                "
 
 #: interventions/views.py:19
@@ -679,7 +678,7 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:56 observations/models.py:64
-#: observations/models.py:75 proposals/models.py:331 studies/models.py:141
+#: observations/models.py:75 proposals/models.py:334 studies/models.py:141
 #: studies/models.py:171 studies/models.py:299
 msgid "Licht toe"
 msgstr "Explain"
@@ -1016,21 +1015,31 @@ msgstr "How many different trajectories are there?"
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:189
+#: proposals/models.py:186 reviews/forms.py:62
+msgid "Is er een revisie geweest na het indienen van deze studie?"
+msgstr "Has this study been amended after it was submitted to the ETCL?"
+
+#: proposals/models.py:187
+#, fuzzy
+#| msgid "Leg uit waarom"
+msgid "Leg uit"
+msgstr "Explain why"
+
+#: proposals/models.py:192
 msgid "In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?"
 msgstr "In what capacity are you involved in this UiL OTS study?"
 
-#: proposals/models.py:198
+#: proposals/models.py:201
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: proposals/models.py:204
+#: proposals/models.py:207
 #: proposals/templates/proposals/proposal_export_list.html:17
 #: proposals/templates/proposals/proposal_list.html:63
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
-#: proposals/models.py:207
+#: proposals/models.py:210
 msgid ""
 "Aan het einde van de procedure kunt u deze studie ter verificatie naar uw "
 "eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie "
@@ -1041,52 +1050,52 @@ msgstr ""
 "final responsibility can then make adjustments and submit the study to the "
 "ETCL."
 
-#: proposals/models.py:215
+#: proposals/models.py:218
 msgid "Te kopiëren studie"
 msgstr "Application to be copied"
 
-#: proposals/models.py:216
+#: proposals/models.py:219
 msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
-#: proposals/models.py:219
+#: proposals/models.py:222
 msgid "Is deze studie een revisie van of amendement op een ingediende studie?"
 msgstr ""
 "Is this session a revision or an amendment of a previously submitted study?"
 
-#: proposals/models.py:285
+#: proposals/models.py:288
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:288
+#: proposals/models.py:291
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:290
+#: proposals/models.py:293 reviews/templates/reviews/review_detail.html:63
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:292
+#: proposals/models.py:295
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:294
+#: proposals/models.py:297
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:318
+#: proposals/models.py:321
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:319
+#: proposals/models.py:322
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:320
+#: proposals/models.py:323
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:324
+#: proposals/models.py:327
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1094,11 +1103,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:334
+#: proposals/models.py:337
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:338
+#: proposals/models.py:341
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1106,7 +1115,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:340
+#: proposals/models.py:343
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1127,7 +1136,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:353
+#: proposals/models.py:356
 msgid ""
 "Worden de deelnemers aan een handeling onderworpen of worden hen "
 "gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
@@ -1135,7 +1144,7 @@ msgstr ""
 "Will the participants undergo treatment or will rules of conduct be imposed "
 "on them (as defined by the WMO)?"
 
-#: proposals/models.py:355
+#: proposals/models.py:358
 msgid ""
 "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
 "weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. "
@@ -1149,7 +1158,7 @@ msgstr ""
 "given to the participants, and they are observed exclusively in their lives "
 "as they would normally have acted without observation."
 
-#: proposals/models.py:365
+#: proposals/models.py:368
 msgid ""
 "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
 "ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
@@ -1158,15 +1167,15 @@ msgstr ""
 "with the ETCL. Has an application for this study already been submitted to a "
 "METC?"
 
-#: proposals/models.py:370
+#: proposals/models.py:373
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:373
+#: proposals/models.py:376
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:400
+#: proposals/models.py:403
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -1368,7 +1377,7 @@ msgid "Annuleren"
 msgstr "Cancel"
 
 #: proposals/templates/proposals/proposal_confirmation.html:7
-#: reviews/templates/reviews/decision_list.html:63
+#: reviews/templates/reviews/decision_list.html:67
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
@@ -1386,7 +1395,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_confirmation.html:29
-#: reviews/templates/reviews/decision_list.html:65
+#: reviews/templates/reviews/decision_list.html:69
 msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
 
@@ -1832,7 +1841,7 @@ msgid "Acties"
 msgstr "Actions"
 
 #: proposals/templates/proposals/proposal_list.html:80
-#: reviews/templates/reviews/decision_list.html:54
+#: reviews/templates/reviews/decision_list.html:58
 msgid "Beslissen"
 msgstr "Decide"
 
@@ -1891,7 +1900,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_pdf.html:427
 #: proposals/templates/proposals/study_consent.html:100
-#: reviews/templates/reviews/review_detail.html:151
+#: reviews/templates/reviews/review_detail.html:164
 msgid "Extra formulieren"
 msgstr "Additional forms"
 
@@ -2593,9 +2602,13 @@ msgstr "straight to revision"
 msgid "Selecteer de commissieleden"
 msgstr "Select committee members"
 
-#: reviews/forms.py:52
+#: reviews/forms.py:59
 msgid "Voeg deze studie toe aan het UiL OTS archief"
 msgstr "Add this study to the UiL OTS archive"
+
+#: reviews/forms.py:65
+msgid "Opmerkingen over revisie"
+msgstr "Comments about this revision"
 
 #: reviews/models.py:21
 msgid "Beoordeling door eindverantwoordelijke"
@@ -2772,27 +2785,31 @@ msgstr "My decision"
 msgid "open"
 msgstr "open"
 
-#: reviews/templates/reviews/decision_list.html:49
+#: reviews/templates/reviews/decision_list.html:46
+msgid ", met revisie"
+msgstr ", with revision"
+
+#: reviews/templates/reviews/decision_list.html:53
 #: reviews/templates/reviews/decision_list_open.html:43
 #: reviews/templates/reviews/decision_supervisor_list_open.html:42
 #: reviews/templates/reviews/review_list.html:31
 msgid "Studie inzien"
 msgstr "Show study"
 
-#: reviews/templates/reviews/decision_list.html:50
+#: reviews/templates/reviews/decision_list.html:54
 #: reviews/templates/reviews/decision_list_open.html:44
 msgid "Details"
 msgstr "Details"
 
-#: reviews/templates/reviews/decision_list.html:52
+#: reviews/templates/reviews/decision_list.html:56
 msgid "Aanstellen"
 msgstr "Appoint"
 
-#: reviews/templates/reviews/decision_list.html:56
+#: reviews/templates/reviews/decision_list.html:60
 msgid "Afsluiten"
 msgstr "Conclude"
 
-#: reviews/templates/reviews/decision_list.html:59
+#: reviews/templates/reviews/decision_list.html:63
 msgid "Website export tekst"
 msgstr "Website export text"
 
@@ -2832,7 +2849,7 @@ msgid "OK"
 msgstr "OK"
 
 #: reviews/templates/reviews/review_close_form.html:7
-#: reviews/templates/reviews/review_close_form.html:28
+#: reviews/templates/reviews/review_close_form.html:30
 msgid "Review afsluiten"
 msgstr "Conclude review"
 
@@ -2931,56 +2948,76 @@ msgstr ""
 "    This is an application for preliminary assessment.\n"
 "    "
 
-#: reviews/templates/reviews/review_detail.html:66
+#: reviews/templates/reviews/review_detail.html:64
+msgid ""
+"\n"
+"        Deze studie heeft een risivisie gehad tijdens het beslisproces.\n"
+"    "
+msgstr ""
+"\n"
+"        A revision was made to this study after it was submitted to the ETCL .\n"
+"    "
+
+#: reviews/templates/reviews/review_detail.html:68
+msgid ""
+"\n"
+"            Er zijn de volgende opmerkingen bijgevoegd:<br/>\n"
+"        "
+msgstr ""
+"\n"
+"            The following comments have been provided:<br/>\n"
+"        "
+
+#: reviews/templates/reviews/review_detail.html:79
 msgid "Formulieren bij aanmelding"
 msgstr "Forms for application"
 
-#: reviews/templates/reviews/review_detail.html:72
+#: reviews/templates/reviews/review_detail.html:85
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templates/reviews/review_detail.html:79
+#: reviews/templates/reviews/review_detail.html:92
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templates/reviews/review_detail.html:91
+#: reviews/templates/reviews/review_detail.html:104
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templates/reviews/review_detail.html:93
-#: reviews/templates/reviews/review_detail.html:99
-#: reviews/templates/reviews/review_detail.html:105
+#: reviews/templates/reviews/review_detail.html:106
 #: reviews/templates/reviews/review_detail.html:112
 #: reviews/templates/reviews/review_detail.html:118
-#: reviews/templates/reviews/review_detail.html:126
-#: reviews/templates/reviews/review_detail.html:132
-#: reviews/templates/reviews/review_detail.html:142
-#: reviews/templates/reviews/review_detail.html:158
-#: reviews/templates/reviews/review_detail.html:166
+#: reviews/templates/reviews/review_detail.html:125
+#: reviews/templates/reviews/review_detail.html:131
+#: reviews/templates/reviews/review_detail.html:139
+#: reviews/templates/reviews/review_detail.html:145
+#: reviews/templates/reviews/review_detail.html:155
+#: reviews/templates/reviews/review_detail.html:171
+#: reviews/templates/reviews/review_detail.html:179
 msgid "Formulier wijzigen"
 msgstr "Change forms"
 
-#: reviews/templates/reviews/review_detail.html:97
-#: reviews/templates/reviews/review_detail.html:124
+#: reviews/templates/reviews/review_detail.html:110
+#: reviews/templates/reviews/review_detail.html:137
 msgid "Consent informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templates/reviews/review_detail.html:103
-#: reviews/templates/reviews/review_detail.html:130
+#: reviews/templates/reviews/review_detail.html:116
+#: reviews/templates/reviews/review_detail.html:143
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templates/reviews/review_detail.html:110
-#: reviews/templates/reviews/review_detail.html:156
+#: reviews/templates/reviews/review_detail.html:123
+#: reviews/templates/reviews/review_detail.html:169
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templates/reviews/review_detail.html:116
-#: reviews/templates/reviews/review_detail.html:164
+#: reviews/templates/reviews/review_detail.html:129
+#: reviews/templates/reviews/review_detail.html:177
 msgid "Briefing"
 msgstr "Briefing"
 
-#: reviews/templates/reviews/review_detail.html:139
+#: reviews/templates/reviews/review_detail.html:152
 msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
@@ -4153,370 +4190,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Uitvoerende(n) (inclusief uzelf)."
-#~ msgstr "Researcher(s) carrying out the study (including yourself). "
-
-#~ msgid ""
-#~ "Als uw medeonderzoeker niet in de lijst voorkomt, vraag hem dan een keer "
-#~ "in te loggen in het webportaal."
-#~ msgstr ""
-#~ "If your fellow researcher does not appear in the list, ask him/her to log "
-#~ "into the web portal."
-
-#~ msgid "Indiendende onderzoeker"
-#~ msgstr "Researcher with final responsibility"
-
-#~ msgid "Dit veld is verplicht"
-#~ msgstr "This field must be filled in"
-
-#~ msgid "Ruimte voor opmerkingen"
-#~ msgstr "Space for comments"
-
-#~ msgid "Startdatum review"
-#~ msgstr "Start date of review"
-
-#~ msgid "Wat is de titel van uw studie?"
-#~ msgstr "What is the title of your study?"
-
-#~ msgid "ja,nee,twijfel"
-#~ msgstr "yes,no,uncertain"
-
-#~ msgid "akkoord"
-#~ msgstr "approved"
-
-#~ msgid "niet akkoord"
-#~ msgstr "rejected"
-
-#~ msgid "Working"
-#~ msgstr "Working"
-
-#~ msgid "Closed"
-#~ msgstr "Closed"
-
-#~ msgid "Low"
-#~ msgstr "Low"
-
-#~ msgid "Medium"
-#~ msgstr "Medium"
-
-#~ msgid "High"
-#~ msgstr "High"
-
-#~ msgid "Nog geen..."
-#~ msgstr "Not yet a..."
-
-#~ msgid "Totale studieduur moet minstens gelijk zijn aan netto studieduur."
-#~ msgstr ""
-#~ "The total duration of the study has to be at least as long as the netto "
-#~ "duration of the study."
-
-#~ msgid "WMO: geen beoordeling door METC noodzakelijk"
-#~ msgstr "WMO: no assessment by METC needed"
-
-#~ msgid "WMO: wordt beoordeeld door METC"
-#~ msgstr "WMO: METC will make an assessment"
-
-#~ msgid "Kenmerken studie toegevoegd"
-#~ msgstr "Features of study added"
-
-#~ msgid "Belasting deelnemer: sessies toevoegen"
-#~ msgstr "Burden of participant: add session"
-
-#~ msgid "Belasting deelnemer: taken toevoegen"
-#~ msgstr "Burden of participant: add tasks"
-
-#~ msgid "Belasting deelnemer: alle taken toegevoegd"
-#~ msgstr "Burden of participant: all tasks added"
-
-#~ msgid "Belasting deelnemer: afgerond"
-#~ msgstr "Burden of participant: completed"
-
-#~ msgid "Informed consent geüpload"
-#~ msgstr "Informed consent uploaded"
-
-#, fuzzy
-#~| msgid "Wat is de titel van uw studie?"
-#~ msgid "Wat is de beoogde einddatum van uw studie?"
-#~ msgstr "What is the title of your study?"
-
-#~ msgid ""
-#~ "Kies s.v.p. een titel die niet volledig identiek is aan die van eerder "
-#~ "ingediende studies."
-#~ msgstr ""
-#~ "Please choose a titled that is not completely identical to that of "
-#~ "previously submitted studies."
-
-#~ msgid ""
-#~ "Schrijf hier een samenvatting van 200-300 woorden, met daarin (a) een "
-#~ "duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen, en "
-#~ "(b) een korte beschrijving van de beoogde methode, d.w.z. een mini-versie "
-#~ "van de toekomstige Methode-sectie, met informatie over deelnemers, "
-#~ "materiaal (taken, stimuli), design, en procedure. Het gaat er hier vooral "
-#~ "om dat de relatie tussen de onderzoeksvraag of -vragen en de beoogde "
-#~ "methode voldoende helder is; verderop in deze aanmelding zal voor "
-#~ "specifieke ingrediënten van de methode meer gedetailleerde informatie "
-#~ "worden gevraagd."
-#~ msgstr ""
-#~ "Please write down a summary of 200-300 words, which includes (a) a clear "
-#~ "and concise description of the research question(s), and (b) a short "
-#~ "description of the intended methodology, that is, a (very) short version "
-#~ "of the future methodology section, including information on participants, "
-#~ "material (tasks, stimuli), design and procedure. Specifically, the "
-#~ "relationship between the research question(s) and the intended "
-#~ "methodology must be sufficiently clear. More information about the "
-#~ "specifics of the methodology will be requested later on in this "
-#~ "application."
-
-#~ msgid "Wat is uw relatie tot het UiL OTS?"
-#~ msgstr "What is your relationship with UiL OTS?"
-
-#~ msgid ""
-#~ "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
-#~ "weefsel bij een deelnemer tot de deelnemer een knop/toets in laten "
-#~ "drukken."
-#~ msgstr ""
-#~ "An act or a rule of conduct varies from collecting tissue of a "
-#~ "participant to requiring the participant to press a button/key."
-
-#, fuzzy
-#~| msgid ""
-#~| "Geef hieronder aan binnen welke leeftijdscategorie uw deelnemers vallen, "
-#~| "er zijn meerdere antwoorden mogelijk"
-#~ msgid ""
-#~ "Geef aan binnen welke leeftijdscategorie uw deelnemers vallen, er zijn "
-#~ "meerdere antwoorden mogelijk"
-#~ msgstr ""
-#~ "Indicate below to which age categories the participants belong; it is "
-#~ "possible to select multiple answers"
-
-#~ msgid ""
-#~ "tekst over dat vergoeding in redelijke verhouding moet zijn met belasting "
-#~ "pp. En kinderen geen geld"
-#~ msgstr "-"
-
-#~ msgid "Hoeveel sessies telt deze studie?"
-#~ msgstr "How many sessions comprises this study?"
-
-#, fuzzy
-#~| msgid ""
-#~| "De totale geschatte netto studieduur van uw sessie komt op basis van uw "
-#~| "opgave per sessie uit op <strong>X minuten</strong>. Schat de totale "
-#~| "tijd die uw deelnemers aan de gehele studie zullen besteden."
-#~ msgid ""
-#~ "De netto duur van uw studie komt op basis van uw opgegeven tijd, uit op "
-#~ "<strong>%d minuten</strong>. Wat is de totale duur van de gehele studie? "
-#~ "Schat de totale tijd die de deelnemers kwijt zijn aan de studie."
-#~ msgstr ""
-#~ "Based on  the duration that you have specified per session, the estimated "
-#~ "total netto duration of the session of your study is: <strong>X minuten</"
-#~ "strong>. Give an estimation of the total amount of time that your "
-#~ "participants will need to complete the study."
-
-#, fuzzy
-#~| msgid ""
-#~| "Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle "
-#~| "sessie bij elkaar opgeteld, exclusief reistijd."
-#~ msgid ""
-#~ "Dit is de geschatte totale bruto tijd die de deelnemer kwijt is aan alle "
-#~ "sessies bij elkaar opgeteld, exclusief reistijd."
-#~ msgstr ""
-#~ "This is the estimated total bruto time the participant needs for all "
-#~ "culminated sessions, traveling time excluded."
-
-#~ msgid "Status"
-#~ msgstr "State"
-
-#, fuzzy
-#~| msgid "Verwijderen"
-#~ msgid "Verwijder"
-#~ msgstr "Delete"
-
-#, fuzzy
-#~| msgid "Conceptaanvraag %(title)s aangemaakt"
-#~ msgid "Studie %(title)s aangemaakt"
-#~ msgstr "Concept application %(title)s created"
-
-#~ msgid "Informed consent geupload"
-#~ msgstr "Informed consent uploaded"
-
-#~ msgid "%s (kopie)"
-#~ msgstr "%s (copy)"
-
-#~ msgid ""
-#~ "Is dit een studie waarbij dezelfde deelnemers op meerdere dagen deelnemen "
-#~ "aan een sessie? (bijvoorbeeld een longitudinale studie, of een "
-#~ "kortlopende studie waar deelnemers op twee of meer verschillende dagen "
-#~ "getest worden)"
-#~ msgstr ""
-#~ "Is this a study in which the same participants have to participate in a "
-#~ "session on multiple days? (For example a longitudinal study, or a short-"
-#~ "term study in which participants need to be tested on different (two or "
-#~ "more) days)"
-
-#~ msgid ""
-#~ "Is het totaal van sessies als geheel belastend voor de deelnemer op een "
-#~ "manier die, ondanks de verkregen informed consent, vragen zou kunnen "
-#~ "oproepen (bijvoorbeeld bij collegas, bij de deelnemers zelf, bij derden)? "
-#~ "Denk hierbij aan zaken als de aard van de stimuli, de taakduur, saaiheid "
-#~ "of (mentale/fysieke) veeleisendheid van de taak, de mate waarin "
-#~ "deelnemers zich ongemakkelijk kunnen voelen bij het geven van bepaalde "
-#~ "antwoorden (bijv. depressievragenlijst) of bepaald gedrag, etcetera. Ga "
-#~ "bij het beantwoorden van de vraag uit van wat u als onderzoeker beschouwt "
-#~ "als de voor deze taak meest kwetsbare c.q. minst belastbare "
-#~ "deelnemersgroep."
-#~ msgstr ""
-#~ "Is the total of sessions as a whole a burden for the participants in such "
-#~ "a way that it could raise questions (for example from colleagues, from "
-#~ "the participants, a third party)? Examples are the nature of the stimuli, "
-#~ "the duration of the task, whether performing the task is tedious or asks "
-#~ "for a great amount of mental/physical effort, the degree in which the "
-#~ "participants might feel uncomfortable at giving certain answers (for "
-#~ "example in the case of a questionnaire concerning depression) or certain "
-#~ "behavior, et cetera. In answering this question, keep in mind the group "
-#~ "of participants that you as a researcher consider as the most vulnerable "
-#~ "or that can carry the least amount of pressure/burden."
-
-#~ msgid "Waarom denkt u dat?"
-#~ msgstr "Why do you think that is the case?"
-
-#, fuzzy
-#~| msgid ""
-#~| "Is de kans dat de deelnemer fysieke schade oploopt tijdens het afnemen "
-#~| "van het experiment groter dan de kans op fysieke schade in het dagelijks "
-#~| "leven?"
-#~ msgid ""
-#~ "Is de kans dat de deelnemer fysieke schade oploopt tijdens het afnemen "
-#~ "van de taak groter dan de kans op fysieke schade in het dagelijks leven?"
-#~ msgstr ""
-#~ "Is the chance on physical damage for the participant higher during the "
-#~ "experiment than in daily life?"
-
-#, fuzzy
-#~| msgid ""
-#~| "Is de kans dat de deelnemer psychische schade oploopt tijdens het "
-#~| "afnemen van het experiment groter dan de kans op psychische schade in "
-#~| "het dagelijks leven?"
-#~ msgid ""
-#~ "Is de kans dat de deelnemer psychische schade oploopt tijdens het afnemen "
-#~ "van de taak groter dan de kans op psychische schade in het dagelijks "
-#~ "leven?"
-#~ msgstr ""
-#~ "Is the chance on psychological damage for the participant higher during "
-#~ "the experiment than in daily life?"
-
-#~ msgid ""
-#~ "Is het geheel van taken en overige activiteiten in de sessie als geheel "
-#~ "belastend voor de deelnemer op een manier die, ondanks de verkregen "
-#~ "informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij collegas, "
-#~ "bij de deelnemers zelf, bij derden)? Denk hierbij aan zaken als de aard "
-#~ "van de stimuli, de taakduur, saaiheid of (mentale/fysieke) veeleisendheid "
-#~ "van de taak, de mate waarin deelnemers zich ongemakkelijk kunnen voelen "
-#~ "bij het geven van bepaalde antwoorden (bijv. depressievragenlijst) of "
-#~ "bepaald gedrag, etcetera. Ga bij het beantwoorden van de vraag uit van "
-#~ "wat u als onderzoeker beschouwt als de voor deze taak meest kwetsbare c."
-#~ "q. minst belastbare deelnemersgroep."
-#~ msgstr ""
-#~ "Is the total of tasks and further activities during the session as a "
-#~ "whole a burden for the participants in such a way that it could raise "
-#~ "questions, in spite of the obtained informed consent (for example from "
-#~ "colleagues, from the participants, a third party)? Examples are the "
-#~ "nature of the stimuli, the duration of the task, whether performing the "
-#~ "task is tedious or asks for a great amount of mental/physical effort, the "
-#~ "degree in which the participants might feel uncomfortable at giving "
-#~ "certain answers (for example in the case of a questionnaire concerning "
-#~ "depression) or certain behavior, et cetera. In answering this question, "
-#~ "keep in mind the group of participants that you as a researcher consider "
-#~ "as the most vulnerable or that can carry the least amount of pressure/"
-#~ "burden."
-
-#~ msgid "Session {} at proposal {}"
-#~ msgstr "Session {} at proposal {}"
-
-#~ msgid "Bestand"
-#~ msgstr "File"
-
-#~ msgid ""
-#~ "Wat is de naam of korte beschrijving van de taak? (geef alleen een naam "
-#~ "als daarmee volledig duidelijk is waar het om gaat, bijv \"lexicale "
-#~ "decisietaak\")"
-#~ msgstr ""
-#~ "What is the name or short description of the taks? (only give up a name "
-#~ "if this name makes it completely clear what the task is about, for "
-#~ "example 'lexical decision task')"
-
-#~ msgid ""
-#~ "Is deze taak belastend voor de deelnemer op een manier die, ondanks de "
-#~ "verkregen informed consent, vragen zou kunnen oproepen (bijvoorbeeld bij "
-#~ "collegas, bij de deelnemers zelf, bij derden)? Denk hierbij aan zaken als "
-#~ "de aard van de stimuli, de taakduur, saaiheid of (mentale/fysieke) "
-#~ "veeleisendheid van de taak, de mate waarin deelnemers zich ongemakkelijk "
-#~ "kunnen voelen bij het geven van bepaalde antwoorden (bijv. "
-#~ "depressievragenlijst) of bepaald gedrag, etcetera. En ga bij het "
-#~ "beantwoorden van de vraag uit van wat u als onderzoeker beschouwt als de "
-#~ "voor deze taak meest kwetsbare c.q. minst belastbare deelnemersgroep."
-#~ msgstr ""
-#~ "Is this task a burden for the participants in such a way that it could "
-#~ "raise questions, in spite of the obtained informed consent (for example "
-#~ "from colleagues, from the participants, a third party)? Examples are the "
-#~ "nature of the stimuli, the duration of the task, whether performing the "
-#~ "task is tedious or asks for a great amount of mental/physical effort, the "
-#~ "degree in which the participants might feel uncomfortable at giving "
-#~ "certain answers (for example in the case of a questionnaire concerning "
-#~ "depression) or certain behavior, et cetera. In answering this question, "
-#~ "keep in mind the group of participants that you as a researcher consider "
-#~ "as the most vulnerable or that can carry the least amount of pressure/"
-#~ "burden."
-
-#~ msgid "Home"
-#~ msgstr "Home"
-
-#~ msgid "Welkom %(first)s %(last)s!"
-#~ msgstr "Welcome %(first)s %(last)s!"
-
-#~ msgid "Nieuwe aanvraag indienen"
-#~ msgstr "Hand in new application"
-
-#~ msgid "Mijn aanvraagarchief"
-#~ msgstr "My proposal archive"
-
-#~ msgid "Ga"
-#~ msgstr "Go"
-
-#~ msgid "Aanvraag verwijderen"
-#~ msgstr "Delete application"
-
-#~ msgid "Aanvraag verzonden"
-#~ msgstr "Application sent"
-
-#~ msgid "Aanvraag verwijderd"
-#~ msgstr "Application deleted"
-
-#~ msgid "Aanvraag is beoordeeld naar ETCL"
-#~ msgstr "Application is assessed for ETCL"
-
-#~ msgid ""
-#~ "deelnemers kunnen geselecteerd worden op bepaalde bijzondere kenmerken "
-#~ "die mogelijk samenhangen met een verhoogde kwetsbaarheid of verminderde "
-#~ "belastbaarheid t.a.v. aspecten van de beoogde studie (bijvoorbeeld: "
-#~ "kinderen die vroeger gepest zijn in een onderzoek naar de neurale reactie "
-#~ "op verbale beledigingen; patiënten met afasie die een gesprek moeten "
-#~ "voeren, ook al gaat het gesprek over alledaagse dingen). Is dit in uw "
-#~ "studie bij (een deel van) de deelnemers het geval?"
-#~ msgstr ""
-#~ "It may be the case that participants are selected based on certain "
-#~ "deviating/special characteristics that possibly go with a increased risk "
-#~ "on vulnerability or reduced capacity with respect to aspects of the "
-#~ "proposed study (e.g. children that are bullied in the past in a study on "
-#~ "the neural response on verbal insults; patients with aphasia that have to "
-#~ "engage in an conversation, even if the topics are everyday matters). Is "
-#~ "this the case in your study with (a part of) the participants?"
-
-#~ msgid "Voorbeelddocumenten"
-#~ msgstr "Example documents"
-
-#~ msgid "Vergaderdata"
-#~ msgstr "Dates of meetings"
-
-#~ msgid "Van welke aard is deze feedback?"
-#~ msgstr "What is the nature of this feedback?"

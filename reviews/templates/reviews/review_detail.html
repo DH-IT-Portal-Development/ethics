@@ -59,6 +59,19 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
 
 {% include "reviews/review_table.html" %}
 
+{% if review.proposal.has_minor_revision%}
+    <h3>{% trans 'Revisie' %}</h3>
+    {% blocktrans %}
+        Deze studie heeft een risivisie gehad tijdens het beslisproces.
+    {% endblocktrans %}
+    {% if review.proposal.minor_revision_description  %}
+        {% blocktrans %}
+            Er zijn de volgende opmerkingen bijgevoegd:<br/>
+        {% endblocktrans %}
+        {{ review.proposal.minor_revision_description }}
+    {% endif %}
+{% endif %}
+
 {% if not review.proposal.is_pre_assessment %}
 {% include "reviews/auto_review.html" %}
 {% endif %}

@@ -184,6 +184,8 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
             proposal.wmo.save()
 
         proposal.in_archive = form.cleaned_data['in_archive']
+        proposal.has_minor_revision = form.cleaned_data['has_minor_revision']
+        proposal.minor_revision_description = form.cleaned_data['minor_revision_description']
         proposal.save()
 
         form.instance.stage = Review.CLOSED

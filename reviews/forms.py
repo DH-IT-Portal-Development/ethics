@@ -31,10 +31,17 @@ class ReviewAssignForm(ConditionalModelForm):
 
 class ReviewCloseForm(forms.ModelForm):
     in_archive = forms.BooleanField(initial=True, required=False)
+    has_minor_revision = forms.BooleanField(initial=False, required=False)
+    minor_revision_description = forms.Field(required=False)
 
     class Meta:
         model = Review
-        fields = ['continuation', 'in_archive']
+        fields = [
+            'continuation',
+            'has_minor_revision',
+            'minor_revision_description',
+            'in_archive',
+        ]
         widgets = {
             'continuation': forms.RadioSelect(),
         }
@@ -51,6 +58,12 @@ class ReviewCloseForm(forms.ModelForm):
 
         self.fields['in_archive'].label = _('Voeg deze studie toe aan het UiL OTS archief')
         self.fields['in_archive'].widget = forms.RadioSelect(choices=YES_NO)
+
+        self.fields['has_minor_revision'].label = _('Is er een revisie geweest na het indienen van deze studie?')
+        self.fields['has_minor_revision'].widget = forms.RadioSelect(choices=YES_NO)
+
+        self.fields['minor_revision_description'].label = _('Opmerkingen over revisie')
+        self.fields['minor_revision_description'].widget = forms.Textarea()
 
 
 class DecisionForm(forms.ModelForm):
