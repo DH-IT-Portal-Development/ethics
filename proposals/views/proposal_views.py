@@ -390,6 +390,61 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
 class ProposalSubmittedPreAssessment(ProposalSubmitted):
     template_name = 'proposals/proposal_submitted.html'
 
+#############
+# Pre-Aproved
+#############
+
+class ProposalStartPreApproved(ProposalStart):
+    template_name = 'proposals/proposal_start_pre_approved.html'
+
+
+class PreApprovedMixin(ProposalMixin):
+    def get_form_kwargs(self):
+        """Sets is_pre_approved as a form kwarg"""
+        kwargs = super(PreApprovedMixin, self).get_form_kwargs()
+        kwargs['is_pre_approved'] = True
+        return kwargs
+
+    def get_next_url(self):
+        proposal = self.object
+        return reverse('proposals:submit_pre_approved', args=(proposal.pk,))
+
+
+class ProposalCreatePreApproved(PreApprovedMixin, ProposalCreate):
+    def form_valid(self, form):
+        """Sets is_pre_approved to True"""
+        form.instance.is_pre_approved = True
+        return super(ProposalCreatePreApproved, self).form_valid(form)
+
+class ProposalUpdatePreApproved(PreApprovedMixin, ProposalUpdate):
+    pass
+
+
+class ProposalSubmitPreApproved(ProposalSubmit):
+    def form_valid(self, form):
+        """
+        Performs actions after saving the form
+        - Save the pre_approved PDF on the Proposal
+        - End the draft phase and start the appropiate review phase (in super function)
+        """
+        # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
+        success_url = super(ProposalSubmitPreApproved, self).form_valid(form)
+        if 'save_back' not in self.request.POST:
+            proposal = self.get_object()
+            generate_pdf(proposal, 'proposals/proposal_pdf_pre_approved.html')
+        return success_url
+
+    def get_next_url(self):
+        """After submission, go to the thank-you view"""
+        return reverse('proposals:submitted_pre_approved', args=(self.object.pk,))
+
+    def get_back_url(self):
+        """Return to the update page"""
+        return reverse('proposals:update_pre_approved', args=(self.object.pk,))
+
+
+class ProposalSubmittedPreApproved(ProposalSubmitted):
+    template_name = 'proposals/proposal_submitted.html'
 
 ##########
 # Practice

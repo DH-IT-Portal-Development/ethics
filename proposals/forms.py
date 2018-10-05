@@ -19,14 +19,17 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = [
+            'is_pre_approved',
             'relation', 'supervisor',
             'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
             'date_start', 'title',
             'summary', 'pre_assessment_pdf',
-            'funding', 'funding_details', 'funding_name'
+            'funding', 'funding_details', 'funding_name',
+            'pre_approval_institute', 'pre_approval_pdf'
         ]
         widgets = {
+            'is_pre_approved': forms.RadioSelect(choices=YES_NO),
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
             'other_stakeholders': forms.RadioSelect(choices=YES_NO),
@@ -52,6 +55,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         """
         in_course = kwargs.pop('in_course', False)
         is_pre_assessment = kwargs.pop('is_pre_assessment', False)
+        is_pre_approved = kwargs.pop('is_pre_approved', False)
 
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
@@ -87,6 +91,14 @@ van het UiL OTS worden opgenomen.')
         else:
             del self.fields['pre_assessment_pdf']
 
+        if is_pre_approved:
+            self.fields['pre_approval_institute'].required = True
+            self.fields['pre_approval_pdf'].required = True
+        else:
+            del self.fields['is_pre_approved']
+            del self.fields['pre_approval_institute']
+            del self.fields['pre_approval_pdf']
+
     def clean(self):
         """
         Check for conditional requirements:
@@ -94,6 +106,8 @@ van het UiL OTS worden opgenomen.')
         - If other_applicants is checked, make sure applicants are set
         - If other_stakeholders is checked, make sure stakeholders is not empty
         - Maximum number of words for summary
+        - If this is a pre approved proposal, make sure people say yes to that question
+        - If this is a pre approved proposal, make sure people fill in the correct fields
         """
         cleaned_data = super(ProposalForm, self).clean()
 
@@ -105,6 +119,18 @@ van het UiL OTS worden opgenomen.')
         if cleaned_data.get('other_applicants') and len(cleaned_data.get('applicants')) == 1:
             error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
             self.add_error('applicants', error)
+
+        if 'is_pre_approved' in cleaned_data:
+            if not cleaned_data['is_pre_approved']:
+                error = forms.ValidationError(
+                    _('Indien u geen toestemming heeft van een andere ethische commissie, dient u het normale formulier in '
+                      'te vullen. Ga terug naar de startpagina, en selecteer "Een nieuwe studie aanmelden (from scratch in '
+                      'een leeg formulier)" of "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)".')
+                )
+                self.add_error('is_pre_approved', error)
+
+            self.check_dependency(cleaned_data, 'is_pre_approved', 'pre_approval_pdf')
+            self.check_dependency(cleaned_data, 'is_pre_approved', 'pre_approval_institute')
 
         self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders')
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
