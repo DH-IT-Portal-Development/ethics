@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>proposals.views.wmo_views &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>proposals.views.wmo_views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for proposals.views.wmo_views</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="k">import</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="k">import</span> <span class="n">csrf_exempt</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span>
+<span class="kn">from</span> <span class="nn">core.views</span> <span class="k">import</span> <span class="n">CreateView</span><span class="p">,</span> <span class="n">UpdateView</span>
+<span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">get_secretary</span>
+
+<span class="kn">from</span> <span class="nn">..models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Wmo</span>
+<span class="kn">from</span> <span class="nn">..forms</span> <span class="k">import</span> <span class="n">WmoForm</span><span class="p">,</span> <span class="n">WmoApplicationForm</span><span class="p">,</span> <span class="n">WmoCheckForm</span>
+
+
+<span class="c1">#####################</span>
+<span class="c1"># CRUD actions on WMO</span>
+<span class="c1">#####################</span>
+<div class="viewcode-block" id="WmoMixin"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoMixin">[docs]</a><span class="k">class</span> <span class="nc">WmoMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Wmo</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">WmoForm</span>
+
+<div class="viewcode-block" id="WmoMixin.get_context_data"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting the Proposal on the context&quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">WmoMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;proposal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_proposal</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="WmoMixin.get_next_url"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoMixin.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If no Wmo is necessary, continue to definition of Study,</span>
+<span class="sd">        else, start the Wmo application.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wmo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">if</span> <span class="n">wmo</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">Wmo</span><span class="o">.</span><span class="n">NO_WMO</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:study_start&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">wmo</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_application&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">wmo</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="WmoMixin.get_back_url"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoMixin.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return to the Proposal overview, or practice overview if we are in practice mode&quot;&quot;&quot;</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_proposal</span><span class="p">()</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;proposals:update_practice&#39;</span> <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">is_practice</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;proposals:update&#39;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="WmoMixin.get_proposal"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoMixin.get_proposal">[docs]</a>    <span class="k">def</span> <span class="nf">get_proposal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="WmoCreate"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoCreate">[docs]</a><span class="k">class</span> <span class="nc">WmoCreate</span><span class="p">(</span><span class="n">WmoMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
+    <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;WMO-gegevens opgeslagen&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WmoCreate.form_valid"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoCreate.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves the Proposal on the WMO instance&quot;&quot;&quot;</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_proposal</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">WmoCreate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WmoCreate.get_proposal"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoCreate.get_proposal">[docs]</a>    <span class="k">def</span> <span class="nf">get_proposal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the Proposal from the pk kwarg&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pk&#39;</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="WmoUpdate"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoUpdate">[docs]</a><span class="k">class</span> <span class="nc">WmoUpdate</span><span class="p">(</span><span class="n">WmoMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+    <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;WMO-gegevens bewerkt&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WmoUpdate.get_proposal"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoUpdate.get_proposal">[docs]</a>    <span class="k">def</span> <span class="nf">get_proposal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the Proposal from the form object&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span></div></div>
+
+
+<span class="c1">######################</span>
+<span class="c1"># Other actions on WMO</span>
+<span class="c1">######################</span>
+<div class="viewcode-block" id="WmoApplication"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoApplication">[docs]</a><span class="k">class</span> <span class="nc">WmoApplication</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Wmo</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">WmoApplicationForm</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/wmo_application.html&#39;</span>
+
+<div class="viewcode-block" id="WmoApplication.get_context_data"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoApplication.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting the Proposal on the context&quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">WmoApplication</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;proposal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="WmoApplication.get_next_url"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoApplication.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Continue to the definition of a Study if we have completed the Wmo application&quot;&quot;&quot;</span>
+        <span class="n">wmo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">if</span> <span class="n">wmo</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">Wmo</span><span class="o">.</span><span class="n">WAITING</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_application&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">wmo</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:study_start&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">wmo</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="WmoApplication.get_back_url"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoApplication.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return to the Wmo overview&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_update&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
+
+
+<div class="viewcode-block" id="WmoCheck"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoCheck">[docs]</a><span class="k">class</span> <span class="nc">WmoCheck</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">FormView</span><span class="p">):</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">WmoCheckForm</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/wmo_check.html&#39;</span></div>
+
+
+<span class="c1">########################</span>
+<span class="c1"># Preliminary assessment</span>
+<span class="c1">########################</span>
+<div class="viewcode-block" id="PreAssessmentMixin"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.PreAssessmentMixin">[docs]</a><span class="k">class</span> <span class="nc">PreAssessmentMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="PreAssessmentMixin.get_next_url"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.PreAssessmentMixin.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Different continue URL for pre-assessment Proposals&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submit_pre&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="PreAssessmentMixin.get_back_url"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.PreAssessmentMixin.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Different return URL for pre-assessment Proposals&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:update_pre&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
+
+
+<div class="viewcode-block" id="WmoCreatePreAssessment"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoCreatePreAssessment">[docs]</a><span class="k">class</span> <span class="nc">WmoCreatePreAssessment</span><span class="p">(</span><span class="n">PreAssessmentMixin</span><span class="p">,</span> <span class="n">WmoCreate</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="WmoUpdatePreAssessment"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.WmoUpdatePreAssessment">[docs]</a><span class="k">class</span> <span class="nc">WmoUpdatePreAssessment</span><span class="p">(</span><span class="n">PreAssessmentMixin</span><span class="p">,</span> <span class="n">WmoUpdate</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="c1">################</span>
+<span class="c1"># AJAX callbacks</span>
+<span class="c1">################</span>
+<div class="viewcode-block" id="check_wmo"><a class="viewcode-back" href="../../../source_bak/proposals.views.html#proposals.views.wmo_views.check_wmo">[docs]</a><span class="nd">@csrf_exempt</span>
+<span class="k">def</span> <span class="nf">check_wmo</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This call checks which WMO message should be generated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">is_metc</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metc&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">YES</span>
+    <span class="n">is_medical</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;medical&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">YES</span>
+    <span class="n">is_behavioristic</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;behavioristic&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">YES</span>
+
+    <span class="n">doubt</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;metc&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">DOUBT</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;medical&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">DOUBT</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;behavioristic&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">DOUBT</span>
+
+    <span class="c1"># Default message: OK.</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Uw studie hoeft niet te worden beoordeeld door de METC.&#39;</span><span class="p">)</span>
+    <span class="n">message_class</span> <span class="o">=</span> <span class="s1">&#39;info&#39;</span>
+    <span class="n">needs_metc</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># On doubt, contact secretary.</span>
+    <span class="k">if</span> <span class="n">doubt</span><span class="p">:</span>
+        <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Neem contact op met </span><span class="si">{secretary}</span><span class="s1"> om de twijfels weg te nemen.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">secretary</span><span class="o">=</span><span class="n">secretary</span><span class="p">)</span>
+        <span class="n">message_class</span> <span class="o">=</span> <span class="s1">&#39;warning&#39;</span>
+        <span class="n">needs_metc</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># Otherwise, METC review is necessary for METC studies (obviously) and</span>
+    <span class="c1"># studies that have medical research questions or define user behavior</span>
+    <span class="k">elif</span> <span class="n">is_metc</span> <span class="ow">or</span> <span class="p">(</span><span class="n">is_medical</span> <span class="ow">and</span> <span class="n">is_behavioristic</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Uw studie zal moeten worden beoordeeld door de METC.&#39;</span><span class="p">)</span>
+        <span class="n">message_class</span> <span class="o">=</span> <span class="s1">&#39;warning&#39;</span>
+        <span class="n">needs_metc</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;needs_metc&#39;</span><span class="p">:</span> <span class="n">needs_metc</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="s1">&#39;message_class&#39;</span><span class="p">:</span> <span class="n">message_class</span><span class="p">})</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

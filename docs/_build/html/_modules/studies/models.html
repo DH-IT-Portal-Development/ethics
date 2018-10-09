@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>studies.models &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>studies.models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for studies.models</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="k">import</span> <span class="n">MinValueValidator</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="k">import</span> <span class="n">Q</span>
+<span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="k">import</span> <span class="n">mark_safe</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="k">import</span> <span class="n">python_2_unicode_compatible</span>
+
+<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES_NO_DOUBT</span>
+<span class="kn">from</span> <span class="nn">core.validators</span> <span class="k">import</span> <span class="n">validate_pdf_or_doc</span>
+<span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
+
+
+<div class="viewcode-block" id="AgeGroup"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.AgeGroup">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">AgeGroup</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model to store participant age groups.</span>
+<span class="sd">    The model has fields for the age range, a description and whether this age group is considered adult.</span>
+<span class="sd">    The &#39;needs_details&#39; field is used to determine whether the &#39;necessity&#39; field on Study needs to be filled.</span>
+<span class="sd">    The &#39;max_net_duration&#39; field is used in the automatic review to check the target Session duration is not exceeded.</span>
+<span class="sd">    The &#39;is_active&#39; field is used for when the age groups need to be redefined. Create new ones for the groups that need</span>
+<span class="sd">    to be redefined, and set the old ones to inactive. This is needed to preserve old proposals for the archive.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;age_min&#39;</span><span class="p">,)</span>
+
+    <span class="n">age_min</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
+    <span class="n">age_max</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">is_adult</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">needs_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">max_net_duration</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
+    <span class="n">is_active</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">age_max</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1"> jaar&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">age_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">age_max</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> jaar en ouder&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">age_min</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Trait"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Trait">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">Trait</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model to store participant traits.</span>
+<span class="sd">    The model has fields to keep a certain order and a description.</span>
+<span class="sd">    The &#39;needs_details&#39; field is used to determine whether the &#39;necessity&#39; field on Study needs to be filled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">needs_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
+
+
+<div class="viewcode-block" id="Compensation"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Compensation">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">Compensation</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model to store forms of participant compensation.</span>
+<span class="sd">    The model has fields to keep a certain order and a description.</span>
+<span class="sd">    The &#39;needs_details&#39; field is used to determine whether the &#39;compensation_details&#39; field on Study needs to be filled.</span>
+<span class="sd">    The &#39;requires_review&#39; field is used in the automatic review to tag anomalous forms of compensation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">needs_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">requires_review</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
+
+
+<div class="viewcode-block" id="Recruitment"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Recruitment">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">Recruitment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model to store forms of participant recruitment.</span>
+<span class="sd">    The model has fields to keep a certain order and a description.</span>
+<span class="sd">    The &#39;is_local&#39; field is used to determine whether the &#39;inform_local_staff&#39; field on Proposal needs to be filled.</span>
+<span class="sd">    The &#39;needs_details&#39; field is used to determine whether the &#39;recruitment_details&#39; field on Study needs to be filled.</span>
+<span class="sd">    The &#39;requires_review&#39; field is used in the automatic review to tag anomalous forms of recruitment.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">is_local</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">needs_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">requires_review</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
+        <span class="n">verbose_name</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Werving&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
+
+<div class="viewcode-block" id="Study"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">Study</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model to store a study within a Proposal.</span>
+<span class="sd">    A Study consists of participant details, experiment design and consent forms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">OBSERVATION</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">INTERVENTION</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">SESSIONS</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">DESIGNS</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">OBSERVATION</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Observatieonderzoek&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">INTERVENTION</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Interventieonderzoek&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">SESSIONS</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taakonderzoek&#39;</span><span class="p">)),</span>
+    <span class="p">)</span>
+
+    <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">age_groups</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
+        <span class="n">AgeGroup</span><span class="p">,</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De beoogde leeftijdsgroep kan zijn 5-7 jarigen. </span><span class="se">\</span>
+<span class="s1">Dan moet u hier hier 4-5 én 6-11 invullen.&#39;</span><span class="p">))</span>
+    <span class="n">legally_incapable</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Maakt uw studie gebruik van wils&lt;u&gt;on&lt;/u&gt;bekwame (volwassen) </span><span class="se">\</span>
+<span class="s1">deelnemers?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wilsonbekwame volwassenen zijn volwassenen die waarvan </span><span class="se">\</span>
+<span class="s1">redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten </span><span class="se">\</span>
+<span class="s1">wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag </span><span class="se">\</span>
+<span class="s1">worden aangenomen dat informed consent niet goed gerealiseerd kan worden </span><span class="se">\</span>
+<span class="s1">(bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). </span><span class="se">\</span>
+<span class="s1">Hier dient in ieder geval altijd informed consent van een relevante </span><span class="se">\</span>
+<span class="s1">vertegenwoordiger te worden verkregen.&#39;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">legally_incapable_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht toe&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">has_traits</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">NullBooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. </span><span class="se">\</span>
+<span class="s1">Is dit in uw studie bij (een deel van) de deelnemers het geval?&#39;</span><span class="p">))</span>
+    <span class="n">traits</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
+        <span class="n">Trait</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Selecteer de bijzondere kenmerken van uw proefpersonen&#39;</span><span class="p">))</span>
+    <span class="n">traits_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Namelijk&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">necessity</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Is het, om de onderzoeksvraag beantwoord te krijgen, </span><span class="se">\</span>
+<span class="s1">noodzakelijk om het geselecteerde type deelnemer aan de studie te </span><span class="se">\</span>
+<span class="s1">laten meedoen?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Is het bijvoorbeeld noodzakelijk om kinderen te testen, </span><span class="se">\</span>
+<span class="s1">of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers </span><span class="se">\</span>
+<span class="s1">te testen?&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">necessity_reason</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Leg uit waarom&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">recruitment</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
+        <span class="n">Recruitment</span><span class="p">,</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Hoe worden de deelnemers geworven?&#39;</span><span class="p">))</span>
+    <span class="n">recruitment_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht toe&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">compensation</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
+        <span class="n">Compensation</span><span class="p">,</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Het standaardbedrag voor vergoeding aan de deelnemers </span><span class="se">\</span>
+<span class="s1">is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een </span><span class="se">\</span>
+<span class="s1">cadeautje.&#39;</span><span class="p">),</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">compensation_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Namelijk&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Fields with respect to experimental design</span>
+    <span class="n">has_intervention</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Interventieonderzoek&#39;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">has_observation</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Observatieonderzoek&#39;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">has_sessions</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taakonderzoek&#39;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Fields with respect to informed consent</span>
+    <span class="n">passive_consent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">NullBooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Maakt u gebruik van passieve informed consent?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">mark_safe</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wanneer u kinderen via een instelling </span><span class="se">\</span>
+<span class="s1">(dus ook school) werft en u de ouders niet laat ondertekenen, maar in </span><span class="se">\</span>
+<span class="s1">plaats daarvan de leiding van die instelling, dan maakt u gebruik van </span><span class="se">\</span>
+<span class="s1">passieve informed consent. U kunt de templates vinden op </span><span class="se">\</span>
+<span class="s1">&lt;a href=&quot;https://etcl.wp.hum.uu.nl/toestemmingsverklaringen/&quot; </span><span class="se">\</span>
+<span class="s1">target=&quot;_blank&quot;&gt;de ETCL-website&lt;/a&gt;.&#39;</span><span class="p">)))</span>
+    <span class="n">passive_consent_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht uw antwoord toe. Wij willen u wijzen op het reglement, </span><span class="se">\</span>
+<span class="s1">sectie 3.1 </span><span class="se">\&#39;</span><span class="s1">d</span><span class="se">\&#39;</span><span class="s1"> en </span><span class="se">\&#39;</span><span class="s1">e</span><span class="se">\&#39;</span><span class="s1">. Passive consent is slechts in enkele gevallen </span><span class="se">\</span>
+<span class="s1">toegestaan en draagt niet de voorkeur van de commissie.&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Fields with respect to Sessions</span>
+    <span class="n">sessions_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?&#39;</span><span class="p">),</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">MinValueValidator</span><span class="p">(</span><span class="mi">1</span><span class="p">)],</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wanneer u bijvoorbeeld eerst de deelnemer een </span><span class="se">\</span>
+<span class="s1">taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en </span><span class="se">\</span>
+<span class="s1">u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken </span><span class="se">\</span>
+<span class="s1">of andere taak/taken te doen, dan spreken we van twee sessies. </span><span class="se">\</span>
+<span class="s1">Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, </span><span class="se">\</span>
+<span class="s1">dan geldt dat toch als één sessie.&#39;</span><span class="p">))</span>
+    <span class="n">deception</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Is er binnen bovenstaand onderzoekstraject sprake van </span><span class="se">\</span>
+<span class="s1">misleiding van de deelnemer?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Misleiding is het doelbewust verschaffen van inaccurate </span><span class="se">\</span>
+<span class="s1">informatie over het doel en/of belangrijke aspecten van de gang van zaken </span><span class="se">\</span>
+<span class="s1">tijdens de studie. Denk aan zaken als een bewust misleidende &quot;cover story&quot; </span><span class="se">\</span>
+<span class="s1">voor het experiment; het ten onrechte suggereren dat er met andere </span><span class="se">\</span>
+<span class="s1">deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale </span><span class="se">\</span>
+<span class="s1">geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: </span><span class="se">\</span>
+<span class="s1">het gaat hierbij niet om fillers.&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">deception_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Geef een toelichting en beschrijf hoe en wanneer de deelnemer </span><span class="se">\</span>
+<span class="s1">zal worden gedebrieft.&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">negativity</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Bevat bovenstaand onderzoekstraject elementen die </span><span class="se">\</span>
+<span class="s1">&lt;em&gt;tijdens&lt;/em&gt; de deelname niet-triviale negatieve emoties kunnen opwekken? </span><span class="se">\</span>
+<span class="s1">Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende </span><span class="se">\</span>
+<span class="s1">uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of </span><span class="se">\</span>
+<span class="s1">(heel) saaie taken.&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">negativity_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht uw antwoord toe.&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">stressful</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Bevat bovenstaand onderzoekstraject elementen die tijdens de </span><span class="se">\</span>
+<span class="s1">deelname zodanig belastend zijn dat deze &lt;em&gt;ondanks de verkregen </span><span class="se">\</span>
+<span class="s1">informed consent&lt;/em&gt; vragen zou kunnen oproepen (of zelfs </span><span class="se">\</span>
+<span class="s1">verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers </span><span class="se">\</span>
+<span class="s1">zelf, of bij ouders of andere vertegenwoordigers?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">mark_safe</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit zou bijvoorbeeld het geval kunnen zijn </span><span class="se">\</span>
+<span class="s1">bij een </span><span class="se">\&#39;</span><span class="s1">onmenselijk</span><span class="se">\&#39;</span><span class="s1"> lange en uitputtende taak, een zeer confronterende </span><span class="se">\</span>
+<span class="s1">vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren </span><span class="se">\</span>
+<span class="s1">inbreuk op de privacy, of een ander ervaren gebrek aan respect. </span><span class="se">\</span>
+<span class="s1">Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting </span><span class="se">\</span>
+<span class="s1">tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade </span><span class="se">\</span>
+<span class="s1">door het onderzoek.&#39;</span><span class="p">)),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">stressful_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht uw antwoord toe. Geef concrete voorbeelden van de relevante </span><span class="se">\</span>
+<span class="s1">aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer </span><span class="se">\</span>
+<span class="s1">kwetsende woorden of uitspraken in de taak, of van zeer confronterende </span><span class="se">\</span>
+<span class="s1">vragen in een vragenlijst), zodat de commissie zich een goed beeld kan </span><span class="se">\</span>
+<span class="s1">vormen.&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">risk</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Zijn de risico</span><span class="se">\&#39;</span><span class="s1">s op psychische, fysieke, of andere (bijv. </span><span class="se">\</span>
+<span class="s1">economische, juridische) schade door deelname aan bovenstaand </span><span class="se">\</span>
+<span class="s1">onderzoekstraject &lt;em&gt;meer dan&lt;/em&gt; minimaal? </span><span class="se">\</span>
+<span class="s1">D.w.z. ligt de kans op en/of omvang van mogelijke schade </span><span class="se">\</span>
+<span class="s1">bij de deelnemers duidelijk &lt;em&gt;boven&lt;/em&gt; het &quot;achtergrondrisico&quot;?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">mark_safe</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Achtergrondrisico is datgene dat gezonde, </span><span class="se">\</span>
+<span class="s1">gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken </span><span class="se">\</span>
+<span class="s1">in het dagelijks leven ten deel valt. </span><span class="se">\</span>
+<span class="s1">Denk bij schade ook aan de gevolgen die het voor de deelnemer of </span><span class="se">\</span>
+<span class="s1">anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. </span><span class="se">\</span>
+<span class="s1">op het vlak van zelfbeeld, stigmatisering door anderen, economische </span><span class="se">\</span>
+<span class="s1">schade door data-koppeling, et cetera. Het achtergrondrisico voor </span><span class="se">\</span>
+<span class="s1">psychische en fysieke schade omvat bijvoorbeeld ook de risico</span><span class="se">\&#39;</span><span class="s1">s van </span><span class="se">\</span>
+<span class="s1">&quot;routine&quot;-tests, -onderzoeken of -procedures die in alledaagse didactische, </span><span class="se">\</span>
+<span class="s1">psychologische of medische contexten plaatsvinden (zoals een eindexamen, </span><span class="se">\</span>
+<span class="s1">een rijexamen, een stressbestendigheids-&lt;em&gt;assessment&lt;/em&gt;, een </span><span class="se">\</span>
+<span class="s1">intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke </span><span class="se">\</span>
+<span class="s1">inspanning; dit alles, waar relevant, onder begeleiding van adequaat </span><span class="se">\</span>
+<span class="s1">geschoolde specialisten).&#39;</span><span class="p">)),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">risk_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht toe&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># References</span>
+    <span class="n">proposal</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
+        <span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;proposal&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Study.first_session"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.first_session">[docs]</a>    <span class="k">def</span> <span class="nf">first_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the first Session in this Study&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Study.last_session"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.last_session">[docs]</a>    <span class="k">def</span> <span class="nf">last_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the last Session in this Study&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-order&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Study.has_children"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_children">[docs]</a>    <span class="k">def</span> <span class="nf">has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns whether the Study contains non-adult AgeGroups&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_adult</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Study.has_participants_below_age"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_participants_below_age">[docs]</a>    <span class="k">def</span> <span class="nf">has_participants_below_age</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns whether the Study contains AgeGroups with ages below the specified age&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">age_min__lt</span><span class="o">=</span><span class="n">age</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">age_max__lt</span><span class="o">=</span><span class="n">age</span><span class="p">))</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Study.design_started"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.design_started">[docs]</a>    <span class="k">def</span> <span class="nf">design_started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the design phase has started&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_observation</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Study.design_completed"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.design_completed">[docs]</a>    <span class="k">def</span> <span class="nf">design_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the design phase has been completed&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_started</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">&amp;=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;intervention&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_observation</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">&amp;=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;observation&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">result</span> <span class="o">&amp;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_session</span><span class="p">()</span><span class="o">.</span><span class="n">tasks_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="Study.is_completed"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.is_completed">[docs]</a>    <span class="k">def</span> <span class="nf">is_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the whole Study has been completed&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_completed</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">risk</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span></div>
+
+<div class="viewcode-block" id="Study.has_missing_forms"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_missing_forms">[docs]</a>    <span class="k">def</span> <span class="nf">has_missing_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">documents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_documents_object</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">:</span>
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_declaration</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_information</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">parents_information</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">has_missing</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">needs_additional_external_forms</span><span class="p">():</span>
+                <span class="n">has_missing</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_declaration</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_information</span>
+
+            <span class="k">return</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">informed_consent</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">briefing</span> <span class="ow">or</span> <span class="n">has_missing</span></div>
+
+<div class="viewcode-block" id="Study.has_missing_sessions"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_missing_sessions">[docs]</a>    <span class="k">def</span> <span class="nf">has_missing_sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">extra_task</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">settings_contains_schools</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_sessions</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Study.research_settings_contains_schools"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.research_settings_contains_schools">[docs]</a>    <span class="k">def</span> <span class="nf">research_settings_contains_schools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks if any research track contains a school in it&#39;s setting &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">settings_contains_schools</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_sessions</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">setting__is_school</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_observation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">settings_contains_schools</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Study.needs_additional_external_forms"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.needs_additional_external_forms">[docs]</a>    <span class="k">def</span> <span class="nf">needs_additional_external_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method checks if the school/other external institution forms are needed when passive consent is false&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_observation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">needs_approval</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">research_settings_contains_schools</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_participants_below_age</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Study.get_documents_object"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.get_documents_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_documents_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the document object for this study&quot;&quot;&quot;</span>
+        <span class="c1"># The self.proposal should be a bit redundant, but semantically nice</span>
+        <span class="k">return</span> <span class="n">Documents</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">proposal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Study details for proposal </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">title</span></div>
+
+
+<div class="viewcode-block" id="Documents"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Documents">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<span class="k">class</span> <span class="nc">Documents</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model to store consent forms for a study and/or a proposal</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">study</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">Study</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">proposal</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+
+    <span class="n">informed_consent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">])</span>
+    <span class="n">briefing</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">])</span>
+
+    <span class="n">director_consent_declaration</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">],</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;If it is already signed, upload the signed declaration form. If it is not signed yet, &#39;</span>
+                   <span class="s1">&#39;you can upload the unsigned document and send the document when it is signed to the&#39;</span>
+                   <span class="s1">&#39; secretary of the EtCL&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">director_consent_information</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">parents_information</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">]</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="Documents.save"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Documents.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To be a bit cleaner we do not save if this object is new, not connected to a study and if the document fields are</span>
+<span class="sd">        empty.</span>
+
+<span class="sd">        The edit consent form page contains 2 extra forms, but those are optional. However, Django creates instances</span>
+<span class="sd">        for these forms anyway, so we have to</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">informed_consent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">briefing</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">Documents</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Documents object for study &#39;</span><span class="si">{}</span><span class="s2">&#39;, proposal &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;(Extra) Documents object for proposal &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

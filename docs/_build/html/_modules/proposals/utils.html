@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>proposals.utils &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>proposals.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for proposals.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.files.base</span> <span class="k">import</span> <span class="n">ContentFile</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="k">import</span> <span class="n">send_mail</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="k">import</span> <span class="n">render_to_string</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">activate</span><span class="p">,</span> <span class="n">get_language</span><span class="p">,</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">easy_pdf.rendering</span> <span class="k">import</span> <span class="n">render_to_pdf</span>
+
+<span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">AvailableURL</span><span class="p">,</span> <span class="n">get_secretary</span>
+<span class="kn">from</span> <span class="nn">studies.utils</span> <span class="k">import</span> <span class="n">study_urls</span>
+
+<div class="viewcode-block" id="available_urls"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.available_urls">[docs]</a><span class="k">def</span> <span class="nf">available_urls</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the available URLs for the given Proposal.</span>
+<span class="sd">    :param proposal: the current Proposal</span>
+<span class="sd">    :return: a list of available URLs for this Proposal.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">is_pre_assessment</span><span class="p">:</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvailableURL</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:update_pre&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,)),</span>
+                                 <span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Algemene informatie over de studie&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="n">wmo_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Ethische toetsing nodig door een METC?&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">):</span>
+            <span class="n">wmo_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_update_pre&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">wmo</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">wmo_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_create_pre&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wmo_url</span><span class="p">)</span>
+
+        <span class="n">submit_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Aanvraag voor voortoetsing klaar voor versturen&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">):</span>
+            <span class="n">submit_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submit_pre&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">submit_url</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">update_url</span> <span class="o">=</span> <span class="s1">&#39;proposals:update_practice&#39;</span> <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">is_practice</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;proposals:update&#39;</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvailableURL</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">reverse</span><span class="p">(</span><span class="n">update_url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,)),</span>
+                                 <span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Algemene informatie over de studie&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="n">wmo_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Ethische toetsing nodig door een METC?&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">):</span>
+            <span class="n">wmo_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_update&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">wmo</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">wmo_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_create&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wmo_url</span><span class="p">)</span>
+
+        <span class="n">studies_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Eén of meerdere trajecten?&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">):</span>
+            <span class="n">studies_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:study_start&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">studies_url</span><span class="p">)</span>
+
+        <span class="n">prev_study_completed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">proposal</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">urls</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">study_urls</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">prev_study_completed</span><span class="p">))</span>
+            <span class="n">prev_study_completed</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">is_completed</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">studies_number</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">is_title</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="n">consent_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Informed consent formulieren&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">data_management_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Datamanagement&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">submit_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Concept-aanmelding klaar voor versturen&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">last_study</span><span class="p">()</span> <span class="ow">and</span> <span class="n">proposal</span><span class="o">.</span><span class="n">last_study</span><span class="p">()</span><span class="o">.</span><span class="n">is_completed</span><span class="p">():</span>
+            <span class="n">consent_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:consent&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+            <span class="n">data_management_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:data_management&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,</span> <span class="p">))</span>
+            <span class="n">submit_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submit&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">consent_url</span><span class="p">)</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_management_url</span><span class="p">)</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">submit_url</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">urls</span></div>
+
+
+<div class="viewcode-block" id="generate_ref_number"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.generate_ref_number">[docs]</a><span class="k">def</span> <span class="nf">generate_ref_number</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a reference number for a Proposal.</span>
+<span class="sd">    :param user: the creator of this Proposal, the currently logged-in User</span>
+<span class="sd">    :return: a reference number in the format {username}-{nr}-{current_year},</span>
+<span class="sd">    where nr is the number of Proposals created by the current User in the</span>
+<span class="sd">    current year.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Proposal</span>
+
+    <span class="n">current_year</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">last_proposal</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">date_created__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span><span class="o">.</span><span class="n">latest</span><span class="p">(</span><span class="s1">&#39;date_created&#39;</span><span class="p">)</span>
+        <span class="n">proposal_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">last_proposal</span><span class="o">.</span><span class="n">reference_number</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="n">proposal_number</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{:02}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">proposal_number</span><span class="p">,</span> <span class="n">current_year</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_pdf"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.generate_pdf">[docs]</a><span class="k">def</span> <span class="nf">generate_pdf</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates the PDF for a Proposal and attaches it.</span>
+<span class="sd">    :param proposal: the current Proposal</span>
+<span class="sd">    :param template: the template for the PDF</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Local import, as otherwise a circular import will happen because the proposal model imports this file</span>
+    <span class="c1"># (And the document model imports the proposal model)</span>
+    <span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Documents</span>
+
+    <span class="c1"># Change language to English for this PDF, but save the current language to reset it later</span>
+    <span class="n">current_language</span> <span class="o">=</span> <span class="n">get_language</span><span class="p">()</span>
+    <span class="n">activate</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
+
+    <span class="n">documents</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;extra&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">Documents</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">document</span><span class="o">.</span><span class="n">study</span><span class="p">:</span>
+            <span class="n">documents</span><span class="p">[</span><span class="n">document</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">pk</span><span class="p">]</span> <span class="o">=</span> <span class="n">document</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">documents</span><span class="p">[</span><span class="s1">&#39;extra&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+
+    <span class="c1"># This try catch does not actually handle any errors. It only makes sure the language is properly reset before</span>
+    <span class="c1"># reraising the exception.</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;proposal&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="p">,</span> <span class="s1">&#39;BASE_URL&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">BASE_URL</span><span class="p">,</span> <span class="s1">&#39;documents&#39;</span><span class="p">:</span> <span class="n">documents</span><span class="p">}</span>
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">ContentFile</span><span class="p">(</span><span class="n">render_to_pdf</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">context</span><span class="p">))</span>
+        <span class="n">proposal</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.pdf&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">reference_number</span><span class="p">),</span> <span class="n">pdf</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">activate</span><span class="p">(</span><span class="n">current_language</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">e</span>
+
+    <span class="c1"># Reset the current language</span>
+    <span class="n">activate</span><span class="p">(</span><span class="n">current_language</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_local_facilities"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.check_local_facilities">[docs]</a><span class="k">def</span> <span class="nf">check_local_facilities</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks whether local lab facilities are used in the given Proposal</span>
+<span class="sd">    :param proposal: the current Proposal</span>
+<span class="sd">    :return: an empty dictionary if no local support is needed, a dictionary with local facilities otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_to_result</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">verbose_name</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">proposal</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">recruitment</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">recruitment</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">recruitment</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+                <span class="n">add_to_result</span><span class="p">(</span><span class="n">recruitment</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">setting</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">setting</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+                    <span class="n">add_to_result</span><span class="p">(</span><span class="n">setting</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_observation</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">setting</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">setting</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+                    <span class="n">add_to_result</span><span class="p">(</span><span class="n">setting</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">setting</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">setting</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+                        <span class="n">add_to_result</span><span class="p">(</span><span class="n">setting</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">task_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">registration</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">registrations</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">registration</span><span class="o">.</span><span class="n">is_local</span><span class="p">:</span>
+                            <span class="n">add_to_result</span><span class="p">(</span><span class="n">registration</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="notify_local_staff"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.notify_local_staff">[docs]</a><span class="k">def</span> <span class="nf">notify_local_staff</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Notifies local lab staff of the current Proposal via e-mail.</span>
+<span class="sd">    :param proposal: the current Proposal</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Change language to Dutch for this e-mail, but save the current language to reset it later</span>
+    <span class="n">current_language</span> <span class="o">=</span> <span class="n">get_language</span><span class="p">()</span>
+    <span class="n">activate</span><span class="p">(</span><span class="s1">&#39;nl&#39;</span><span class="p">)</span>
+
+    <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
+
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe studie ingediend&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;proposal&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="p">,</span>
+        <span class="s1">&#39;applicants&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">applicant</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span> <span class="k">for</span> <span class="n">applicant</span> <span class="ow">in</span> <span class="n">proposal</span><span class="o">.</span><span class="n">applicants</span><span class="o">.</span><span class="n">all</span><span class="p">()],</span>
+        <span class="s1">&#39;facilities&#39;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">check_local_facilities</span><span class="p">(</span><span class="n">proposal</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span>
+    <span class="p">}</span>
+    <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/local_staff_notify.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_LOCAL_STAFF</span><span class="p">])</span>
+
+    <span class="c1"># Reset the current language</span>
+    <span class="n">activate</span><span class="p">(</span><span class="n">current_language</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

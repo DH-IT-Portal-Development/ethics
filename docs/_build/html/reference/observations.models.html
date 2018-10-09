@@ -1,0 +1,615 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>observations.models module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="observations.tests module" href="observations.tests.html" />
+    <link rel="prev" title="observations.forms module" href="observations.forms.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="observations.html">observations package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="observations.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="observations.admin.html">observations.admin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observations.forms.html">observations.forms module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">observations.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observations.tests.html">observations.tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observations.translation.html">observations.translation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observations.urls.html">observations.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observations.utils.html">observations.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="observations.views.html">observations.views module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="observations.html#module-observations">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="observations.html">observations package</a> &raquo;</li>
+        
+      <li>observations.models module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/observations.models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-observations.models">
+<span id="observations-models-module"></span><h1>observations.models module<a class="headerlink" href="#module-observations.models" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="observations.models.Observation">
+<em class="property">class </em><code class="descclassname">observations.models.</code><code class="descname">Observation</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>version</em>, <em>details_who</em>, <em>details_why</em>, <em>details_frequency</em>, <em>is_anonymous</em>, <em>is_anonymous_details</em>, <em>is_in_target_group</em>, <em>is_in_target_group_details</em>, <em>is_nonpublic_space</em>, <em>is_nonpublic_space_details</em>, <em>has_advanced_consent</em>, <em>needs_approval</em>, <em>approval_institution</em>, <em>approval_document</em>, <em>registrations_details</em>, <em>days</em>, <em>mean_hours</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/observations/models.html#Observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#observations.models.Observation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – ID</li>
+<li><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</li>
+<li><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De ETCL neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</li>
+<li><strong>version</strong> (<em>PositiveIntegerField</em>) – INTERNAL - Describes which version of the observation model is used</li>
+<li><strong>details_who</strong> (<em>TextField</em>) – Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie tussen leraar en leerling in kaart brengen.</li>
+<li><strong>details_why</strong> (<em>TextField</em>) – Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste manier en in begrijpelijke taal?</li>
+<li><strong>details_frequency</strong> (<em>TextField</em>) – Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd.</li>
+<li><strong>is_anonymous</strong> (<em>BooleanField</em>) – Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.</li>
+<li><strong>is_anonymous_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>is_in_target_group</strong> (<em>BooleanField</em>) – Doet de onderzoeker zich voor als behorende tot de doelgroep?</li>
+<li><strong>is_in_target_group_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>is_nonpublic_space</strong> (<em>BooleanField</em>) – Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor moet worden aangemaakt.</li>
+<li><strong>is_nonpublic_space_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>has_advanced_consent</strong> (<em>BooleanField</em>) – Vindt informed consent van tevoren plaats?</li>
+<li><strong>needs_approval</strong> (<em>BooleanField</em>) – Heeft u toestemming nodig van een (samenwerkende) instantie om deze observatie te mogen uitvoeren?</li>
+<li><strong>approval_institution</strong> (<em>CharField</em>) – Welke instantie?</li>
+<li><strong>approval_document</strong> (<em>FileField</em>) – Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)</li>
+<li><strong>registrations_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>days</strong> (<em>PositiveIntegerField</em>) – Op hoeveel dagen wordt er geobserveerd (per deelnemer)?</li>
+<li><strong>mean_hours</strong> (<em>DecimalField</em>) – Hoeveel uur wordt er gemiddeld per dag geobserveerd?</li>
+<li><strong>study_id</strong> (<em>OneToOneField</em>) – study</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="observations.models.Observation.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#observations.models.Observation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="observations.models.Observation.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#observations.models.Observation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.approval_document">
+<code class="descname">approval_document</code><a class="headerlink" href="#observations.models.Observation.approval_document" title="Permalink to this definition">¶</a></dt>
+<dd><p>The descriptor for the file attribute on the model instance. Returns a
+FieldFile when accessed so you can do stuff like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>Assigns a file object on assignment so you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.approval_institution">
+<code class="descname">approval_institution</code><a class="headerlink" href="#observations.models.Observation.approval_institution" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.days">
+<code class="descname">days</code><a class="headerlink" href="#observations.models.Observation.days" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.details_frequency">
+<code class="descname">details_frequency</code><a class="headerlink" href="#observations.models.Observation.details_frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.details_who">
+<code class="descname">details_who</code><a class="headerlink" href="#observations.models.Observation.details_who" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.details_why">
+<code class="descname">details_why</code><a class="headerlink" href="#observations.models.Observation.details_why" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.has_advanced_consent">
+<code class="descname">has_advanced_consent</code><a class="headerlink" href="#observations.models.Observation.has_advanced_consent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.id">
+<code class="descname">id</code><a class="headerlink" href="#observations.models.Observation.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.is_anonymous">
+<code class="descname">is_anonymous</code><a class="headerlink" href="#observations.models.Observation.is_anonymous" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.is_anonymous_details">
+<code class="descname">is_anonymous_details</code><a class="headerlink" href="#observations.models.Observation.is_anonymous_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.is_in_target_group">
+<code class="descname">is_in_target_group</code><a class="headerlink" href="#observations.models.Observation.is_in_target_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.is_in_target_group_details">
+<code class="descname">is_in_target_group_details</code><a class="headerlink" href="#observations.models.Observation.is_in_target_group_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.is_nonpublic_space">
+<code class="descname">is_nonpublic_space</code><a class="headerlink" href="#observations.models.Observation.is_nonpublic_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.is_nonpublic_space_details">
+<code class="descname">is_nonpublic_space_details</code><a class="headerlink" href="#observations.models.Observation.is_nonpublic_space_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.mean_hours">
+<code class="descname">mean_hours</code><a class="headerlink" href="#observations.models.Observation.mean_hours" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.needs_approval">
+<code class="descname">needs_approval</code><a class="headerlink" href="#observations.models.Observation.needs_approval" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#observations.models.Observation.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.registrations">
+<code class="descname">registrations</code><a class="headerlink" href="#observations.models.Observation.registrations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.registrations_details">
+<code class="descname">registrations_details</code><a class="headerlink" href="#observations.models.Observation.registrations_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.setting">
+<code class="descname">setting</code><a class="headerlink" href="#observations.models.Observation.setting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.study">
+<code class="descname">study</code><a class="headerlink" href="#observations.models.Observation.study" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.study_id">
+<code class="descname">study_id</code><a class="headerlink" href="#observations.models.Observation.study_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Observation.version">
+<code class="descname">version</code><a class="headerlink" href="#observations.models.Observation.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="observations.models.Registration">
+<em class="property">class </em><code class="descclassname">observations.models.</code><code class="descname">Registration</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>needs_details</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/observations/models.html#Registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#observations.models.Registration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – ID</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – order</li>
+<li><strong>description</strong> (<em>CharField</em>) – description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – description [en]</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – needs details</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="observations.models.Registration.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#observations.models.Registration.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="observations.models.Registration.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#observations.models.Registration.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="observations.models.Registration.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#observations.models.Registration.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.description">
+<code class="descname">description</code><a class="headerlink" href="#observations.models.Registration.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descriptor used for the original translated field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.description_en">
+<code class="descname">description_en</code><a class="headerlink" href="#observations.models.Registration.description_en" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.description_nl">
+<code class="descname">description_nl</code><a class="headerlink" href="#observations.models.Registration.description_nl" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="observations.models.Registration.get_deferred_fields">
+<code class="descname">get_deferred_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#observations.models.Registration.get_deferred_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.id">
+<code class="descname">id</code><a class="headerlink" href="#observations.models.Registration.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.needs_details">
+<code class="descname">needs_details</code><a class="headerlink" href="#observations.models.Registration.needs_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.objects">
+<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#observations.models.Registration.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.observation_set">
+<code class="descname">observation_set</code><a class="headerlink" href="#observations.models.Registration.observation_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="observations.models.Registration.order">
+<code class="descname">order</code><a class="headerlink" href="#observations.models.Registration.order" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="observations.models.Registration.refresh_from_db">
+<code class="descname">refresh_from_db</code><span class="sig-paren">(</span><em>using=None</em>, <em>fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#observations.models.Registration.refresh_from_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="observations.tests.html" class="btn btn-neutral float-right" title="observations.tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="observations.forms.html" class="btn btn-neutral" title="observations.forms module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

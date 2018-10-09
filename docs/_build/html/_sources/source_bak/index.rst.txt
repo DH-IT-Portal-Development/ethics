@@ -1,0 +1,16 @@
+Source code
+===========
+
+.. toctree::
+    :maxdepth: 1
+
+    core
+    etcl
+    faqs
+    feedback
+    interventions
+    observations
+    proposals
+    reviews
+    studies
+    tasks

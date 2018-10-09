@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>proposals.tests module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>proposals.tests module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/proposals.tests.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-proposals.tests">
+<span id="proposals-tests-module"></span><h1>proposals.tests module<a class="headerlink" href="#module-proposals.tests" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="proposals.tests.BaseProposalTestCase">
+<em class="property">class </em><code class="descclassname">proposals.tests.</code><code class="descname">BaseProposalTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#BaseProposalTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.BaseProposalTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<dl class="attribute">
+<dt id="proposals.tests.BaseProposalTestCase.fixtures">
+<code class="descname">fixtures</code><em class="property"> = ['relations', 'compensations', 'recruitments', 'settings', 'registrations', 'groups']</em><a class="headerlink" href="#proposals.tests.BaseProposalTestCase.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proposals.tests.BaseProposalTestCase.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#BaseProposalTestCase.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.BaseProposalTestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="proposals.tests.ProposalTestCase">
+<em class="property">class </em><code class="descclassname">proposals.tests.</code><code class="descname">ProposalTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#ProposalTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.ProposalTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.html#proposals.tests.BaseProposalTestCase" title="proposals.tests.BaseProposalTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.tests.BaseProposalTestCase</span></code></a></p>
+<dl class="method">
+<dt id="proposals.tests.ProposalTestCase.test_check_local_facilities">
+<code class="descname">test_check_local_facilities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#ProposalTestCase.test_check_local_facilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.ProposalTestCase.test_check_local_facilities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proposals.tests.ProposalTestCase.test_reference_number">
+<code class="descname">test_reference_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#ProposalTestCase.test_reference_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.ProposalTestCase.test_reference_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proposals.tests.ProposalTestCase.test_status">
+<code class="descname">test_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#ProposalTestCase.test_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.ProposalTestCase.test_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="proposals.tests.ProposalsViewTestCase">
+<em class="property">class </em><code class="descclassname">proposals.tests.</code><code class="descname">ProposalsViewTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#ProposalsViewTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.ProposalsViewTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.html#proposals.tests.BaseProposalTestCase" title="proposals.tests.BaseProposalTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.tests.BaseProposalTestCase</span></code></a></p>
+<dl class="method">
+<dt id="proposals.tests.ProposalsViewTestCase.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#ProposalsViewTestCase.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.ProposalsViewTestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="proposals.tests.ProposalsViewTestCase.test_supervisor">
+<code class="descname">test_supervisor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#ProposalsViewTestCase.test_supervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.ProposalsViewTestCase.test_supervisor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="proposals.tests.WmoTestCase">
+<em class="property">class </em><code class="descclassname">proposals.tests.</code><code class="descname">WmoTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#WmoTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.WmoTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.html#proposals.tests.BaseProposalTestCase" title="proposals.tests.BaseProposalTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.tests.BaseProposalTestCase</span></code></a></p>
+<dl class="method">
+<dt id="proposals.tests.WmoTestCase.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#WmoTestCase.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.WmoTestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hook method for setting up the test fixture before exercising it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="proposals.tests.WmoTestCase.test_status">
+<code class="descname">test_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/tests.html#WmoTestCase.test_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.tests.WmoTestCase.test_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

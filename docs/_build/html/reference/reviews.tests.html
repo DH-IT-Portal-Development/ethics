@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>reviews.tests module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="reviews.urls module" href="reviews.urls.html" />
+    <link rel="prev" title="reviews.models module" href="reviews.models.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="reviews.html">reviews package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="reviews.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="reviews.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="reviews.admin.html">reviews.admin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reviews.forms.html">reviews.forms module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reviews.mixins.html">reviews.mixins module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reviews.models.html">reviews.models module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">reviews.tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reviews.urls.html">reviews.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reviews.utils.html">reviews.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reviews.views.html">reviews.views module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reviews.html#module-reviews">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="reviews.html">reviews package</a> &raquo;</li>
+        
+      <li>reviews.tests module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/reviews.tests.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-reviews.tests">
+<span id="reviews-tests-module"></span><h1>reviews.tests module<a class="headerlink" href="#module-reviews.tests" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="reviews.tests.AssignmentTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">AssignmentTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#AssignmentTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.AssignmentTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/reviews.html#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.AssignmentTestCase.test_assignment">
+<code class="descname">test_assignment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#AssignmentTestCase.test_assignment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.AssignmentTestCase.test_assignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the assignment works correctly.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.AutoReviewTests">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">AutoReviewTests</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#AutoReviewTests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.AutoReviewTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/reviews.html#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.AutoReviewTests.test_auto_review">
+<code class="descname">test_auto_review</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#AutoReviewTests.test_auto_review"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.AutoReviewTests.test_auto_review" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.tests.AutoReviewTests.test_auto_review_age_groups">
+<code class="descname">test_auto_review_age_groups</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#AutoReviewTests.test_auto_review_age_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.AutoReviewTests.test_auto_review_age_groups" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.tests.AutoReviewTests.test_auto_review_observation">
+<code class="descname">test_auto_review_observation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#AutoReviewTests.test_auto_review_observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.AutoReviewTests.test_auto_review_observation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.tests.AutoReviewTests.test_auto_review_task">
+<code class="descname">test_auto_review_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#AutoReviewTests.test_auto_review_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.AutoReviewTests.test_auto_review_task" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.BaseReviewTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">BaseReviewTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#BaseReviewTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.BaseReviewTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.test.testcases.TestCase</span></code></p>
+<dl class="attribute">
+<dt id="reviews.tests.BaseReviewTestCase.fixtures">
+<code class="descname">fixtures</code><em class="property"> = ['relations', 'compensations', 'registrations', 'registrationkinds', 'agegroups', 'groups']</em><a class="headerlink" href="#reviews.tests.BaseReviewTestCase.fixtures" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.tests.BaseReviewTestCase.setUp">
+<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#BaseReviewTestCase.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.BaseReviewTestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the Users and a default Proposal to use in the tests below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.CommissionTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">CommissionTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#CommissionTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.CommissionTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/reviews.html#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.CommissionTestCase.test_decision_commission">
+<code class="descname">test_decision_commission</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#CommissionTestCase.test_decision_commission"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.CommissionTestCase.test_decision_commission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether the commission phase in a Review works correctly.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.ReviewTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">ReviewTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#ReviewTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.ReviewTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/reviews.html#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.ReviewTestCase.test_start_review">
+<code class="descname">test_start_review</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#ReviewTestCase.test_start_review"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.ReviewTestCase.test_start_review" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests starting of a Review from a submitted Proposal.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.tests.SupervisorTestCase">
+<em class="property">class </em><code class="descclassname">reviews.tests.</code><code class="descname">SupervisorTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#SupervisorTestCase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.SupervisorTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../source_bak/reviews.html#reviews.tests.BaseReviewTestCase" title="reviews.tests.BaseReviewTestCase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.tests.BaseReviewTestCase</span></code></a></p>
+<dl class="method">
+<dt id="reviews.tests.SupervisorTestCase.test_decision_supervisor">
+<code class="descname">test_decision_supervisor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/tests.html#SupervisorTestCase.test_decision_supervisor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.tests.SupervisorTestCase.test_decision_supervisor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether a Decision from the supervisor leads to a change in the Review.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reviews.urls.html" class="btn btn-neutral float-right" title="reviews.urls module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="reviews.models.html" class="btn btn-neutral" title="reviews.models module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

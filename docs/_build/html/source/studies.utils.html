@@ -1,0 +1,269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>studies.utils module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Developing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>studies.utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/studies.utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-studies.utils">
+<span id="studies-utils-module"></span><h1>studies.utils module<a class="headerlink" href="#module-studies.utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="studies.utils.check_has_adults">
+<code class="descclassname">studies.utils.</code><code class="descname">check_has_adults</code><span class="sig-paren">(</span><em>selected_age_groups</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/utils.html#check_has_adults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.utils.check_has_adults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether the given AgeGroups include adults.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="studies.utils.check_necessity_required">
+<code class="descclassname">studies.utils.</code><code class="descname">check_necessity_required</code><span class="sig-paren">(</span><em>proposal</em>, <em>age_groups</em>, <em>has_traits</em>, <em>legally_incapable</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/utils.html#check_necessity_required"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.utils.check_necessity_required" title="Permalink to this definition">¶</a></dt>
+<dd><p>This call checks whether the necessity questions are required. They are required when:
+- The researcher requires a supervisor AND one of these cases applies:
+* A selected AgeGroup requires details.
+* Participants have been selected on certain traits.
+* Participants are legally incapable.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="studies.utils.copy_documents_to_proposal">
+<code class="descclassname">studies.utils.</code><code class="descname">copy_documents_to_proposal</code><span class="sig-paren">(</span><em>proposal_old</em>, <em>proposal</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/utils.html#copy_documents_to_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.utils.copy_documents_to_proposal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="studies.utils.copy_documents_to_study">
+<code class="descclassname">studies.utils.</code><code class="descname">copy_documents_to_study</code><span class="sig-paren">(</span><em>study_old</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/utils.html#copy_documents_to_study"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.utils.copy_documents_to_study" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="studies.utils.copy_study_to_proposal">
+<code class="descclassname">studies.utils.</code><code class="descname">copy_study_to_proposal</code><span class="sig-paren">(</span><em>proposal</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/utils.html#copy_study_to_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.utils.copy_study_to_proposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies the given Study to the given Proposal.
+:param proposal: the current Proposal
+:param study: the current Study
+:return: the Proposal appended with the details of the given Study.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="studies.utils.get_study_progress">
+<code class="descclassname">studies.utils.</code><code class="descname">get_study_progress</code><span class="sig-paren">(</span><em>study</em>, <em>is_end=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/utils.html#get_study_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.utils.get_study_progress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="studies.utils.study_urls">
+<code class="descclassname">studies.utils.</code><code class="descname">study_urls</code><span class="sig-paren">(</span><em>study</em>, <em>prev_study_completed</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/utils.html#study_urls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.utils.study_urls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the available URLs for the current Study.
+:param study: the current Study
+:param prev_study_completed: whether the previous Study is completed
+:return: a list of available URLs for this Study.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
