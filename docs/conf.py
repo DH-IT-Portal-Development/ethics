@@ -52,8 +52,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'ETCL'
-copyright = u'2017, Martijn van der Klis'
-author = u'Martijn van der Klis'
+copyright = u'2018, Martijn van der Klis & Ty Mees'
+author = u'Martijn van der Klis & Ty Mees'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -114,7 +114,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -231,7 +231,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'ETCL.tex', u'ETCL Documentation',
-     u'Martijn van der Klis', 'manual'),
+     u'Martijn van der Klis & Ty Mees', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

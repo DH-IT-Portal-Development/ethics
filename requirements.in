@@ -6,4 +6,5 @@ django-modeltranslation
 mysqlclient
 xhtml2pdf
 sphinx
+sphinx_rtd_theme
 html5lib
