@@ -19,7 +19,6 @@ import os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
-sys.path.insert(0, os.path.abspath('_ext'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'etcl.settings'
 import django
 django.setup()
@@ -35,9 +34,9 @@ django.setup()
 extensions = [
     'sphinxcontrib.apidoc',
     'sphinx.ext.autodoc',
+    'sphinxcontrib_django',
     'sphinx.ext.coverage',
-    'sphinx.ext.viewcode',
-    'django-models',
+    'sphinx.ext.viewcode'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
