@@ -7,4 +7,5 @@ mysqlclient
 xhtml2pdf
 sphinx
 sphinx_rtd_theme
+sphinxcontrib-apidoc
 html5lib

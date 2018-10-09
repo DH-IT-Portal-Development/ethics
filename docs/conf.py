@@ -19,6 +19,7 @@ import os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
+sys.path.insert(0, os.path.abspath('_ext'))
 os.environ['DJANGO_SETTINGS_MODULE'] = 'etcl.settings'
 import django
 django.setup()
@@ -32,8 +33,11 @@ django.setup()
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinxcontrib.apidoc',
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
+    'sphinx.ext.viewcode',
+    'django-models',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -290,3 +294,10 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+
+apidoc_module_dir = '..'
+apidoc_output_dir = 'reference'
+apidoc_excluded_paths = ['docs', '*/migrations']
+apidoc_separate_modules = True
+apidoc_toc_file = 'index'
