@@ -22,8 +22,8 @@ Installation of this Django project is quite straightforward:
 
     + Please note that this command requires you to specify each fixture file, as it doesn't auto detect them.
       Example: ``python manage.py loadddata relations.json``.
-    + However, you can find and install all fixture files with the following shell command (GNU/Linux only):
-      ``find $directory -type f -wholename "*fixtures/*.json" -print0 | xargs -0 python manage.py loaddata"``
+    + However, you can find and install all fixture files with the following shell command (GNU tools only):
+      ``find $directory -type f -wholename "*fixtures/*.json" -print0 | xargs -0 python manage.py loaddata``
 
 - Create a superuser (``python manage.py createsuperuser``)
 
