@@ -1,6 +1,11 @@
 feedback package
 ================
 
+.. automodule:: feedback
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -13,10 +18,3 @@ Submodules
    feedback.urls
    feedback.views
 
-Module contents
----------------
-
-.. automodule:: feedback
-    :members:
-    :undoc-members:
-    :show-inheritance:

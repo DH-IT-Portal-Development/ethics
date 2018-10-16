@@ -1,6 +1,11 @@
 reviews.management package
 ==========================
 
+.. automodule:: reviews.management
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -8,10 +13,3 @@ Subpackages
 
     reviews.management.commands
 
-Module contents
----------------
-
-.. automodule:: reviews.management
-    :members:
-    :undoc-members:
-    :show-inheritance:

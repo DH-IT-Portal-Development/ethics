@@ -1,6 +1,11 @@
 tasks.views package
 ===================
 
+.. automodule:: tasks.views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -9,10 +14,3 @@ Submodules
    tasks.views.session_views
    tasks.views.task_views
 
-Module contents
----------------
-
-.. automodule:: tasks.views
-    :members:
-    :undoc-members:
-    :show-inheritance:

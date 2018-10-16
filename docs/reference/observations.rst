@@ -1,6 +1,11 @@
 observations package
 ====================
 
+.. automodule:: observations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -15,10 +20,3 @@ Submodules
    observations.utils
    observations.views
 
-Module contents
----------------
-
-.. automodule:: observations
-    :members:
-    :undoc-members:
-    :show-inheritance:

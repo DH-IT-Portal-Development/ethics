@@ -1,6 +1,11 @@
 studies.views package
 =====================
 
+.. automodule:: studies.views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -9,10 +14,3 @@ Submodules
    studies.views.session_views
    studies.views.study_views
 
-Module contents
----------------
-
-.. automodule:: studies.views
-    :members:
-    :undoc-members:
-    :show-inheritance:

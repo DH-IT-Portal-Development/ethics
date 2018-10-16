@@ -1,6 +1,11 @@
 etcl package
 ============
 
+.. automodule:: etcl
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -11,10 +16,3 @@ Submodules
    etcl.urls
    etcl.wsgi
 
-Module contents
----------------
-
-.. automodule:: etcl
-    :members:
-    :undoc-members:
-    :show-inheritance:

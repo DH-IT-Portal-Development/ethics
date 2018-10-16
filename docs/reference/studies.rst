@@ -1,6 +1,11 @@
 studies package
 ===============
 
+.. automodule:: studies
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -21,10 +26,3 @@ Submodules
    studies.urls
    studies.utils
 
-Module contents
----------------
-
-.. automodule:: studies
-    :members:
-    :undoc-members:
-    :show-inheritance:

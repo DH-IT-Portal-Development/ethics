@@ -1,6 +1,11 @@
 core package
 ============
 
+.. automodule:: core
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -24,10 +29,3 @@ Submodules
    core.validators
    core.views
 
-Module contents
----------------
-
-.. automodule:: core
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -1,6 +1,11 @@
 faqs package
 ============
 
+.. automodule:: faqs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -13,10 +18,3 @@ Submodules
    faqs.urls
    faqs.views
 
-Module contents
----------------
-
-.. automodule:: faqs
-    :members:
-    :undoc-members:
-    :show-inheritance:

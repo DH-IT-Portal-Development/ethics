@@ -1,6 +1,11 @@
 proposals.views package
 =======================
 
+.. automodule:: proposals.views
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -10,10 +15,3 @@ Submodules
    proposals.views.study_views
    proposals.views.wmo_views
 
-Module contents
----------------
-
-.. automodule:: proposals.views
-    :members:
-    :undoc-members:
-    :show-inheritance:
