@@ -1,0 +1,11 @@
+********************
+Internationalization
+********************
+
+The main language of this web application is Dutch, as it's aimed towards the mostly avid Dutch-speaking researchers of Utrecht University.
+However, since October 2016, there is a full English translation available, compiled by `Anna Asbury`_.
+Translations in other languages are welcome, of course.
+Translations can be easily created using `python manage.py makemessages` and edited using e.g. `Poedit`_.
+
+.. _Anna Asbury: http://www.annaasbury.com/
+.. _Poedit: https://poedit.net/
