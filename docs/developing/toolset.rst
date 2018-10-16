@@ -1,5 +1,6 @@
+*******
 Toolset
-=======
+*******
 
 The project uses a few tools to simplify the development workflow:
 
