@@ -65,3 +65,33 @@ If for some reason a new set of vHost's need to be added, the WSGI config should
 
 The main benefit of configuring WSGI this way is the fact that we that we can change the config ourselves. Any change
 to the vHost file needs to be done in the main Puppet config for the VM.
+
+Example config
+--------------
+Based upon code provided in the `Django documentation`_
+
+.. code:: apacheconf
+
+    # This disables embedded mode, which removes a lot of Apache overhead
+    WSGIRestrictEmbedded On
+
+    WSGIScriptAlias / /path/to/wsgi/wsgi.py
+    WSGIDaemonProcess etcl python-path= <See above>
+    WSGIProcessGroup etcl
+
+    Alias /static/ /path/to/static_folder/
+    Alias /media/ /path/to/media_folder/
+
+    <Directory /path/to/static_folder/>
+        Require all granted
+    </Directory>
+
+    <Directory /path/to/media_folder/>
+        Require all granted
+    </Directory>
+
+    <Directory /path/to/source_folder/>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
