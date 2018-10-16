@@ -34,6 +34,7 @@ django.setup()
 extensions = [
     'sphinxcontrib.apidoc',
     'sphinx.ext.autodoc',
+    'sphinx.ext.todo',
     'sphinxcontrib_django',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode'
@@ -301,3 +302,5 @@ apidoc_excluded_paths = ['docs', '*/migrations', 'manage.py']
 apidoc_separate_modules = True
 apidoc_module_first = True
 apidoc_toc_file = 'index'
+
+todo_include_todos = True

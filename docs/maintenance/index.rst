@@ -2,7 +2,7 @@
 Maintenance
 ###########
 
-:todo: Make this doc chapter
+.. todo:: Make this doc chapter
 
 * Updating dependencies
 

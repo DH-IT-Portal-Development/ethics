@@ -11,6 +11,14 @@ to document procedure.
 For reference, a code reference is also included. This reference is auto-generated using the docstrings in the code.
 (And with some fancy tricks Django Model metadata is also used.)
 
+Todos
+=====
+
+.. todolist::
+
+Index
+=====
+
 .. toctree::
    :caption: General
    :maxdepth: 1
