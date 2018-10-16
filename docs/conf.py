@@ -297,6 +297,7 @@ texinfo_documents = [
 
 apidoc_module_dir = '..'
 apidoc_output_dir = 'reference'
-apidoc_excluded_paths = ['docs', '*/migrations']
+apidoc_excluded_paths = ['docs', '*/migrations', 'manage.py']
 apidoc_separate_modules = True
+apidoc_module_first = True
 apidoc_toc_file = 'index'
