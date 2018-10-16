@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -174,7 +179,7 @@
 <span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
 
 
-<div class="viewcode-block" id="Review"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.forms.Review">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Review"><a class="viewcode-back" href="../../reference/reviews.models.html#reviews.models.Review">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Review</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">SUPERVISOR</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">ASSIGNMENT</span> <span class="o">=</span> <span class="mi">1</span>
@@ -213,7 +218,7 @@
 
     <span class="n">proposal</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Review.update_go"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.forms.Review.update_go">[docs]</a>    <span class="k">def</span> <span class="nf">update_go</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Review.update_go"><a class="viewcode-back" href="../../reference/reviews.models.html#reviews.models.Review.update_go">[docs]</a>    <span class="k">def</span> <span class="nf">update_go</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check all decisions: if all are finished, set the final decision and date_end.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -250,17 +255,17 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CLOSING</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Review.accountable_user"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.forms.Review.accountable_user">[docs]</a>    <span class="k">def</span> <span class="nf">accountable_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Review.accountable_user"><a class="viewcode-back" href="../../reference/reviews.models.html#reviews.models.Review.accountable_user">[docs]</a>    <span class="k">def</span> <span class="nf">accountable_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">accountable_user</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Review.current_reviewers"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.forms.Review.current_reviewers">[docs]</a>    <span class="k">def</span> <span class="nf">current_reviewers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Review.current_reviewers"><a class="viewcode-back" href="../../reference/reviews.models.html#reviews.models.Review.current_reviewers">[docs]</a>    <span class="k">def</span> <span class="nf">current_reviewers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">decision__review</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Review of </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span></div>
 
 
-<div class="viewcode-block" id="Decision"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.forms.Decision">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Decision"><a class="viewcode-back" href="../../reference/reviews.models.html#reviews.models.Decision">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Decision</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">APPROVED</span> <span class="o">=</span> <span class="s1">&#39;Y&#39;</span>
     <span class="n">NOT_APPROVED</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
@@ -287,7 +292,7 @@
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;review&#39;</span><span class="p">,</span> <span class="s1">&#39;reviewer&#39;</span><span class="p">,)</span>
 
-<div class="viewcode-block" id="Decision.save"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.forms.Decision.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Decision.save"><a class="viewcode-back" href="../../reference/reviews.models.html#reviews.models.Decision.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the correct status of the Review on save of a Decision.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

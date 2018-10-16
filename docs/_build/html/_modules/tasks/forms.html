@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -173,7 +178,7 @@
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Task</span>
 
 
-<div class="viewcode-block" id="TaskStartForm"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskStartForm">[docs]</a><span class="k">class</span> <span class="nc">TaskStartForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskStartForm"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskStartForm">[docs]</a><span class="k">class</span> <span class="nc">TaskStartForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
     <span class="n">is_copy</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Is deze sessie een kopie van een voorgaande sessie?&#39;</span><span class="p">),</span>
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Na het kopiëren zijn alle velden bewerkbaar.&#39;</span><span class="p">),</span>
@@ -185,7 +190,7 @@
         <span class="n">queryset</span><span class="o">=</span><span class="n">Session</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span>
         <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaskStartForm.Meta"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskStartForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Session</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;setting&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_details&#39;</span><span class="p">,</span> <span class="s1">&#39;supervision&#39;</span><span class="p">,</span> <span class="s1">&#39;leader_has_coc&#39;</span><span class="p">,</span>
@@ -195,9 +200,9 @@
             <span class="s1">&#39;setting&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
             <span class="s1">&#39;supervision&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
             <span class="s1">&#39;leader_has_coc&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskStartForm.__init__"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskStartForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Set the Study for later reference</span>
 <span class="sd">        - The field tasks_number is not required by default (only if is_copy is set to False)</span>
@@ -218,9 +223,9 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_children</span><span class="p">():</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervision&#39;</span><span class="p">]</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;leader_has_coc&#39;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;leader_has_coc&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TaskStartForm.clean"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskStartForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskStartForm.clean"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskStartForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for conditional requirements:</span>
 <span class="sd">        - If a setting which needs details or supervision has been checked, make sure the details are filled</span>
@@ -239,8 +244,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;tasks_number&#39;</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">),</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">))</span></div></div>
 
 
-<div class="viewcode-block" id="TaskForm"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskForm">[docs]</a><span class="k">class</span> <span class="nc">TaskForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="TaskForm.Meta"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="TaskForm"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskForm">[docs]</a><span class="k">class</span> <span class="nc">TaskForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Task</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">,</span>
@@ -252,13 +257,13 @@
             <span class="s1">&#39;registrations&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
             <span class="s1">&#39;registration_kinds&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
             <span class="s1">&#39;feedback&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskForm.__init__"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TaskForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaskForm.clean"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskForm.clean"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for conditional requirements:</span>
 <span class="sd">        - Check if feedback has been filled out</span>
@@ -276,12 +281,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;feedback&#39;</span><span class="p">,</span> <span class="s1">&#39;feedback_details&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="TaskEndForm"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskEndForm">[docs]</a><span class="k">class</span> <span class="nc">TaskEndForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="TaskEndForm.Meta"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskEndForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="TaskEndForm"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskEndForm">[docs]</a><span class="k">class</span> <span class="nc">TaskEndForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Session</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tasks_duration&#39;</span><span class="p">]</span></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tasks_duration&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskEndForm.__init__"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskEndForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Set the tasks_duration label</span>
 <span class="sd">        - Set the tasks_duration as required</span>
@@ -291,9 +296,9 @@
         <span class="n">tasks_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tasks_duration&#39;</span><span class="p">]</span>
         <span class="n">tasks_duration</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">tasks_duration</span><span class="o">.</span><span class="n">label</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">net_duration</span><span class="p">()</span>
-        <span class="n">tasks_duration</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">tasks_duration</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TaskEndForm.clean_tasks_duration"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.TaskEndForm.clean_tasks_duration">[docs]</a>    <span class="k">def</span> <span class="nf">clean_tasks_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskEndForm.clean_tasks_duration"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskEndForm.clean_tasks_duration">[docs]</a>    <span class="k">def</span> <span class="nf">clean_tasks_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check that the net duration is at least equal to the gross duration</span>
 <span class="sd">        &quot;&quot;&quot;</span>

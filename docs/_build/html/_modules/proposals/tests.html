@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -178,10 +183,10 @@
 <span class="kn">from</span> <span class="nn">.views.proposal_views</span> <span class="k">import</span> <span class="n">MyProposalsView</span>
 
 
-<div class="viewcode-block" id="BaseProposalTestCase"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.BaseProposalTestCase">[docs]</a><span class="k">class</span> <span class="nc">BaseProposalTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseProposalTestCase"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.BaseProposalTestCase">[docs]</a><span class="k">class</span> <span class="nc">BaseProposalTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="n">fixtures</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relations&#39;</span><span class="p">,</span> <span class="s1">&#39;compensations&#39;</span><span class="p">,</span> <span class="s1">&#39;recruitments&#39;</span><span class="p">,</span> <span class="s1">&#39;settings&#39;</span><span class="p">,</span> <span class="s1">&#39;registrations&#39;</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="BaseProposalTestCase.setUp"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.BaseProposalTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseProposalTestCase.setUp"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.BaseProposalTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;test0101&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">secretary</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span>
             <span class="n">username</span><span class="o">=</span><span class="s1">&#39;secretarytest010101&#39;</span><span class="p">,</span>
@@ -196,8 +201,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalTestCase"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.ProposalTestCase">[docs]</a><span class="k">class</span> <span class="nc">ProposalTestCase</span><span class="p">(</span><span class="n">BaseProposalTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="ProposalTestCase.test_reference_number"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.ProposalTestCase.test_reference_number">[docs]</a>    <span class="k">def</span> <span class="nf">test_reference_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalTestCase"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalTestCase">[docs]</a><span class="k">class</span> <span class="nc">ProposalTestCase</span><span class="p">(</span><span class="n">BaseProposalTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalTestCase.test_reference_number"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalTestCase.test_reference_number">[docs]</a>    <span class="k">def</span> <span class="nf">test_reference_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">current_year</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
 
         <span class="c1"># Add a proposal for the same user, check new reference number</span>
@@ -219,7 +224,7 @@
                                      <span class="n">created_by</span><span class="o">=</span><span class="n">user2</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">reference_number</span><span class="p">,</span> <span class="s1">&#39;test0102-01-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ProposalTestCase.test_status"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.ProposalTestCase.test_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalTestCase.test_status"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalTestCase.test_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">DRAFT</span><span class="p">)</span>
 
@@ -251,7 +256,7 @@
         <span class="n">s1_t1</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">current_session</span><span class="p">(),</span> <span class="n">s1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ProposalTestCase.test_check_local_facilities"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.ProposalTestCase.test_check_local_facilities">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_local_facilities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalTestCase.test_check_local_facilities"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalTestCase.test_check_local_facilities">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_local_facilities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># By default there are no local facilities in use</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">check_local_facilities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -306,12 +311,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertSetEqual</span><span class="p">(</span><span class="n">facs</span><span class="p">[</span><span class="n">Registration</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">verbose_name</span><span class="p">],</span> <span class="nb">set</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">description</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">registrations</span><span class="p">]))</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalsViewTestCase"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.ProposalsViewTestCase">[docs]</a><span class="k">class</span> <span class="nc">ProposalsViewTestCase</span><span class="p">(</span><span class="n">BaseProposalTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="ProposalsViewTestCase.setUp"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.ProposalsViewTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalsViewTestCase"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalsViewTestCase">[docs]</a><span class="k">class</span> <span class="nc">ProposalsViewTestCase</span><span class="p">(</span><span class="n">BaseProposalTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalsViewTestCase.setUp"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalsViewTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ProposalsViewTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="n">RequestFactory</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ProposalsViewTestCase.test_supervisor"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.ProposalsViewTestCase.test_supervisor">[docs]</a>    <span class="k">def</span> <span class="nf">test_supervisor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalsViewTestCase.test_supervisor"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalsViewTestCase.test_supervisor">[docs]</a>    <span class="k">def</span> <span class="nf">test_supervisor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">request</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/proposals/my_archive&#39;</span><span class="p">)</span>
         <span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span>
 
@@ -348,12 +353,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertSequenceEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">context_data</span><span class="p">[</span><span class="s1">&#39;proposals&#39;</span><span class="p">],</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="WmoTestCase"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.WmoTestCase">[docs]</a><span class="k">class</span> <span class="nc">WmoTestCase</span><span class="p">(</span><span class="n">BaseProposalTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="WmoTestCase.setUp"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.WmoTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoTestCase"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.WmoTestCase">[docs]</a><span class="k">class</span> <span class="nc">WmoTestCase</span><span class="p">(</span><span class="n">BaseProposalTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoTestCase.setUp"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.WmoTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WmoTestCase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setUp</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wmo</span> <span class="o">=</span> <span class="n">Wmo</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="p">,</span> <span class="n">metc</span><span class="o">=</span><span class="n">NO</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="WmoTestCase.test_status"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.tests.WmoTestCase.test_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoTestCase.test_status"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.WmoTestCase.test_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wmo</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">Wmo</span><span class="o">.</span><span class="n">NO_WMO</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">wmo</span><span class="o">.</span><span class="n">metc</span> <span class="o">=</span> <span class="n">YES</span>

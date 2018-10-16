@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -171,7 +176,7 @@
 <span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="get_verbose_field_name"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.get_verbose_field_name">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<div class="viewcode-block" id="get_verbose_field_name"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.get_verbose_field_name">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
 <span class="k">def</span> <span class="nf">get_verbose_field_name</span><span class="p">(</span><span class="n">app_label</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns verbose_name for a field.</span>
@@ -182,7 +187,7 @@
     <span class="k">return</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">verbose_name</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="show_selected"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.show_selected">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
+<div class="viewcode-block" id="show_selected"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.show_selected">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
 <span class="k">def</span> <span class="nf">show_selected</span><span class="p">(</span><span class="n">selected_values</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a unordered list of with all possible values for a model,</span>
@@ -199,7 +204,7 @@
     <span class="k">return</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="needs_details"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.needs_details">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
+<div class="viewcode-block" id="needs_details"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.needs_details">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
 <span class="k">def</span> <span class="nf">needs_details</span><span class="p">(</span><span class="n">selected_values</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;needs_details&#39;</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">for</span> <span class="n">sv</span> <span class="ow">in</span> <span class="n">selected_values</span><span class="p">:</span>
@@ -209,19 +214,19 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="has_adults"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.has_adults">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
+<div class="viewcode-block" id="has_adults"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.has_adults">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
 <span class="k">def</span> <span class="nf">has_adults</span><span class="p">(</span><span class="n">study</span><span class="p">):</span>
     <span class="n">age_groups</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">check_has_adults</span><span class="p">(</span><span class="n">age_groups</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="necessity_required"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.necessity_required">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
+<div class="viewcode-block" id="necessity_required"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.necessity_required">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">filter</span>
 <span class="k">def</span> <span class="nf">necessity_required</span><span class="p">(</span><span class="n">study</span><span class="p">):</span>
     <span class="n">age_groups</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">check_necessity_required</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">proposal</span><span class="p">,</span> <span class="n">age_groups</span><span class="p">,</span> <span class="n">study</span><span class="o">.</span><span class="n">has_traits</span><span class="p">,</span> <span class="n">study</span><span class="o">.</span><span class="n">legally_incapable</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="show_all"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.show_all">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<div class="viewcode-block" id="show_all"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.show_all">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
 <span class="k">def</span> <span class="nf">show_all</span><span class="p">(</span><span class="n">app_label</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a unordered list of with all possible values for a model</span>
@@ -233,7 +238,7 @@
     <span class="k">return</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="show_yesno"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.show_yesno">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<div class="viewcode-block" id="show_yesno"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.show_yesno">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
 <span class="k">def</span> <span class="nf">show_yesno</span><span class="p">(</span><span class="n">doubt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&lt;ul&gt;&#39;</span>
     <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;&lt;li&gt;</span><span class="si">{}</span><span class="s1">&lt;/li&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;ja&#39;</span><span class="p">)</span>
@@ -244,27 +249,27 @@
     <span class="k">return</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="show_yesnodoubt"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.show_yesnodoubt">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<div class="viewcode-block" id="show_yesnodoubt"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.show_yesnodoubt">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
 <span class="k">def</span> <span class="nf">show_yesnodoubt</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">show_yesno</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="StudyDocumentsNode"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.StudyDocumentsNode">[docs]</a><span class="k">class</span> <span class="nc">StudyDocumentsNode</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+<div class="viewcode-block" id="StudyDocumentsNode"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.StudyDocumentsNode">[docs]</a><span class="k">class</span> <span class="nc">StudyDocumentsNode</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This node handles adding a documents object for a given study, by first getting the study object from the context.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
+<div class="viewcode-block" id="StudyDocumentsNode.__init__"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.StudyDocumentsNode.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span> <span class="o">=</span> <span class="n">var_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">study</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="StudyDocumentsNode.render"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.StudyDocumentsNode.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="StudyDocumentsNode.render"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.StudyDocumentsNode.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
         <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;studies&quot;</span><span class="p">,</span> <span class="s2">&quot;Documents&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="n">study</span><span class="p">)</span>
         <span class="k">return</span> <span class="sa">u</span><span class="s2">&quot;&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="get_study_documents"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.get_study_documents">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">tag</span>
+<div class="viewcode-block" id="get_study_documents"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.get_study_documents">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">tag</span>
 <span class="k">def</span> <span class="nf">get_study_documents</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds a variable to the context with the documents object for the specified study</span>
@@ -280,23 +285,23 @@
     <span class="k">return</span> <span class="n">StudyDocumentsNode</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="ExtraDocumentsNode"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.ExtraDocumentsNode">[docs]</a><span class="k">class</span> <span class="nc">ExtraDocumentsNode</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+<div class="viewcode-block" id="ExtraDocumentsNode"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.ExtraDocumentsNode">[docs]</a><span class="k">class</span> <span class="nc">ExtraDocumentsNode</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This node handles adding a documents object for a given study, by first getting the study object from the context.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
+<div class="viewcode-block" id="ExtraDocumentsNode.__init__"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.ExtraDocumentsNode.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">var_name</span> <span class="o">=</span> <span class="n">var_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">study</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">study</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ExtraDocumentsNode.render"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.ExtraDocumentsNode.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<div class="viewcode-block" id="ExtraDocumentsNode.render"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.ExtraDocumentsNode.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_value</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
         <span class="n">context</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">var_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;studies&quot;</span><span class="p">,</span> <span class="s2">&quot;Documents&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span> <span class="n">study</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="sa">u</span><span class="s2">&quot;&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="get_extra_documents"><a class="viewcode-back" href="../../../source_bak/proposals.templatetags.html#proposals.templatetags.proposal_filters.get_extra_documents">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">tag</span>
+<div class="viewcode-block" id="get_extra_documents"><a class="viewcode-back" href="../../../reference/proposals.templatetags.proposal_filters.html#proposals.templatetags.proposal_filters.get_extra_documents">[docs]</a><span class="nd">@register</span><span class="o">.</span><span class="n">tag</span>
 <span class="k">def</span> <span class="nf">get_extra_documents</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds a variable to the context with a list of extra documents objects for the specified proposal</span>

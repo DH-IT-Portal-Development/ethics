@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -179,7 +184,7 @@
 
 <span class="kn">import</span> <span class="nn">datetime</span>
 
-<div class="viewcode-block" id="start_review"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.start_review">[docs]</a><span class="k">def</span> <span class="nf">start_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="start_review"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_review">[docs]</a><span class="k">def</span> <span class="nf">start_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Starts a Review for the given Proposal.</span>
 
@@ -193,7 +198,7 @@
     <span class="k">return</span> <span class="n">review</span></div>
 
 
-<div class="viewcode-block" id="start_supervisor_phase"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.start_supervisor_phase">[docs]</a><span class="k">def</span> <span class="nf">start_supervisor_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="start_supervisor_phase"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_supervisor_phase">[docs]</a><span class="k">def</span> <span class="nf">start_supervisor_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Starts the supervisor phase:</span>
 <span class="sd">    - Set the Review status to SUPERVISOR</span>
@@ -236,7 +241,7 @@
     <span class="k">return</span> <span class="n">review</span></div>
 
 
-<div class="viewcode-block" id="remind_reviewers"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.remind_reviewers">[docs]</a><span class="k">def</span> <span class="nf">remind_reviewers</span><span class="p">():</span>
+<div class="viewcode-block" id="remind_reviewers"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.remind_reviewers">[docs]</a><span class="k">def</span> <span class="nf">remind_reviewers</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sends an email to a reviewer to remind them to review a proposal.</span>
 <span class="sd">    The reminders are only sent for proposals that are on the short track and need to be reviewed in the next 2 days</span>
@@ -266,7 +271,7 @@
         <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">decision</span><span class="o">.</span><span class="n">reviewer</span><span class="o">.</span><span class="n">email</span><span class="p">],</span> <span class="n">html_message</span><span class="o">=</span><span class="n">msg_html</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="start_assignment_phase"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.start_assignment_phase">[docs]</a><span class="k">def</span> <span class="nf">start_assignment_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="start_assignment_phase"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_assignment_phase">[docs]</a><span class="k">def</span> <span class="nf">start_assignment_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Starts the assignment phase:</span>
 <span class="sd">    - Set the Review status to ASSIGNMENT</span>
@@ -319,7 +324,7 @@
     <span class="k">return</span> <span class="n">review</span></div>
 
 
-<div class="viewcode-block" id="start_review_pre_assessment"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.start_review_pre_assessment">[docs]</a><span class="k">def</span> <span class="nf">start_review_pre_assessment</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="start_review_pre_assessment"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_review_pre_assessment">[docs]</a><span class="k">def</span> <span class="nf">start_review_pre_assessment</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Starts the preliminary assessment Review:</span>
 <span class="sd">    - Set the Review status to ASSIGNMENT</span>
@@ -360,7 +365,7 @@
     <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="start_review_route"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.start_review_route">[docs]</a><span class="k">def</span> <span class="nf">start_review_route</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">commission_users</span><span class="p">,</span> <span class="n">use_short_route</span><span class="p">):</span>
+<div class="viewcode-block" id="start_review_route"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_review_route">[docs]</a><span class="k">def</span> <span class="nf">start_review_route</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">commission_users</span><span class="p">,</span> <span class="n">use_short_route</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates Decisions and sends notification e-mail to the selected Reviewers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -379,7 +384,7 @@
         <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="notify_secretary_assignment"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.notify_secretary_assignment">[docs]</a><span class="k">def</span> <span class="nf">notify_secretary_assignment</span><span class="p">(</span><span class="n">review</span><span class="p">):</span>
+<div class="viewcode-block" id="notify_secretary_assignment"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.notify_secretary_assignment">[docs]</a><span class="k">def</span> <span class="nf">notify_secretary_assignment</span><span class="p">(</span><span class="n">review</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Notifies the secretary a Proposal is ready for assigment</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -393,7 +398,7 @@
     <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">secretary</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="notify_secretary"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.notify_secretary">[docs]</a><span class="k">def</span> <span class="nf">notify_secretary</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
+<div class="viewcode-block" id="notify_secretary"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.notify_secretary">[docs]</a><span class="k">def</span> <span class="nf">notify_secretary</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Notifies a secretary a Decision has been made by one of the members in the Commission</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -407,7 +412,7 @@
     <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">secretary</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="auto_review"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.auto_review">[docs]</a><span class="k">def</span> <span class="nf">auto_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="auto_review"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review">[docs]</a><span class="k">def</span> <span class="nf">auto_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reviews a Proposal machine-wise.</span>
 <span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
@@ -470,7 +475,7 @@
     <span class="k">return</span> <span class="n">reasons</span></div>
 
 
-<div class="viewcode-block" id="auto_review_observation"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.auto_review_observation">[docs]</a><span class="k">def</span> <span class="nf">auto_review_observation</span><span class="p">(</span><span class="n">observation</span><span class="p">):</span>
+<div class="viewcode-block" id="auto_review_observation"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review_observation">[docs]</a><span class="k">def</span> <span class="nf">auto_review_observation</span><span class="p">(</span><span class="n">observation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reviews an Observation machine-wise.</span>
 <span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
@@ -490,7 +495,7 @@
     <span class="k">return</span> <span class="n">reasons</span></div>
 
 
-<div class="viewcode-block" id="auto_review_task"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.utils.auto_review_task">[docs]</a><span class="k">def</span> <span class="nf">auto_review_task</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+<div class="viewcode-block" id="auto_review_task"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review_task">[docs]</a><span class="k">def</span> <span class="nf">auto_review_task</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reviews a Task machine-wise.</span>
 <span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>

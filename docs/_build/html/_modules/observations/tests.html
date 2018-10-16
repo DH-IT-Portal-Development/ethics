@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -166,13 +171,13 @@
 <span class="kn">from</span> <span class="nn">django.test</span> <span class="k">import</span> <span class="n">TestCase</span>
 
 
-<div class="viewcode-block" id="ObservationTestCase"><a class="viewcode-back" href="../../source_bak/observations.html#observations.tests.ObservationTestCase">[docs]</a><span class="k">class</span> <span class="nc">ObservationTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="ObservationTestCase.test_create"><a class="viewcode-back" href="../../source_bak/observations.html#observations.tests.ObservationTestCase.test_create">[docs]</a>    <span class="k">def</span> <span class="nf">test_create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ObservationTestCase"><a class="viewcode-back" href="../../reference/observations.tests.html#observations.tests.ObservationTestCase">[docs]</a><span class="k">class</span> <span class="nc">ObservationTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="ObservationTestCase.test_create"><a class="viewcode-back" href="../../reference/observations.tests.html#observations.tests.ObservationTestCase.test_create">[docs]</a>    <span class="k">def</span> <span class="nf">test_create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pk</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;observations:create&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">302</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ObservationTestCase.test_update"><a class="viewcode-back" href="../../source_bak/observations.html#observations.tests.ObservationTestCase.test_update">[docs]</a>    <span class="k">def</span> <span class="nf">test_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ObservationTestCase.test_update"><a class="viewcode-back" href="../../reference/observations.tests.html#observations.tests.ObservationTestCase.test_update">[docs]</a>    <span class="k">def</span> <span class="nf">test_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">pk</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;observations:update&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">302</span><span class="p">)</span></div></div>

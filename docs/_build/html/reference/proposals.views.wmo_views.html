@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -106,7 +111,6 @@
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="proposals.html">proposals package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="proposals.html#subpackages">Subpackages</a><ul class="current">
@@ -116,7 +120,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="proposals.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="proposals.html#module-proposals">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
@@ -217,11 +220,11 @@
 <dl class="class">
 <dt id="proposals.views.wmo_views.WmoApplication">
 <em class="property">class </em><code class="descclassname">proposals.views.wmo_views.</code><code class="descname">WmoApplication</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/wmo_views.html#WmoApplication"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.wmo_views.WmoApplication" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.wmo_views.WmoApplication.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.wmo_views.WmoApplication.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.WmoApplicationForm" title="proposals.forms.WmoApplicationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.WmoApplicationForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.WmoApplicationForm" title="proposals.forms.WmoApplicationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.WmoApplicationForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -245,7 +248,7 @@
 <dl class="attribute">
 <dt id="proposals.views.wmo_views.WmoApplication.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.wmo_views.WmoApplication.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Wmo" title="proposals.models.Wmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Wmo</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Wmo" title="proposals.models.Wmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Wmo</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -262,7 +265,7 @@
 <dl class="attribute">
 <dt id="proposals.views.wmo_views.WmoCheck.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.wmo_views.WmoCheck.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.WmoCheckForm" title="proposals.forms.WmoCheckForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.WmoCheckForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.WmoCheckForm" title="proposals.forms.WmoCheckForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.WmoCheckForm</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -275,7 +278,7 @@
 <dl class="class">
 <dt id="proposals.views.wmo_views.WmoCreate">
 <em class="property">class </em><code class="descclassname">proposals.views.wmo_views.</code><code class="descname">WmoCreate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/wmo_views.html#WmoCreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.wmo_views.WmoCreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.wmo_views.WmoMixin" title="proposals.views.wmo_views.WmoMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.wmo_views.WmoMixin" title="proposals.views.wmo_views.WmoMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.wmo_views.WmoCreate.form_valid">
 <code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/wmo_views.html#WmoCreate.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.wmo_views.WmoCreate.form_valid" title="Permalink to this definition">¶</a></dt>
@@ -298,7 +301,7 @@
 <dl class="class">
 <dt id="proposals.views.wmo_views.WmoCreatePreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.wmo_views.</code><code class="descname">WmoCreatePreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/wmo_views.html#WmoCreatePreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.wmo_views.WmoCreatePreAssessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.wmo_views.PreAssessmentMixin" title="proposals.views.wmo_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.wmo_views.WmoCreate" title="proposals.views.wmo_views.WmoCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoCreate</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.wmo_views.PreAssessmentMixin" title="proposals.views.wmo_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="#proposals.views.wmo_views.WmoCreate" title="proposals.views.wmo_views.WmoCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoCreate</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
@@ -308,7 +311,7 @@
 <dl class="attribute">
 <dt id="proposals.views.wmo_views.WmoMixin.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.wmo_views.WmoMixin.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.WmoForm" title="proposals.forms.WmoForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.WmoForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.WmoForm" title="proposals.forms.WmoForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.WmoForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -338,7 +341,7 @@ else, start the Wmo application.</p>
 <dl class="attribute">
 <dt id="proposals.views.wmo_views.WmoMixin.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.wmo_views.WmoMixin.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Wmo" title="proposals.models.Wmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Wmo</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Wmo" title="proposals.models.Wmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Wmo</span></code></a></p>
 </dd></dl>
 
 </dd></dl>
@@ -346,7 +349,7 @@ else, start the Wmo application.</p>
 <dl class="class">
 <dt id="proposals.views.wmo_views.WmoUpdate">
 <em class="property">class </em><code class="descclassname">proposals.views.wmo_views.</code><code class="descname">WmoUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/wmo_views.html#WmoUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.wmo_views.WmoUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.wmo_views.WmoMixin" title="proposals.views.wmo_views.WmoMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.wmo_views.WmoMixin" title="proposals.views.wmo_views.WmoMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.wmo_views.WmoUpdate.get_proposal">
 <code class="descname">get_proposal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/wmo_views.html#WmoUpdate.get_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.wmo_views.WmoUpdate.get_proposal" title="Permalink to this definition">¶</a></dt>
@@ -363,7 +366,7 @@ else, start the Wmo application.</p>
 <dl class="class">
 <dt id="proposals.views.wmo_views.WmoUpdatePreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.wmo_views.</code><code class="descname">WmoUpdatePreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/wmo_views.html#WmoUpdatePreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.wmo_views.WmoUpdatePreAssessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.wmo_views.PreAssessmentMixin" title="proposals.views.wmo_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.wmo_views.WmoUpdate" title="proposals.views.wmo_views.WmoUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoUpdate</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.wmo_views.PreAssessmentMixin" title="proposals.views.wmo_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="#proposals.views.wmo_views.WmoUpdate" title="proposals.views.wmo_views.WmoUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.wmo_views.WmoUpdate</span></code></a></p>
 </dd></dl>
 
 <dl class="function">

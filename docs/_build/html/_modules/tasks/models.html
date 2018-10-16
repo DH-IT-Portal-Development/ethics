@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -172,7 +177,7 @@
 <span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Study</span>
 
 
-<div class="viewcode-block" id="Session"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Session">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Session"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Session">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Session</span><span class="p">(</span><span class="n">SettingModel</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
 
@@ -199,18 +204,18 @@
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
         <span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;study&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Session.net_duration"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Session.net_duration">[docs]</a>    <span class="k">def</span> <span class="nf">net_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Session.net_duration"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Session.net_duration">[docs]</a>    <span class="k">def</span> <span class="nf">net_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_set</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Sum</span><span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">))[</span><span class="s1">&#39;duration__sum&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Session.first_task"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Session.first_task">[docs]</a>    <span class="k">def</span> <span class="nf">first_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Session.first_task"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Session.first_task">[docs]</a>    <span class="k">def</span> <span class="nf">first_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">tasks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tasks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">tasks</span> <span class="k">else</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Session.last_task"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Session.last_task">[docs]</a>    <span class="k">def</span> <span class="nf">last_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Session.last_task"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Session.last_task">[docs]</a>    <span class="k">def</span> <span class="nf">last_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">tasks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-order&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tasks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">tasks</span> <span class="k">else</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Session.current_task"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Session.current_task">[docs]</a>    <span class="k">def</span> <span class="nf">current_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Session.current_task"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Session.current_task">[docs]</a>    <span class="k">def</span> <span class="nf">current_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the current (incomplete) Task.</span>
 <span class="sd">        - If all Tasks are completed, the last Task is returned.</span>
@@ -223,7 +228,7 @@
                 <span class="k">break</span>
         <span class="k">return</span> <span class="n">current_task</span></div>
 
-<div class="viewcode-block" id="Session.tasks_completed"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Session.tasks_completed">[docs]</a>    <span class="k">def</span> <span class="nf">tasks_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Session.tasks_completed"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Session.tasks_completed">[docs]</a>    <span class="k">def</span> <span class="nf">tasks_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_set</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
@@ -231,7 +236,7 @@
             <span class="n">result</span> <span class="o">&amp;=</span> <span class="n">task</span><span class="o">.</span><span class="n">is_completed</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Session.is_completed"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Session.is_completed">[docs]</a>    <span class="k">def</span> <span class="nf">is_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Session.is_completed"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Session.is_completed">[docs]</a>    <span class="k">def</span> <span class="nf">is_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_completed</span><span class="p">()</span>
         <span class="n">result</span> <span class="o">&amp;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasks_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -240,7 +245,7 @@
         <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Sessie </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Registration"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Registration">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Registration"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Registration">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Registration</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -258,7 +263,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
 
 
-<div class="viewcode-block" id="RegistrationKind"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.RegistrationKind">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="RegistrationKind"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.RegistrationKind">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">RegistrationKind</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -273,7 +278,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
 
 
-<div class="viewcode-block" id="Task"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Task">[docs]</a><span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="viewcode-block" id="Task"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Task">[docs]</a><span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wat is de naam van de taak?&#39;</span><span class="p">),</span>
@@ -321,10 +326,10 @@
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
         <span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Task.is_completed"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Task.is_completed">[docs]</a>    <span class="k">def</span> <span class="nf">is_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Task.is_completed"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Task.is_completed">[docs]</a>    <span class="k">def</span> <span class="nf">is_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span></div>
 
-<div class="viewcode-block" id="Task.delete"><a class="viewcode-back" href="../../source_bak/tasks.html#tasks.forms.Task.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Task.delete"><a class="viewcode-back" href="../../reference/tasks.models.html#tasks.models.Task.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Invalidate the totals on Session level on deletion of a Task.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

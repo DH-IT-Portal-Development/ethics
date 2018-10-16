@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -115,10 +120,8 @@
 <li class="toctree-l4"><a class="reference internal" href="interventions.views.html">interventions.views module</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="interventions.html#module-interventions">Module contents</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
@@ -199,17 +202,17 @@
 <dl class="class">
 <dt id="interventions.models.Intervention">
 <em class="property">class </em><code class="descclassname">interventions.models.</code><code class="descname">Intervention</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>version</em>, <em>period</em>, <em>multiple_sessions</em>, <em>session_frequency</em>, <em>duration</em>, <em>experimenter</em>, <em>description</em>, <em>has_controls</em>, <em>controls_description</em>, <em>measurement</em>, <em>extra_task</em>, <em>amount_per_week</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/models.html#Intervention"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.models.Intervention" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.models.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – ID</li>
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
 <li><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</li>
 <li><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</li>
 <li><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De ETCL neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</li>
-<li><strong>version</strong> (<em>PositiveIntegerField</em>) – INTERNAL - Describes which version of the intervention model is used</li>
+<li><strong>version</strong> (<em>PositiveIntegerField</em>) – Internal - describes which version of the intervention model is used</li>
 <li><strong>period</strong> (<em>TextField</em>) – De interventie vindt plaats binnen het schooljaar 2018-2019</li>
 <li><strong>multiple_sessions</strong> (<em>BooleanField</em>) – Zal de interventie vaker dan één keer plaatsvinden?</li>
 <li><strong>session_frequency</strong> (<em>TextField</em>) – Wat is de frequentie van de interventie?</li>
@@ -221,7 +224,8 @@
 <li><strong>measurement</strong> (<em>TextField</em>) – Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina ook “takenonderzoek” aanvinken.</li>
 <li><strong>extra_task</strong> (<em>BooleanField</em>) – Moet het nog een taak doen, zoals het invullen van een (onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?</li>
 <li><strong>amount_per_week</strong> (<em>PositiveIntegerField</em>) – Hoe vaak per week vindt de interventiesessie plaats?</li>
-<li><strong>study_id</strong> (<em>OneToOneField</em>) – study</li>
+<li><strong>study</strong> (OneToOneField to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</li>
+<li><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</li>
 </ul>
 </td>
 </tr>
@@ -242,71 +246,61 @@
 <dl class="attribute">
 <dt id="interventions.models.Intervention.amount_per_week">
 <code class="descname">amount_per_week</code><a class="headerlink" href="#interventions.models.Intervention.amount_per_week" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Hoe vaak per week vindt de interventiesessie plaats?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.controls_description">
 <code class="descname">controls_description</code><a class="headerlink" href="#interventions.models.Intervention.controls_description" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Geef een beschrijving van de controleinterventie</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.description">
 <code class="descname">description</code><a class="headerlink" href="#interventions.models.Intervention.description" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Geef een beschrijving van de experimentele interventie</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.duration">
 <code class="descname">duration</code><a class="headerlink" href="#interventions.models.Intervention.duration" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Wat is de duur van de interventie per sessie in minuten?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.experimenter">
 <code class="descname">experimenter</code><a class="headerlink" href="#interventions.models.Intervention.experimenter" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Wie voert de interventie uit?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.extra_task">
 <code class="descname">extra_task</code><a class="headerlink" href="#interventions.models.Intervention.extra_task" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Voert de leerling nog een taak uit die niet onder het leerplan valt?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.has_controls">
 <code class="descname">has_controls</code><a class="headerlink" href="#interventions.models.Intervention.has_controls" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Is er sprake van een controlegroep?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.id">
 <code class="descname">id</code><a class="headerlink" href="#interventions.models.Intervention.id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> ID</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.measurement">
 <code class="descname">measurement</code><a class="headerlink" href="#interventions.models.Intervention.measurement" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Hoe wordt het effect van de interventie gemeten?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.multiple_sessions">
 <code class="descname">multiple_sessions</code><a class="headerlink" href="#interventions.models.Intervention.multiple_sessions" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Zal de interventie vaker dan één keer plaatsvinden?</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -317,57 +311,37 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="interventions.models.Intervention.period">
 <code class="descname">period</code><a class="headerlink" href="#interventions.models.Intervention.period" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Wat is de periode waarbinnen de interventie plaatsvindt?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.session_frequency">
 <code class="descname">session_frequency</code><a class="headerlink" href="#interventions.models.Intervention.session_frequency" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Wat is de frequentie van de interventie?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.setting">
 <code class="descname">setting</code><a class="headerlink" href="#interventions.models.Intervention.setting" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the forward and reverse sides of
-a many-to-many relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
-instances.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> Geef aan waar de dataverzameling plaatsvindt, accesses the M2M <a class="reference internal" href="#interventions.models.Intervention" title="interventions.models.Intervention"><code class="xref py py-class docutils literal notranslate"><span class="pre">Intervention</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.study">
 <code class="descname">study</code><a class="headerlink" href="#interventions.models.Intervention.study" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+<dd><p><strong>Model field:</strong> study, accesses the <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.study_id">
 <code class="descname">study_id</code><a class="headerlink" href="#interventions.models.Intervention.study_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> study</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.models.Intervention.version">
 <code class="descname">version</code><a class="headerlink" href="#interventions.models.Intervention.version" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> INTERNAL - Describes which version of the intervention model is used</p>
 </dd></dl>
 
 </dd></dl>

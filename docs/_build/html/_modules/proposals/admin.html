@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -167,21 +172,21 @@
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Relation</span><span class="p">,</span> <span class="n">Funding</span><span class="p">,</span> <span class="n">Proposal</span>
 
 
-<div class="viewcode-block" id="RelationAdmin"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.admin.RelationAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Relation</span><span class="p">)</span>
+<div class="viewcode-block" id="RelationAdmin"><a class="viewcode-back" href="../../reference/proposals.admin.html#proposals.admin.RelationAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Relation</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">RelationAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_supervisor&#39;</span><span class="p">,</span> <span class="s1">&#39;check_in_course&#39;</span><span class="p">,</span> <span class="s1">&#39;check_pre_assessment&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="FundingAdmin"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.admin.FundingAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Funding</span><span class="p">)</span>
+<div class="viewcode-block" id="FundingAdmin"><a class="viewcode-back" href="../../reference/proposals.admin.html#proposals.admin.FundingAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Funding</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">FundingAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_name&#39;</span><span class="p">,</span> <span class="s1">&#39;requires_review&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="ProposalAdmin"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.admin.ProposalAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Proposal</span><span class="p">)</span>
+<div class="viewcode-block" id="ProposalAdmin"><a class="viewcode-back" href="../../reference/proposals.admin.html#proposals.admin.ProposalAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Proposal</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">ProposalAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;reference_number&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;created_by&#39;</span><span class="p">,</span> <span class="s1">&#39;supervisor&#39;</span><span class="p">)</span>
     <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;reference_number&#39;</span><span class="p">,</span> <span class="p">)</span>

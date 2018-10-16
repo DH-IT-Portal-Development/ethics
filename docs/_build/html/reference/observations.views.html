@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -106,7 +111,6 @@
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="observations.html">observations package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="observations.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="observations.admin.html">observations.admin module</a></li>
@@ -119,7 +123,6 @@
 <li class="toctree-l4 current"><a class="current reference internal" href="#">observations.views module</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="observations.html#module-observations">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
@@ -201,11 +204,11 @@
 <dl class="class">
 <dt id="observations.views.AttachmentsUpdate">
 <em class="property">class </em><code class="descclassname">observations.views.</code><code class="descname">AttachmentsUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/observations/views.html#AttachmentsUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#observations.views.AttachmentsUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="attribute">
 <dt id="observations.views.AttachmentsUpdate.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#observations.views.AttachmentsUpdate.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/observations.html#observations.forms.ObservationUpdateAttachmentsForm" title="observations.forms.ObservationUpdateAttachmentsForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.forms.ObservationUpdateAttachmentsForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="observations.forms.html#observations.forms.ObservationUpdateAttachmentsForm" title="observations.forms.ObservationUpdateAttachmentsForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.forms.ObservationUpdateAttachmentsForm</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -216,7 +219,7 @@
 <dl class="attribute">
 <dt id="observations.views.AttachmentsUpdate.model">
 <code class="descname">model</code><a class="headerlink" href="#observations.views.AttachmentsUpdate.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/observations.html#observations.models.Observation" title="observations.models.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.models.Observation</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="observations.models.html#observations.models.Observation" title="observations.models.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.models.Observation</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -229,7 +232,7 @@
 <dl class="class">
 <dt id="observations.views.ObservationCreate">
 <em class="property">class </em><code class="descclassname">observations.views.</code><code class="descname">ObservationCreate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/observations/views.html#ObservationCreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#observations.views.ObservationCreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/observations.html#observations.views.ObservationMixin" title="observations.views.ObservationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.views.ObservationMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#observations.views.ObservationMixin" title="observations.views.ObservationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.views.ObservationMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
 <p>Creates an Observation from a ObservationForm</p>
 <dl class="method">
 <dt id="observations.views.ObservationCreate.form_valid">
@@ -253,7 +256,7 @@
 <dl class="attribute">
 <dt id="observations.views.ObservationMixin.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#observations.views.ObservationMixin.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/observations.html#observations.forms.ObservationForm" title="observations.forms.ObservationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.forms.ObservationForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="observations.forms.html#observations.forms.ObservationForm" title="observations.forms.ObservationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.forms.ObservationForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -286,7 +289,7 @@
 <dl class="attribute">
 <dt id="observations.views.ObservationMixin.model">
 <code class="descname">model</code><a class="headerlink" href="#observations.views.ObservationMixin.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/observations.html#observations.models.Observation" title="observations.models.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.models.Observation</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="observations.models.html#observations.models.Observation" title="observations.models.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.models.Observation</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -299,7 +302,7 @@
 <dl class="class">
 <dt id="observations.views.ObservationUpdate">
 <em class="property">class </em><code class="descclassname">observations.views.</code><code class="descname">ObservationUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/observations/views.html#ObservationUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#observations.views.ObservationUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/observations.html#observations.views.ObservationMixin" title="observations.views.ObservationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.views.ObservationMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#observations.views.ObservationMixin" title="observations.views.ObservationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">observations.views.ObservationMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <p>Updates a Observation from a ObservationForm</p>
 <dl class="method">
 <dt id="observations.views.ObservationUpdate.get_study">

@@ -87,13 +87,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developing/toolset.html">Toolset</a></li>
 </ul>
@@ -168,6 +173,25 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <p>Welcome to the ETCL’s documentation! This <a class="reference external" href="https://www.djangoproject.com/">Django</a> project allows a user to apply a research project for ethical review.
 It was custom-tailored for the <a class="reference external" href="https://etcl.wp.hum.uu.nl">Ethical Committee Linguistics</a> (ETCL) of <a class="reference external" href="https://www.uu.nl">Utrecht University</a>.</p>
+<p>This documentation is meant to give (new) maintainers/developers of the codebase a general overview of the project and
+to document procedure.</p>
+<p>For reference, a code reference is also included. This reference is auto-generated using the docstrings in the code.
+(And with some fancy tricks Django Model metadata is also used.)</p>
+<div class="section" id="todos">
+<h2>Todos<a class="headerlink" href="#todos" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition">
+<p class="first admonition-title">Todo</p>
+<p class="last">better formatting</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="installation/local/steps.html#index-0"><em>original entry</em></a> is located in /home/5627710/PycharmProjects/etcl/docs/installation/local/steps.rst, line 5.)</p>
+<div class="admonition-todo admonition">
+<p class="first admonition-title">Todo</p>
+<p class="last">Make this doc chapter</p>
+</div>
+<p class="todo-source">(The <a class="reference internal" href="maintenance/index.html#index-0"><em>original entry</em></a> is located in /home/5627710/PycharmProjects/etcl/docs/maintenance/index.rst, line 5.)</p>
+</div>
+<div class="section" id="index">
+<h2>Index<a class="headerlink" href="#index" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">General</span></p>
 <ul>
@@ -177,15 +201,32 @@ It was custom-tailored for the <a class="reference external" href="https://etcl.
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/local/index.html">Local development installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation/local/steps.html">Installation Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/local/mail.html">E-Mail</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation/server/index.html">Server Deployment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation/server/steps.html">Deployment steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/server/webserver.html">Webserver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/server/database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation/server/configuration.html">Application configuration</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="maintenance/index.html">Maintenance</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developing/toolset.html">Toolset</a></li>
 </ul>
@@ -199,7 +240,6 @@ It was custom-tailored for the <a class="reference external" href="https://etcl.
 <li class="toctree-l2"><a class="reference internal" href="reference/faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/proposals.html">proposals package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/reviews.html">reviews package</a></li>
@@ -211,12 +251,13 @@ It was custom-tailored for the <a class="reference external" href="https://etcl.
 </div>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
+</div>
 </div>
 
 

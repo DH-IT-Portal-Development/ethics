@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -176,13 +181,13 @@
 <span class="c1">##############################</span>
 <span class="c1"># CRUD actions on Intervention</span>
 <span class="c1">##############################</span>
-<div class="viewcode-block" id="InterventionMixin"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionMixin">[docs]</a><span class="k">class</span> <span class="nc">InterventionMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionMixin"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionMixin">[docs]</a><span class="k">class</span> <span class="nc">InterventionMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Mixin for an Intervention, to use in both InterventionCreate and InterventionUpdate below&quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Intervention</span>
     <span class="n">form_class</span> <span class="o">=</span> <span class="n">InterventionForm</span>
     <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Interventie opgeslagen&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="InterventionMixin.get_context_data"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionMixin.get_context_data"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Setting the Study and progress on the context&quot;&quot;&quot;</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">InterventionMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
@@ -190,13 +195,13 @@
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_study_progress</span><span class="p">(</span><span class="n">study</span><span class="p">)</span> <span class="o">+</span> <span class="mi">7</span>
         <span class="k">return</span> <span class="n">context</span></div>
 
-<div class="viewcode-block" id="InterventionMixin.get_form_kwargs"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionMixin.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionMixin.get_form_kwargs"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionMixin.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the Study as a form kwarg&quot;&quot;&quot;</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">InterventionMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;study&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">kwargs</span></div>
 
-<div class="viewcode-block" id="InterventionMixin.get_next_url"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionMixin.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionMixin.get_next_url"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionMixin.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
         <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:design_end&#39;</span>
         <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">pk</span>
@@ -210,30 +215,30 @@
             <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:session_start&#39;</span>
         <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,))</span></div>
 
-<div class="viewcode-block" id="InterventionMixin.get_back_url"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionMixin.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionMixin.get_back_url"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionMixin.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;studies:design&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
 
-<div class="viewcode-block" id="InterventionMixin.get_study"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionMixin.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionMixin.get_study"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionMixin.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
 
-<div class="viewcode-block" id="InterventionCreate"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionCreate">[docs]</a><span class="k">class</span> <span class="nc">InterventionCreate</span><span class="p">(</span><span class="n">InterventionMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionCreate"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionCreate">[docs]</a><span class="k">class</span> <span class="nc">InterventionCreate</span><span class="p">(</span><span class="n">InterventionMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates a Intervention from a InterventionForm&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="InterventionCreate.form_valid"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionCreate.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionCreate.form_valid"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionCreate.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the Study on the Intervention before starting validation.&quot;&quot;&quot;</span>
         <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">InterventionCreate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="InterventionCreate.get_study"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionCreate.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionCreate.get_study"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionCreate.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the Study from the pk kwarg&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Study</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pk&#39;</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="InterventionUpdate"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionUpdate">[docs]</a><span class="k">class</span> <span class="nc">InterventionUpdate</span><span class="p">(</span><span class="n">InterventionMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionUpdate"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionUpdate">[docs]</a><span class="k">class</span> <span class="nc">InterventionUpdate</span><span class="p">(</span><span class="n">InterventionMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Updates a Intervention from an InterventionForm&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="InterventionUpdate.get_study"><a class="viewcode-back" href="../../source_bak/interventions.html#interventions.views.InterventionUpdate.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InterventionUpdate.get_study"><a class="viewcode-back" href="../../reference/interventions.views.html#interventions.views.InterventionUpdate.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieves the Study from the form object&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">study</span></div></div>
 </pre></div>

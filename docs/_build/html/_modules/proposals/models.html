@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -179,7 +184,7 @@
 <span class="n">SUMMARY_MAX_WORDS</span> <span class="o">=</span> <span class="mi">200</span>
 
 
-<div class="viewcode-block" id="Relation"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Relation">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Relation"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Relation">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Relation</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -194,7 +199,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
 
 
-<div class="viewcode-block" id="Funding"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Funding">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Funding"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Funding">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Funding</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
@@ -209,7 +214,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
 
 
-<div class="viewcode-block" id="Proposal"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Proposal"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Proposal</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">DRAFT</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">SUBMITTED_TO_SUPERVISOR</span> <span class="o">=</span> <span class="mi">40</span>
@@ -387,13 +392,13 @@
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">)</span>
 
-<div class="viewcode-block" id="Proposal.is_practice"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.is_practice">[docs]</a>    <span class="k">def</span> <span class="nf">is_practice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.is_practice"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.is_practice">[docs]</a>    <span class="k">def</span> <span class="nf">is_practice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_course</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_exploration</span></div>
 
-<div class="viewcode-block" id="Proposal.accountable_user"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.accountable_user">[docs]</a>    <span class="k">def</span> <span class="nf">accountable_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.accountable_user"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.accountable_user">[docs]</a>    <span class="k">def</span> <span class="nf">accountable_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">supervisor</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="o">.</span><span class="n">needs_supervisor</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span></div>
 
-<div class="viewcode-block" id="Proposal.continue_url"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.continue_url">[docs]</a>    <span class="k">def</span> <span class="nf">continue_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.continue_url"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.continue_url">[docs]</a>    <span class="k">def</span> <span class="nf">continue_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the next URL for this Proposal&quot;&quot;&quot;</span>
         <span class="n">available_urls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_urls</span><span class="p">()</span>
         <span class="c1"># For copies, always start at the first available URL</span>
@@ -406,19 +411,19 @@
                     <span class="n">result</span> <span class="o">=</span> <span class="n">available_url</span><span class="o">.</span><span class="n">url</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Proposal.available_urls"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.available_urls">[docs]</a>    <span class="k">def</span> <span class="nf">available_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.available_urls"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.available_urls">[docs]</a>    <span class="k">def</span> <span class="nf">available_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the available URLs for this Proposal&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">available_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Proposal.first_study"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.first_study">[docs]</a>    <span class="k">def</span> <span class="nf">first_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.first_study"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.first_study">[docs]</a>    <span class="k">def</span> <span class="nf">first_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the first Study in this Proposal, or None if there&#39;s none.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Proposal.last_study"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.last_study">[docs]</a>    <span class="k">def</span> <span class="nf">last_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.last_study"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.last_study">[docs]</a>    <span class="k">def</span> <span class="nf">last_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the last Study in this Proposal, or None if there&#39;s none.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-order&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Proposal.current_study"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.current_study">[docs]</a>    <span class="k">def</span> <span class="nf">current_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.current_study"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.current_study">[docs]</a>    <span class="k">def</span> <span class="nf">current_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the current (incomplete) Study.</span>
 <span class="sd">        - If all Studies are completed, the last Study is returned.</span>
@@ -431,7 +436,7 @@
                 <span class="k">break</span>
         <span class="k">return</span> <span class="n">current_study</span></div>
 
-<div class="viewcode-block" id="Proposal.current_session"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.current_session">[docs]</a>    <span class="k">def</span> <span class="nf">current_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.current_session"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.current_session">[docs]</a>    <span class="k">def</span> <span class="nf">current_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the current (incomplete) Session.</span>
 <span class="sd">        - If all Sessions are completed, the last Session is returned.</span>
@@ -445,7 +450,7 @@
                     <span class="k">break</span>
         <span class="k">return</span> <span class="n">current_session</span></div>
 
-<div class="viewcode-block" id="Proposal.type"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.type">[docs]</a>    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.type"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.type">[docs]</a>    <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -462,7 +467,7 @@
 
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Proposal.supervisor_decision"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Proposal.supervisor_decision">[docs]</a>    <span class="k">def</span> <span class="nf">supervisor_decision</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposal.supervisor_decision"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Proposal.supervisor_decision">[docs]</a>    <span class="k">def</span> <span class="nf">supervisor_decision</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the Decision of the supervisor for this Proposal (if any and in current stage)&quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">reviews.models</span> <span class="k">import</span> <span class="n">Review</span><span class="p">,</span> <span class="n">Decision</span>
 
@@ -476,7 +481,7 @@
             <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">) (Practice)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span><span class="p">)</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">created_by</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Wmo"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Wmo">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Wmo"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Wmo">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Wmo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">NO_WMO</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">WAITING</span> <span class="o">=</span> <span class="mi">1</span>
@@ -549,12 +554,12 @@
     <span class="c1"># References</span>
     <span class="n">proposal</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">Proposal</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Wmo.save"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Wmo.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Wmo.save"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Wmo.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the correct status on save of a WMO&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_status</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Wmo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Wmo.update_status"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.Wmo.update_status">[docs]</a>    <span class="k">def</span> <span class="nf">update_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Wmo.update_status"><a class="viewcode-back" href="../../reference/proposals.models.html#proposals.models.Wmo.update_status">[docs]</a>    <span class="k">def</span> <span class="nf">update_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metc</span> <span class="o">==</span> <span class="n">YES</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_medical</span> <span class="o">==</span> <span class="n">YES</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_behavioristic</span> <span class="o">==</span> <span class="n">YES</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">enforced_by_commission</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metc_decision</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">metc_decision_pdf</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">JUDGED</span>

@@ -1,6 +1,11 @@
 interventions package
 =====================
 
+.. automodule:: interventions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -13,10 +18,3 @@ Submodules
    interventions.utils
    interventions.views
 
-Module contents
----------------
-
-.. automodule:: interventions
-    :members:
-    :undoc-members:
-    :show-inheritance:

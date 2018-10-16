@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Server &mdash; ETCL 1.0 documentation</title>
+  <title>Server Deployment &mdash; ETCL 1.0 documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="General" href="../../developing/index.html" />
-    <link rel="prev" title="Local" href="../local/index.html" /> 
+    <link rel="next" title="Deployment steps" href="steps.html" />
+    <link rel="prev" title="E-Mail" href="../local/mail.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -88,13 +88,24 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../local/index.html">Local</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../local/index.html">Local development installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Server Deployment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="steps.html">Deployment steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webserver.html">Webserver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Application configuration</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -146,7 +157,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>Server</li>
+      <li>Server Deployment</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -165,8 +176,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="server">
-<h1>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="server-deployment">
+<h1>Server Deployment<a class="headerlink" href="#server-deployment" title="Permalink to this headline">¶</a></h1>
+<p>Deployment on servers/vm’s is handled by a Puppet module, hosted elsewhere.
+Simple installation instructions are provided with said module.</p>
+<p>This section describes how/why it actually works, but lacks implementation details.</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="steps.html">Deployment steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webserver.html">Webserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Application configuration</a></li>
+</ul>
+</div>
 </div>
 
 
@@ -177,10 +200,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../developing/index.html" class="btn btn-neutral float-right" title="General" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="steps.html" class="btn btn-neutral float-right" title="Deployment steps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../local/index.html" class="btn btn-neutral" title="Local" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../local/mail.html" class="btn btn-neutral" title="E-Mail" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

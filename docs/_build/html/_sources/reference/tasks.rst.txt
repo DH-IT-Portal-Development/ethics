@@ -1,6 +1,11 @@
 tasks package
 =============
 
+.. automodule:: tasks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -22,10 +27,3 @@ Submodules
    tasks.urls
    tasks.utils
 
-Module contents
----------------
-
-.. automodule:: tasks
-    :members:
-    :undoc-members:
-    :show-inheritance:

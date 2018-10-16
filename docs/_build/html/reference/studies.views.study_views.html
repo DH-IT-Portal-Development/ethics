@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -106,7 +111,6 @@
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
@@ -116,7 +120,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="studies.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="studies.html#module-studies">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
@@ -197,11 +200,11 @@
 <dl class="class">
 <dt id="studies.views.study_views.StudyDesign">
 <em class="property">class </em><code class="descclassname">studies.views.study_views.</code><code class="descname">StudyDesign</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/views/study_views.html#StudyDesign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.views.study_views.StudyDesign" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyDesign.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#studies.views.study_views.StudyDesign.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.forms.StudyDesignForm" title="studies.forms.StudyDesignForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyDesignForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.forms.html#studies.forms.StudyDesignForm" title="studies.forms.StudyDesignForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyDesignForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -226,7 +229,7 @@ continue to this part. Otherwise, continue to the Study start overview.</p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyDesign.model">
 <code class="descname">model</code><a class="headerlink" href="#studies.views.study_views.StudyDesign.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -244,12 +247,12 @@ continue to this part. Otherwise, continue to the Study start overview.</p>
 <dl class="class">
 <dt id="studies.views.study_views.StudyEnd">
 <em class="property">class </em><code class="descclassname">studies.views.study_views.</code><code class="descname">StudyEnd</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/views/study_views.html#StudyEnd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.views.study_views.StudyEnd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <p>Completes a Study</p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyEnd.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#studies.views.study_views.StudyEnd.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.forms.StudyEndForm" title="studies.forms.StudyEndForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyEndForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.forms.html#studies.forms.StudyEndForm" title="studies.forms.StudyEndForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyEndForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -279,7 +282,7 @@ Otherwise, go to the data management view.</p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyEnd.model">
 <code class="descname">model</code><a class="headerlink" href="#studies.views.study_views.StudyEnd.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -292,12 +295,12 @@ Otherwise, go to the data management view.</p>
 <dl class="class">
 <dt id="studies.views.study_views.StudyUpdate">
 <em class="property">class </em><code class="descclassname">studies.views.study_views.</code><code class="descname">StudyUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/views/study_views.html#StudyUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.views.study_views.StudyUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <p>Updates a Study from a StudyForm</p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyUpdate.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#studies.views.study_views.StudyUpdate.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.forms.StudyForm" title="studies.forms.StudyForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.forms.html#studies.forms.StudyForm" title="studies.forms.StudyForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -326,7 +329,7 @@ Otherwise, go to the data management view.</p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyUpdate.model">
 <code class="descname">model</code><a class="headerlink" href="#studies.views.study_views.StudyUpdate.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Study</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -344,7 +347,7 @@ Otherwise, go to the data management view.</p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyUpdateAttachments.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#studies.views.study_views.StudyUpdateAttachments.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.forms.StudyUpdateAttachmentsForm" title="studies.forms.StudyUpdateAttachmentsForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyUpdateAttachmentsForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.forms.html#studies.forms.StudyUpdateAttachmentsForm" title="studies.forms.StudyUpdateAttachmentsForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.forms.StudyUpdateAttachmentsForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -361,7 +364,7 @@ Otherwise, go to the data management view.</p>
 <dl class="attribute">
 <dt id="studies.views.study_views.StudyUpdateAttachments.model">
 <code class="descname">model</code><a class="headerlink" href="#studies.views.study_views.StudyUpdateAttachments.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/studies.html#studies.models.Documents" title="studies.models.Documents"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Documents</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="studies.models.html#studies.models.Documents" title="studies.models.Documents"><code class="xref py py-class docutils literal notranslate"><span class="pre">studies.models.Documents</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">

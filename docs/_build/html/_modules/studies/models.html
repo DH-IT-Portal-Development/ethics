@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -176,7 +181,7 @@
 <span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
 
 
-<div class="viewcode-block" id="AgeGroup"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.AgeGroup">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="AgeGroup"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.AgeGroup">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">AgeGroup</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A model to store participant age groups.</span>
@@ -204,7 +209,7 @@
             <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> jaar en ouder&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">age_min</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Trait"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Trait">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Trait"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Trait">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Trait</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A model to store participant traits.</span>
@@ -222,7 +227,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
 
 
-<div class="viewcode-block" id="Compensation"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Compensation">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Compensation"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Compensation">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Compensation</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A model to store forms of participant compensation.</span>
@@ -242,7 +247,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
 
 
-<div class="viewcode-block" id="Recruitment"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Recruitment">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Recruitment"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Recruitment">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Recruitment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A model to store forms of participant recruitment.</span>
@@ -264,7 +269,7 @@
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span></div>
 
-<div class="viewcode-block" id="Study"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Study"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Study</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A model to store a study within a Proposal.</span>
@@ -471,27 +476,27 @@
         <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span>
         <span class="n">unique_together</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;proposal&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Study.first_session"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.first_session">[docs]</a>    <span class="k">def</span> <span class="nf">first_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.first_session"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.first_session">[docs]</a>    <span class="k">def</span> <span class="nf">first_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the first Session in this Study&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Study.last_session"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.last_session">[docs]</a>    <span class="k">def</span> <span class="nf">last_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.last_session"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.last_session">[docs]</a>    <span class="k">def</span> <span class="nf">last_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the last Session in this Study&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-order&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Study.has_children"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_children">[docs]</a>    <span class="k">def</span> <span class="nf">has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.has_children"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.has_children">[docs]</a>    <span class="k">def</span> <span class="nf">has_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns whether the Study contains non-adult AgeGroups&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_adult</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Study.has_participants_below_age"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_participants_below_age">[docs]</a>    <span class="k">def</span> <span class="nf">has_participants_below_age</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.has_participants_below_age"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.has_participants_below_age">[docs]</a>    <span class="k">def</span> <span class="nf">has_participants_below_age</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns whether the Study contains AgeGroups with ages below the specified age&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">age_min__lt</span><span class="o">=</span><span class="n">age</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">age_max__lt</span><span class="o">=</span><span class="n">age</span><span class="p">))</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Study.design_started"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.design_started">[docs]</a>    <span class="k">def</span> <span class="nf">design_started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.design_started"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.design_started">[docs]</a>    <span class="k">def</span> <span class="nf">design_started</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if the design phase has started&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">any</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_observation</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Study.design_completed"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.design_completed">[docs]</a>    <span class="k">def</span> <span class="nf">design_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.design_completed"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.design_completed">[docs]</a>    <span class="k">def</span> <span class="nf">design_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if the design phase has been completed&quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_started</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">:</span>
@@ -505,11 +510,11 @@
                 <span class="n">result</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Study.is_completed"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.is_completed">[docs]</a>    <span class="k">def</span> <span class="nf">is_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.is_completed"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.is_completed">[docs]</a>    <span class="k">def</span> <span class="nf">is_completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if the whole Study has been completed&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">design_completed</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">risk</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span></div>
 
-<div class="viewcode-block" id="Study.has_missing_forms"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_missing_forms">[docs]</a>    <span class="k">def</span> <span class="nf">has_missing_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.has_missing_forms"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.has_missing_forms">[docs]</a>    <span class="k">def</span> <span class="nf">has_missing_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">documents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_documents_object</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">:</span>
             <span class="k">return</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_declaration</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_information</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">parents_information</span>
@@ -520,13 +525,13 @@
 
             <span class="k">return</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">informed_consent</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">briefing</span> <span class="ow">or</span> <span class="n">has_missing</span></div>
 
-<div class="viewcode-block" id="Study.has_missing_sessions"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.has_missing_sessions">[docs]</a>    <span class="k">def</span> <span class="nf">has_missing_sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.has_missing_sessions"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.has_missing_sessions">[docs]</a>    <span class="k">def</span> <span class="nf">has_missing_sessions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">extra_task</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">settings_contains_schools</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_sessions</span>
 
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Study.research_settings_contains_schools"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.research_settings_contains_schools">[docs]</a>    <span class="k">def</span> <span class="nf">research_settings_contains_schools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.research_settings_contains_schools"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.research_settings_contains_schools">[docs]</a>    <span class="k">def</span> <span class="nf">research_settings_contains_schools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Checks if any research track contains a school in it&#39;s setting &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_intervention</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">settings_contains_schools</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -539,7 +544,7 @@
 
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Study.needs_additional_external_forms"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.needs_additional_external_forms">[docs]</a>    <span class="k">def</span> <span class="nf">needs_additional_external_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.needs_additional_external_forms"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.needs_additional_external_forms">[docs]</a>    <span class="k">def</span> <span class="nf">needs_additional_external_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This method checks if the school/other external institution forms are needed when passive consent is false&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -550,7 +555,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">research_settings_contains_schools</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_participants_below_age</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Study.get_documents_object"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Study.get_documents_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_documents_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Study.get_documents_object"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Study.get_documents_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_documents_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets the document object for this study&quot;&quot;&quot;</span>
         <span class="c1"># The self.proposal should be a bit redundant, but semantically nice</span>
         <span class="k">return</span> <span class="n">Documents</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">proposal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span></div>
@@ -559,7 +564,7 @@
         <span class="k">return</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Study details for proposal </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">title</span></div>
 
 
-<div class="viewcode-block" id="Documents"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Documents">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
+<div class="viewcode-block" id="Documents"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Documents">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Documents</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A model to store consent forms for a study and/or a proposal</span>
@@ -599,7 +604,7 @@
         <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">]</span>
     <span class="p">)</span>
 
-<div class="viewcode-block" id="Documents.save"><a class="viewcode-back" href="../../source_bak/studies.html#studies.forms.Documents.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Documents.save"><a class="viewcode-back" href="../../reference/studies.models.html#studies.models.Documents.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        To be a bit cleaner we do not save if this object is new, not connected to a study and if the document fields are</span>
 <span class="sd">        empty.</span>

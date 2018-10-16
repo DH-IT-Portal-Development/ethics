@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -176,7 +181,7 @@
 <span class="n">STUDY_PROGRESS_TOTAL</span> <span class="o">=</span> <span class="mi">90</span>
 
 
-<div class="viewcode-block" id="check_has_adults"><a class="viewcode-back" href="../../source_bak/studies.html#studies.utils.check_has_adults">[docs]</a><span class="k">def</span> <span class="nf">check_has_adults</span><span class="p">(</span><span class="n">selected_age_groups</span><span class="p">):</span>
+<div class="viewcode-block" id="check_has_adults"><a class="viewcode-back" href="../../reference/studies.utils.html#studies.utils.check_has_adults">[docs]</a><span class="k">def</span> <span class="nf">check_has_adults</span><span class="p">(</span><span class="n">selected_age_groups</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks whether the given AgeGroups include adults.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -186,7 +191,7 @@
     <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">selected_age_groups</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">adult_age_groups</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="check_necessity_required"><a class="viewcode-back" href="../../source_bak/studies.html#studies.utils.check_necessity_required">[docs]</a><span class="k">def</span> <span class="nf">check_necessity_required</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">age_groups</span><span class="p">,</span> <span class="n">has_traits</span><span class="p">,</span> <span class="n">legally_incapable</span><span class="p">):</span>
+<div class="viewcode-block" id="check_necessity_required"><a class="viewcode-back" href="../../reference/studies.utils.html#studies.utils.check_necessity_required">[docs]</a><span class="k">def</span> <span class="nf">check_necessity_required</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">age_groups</span><span class="p">,</span> <span class="n">has_traits</span><span class="p">,</span> <span class="n">legally_incapable</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This call checks whether the necessity questions are required. They are required when:</span>
 <span class="sd">    - The researcher requires a supervisor AND one of these cases applies:</span>
@@ -206,7 +211,7 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="get_study_progress"><a class="viewcode-back" href="../../source_bak/studies.html#studies.utils.get_study_progress">[docs]</a><span class="k">def</span> <span class="nf">get_study_progress</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">is_end</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="get_study_progress"><a class="viewcode-back" href="../../reference/studies.utils.html#studies.utils.get_study_progress">[docs]</a><span class="k">def</span> <span class="nf">get_study_progress</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">is_end</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">study</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">STUDY_PROGRESS_START</span>
     <span class="n">progress</span> <span class="o">=</span> <span class="n">STUDY_PROGRESS_TOTAL</span> <span class="o">/</span> <span class="n">study</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">studies_number</span>
@@ -217,7 +222,7 @@
     <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">STUDY_PROGRESS_START</span> <span class="o">+</span> <span class="n">progress</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="study_urls"><a class="viewcode-back" href="../../source_bak/studies.html#studies.utils.study_urls">[docs]</a><span class="k">def</span> <span class="nf">study_urls</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">prev_study_completed</span><span class="p">):</span>
+<div class="viewcode-block" id="study_urls"><a class="viewcode-back" href="../../reference/studies.utils.html#studies.utils.study_urls">[docs]</a><span class="k">def</span> <span class="nf">study_urls</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">prev_study_completed</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the available URLs for the current Study.</span>
 <span class="sd">    :param study: the current Study</span>
@@ -251,7 +256,7 @@
     <span class="k">return</span> <span class="n">urls</span></div>
 
 
-<div class="viewcode-block" id="copy_study_to_proposal"><a class="viewcode-back" href="../../source_bak/studies.html#studies.utils.copy_study_to_proposal">[docs]</a><span class="k">def</span> <span class="nf">copy_study_to_proposal</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
+<div class="viewcode-block" id="copy_study_to_proposal"><a class="viewcode-back" href="../../reference/studies.utils.html#studies.utils.copy_study_to_proposal">[docs]</a><span class="k">def</span> <span class="nf">copy_study_to_proposal</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Copies the given Study to the given Proposal.</span>
 <span class="sd">    :param proposal: the current Proposal</span>
@@ -289,7 +294,7 @@
 
     <span class="n">copy_documents_to_study</span><span class="p">(</span><span class="n">old_pk</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="copy_documents_to_study"><a class="viewcode-back" href="../../source_bak/studies.html#studies.utils.copy_documents_to_study">[docs]</a><span class="k">def</span> <span class="nf">copy_documents_to_study</span><span class="p">(</span><span class="n">study_old</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
+<div class="viewcode-block" id="copy_documents_to_study"><a class="viewcode-back" href="../../reference/studies.utils.html#studies.utils.copy_documents_to_study">[docs]</a><span class="k">def</span> <span class="nf">copy_documents_to_study</span><span class="p">(</span><span class="n">study_old</span><span class="p">,</span> <span class="n">study</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Documents</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="n">study_old</span><span class="p">)</span>
@@ -301,7 +306,7 @@
     <span class="n">d</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="n">study</span>
     <span class="n">d</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="copy_documents_to_proposal"><a class="viewcode-back" href="../../source_bak/studies.html#studies.utils.copy_documents_to_proposal">[docs]</a><span class="k">def</span> <span class="nf">copy_documents_to_proposal</span><span class="p">(</span><span class="n">proposal_old</span><span class="p">,</span> <span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="copy_documents_to_proposal"><a class="viewcode-back" href="../../reference/studies.utils.html#studies.utils.copy_documents_to_proposal">[docs]</a><span class="k">def</span> <span class="nf">copy_documents_to_proposal</span><span class="p">(</span><span class="n">proposal_old</span><span class="p">,</span> <span class="n">proposal</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Documents</span>
 
     <span class="k">for</span> <span class="n">documents</span> <span class="ow">in</span> <span class="n">Documents</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">proposal__pk</span><span class="o">=</span><span class="n">proposal_old</span><span class="p">,</span> <span class="n">study</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

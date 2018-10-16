@@ -1,6 +1,11 @@
 proposals.management.commands package
 =====================================
 
+.. automodule:: proposals.management.commands
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -9,10 +14,3 @@ Submodules
    proposals.management.commands.export_csv
    proposals.management.commands.regenerate_pdf
 
-Module contents
----------------
-
-.. automodule:: proposals.management.commands
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -168,7 +173,7 @@
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">AvailableURL</span>
 
 
-<div class="viewcode-block" id="observation_url"><a class="viewcode-back" href="../../source_bak/observations.html#observations.utils.observation_url">[docs]</a><span class="k">def</span> <span class="nf">observation_url</span><span class="p">(</span><span class="n">study</span><span class="p">):</span>
+<div class="viewcode-block" id="observation_url"><a class="viewcode-back" href="../../reference/observations.utils.html#observations.utils.observation_url">[docs]</a><span class="k">def</span> <span class="nf">observation_url</span><span class="p">(</span><span class="n">study</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Het observatieonderzoek&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_observation</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="s1">&#39;observation&#39;</span><span class="p">):</span>
@@ -178,7 +183,7 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="copy_observation_to_study"><a class="viewcode-back" href="../../source_bak/observations.html#observations.utils.copy_observation_to_study">[docs]</a><span class="k">def</span> <span class="nf">copy_observation_to_study</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">observation</span><span class="p">):</span>
+<div class="viewcode-block" id="copy_observation_to_study"><a class="viewcode-back" href="../../reference/observations.utils.html#observations.utils.copy_observation_to_study">[docs]</a><span class="k">def</span> <span class="nf">copy_observation_to_study</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">observation</span><span class="p">):</span>
     <span class="n">setting</span> <span class="o">=</span> <span class="n">observation</span><span class="o">.</span><span class="n">setting</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
     <span class="n">registrations</span> <span class="o">=</span> <span class="n">observation</span><span class="o">.</span><span class="n">registrations</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 

@@ -1,6 +1,11 @@
 proposals package
 =================
 
+.. automodule:: proposals
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -25,10 +30,3 @@ Submodules
    proposals.utils
    proposals.widgets
 
-Module contents
----------------
-
-.. automodule:: proposals
-    :members:
-    :undoc-members:
-    :show-inheritance:

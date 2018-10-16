@@ -1,6 +1,11 @@
 reviews package
 ===============
 
+.. automodule:: reviews
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -22,10 +27,3 @@ Submodules
    reviews.utils
    reviews.views
 
-Module contents
----------------
-
-.. automodule:: reviews
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -1,6 +1,11 @@
 core.management.commands package
 ================================
 
+.. automodule:: core.management.commands
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -8,10 +13,3 @@ Submodules
 
    core.management.commands.add_ldap_users
 
-Module contents
----------------
-
-.. automodule:: core.management.commands
-    :members:
-    :undoc-members:
-    :show-inheritance:

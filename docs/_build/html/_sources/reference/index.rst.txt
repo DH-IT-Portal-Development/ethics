@@ -9,7 +9,6 @@ etcl
    faqs
    feedback
    interventions
-   manage
    observations
    proposals
    reviews

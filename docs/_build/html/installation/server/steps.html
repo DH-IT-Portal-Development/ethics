@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Deployment steps &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Webserver" href="webserver.html" />
+    <link rel="prev" title="Server Deployment" href="index.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Installation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../local/index.html">Local development installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Server Deployment</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Deployment steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-prerequisites">1. Install prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prepare-filesystem-files">2. Prepare Filesystem &amp; Files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#source">Source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#media">Media</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#static">Static</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#virtual-environment">Virtual environment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-dependencies">3. Python dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration">4. Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#apache">Apache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#application">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#database">5. Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#filling-a-new-database">Filling a new database</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#finishing-up">6. Finishing up</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#static-files">Static files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#translation-file">Translation file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#restart-apache">Restart Apache</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webserver.html">Webserver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Application configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Server Deployment</a> &raquo;</li>
+        
+      <li>Deployment steps</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/installation/server/steps.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="deployment-steps">
+<h1>Deployment steps<a class="headerlink" href="#deployment-steps" title="Permalink to this headline">¶</a></h1>
+<p>All steps below are automated in a puppet module, but sometimes in a different order. You do not need to actually do
+this yourself, but you probably should know what the module does.</p>
+<p>This guide assumes you are running on a Debian OS with Apache and MySQL.</p>
+<div class="section" id="install-prerequisites">
+<h2>1. Install prerequisites<a class="headerlink" href="#install-prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The following packages needs to be installed:</p>
+<ul>
+<li><p class="first">Webserver with WSGI support. See ‘<a class="reference internal" href="webserver.html"><span class="doc">Webserver</span></a>’.</p>
+</li>
+<li><p class="first">Database. See ‘<a class="reference internal" href="database.html"><span class="doc">Database</span></a>’.</p>
+</li>
+<li><p class="first">Python 3:</p>
+<blockquote>
+<div><ul class="simple">
+<li>python3</li>
+<li>python3-dev</li>
+<li>python3-tk</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Other packages:</p>
+<blockquote>
+<div><ul class="simple">
+<li>libtiff5-dev</li>
+<li>libjpeg62-turbo-dev</li>
+<li>zlib1g-dev</li>
+<li>libfreetype6-dev</li>
+<li>liblcms2-dev</li>
+<li>libwebp-dev</li>
+<li>tcl8.6-dev</li>
+<li>tk8.6-dev</li>
+<li>libldap2-dev</li>
+<li>libsasl2-dev</li>
+<li>libssl-dev</li>
+<li>gettext</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="prepare-filesystem-files">
+<h2>2. Prepare Filesystem &amp; Files<a class="headerlink" href="#prepare-filesystem-files" title="Permalink to this headline">¶</a></h2>
+<p>We’re going to create a few folders to house our application. The current servers all have these folders as subfolders
+of a <code class="docutils literal notranslate"><span class="pre">data</span></code> folder, next to the webroot and private folders.</p>
+<p>All folders should be owned by the <code class="docutils literal notranslate"><span class="pre">www-data</span></code> user and group.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>None of the folders should be in a webroot, as this could expose sensitive information like passwords to the world.</p>
+<p class="last">Webserver access to folder that need it is handled later in this guide.</p>
+</div>
+<p>Below is an overview of all folders we need, plus examples on how to get this folder</p>
+<div class="section" id="source">
+<h3>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h3>
+<p>This folder will hold the application source code. You should create this by cloning the source code from git. This way
+you can update the code later by doing a simple git pull.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; source
+$ chown www-data:www-data source
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Currently, we use a bare clone of the repository on GitHub as the source repo on the production server. This is
+to make sure we do not accidentally push code to production.</p>
+<p>This would make the procedure on production:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; /path/to/repo --bare
+$ git clone /path/to/repo source
+$ chown www-data:www-data source
+</pre></div>
+</div>
+<p class="last">When updating, you can either figure out how to update a bare repo, or you can delete the bare repo and re-clone.</p>
+</div>
+</div>
+<div class="section" id="media">
+<h3>Media<a class="headerlink" href="#media" title="Permalink to this headline">¶</a></h3>
+<p>This folder will hold all user uploaded/generated files.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir uploads
+$ chown www-data:www-data uploads
+</pre></div>
+</div>
+</div>
+<div class="section" id="static">
+<h3>Static<a class="headerlink" href="#static" title="Permalink to this headline">¶</a></h3>
+<p>This folder will be used for all static application files (css, images, etc).</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; static
+$ chown www-data:www-data static
+</pre></div>
+</div>
+</div>
+<div class="section" id="virtual-environment">
+<h3>Virtual environment<a class="headerlink" href="#virtual-environment" title="Permalink to this headline">¶</a></h3>
+<p>This folder will hold the virtual environment that holds the application dependencies. It’s best to create the env as
+the www-data user.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># su www-data
+$ python3 -m venv env
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="python-dependencies">
+<h2>3. Python dependencies<a class="headerlink" href="#python-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>By this point you should be able to install your dependencies. You will also need to install <cite>pip-tools</cite>.</p>
+<p>As your virtual environment should be owned by www-data, it’s best to install these dependencies as www-data.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># su www-data
+$ source env/bin/activate
+$ pip install pip-tools
+$ pip install -r source/requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>4. Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="apache">
+<h3>Apache<a class="headerlink" href="#apache" title="Permalink to this headline">¶</a></h3>
+<p><em>See</em> ‘<a class="reference internal" href="webserver.html"><span class="doc">Webserver</span></a>’ <em>for more information.</em></p>
+<p>We need to hook up the application to Apache2. To do this, we need to create a configuration file in
+<code class="docutils literal notranslate"><span class="pre">/etc/apache2/conf-enabled</span></code>.</p>
+<p>An example config is provided in the ‘<a class="reference internal" href="webserver.html"><span class="doc">Webserver</span></a>’ page. Use this to configure Apache2 to fit your situation.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Do not restart Apache2 yet! This should be done at the end of the guide.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Technically it’s better to create the config file in <code class="docutils literal notranslate"><span class="pre">conf-available</span></code> and then make a symlink to this file in
+<code class="docutils literal notranslate"><span class="pre">conf-enabled</span></code>.</p>
+<p class="last">However, the puppet script doesn’t do this, as that requires more effort ¯\_(ツ)_/¯.</p>
+</div>
+</div>
+<div class="section" id="application">
+<h3>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h3>
+<p><em>See</em> ‘<a class="reference internal" href="configuration.html"><span class="doc">Application configuration</span></a>’ <em>for detailed information.</em></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The puppet module actually performs this step just after cloning the repository.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> file supplied with the source code is meant for development purposes. On a live server we want some
+additional settings.</p>
+<p>Please refer to the ‘<a class="reference internal" href="configuration.html"><span class="doc">Application configuration</span></a>’ page for detailed information on how the application should be configured.</p>
+</div>
+</div>
+<div class="section" id="database">
+<h2>5. Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h2>
+<p><em>See</em> ‘<a class="reference internal" href="database.html"><span class="doc">Database</span></a>’ <em>for more information.</em></p>
+<p>Create the database and database user as specified in the config file you just created.</p>
+<p>After that, we need to install our application into it. For this, we use Django migrations:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+$ python source/manage.py migrate
+</pre></div>
+</div>
+<p>Once this is done, we can put our data in. Either insert a dump from an existing database, or initialize an empty
+database.</p>
+<div class="section" id="filling-a-new-database">
+<h3>Filling a new database<a class="headerlink" href="#filling-a-new-database" title="Permalink to this headline">¶</a></h3>
+<p>First we need to load all our fixtures. We can do this with the <code class="docutils literal notranslate"><span class="pre">loaddata</span></code> management command. You do need to specify
+all the individual fixture files individually.</p>
+<p>If you’re on a POSIX system with GNU tools, you can use the following command to install all fixtures:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>find $directory -type f -wholename &quot;*fixtures/*.json&quot; -print0 | xargs -0 python manage.py loaddata
+</pre></div>
+</div>
+<p>You also need to create a super user, using the <code class="docutils literal notranslate"><span class="pre">createsuperuser</span></code> management command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+$ python source/manage.py createsuperuser
+</pre></div>
+</div>
+<p>Use this superuser account to create a new account to serve as secretary. You can do this through the admin interface,
+which can be found in <code class="docutils literal notranslate"><span class="pre">/admin</span></code> through your favourite browser. Make sure this user is part of the <code class="docutils literal notranslate"><span class="pre">committee</span></code> and
+<code class="docutils literal notranslate"><span class="pre">secretary</span></code> groups.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If using LDAP accounts, you can also add this user directly from the LDAP with the following management command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+$ python sourve/manage.py add_ldap_users &lt;username&gt;
+</pre></div>
+</div>
+<p class="last">You still need to add this account to the proper groups through the admin interface, but this way your user can log
+in with his/her LDAP credentials.</p>
+</div>
+</div>
+</div>
+<div class="section" id="finishing-up">
+<h2>6. Finishing up<a class="headerlink" href="#finishing-up" title="Permalink to this headline">¶</a></h2>
+<p>We’re almost done, we only need to make our static files avaible, make sure we have the right translation file and
+restart Apache.</p>
+<div class="section" id="static-files">
+<h3>Static files<a class="headerlink" href="#static-files" title="Permalink to this headline">¶</a></h3>
+<p>When Django is run in production mode, it doesn’t serve static files like the development server does. This means that
+we need to collect all static files in a folder that Apache2 can use to serve the files.</p>
+<p>This can be achieved by running the <code class="docutils literal notranslate"><span class="pre">collectstatic</span></code> management command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+$ python sourve/manage.py manage.py collectstatic --noinput
+</pre></div>
+</div>
+<p>This will copy all static files to the folder specified in <code class="docutils literal notranslate"><span class="pre">etcl/settings.py</span></code>.</p>
+</div>
+<div class="section" id="translation-file">
+<h3>Translation file<a class="headerlink" href="#translation-file" title="Permalink to this headline">¶</a></h3>
+<p>To make sure we use the right translation file, we recompile it from the source file.</p>
+<p>This can be achieved by running the <code class="docutils literal notranslate"><span class="pre">collectstatic</span></code> management command:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+$ python sourve/manage.py manage.py compilemessages
+</pre></div>
+</div>
+</div>
+<div class="section" id="restart-apache">
+<h3>Restart Apache<a class="headerlink" href="#restart-apache" title="Permalink to this headline">¶</a></h3>
+<p>Now it’s finally time to finish our deploy, by restarting apache. This can be done in your preferred way.</p>
+<p>Some examples:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo &#39;Ignore me, I&#39;m a workaround&#39;
+# systemctl restart apache2
+# service apache2 restart
+# /usr/sbin/apache2ctl -k graceful
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="webserver.html" class="btn btn-neutral float-right" title="Webserver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Server Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -167,11 +172,11 @@
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Review</span><span class="p">,</span> <span class="n">Decision</span>
 
 
-<div class="viewcode-block" id="ReviewAdmin"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.admin.ReviewAdmin">[docs]</a><span class="k">class</span> <span class="nc">ReviewAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+<div class="viewcode-block" id="ReviewAdmin"><a class="viewcode-back" href="../../reference/reviews.admin.html#reviews.admin.ReviewAdmin">[docs]</a><span class="k">class</span> <span class="nc">ReviewAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;proposal&#39;</span><span class="p">,</span> <span class="s1">&#39;date_start&#39;</span><span class="p">,</span> <span class="s1">&#39;date_end&#39;</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="DecisionAdmin"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.admin.DecisionAdmin">[docs]</a><span class="k">class</span> <span class="nc">DecisionAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
+<div class="viewcode-block" id="DecisionAdmin"><a class="viewcode-back" href="../../reference/reviews.admin.html#reviews.admin.DecisionAdmin">[docs]</a><span class="k">class</span> <span class="nc">DecisionAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;review&#39;</span><span class="p">,</span> <span class="s1">&#39;reviewer&#39;</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">)</span></div>
 
 <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Review</span><span class="p">,</span> <span class="n">ReviewAdmin</span><span class="p">)</span>

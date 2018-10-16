@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -115,14 +120,12 @@
 <li class="toctree-l4"><a class="reference internal" href="core.views.html">core.views module</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="core.html#module-core">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
@@ -204,11 +207,6 @@
 <dt id="core.forms.ConditionalModelForm">
 <em class="property">class </em><code class="descclassname">core.forms.</code><code class="descname">ConditionalModelForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
-<dl class="attribute">
-<dt id="core.forms.ConditionalModelForm.base_fields">
-<code class="descname">base_fields</code><em class="property"> = {}</em><a class="headerlink" href="#core.forms.ConditionalModelForm.base_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="core.forms.ConditionalModelForm.check_dependency">
 <code class="descname">check_dependency</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f2</em>, <em>f1_value=True</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm.check_dependency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency" title="Permalink to this definition">¶</a></dt>
@@ -232,11 +230,6 @@
 <dl class="method">
 <dt id="core.forms.ConditionalModelForm.check_empty">
 <code class="descname">check_empty</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm.check_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm.check_empty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="core.forms.ConditionalModelForm.declared_fields">
-<code class="descname">declared_fields</code><em class="property"> = {}</em><a class="headerlink" href="#core.forms.ConditionalModelForm.declared_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">

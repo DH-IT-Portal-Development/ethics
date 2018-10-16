@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -106,7 +111,6 @@
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="proposals.html">proposals package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="proposals.html#subpackages">Subpackages</a></li>
@@ -122,7 +126,6 @@
 <li class="toctree-l4"><a class="reference internal" href="proposals.widgets.html">proposals.widgets module</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="proposals.html#module-proposals">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
@@ -209,14 +212,14 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – ID</li>
-<li><strong>order</strong> (<em>PositiveIntegerField</em>) – order</li>
-<li><strong>description</strong> (<em>CharField</em>) – description</li>
-<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – description [nl]</li>
-<li><strong>description_en</strong> (<em>TranslationCharField</em>) – description [en]</li>
-<li><strong>needs_details</strong> (<em>BooleanField</em>) – needs details</li>
-<li><strong>needs_name</strong> (<em>BooleanField</em>) – needs name</li>
-<li><strong>requires_review</strong> (<em>BooleanField</em>) – requires review</li>
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>needs_name</strong> (<em>BooleanField</em>) – Needs name</li>
+<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
 </ul>
 </td>
 </tr>
@@ -235,6 +238,11 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="proposals.models.Funding.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Funding.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="proposals.models.Funding.clean_fields">
 <code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Funding.clean_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -248,15 +256,13 @@
 <dl class="attribute">
 <dt id="proposals.models.Funding.description_en">
 <code class="descname">description_en</code><a class="headerlink" href="#proposals.models.Funding.description_en" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> description [en]</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Funding.description_nl">
 <code class="descname">description_nl</code><a class="headerlink" href="#proposals.models.Funding.description_nl" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> description [nl]</p>
 </dd></dl>
 
 <dl class="method">
@@ -267,22 +273,19 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Funding.id">
 <code class="descname">id</code><a class="headerlink" href="#proposals.models.Funding.id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> ID</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Funding.needs_details">
 <code class="descname">needs_details</code><a class="headerlink" href="#proposals.models.Funding.needs_details" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> needs details</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Funding.needs_name">
 <code class="descname">needs_name</code><a class="headerlink" href="#proposals.models.Funding.needs_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> needs name</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -293,24 +296,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Funding.order">
 <code class="descname">order</code><a class="headerlink" href="#proposals.models.Funding.order" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> order</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Funding.proposal_set">
 <code class="descname">proposal_set</code><a class="headerlink" href="#proposals.models.Funding.proposal_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the forward and reverse sides of
-a many-to-many relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
-instances.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> Hoe wordt dit onderzoek gefinancierd?, accesses the M2M <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="method">
@@ -321,8 +313,7 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="attribute">
 <dt id="proposals.models.Funding.requires_review">
 <code class="descname">requires_review</code><a class="headerlink" href="#proposals.models.Funding.requires_review" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> requires review</p>
 </dd></dl>
 
 </dd></dl>
@@ -336,44 +327,46 @@ object the first time, the query is executed.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – ID</li>
-<li><strong>reference_number</strong> (<em>CharField</em>) – reference number</li>
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>reference_number</strong> (<em>CharField</em>) – Reference number</li>
 <li><strong>date_start</strong> (<em>DateField</em>) – Wat is, indien bekend, de beoogde startdatum van uw studie?</li>
 <li><strong>title</strong> (<em>CharField</em>) – De titel die u hier opgeeft is zichtbaar voor de ETCL-leden en, wanneer de studie is goedgekeurd, ook voor alle UiL-OTS medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een studie die u heeft ingediend.</li>
-<li><strong>summary</strong> (<em>TextField</em>) – Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.</li>
-<li><strong>other_applicants</strong> (<em>BooleanField</em>) – Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie betrokken?</li>
-<li><strong>other_stakeholders</strong> (<em>BooleanField</em>) – Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?</li>
+<li><strong>summary</strong> (<em>TextField</em>) – Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. gebruik maximaal 200 woorden.</li>
+<li><strong>other_applicants</strong> (<em>BooleanField</em>) – Zijn er nog andere uil ots-onderzoekers of -studenten bij deze studie betrokken?</li>
+<li><strong>other_stakeholders</strong> (<em>BooleanField</em>) – Zijn er onderzoekers van buiten uil ots bij deze studie betrokken?</li>
 <li><strong>stakeholders</strong> (<em>TextField</em>) – Andere betrokkenen</li>
 <li><strong>funding_details</strong> (<em>CharField</em>) – Namelijk</li>
 <li><strong>funding_name</strong> (<em>CharField</em>) – De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.</li>
 <li><strong>comments</strong> (<em>TextField</em>) – Ruimte voor eventuele opmerkingen</li>
-<li><strong>inform_local_staff</strong> (<em>NullBooleanField</em>) – &lt;p&gt;U hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte willen worden gesteld van aankomende studies. Daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;Vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - Uw naam en de namen van de andere betrokkenen &lt;br/&gt; - De eindverantwoordelijke van de studie &lt;br/&gt; - De titel van de studie &lt;br/&gt; - De beoogde startdatum &lt;br/&gt; - Van welke faciliteiten u gebruik wilt maken (database, lab, Zep software)</li>
-<li><strong>in_archive</strong> (<em>BooleanField</em>) – in archive</li>
-<li><strong>public</strong> (<em>BooleanField</em>) – public</li>
-<li><strong>is_pre_assessment</strong> (<em>BooleanField</em>) – is pre assessment</li>
+<li><strong>inform_local_staff</strong> (<em>NullBooleanField</em>) – &lt;p&gt;u hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het uil ots, namelijk de database, zep software en/of het uil ots lab. het lab supportteam van het uil ots zou graag op de hoogte willen worden gesteld van aankomende studies. daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - uw naam en de namen van de andere betrokkenen &lt;br/&gt; - de eindverantwoordelijke van de studie &lt;br/&gt; - de titel van de studie &lt;br/&gt; - de beoogde startdatum &lt;br/&gt; - van welke faciliteiten u gebruik wilt maken (database, lab, zep software)</li>
+<li><strong>in_archive</strong> (<em>BooleanField</em>) – In archive</li>
+<li><strong>public</strong> (<em>BooleanField</em>) – Public</li>
+<li><strong>is_pre_assessment</strong> (<em>BooleanField</em>) – Is pre assessment</li>
 <li><strong>pre_assessment_pdf</strong> (<em>FileField</em>) – Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)</li>
 <li><strong>in_course</strong> (<em>BooleanField</em>) – Ik vul de portal in in het kader van een cursus</li>
 <li><strong>is_exploration</strong> (<em>BooleanField</em>) – Ik vul de portal in om de portal te exploreren</li>
-<li><strong>pdf</strong> (<em>FileField</em>) – pdf</li>
+<li><strong>pdf</strong> (<em>FileField</em>) – Pdf</li>
 <li><strong>studies_similar</strong> (<em>NullBooleanField</em>) – Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde moment een verschillende interventie-variant krijgen (specificeer dan wel bij de beschrijving van de interventie welke varianten precies gebruikt worden).</li>
 <li><strong>studies_number</strong> (<em>PositiveIntegerField</em>) – Hoeveel verschillende trajecten zijn er?</li>
-<li><strong>status</strong> (<em>PositiveIntegerField</em>) – status</li>
-<li><strong>status_review</strong> (<em>NullBooleanField</em>) – status review</li>
+<li><strong>status</strong> (<em>PositiveIntegerField</em>) – Status</li>
+<li><strong>status_review</strong> (<em>NullBooleanField</em>) – Status review</li>
 <li><strong>confirmation_comments</strong> (<em>TextField</em>) – Ruimte voor eventuele opmerkingen</li>
-<li><strong>date_created</strong> (<em>DateTimeField</em>) – date created</li>
-<li><strong>date_modified</strong> (<em>DateTimeField</em>) – date modified</li>
-<li><strong>date_submitted_supervisor</strong> (<em>DateTimeField</em>) – date submitted supervisor</li>
-<li><strong>date_reviewed_supervisor</strong> (<em>DateTimeField</em>) – date reviewed supervisor</li>
-<li><strong>date_submitted</strong> (<em>DateTimeField</em>) – date submitted</li>
-<li><strong>date_reviewed</strong> (<em>DateTimeField</em>) – date reviewed</li>
+<li><strong>date_created</strong> (<em>DateTimeField</em>) – Date created</li>
+<li><strong>date_modified</strong> (<em>DateTimeField</em>) – Date modified</li>
+<li><strong>date_submitted_supervisor</strong> (<em>DateTimeField</em>) – Date submitted supervisor</li>
+<li><strong>date_reviewed_supervisor</strong> (<em>DateTimeField</em>) – Date reviewed supervisor</li>
+<li><strong>date_submitted</strong> (<em>DateTimeField</em>) – Date submitted</li>
+<li><strong>date_reviewed</strong> (<em>DateTimeField</em>) – Date reviewed</li>
 <li><strong>date_confirmed</strong> (<em>DateField</em>) – Datum bevestigingsbrief verstuurd</li>
 <li><strong>has_minor_revision</strong> (<em>BooleanField</em>) – Is er een revisie geweest na het indienen van deze studie?</li>
 <li><strong>minor_revision_description</strong> (<em>TextField</em>) – Leg uit</li>
-<li><strong>relation_id</strong> (<em>ForeignKey</em>) – In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?</li>
-<li><strong>created_by_id</strong> (<em>ForeignKey</em>) – created by</li>
-<li><strong>supervisor_id</strong> (<em>ForeignKey</em>) – Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.</li>
-<li><strong>parent_id</strong> (<em>ForeignKey</em>) – Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.</li>
+<li><strong>relation</strong> (ForeignKey to <a class="reference internal" href="#proposals.models.Relation" title="proposals.models.Relation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relation</span></code></a>) – In welke hoedanigheid bent u betrokken bij deze uil ots studie?</li>
+<li><strong>created_by</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Created by</li>
+<li><strong>supervisor</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.</li>
+<li><strong>parent</strong> (ForeignKey to <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.</li>
 <li><strong>is_revision</strong> (<em>BooleanField</em>) – Is deze studie een revisie van of amendement op een ingediende studie?</li>
+<li><strong>funding</strong> (<em>ManyToManyField</em>) – Hoe wordt dit onderzoek gefinancierd?</li>
+<li><strong>applicants</strong> (<em>ManyToManyField</em>) – Uitvoerende(n) (inclusief uzelf)</li>
 </ul>
 </td>
 </tr>
@@ -444,17 +437,7 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.applicants">
 <code class="descname">applicants</code><a class="headerlink" href="#proposals.models.Proposal.applicants" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the forward and reverse sides of
-a many-to-many relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
-instances.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> Uitvoerende(n) (inclusief uzelf), accesses the M2M <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="method">
@@ -466,15 +449,13 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="attribute">
 <dt id="proposals.models.Proposal.comments">
 <code class="descname">comments</code><a class="headerlink" href="#proposals.models.Proposal.comments" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Ruimte voor eventuele opmerkingen</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.confirmation_comments">
 <code class="descname">confirmation_comments</code><a class="headerlink" href="#proposals.models.Proposal.confirmation_comments" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Ruimte voor eventuele opmerkingen</p>
 </dd></dl>
 
 <dl class="method">
@@ -486,21 +467,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.created_by">
 <code class="descname">created_by</code><a class="headerlink" href="#proposals.models.Proposal.created_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p><strong>Model field:</strong> created by, accesses the <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.created_by_id">
 <code class="descname">created_by_id</code><a class="headerlink" href="#proposals.models.Proposal.created_by_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> created by</p>
 </dd></dl>
 
 <dl class="method">
@@ -522,72 +495,55 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_confirmed">
 <code class="descname">date_confirmed</code><a class="headerlink" href="#proposals.models.Proposal.date_confirmed" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Datum bevestigingsbrief verstuurd</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_created">
 <code class="descname">date_created</code><a class="headerlink" href="#proposals.models.Proposal.date_created" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> date created</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_modified">
 <code class="descname">date_modified</code><a class="headerlink" href="#proposals.models.Proposal.date_modified" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> date modified</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_reviewed">
 <code class="descname">date_reviewed</code><a class="headerlink" href="#proposals.models.Proposal.date_reviewed" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> date reviewed</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_reviewed_supervisor">
 <code class="descname">date_reviewed_supervisor</code><a class="headerlink" href="#proposals.models.Proposal.date_reviewed_supervisor" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> date reviewed supervisor</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_start">
 <code class="descname">date_start</code><a class="headerlink" href="#proposals.models.Proposal.date_start" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Wat is, indien bekend, de beoogde startdatum van uw studie?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_submitted">
 <code class="descname">date_submitted</code><a class="headerlink" href="#proposals.models.Proposal.date_submitted" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> date submitted</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.date_submitted_supervisor">
 <code class="descname">date_submitted_supervisor</code><a class="headerlink" href="#proposals.models.Proposal.date_submitted_supervisor" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> date submitted supervisor</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.documents_set">
 <code class="descname">documents_set</code><a class="headerlink" href="#proposals.models.Proposal.documents_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> proposal, accesses the M2M <a class="reference internal" href="studies.models.html#studies.models.Documents" title="studies.models.Documents"><code class="xref py py-class docutils literal notranslate"><span class="pre">Documents</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="method">
@@ -599,98 +555,85 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="attribute">
 <dt id="proposals.models.Proposal.funding">
 <code class="descname">funding</code><a class="headerlink" href="#proposals.models.Proposal.funding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the forward and reverse sides of
-a many-to-many relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
-instances.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> Hoe wordt dit onderzoek gefinancierd?, accesses the M2M <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.funding_details">
 <code class="descname">funding_details</code><a class="headerlink" href="#proposals.models.Proposal.funding_details" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Namelijk</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.funding_name">
 <code class="descname">funding_name</code><a class="headerlink" href="#proposals.models.Proposal.funding_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Wat is de naam van het gefinancierde project?</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Proposal.get_next_by_date_created">
 <code class="descname">get_next_by_date_created</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Proposal.get_next_by_date_created" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#proposals.models.Proposal.date_created" title="proposals.models.Proposal.date_created"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_created</span></code></a>.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Proposal.get_next_by_date_modified">
 <code class="descname">get_next_by_date_modified</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Proposal.get_next_by_date_modified" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#proposals.models.Proposal.date_modified" title="proposals.models.Proposal.date_modified"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_modified</span></code></a>.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Proposal.get_previous_by_date_created">
 <code class="descname">get_previous_by_date_created</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Proposal.get_previous_by_date_created" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#proposals.models.Proposal.date_created" title="proposals.models.Proposal.date_created"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_created</span></code></a>.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Proposal.get_previous_by_date_modified">
 <code class="descname">get_previous_by_date_modified</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Proposal.get_previous_by_date_modified" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#proposals.models.Proposal.date_modified" title="proposals.models.Proposal.date_modified"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_modified</span></code></a>.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Proposal.get_status_display">
 <code class="descname">get_status_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Proposal.get_status_display" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#proposals.models.Proposal.status" title="proposals.models.Proposal.status"><code class="xref py py-attr docutils literal notranslate"><span class="pre">status</span></code></a></p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.has_minor_revision">
 <code class="descname">has_minor_revision</code><a class="headerlink" href="#proposals.models.Proposal.has_minor_revision" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Is er een revisie geweest na het indienen van deze studie?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.id">
 <code class="descname">id</code><a class="headerlink" href="#proposals.models.Proposal.id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> ID</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.in_archive">
 <code class="descname">in_archive</code><a class="headerlink" href="#proposals.models.Proposal.in_archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> in archive</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.in_course">
 <code class="descname">in_course</code><a class="headerlink" href="#proposals.models.Proposal.in_course" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Ik vul de portal in in het kader van een cursus</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.inform_local_staff">
 <code class="descname">inform_local_staff</code><a class="headerlink" href="#proposals.models.Proposal.inform_local_staff" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> &lt;p&gt;U hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte willen worden gesteld van aankomende studies. Daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;Vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - Uw naam en de namen van de andere betrokkenen &lt;br/&gt; - De eindverantwoordelijke van de studie &lt;br/&gt; - De titel van de studie &lt;br/&gt; - De beoogde startdatum &lt;br/&gt; - Van welke faciliteiten u gebruik wilt maken (database, lab, Zep software)</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.is_exploration">
 <code class="descname">is_exploration</code><a class="headerlink" href="#proposals.models.Proposal.is_exploration" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Ik vul de portal in om de portal te exploreren</p>
 </dd></dl>
 
 <dl class="method">
@@ -701,15 +644,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.is_pre_assessment">
 <code class="descname">is_pre_assessment</code><a class="headerlink" href="#proposals.models.Proposal.is_pre_assessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> is pre assessment</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.is_revision">
 <code class="descname">is_revision</code><a class="headerlink" href="#proposals.models.Proposal.is_revision" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Is deze studie een revisie van of amendement op een ingediende studie?</p>
 </dd></dl>
 
 <dl class="method">
@@ -721,8 +662,7 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.minor_revision_description">
 <code class="descname">minor_revision_description</code><a class="headerlink" href="#proposals.models.Proposal.minor_revision_description" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Leg uit</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -733,203 +673,123 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.other_applicants">
 <code class="descname">other_applicants</code><a class="headerlink" href="#proposals.models.Proposal.other_applicants" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie betrokken?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.other_stakeholders">
 <code class="descname">other_stakeholders</code><a class="headerlink" href="#proposals.models.Proposal.other_stakeholders" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.parent">
 <code class="descname">parent</code><a class="headerlink" href="#proposals.models.Proposal.parent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p><strong>Model field:</strong> Te kopiëren studie, accesses the <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.parent_id">
 <code class="descname">parent_id</code><a class="headerlink" href="#proposals.models.Proposal.parent_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Te kopiëren studie</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.pdf">
 <code class="descname">pdf</code><a class="headerlink" href="#proposals.models.Proposal.pdf" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
+<dd><p><strong>Model field:</strong> pdf
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.pre_assessment_pdf">
 <code class="descname">pre_assessment_pdf</code><a class="headerlink" href="#proposals.models.Proposal.pre_assessment_pdf" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
+<dd><p><strong>Model field:</strong> Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.proposal_set">
 <code class="descname">proposal_set</code><a class="headerlink" href="#proposals.models.Proposal.proposal_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> Te kopiëren studie, accesses the M2M <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.public">
 <code class="descname">public</code><a class="headerlink" href="#proposals.models.Proposal.public" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> public</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.reference_number">
 <code class="descname">reference_number</code><a class="headerlink" href="#proposals.models.Proposal.reference_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> reference number</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.relation">
 <code class="descname">relation</code><a class="headerlink" href="#proposals.models.Proposal.relation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p><strong>Model field:</strong> In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?, accesses the <a class="reference internal" href="#proposals.models.Relation" title="proposals.models.Relation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relation</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.relation_id">
 <code class="descname">relation_id</code><a class="headerlink" href="#proposals.models.Proposal.relation_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.review_set">
 <code class="descname">review_set</code><a class="headerlink" href="#proposals.models.Proposal.review_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> proposal, accesses the M2M <a class="reference internal" href="reviews.models.html#reviews.models.Review" title="reviews.models.Review"><code class="xref py py-class docutils literal notranslate"><span class="pre">Review</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.stakeholders">
 <code class="descname">stakeholders</code><a class="headerlink" href="#proposals.models.Proposal.stakeholders" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Andere betrokkenen</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.status">
 <code class="descname">status</code><a class="headerlink" href="#proposals.models.Proposal.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> status</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.status_review">
 <code class="descname">status_review</code><a class="headerlink" href="#proposals.models.Proposal.status_review" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> status review</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.studies_number">
 <code class="descname">studies_number</code><a class="headerlink" href="#proposals.models.Proposal.studies_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Hoeveel verschillende trajecten zijn er?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.studies_similar">
 <code class="descname">studies_similar</code><a class="headerlink" href="#proposals.models.Proposal.studies_similar" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.study_set">
 <code class="descname">study_set</code><a class="headerlink" href="#proposals.models.Proposal.study_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> proposal, accesses the M2M <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.summary">
 <code class="descname">summary</code><a class="headerlink" href="#proposals.models.Proposal.summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.supervisor">
 <code class="descname">supervisor</code><a class="headerlink" href="#proposals.models.Proposal.supervisor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a many-to-one or
-one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+<dd><p><strong>Model field:</strong> Eindverantwoordelijke onderzoeker, accesses the <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code> model.</p>
 </dd></dl>
 
 <dl class="method">
@@ -941,15 +801,13 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.supervisor_id">
 <code class="descname">supervisor_id</code><a class="headerlink" href="#proposals.models.Proposal.supervisor_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Eindverantwoordelijke onderzoeker</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Proposal.title">
 <code class="descname">title</code><a class="headerlink" href="#proposals.models.Proposal.title" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.</p>
 </dd></dl>
 
 <dl class="method">
@@ -961,14 +819,7 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Proposal.wmo">
 <code class="descname">wmo</code><a class="headerlink" href="#proposals.models.Proposal.wmo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the reverse side of a one-to-one
-relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">place.restaurant</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseOneToOneDescriptor</span></code> instance.</p>
+<dd><p><strong>Model field:</strong> proposal, accesses the <a class="reference internal" href="#proposals.models.Wmo" title="proposals.models.Wmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">Wmo</span></code></a> model.</p>
 </dd></dl>
 
 </dd></dl>
@@ -982,14 +833,14 @@ relation.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – ID</li>
-<li><strong>order</strong> (<em>PositiveIntegerField</em>) – order</li>
-<li><strong>description</strong> (<em>CharField</em>) – description</li>
-<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – description [nl]</li>
-<li><strong>description_en</strong> (<em>TranslationCharField</em>) – description [en]</li>
-<li><strong>needs_supervisor</strong> (<em>BooleanField</em>) – needs supervisor</li>
-<li><strong>check_in_course</strong> (<em>BooleanField</em>) – check in course</li>
-<li><strong>check_pre_assessment</strong> (<em>BooleanField</em>) – check pre assessment</li>
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>needs_supervisor</strong> (<em>BooleanField</em>) – Needs supervisor</li>
+<li><strong>check_in_course</strong> (<em>BooleanField</em>) – Check in course</li>
+<li><strong>check_pre_assessment</strong> (<em>BooleanField</em>) – Check pre assessment</li>
 </ul>
 </td>
 </tr>
@@ -1007,18 +858,21 @@ relation.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
 </dd></dl>
 
+<dl class="method">
+<dt id="proposals.models.Relation.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Relation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="proposals.models.Relation.check_in_course">
 <code class="descname">check_in_course</code><a class="headerlink" href="#proposals.models.Relation.check_in_course" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> check in course</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Relation.check_pre_assessment">
 <code class="descname">check_pre_assessment</code><a class="headerlink" href="#proposals.models.Relation.check_pre_assessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> check pre assessment</p>
 </dd></dl>
 
 <dl class="method">
@@ -1035,15 +889,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Relation.description_en">
 <code class="descname">description_en</code><a class="headerlink" href="#proposals.models.Relation.description_en" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> description [en]</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Relation.description_nl">
 <code class="descname">description_nl</code><a class="headerlink" href="#proposals.models.Relation.description_nl" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> description [nl]</p>
 </dd></dl>
 
 <dl class="method">
@@ -1054,15 +906,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Relation.id">
 <code class="descname">id</code><a class="headerlink" href="#proposals.models.Relation.id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> ID</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Relation.needs_supervisor">
 <code class="descname">needs_supervisor</code><a class="headerlink" href="#proposals.models.Relation.needs_supervisor" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> needs supervisor</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1073,23 +923,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Relation.order">
 <code class="descname">order</code><a class="headerlink" href="#proposals.models.Relation.order" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> order</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Relation.proposal_set">
 <code class="descname">proposal_set</code><a class="headerlink" href="#proposals.models.Relation.proposal_set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related objects manager on the reverse side of a
-many-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
-<p>Most of the implementation is delegated to a dynamically defined manager
-class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+<dd><p><strong>Model field:</strong> In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?, accesses the M2M <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1108,17 +948,17 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>metc</strong> (<em>CharField</em>) – Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?</li>
+<li><strong>metc</strong> (<em>CharField</em>) – Vindt de dataverzameling plaats binnen het umc utrecht of andere instelling waar toetsing door een metc verplicht is gesteld?</li>
 <li><strong>metc_details</strong> (<em>TextField</em>) – Licht toe</li>
 <li><strong>metc_institution</strong> (<em>CharField</em>) – Welke instelling?</li>
 <li><strong>is_medical</strong> (<em>CharField</em>) – De definitie van medisch-wetenschappelijk onderzoek is: Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid (etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)</li>
 <li><strong>is_behavioristic</strong> (<em>CharField</em>) – Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, slechts dan kan “nee” ingevuld worden.</li>
-<li><strong>metc_application</strong> (<em>BooleanField</em>) – Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?</li>
-<li><strong>metc_decision</strong> (<em>BooleanField</em>) – Is de METC al tot een beslissing gekomen?</li>
-<li><strong>metc_decision_pdf</strong> (<em>FileField</em>) – Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)</li>
-<li><strong>status</strong> (<em>PositiveIntegerField</em>) – status</li>
-<li><strong>enforced_by_commission</strong> (<em>BooleanField</em>) – enforced by commission</li>
-<li><strong>proposal_id</strong> (<em>OneToOneField</em>) – proposal</li>
+<li><strong>metc_application</strong> (<em>BooleanField</em>) – Uw studie moet beoordeeld worden door de metc, maar dient nog wel bij de etcl te worden geregistreerd. is deze studie al aangemeld bij een metc?</li>
+<li><strong>metc_decision</strong> (<em>BooleanField</em>) – Is de metc al tot een beslissing gekomen?</li>
+<li><strong>metc_decision_pdf</strong> (<em>FileField</em>) – Upload hier de beslissing van het metc (in .pdf of .doc(x)-formaat)</li>
+<li><strong>status</strong> (<em>PositiveIntegerField</em>) – Status</li>
+<li><strong>enforced_by_commission</strong> (<em>BooleanField</em>) – Enforced by commission</li>
+<li><strong>proposal</strong> (OneToOneField to <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</li>
 </ul>
 </td>
 </tr>
@@ -1159,94 +999,80 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dl class="attribute">
 <dt id="proposals.models.Wmo.enforced_by_commission">
 <code class="descname">enforced_by_commission</code><a class="headerlink" href="#proposals.models.Wmo.enforced_by_commission" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> enforced by commission</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Wmo.get_is_behavioristic_display">
 <code class="descname">get_is_behavioristic_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Wmo.get_is_behavioristic_display" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#proposals.models.Wmo.is_behavioristic" title="proposals.models.Wmo.is_behavioristic"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_behavioristic</span></code></a></p>
+</dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Wmo.get_is_medical_display">
 <code class="descname">get_is_medical_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Wmo.get_is_medical_display" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#proposals.models.Wmo.is_medical" title="proposals.models.Wmo.is_medical"><code class="xref py py-attr docutils literal notranslate"><span class="pre">is_medical</span></code></a></p>
+</dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Wmo.get_metc_display">
 <code class="descname">get_metc_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Wmo.get_metc_display" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#proposals.models.Wmo.metc" title="proposals.models.Wmo.metc"><code class="xref py py-attr docutils literal notranslate"><span class="pre">metc</span></code></a></p>
+</dd></dl>
 
 <dl class="method">
 <dt id="proposals.models.Wmo.get_status_display">
 <code class="descname">get_status_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#proposals.models.Wmo.get_status_display" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#proposals.models.Wmo.status" title="proposals.models.Wmo.status"><code class="xref py py-attr docutils literal notranslate"><span class="pre">status</span></code></a></p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.is_behavioristic">
 <code class="descname">is_behavioristic</code><a class="headerlink" href="#proposals.models.Wmo.is_behavioristic" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.is_medical">
 <code class="descname">is_medical</code><a class="headerlink" href="#proposals.models.Wmo.is_medical" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.metc">
 <code class="descname">metc</code><a class="headerlink" href="#proposals.models.Wmo.metc" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.metc_application">
 <code class="descname">metc_application</code><a class="headerlink" href="#proposals.models.Wmo.metc_application" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.metc_decision">
 <code class="descname">metc_decision</code><a class="headerlink" href="#proposals.models.Wmo.metc_decision" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Is de METC al tot een beslissing gekomen?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.metc_decision_pdf">
 <code class="descname">metc_decision_pdf</code><a class="headerlink" href="#proposals.models.Wmo.metc_decision_pdf" title="Permalink to this definition">¶</a></dt>
-<dd><p>The descriptor for the file attribute on the model instance. Returns a
-FieldFile when accessed so you can do stuff like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">myapp.models</span> <span class="k">import</span> <span class="n">MyModel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span> <span class="o">=</span> <span class="n">MyModel</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">instance</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">size</span>
-</pre></div>
-</div>
-<p>Assigns a file object on assignment so you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/path/to/hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">instance</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
+<dd><p><strong>Model field:</strong> Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.metc_details">
 <code class="descname">metc_details</code><a class="headerlink" href="#proposals.models.Wmo.metc_details" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Licht toe</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.metc_institution">
 <code class="descname">metc_institution</code><a class="headerlink" href="#proposals.models.Wmo.metc_institution" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> Welke instelling?</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1257,20 +1083,13 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Wmo.proposal">
 <code class="descname">proposal</code><a class="headerlink" href="#proposals.models.Wmo.proposal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
-<p>In the example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+<dd><p><strong>Model field:</strong> proposal, accesses the <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="proposals.models.Wmo.proposal_id">
 <code class="descname">proposal_id</code><a class="headerlink" href="#proposals.models.Wmo.proposal_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> proposal</p>
 </dd></dl>
 
 <dl class="method">
@@ -1282,8 +1101,7 @@ object the first time, the query is executed.</p>
 <dl class="attribute">
 <dt id="proposals.models.Wmo.status">
 <code class="descname">status</code><a class="headerlink" href="#proposals.models.Wmo.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dd><p><strong>Model field:</strong> status</p>
 </dd></dl>
 
 <dl class="method">

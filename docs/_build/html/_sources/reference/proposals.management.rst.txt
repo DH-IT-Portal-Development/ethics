@@ -1,6 +1,11 @@
 proposals.management package
 ============================
 
+.. automodule:: proposals.management
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -8,10 +13,3 @@ Subpackages
 
     proposals.management.commands
 
-Module contents
----------------
-
-.. automodule:: proposals.management
-    :members:
-    :undoc-members:
-    :show-inheritance:

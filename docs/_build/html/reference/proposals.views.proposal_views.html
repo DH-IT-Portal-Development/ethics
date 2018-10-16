@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -106,7 +111,6 @@
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="proposals.html">proposals package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="proposals.html#subpackages">Subpackages</a><ul class="current">
@@ -116,7 +120,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="proposals.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="proposals.html#module-proposals">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
@@ -234,7 +237,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.MyCompletedView">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">MyCompletedView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#MyCompletedView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.MyCompletedView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.MyCompletedView.body">
 <code class="descname">body</code><em class="property"> = 'Dit overzicht toont al uw beoordeelde studies.'</em><a class="headerlink" href="#proposals.views.proposal_views.MyCompletedView.body" title="Permalink to this definition">¶</a></dt>
@@ -266,7 +269,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.MyConceptsView">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">MyConceptsView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#MyConceptsView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.MyConceptsView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.MyConceptsView.body">
 <code class="descname">body</code><em class="property"> = 'Dit overzicht toont al uw nog niet ingediende studies.'</em><a class="headerlink" href="#proposals.views.proposal_views.MyConceptsView.body" title="Permalink to this definition">¶</a></dt>
@@ -298,7 +301,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.MyPracticeView">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">MyPracticeView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#MyPracticeView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.MyPracticeView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.MyPracticeView.body">
 <code class="descname">body</code><em class="property"> = 'Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of eindverantwoordelijke bij betrokken bent.'</em><a class="headerlink" href="#proposals.views.proposal_views.MyPracticeView.body" title="Permalink to this definition">¶</a></dt>
@@ -330,7 +333,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.MyProposalsView">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">MyProposalsView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#MyProposalsView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.MyProposalsView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.MyProposalsView.body">
 <code class="descname">body</code><em class="property"> = 'Dit overzicht toont al uw studies.'</em><a class="headerlink" href="#proposals.views.proposal_views.MyProposalsView.body" title="Permalink to this definition">¶</a></dt>
@@ -362,7 +365,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.MySubmittedView">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">MySubmittedView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#MySubmittedView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.MySubmittedView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.MySubmittedView.body">
 <code class="descname">body</code><em class="property"> = 'Dit overzicht toont al uw ingediende studies.'</em><a class="headerlink" href="#proposals.views.proposal_views.MySubmittedView.body" title="Permalink to this definition">¶</a></dt>
@@ -394,7 +397,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.MySupervisedView">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">MySupervisedView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#MySupervisedView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.MySupervisedView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalsView" title="proposals.views.proposal_views.ProposalsView"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalsView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.MySupervisedView.body">
 <code class="descname">body</code><em class="property"> = 'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.'</em><a class="headerlink" href="#proposals.views.proposal_views.MySupervisedView.body" title="Permalink to this definition">¶</a></dt>
@@ -426,7 +429,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.PreAssessmentMixin">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">PreAssessmentMixin</code><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#PreAssessmentMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.PreAssessmentMixin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.PreAssessmentMixin.get_form_kwargs">
 <code class="descname">get_form_kwargs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#PreAssessmentMixin.get_form_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.PreAssessmentMixin.get_form_kwargs" title="Permalink to this definition">¶</a></dt>
@@ -454,7 +457,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalAsPdf.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalAsPdf.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -471,7 +474,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalConfirmation.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalConfirmation.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.ProposalConfirmationForm" title="proposals.forms.ProposalConfirmationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalConfirmationForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.ProposalConfirmationForm" title="proposals.forms.ProposalConfirmationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalConfirmationForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -488,7 +491,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalConfirmation.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalConfirmation.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -501,11 +504,11 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalCopy">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCopy</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCopy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCopy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._forms.UserFormKwargsMixin</span></code>, <a class="reference internal" href="../source_bak/core.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._forms.UserFormKwargsMixin</span></code>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalCopy.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalCopy.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.ProposalCopyForm" title="proposals.forms.ProposalCopyForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalCopyForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.ProposalCopyForm" title="proposals.forms.ProposalCopyForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalCopyForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -517,7 +520,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalCopy.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalCopy.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -535,7 +538,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalCopyRevision">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCopyRevision</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCopyRevision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCopyRevision" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalCopy" title="proposals.views.proposal_views.ProposalCopy"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCopy</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalCopy" title="proposals.views.proposal_views.ProposalCopy"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCopy</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalCopyRevision.get_initial">
 <code class="descname">get_initial</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCopyRevision.get_initial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCopyRevision.get_initial" title="Permalink to this definition">¶</a></dt>
@@ -547,7 +550,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalCreate">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCreate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalCreate.form_valid">
 <code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreate.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreate.form_valid" title="Permalink to this definition">¶</a></dt>
@@ -571,7 +574,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalCreatePractice">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCreatePractice</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreatePractice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePractice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalCreate" title="proposals.views.proposal_views.ProposalCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCreate</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalCreate" title="proposals.views.proposal_views.ProposalCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCreate</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalCreatePractice.form_valid">
 <code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreatePractice.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePractice.form_valid" title="Permalink to this definition">¶</a></dt>
@@ -595,7 +598,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalCreatePreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCreatePreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreatePreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePreAssessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.PreAssessmentMixin" title="proposals.views.proposal_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalCreate" title="proposals.views.proposal_views.ProposalCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCreate</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.PreAssessmentMixin" title="proposals.views.proposal_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="#proposals.views.proposal_views.ProposalCreate" title="proposals.views.proposal_views.ProposalCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCreate</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalCreatePreAssessment.form_valid">
 <code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreatePreAssessment.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePreAssessment.form_valid" title="Permalink to this definition">¶</a></dt>
@@ -607,11 +610,11 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalDataManagement">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalDataManagement</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalDataManagement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalDataManagement" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalDataManagement.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalDataManagement.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.ProposalDataManagementForm" title="proposals.forms.ProposalDataManagementForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalDataManagementForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.ProposalDataManagementForm" title="proposals.forms.ProposalDataManagementForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalDataManagementForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -629,7 +632,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalDataManagement.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalDataManagement.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -642,7 +645,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalDelete">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalDelete</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalDelete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalDelete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.DeleteView" title="core.views.DeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.DeleteView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.DeleteView" title="core.views.DeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.DeleteView</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalDelete.get_success_url">
 <code class="descname">get_success_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalDelete.get_success_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalDelete.get_success_url" title="Permalink to this definition">¶</a></dt>
@@ -652,7 +655,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalDelete.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalDelete.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -669,7 +672,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalDifference.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalDifference.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -686,7 +689,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalMixin.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalMixin.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.ProposalForm" title="proposals.forms.ProposalForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.ProposalForm" title="proposals.forms.ProposalForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -698,7 +701,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalMixin.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalMixin.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -732,7 +735,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalStartPractice.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalStartPractice.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.ProposalStartPracticeForm" title="proposals.forms.ProposalStartPracticeForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalStartPracticeForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.ProposalStartPracticeForm" title="proposals.forms.ProposalStartPracticeForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalStartPracticeForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -757,7 +760,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalStartPreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalStartPreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalStartPreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalStartPreAssessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalStart" title="proposals.views.proposal_views.ProposalStart"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalStart</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalStart" title="proposals.views.proposal_views.ProposalStart"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalStart</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalStartPreAssessment.template_name">
 <code class="descname">template_name</code><em class="property"> = 'proposals/proposal_start_pre_assessment.html'</em><a class="headerlink" href="#proposals.views.proposal_views.ProposalStartPreAssessment.template_name" title="Permalink to this definition">¶</a></dt>
@@ -768,11 +771,11 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalSubmit">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmit</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalSubmit.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.forms.ProposalSubmitForm" title="proposals.forms.ProposalSubmitForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalSubmitForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.forms.html#proposals.forms.ProposalSubmitForm" title="proposals.forms.ProposalSubmitForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.forms.ProposalSubmitForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -805,7 +808,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalSubmit.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -823,7 +826,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalSubmitPreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmitPreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmitPreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitPreAssessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalSubmit" title="proposals.views.proposal_views.ProposalSubmit"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmit</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalSubmit" title="proposals.views.proposal_views.ProposalSubmit"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmit</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalSubmitPreAssessment.form_valid">
 <code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmitPreAssessment.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitPreAssessment.form_valid" title="Permalink to this definition">¶</a></dt>
@@ -853,7 +856,7 @@ are provided as kwargs to this method.</p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalSubmitted.model">
 <code class="descname">model</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitted.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/proposals.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -866,7 +869,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalSubmittedPreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmittedPreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmittedPreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmittedPreAssessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalSubmitted" title="proposals.views.proposal_views.ProposalSubmitted"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmitted</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalSubmitted" title="proposals.views.proposal_views.ProposalSubmitted"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmitted</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalSubmittedPreAssessment.template_name">
 <code class="descname">template_name</code><em class="property"> = 'proposals/proposal_submitted.html'</em><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmittedPreAssessment.template_name" title="Permalink to this definition">¶</a></dt>
@@ -877,7 +880,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalUpdate">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalUpdate.get_context_data">
 <code class="descname">get_context_data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdate.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdate.get_context_data" title="Permalink to this definition">¶</a></dt>
@@ -889,7 +892,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalUpdatePractice">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalUpdatePractice</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdatePractice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdatePractice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalUpdate" title="proposals.views.proposal_views.ProposalUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalUpdate</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalUpdate" title="proposals.views.proposal_views.ProposalUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalUpdate</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalUpdatePractice.get_form_kwargs">
 <code class="descname">get_form_kwargs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdatePractice.get_form_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdatePractice.get_form_kwargs" title="Permalink to this definition">¶</a></dt>
@@ -901,7 +904,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalUpdatePreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalUpdatePreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdatePreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdatePreAssessment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.PreAssessmentMixin" title="proposals.views.proposal_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="../source_bak/proposals.views.html#proposals.views.proposal_views.ProposalUpdate" title="proposals.views.proposal_views.ProposalUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalUpdate</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.PreAssessmentMixin" title="proposals.views.proposal_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="#proposals.views.proposal_views.ProposalUpdate" title="proposals.views.proposal_views.ProposalUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalUpdate</span></code></a></p>
 </dd></dl>
 
 <dl class="class">

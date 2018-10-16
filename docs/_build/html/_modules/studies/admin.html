@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -167,27 +172,27 @@
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">AgeGroup</span><span class="p">,</span> <span class="n">Trait</span><span class="p">,</span> <span class="n">Compensation</span><span class="p">,</span> <span class="n">Recruitment</span>
 
 
-<div class="viewcode-block" id="AgeGroupAdmin"><a class="viewcode-back" href="../../source_bak/studies.html#studies.admin.AgeGroupAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">AgeGroup</span><span class="p">)</span>
+<div class="viewcode-block" id="AgeGroupAdmin"><a class="viewcode-back" href="../../reference/studies.admin.html#studies.admin.AgeGroupAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">AgeGroup</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">AgeGroupAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;age_min&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">,</span> <span class="s1">&#39;age_max&#39;</span><span class="p">,</span> <span class="s1">&#39;is_adult&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;max_net_duration&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age_min&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="TraitAdmin"><a class="viewcode-back" href="../../source_bak/studies.html#studies.admin.TraitAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Trait</span><span class="p">)</span>
+<div class="viewcode-block" id="TraitAdmin"><a class="viewcode-back" href="../../reference/studies.admin.html#studies.admin.TraitAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Trait</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">TraitAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="CompensationAdmin"><a class="viewcode-back" href="../../source_bak/studies.html#studies.admin.CompensationAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Compensation</span><span class="p">)</span>
+<div class="viewcode-block" id="CompensationAdmin"><a class="viewcode-back" href="../../reference/studies.admin.html#studies.admin.CompensationAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Compensation</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">CompensationAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;requires_review&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;order&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="RecruitmentAdmin"><a class="viewcode-back" href="../../source_bak/studies.html#studies.admin.RecruitmentAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Recruitment</span><span class="p">)</span>
+<div class="viewcode-block" id="RecruitmentAdmin"><a class="viewcode-back" href="../../reference/studies.admin.html#studies.admin.RecruitmentAdmin">[docs]</a><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Recruitment</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">RecruitmentAdmin</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">ModelAdmin</span><span class="p">):</span>
     <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;is_local&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;requires_review&#39;</span><span class="p">,</span> <span class="p">)</span>
     <span class="n">list_display_links</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="p">)</span>

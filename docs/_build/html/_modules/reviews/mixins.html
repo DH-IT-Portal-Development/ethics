@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -169,8 +174,8 @@
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">auto_review</span>
 
 
-<div class="viewcode-block" id="UserAllowedMixin"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.mixins.UserAllowedMixin">[docs]</a><span class="k">class</span> <span class="nc">UserAllowedMixin</span><span class="p">(</span><span class="n">SingleObjectMixin</span><span class="p">):</span>
-<div class="viewcode-block" id="UserAllowedMixin.get_object"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.mixins.UserAllowedMixin.get_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="UserAllowedMixin"><a class="viewcode-back" href="../../reference/reviews.mixins.html#reviews.mixins.UserAllowedMixin">[docs]</a><span class="k">class</span> <span class="nc">UserAllowedMixin</span><span class="p">(</span><span class="n">SingleObjectMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="UserAllowedMixin.get_object"><a class="viewcode-back" href="../../reference/reviews.mixins.html#reviews.mixins.UserAllowedMixin.get_object">[docs]</a>    <span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queryset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks whether the current User is a reviewer in this Review,</span>
 <span class="sd">        as well as whether the Review is still open.</span>
@@ -191,8 +196,8 @@
         <span class="k">return</span> <span class="n">obj</span></div></div>
 
 
-<div class="viewcode-block" id="AutoReviewMixin"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.mixins.AutoReviewMixin">[docs]</a><span class="k">class</span> <span class="nc">AutoReviewMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="AutoReviewMixin.get_context_data"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.mixins.AutoReviewMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewMixin"><a class="viewcode-back" href="../../reference/reviews.mixins.html#reviews.mixins.AutoReviewMixin">[docs]</a><span class="k">class</span> <span class="nc">AutoReviewMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewMixin.get_context_data"><a class="viewcode-back" href="../../reference/reviews.mixins.html#reviews.mixins.AutoReviewMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds the results of the machine-wise review to the context.&quot;&quot;&quot;</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">AutoReviewMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>

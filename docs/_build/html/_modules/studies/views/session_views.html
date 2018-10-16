@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -178,20 +183,20 @@
 <span class="c1">######################</span>
 <span class="c1"># Actions on a Session</span>
 <span class="c1">######################</span>
-<div class="viewcode-block" id="SessionStart"><a class="viewcode-back" href="../../../source_bak/studies.views.html#studies.views.session_views.SessionStart">[docs]</a><span class="k">class</span> <span class="nc">SessionStart</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+<div class="viewcode-block" id="SessionStart"><a class="viewcode-back" href="../../../reference/studies.views.session_views.html#studies.views.session_views.SessionStart">[docs]</a><span class="k">class</span> <span class="nc">SessionStart</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Initial creation of Sessions&quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Study</span>
     <span class="n">form_class</span> <span class="o">=</span> <span class="n">SessionStartForm</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;studies/session_start.html&#39;</span>
     <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(sessions_number)s</span><span class="s1"> sessie(s) voor studie </span><span class="si">%(title)s</span><span class="s1"> aangemaakt&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SessionStart.get_context_data"><a class="viewcode-back" href="../../../source_bak/studies.views.html#studies.views.session_views.SessionStart.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SessionStart.get_context_data"><a class="viewcode-back" href="../../../reference/studies.views.session_views.html#studies.views.session_views.SessionStart.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Setting the progress on the context&quot;&quot;&quot;</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SessionStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_study_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span> <span class="o">+</span> <span class="mi">9</span>
         <span class="k">return</span> <span class="n">context</span></div>
 
-<div class="viewcode-block" id="SessionStart.form_valid"><a class="viewcode-back" href="../../../source_bak/studies.views.html#studies.views.session_views.SessionStart.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+<div class="viewcode-block" id="SessionStart.form_valid"><a class="viewcode-back" href="../../../reference/studies.views.session_views.html#studies.views.session_views.SessionStart.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates or deletes Sessions on save&quot;&quot;&quot;</span>
         <span class="n">nr_sessions</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;sessions_number&#39;</span><span class="p">]</span>
         <span class="n">study</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span>
@@ -211,11 +216,11 @@
 
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">SessionStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SessionStart.get_next_url"><a class="viewcode-back" href="../../../source_bak/studies.views.html#studies.views.session_views.SessionStart.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SessionStart.get_next_url"><a class="viewcode-back" href="../../../reference/studies.views.session_views.html#studies.views.session_views.SessionStart.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Continue to the addition of Tasks&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;tasks:start&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">first_session</span><span class="p">()</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
 
-<div class="viewcode-block" id="SessionStart.get_back_url"><a class="viewcode-back" href="../../../source_bak/studies.views.html#studies.views.session_views.SessionStart.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SessionStart.get_back_url"><a class="viewcode-back" href="../../../reference/studies.views.session_views.html#studies.views.session_views.SessionStart.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Depending on whether this Study contains an Observation or Intervention part,</span>
 <span class="sd">        return to this part. Otherwise, return to the Study design overview.</span>
@@ -231,7 +236,7 @@
             <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">pk</span>
         <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,))</span></div>
 
-<div class="viewcode-block" id="SessionStart.get_success_message"><a class="viewcode-back" href="../../../source_bak/studies.views.html#studies.views.session_views.SessionStart.get_success_message">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cleaned_data</span><span class="p">):</span>
+<div class="viewcode-block" id="SessionStart.get_success_message"><a class="viewcode-back" href="../../../reference/studies.views.session_views.html#studies.views.session_views.SessionStart.get_success_message">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cleaned_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fill the success message using the cleaned_data&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">success_message</span> <span class="o">%</span> <span class="nb">dict</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">title</span><span class="p">)</span></div></div>
 </pre></div>

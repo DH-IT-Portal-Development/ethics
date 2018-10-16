@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -179,7 +184,7 @@
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">AvailableURL</span><span class="p">,</span> <span class="n">get_secretary</span>
 <span class="kn">from</span> <span class="nn">studies.utils</span> <span class="k">import</span> <span class="n">study_urls</span>
 
-<div class="viewcode-block" id="available_urls"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.available_urls">[docs]</a><span class="k">def</span> <span class="nf">available_urls</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="available_urls"><a class="viewcode-back" href="../../reference/proposals.utils.html#proposals.utils.available_urls">[docs]</a><span class="k">def</span> <span class="nf">available_urls</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the available URLs for the given Proposal.</span>
 <span class="sd">    :param proposal: the current Proposal</span>
@@ -243,7 +248,7 @@
     <span class="k">return</span> <span class="n">urls</span></div>
 
 
-<div class="viewcode-block" id="generate_ref_number"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.generate_ref_number">[docs]</a><span class="k">def</span> <span class="nf">generate_ref_number</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_ref_number"><a class="viewcode-back" href="../../reference/proposals.utils.html#proposals.utils.generate_ref_number">[docs]</a><span class="k">def</span> <span class="nf">generate_ref_number</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates a reference number for a Proposal.</span>
 <span class="sd">    :param user: the creator of this Proposal, the currently logged-in User</span>
@@ -263,7 +268,7 @@
     <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{:02}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">proposal_number</span><span class="p">,</span> <span class="n">current_year</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="generate_pdf"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.generate_pdf">[docs]</a><span class="k">def</span> <span class="nf">generate_pdf</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_pdf"><a class="viewcode-back" href="../../reference/proposals.utils.html#proposals.utils.generate_pdf">[docs]</a><span class="k">def</span> <span class="nf">generate_pdf</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates the PDF for a Proposal and attaches it.</span>
 <span class="sd">    :param proposal: the current Proposal</span>
@@ -301,7 +306,7 @@
     <span class="n">activate</span><span class="p">(</span><span class="n">current_language</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="check_local_facilities"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.check_local_facilities">[docs]</a><span class="k">def</span> <span class="nf">check_local_facilities</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="check_local_facilities"><a class="viewcode-back" href="../../reference/proposals.utils.html#proposals.utils.check_local_facilities">[docs]</a><span class="k">def</span> <span class="nf">check_local_facilities</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks whether local lab facilities are used in the given Proposal</span>
 <span class="sd">    :param proposal: the current Proposal</span>
@@ -339,7 +344,7 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="notify_local_staff"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.utils.notify_local_staff">[docs]</a><span class="k">def</span> <span class="nf">notify_local_staff</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="notify_local_staff"><a class="viewcode-back" href="../../reference/proposals.utils.html#proposals.utils.notify_local_staff">[docs]</a><span class="k">def</span> <span class="nf">notify_local_staff</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Notifies local lab staff of the current Proposal via e-mail.</span>
 <span class="sd">    :param proposal: the current Proposal</span>

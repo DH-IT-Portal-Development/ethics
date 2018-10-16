@@ -1,6 +1,11 @@
 core.management package
 =======================
 
+.. automodule:: core.management
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Subpackages
 -----------
 
@@ -8,10 +13,3 @@ Subpackages
 
     core.management.commands
 
-Module contents
----------------
-
-.. automodule:: core.management
-    :members:
-    :undoc-members:
-    :show-inheritance:

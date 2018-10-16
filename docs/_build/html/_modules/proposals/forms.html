@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -179,8 +184,8 @@
 <span class="kn">from</span> <span class="nn">.widgets</span> <span class="k">import</span> <span class="n">SelectMultipleUser</span>
 
 
-<div class="viewcode-block" id="ProposalForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">ConditionalModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="ProposalForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="ProposalForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">ConditionalModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;relation&#39;</span><span class="p">,</span> <span class="s1">&#39;supervisor&#39;</span><span class="p">,</span>
@@ -202,9 +207,9 @@
             <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Er bestaat al een studie met deze titel.&#39;</span><span class="p">),</span>
             <span class="p">},</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Remove empty label from relation field</span>
 <span class="sd">        - Don&#39;t allow to pick yourself or a superuser as supervisor, unless you already are</span>
@@ -249,9 +254,9 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;funding_details&#39;</span><span class="p">]</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;funding_name&#39;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;pre_assessment_pdf&#39;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;pre_assessment_pdf&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="ProposalForm.clean"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalForm.clean"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for conditional requirements:</span>
 <span class="sd">        - If relation needs supervisor, make sure supervisor is set</span>
@@ -275,15 +280,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;funding&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_name&#39;</span><span class="p">,</span> <span class="s1">&#39;funding_name&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalStartPracticeForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalStartPracticeForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalStartPracticeForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalStartPracticeForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalStartPracticeForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalStartPracticeForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
     <span class="n">practice_reason</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">(</span>
         <span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Ik vul de portal in&#39;</span><span class="p">),</span>
         <span class="n">choices</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">PRACTICE_REASONS</span><span class="p">,</span>
         <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="ProposalCopyForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalCopyForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalCopyForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="ProposalCopyForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalCopyForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="ProposalCopyForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalCopyForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalCopyForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;is_revision&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
@@ -293,26 +298,26 @@
             <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Er bestaat al een studie met deze titel.&#39;</span><span class="p">),</span>
             <span class="p">},</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalCopyForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalCopyForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filters the Proposals to only show those where:</span>
 <span class="sd">        - the current User is an applicant.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ProposalCopyForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span> \
-            <span class="nb">filter</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">is_pre_assessment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+            <span class="nb">filter</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">is_pre_assessment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalConfirmationForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalConfirmationForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalConfirmationForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="ProposalConfirmationForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalConfirmationForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="ProposalConfirmationForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalConfirmationForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalConfirmationForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;date_confirmed&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmation_comments&#39;</span><span class="p">]</span></div></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;date_confirmed&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmation_comments&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="WmoForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoForm">[docs]</a><span class="k">class</span> <span class="nc">WmoForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="WmoForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="WmoForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoForm">[docs]</a><span class="k">class</span> <span class="nc">WmoForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Wmo</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_details&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_institution&#39;</span><span class="p">,</span>
@@ -322,9 +327,9 @@
             <span class="s1">&#39;metc&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
             <span class="s1">&#39;is_medical&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
             <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Remove empty label from is_medical/is_behavioristic field and reset the choices</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -332,9 +337,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_medical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_medical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span></div>
 
-<div class="viewcode-block" id="WmoForm.clean"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoForm.clean"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for conditional requirements:</span>
 <span class="sd">        - If metc is checked, make sure institution is set and details are filled out</span>
@@ -350,8 +355,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">,</span> <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">NO</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="WmoCheckForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoCheckForm">[docs]</a><span class="k">class</span> <span class="nc">WmoCheckForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="WmoCheckForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoCheckForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="WmoCheckForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoCheckForm">[docs]</a><span class="k">class</span> <span class="nc">WmoCheckForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Wmo</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;is_medical&#39;</span><span class="p">,</span> <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">,</span>
@@ -360,9 +365,9 @@
             <span class="s1">&#39;metc&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
             <span class="s1">&#39;is_medical&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
             <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoCheckForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoCheckForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Remove empty label from is_medical/is_behavioristic field and reset the choices</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -370,11 +375,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_medical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_medical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span></div></div>
 
 
-<div class="viewcode-block" id="WmoApplicationForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoApplicationForm">[docs]</a><span class="k">class</span> <span class="nc">WmoApplicationForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="WmoApplicationForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoApplicationForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="WmoApplicationForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoApplicationForm">[docs]</a><span class="k">class</span> <span class="nc">WmoApplicationForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Wmo</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;metc_application&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_decision&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_decision_pdf&#39;</span><span class="p">,</span>
@@ -382,9 +387,9 @@
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;metc_application&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
             <span class="s1">&#39;metc_decision&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-<div class="viewcode-block" id="WmoApplicationForm.clean"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.WmoApplicationForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoApplicationForm.clean"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoApplicationForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for conditional requirements:</span>
 <span class="sd">        - If metc_decision has been checked, make sure the file is added</span>
@@ -394,14 +399,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc_decision&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_decision_pdf&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="StudyStartForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.StudyStartForm">[docs]</a><span class="k">class</span> <span class="nc">StudyStartForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="StudyStartForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.StudyStartForm">[docs]</a><span class="k">class</span> <span class="nc">StudyStartForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
     <span class="n">study_name_1</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 1&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">study_name_2</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 2&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">study_name_3</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 3&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">study_name_4</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 4&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">study_name_5</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 5&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<div class="viewcode-block" id="StudyStartForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.StudyStartForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;studies_similar&#39;</span><span class="p">,</span> <span class="s1">&#39;studies_number&#39;</span><span class="p">,</span>
@@ -409,9 +414,9 @@
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;studies_similar&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="StudyStartForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.StudyStartForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Set the Proposal for later reference</span>
 <span class="sd">        - Set initial data for the study_name fields</span>
@@ -422,9 +427,9 @@
 
         <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">study</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">all</span><span class="p">()):</span>
             <span class="n">study_name</span> <span class="o">=</span> <span class="s1">&#39;study_name_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">study_name</span><span class="p">]</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">study_name</span><span class="p">]</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">name</span></div>
 
-<div class="viewcode-block" id="StudyStartForm.clean"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.StudyStartForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="StudyStartForm.clean"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.StudyStartForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for conditional requirements:</span>
 <span class="sd">        - If studies_similar is not set, add a required error</span>
@@ -447,21 +452,21 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="n">study_name</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">))</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalDataManagementForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalDataManagementForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalDataManagementForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="ProposalDataManagementForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalDataManagementForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="ProposalDataManagementForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalDataManagementForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalDataManagementForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span></div></div>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 
-<div class="viewcode-block" id="ProposalSubmitForm"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalSubmitForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmitForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-<div class="viewcode-block" id="ProposalSubmitForm.Meta"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalSubmitForm.Meta">[docs]</a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<div class="viewcode-block" id="ProposalSubmitForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalSubmitForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmitForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;inform_local_staff&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-        <span class="p">}</span></div>
+        <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalSubmitForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalSubmitForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Mark the label of inform_local_staff as safe</span>
 <span class="sd">        - Check if the inform_local_staff question should be asked</span>
@@ -473,9 +478,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">check_local_facilities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">):</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="ProposalSubmitForm.clean"><a class="viewcode-back" href="../../source_bak/proposals.html#proposals.forms.ProposalSubmitForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalSubmitForm.clean"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalSubmitForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if the Proposal is complete:</span>
 <span class="sd">        - Do all Studies have informed consent/briefing?</span>

@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -178,18 +183,18 @@
 <span class="c1">######################</span>
 <span class="c1"># CRUD actions on Task</span>
 <span class="c1">######################</span>
-<div class="viewcode-block" id="TaskUpdate"><a class="viewcode-back" href="../../../source_bak/tasks.views.html#tasks.views.task_views.TaskUpdate">[docs]</a><span class="k">class</span> <span class="nc">TaskUpdate</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskUpdate"><a class="viewcode-back" href="../../../reference/tasks.views.task_views.html#tasks.views.task_views.TaskUpdate">[docs]</a><span class="k">class</span> <span class="nc">TaskUpdate</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Updates a Task&quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Task</span>
     <span class="n">form_class</span> <span class="o">=</span> <span class="n">TaskForm</span>
     <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taak bewerkt&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaskUpdate.get_context_data"><a class="viewcode-back" href="../../../source_bak/tasks.views.html#tasks.views.task_views.TaskUpdate.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskUpdate.get_context_data"><a class="viewcode-back" href="../../../reference/tasks.views.task_views.html#tasks.views.task_views.TaskUpdate.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaskUpdate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_task_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">context</span></div>
 
-<div class="viewcode-block" id="TaskUpdate.get_next_url"><a class="viewcode-back" href="../../../source_bak/tasks.views.html#tasks.views.task_views.TaskUpdate.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskUpdate.get_next_url"><a class="viewcode-back" href="../../../reference/tasks.views.task_views.html#tasks.views.task_views.TaskUpdate.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Try to continue to next Task</span>
             <span class="n">next_task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">order</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -198,7 +203,7 @@
             <span class="c1"># If this is the last Task, continue to task_end</span>
             <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;tasks:end&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
 
-<div class="viewcode-block" id="TaskUpdate.get_back_url"><a class="viewcode-back" href="../../../source_bak/tasks.views.html#tasks.views.task_views.TaskUpdate.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskUpdate.get_back_url"><a class="viewcode-back" href="../../../reference/tasks.views.task_views.html#tasks.views.task_views.TaskUpdate.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Try to return to previous Task</span>
             <span class="n">prev_task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">session</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">order</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -208,15 +213,15 @@
             <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;tasks:start&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
 
 
-<div class="viewcode-block" id="TaskDelete"><a class="viewcode-back" href="../../../source_bak/tasks.views.html#tasks.views.task_views.TaskDelete">[docs]</a><span class="k">class</span> <span class="nc">TaskDelete</span><span class="p">(</span><span class="n">DeletionAllowedMixin</span><span class="p">,</span> <span class="n">DeleteView</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskDelete"><a class="viewcode-back" href="../../../reference/tasks.views.task_views.html#tasks.views.task_views.TaskDelete">[docs]</a><span class="k">class</span> <span class="nc">TaskDelete</span><span class="p">(</span><span class="n">DeletionAllowedMixin</span><span class="p">,</span> <span class="n">DeleteView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Deletes a Task&quot;&quot;&quot;</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Task</span>
     <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taak verwijderd&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TaskDelete.get_success_url"><a class="viewcode-back" href="../../../source_bak/tasks.views.html#tasks.views.task_views.TaskDelete.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskDelete.get_success_url"><a class="viewcode-back" href="../../../reference/tasks.views.task_views.html#tasks.views.task_views.TaskDelete.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;tasks:end&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
 
-<div class="viewcode-block" id="TaskDelete.delete"><a class="viewcode-back" href="../../../source_bak/tasks.views.html#tasks.views.task_views.TaskDelete.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskDelete.delete"><a class="viewcode-back" href="../../../reference/tasks.views.task_views.html#tasks.views.task_views.TaskDelete.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes the Task and updates the Session.</span>
 <span class="sd">        Completely overrides the default delete function (as that calls delete too late for us).</span>

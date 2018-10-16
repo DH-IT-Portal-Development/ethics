@@ -88,13 +88,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -106,7 +111,6 @@
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
@@ -117,7 +121,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="tasks.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="tasks.html#module-tasks">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -197,7 +200,7 @@
 <dl class="class">
 <dt id="tasks.views.task_views.TaskDelete">
 <em class="property">class </em><code class="descclassname">tasks.views.task_views.</code><code class="descname">TaskDelete</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tasks/views/task_views.html#TaskDelete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.views.task_views.TaskDelete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/tasks.html#tasks.mixins.DeletionAllowedMixin" title="tasks.mixins.DeletionAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.mixins.DeletionAllowedMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.DeleteView" title="core.views.DeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.DeleteView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="tasks.mixins.html#tasks.mixins.DeletionAllowedMixin" title="tasks.mixins.DeletionAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.mixins.DeletionAllowedMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.DeleteView" title="core.views.DeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.DeleteView</span></code></a></p>
 <p>Deletes a Task</p>
 <dl class="method">
 <dt id="tasks.views.task_views.TaskDelete.delete">
@@ -214,7 +217,7 @@ Completely overrides the default delete function (as that calls delete too late 
 <dl class="attribute">
 <dt id="tasks.views.task_views.TaskDelete.model">
 <code class="descname">model</code><a class="headerlink" href="#tasks.views.task_views.TaskDelete.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/tasks.html#tasks.models.Task" title="tasks.models.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.models.Task</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="tasks.models.html#tasks.models.Task" title="tasks.models.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.models.Task</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -227,12 +230,12 @@ Completely overrides the default delete function (as that calls delete too late 
 <dl class="class">
 <dt id="tasks.views.task_views.TaskUpdate">
 <em class="property">class </em><code class="descclassname">tasks.views.task_views.</code><code class="descname">TaskUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tasks/views/task_views.html#TaskUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.views.task_views.TaskUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../source_bak/core.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="../source_bak/core.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <p>Updates a Task</p>
 <dl class="attribute">
 <dt id="tasks.views.task_views.TaskUpdate.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#tasks.views.task_views.TaskUpdate.form_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/tasks.html#tasks.forms.TaskForm" title="tasks.forms.TaskForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.forms.TaskForm</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="tasks.forms.html#tasks.forms.TaskForm" title="tasks.forms.TaskForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.forms.TaskForm</span></code></a></p>
 </dd></dl>
 
 <dl class="method">
@@ -254,7 +257,7 @@ Completely overrides the default delete function (as that calls delete too late 
 <dl class="attribute">
 <dt id="tasks.views.task_views.TaskUpdate.model">
 <code class="descname">model</code><a class="headerlink" href="#tasks.views.task_views.TaskUpdate.model" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="../source_bak/tasks.html#tasks.models.Task" title="tasks.models.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.models.Task</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="tasks.models.html#tasks.models.Task" title="tasks.models.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks.models.Task</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">

@@ -86,13 +86,18 @@
 </ul>
 <p class="caption"><span class="caption-text">Installation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Developing</span></p>
+<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Development</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/coding_style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
 </ul>
@@ -180,10 +185,10 @@
 <span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Task</span><span class="p">,</span> <span class="n">Registration</span><span class="p">,</span> <span class="n">RegistrationKind</span>
 
 
-<div class="viewcode-block" id="BaseReviewTestCase"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.BaseReviewTestCase">[docs]</a><span class="k">class</span> <span class="nc">BaseReviewTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseReviewTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.BaseReviewTestCase">[docs]</a><span class="k">class</span> <span class="nc">BaseReviewTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="n">fixtures</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relations&#39;</span><span class="p">,</span> <span class="s1">&#39;compensations&#39;</span><span class="p">,</span> <span class="s1">&#39;registrations&#39;</span><span class="p">,</span> <span class="s1">&#39;registrationkinds&#39;</span><span class="p">,</span> <span class="s1">&#39;agegroups&#39;</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">]</span>
 
-<div class="viewcode-block" id="BaseReviewTestCase.setUp"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.BaseReviewTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseReviewTestCase.setUp"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.BaseReviewTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the Users and a default Proposal to use in the tests below.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -204,8 +209,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="n">Study</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">compensation</span><span class="o">=</span><span class="n">Compensation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span></div></div>
 
 
-<div class="viewcode-block" id="ReviewTestCase"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.ReviewTestCase">[docs]</a><span class="k">class</span> <span class="nc">ReviewTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="ReviewTestCase.test_start_review"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.ReviewTestCase.test_start_review">[docs]</a>    <span class="k">def</span> <span class="nf">test_start_review</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ReviewTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.ReviewTestCase">[docs]</a><span class="k">class</span> <span class="nc">ReviewTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="ReviewTestCase.test_start_review"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.ReviewTestCase.test_start_review">[docs]</a>    <span class="k">def</span> <span class="nf">test_start_review</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests starting of a Review from a submitted Proposal.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -234,8 +239,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: aanmelding ontvangen&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="SupervisorTestCase"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.SupervisorTestCase">[docs]</a><span class="k">class</span> <span class="nc">SupervisorTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="SupervisorTestCase.test_decision_supervisor"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.SupervisorTestCase.test_decision_supervisor">[docs]</a>    <span class="k">def</span> <span class="nf">test_decision_supervisor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SupervisorTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.SupervisorTestCase">[docs]</a><span class="k">class</span> <span class="nc">SupervisorTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="SupervisorTestCase.test_decision_supervisor"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.SupervisorTestCase.test_decision_supervisor">[docs]</a>    <span class="k">def</span> <span class="nf">test_decision_supervisor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests whether a Decision from the supervisor leads to a change in the Review.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -257,16 +262,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: aanmelding ontvangen&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="AssignmentTestCase"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.AssignmentTestCase">[docs]</a><span class="k">class</span> <span class="nc">AssignmentTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="AssignmentTestCase.test_assignment"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.AssignmentTestCase.test_assignment">[docs]</a>    <span class="k">def</span> <span class="nf">test_assignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AssignmentTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AssignmentTestCase">[docs]</a><span class="k">class</span> <span class="nc">AssignmentTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="AssignmentTestCase.test_assignment"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AssignmentTestCase.test_assignment">[docs]</a>    <span class="k">def</span> <span class="nf">test_assignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests whether the assignment works correctly.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div></div>
 
 
-<div class="viewcode-block" id="CommissionTestCase"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.CommissionTestCase">[docs]</a><span class="k">class</span> <span class="nc">CommissionTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="CommissionTestCase.test_decision_commission"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.CommissionTestCase.test_decision_commission">[docs]</a>    <span class="k">def</span> <span class="nf">test_decision_commission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CommissionTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.CommissionTestCase">[docs]</a><span class="k">class</span> <span class="nc">CommissionTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="CommissionTestCase.test_decision_commission"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.CommissionTestCase.test_decision_commission">[docs]</a>    <span class="k">def</span> <span class="nf">test_decision_commission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tests whether the commission phase in a Review works correctly.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -309,8 +314,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">go</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># go</span></div></div>
 
 
-<div class="viewcode-block" id="AutoReviewTests"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.AutoReviewTests">[docs]</a><span class="k">class</span> <span class="nc">AutoReviewTests</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
-<div class="viewcode-block" id="AutoReviewTests.test_auto_review"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.AutoReviewTests.test_auto_review">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewTests"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests">[docs]</a><span class="k">class</span> <span class="nc">AutoReviewTests</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
 
@@ -363,7 +368,7 @@
         <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">8</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AutoReviewTests.test_auto_review_age_groups"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.AutoReviewTests.test_auto_review_age_groups">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_age_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review_age_groups"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review_age_groups">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_age_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">age_groups</span> <span class="o">=</span> <span class="n">AgeGroup</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># toddlers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -386,7 +391,7 @@
         <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AutoReviewTests.test_auto_review_observation"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.AutoReviewTests.test_auto_review_observation">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review_observation"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review_observation">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_observation</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
         <span class="n">o</span> <span class="o">=</span> <span class="n">Observation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mean_hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -407,7 +412,7 @@
         <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review_observation</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="AutoReviewTests.test_auto_review_task"><a class="viewcode-back" href="../../source_bak/reviews.html#reviews.tests.AutoReviewTests.test_auto_review_task">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review_task"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review_task">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">age_groups</span> <span class="o">=</span> <span class="n">AgeGroup</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># adolescents</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>

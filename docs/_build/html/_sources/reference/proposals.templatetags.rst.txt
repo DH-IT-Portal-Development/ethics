@@ -1,6 +1,11 @@
 proposals.templatetags package
 ==============================
 
+.. automodule:: proposals.templatetags
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 Submodules
 ----------
 
@@ -8,10 +13,3 @@ Submodules
 
    proposals.templatetags.proposal_filters
 
-Module contents
----------------
-
-.. automodule:: proposals.templatetags
-    :members:
-    :undoc-members:
-    :show-inheritance:
