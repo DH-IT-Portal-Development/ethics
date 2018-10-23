@@ -2,8 +2,9 @@
 Deployment steps
 ****************
 
-All steps below are automated in a puppet module, but sometimes in a different order. You do not need to actually do
-this yourself, but you probably should know what the module does.
+All steps (except step 6) are automated in a puppet module, but sometimes in a different order. You do not need to
+actually do this yourself, but you should know what the module does. In case of a production deploy: make sure you check
+that step 6 has been completed!
 
 This guide assumes you are running on a Debian OS with Apache and MySQL.
 
@@ -201,7 +202,34 @@ which can be found in ``/admin`` through your favourite browser. Make sure this 
     You still need to add this account to the proper groups through the admin interface, but this way your user can log
     in with his/her LDAP credentials.
 
-6. Finishing up
+6. Cron (production only)
+=========================
+
+.. warning::
+    This step is **not** handled by the puppet module!
+
+    Manual configuration is necessary.
+
+Everyday at 7 AM, a cron task is scheduled to run a management command. This command sends out review reminders when
+certain criteria are met.
+
+To enable this, create a file in ``/etc/cron.d/`` to run the following command:
+
+.. code::
+
+    /path/to/env/bin/python /path/to/source/manage.py send_reminders
+
+It's probably best to send the output to ``/dev/null``, as the sysadmin's probably panick when they get errors they
+don't know.
+
+An example of a full Cron definition (taken straight from the then-current production server):
+
+.. code::
+
+    0 7 * * * /hum/web/etcl.hum.uu.nl/data/etcl/env/bin/python /hum/web/etcl.hum.uu.nl/data/etcl/source/manage.py send_reminders >/dev/null 2>&1
+
+
+7. Finishing up
 ===============
 
 We're almost done, we only need to make our static files avaible, make sure we have the right translation file and

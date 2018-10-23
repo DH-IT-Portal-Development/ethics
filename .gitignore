@@ -18,4 +18,4 @@ htmlcov/
 .idea
 
 ### Docs ###
-docs/_build/doctree/**
+docs/_build/doctrees/**

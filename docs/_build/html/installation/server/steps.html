@@ -109,7 +109,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#filling-a-new-database">Filling a new database</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#finishing-up">6. Finishing up</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cron-production-only">6. Cron (production only)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finishing-up">7. Finishing up</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#static-files">Static files</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#translation-file">Translation file</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#restart-apache">Restart Apache</a></li>
@@ -206,8 +207,9 @@
             
   <div class="section" id="deployment-steps">
 <h1>Deployment steps<a class="headerlink" href="#deployment-steps" title="Permalink to this headline">¶</a></h1>
-<p>All steps below are automated in a puppet module, but sometimes in a different order. You do not need to actually do
-this yourself, but you probably should know what the module does.</p>
+<p>All steps (except step 6) are automated in a puppet module, but sometimes in a different order. You do not need to
+actually do this yourself, but you should know what the module does. In case of a production deploy: make sure you check
+that step 6 has been completed!</p>
 <p>This guide assumes you are running on a Debian OS with Apache and MySQL.</p>
 <div class="section" id="install-prerequisites">
 <h2>1. Install prerequisites<a class="headerlink" href="#install-prerequisites" title="Permalink to this headline">¶</a></h2>
@@ -385,8 +387,28 @@ in with his/her LDAP credentials.</p>
 </div>
 </div>
 </div>
+<div class="section" id="cron-production-only">
+<h2>6. Cron (production only)<a class="headerlink" href="#cron-production-only" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>This step is <strong>not</strong> handled by the puppet module!</p>
+<p class="last">Manual configuration is necessary.</p>
+</div>
+<p>Everyday at 7 AM, a cron task is scheduled to run a management command. This command sends out review reminders when
+certain criteria are met.</p>
+<p>To enable this, create a file in <code class="docutils literal notranslate"><span class="pre">/etc/cron.d/</span></code> to run the following command:</p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">send_reminders</span>
+</pre></div>
+</div>
+<p>It’s probably best to send the output to <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code>, as the sysadmin’s probably panick when they get errors they
+don’t know.</p>
+<p>An example of a full Cron definition (taken straight from the then-current production server):</p>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">7</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">hum</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">etcl</span><span class="o">.</span><span class="n">hum</span><span class="o">.</span><span class="n">uu</span><span class="o">.</span><span class="n">nl</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">etcl</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">/</span><span class="n">hum</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">etcl</span><span class="o">.</span><span class="n">hum</span><span class="o">.</span><span class="n">uu</span><span class="o">.</span><span class="n">nl</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">etcl</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">send_reminders</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="finishing-up">
-<h2>6. Finishing up<a class="headerlink" href="#finishing-up" title="Permalink to this headline">¶</a></h2>
+<h2>7. Finishing up<a class="headerlink" href="#finishing-up" title="Permalink to this headline">¶</a></h2>
 <p>We’re almost done, we only need to make our static files avaible, make sure we have the right translation file and
 restart Apache.</p>
 <div class="section" id="static-files">
