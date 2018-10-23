@@ -86,6 +86,14 @@ def study_urls(study, prev_study_completed):
 
     return urls
 
+def create_documents_for_study(study):
+    from .models import Documents
+
+    d = Documents()
+    d.proposal = study.proposal
+    d.study = study
+    d.save()
+
 
 def copy_study_to_proposal(proposal, study):
     """
@@ -108,8 +116,6 @@ def copy_study_to_proposal(proposal, study):
     s.proposal = proposal
     s.save()
 
-    print(s is study)
-    print(s == study)
     s.age_groups.set(age_groups)
     s.traits.set(traits)
     s.compensation = compensation
@@ -128,7 +134,6 @@ def copy_study_to_proposal(proposal, study):
 def copy_documents_to_study(study_old, study):
     from .models import Documents
 
-    print(study_old)
     documents = Documents.objects.get(study__pk=study_old)
 
     d = documents
