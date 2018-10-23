@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from core.views import AllowErrorsMixin, UpdateView, FormSetUpdateView
 from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
+from studies.utils import create_documents_for_study
 from ..forms import StudyStartForm
 from ..models import Proposal
 
@@ -89,7 +90,17 @@ class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
 
     def get_queryset(self):
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        return Documents.objects.filter(proposal=proposal)
+        documents = Documents.objects.filter(proposal=proposal)
+
+        Proposal.objects.count()
+        if len(documents) == 0:
+            for study in proposal.study_set.all():
+                create_documents_for_study(study)
+
+            return Documents.objects.filter(proposal=proposal)
+
+        return documents
+
 
     def get_next_url(self):
         """

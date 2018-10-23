@@ -86,6 +86,14 @@ def study_urls(study, prev_study_completed):
 
     return urls
 
+def create_documents_for_study(study):
+    from .models import Documents
+
+    d = Documents()
+    d.proposal = study.proposal
+    d.study = study
+    d.save()
+
 
 def copy_study_to_proposal(proposal, study):
     """
