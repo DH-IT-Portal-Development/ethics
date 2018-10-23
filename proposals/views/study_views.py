@@ -70,6 +70,8 @@ class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
 
         self.extra = (len(proposal.study_set.all()) + self.extra) - len(self.get_queryset().all())
 
+        print(self.extra)
+
         return super(StudyConsent, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -92,7 +94,6 @@ class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
         documents = Documents.objects.filter(proposal=proposal)
 
-        Proposal.objects.count()
         if len(documents) == 0:
             for study in proposal.study_set.all():
                 create_documents_for_study(study)
