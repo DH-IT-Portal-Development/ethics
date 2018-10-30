@@ -16,44 +16,15 @@ Todos
 
 .. todolist::
 
-Index
-=====
-
 .. toctree::
-   :caption: General
-   :maxdepth: 1
+   :caption: Index
+   :maxdepth: 2
 
    general/index
-
-.. toctree::
-   :caption: Installation
-   :maxdepth: 2
-
-   installation/local/index
-   installation/server/index
-
-.. toctree::
-   :caption: Maintenance & Administration
-   :maxdepth: 1
-
    maintenance/index
-
-.. toctree::
-   :caption: Development
-   :maxdepth: 1
-
    developing/index
-   developing/tests
-   developing/i18n
-   developing/documentation
-   developing/toolset
-
-.. toctree::
-   :caption: Code Reference
-   :maxdepth: 2
-
+   installation/index
    reference/index
-
 
 Indices and tables
 ==================

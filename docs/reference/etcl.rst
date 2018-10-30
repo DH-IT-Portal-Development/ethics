@@ -11,7 +11,6 @@ Submodules
 
 .. toctree::
 
-   etcl.ldap_settings
    etcl.settings
    etcl.urls
    etcl.wsgi
