@@ -19,3 +19,4 @@ htmlcov/
 
 ### Docs ###
 docs/_build/doctrees/**
+*.doctree
