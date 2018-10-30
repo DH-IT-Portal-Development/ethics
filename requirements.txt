@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12         # via sphinx
 babel==2.6.0              # via sphinx
-certifi==2018.8.24        # via requests
+certifi==2018.10.15       # via requests
 chardet==3.0.4            # via requests
 django-auth-ldap==1.7.0
 django-braces==1.13.0
@@ -28,13 +28,13 @@ pygments==2.2.0           # via sphinx
 pyparsing==2.2.2          # via packaging
 pypdf2==1.26.0            # via xhtml2pdf
 python-ldap==3.1.0        # via django-auth-ldap
-pytz==2018.5              # via babel, django
+pytz==2018.7              # via babel, django
 reportlab==3.5.9          # via django-easy-pdf, xhtml2pdf
-requests==2.19.1          # via sphinx
+requests==2.20.0          # via sphinx
 six==1.11.0               # via html5lib, packaging, sphinx, xhtml2pdf
 snowballstemmer==1.2.1    # via sphinx
 sphinx==1.8.1
 sphinxcontrib-websupport==1.1.0  # via sphinx
-urllib3==1.23             # via requests
+urllib3==1.24             # via requests
 webencodings==0.5.1       # via html5lib
 xhtml2pdf==0.2.3
