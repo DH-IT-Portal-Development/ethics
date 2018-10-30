@@ -34,7 +34,6 @@ django.setup()
 extensions = [
     'sphinxcontrib.apidoc',
     'sphinx.ext.autodoc',
-    'sphinx.ext.todo',
     'sphinxcontrib_django',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode'
