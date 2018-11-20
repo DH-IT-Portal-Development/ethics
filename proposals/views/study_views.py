@@ -70,8 +70,6 @@ class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
 
         self.extra = (len(proposal.study_set.all()) + self.extra) - len(self.get_queryset().all())
 
-        print(self.extra)
-
         return super(StudyConsent, self).get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
