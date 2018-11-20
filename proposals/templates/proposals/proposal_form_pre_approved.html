@@ -1,0 +1,108 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Algemene informatie over de studie" %}
+{% endblock %}
+
+{% block noprogressbar %}{% endblock %}
+
+{% block sidebar %}
+{% if not create %}
+{% include "base/sidebar.html" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<script>
+$(function() {
+
+    // Default for proposals
+    check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
+    depends_on_value('other_applicants', 'True', 'applicants');
+    depends_on_value('other_stakeholders', 'True', 'stakeholders');
+    check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
+    check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
+
+    // Additional contraints for pre-approved proposals
+    depends_on_value('is_pre_approved', 'True', 'relation');
+    depends_on_value('is_pre_approved', 'True', 'supervisor');
+    depends_on_value('is_pre_approved', 'True', 'other_applicants');
+    depends_on_value('is_pre_approved', 'True', 'other_stakeholders');
+    depends_on_value('is_pre_approved', 'True', 'date_start');
+    depends_on_value('is_pre_approved', 'True', 'title');
+    depends_on_value('is_pre_approved', 'True', 'summary');
+    depends_on_value('is_pre_approved', 'True', 'pre_assessment_pdf');
+    depends_on_value('is_pre_approved', 'True', 'funding');
+    depends_on_value('is_pre_approved', 'True', 'pre_approval_institute');
+    depends_on_value('is_pre_approved', 'True', 'pre_approval_pdf');
+    warning_on_value('is_pre_approved', 'False', 'pre_approval_warning');
+
+    // Add datepicker for date_start, set locale to current language
+    $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
+
+    var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
+    $("#id_date_start").datepicker({
+        dateFormat: date_format,
+        minDate: 'now',
+    })
+
+    // AJAX applicants
+    $('select#id_applicants').select2({
+      ajax: {
+        url: '{% url 'core:user_search' %}',
+        dataType: 'json',
+        data: function (params) {
+          return {
+            q: params.term || '*',
+            page: params.page || 1
+          }
+        },
+        delay: 1500,
+        error: function (err) {
+            console.log(err)
+        },
+        cache: true
+      }
+    });
+
+    // Add a running word count to the summary
+    var summary = $("#id_summary");
+    if (summary.length)
+    {
+        summary.after("<span id='wordcount' />");
+        summary[0].addEventListener("input", function() {
+            var wordCount = 0;
+            if (this.value.trim()) {
+                wordCount = this.value.match(/\S+/g).length;
+            }
+            $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
+        }, false);
+    }
+});
+</script>
+{% if not create and is_supervisor  %}
+    {% blocktrans %}
+        Je past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat je het formulier
+        invuld alsof je die student/PhD kandidaat bent.
+    {% endblocktrans %}
+    <br/>
+    <br/>
+{% endif %}
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <div class="warning" id="pre_approval_warning">
+        {% url 'proposals:start' as proposal_url %}
+        {% blocktrans %}
+            Dit formulier is bedoeld voor studies die al goedgekeurd zijn door een andere commissie. Indien dit
+            niet het geval is, dient u het <a href="{{ proposal_url }}">normale formulier</a> in te vullen.
+        {% endblocktrans %}
+    </div>
+    {% include "base/form_buttons.html" %}
+</form>
+{% endblock %}

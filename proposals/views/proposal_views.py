@@ -411,6 +411,9 @@ class PreApprovedMixin(ProposalMixin):
 
 
 class ProposalCreatePreApproved(PreApprovedMixin, ProposalCreate):
+
+    template_name = 'proposals/proposal_form_pre_approved.html'
+
     def form_valid(self, form):
         """Sets is_pre_approved to True"""
         form.instance.is_pre_approved = True
