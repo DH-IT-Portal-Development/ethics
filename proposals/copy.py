@@ -53,6 +53,7 @@ def copy_proposal(self, form):
     for study in copy_studies:
         copy_study_to_proposal(copy_proposal, study)
 
-    copy_documents_to_proposal(parent_pk, copy_proposal)
+    if not copy_proposal.is_pre_approved:
+        copy_documents_to_proposal(parent_pk, copy_proposal)
 
     return copy_proposal

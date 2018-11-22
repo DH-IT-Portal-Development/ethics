@@ -93,6 +93,13 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
         </a>
     </li>
     {% endif %}
+    {% if review.proposal.pre_approval_pdf %}
+    <li>
+        <a href="{{ review.proposal.pre_approval_pdf.url }}" target="_blank">
+            {% trans "Toestemmingsbrief andere ethische commissie" %}
+        </a>
+    </li>
+    {% endif %}
 </ul>
 
 {% for study in review.proposal.study_set.all %}

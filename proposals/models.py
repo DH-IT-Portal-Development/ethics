@@ -138,6 +138,24 @@ Zep software)'),
         blank=True,
         validators=[validate_pdf_or_doc])
 
+    is_pre_approved = models.NullBooleanField(
+        _('Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze EtCL commissie?'),
+        default=None,
+        null=True,
+        blank=True
+    )
+    pre_approval_institute = models.CharField(
+        _('Welk instituut heeft de studie goedgekeurd?'),
+        max_length=200,
+        blank=True,
+        null=True
+    )
+    pre_approval_pdf = models.FileField(
+        _('Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        validators=[validate_pdf_or_doc]
+    )
+
     in_course = models.BooleanField(
         _('Ik vul de portal in in het kader van een cursus'),
         default=False)
@@ -295,6 +313,8 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
             result = _('Voortoetsing')
         elif self.is_practice():
             result = _('Oefening')
+        elif self.is_pre_approved:
+            result = _('Extern getoetst')
 
         return result
 
