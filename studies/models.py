@@ -197,7 +197,7 @@ cadeautje.'),
     # Fields with respect to informed consent
     passive_consent = models.NullBooleanField(
         _('Maakt u gebruik van passieve informed consent?'),
-        help_text=mark_safe(_('Wanneer u kinderen via een instelling \
+        help_text=_(mark_safe('Wanneer u kinderen via een instelling \
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
 passieve informed consent. U kunt de templates vinden op \
@@ -255,7 +255,7 @@ deelname zodanig belastend zijn dat deze <em>ondanks de verkregen \
 informed consent</em> vragen zou kunnen oproepen (of zelfs \
 verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
 zelf, of bij ouders of andere vertegenwoordigers?'),
-        help_text=mark_safe(_('Dit zou bijvoorbeeld het geval kunnen zijn \
+        help_text=_(mark_safe('Dit zou bijvoorbeeld het geval kunnen zijn \
 bij een \'onmenselijk\' lange en uitputtende taak, een zeer confronterende \
 vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren \
 inbreuk op de privacy, of een ander ervaren gebrek aan respect. \
@@ -278,7 +278,7 @@ economische, juridische) schade door deelname aan bovenstaand \
 onderzoekstraject <em>meer dan</em> minimaal? \
 D.w.z. ligt de kans op en/of omvang van mogelijke schade \
 bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"?'),
-        help_text=mark_safe(_('Achtergrondrisico is datgene dat gezonde, \
+        help_text=_(mark_safe('Achtergrondrisico is datgene dat gezonde, \
 gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken \
 in het dagelijks leven ten deel valt. \
 Denk bij schade ook aan de gevolgen die het voor de deelnemer of \
