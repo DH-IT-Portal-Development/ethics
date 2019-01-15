@@ -286,7 +286,8 @@ class ProposalConfirmation(GroupRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         """On confirmation, return to the Review archive"""
-        return reverse('reviews:my_archive')
+        committee = self.object.reviewing_committee.name
+        return reverse('reviews:my_archive', args=[committee])
 
 
 class ProposalCopy(UserFormKwargsMixin, CreateView):

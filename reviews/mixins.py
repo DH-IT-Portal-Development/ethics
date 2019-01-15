@@ -1,7 +1,10 @@
+from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
+from django.utils.functional import cached_property
+from django.views.generic.base import ContextMixin
 from django.views.generic.detail import SingleObjectMixin
 
-from .models import Review, Decision
+from .models import Decision, Review
 from .utils import auto_review
 
 
@@ -25,6 +28,22 @@ class UserAllowedMixin(SingleObjectMixin):
                 raise PermissionDenied
 
         return obj
+
+
+class CommitteeMixin(ContextMixin):
+
+    @cached_property
+    def committee(self):
+        group = self.kwargs.get('committee')
+
+        return Group.objects.get(name=group)
+
+    def get_context_data(self, **kwargs):
+        context = super(CommitteeMixin, self).get_context_data(**kwargs)
+
+        context['committee'] = self.committee
+
+        return context
 
 
 class AutoReviewMixin(object):

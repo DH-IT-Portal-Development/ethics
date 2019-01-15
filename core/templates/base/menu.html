@@ -40,34 +40,55 @@
             </ul>
         </li>
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">{% trans "UiL OTS archief" %}</a>
+            <a href="#" class="pure-menu-link">{% trans "Archief" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS-studies bekijken" %}</a>
+                    <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Alle studies bekijken" %}</a>
                 </li>
-                {% if user|in_commission %}
+                {% if user|is_secretary %}
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'proposals:archive_export' %}">{% trans "Site-export" %}</a>
                 </li>
                 {% endif %}
             </ul>
         </li>
-        {% if user|in_commission %}
+        {% if user|in_fetc %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">{% trans "Commissie" %}</a>
+            <a href="#" class="pure-menu-link">{% trans "FETC" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:my_open' %}">{% trans "Mijn openstaande besluiten" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:my_open' 'FETC' %}">{% trans "Mijn openstaande besluiten" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:my_archive' %}">{% trans "Al mijn besluiten" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:my_archive' 'FETC' %}">{% trans "Al mijn besluiten" %}</a>
                 </li>
                 {% if user|is_secretary %}
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:open' %}">{% trans "Alle openstaande besluiten commissieleden" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:open' 'FETC' %}">{% trans "Alle openstaande besluiten commissieleden" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' 'FETC' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
+                </li>
+                {% endif %}
+            </ul>
+        </li>
+        {% endif %}
+        {% if user|in_etcl %}
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">{% trans "ETCL" %}</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:my_open' 'ETCL' %}">{% trans "Mijn openstaande besluiten" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:my_archive' 'ETCL' %}">{% trans "Al mijn besluiten" %}</a>
+                </li>
+                {% if user|is_secretary %}
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:open' 'ETCL' %}">{% trans "Alle openstaande besluiten commissieleden" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' 'ETCL' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
                 </li>
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'reviews:to_conclude' %}">{% trans "Nog af te handelen studies" %}</a>

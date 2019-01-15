@@ -9,10 +9,11 @@ from .views import \
 app_name = 'reviews'
 
 urlpatterns = [
-    url(r'^$', DecisionListView.as_view(), name='my_archive'),
-    url(r'^my_open/$', DecisionMyOpenView.as_view(), name='my_open'),
-    url(r'^open/$', DecisionOpenView.as_view(), name='open'),
-    url(r'^open_supervisors/$', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),
+    url(r'^(?P<committee>\w+)/$', DecisionListView.as_view(),
+        name='my_archive'),
+    url(r'^(?P<committee>\w+)/my_open/$', DecisionMyOpenView.as_view(), name='my_open'),
+    url(r'^(?P<committee>\w+)/open/$', DecisionOpenView.as_view(), name='open'),
+    url(r'^(?P<committee>\w+)/open_supervisors/$', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),
     url(r'^to_conclude/$', ToConcludeProposalView.as_view(),
         name='to_conclude'),
 
