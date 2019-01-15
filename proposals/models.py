@@ -75,10 +75,11 @@ class Proposal(models.Model):
         max_length=16,
         unique=True)
 
-    reviewing_comittee = models.ForeignKey(
+    reviewing_committee = models.ForeignKey(
         Group,
         verbose_name=_('Door welke comissie dient deze studie te worden beoordeeld?'),
-        help_text="" # TODO: help text
+        help_text="", # TODO: help text
+        on_delete=models.PROTECT
     )
 
     date_start = models.DateField(
