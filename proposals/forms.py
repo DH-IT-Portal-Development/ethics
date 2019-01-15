@@ -2,6 +2,7 @@
 
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
@@ -20,6 +21,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         model = Proposal
         fields = [
             'is_pre_approved',
+            'reviewing_comittee',
             'relation', 'supervisor',
             'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
@@ -30,6 +32,7 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
         ]
         widgets = {
             'is_pre_approved': forms.RadioSelect(choices=YES_NO),
+            'reviewing_comittee': forms.RadioSelect(),
             'relation': forms.RadioSelect(),
             'other_applicants': forms.RadioSelect(choices=YES_NO),
             'other_stakeholders': forms.RadioSelect(choices=YES_NO),
@@ -72,6 +75,8 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
 
         self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + get_users_as_list(supervisors)
         self.fields['applicants'].choices = get_users_as_list(applicants)
+
+        self.fields['reviewing_comittee'].choices = [(x.pk, x.name) for x in Group.objects.exclude(id=2)]
 
         if in_course:
             self.fields['relation'].queryset = Relation.objects.filter(check_in_course=True)

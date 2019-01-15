@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -73,6 +74,13 @@ class Proposal(models.Model):
     reference_number = models.CharField(
         max_length=16,
         unique=True)
+
+    reviewing_comittee = models.ForeignKey(
+        Group,
+        verbose_name=_('Door welke comissie dient deze studie te worden beoordeeld?'),
+        help_text="" # TODO: help text
+    )
+
     date_start = models.DateField(
         _('Wat is, indien bekend, de beoogde startdatum van uw studie?'),
         blank=True,
