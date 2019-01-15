@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>proposals.admin module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="proposals.copy module" href="proposals.copy.html" />
+    <link rel="prev" title="proposals.views.wmo_views module" href="proposals.views.wmo_views.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="proposals.html">proposals package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="proposals.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="proposals.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">proposals.admin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.copy.html">proposals.copy module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.forms.html">proposals.forms module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.models.html">proposals.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.tests.html">proposals.tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.translation.html">proposals.translation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.urls.html">proposals.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.utils.html">proposals.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.widgets.html">proposals.widgets module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="proposals.html">proposals package</a> &raquo;</li>
+        
+      <li>proposals.admin module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/proposals.admin.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-proposals.admin">
+<span id="proposals-admin-module"></span><h1>proposals.admin module<a class="headerlink" href="#module-proposals.admin" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="proposals.admin.FundingAdmin">
+<em class="property">class </em><code class="descclassname">proposals.admin.</code><code class="descname">FundingAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/admin.html#FundingAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.admin.FundingAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="proposals.admin.FundingAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('order', 'description', 'needs_details', 'needs_name', 'requires_review')</em><a class="headerlink" href="#proposals.admin.FundingAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.FundingAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#proposals.admin.FundingAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.FundingAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#proposals.admin.FundingAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.FundingAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#proposals.admin.FundingAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="proposals.admin.ProposalAdmin">
+<em class="property">class </em><code class="descclassname">proposals.admin.</code><code class="descname">ProposalAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/admin.html#ProposalAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.admin.ProposalAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="proposals.admin.ProposalAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('reference_number', 'title', 'created_by', 'supervisor')</em><a class="headerlink" href="#proposals.admin.ProposalAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.ProposalAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('reference_number',)</em><a class="headerlink" href="#proposals.admin.ProposalAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.ProposalAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#proposals.admin.ProposalAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.ProposalAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['reference_number']</em><a class="headerlink" href="#proposals.admin.ProposalAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="proposals.admin.RelationAdmin">
+<em class="property">class </em><code class="descclassname">proposals.admin.</code><code class="descname">RelationAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/admin.html#RelationAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.admin.RelationAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="proposals.admin.RelationAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('order', 'description', 'needs_supervisor', 'check_in_course', 'check_pre_assessment')</em><a class="headerlink" href="#proposals.admin.RelationAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.RelationAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#proposals.admin.RelationAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.RelationAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#proposals.admin.RelationAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.admin.RelationAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#proposals.admin.RelationAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="proposals.copy.html" class="btn btn-neutral float-right" title="proposals.copy module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="proposals.views.wmo_views.html" class="btn btn-neutral" title="proposals.views.wmo_views module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

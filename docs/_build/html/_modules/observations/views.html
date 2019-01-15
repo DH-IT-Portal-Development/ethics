@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>observations.views &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>observations.views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for observations.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">core.views</span> <span class="k">import</span> <span class="n">CreateView</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span>
+<span class="kn">from</span> <span class="nn">etcl</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Study</span>
+<span class="kn">from</span> <span class="nn">studies.utils</span> <span class="k">import</span> <span class="n">get_study_progress</span>
+
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">ObservationForm</span><span class="p">,</span> <span class="n">ObservationUpdateAttachmentsForm</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Observation</span>
+
+
+<span class="c1">#############################</span>
+<span class="c1"># CRUD actions on Observation</span>
+<span class="c1">#############################</span>
+<div class="viewcode-block" id="ObservationMixin"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationMixin">[docs]</a><span class="k">class</span> <span class="nc">ObservationMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mixin for a Observation, to use in both ObservationCreate and ObservationUpdate below&quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Observation</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ObservationForm</span>
+    <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Observatie opgeslagen&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ObservationMixin.get_context_data"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting the Study and progress on the context&quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ObservationMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;study&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">study</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_study_progress</span><span class="p">(</span><span class="n">study</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="ObservationMixin.get_form_kwargs"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationMixin.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the Study as a form kwarg&quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ObservationMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;study&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">kwargs</span></div>
+
+<div class="viewcode-block" id="ObservationMixin.get_next_url"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationMixin.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
+        <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:design_end&#39;</span>
+        <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">pk</span>
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">:</span>
+            <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:session_start&#39;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="ObservationMixin.get_back_url"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationMixin.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
+        <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">pk</span>
+        <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:design&#39;</span>
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">:</span>
+            <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;interventions:update&#39;</span>
+            <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">pk</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="ObservationMixin.get_study"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationMixin.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="AttachmentsUpdate"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.AttachmentsUpdate">[docs]</a><span class="k">class</span> <span class="nc">AttachmentsUpdate</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Observation</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;observations/observation_update_attachments.html&#39;</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ObservationUpdateAttachmentsForm</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span></div>
+
+
+<div class="viewcode-block" id="ObservationCreate"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationCreate">[docs]</a><span class="k">class</span> <span class="nc">ObservationCreate</span><span class="p">(</span><span class="n">ObservationMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates an Observation from a ObservationForm&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ObservationCreate.form_valid"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationCreate.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the Study on the Observation before starting validation.&quot;&quot;&quot;</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_study</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ObservationCreate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ObservationCreate.get_study"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationCreate.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the Study from the pk kwarg&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Study</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pk&#39;</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="ObservationUpdate"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationUpdate">[docs]</a><span class="k">class</span> <span class="nc">ObservationUpdate</span><span class="p">(</span><span class="n">ObservationMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates a Observation from a ObservationForm&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ObservationUpdate.get_study"><a class="viewcode-back" href="../../reference/observations.views.html#observations.views.ObservationUpdate.get_study">[docs]</a>    <span class="k">def</span> <span class="nf">get_study</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves the Study from the form object&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">study</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

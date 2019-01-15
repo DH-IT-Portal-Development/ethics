@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>interventions.models module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="interventions.tests module" href="interventions.tests.html" />
+    <link rel="prev" title="interventions.forms module" href="interventions.forms.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="interventions.html">interventions package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="interventions.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="interventions.forms.html">interventions.forms module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">interventions.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interventions.tests.html">interventions.tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interventions.urls.html">interventions.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interventions.utils.html">interventions.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="interventions.views.html">interventions.views module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="interventions.html">interventions package</a> &raquo;</li>
+        
+      <li>interventions.models module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/interventions.models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-interventions.models">
+<span id="interventions-models-module"></span><h1>interventions.models module<a class="headerlink" href="#module-interventions.models" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="interventions.models.Intervention">
+<em class="property">class </em><code class="descclassname">interventions.models.</code><code class="descname">Intervention</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>version</em>, <em>period</em>, <em>multiple_sessions</em>, <em>session_frequency</em>, <em>duration</em>, <em>experimenter</em>, <em>description</em>, <em>has_controls</em>, <em>controls_description</em>, <em>measurement</em>, <em>extra_task</em>, <em>amount_per_week</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/models.html#Intervention"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.models.Intervention" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="core.models.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</li>
+<li><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De ETCL neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</li>
+<li><strong>version</strong> (<em>PositiveIntegerField</em>) – Internal - describes which version of the intervention model is used</li>
+<li><strong>period</strong> (<em>TextField</em>) – De interventie vindt plaats binnen het schooljaar 2018-2019</li>
+<li><strong>multiple_sessions</strong> (<em>BooleanField</em>) – Zal de interventie vaker dan één keer plaatsvinden?</li>
+<li><strong>session_frequency</strong> (<em>TextField</em>) – Wat is de frequentie van de interventie?</li>
+<li><strong>duration</strong> (<em>PositiveIntegerField</em>) – Wat is de duur van de interventie per sessie in minuten?</li>
+<li><strong>experimenter</strong> (<em>TextField</em>) – Wie voert de interventie uit?</li>
+<li><strong>description</strong> (<em>TextField</em>) – Geef een beschrijving van de experimentele interventie</li>
+<li><strong>has_controls</strong> (<em>BooleanField</em>) – Is er sprake van een controlegroep?</li>
+<li><strong>controls_description</strong> (<em>TextField</em>) – Geef een beschrijving van de controleinterventie</li>
+<li><strong>measurement</strong> (<em>TextField</em>) – Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina ook “takenonderzoek” aanvinken.</li>
+<li><strong>extra_task</strong> (<em>BooleanField</em>) – Moet het nog een taak doen, zoals het invullen van een (onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?</li>
+<li><strong>amount_per_week</strong> (<em>PositiveIntegerField</em>) – Hoe vaak per week vindt de interventiesessie plaats?</li>
+<li><strong>study</strong> (OneToOneField to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</li>
+<li><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="interventions.models.Intervention.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#interventions.models.Intervention.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="interventions.models.Intervention.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#interventions.models.Intervention.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.amount_per_week">
+<code class="descname">amount_per_week</code><a class="headerlink" href="#interventions.models.Intervention.amount_per_week" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Hoe vaak per week vindt de interventiesessie plaats?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.controls_description">
+<code class="descname">controls_description</code><a class="headerlink" href="#interventions.models.Intervention.controls_description" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Geef een beschrijving van de controleinterventie</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.description">
+<code class="descname">description</code><a class="headerlink" href="#interventions.models.Intervention.description" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Geef een beschrijving van de experimentele interventie</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.duration">
+<code class="descname">duration</code><a class="headerlink" href="#interventions.models.Intervention.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Wat is de duur van de interventie per sessie in minuten?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.experimenter">
+<code class="descname">experimenter</code><a class="headerlink" href="#interventions.models.Intervention.experimenter" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Wie voert de interventie uit?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.extra_task">
+<code class="descname">extra_task</code><a class="headerlink" href="#interventions.models.Intervention.extra_task" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Voert de leerling nog een taak uit die niet onder het leerplan valt?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.has_controls">
+<code class="descname">has_controls</code><a class="headerlink" href="#interventions.models.Intervention.has_controls" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Is er sprake van een controlegroep?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.id">
+<code class="descname">id</code><a class="headerlink" href="#interventions.models.Intervention.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.measurement">
+<code class="descname">measurement</code><a class="headerlink" href="#interventions.models.Intervention.measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Hoe wordt het effect van de interventie gemeten?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.multiple_sessions">
+<code class="descname">multiple_sessions</code><a class="headerlink" href="#interventions.models.Intervention.multiple_sessions" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Zal de interventie vaker dan één keer plaatsvinden?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#interventions.models.Intervention.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.period">
+<code class="descname">period</code><a class="headerlink" href="#interventions.models.Intervention.period" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Wat is de periode waarbinnen de interventie plaatsvindt?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.session_frequency">
+<code class="descname">session_frequency</code><a class="headerlink" href="#interventions.models.Intervention.session_frequency" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Wat is de frequentie van de interventie?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.setting">
+<code class="descname">setting</code><a class="headerlink" href="#interventions.models.Intervention.setting" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Geef aan waar de dataverzameling plaatsvindt, accesses the M2M <a class="reference internal" href="#interventions.models.Intervention" title="interventions.models.Intervention"><code class="xref py py-class docutils literal notranslate"><span class="pre">Intervention</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.study">
+<code class="descname">study</code><a class="headerlink" href="#interventions.models.Intervention.study" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study, accesses the <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.study_id">
+<code class="descname">study_id</code><a class="headerlink" href="#interventions.models.Intervention.study_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="interventions.models.Intervention.version">
+<code class="descname">version</code><a class="headerlink" href="#interventions.models.Intervention.version" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> INTERNAL - Describes which version of the intervention model is used</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="interventions.tests.html" class="btn btn-neutral float-right" title="interventions.tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="interventions.forms.html" class="btn btn-neutral" title="interventions.forms module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

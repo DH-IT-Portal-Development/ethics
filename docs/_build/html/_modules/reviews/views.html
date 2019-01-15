@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>reviews.views &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>reviews.views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for reviews.views</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="k">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="k">import</span> <span class="n">generic</span>
+
+<span class="kn">from</span> <span class="nn">braces.views</span> <span class="k">import</span> <span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">GroupRequiredMixin</span>
+
+<span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">get_secretary</span><span class="p">,</span> <span class="n">get_reviewers</span>
+<span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
+
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="k">import</span> <span class="n">ReviewAssignForm</span><span class="p">,</span> <span class="n">ReviewCloseForm</span><span class="p">,</span> <span class="n">DecisionForm</span>
+<span class="kn">from</span> <span class="nn">.mixins</span> <span class="k">import</span> <span class="n">UserAllowedMixin</span><span class="p">,</span> <span class="n">AutoReviewMixin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Review</span><span class="p">,</span> <span class="n">Decision</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">start_review_route</span><span class="p">,</span> <span class="n">notify_secretary</span>
+
+
+<div class="viewcode-block" id="DecisionListView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionListView">[docs]</a><span class="k">class</span> <span class="nc">DecisionListView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;decisions&#39;</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="p">[</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">]</span>
+
+<div class="viewcode-block" id="DecisionListView.get_queryset"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionListView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all Decisions of the current User&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reviewer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DecisionMyOpenView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionMyOpenView">[docs]</a><span class="k">class</span> <span class="nc">DecisionMyOpenView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;decisions&#39;</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="p">[</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">]</span>
+
+<div class="viewcode-block" id="DecisionMyOpenView.get_queryset"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionMyOpenView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all open Decisions of the current User&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reviewer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">go</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DecisionOpenView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionOpenView">[docs]</a><span class="k">class</span> <span class="nc">DecisionOpenView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;decisions&#39;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;reviews/decision_list_open.html&#39;</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span>
+
+<div class="viewcode-block" id="DecisionOpenView.get_queryset"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionOpenView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all open Committee Decisions of all Users&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">go</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="n">review__stage</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">SUPERVISOR</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SupervisorDecisionOpenView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.SupervisorDecisionOpenView">[docs]</a><span class="k">class</span> <span class="nc">SupervisorDecisionOpenView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This page displays all proposals to be reviewed by supervisors. Not to be confused with SupervisorView, which</span>
+<span class="sd">    displays all open reviews for a specific supervisor. Viewable for the secretary only!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;decisions&#39;</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;reviews/decision_supervisor_list_open.html&#39;</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span>
+
+<div class="viewcode-block" id="SupervisorDecisionOpenView.get_queryset"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.SupervisorDecisionOpenView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all open Supervisor Decisions of all Users&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">go</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">review__stage</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">SUPERVISOR</span><span class="p">,</span>
+            <span class="n">review__proposal__status</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SupervisorView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.SupervisorView">[docs]</a><span class="k">class</span> <span class="nc">SupervisorView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This page displays all proposals to be reviewed by a specific supervisors. Not to be confused with</span>
+<span class="sd">        SupervisorDecisionOpenView, which displays all open reviews for all supervisors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;decisions&#39;</span>
+
+<div class="viewcode-block" id="SupervisorView.get_queryset"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.SupervisorView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all the current open Decisions for the current User&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">review__date_end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">review__stage</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">SUPERVISOR</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewDetailView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewDetailView">[docs]</a><span class="k">class</span> <span class="nc">ReviewDetailView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">AutoReviewMixin</span><span class="p">,</span> <span class="n">UserAllowedMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">DetailView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Shows the Decisions for a Review</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Review</span></div>
+
+
+<div class="viewcode-block" id="ReviewAssignView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewAssignView">[docs]</a><span class="k">class</span> <span class="nc">ReviewAssignView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">AutoReviewMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Allows a User of the SECRETARY group to assign reviewers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Review</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ReviewAssignForm</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;reviews/review_assign_form.html&#39;</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span>
+
+<div class="viewcode-block" id="ReviewAssignView.get_success_url"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewAssignView.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:my_open&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReviewAssignView.form_valid"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewAssignView.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates the Review stage and start the selected Review route for the selected Users.&quot;&quot;&quot;</span>
+        <span class="n">route</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">short_route</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+
+        <span class="k">if</span> <span class="n">route</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Start a short/long route</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">COMMISSION</span>
+
+            <span class="n">current_reviewers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">current_reviewers</span><span class="p">())</span>
+            <span class="n">selected_reviewers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;reviewers&#39;</span><span class="p">])</span>
+            <span class="n">new_reviewers</span> <span class="o">=</span> <span class="n">selected_reviewers</span> <span class="o">-</span> <span class="n">current_reviewers</span>
+            <span class="n">obsolete_reviewers</span> <span class="o">=</span> <span class="n">current_reviewers</span> <span class="o">-</span> <span class="n">selected_reviewers</span> <span class="o">-</span> <span class="p">{</span><span class="n">get_secretary</span><span class="p">()}</span>
+
+            <span class="c1"># Create a new Decision for new reviewers</span>
+            <span class="n">start_review_route</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span> <span class="n">new_reviewers</span><span class="p">,</span> <span class="n">route</span><span class="p">)</span>
+
+            <span class="c1"># Remove the Decision for obsolete reviewers</span>
+            <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer__in</span><span class="o">=</span><span class="n">obsolete_reviewers</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Directly mark this Proposal as closed: applicants should start a revision Proposal</span>
+            <span class="k">for</span> <span class="n">decision</span> <span class="ow">in</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">):</span>
+                <span class="n">decision</span><span class="o">.</span><span class="n">go</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">NEEDS_REVISION</span>
+                <span class="n">decision</span><span class="o">.</span><span class="n">date_decision</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="n">decision</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">continuation</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">REVISION</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">date_end</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">CLOSED</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ReviewAssignView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewCloseView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewCloseView">[docs]</a><span class="k">class</span> <span class="nc">ReviewCloseView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Review</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ReviewCloseForm</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;reviews/review_close_form.html&#39;</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span>
+
+<div class="viewcode-block" id="ReviewCloseView.get_success_url"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewCloseView.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:my_archive&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReviewCloseView.get_form_kwargs"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewCloseView.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds allow_long_route_continuation to the form_kwargs.</span>
+<span class="sd">        The long route continuation is only allowed for short route Reviews</span>
+<span class="sd">        that are not of preliminary assessment Proposals.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span>
+
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ReviewCloseView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;allow_long_route_continuation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">review</span><span class="o">.</span><span class="n">short_route</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">review</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">is_pre_assessment</span>
+        <span class="k">return</span> <span class="n">kwargs</span></div>
+
+<div class="viewcode-block" id="ReviewCloseView.get_initial"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewCloseView.get_initial">[docs]</a>    <span class="k">def</span> <span class="nf">get_initial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set initial values:</span>
+<span class="sd">        - continuation to GO if review was positive</span>
+<span class="sd">        - in_archive to True as long as we are not dealing with preliminary assessment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span>
+
+        <span class="n">initial</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ReviewCloseView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_initial</span><span class="p">()</span>
+        <span class="n">initial</span><span class="p">[</span><span class="s1">&#39;continuation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">GO</span> <span class="k">if</span> <span class="n">review</span><span class="o">.</span><span class="n">go</span> <span class="k">else</span> <span class="n">Review</span><span class="o">.</span><span class="n">NO_GO</span>
+        <span class="n">initial</span><span class="p">[</span><span class="s1">&#39;in_archive&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">review</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">is_pre_assessment</span>
+        <span class="k">return</span> <span class="n">initial</span></div>
+
+<div class="viewcode-block" id="ReviewCloseView.form_valid"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.ReviewCloseView.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">proposal</span>
+
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">continuation</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Review</span><span class="o">.</span><span class="n">GO</span><span class="p">,</span> <span class="n">Review</span><span class="o">.</span><span class="n">NO_GO</span><span class="p">]:</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">DECISION_MADE</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">status_review</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">continuation</span> <span class="o">==</span> <span class="n">Review</span><span class="o">.</span><span class="n">GO</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">date_reviewed</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">continuation</span> <span class="o">==</span> <span class="n">Review</span><span class="o">.</span><span class="n">LONG_ROUTE</span><span class="p">:</span>
+            <span class="c1"># Create a new review</span>
+            <span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span>
+                <span class="n">stage</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">COMMISSION</span><span class="p">,</span>
+                <span class="n">short_route</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">date_start</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+            <span class="c1"># Create a Decision for the secretary</span>
+            <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">get_secretary</span><span class="p">())</span>
+            <span class="c1"># Start the long review route</span>
+            <span class="n">start_review_route</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">get_reviewers</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">continuation</span> <span class="o">==</span> <span class="n">Review</span><span class="o">.</span><span class="n">METC</span><span class="p">:</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">DRAFT</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">wmo</span><span class="o">.</span><span class="n">enforced_by_commission</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">proposal</span><span class="o">.</span><span class="n">wmo</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">proposal</span><span class="o">.</span><span class="n">in_archive</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;in_archive&#39;</span><span class="p">]</span>
+        <span class="n">proposal</span><span class="o">.</span><span class="n">has_minor_revision</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;has_minor_revision&#39;</span><span class="p">]</span>
+        <span class="n">proposal</span><span class="o">.</span><span class="n">minor_revision_description</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;minor_revision_description&#39;</span><span class="p">]</span>
+        <span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">CLOSED</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ReviewCloseView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DecisionUpdateView"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionUpdateView">[docs]</a><span class="k">class</span> <span class="nc">DecisionUpdateView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">UserAllowedMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Allows a User to make a Decision on a Review.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Decision</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">DecisionForm</span>
+
+<div class="viewcode-block" id="DecisionUpdateView.is_reviewer"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionUpdateView.is_reviewer">[docs]</a>    <span class="k">def</span> <span class="nf">is_reviewer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_superuser</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">user_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">}</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">user_groups</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="DecisionUpdateView.get_success_url"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionUpdateView.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_reviewer</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:my_archive&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:my_archive&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DecisionUpdateView.form_valid"><a class="viewcode-back" href="../../reference/reviews.views.html#reviews.views.DecisionUpdateView.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save the decision date and send e-mail to secretary&quot;&quot;&quot;</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">date_decision</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">notify_secretary</span><span class="p">(</span><span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">DecisionUpdateView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

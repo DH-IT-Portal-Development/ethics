@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>studies.views.study_views &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>studies.views.study_views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for studies.views.study_views</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">JsonResponse</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="k">import</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="k">import</span> <span class="n">csrf_exempt</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">core.views</span> <span class="k">import</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span>
+<span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">string_to_bool</span>
+<span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
+<span class="kn">from</span> <span class="nn">interventions.models</span> <span class="k">import</span> <span class="n">Intervention</span>
+<span class="kn">from</span> <span class="nn">observations.models</span> <span class="k">import</span> <span class="n">Observation</span>
+
+<span class="kn">from</span> <span class="nn">..forms</span> <span class="k">import</span> <span class="n">StudyForm</span><span class="p">,</span> <span class="n">StudyDesignForm</span><span class="p">,</span> <span class="n">StudyConsentForm</span><span class="p">,</span> <span class="n">StudyEndForm</span><span class="p">,</span> <span class="n">StudyUpdateAttachmentsForm</span>
+<span class="kn">from</span> <span class="nn">..models</span> <span class="k">import</span> <span class="n">Study</span><span class="p">,</span> <span class="n">Documents</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">check_has_adults</span><span class="p">,</span> <span class="n">check_necessity_required</span><span class="p">,</span> <span class="n">get_study_progress</span>
+
+
+<span class="c1">#######################</span>
+<span class="c1"># CRUD actions on Study</span>
+<span class="c1">#######################</span>
+<div class="viewcode-block" id="StudyUpdate"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyUpdate">[docs]</a><span class="k">class</span> <span class="nc">StudyUpdate</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Updates a Study from a StudyForm&quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Study</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">StudyForm</span>
+    <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Studie opgeslagen&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StudyUpdate.get_context_data"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyUpdate.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting the progress on the context&quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudyUpdate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_study_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="StudyUpdate.get_form_kwargs"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyUpdate.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the Proposal as a form kwarg&quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudyUpdate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;proposal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span>
+        <span class="k">return</span> <span class="n">kwargs</span></div>
+
+<div class="viewcode-block" id="StudyUpdate.get_back_url"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyUpdate.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">order</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:study_start&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">order</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">prev_study</span> <span class="o">=</span> <span class="n">Study</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">prev</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;studies:design_end&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">prev_study</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="StudyUpdate.get_next_url"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyUpdate.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Continue to the Study design overview&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;studies:design&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
+
+
+<span class="c1">###############</span>
+<span class="c1"># Other actions</span>
+<span class="c1">###############</span>
+<div class="viewcode-block" id="StudyDesign"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyDesign">[docs]</a><span class="k">class</span> <span class="nc">StudyDesign</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Study</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">StudyDesignForm</span>
+    <span class="n">success_message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Studieontwerp opgeslagen&#39;</span><span class="p">)</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;studies/study_design.html&#39;</span>
+
+<div class="viewcode-block" id="StudyDesign.get_context_data"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyDesign.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting the progress on the context&quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudyDesign</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_study_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="StudyDesign.get_next_url"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyDesign.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Depending on whether this Study contains an Observation, Intervention or Session part,</span>
+<span class="sd">        continue to this part. Otherwise, continue to the Study start overview.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+        <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:design_end&#39;</span>
+        <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">pk</span>
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="s1">&#39;intervention&#39;</span><span class="p">):</span>
+                <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;interventions:update&#39;</span>
+                <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">pk</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;interventions:create&#39;</span>
+        <span class="k">elif</span> <span class="n">study</span><span class="o">.</span><span class="n">has_observation</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="s1">&#39;observation&#39;</span><span class="p">):</span>
+                <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;observations:update&#39;</span>
+                <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">pk</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;observations:create&#39;</span>
+        <span class="k">elif</span> <span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">:</span>
+            <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:session_start&#39;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="StudyDesign.get_back_url"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyDesign.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return to the Study overview</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;studies:update&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;pk&#39;</span><span class="p">],))</span></div></div>
+
+<div class="viewcode-block" id="StudyEnd"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyEnd">[docs]</a><span class="k">class</span> <span class="nc">StudyEnd</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Completes a Study</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Study</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">StudyEndForm</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;studies/study_end.html&#39;</span>
+
+<div class="viewcode-block" id="StudyEnd.get_context_data"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyEnd.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting the progress on the context&quot;&quot;&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudyEnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_study_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-</span> <span class="mi">10</span>
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="StudyEnd.get_form_kwargs"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyEnd.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the Study as a form kwarg&quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudyEnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;study&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">return</span> <span class="n">kwargs</span></div>
+
+<div class="viewcode-block" id="StudyEnd.get_next_url"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyEnd.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If there is another Study in this Proposal, continue to that one.</span>
+<span class="sd">        Otherwise, go to the data management view.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">proposal</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">order</span> <span class="o">&lt;</span> <span class="n">proposal</span><span class="o">.</span><span class="n">studies_number</span><span class="p">:</span>
+            <span class="n">next_order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">order</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">next_study</span> <span class="o">=</span> <span class="n">Study</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">next_order</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;studies:update&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">next_study</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:consent&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="StudyEnd.get_back_url"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyEnd.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">study</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">:</span>
+            <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;tasks:end&#39;</span>
+            <span class="n">pk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">last_session</span><span class="p">()</span><span class="o">.</span><span class="n">pk</span>
+        <span class="k">elif</span> <span class="n">study</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">:</span>
+            <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;interventions:update&#39;</span>
+            <span class="n">pk</span> <span class="o">=</span> <span class="n">Intervention</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="n">study</span><span class="p">)</span><span class="o">.</span><span class="n">pk</span>
+        <span class="k">elif</span> <span class="n">study</span><span class="o">.</span><span class="n">has_observation</span><span class="p">:</span>
+            <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;observations:update&#39;</span>
+            <span class="n">pk</span> <span class="o">=</span> <span class="n">Observation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="n">study</span><span class="p">)</span><span class="o">.</span><span class="n">pk</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_url</span> <span class="o">=</span> <span class="s1">&#39;studies:design&#39;</span>
+            <span class="n">pk</span> <span class="o">=</span> <span class="n">study</span><span class="o">.</span><span class="n">pk</span>
+
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="n">next_url</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">pk</span><span class="p">,))</span></div></div>
+
+
+<div class="viewcode-block" id="StudyUpdateAttachments"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyUpdateAttachments">[docs]</a><span class="k">class</span> <span class="nc">StudyUpdateAttachments</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Allows the secretary to change the attachments on Study level</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Documents</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;studies/study_update_attachments.html&#39;</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">StudyUpdateAttachmentsForm</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span>
+
+<div class="viewcode-block" id="StudyUpdateAttachments.get_success_url"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.StudyUpdateAttachments.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Continue to the URL specified in the &#39;next&#39; POST parameter&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;next&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span></div></div>
+
+
+<span class="c1">################</span>
+<span class="c1"># AJAX callbacks</span>
+<span class="c1">################</span>
+<div class="viewcode-block" id="has_adults"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.has_adults">[docs]</a><span class="nd">@csrf_exempt</span>
+<span class="k">def</span> <span class="nf">has_adults</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This call checks whether the selected AgeGroups contain adult age groups.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">age_groups</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s1">&#39;age_groups[]&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="n">check_has_adults</span><span class="p">(</span><span class="n">age_groups</span><span class="p">)})</span></div>
+
+
+<div class="viewcode-block" id="necessity_required"><a class="viewcode-back" href="../../../reference/studies.views.study_views.html#studies.views.study_views.necessity_required">[docs]</a><span class="nd">@csrf_exempt</span>
+<span class="k">def</span> <span class="nf">necessity_required</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This call checks whether the necessity questions are required. They are required when:</span>
+<span class="sd">    * The researcher requires a supervisor AND one of these cases applies:</span>
+<span class="sd">    ** A selected AgeGroup requires details.</span>
+<span class="sd">    ** Participants have been selected on certain traits.</span>
+<span class="sd">    ** Participants are legally incapable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">proposal</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;proposal_pk&#39;</span><span class="p">))</span>
+    <span class="n">age_groups</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s1">&#39;age_groups[]&#39;</span><span class="p">))</span>
+    <span class="n">has_traits</span> <span class="o">=</span> <span class="n">string_to_bool</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;has_traits&#39;</span><span class="p">))</span>
+    <span class="n">legally_incapable</span> <span class="o">=</span> <span class="n">string_to_bool</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;legally_incapable&#39;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="n">check_necessity_required</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">age_groups</span><span class="p">,</span> <span class="n">has_traits</span><span class="p">,</span> <span class="n">legally_incapable</span><span class="p">)})</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

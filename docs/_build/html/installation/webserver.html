@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Webserver &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Database" href="database.html" />
+    <link rel="prev" title="Deployment steps" href="steps.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Server Deployment</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="steps.html">Deployment steps</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Webserver</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#apache">Apache</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#virtual-environment">Virtual environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vhost-config">vHost config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-config">Example config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Application configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Server Deployment</a> &raquo;</li>
+        
+      <li>Webserver</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/installation/webserver.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="webserver">
+<h1>Webserver<a class="headerlink" href="#webserver" title="Permalink to this headline">¶</a></h1>
+<p>As with most Python webapps, communication with the webserver is done through the Web Server Gateway Interface. For more
+information on the WSGI spec, see <a class="reference external" href="https://www.python.org/dev/peps/pep-333/">PEP333</a> and <a class="reference external" href="https://www.python.org/dev/peps/pep-3333/">PEP3333</a>.</p>
+<p>A WSGI application is supplied in the <a class="reference internal" href="../reference/etcl.wsgi.html#module-etcl.wsgi" title="etcl.wsgi"><code class="xref py py-mod docutils literal notranslate"><span class="pre">etcl.wsgi</span></code></a> module. You can point your webserver to this file, providing that
+your webserver speaks WSGI.</p>
+<div class="section" id="apache">
+<h2>Apache<a class="headerlink" href="#apache" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/modwsgi/">Django documentation</a></p>
+<p>For deployment on our own servers we use Apache2’s <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code> in daemon mode. It’s important that you install the
+python 3 version. Most linux distro’s supply the Python2 version by default, but offer the Python 3 version through a
+different package. For example, Debian uses the <code class="docutils literal notranslate"><span class="pre">libapache2-mod-wsgi-py3</span></code> package.</p>
+<div class="section" id="virtual-environment">
+<h3>Virtual environment<a class="headerlink" href="#virtual-environment" title="Permalink to this headline">¶</a></h3>
+<p>Python virtual environments and <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code> do not mix together easily. This is because <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code> actually contains
+an embedded version of the CPython interpreter.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The embedded interpreter should not be confused with <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code>’s embedded mode. Both embedded mod and daemon mode
+use the embedded interpreter. Embedded mode only embeds the interpreter in the main Apache2 process instead of
+creating a seperate process.</p>
+</div>
+<p>This has a few implications, most importantly the fact that virtual environment needs to be created by the same version
+of Python that <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code> was build with. Luckily, most (if not all) Linux distributions build their <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code>
+package with the Python binary they ship withthe distribution. So as long as you use the correct Python version, you
+shouldn’t have any problems.</p>
+<p>As Apache will not use the binary in the virtual environment, you also need to instruct Apache’s Python where to find
+it’s python libraries. This can be done by specifying the <code class="docutils literal notranslate"><span class="pre">python-path</span></code> variable in the Apache <code class="docutils literal notranslate"><span class="pre">WSGIDaemonProcess</span></code>
+setting.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p>You need to specify both the site-packages folder of your virtualenv and the folder containing your source files. You
+need to seperate both folders with a <code class="docutils literal notranslate"><span class="pre">:</span></code>.</p>
+<p>For example:</p>
+<div class="code apacheconf highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">etcl</span> <span class="n">python</span><span class="o">-</span><span class="n">path</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">app_src</span><span class="p">:</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python</span><span class="p">{</span><span class="n">version</span><span class="p">}</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;en_US.UTF-8&#39;</span> <span class="n">locale</span><span class="o">=</span><span class="s1">&#39;en_US.UTF-8&#39;</span>
+</pre></div>
+</div>
+<p class="last">The lang and locale parameters are optional, but encouraged.</p>
+</div>
+</div>
+<div class="section" id="vhost-config">
+<h3>vHost config<a class="headerlink" href="#vhost-config" title="Permalink to this headline">¶</a></h3>
+<p>In most cases you’d configure WSGI on a vHost level. In our case, we actually configure it on a Apache level trough a
+config file in the <code class="docutils literal notranslate"><span class="pre">/etc/apache2/conf-enabled</span></code>. This means it will apply to <strong>all</strong> vHosts on the server.</p>
+<p>In the current situation, this isn’t a problem as we only have the one vHost. (Ignoring the http to https redirect).
+If for some reason a new set of vHost’s need to be added, the WSGI config should be moved into a vHost config.</p>
+<p>The main benefit of configuring WSGI this way is the fact that we that we can change the config ourselves. Any change
+to the vHost file needs to be done in the main Puppet config for the VM.</p>
+</div>
+<div class="section" id="example-config">
+<h3>Example config<a class="headerlink" href="#example-config" title="Permalink to this headline">¶</a></h3>
+<p>Based upon code provided in the <a class="reference external" href="https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/modwsgi/">Django documentation</a></p>
+<div class="code apacheconf highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This disables embedded mode, which removes a lot of Apache overhead</span>
+<span class="n">WSGIRestrictEmbedded</span> <span class="n">On</span>
+
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">wsgi</span><span class="o">.</span><span class="n">py</span>
+<span class="n">WSGIDaemonProcess</span> <span class="n">etcl</span> <span class="n">python</span><span class="o">-</span><span class="n">path</span><span class="o">=</span> <span class="o">&lt;</span><span class="n">See</span> <span class="n">above</span><span class="o">&gt;</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">etcl</span>
+
+<span class="n">Alias</span> <span class="o">/</span><span class="n">static</span><span class="o">/</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">static_folder</span><span class="o">/</span>
+<span class="n">Alias</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">media_folder</span><span class="o">/</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">static_folder</span><span class="o">/&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">media_folder</span><span class="o">/&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">source_folder</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">Files</span> <span class="n">wsgi</span><span class="o">.</span><span class="n">py</span><span class="o">&gt;</span>
+        <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+    <span class="o">&lt;/</span><span class="n">Files</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="database.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="steps.html" class="btn btn-neutral" title="Deployment steps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
