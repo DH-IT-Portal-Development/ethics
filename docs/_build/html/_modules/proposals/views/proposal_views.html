@@ -80,29 +80,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">etcl</a></li>
 </ul>
 
@@ -559,6 +542,64 @@
 <div class="viewcode-block" id="ProposalSubmittedPreAssessment"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreAssessment">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmittedPreAssessment</span><span class="p">(</span><span class="n">ProposalSubmitted</span><span class="p">):</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_submitted.html&#39;</span></div>
 
+<span class="c1">#############</span>
+<span class="c1"># Pre-Aproved</span>
+<span class="c1">#############</span>
+
+<div class="viewcode-block" id="ProposalStartPreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalStartPreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalStartPreApproved</span><span class="p">(</span><span class="n">ProposalStart</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_start_pre_approved.html&#39;</span></div>
+
+
+<div class="viewcode-block" id="PreApprovedMixin"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreApprovedMixin">[docs]</a><span class="k">class</span> <span class="nc">PreApprovedMixin</span><span class="p">(</span><span class="n">ProposalMixin</span><span class="p">):</span>
+<div class="viewcode-block" id="PreApprovedMixin.get_form_kwargs"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreApprovedMixin.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets is_pre_approved as a form kwarg&quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">PreApprovedMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;is_pre_approved&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">kwargs</span></div>
+
+<div class="viewcode-block" id="PreApprovedMixin.get_next_url"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreApprovedMixin.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submit_pre_approved&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
+
+
+<div class="viewcode-block" id="ProposalCreatePreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalCreatePreApproved</span><span class="p">(</span><span class="n">PreApprovedMixin</span><span class="p">,</span> <span class="n">ProposalCreate</span><span class="p">):</span>
+
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_form_pre_approved.html&#39;</span>
+
+<div class="viewcode-block" id="ProposalCreatePreApproved.form_valid"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreApproved.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets is_pre_approved to True&quot;&quot;&quot;</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">is_pre_approved</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalCreatePreApproved</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="ProposalUpdatePreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdatePreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalUpdatePreApproved</span><span class="p">(</span><span class="n">PreApprovedMixin</span><span class="p">,</span> <span class="n">ProposalUpdate</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ProposalSubmitPreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmitPreApproved</span><span class="p">(</span><span class="n">ProposalSubmit</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalSubmitPreApproved.form_valid"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs actions after saving the form</span>
+<span class="sd">        - Save the pre_approved PDF on the Proposal</span>
+<span class="sd">        - End the draft phase and start the appropiate review phase (in super function)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.</span>
+        <span class="n">success_url</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalSubmitPreApproved</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;save_back&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
+            <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span>
+            <span class="n">generate_pdf</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="s1">&#39;proposals/proposal_pdf_pre_approved.html&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">success_url</span></div>
+
+<div class="viewcode-block" id="ProposalSubmitPreApproved.get_next_url"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;After submission, go to the thank-you view&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submitted_pre_approved&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+
+<div class="viewcode-block" id="ProposalSubmitPreApproved.get_back_url"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return to the update page&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:update_pre_approved&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
+
+
+<div class="viewcode-block" id="ProposalSubmittedPreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmittedPreApproved</span><span class="p">(</span><span class="n">ProposalSubmitted</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_submitted.html&#39;</span></div>
 
 <span class="c1">##########</span>
 <span class="c1"># Practice</span>

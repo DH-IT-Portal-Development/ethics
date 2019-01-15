@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Application configuration &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="etcl" href="../reference/index.html" />
+    <link rel="prev" title="Database" href="database.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Server Deployment</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="steps.html">Deployment steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webserver.html">Webserver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Application configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#settings-py">settings.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general">General</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database">Database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#static-media-files">Static/Media files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#email">Email</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ldap-settings-py">ldap_settings.py</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#authentication-backends">AUTHENTICATION_BACKENDS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth-ldap-server-uri">AUTH_LDAP_SERVER_URI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth-ldap-start-tls">AUTH_LDAP_START_TLS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth-ldap-bind-dn">AUTH_LDAP_BIND_DN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth-ldap-bind-password">AUTH_LDAP_BIND_PASSWORD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth-ldap-user-dn-template">AUTH_LDAP_USER_DN_TEMPLATE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth-ldap-user-attr-map">AUTH_LDAP_USER_ATTR_MAP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth-ldap-always-update-user">AUTH_LDAP_ALWAYS_UPDATE_USER</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Server Deployment</a> &raquo;</li>
+        
+      <li>Application configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/installation/configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="application-configuration">
+<h1>Application configuration<a class="headerlink" href="#application-configuration" title="Permalink to this headline">¶</a></h1>
+<p>The git repository contains a <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> file suitable for development. Some tweaks are required for a
+production/acceptation server.</p>
+<div class="section" id="settings-py">
+<h2>settings.py<a class="headerlink" href="#settings-py" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="logging">
+<h3>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="database">
+<h3>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="static-media-files">
+<h3>Static/Media files<a class="headerlink" href="#static-media-files" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="email">
+<h3>Email<a class="headerlink" href="#email" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="ldap-settings-py">
+<h2>ldap_settings.py<a class="headerlink" href="#ldap-settings-py" title="Permalink to this headline">¶</a></h2>
+<p>By default, the project doesn’t have the required files to use LDAP based authentication. To enable this, you need to
+create a file called <code class="docutils literal notranslate"><span class="pre">ldap_settings.py</span></code> in the <code class="docutils literal notranslate"><span class="pre">etcl</span></code> folder using the following template:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">AUTHENTICATION_BACKENDS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;django_auth_ldap.backend.LDAPBackend&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.auth.backends.ModelBackend&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Authentication (via LDAP)</span>
+<span class="n">AUTH_LDAP_SERVER_URI</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">AUTH_LDAP_START_TLS</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">AUTH_LDAP_BIND_DN</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">AUTH_LDAP_BIND_PASSWORD</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">AUTH_LDAP_USER_DN_TEMPLATE</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">AUTH_LDAP_USER_ATTR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+<span class="p">}</span>
+<span class="n">AUTH_LDAP_ALWAYS_UPDATE_USER</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+<p>We will now explain what each of these contants actually do. Please note that full documentation about Django LDAP auth
+can be found <a class="reference external" href="https://django-auth-ldap.readthedocs.io/">here</a>.</p>
+<div class="section" id="authentication-backends">
+<h3>AUTHENTICATION_BACKENDS<a class="headerlink" href="#authentication-backends" title="Permalink to this headline">¶</a></h3>
+<p>You don’t have to change anything here. It only overrides the default value by adding the <code class="docutils literal notranslate"><span class="pre">LDAPBackend</span></code> authentication
+backend.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ModelBackend</span></code> is still needed as it’s used to assign users to groups internally. We cannot use the LDAP for this,
+as the LDAP does not contain the necessary information.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Always create user accounts from the LDAP if you can, as this is connected to the university’s IAM system. Local
+accounts are <strong>evil</strong> and should only be used in emergencies!</p>
+</div>
+</div>
+<div class="section" id="auth-ldap-server-uri">
+<h3>AUTH_LDAP_SERVER_URI<a class="headerlink" href="#auth-ldap-server-uri" title="Permalink to this headline">¶</a></h3>
+<p>This is the location of the LDAP you want to use. Please include the <code class="docutils literal notranslate"><span class="pre">ldap://</span></code>.</p>
+<p>For the ETCL we use an ICT&amp;Media LDAP: <code class="docutils literal notranslate"><span class="pre">ldap://ldap.hum.uu.nl</span></code></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>While it might seem logical to use the <code class="docutils literal notranslate"><span class="pre">ldaps://</span></code> protocol, it’s not recommended to do so.</p>
+<p class="last">Secure connections can be enforced with the <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_START_TLS</span></code> setting.</p>
+</div>
+</div>
+<div class="section" id="auth-ldap-start-tls">
+<h3>AUTH_LDAP_START_TLS<a class="headerlink" href="#auth-ldap-start-tls" title="Permalink to this headline">¶</a></h3>
+<p>If set to true, this will enforce a secure connection to the LDAP server. While in theory the connections are internal
+only, it doesn’t hurt (that much) to use secure connections.</p>
+</div>
+<div class="section" id="auth-ldap-bind-dn">
+<h3>AUTH_LDAP_BIND_DN<a class="headerlink" href="#auth-ldap-bind-dn" title="Permalink to this headline">¶</a></h3>
+<p>If your LDAP server doesn’t allow for anonymous login, you need to specify a bind DN here. Otherwise you can leave it
+empty.</p>
+<p>You can request a bind DN from ICT&amp;Media if needed. (Or you could just get one from one of the existing servers).</p>
+</div>
+<div class="section" id="auth-ldap-bind-password">
+<h3>AUTH_LDAP_BIND_PASSWORD<a class="headerlink" href="#auth-ldap-bind-password" title="Permalink to this headline">¶</a></h3>
+<p>If you have supplied a bind DN in <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_BIND_DN</span></code>, you have to supply it’s password here.</p>
+</div>
+<div class="section" id="auth-ldap-user-dn-template">
+<h3>AUTH_LDAP_USER_DN_TEMPLATE<a class="headerlink" href="#auth-ldap-user-dn-template" title="Permalink to this headline">¶</a></h3>
+<p>When logging in, Django will query the LDAP with an exact DN for that user. To create this DN, Django will use this
+constant. Use <code class="docutils literal notranslate"><span class="pre">%(user)s</span></code> where the user’s username should be in the DN.</p>
+<p>For example: <code class="docutils literal notranslate"><span class="pre">uid=%(user)s,ou=People,dc=uu,dc=nl</span></code></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can also configure the LDAP auth to use an LDAP search instead of a direct match. More information can be found
+in the <a class="reference external" href="https://django-auth-ldap.readthedocs.io/en/latest/authentication.html#search-bind">corresponding documentation</a>.</p>
+</div>
+</div>
+<div class="section" id="auth-ldap-user-attr-map">
+<h3>AUTH_LDAP_USER_ATTR_MAP<a class="headerlink" href="#auth-ldap-user-attr-map" title="Permalink to this headline">¶</a></h3>
+<p>This constant should contain a dictorary that maps LDAP fields to  Django’s auth model fields.</p>
+<p>For example (when using ICT&amp;Media’s LDAP):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">AUTH_LDAP_USER_ATTR_MAP</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;givenName&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;humAchternaam&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;mail&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>If you enter an invalid LDAP field, no error will be given and an empty string will be supplied to the auth model.</p>
+<p class="last">Please double check all values.</p>
+</div>
+</div>
+<div class="section" id="auth-ldap-always-update-user">
+<h3>AUTH_LDAP_ALWAYS_UPDATE_USER<a class="headerlink" href="#auth-ldap-always-update-user" title="Permalink to this headline">¶</a></h3>
+<p>If set to True, this will update the user model in the database with the values in the LDAP on every login.</p>
+<p>Passwords are always checked against the LDAP regardless of this setting.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../reference/index.html" class="btn btn-neutral float-right" title="etcl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="database.html" class="btn btn-neutral" title="Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

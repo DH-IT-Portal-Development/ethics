@@ -82,29 +82,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
@@ -427,6 +410,24 @@ are provided as kwargs to this method.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="proposals.views.proposal_views.PreApprovedMixin">
+<em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">PreApprovedMixin</code><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#PreApprovedMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.PreApprovedMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a></p>
+<dl class="method">
+<dt id="proposals.views.proposal_views.PreApprovedMixin.get_form_kwargs">
+<code class="descname">get_form_kwargs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#PreApprovedMixin.get_form_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.PreApprovedMixin.get_form_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets is_pre_approved as a form kwarg</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="proposals.views.proposal_views.PreApprovedMixin.get_next_url">
+<code class="descname">get_next_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#PreApprovedMixin.get_next_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.PreApprovedMixin.get_next_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the Proposal has a Wmo model attached, go to update, else, go to create</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="proposals.views.proposal_views.PreAssessmentMixin">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">PreAssessmentMixin</code><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#PreAssessmentMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.PreAssessmentMixin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a></p>
@@ -596,6 +597,23 @@ are provided as kwargs to this method.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="proposals.views.proposal_views.ProposalCreatePreApproved">
+<em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCreatePreApproved</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreatePreApproved"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePreApproved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.PreApprovedMixin" title="proposals.views.proposal_views.PreApprovedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.PreApprovedMixin</span></code></a>, <a class="reference internal" href="#proposals.views.proposal_views.ProposalCreate" title="proposals.views.proposal_views.ProposalCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCreate</span></code></a></p>
+<dl class="method">
+<dt id="proposals.views.proposal_views.ProposalCreatePreApproved.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreatePreApproved.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePreApproved.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets is_pre_approved to True</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.views.proposal_views.ProposalCreatePreApproved.template_name">
+<code class="descname">template_name</code><em class="property"> = 'proposals/proposal_form_pre_approved.html'</em><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePreApproved.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="proposals.views.proposal_views.ProposalCreatePreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCreatePreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreatePreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreatePreAssessment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.PreAssessmentMixin" title="proposals.views.proposal_views.PreAssessmentMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.PreAssessmentMixin</span></code></a>, <a class="reference internal" href="#proposals.views.proposal_views.ProposalCreate" title="proposals.views.proposal_views.ProposalCreate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalCreate</span></code></a></p>
@@ -758,6 +776,17 @@ are provided as kwargs to this method.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="proposals.views.proposal_views.ProposalStartPreApproved">
+<em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalStartPreApproved</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalStartPreApproved"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalStartPreApproved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalStart" title="proposals.views.proposal_views.ProposalStart"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalStart</span></code></a></p>
+<dl class="attribute">
+<dt id="proposals.views.proposal_views.ProposalStartPreApproved.template_name">
+<code class="descname">template_name</code><em class="property"> = 'proposals/proposal_start_pre_approved.html'</em><a class="headerlink" href="#proposals.views.proposal_views.ProposalStartPreApproved.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="proposals.views.proposal_views.ProposalStartPreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalStartPreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalStartPreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalStartPreAssessment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalStart" title="proposals.views.proposal_views.ProposalStart"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalStart</span></code></a></p>
@@ -824,6 +853,32 @@ are provided as kwargs to this method.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="proposals.views.proposal_views.ProposalSubmitPreApproved">
+<em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmitPreApproved</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmitPreApproved"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitPreApproved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalSubmit" title="proposals.views.proposal_views.ProposalSubmit"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmit</span></code></a></p>
+<dl class="method">
+<dt id="proposals.views.proposal_views.ProposalSubmitPreApproved.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmitPreApproved.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitPreApproved.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs actions after saving the form
+- Save the pre_approved PDF on the Proposal
+- End the draft phase and start the appropiate review phase (in super function)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="proposals.views.proposal_views.ProposalSubmitPreApproved.get_back_url">
+<code class="descname">get_back_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmitPreApproved.get_back_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitPreApproved.get_back_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return to the update page</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="proposals.views.proposal_views.ProposalSubmitPreApproved.get_next_url">
+<code class="descname">get_next_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmitPreApproved.get_next_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitPreApproved.get_next_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>After submission, go to the thank-you view</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="proposals.views.proposal_views.ProposalSubmitPreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmitPreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmitPreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmitPreAssessment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalSubmit" title="proposals.views.proposal_views.ProposalSubmit"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmit</span></code></a></p>
@@ -867,6 +922,17 @@ are provided as kwargs to this method.</p>
 </dd></dl>
 
 <dl class="class">
+<dt id="proposals.views.proposal_views.ProposalSubmittedPreApproved">
+<em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmittedPreApproved</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmittedPreApproved"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmittedPreApproved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalSubmitted" title="proposals.views.proposal_views.ProposalSubmitted"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmitted</span></code></a></p>
+<dl class="attribute">
+<dt id="proposals.views.proposal_views.ProposalSubmittedPreApproved.template_name">
+<code class="descname">template_name</code><em class="property"> = 'proposals/proposal_submitted.html'</em><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmittedPreApproved.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="proposals.views.proposal_views.ProposalSubmittedPreAssessment">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmittedPreAssessment</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmittedPreAssessment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmittedPreAssessment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalSubmitted" title="proposals.views.proposal_views.ProposalSubmitted"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalSubmitted</span></code></a></p>
@@ -899,6 +965,12 @@ are provided as kwargs to this method.</p>
 <dd><p>Sets in_course as a form kwarg</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="proposals.views.proposal_views.ProposalUpdatePreApproved">
+<em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalUpdatePreApproved</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdatePreApproved"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdatePreApproved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.PreApprovedMixin" title="proposals.views.proposal_views.PreApprovedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.PreApprovedMixin</span></code></a>, <a class="reference internal" href="#proposals.views.proposal_views.ProposalUpdate" title="proposals.views.proposal_views.ProposalUpdate"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalUpdate</span></code></a></p>
 </dd></dl>
 
 <dl class="class">

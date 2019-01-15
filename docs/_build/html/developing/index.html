@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>General &mdash; ETCL 1.0 documentation</title>
+  <title>Development &mdash; ETCL 1.0 documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tests" href="tests.html" />
-    <link rel="prev" title="Maintenance" href="../maintenance/index.html" /> 
+    <link rel="next" title="Local development installation" href="install/index.html" />
+    <link rel="prev" title="Maintenance &amp; administration" href="../maintenance/index.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -82,32 +82,20 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">General</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#structure">Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/index.html">Local development installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="structure.html">Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolset.html">Toolset</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
 </ul>
 
@@ -154,7 +142,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>General</li>
+      <li>Development</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -173,43 +161,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="general">
-<h1>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="structure">
-<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
-<p>This Django project consists of ten apps that can be divided into three categories:</p>
-<ul class="simple">
-<li><dl class="first docutils">
-<dt>Core</dt>
-<dd><ul class="first last">
-<li><em>etcl</em>: Main directory with settings and a WSGI configuration.</li>
-<li><em>core</em>: Core functionality, reusable models, views, forms and templates.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Proposals</dt>
-<dd><ul class="first last">
-<li><em>proposals</em>: Main application that binds together all applications below. Allows participants to give general information on their study.</li>
-<li><em>studies</em>: Allows users to add more in-detail information on their study.</li>
-<li><em>observations</em>: Allows users to specify the observation part of their study (if applicable).</li>
-<li><em>interventions</em>: Allows users to specify the intervention part of their study (if applicable).</li>
-<li><em>tasks</em>: Allows users to specify tasks in their study (if applicable). Tasks can be grouped in one or more sessions.</li>
-<li><em>reviews</em>: Allows the committee to review proposals.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Feedback</dt>
-<dd><ul class="first last">
-<li><em>feedback</em>: Allows users to give feedback on the application: with what parts did they struggle?</li>
-<li><em>faqs</em>: Provides users with answers to frequently asked questions about the application.</li>
-</ul>
-</dd>
-</dl>
-</li>
+  <div class="section" id="development">
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/index.html">Local development installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structure.html">Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="i18n.html">Internationalization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="toolset.html">Toolset</a></li>
 </ul>
 </div>
 </div>
@@ -222,10 +184,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tests.html" class="btn btn-neutral float-right" title="Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="install/index.html" class="btn btn-neutral float-right" title="Local development installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../maintenance/index.html" class="btn btn-neutral" title="Maintenance" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../maintenance/index.html" class="btn btn-neutral" title="Maintenance &amp; administration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

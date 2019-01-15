@@ -80,29 +80,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
 </ul>
 
@@ -307,6 +290,24 @@
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">])</span>
 
+    <span class="n">is_pre_approved</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">NullBooleanField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze EtCL commissie?&#39;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">pre_approval_institute</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Welk instituut heeft de studie goedgekeurd?&#39;</span><span class="p">),</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">pre_approval_pdf</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">]</span>
+    <span class="p">)</span>
+
     <span class="n">in_course</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Ik vul de portal in in het kader van een cursus&#39;</span><span class="p">),</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -464,6 +465,8 @@
             <span class="n">result</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Voortoetsing&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_practice</span><span class="p">():</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Oefening&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pre_approved</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Extern getoetst&#39;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">result</span></div>
 

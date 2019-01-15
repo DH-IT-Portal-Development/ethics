@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Maintenance &mdash; ETCL 1.0 documentation</title>
+  <title>Maintenance &amp; administration &mdash; ETCL 1.0 documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="General" href="../developing/index.html" />
-    <link rel="prev" title="Application configuration" href="../installation/server/configuration.html" /> 
+    <link rel="next" title="Development" href="../developing/index.html" />
+    <link rel="prev" title="General" href="../general/index.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -82,29 +82,24 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Maintenance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Maintenance &amp; administration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#periodic-tasks">Periodic tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#updating-dependencies">Updating dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updating-django">Updating Django</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sporadic-tasks-frequently-encountered-problems">Sporadic tasks / Frequently encountered problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-user-cannot-log-in">New user cannot log in</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fixing-proposals">Fixing proposals</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
 </ul>
 
@@ -151,7 +146,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Maintenance</li>
+      <li>Maintenance &amp; administration</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -170,17 +165,89 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="maintenance">
-<h1>Maintenance<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Make this doc chapter</p>
+  <div class="section" id="maintenance-administration">
+<h1>Maintenance &amp; administration<a class="headerlink" href="#maintenance-administration" title="Permalink to this headline">¶</a></h1>
+<p>This section details some common maintenance and administration topics, like updating dependencies and user accounts.
+It’s written in the point of view of the current configuration, in contrast to the development section which is written
+in a more neutral manner.</p>
+<div class="section" id="periodic-tasks">
+<h2>Periodic tasks<a class="headerlink" href="#periodic-tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="updating-dependencies">
+<h3>Updating dependencies<a class="headerlink" href="#updating-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>The dependencies used by the applications become outdated (and insecure) and should be updated semi-often.</p>
+<p>Luckily, updating dependencies is very easy:</p>
+<ol class="arabic">
+<li><p class="first">Run the following command:</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span><span class="o">-</span><span class="nb">compile</span> <span class="o">-</span><span class="n">U</span>
+</pre></div>
 </div>
-<ul class="simple">
-<li>Updating dependencies</li>
-<li>Updating Django</li>
-<li>Doing server things</li>
-</ul>
+<p>This should update the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> with the latest versions. If it doesn’t, you can copy paste the terminal
+output into <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code></p>
+</li>
+<li><p class="first">Test if everything is still working</p>
+</li>
+<li><p class="first">Deploy the update on the servers</p>
+</li>
+</ol>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You should use this guide for Django patch updates only. For feature updates (2.0 to 2.1 for example), see the next
+section.</p>
+</div>
+</div>
+<div class="section" id="updating-django">
+<h3>Updating Django<a class="headerlink" href="#updating-django" title="Permalink to this headline">¶</a></h3>
+<p>Once in a while Django puts out a big update. At the moment we are using Django 1.11 LTS, which should be supported till
+April 2020. However, one might decide to update to the latest feature update, or to the next LTS version. In that case,
+you can use the following global steps as a guide.</p>
+<ol class="arabic simple">
+<li>Update Django’s version constraints in <code class="docutils literal notranslate"><span class="pre">requirements.in</span></code> to next version in the series.</li>
+<li>Go through Django’s migration guide for that version and apply necessary changes</li>
+<li>Test your changes</li>
+<li>If everything works, go back to step 1 until you have reached the desired version.</li>
+<li>Check if the application uses deprecated functions and try to migrate to the replacements (saves you or someone else
+a lot of time later).</li>
+</ol>
+</div>
+</div>
+<div class="section" id="sporadic-tasks-frequently-encountered-problems">
+<h2>Sporadic tasks / Frequently encountered problems<a class="headerlink" href="#sporadic-tasks-frequently-encountered-problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new-user-cannot-log-in">
+<h3>New user cannot log in<a class="headerlink" href="#new-user-cannot-log-in" title="Permalink to this headline">¶</a></h3>
+<p>Only users in the HUM-LDAP can log into the system. If a user reports they cannot log in, check if they are in the LDAP.</p>
+<p>You can quickly do this with:</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">add_ldap_users</span> <span class="n">SOLISID</span>
+</pre></div>
+</div>
+<p>If this errors, the user is not in the LDAP.
+Otherwise, an account will be created/updated for that user. (Which confirms that they can in fact login).</p>
+</div>
+<div class="section" id="fixing-proposals">
+<h3>Fixing proposals<a class="headerlink" href="#fixing-proposals" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes an update can cause some problems with draft proposals. To fix these, one might go into the database itself,
+but this is hard. A better way is to do this through the Django shell.</p>
+<p>Simply run the following command to start a shell:</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">shell</span>
+</pre></div>
+</div>
+<p>You can then import the model classes and modify them.</p>
+<p>In the following simple example, we are going to create a Documents object for a study that is missing one</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
+<span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Documents</span>
+<span class="o">&gt;&gt;</span> <span class="n">proposal</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">study</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">&gt;&gt;</span> <span class="n">documents</span> <span class="o">=</span> <span class="n">Documents</span><span class="p">()</span>
+<span class="o">&gt;&gt;</span> <span class="n">documents</span><span class="o">.</span><span class="n">proposal</span> <span class="o">=</span> <span class="n">proposal</span>
+<span class="o">&gt;&gt;</span> <span class="n">documents</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="n">study</span>
+<span class="o">&gt;&gt;</span> <span class="n">documents</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Install bpython if it isn’t installed yet. It will give you autocompletion in the shell, and more!</p>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -191,10 +258,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../developing/index.html" class="btn btn-neutral float-right" title="General" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../developing/index.html" class="btn btn-neutral float-right" title="Development" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../installation/server/configuration.html" class="btn btn-neutral" title="Application configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../general/index.html" class="btn btn-neutral" title="General" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

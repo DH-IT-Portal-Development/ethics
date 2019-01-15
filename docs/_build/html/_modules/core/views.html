@@ -80,29 +80,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
 </ul>
 
@@ -274,8 +257,8 @@
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">ldap_connection</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">msgid</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span>
             <span class="c1"># Add them to the users, with a ldap_ prefix in the ID so we can distinguish this when processing the form</span>
             <span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;ldap_&#39;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
-                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;displayName&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;ldap_&#39;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">,</span>
+                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;displayName&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">)</span>
             <span class="p">})</span>
 
     <span class="c1"># Return a formatted dict with the results</span>

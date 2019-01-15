@@ -81,29 +81,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">etcl</a></li>
 </ul>
 
@@ -315,10 +298,10 @@
 </li>
       <li><a href="reference/faqs.models.html#faqs.models.Faq.answer">answer (faqs.models.Faq attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/faqs.models.html#faqs.models.Faq.answer_en">answer_en (faqs.models.Faq attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/faqs.models.html#faqs.models.Faq.answer_nl">answer_nl (faqs.models.Faq attribute)</a>
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.applicants">applicants (proposals.models.Proposal attribute)</a>
@@ -336,6 +319,8 @@
       <li><a href="reference/reviews.tests.html#reviews.tests.AssignmentTestCase">AssignmentTestCase (class in reviews.tests)</a>
 </li>
       <li><a href="reference/observations.views.html#observations.views.AttachmentsUpdate">AttachmentsUpdate (class in observations.views)</a>
+</li>
+      <li><a href="reference/studies.signals.handlers.html#studies.signals.handlers.auto_destroy_documents">auto_destroy_documents() (in module studies.signals.handlers)</a>
 </li>
       <li><a href="reference/reviews.utils.html#reviews.utils.auto_review">auto_review() (in module reviews.utils)</a>
 </li>
@@ -505,10 +490,10 @@
 </li>
       <li><a href="reference/studies.models.html#studies.models.Compensation">Compensation (class in studies.models)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/studies.models.html#studies.models.Study.compensation">compensation (studies.models.Study attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/studies.models.html#studies.models.Compensation.DoesNotExist">Compensation.DoesNotExist</a>
 </li>
       <li><a href="reference/studies.models.html#studies.models.Compensation.MultipleObjectsReturned">Compensation.MultipleObjectsReturned</a>
@@ -603,6 +588,12 @@
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.COURSE">COURSE (proposals.models.Proposal attribute)</a>
 </li>
+      <li><a href="reference/studies.signals.handlers.html#studies.signals.handlers.create_documents_for_study">create_documents_for_study() (in module studies.signals.handlers)</a>
+
+      <ul>
+        <li><a href="reference/studies.utils.html#studies.utils.create_documents_for_study">(in module studies.utils)</a>
+</li>
+      </ul></li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.created_by">created_by (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.created_by_id">created_by_id (proposals.models.Proposal attribute)</a>
@@ -1026,9 +1017,13 @@
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePractice.form_valid">(proposals.views.proposal_views.ProposalCreatePractice method)</a>
 </li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreApproved.form_valid">(proposals.views.proposal_views.ProposalCreatePreApproved method)</a>
+</li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreAssessment.form_valid">(proposals.views.proposal_views.ProposalCreatePreAssessment method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit.form_valid">(proposals.views.proposal_views.ProposalSubmit method)</a>
+</li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.form_valid">(proposals.views.proposal_views.ProposalSubmitPreApproved method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreAssessment.form_valid">(proposals.views.proposal_views.ProposalSubmitPreAssessment method)</a>
 </li>
@@ -1095,6 +1090,8 @@
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalDataManagement.get_back_url">(proposals.views.proposal_views.ProposalDataManagement method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit.get_back_url">(proposals.views.proposal_views.ProposalSubmit method)</a>
+</li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.get_back_url">(proposals.views.proposal_views.ProposalSubmitPreApproved method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreAssessment.get_back_url">(proposals.views.proposal_views.ProposalSubmitPreAssessment method)</a>
 </li>
@@ -1204,6 +1201,8 @@
       <ul>
         <li><a href="reference/observations.views.html#observations.views.ObservationMixin.get_form_kwargs">(observations.views.ObservationMixin method)</a>
 </li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreApprovedMixin.get_form_kwargs">(proposals.views.proposal_views.PreApprovedMixin method)</a>
+</li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreAssessmentMixin.get_form_kwargs">(proposals.views.proposal_views.PreAssessmentMixin method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePractice.get_form_kwargs">(proposals.views.proposal_views.ProposalCreatePractice method)</a>
@@ -1266,6 +1265,8 @@
       <ul>
         <li><a href="reference/observations.views.html#observations.views.ObservationMixin.get_next_url">(observations.views.ObservationMixin method)</a>
 </li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreApprovedMixin.get_next_url">(proposals.views.proposal_views.PreApprovedMixin method)</a>
+</li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreAssessmentMixin.get_next_url">(proposals.views.proposal_views.PreAssessmentMixin method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalDataManagement.get_next_url">(proposals.views.proposal_views.ProposalDataManagement method)</a>
@@ -1273,6 +1274,8 @@
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalMixin.get_next_url">(proposals.views.proposal_views.ProposalMixin method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit.get_next_url">(proposals.views.proposal_views.ProposalSubmit method)</a>
+</li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.get_next_url">(proposals.views.proposal_views.ProposalSubmitPreApproved method)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreAssessment.get_next_url">(proposals.views.proposal_views.ProposalSubmitPreAssessment method)</a>
 </li>
@@ -1623,10 +1626,10 @@
 </li>
       <li><a href="reference/interventions.tests.html#module-interventions.tests">interventions.tests (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/interventions.urls.html#module-interventions.urls">interventions.urls (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reference/interventions.utils.html#module-interventions.utils">interventions.utils (module)</a>
 </li>
       <li><a href="reference/interventions.views.html#module-interventions.views">interventions.views (module)</a>
@@ -1690,6 +1693,8 @@
       <li><a href="reference/observations.models.html#observations.models.Observation.is_nonpublic_space_details">is_nonpublic_space_details (observations.models.Observation attribute)</a>
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.is_practice">is_practice() (proposals.models.Proposal method)</a>
+</li>
+      <li><a href="reference/proposals.models.html#proposals.models.Proposal.is_pre_approved">is_pre_approved (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.is_pre_assessment">is_pre_assessment (proposals.models.Proposal attribute)</a>
 </li>
@@ -2015,9 +2020,11 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/studies.models.html#studies.models.Study.name">name (studies.models.Study attribute)</a>
+      <li><a href="reference/studies.app.html#studies.app.StudiesConfig.name">name (studies.app.StudiesConfig attribute)</a>
 
       <ul>
+        <li><a href="reference/studies.models.html#studies.models.Study.name">(studies.models.Study attribute)</a>
+</li>
         <li><a href="reference/tasks.models.html#tasks.models.Task.name">(tasks.models.Task attribute)</a>
 </li>
       </ul></li>
@@ -2277,9 +2284,15 @@
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.PRACTICE_REASONS">PRACTICE_REASONS (proposals.models.Proposal attribute)</a>
 </li>
+      <li><a href="reference/proposals.models.html#proposals.models.Proposal.pre_approval_institute">pre_approval_institute (proposals.models.Proposal attribute)</a>
+</li>
+      <li><a href="reference/proposals.models.html#proposals.models.Proposal.pre_approval_pdf">pre_approval_pdf (proposals.models.Proposal attribute)</a>
+</li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.pre_assessment_pdf">pre_assessment_pdf (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="reference/core.views.html#core.views.FormSetUpdateView.pre_validation">pre_validation() (core.views.FormSetUpdateView method)</a>
+</li>
+      <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreApprovedMixin">PreApprovedMixin (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.PreAssessmentMixin">PreAssessmentMixin (class in proposals.views.proposal_views)</a>
 
@@ -2342,6 +2355,8 @@
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreate">ProposalCreate (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePractice">ProposalCreatePractice (class in proposals.views.proposal_views)</a>
+</li>
+      <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreApproved">ProposalCreatePreApproved (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreAssessment">ProposalCreatePreAssessment (class in proposals.views.proposal_views)</a>
 </li>
@@ -2407,15 +2422,21 @@
 </li>
       <li><a href="reference/proposals.forms.html#proposals.forms.ProposalStartPracticeForm">ProposalStartPracticeForm (class in proposals.forms)</a>
 </li>
+      <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalStartPreApproved">ProposalStartPreApproved (class in proposals.views.proposal_views)</a>
+</li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalStartPreAssessment">ProposalStartPreAssessment (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit">ProposalSubmit (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.forms.html#proposals.forms.ProposalSubmitForm">ProposalSubmitForm (class in proposals.forms)</a>
 </li>
+      <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved">ProposalSubmitPreApproved (class in proposals.views.proposal_views)</a>
+</li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreAssessment">ProposalSubmitPreAssessment (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitted">ProposalSubmitted (class in proposals.views.proposal_views)</a>
+</li>
+      <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreApproved">ProposalSubmittedPreApproved (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreAssessment">ProposalSubmittedPreAssessment (class in proposals.views.proposal_views)</a>
 </li>
@@ -2428,6 +2449,8 @@
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdate">ProposalUpdate (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdatePractice">ProposalUpdatePractice (class in proposals.views.proposal_views)</a>
+</li>
+      <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdatePreApproved">ProposalUpdatePreApproved (class in proposals.views.proposal_views)</a>
 </li>
       <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdatePreAssessment">ProposalUpdatePreAssessment (class in proposals.views.proposal_views)</a>
 </li>
@@ -2455,6 +2478,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/studies.app.html#studies.app.StudiesConfig.ready">ready() (studies.app.StudiesConfig method)</a>
+</li>
       <li><a href="reference/studies.models.html#studies.models.Recruitment">Recruitment (class in studies.models)</a>
 </li>
       <li><a href="reference/studies.models.html#studies.models.Study.recruitment">recruitment (studies.models.Study attribute)</a>
@@ -2555,10 +2580,10 @@
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Relation.DoesNotExist">Relation.DoesNotExist</a>
 </li>
-      <li><a href="reference/proposals.models.html#proposals.models.Relation.MultipleObjectsReturned">Relation.MultipleObjectsReturned</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/proposals.models.html#proposals.models.Relation.MultipleObjectsReturned">Relation.MultipleObjectsReturned</a>
+</li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.relation_id">relation_id (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="reference/proposals.admin.html#proposals.admin.RelationAdmin">RelationAdmin (class in proposals.admin)</a>
@@ -2791,9 +2816,15 @@
 </li>
       <li><a href="reference/studies.admin.html#module-studies.admin">studies.admin (module)</a>
 </li>
+      <li><a href="reference/studies.app.html#module-studies.app">studies.app (module)</a>
+</li>
       <li><a href="reference/studies.forms.html#module-studies.forms">studies.forms (module)</a>
 </li>
       <li><a href="reference/studies.models.html#module-studies.models">studies.models (module)</a>
+</li>
+      <li><a href="reference/studies.signals.html#module-studies.signals">studies.signals (module)</a>
+</li>
+      <li><a href="reference/studies.signals.handlers.html#module-studies.signals.handlers">studies.signals.handlers (module)</a>
 </li>
       <li><a href="reference/studies.tests.html#module-studies.tests">studies.tests (module)</a>
 </li>
@@ -2801,10 +2832,10 @@
 </li>
       <li><a href="reference/studies.urls.html#module-studies.urls">studies.urls (module)</a>
 </li>
-      <li><a href="reference/studies.utils.html#module-studies.utils">studies.utils (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/studies.utils.html#module-studies.utils">studies.utils (module)</a>
+</li>
       <li><a href="reference/studies.views.html#module-studies.views">studies.views (module)</a>
 </li>
       <li><a href="reference/studies.views.session_views.html#module-studies.views.session_views">studies.views.session_views (module)</a>
@@ -2814,6 +2845,8 @@
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.studies_number">studies_number (proposals.models.Proposal attribute)</a>
 </li>
       <li><a href="reference/proposals.models.html#proposals.models.Proposal.studies_similar">studies_similar (proposals.models.Proposal attribute)</a>
+</li>
+      <li><a href="reference/studies.app.html#studies.app.StudiesConfig">StudiesConfig (class in studies.app)</a>
 </li>
       <li><a href="reference/studies.models.html#studies.models.Study">Study (class in studies.models)</a>
 </li>
@@ -3028,6 +3061,8 @@
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCopy.template_name">(proposals.views.proposal_views.ProposalCopy attribute)</a>
 </li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreApproved.template_name">(proposals.views.proposal_views.ProposalCreatePreApproved attribute)</a>
+</li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalDataManagement.template_name">(proposals.views.proposal_views.ProposalDataManagement attribute)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalDifference.template_name">(proposals.views.proposal_views.ProposalDifference attribute)</a>
@@ -3036,11 +3071,15 @@
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalStartPractice.template_name">(proposals.views.proposal_views.ProposalStartPractice attribute)</a>
 </li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalStartPreApproved.template_name">(proposals.views.proposal_views.ProposalStartPreApproved attribute)</a>
+</li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalStartPreAssessment.template_name">(proposals.views.proposal_views.ProposalStartPreAssessment attribute)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit.template_name">(proposals.views.proposal_views.ProposalSubmit attribute)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitted.template_name">(proposals.views.proposal_views.ProposalSubmitted attribute)</a>
+</li>
+        <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreApproved.template_name">(proposals.views.proposal_views.ProposalSubmittedPreApproved attribute)</a>
 </li>
         <li><a href="reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreAssessment.template_name">(proposals.views.proposal_views.ProposalSubmittedPreAssessment attribute)</a>
 </li>
@@ -3193,9 +3232,11 @@
 </li>
       <li><a href="reference/core.tests.html#core.tests.ValidatorTest">ValidatorTest (class in core.tests)</a>
 </li>
+      <li><a href="reference/proposals.widgets.html#proposals.widgets.SelectMultipleUser.value_from_datadict">value_from_datadict() (proposals.widgets.SelectMultipleUser method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="reference/proposals.widgets.html#proposals.widgets.SelectMultipleUser.value_from_datadict">value_from_datadict() (proposals.widgets.SelectMultipleUser method)</a>
+      <li><a href="reference/studies.app.html#studies.app.StudiesConfig.verbose_name">verbose_name (studies.app.StudiesConfig attribute)</a>
 </li>
       <li><a href="reference/interventions.models.html#interventions.models.Intervention.version">version (interventions.models.Intervention attribute)</a>
 

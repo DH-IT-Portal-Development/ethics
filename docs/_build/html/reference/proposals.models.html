@@ -82,29 +82,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
@@ -320,7 +303,7 @@
 
 <dl class="class">
 <dt id="proposals.models.Proposal">
-<em class="property">class </em><code class="descclassname">proposals.models.</code><code class="descname">Proposal</code><span class="sig-paren">(</span><em>id</em>, <em>reference_number</em>, <em>date_start</em>, <em>title</em>, <em>summary</em>, <em>other_applicants</em>, <em>other_stakeholders</em>, <em>stakeholders</em>, <em>funding_details</em>, <em>funding_name</em>, <em>comments</em>, <em>inform_local_staff</em>, <em>in_archive</em>, <em>public</em>, <em>is_pre_assessment</em>, <em>pre_assessment_pdf</em>, <em>in_course</em>, <em>is_exploration</em>, <em>pdf</em>, <em>studies_similar</em>, <em>studies_number</em>, <em>status</em>, <em>status_review</em>, <em>confirmation_comments</em>, <em>date_created</em>, <em>date_modified</em>, <em>date_submitted_supervisor</em>, <em>date_reviewed_supervisor</em>, <em>date_submitted</em>, <em>date_reviewed</em>, <em>date_confirmed</em>, <em>has_minor_revision</em>, <em>minor_revision_description</em>, <em>relation</em>, <em>created_by</em>, <em>supervisor</em>, <em>parent</em>, <em>is_revision</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/models.html#Proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.models.Proposal" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">proposals.models.</code><code class="descname">Proposal</code><span class="sig-paren">(</span><em>id</em>, <em>reference_number</em>, <em>date_start</em>, <em>title</em>, <em>summary</em>, <em>other_applicants</em>, <em>other_stakeholders</em>, <em>stakeholders</em>, <em>funding_details</em>, <em>funding_name</em>, <em>comments</em>, <em>inform_local_staff</em>, <em>in_archive</em>, <em>public</em>, <em>is_pre_assessment</em>, <em>pre_assessment_pdf</em>, <em>is_pre_approved</em>, <em>pre_approval_institute</em>, <em>pre_approval_pdf</em>, <em>in_course</em>, <em>is_exploration</em>, <em>pdf</em>, <em>studies_similar</em>, <em>studies_number</em>, <em>status</em>, <em>status_review</em>, <em>confirmation_comments</em>, <em>date_created</em>, <em>date_modified</em>, <em>date_submitted_supervisor</em>, <em>date_reviewed_supervisor</em>, <em>date_submitted</em>, <em>date_reviewed</em>, <em>date_confirmed</em>, <em>has_minor_revision</em>, <em>minor_revision_description</em>, <em>relation</em>, <em>created_by</em>, <em>supervisor</em>, <em>parent</em>, <em>is_revision</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/models.html#Proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.models.Proposal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -343,6 +326,9 @@
 <li><strong>public</strong> (<em>BooleanField</em>) – Public</li>
 <li><strong>is_pre_assessment</strong> (<em>BooleanField</em>) – Is pre assessment</li>
 <li><strong>pre_assessment_pdf</strong> (<em>FileField</em>) – Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)</li>
+<li><strong>is_pre_approved</strong> (<em>NullBooleanField</em>) – Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze etcl commissie?</li>
+<li><strong>pre_approval_institute</strong> (<em>CharField</em>) – Welk instituut heeft de studie goedgekeurd?</li>
+<li><strong>pre_approval_pdf</strong> (<em>FileField</em>) – Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)</li>
 <li><strong>in_course</strong> (<em>BooleanField</em>) – Ik vul de portal in in het kader van een cursus</li>
 <li><strong>is_exploration</strong> (<em>BooleanField</em>) – Ik vul de portal in om de portal te exploreren</li>
 <li><strong>pdf</strong> (<em>FileField</em>) – Pdf</li>
@@ -642,6 +628,12 @@
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="proposals.models.Proposal.is_pre_approved">
+<code class="descname">is_pre_approved</code><a class="headerlink" href="#proposals.models.Proposal.is_pre_approved" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze EtCL commissie?</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="proposals.models.Proposal.is_pre_assessment">
 <code class="descname">is_pre_assessment</code><a class="headerlink" href="#proposals.models.Proposal.is_pre_assessment" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Model field:</strong> is pre assessment</p>
@@ -698,6 +690,19 @@
 <dt id="proposals.models.Proposal.pdf">
 <code class="descname">pdf</code><a class="headerlink" href="#proposals.models.Proposal.pdf" title="Permalink to this definition">¶</a></dt>
 <dd><p><strong>Model field:</strong> pdf
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.models.Proposal.pre_approval_institute">
+<code class="descname">pre_approval_institute</code><a class="headerlink" href="#proposals.models.Proposal.pre_approval_institute" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Welk instituut heeft de studie goedgekeurd?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.models.Proposal.pre_approval_pdf">
+<code class="descname">pre_approval_pdf</code><a class="headerlink" href="#proposals.models.Proposal.pre_approval_pdf" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)
 <strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
 </dd></dl>
 

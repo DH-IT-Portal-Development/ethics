@@ -80,29 +80,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
 </ul>
 
@@ -366,7 +349,7 @@
     <span class="c1"># Fields with respect to informed consent</span>
     <span class="n">passive_consent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">NullBooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Maakt u gebruik van passieve informed consent?&#39;</span><span class="p">),</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="n">mark_safe</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wanneer u kinderen via een instelling </span><span class="se">\</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="n">mark_safe</span><span class="p">(</span><span class="s1">&#39;Wanneer u kinderen via een instelling </span><span class="se">\</span>
 <span class="s1">(dus ook school) werft en u de ouders niet laat ondertekenen, maar in </span><span class="se">\</span>
 <span class="s1">plaats daarvan de leiding van die instelling, dan maakt u gebruik van </span><span class="se">\</span>
 <span class="s1">passieve informed consent. U kunt de templates vinden op </span><span class="se">\</span>
@@ -424,7 +407,7 @@
 <span class="s1">informed consent&lt;/em&gt; vragen zou kunnen oproepen (of zelfs </span><span class="se">\</span>
 <span class="s1">verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers </span><span class="se">\</span>
 <span class="s1">zelf, of bij ouders of andere vertegenwoordigers?&#39;</span><span class="p">),</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="n">mark_safe</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit zou bijvoorbeeld het geval kunnen zijn </span><span class="se">\</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="n">mark_safe</span><span class="p">(</span><span class="s1">&#39;Dit zou bijvoorbeeld het geval kunnen zijn </span><span class="se">\</span>
 <span class="s1">bij een </span><span class="se">\&#39;</span><span class="s1">onmenselijk</span><span class="se">\&#39;</span><span class="s1"> lange en uitputtende taak, een zeer confronterende </span><span class="se">\</span>
 <span class="s1">vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren </span><span class="se">\</span>
 <span class="s1">inbreuk op de privacy, of een ander ervaren gebrek aan respect. </span><span class="se">\</span>
@@ -447,7 +430,7 @@
 <span class="s1">onderzoekstraject &lt;em&gt;meer dan&lt;/em&gt; minimaal? </span><span class="se">\</span>
 <span class="s1">D.w.z. ligt de kans op en/of omvang van mogelijke schade </span><span class="se">\</span>
 <span class="s1">bij de deelnemers duidelijk &lt;em&gt;boven&lt;/em&gt; het &quot;achtergrondrisico&quot;?&#39;</span><span class="p">),</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="n">mark_safe</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Achtergrondrisico is datgene dat gezonde, </span><span class="se">\</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="n">mark_safe</span><span class="p">(</span><span class="s1">&#39;Achtergrondrisico is datgene dat gezonde, </span><span class="se">\</span>
 <span class="s1">gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken </span><span class="se">\</span>
 <span class="s1">in het dagelijks leven ten deel valt. </span><span class="se">\</span>
 <span class="s1">Denk bij schade ook aan de gevolgen die het voor de deelnemer of </span><span class="se">\</span>

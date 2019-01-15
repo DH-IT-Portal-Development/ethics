@@ -80,29 +80,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">General</span></p>
+              <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Installation</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/local/index.html">Local development installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../installation/server/index.html">Server Deployment</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Maintenance &amp; Administration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Development</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">General</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/tests.html">Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/i18n.html">Internationalization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/documentation.html">Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developing/toolset.html">Toolset</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Code Reference</span></p>
-<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
 </ul>
 
@@ -206,6 +189,16 @@
         <span class="n">submit_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Aanvraag voor voortoetsing klaar voor versturen&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">):</span>
             <span class="n">submit_url</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submit_pre&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">submit_url</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">proposal</span><span class="o">.</span><span class="n">is_pre_approved</span><span class="p">:</span>
+        <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AvailableURL</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:update_pre_approved&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,)),</span>
+                                 <span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Algemene informatie over de studie&#39;</span><span class="p">),</span> <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="n">submit_url</span> <span class="o">=</span> <span class="n">AvailableURL</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Aanvraag voor voortoetsing klaar voor versturen&#39;</span><span class="p">),</span>
+            <span class="n">margin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submit_pre_approved&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span>
+        <span class="p">)</span>
         <span class="n">urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">submit_url</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">update_url</span> <span class="o">=</span> <span class="s1">&#39;proposals:update_practice&#39;</span> <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">is_practice</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;proposals:update&#39;</span>
