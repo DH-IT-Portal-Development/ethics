@@ -36,7 +36,9 @@ class BaseReviewTestCase(TestCase):
         self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                                 date_start=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
-                                                relation=Relation.objects.get(pk=4))
+                                                relation=Relation.objects.get(pk=4),
+                                                reviewing_committee=Group.objects.get(name=settings.GROUP_COMMISSION)
+                                                )
         self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=2))
 
 

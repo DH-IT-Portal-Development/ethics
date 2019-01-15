@@ -24,10 +24,14 @@ class BaseProposalTestCase(TestCase):
             email='test@test.nl',
             password='more_secret')
         Group.objects.get(name='Secretaris').user_set.add(self.secretary)
+        self.etcl = Group.objects.get(name='ETCL')
+        self.etcl.user_set.add(self.secretary)
         self.relation = Relation.objects.get(pk=4)
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                           date_start=datetime.now(),
-                                          created_by=self.user, relation=self.relation)
+                                          created_by=self.user,
+                                          relation=self.relation,
+                                          reviewing_committee=self.etcl)
         self.p1.applicants.add(self.user)
         self.p1.save()
 
@@ -40,7 +44,9 @@ class ProposalTestCase(BaseProposalTestCase):
         ref_number = generate_ref_number(self.user)
         p2 = Proposal.objects.create(title='p2', reference_number=ref_number,
                                      date_start=datetime.now(),
-                                     created_by=self.user, relation=self.relation)
+                                     created_by=self.user,
+                                     relation=self.relation,
+                                     reviewing_committee=self.etcl)
         self.assertEqual(ref_number, 'test0101-02-' + current_year)
 
         # Delete a proposal, check new reference number
@@ -52,7 +58,9 @@ class ProposalTestCase(BaseProposalTestCase):
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
         p3 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2),
                                      date_start=datetime.now(),
-                                     created_by=user2, relation=self.relation)
+                                     created_by=user2,
+                                     relation=self.relation,
+                                     reviewing_committee=self.etcl)
         self.assertEqual(p3.reference_number, 'test0102-01-' + current_year)
 
     def test_status(self):
@@ -159,7 +167,9 @@ class ProposalsViewTestCase(BaseProposalTestCase):
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
         p2 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2),
                                      date_start=datetime.now(),
-                                     created_by=user2, relation=self.relation)
+                                     created_by=user2,
+                                     relation=self.relation,
+                                     reviewing_committee=self.etcl)
         p2.applicants.add(user2)
         p2.save()
 
