@@ -53,7 +53,7 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
+    group_required = [settings.GROUP_SECRETARY, settings.GROUP_ETCL, settings.GROUP_FETC]
     template_name_suffix = '_export_list'
 
     def get_queryset(self):

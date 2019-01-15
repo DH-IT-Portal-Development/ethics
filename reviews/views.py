@@ -15,7 +15,7 @@ from .utils import notify_secretary, start_review_route
 
 class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION,
+    group_required = [settings.GROUP_SECRETARY, settings.GROUP_ETCL,
                       settings.GROUP_FETC]
 
     def get_queryset(self):
@@ -28,7 +28,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
 class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION,
+    group_required = [settings.GROUP_SECRETARY, settings.GROUP_ETCL,
                       settings.GROUP_FETC]
 
     def get_queryset(self):
@@ -233,7 +233,9 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
         if self.request.user.is_superuser:
             return True
         user_groups = self.request.user.groups.values_list("name", flat=True)
-        return {settings.GROUP_SECRETARY, settings.GROUP_COMMISSION}.intersection(set(user_groups))
+        # TODO: make this work with more groups properly
+        return {settings.GROUP_SECRETARY, settings.GROUP_ETCL}.intersection(
+            set(user_groups))
 
     def get_success_url(self):
         if self.is_reviewer():

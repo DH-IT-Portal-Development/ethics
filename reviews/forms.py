@@ -23,7 +23,7 @@ class ReviewAssignForm(ConditionalModelForm):
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
         self.fields['reviewers'] = forms.ModelMultipleChoiceField(
             initial=self.instance.current_reviewers(),
-            queryset=get_reviewers(),
+            queryset=get_reviewers(), # TODO: find a fix for this!!
             widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}),
             required=False
         )

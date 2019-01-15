@@ -10,7 +10,7 @@ def in_etcl(current_user):
     """
     Check whether the current user is in the 'ETCL' or 'Secretaris' group
     """
-    return Group.objects.get(name=settings.GROUP_COMMISSION) in current_user.groups.all() or \
+    return Group.objects.get(name=settings.GROUP_ETCL) in current_user.groups.all() or \
         Group.objects.get(name=settings.GROUP_SECRETARY) in current_user.groups.all()
 
 @register.filter

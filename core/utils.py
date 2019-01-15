@@ -22,7 +22,7 @@ def get_secretary():
 
 
 def get_reviewers():
-    return get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
+    return get_user_model().objects.filter(groups__name=settings.GROUP_ETCL)
 
 
 def string_to_bool(s):

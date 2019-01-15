@@ -32,3 +32,11 @@ urlpatterns = [
 admin.site.site_header = 'ETCL'
 admin.site.site_title = 'ETCL administratie'
 admin.site.index_title = 'ETCL administratie'
+
+from django.conf import settings
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
