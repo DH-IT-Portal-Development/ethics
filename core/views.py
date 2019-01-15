@@ -105,8 +105,8 @@ def user_search(query, page):
         for _, data in ldap_connection.result(msgid)[1]:
             # Add them to the users, with a ldap_ prefix in the ID so we can distinguish this when processing the form
             users.append({
-                'id': 'ldap_' + data.get('uid')[0],
-                'text': '{}: {}'.format(data.get('uid')[0], data.get('displayName')[0])
+                'id': 'ldap_' + data.get('uid')[0].decode("utf-8") ,
+                'text': '{}: {}'.format(data.get('uid')[0].decode("utf-8") , data.get('displayName')[0].decode("utf-8") )
             })
 
     # Return a formatted dict with the results

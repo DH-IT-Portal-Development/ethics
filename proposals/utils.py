@@ -38,6 +38,16 @@ def available_urls(proposal):
         if hasattr(proposal, 'wmo'):
             submit_url.url = reverse('proposals:submit_pre', args=(proposal.pk,))
         urls.append(submit_url)
+    elif proposal.is_pre_approved:
+        urls.append(AvailableURL(url=reverse('proposals:update_pre_approved', args=(proposal.pk,)),
+                                 title=_('Algemene informatie over de studie'), margin=0))
+
+        submit_url = AvailableURL(
+            title=_('Aanvraag voor voortoetsing klaar voor versturen'),
+            margin=0,
+            url = reverse('proposals:submit_pre_approved', args=(proposal.pk,))
+        )
+        urls.append(submit_url)
     else:
         update_url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
         urls.append(AvailableURL(url=reverse(update_url, args=(proposal.pk,)),
