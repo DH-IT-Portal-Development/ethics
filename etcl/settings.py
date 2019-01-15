@@ -49,8 +49,6 @@ INSTALLED_APPS = (
     'modeltranslation',
 
     'django.contrib.admin',
-
-    'debug_toolbar',
 )
 
 MIDDLEWARE = (
@@ -62,8 +60,6 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 TEMPLATES = [
