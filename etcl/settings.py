@@ -134,7 +134,8 @@ EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
 
 # Group names
 GROUP_SECRETARY = 'Secretaris'
-GROUP_COMMISSION = 'Commissie'
+GROUP_COMMISSION = 'ETCL' # TODO: rename variable to ETCL
+GROUP_FETC = 'FETC'
 
 # Route durations
 PREASSESSMENT_ROUTE_WEEKS = 1
