@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>proposals.management.commands.export_csv module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="proposals.management.commands.regenerate_pdf module" href="proposals.management.commands.regenerate_pdf.html" />
+    <link rel="prev" title="proposals.management.commands package" href="proposals.management.commands.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="proposals.html">proposals package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="proposals.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="proposals.management.html">proposals.management package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.templatetags.html">proposals.templatetags package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.views.html">proposals.views package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="proposals.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="proposals.html">proposals package</a> &raquo;</li>
+        
+          <li><a href="proposals.management.html">proposals.management package</a> &raquo;</li>
+        
+          <li><a href="proposals.management.commands.html">proposals.management.commands package</a> &raquo;</li>
+        
+      <li>proposals.management.commands.export_csv module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/proposals.management.commands.export_csv.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-proposals.management.commands.export_csv">
+<span id="proposals-management-commands-export-csv-module"></span><h1>proposals.management.commands.export_csv module<a class="headerlink" href="#module-proposals.management.commands.export_csv" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="proposals.management.commands.export_csv.Command">
+<em class="property">class </em><code class="descclassname">proposals.management.commands.export_csv.</code><code class="descname">Command</code><span class="sig-paren">(</span><em>stdout=None</em>, <em>stderr=None</em>, <em>no_color=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/management/commands/export_csv.html#Command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.management.commands.export_csv.Command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.management.base.BaseCommand</span></code></p>
+<dl class="method">
+<dt id="proposals.management.commands.export_csv.Command.handle">
+<code class="descname">handle</code><span class="sig-paren">(</span><em>*args</em>, <em>**options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/management/commands/export_csv.html#Command.handle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.management.commands.export_csv.Command.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual logic of the command. Subclasses must implement
+this method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="proposals.management.commands.export_csv.Command.help">
+<code class="descname">help</code><em class="property"> = 'Exports reviewed Proposals'</em><a class="headerlink" href="#proposals.management.commands.export_csv.Command.help" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="proposals.management.commands.export_csv.UnicodeWriter">
+<em class="property">class </em><code class="descclassname">proposals.management.commands.export_csv.</code><code class="descname">UnicodeWriter</code><span class="sig-paren">(</span><em>f</em>, <em>dialect=&lt;class 'csv.excel'&gt;</em>, <em>encoding='utf-8'</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/management/commands/export_csv.html#UnicodeWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.management.commands.export_csv.UnicodeWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A CSV writer which will write rows to CSV file “f”,
+which is encoded in the given encoding.
+Copied from <a class="reference external" href="https://docs.python.org/2/library/csv.html#examples">https://docs.python.org/2/library/csv.html#examples</a></p>
+<dl class="method">
+<dt id="proposals.management.commands.export_csv.UnicodeWriter.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>f</em>, <em>dialect=&lt;class 'csv.excel'&gt;</em>, <em>encoding='utf-8'</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/management/commands/export_csv.html#UnicodeWriter.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.management.commands.export_csv.UnicodeWriter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="proposals.management.commands.export_csv.UnicodeWriter.writerow">
+<code class="descname">writerow</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/management/commands/export_csv.html#UnicodeWriter.writerow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.management.commands.export_csv.UnicodeWriter.writerow" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proposals.management.commands.export_csv.UnicodeWriter.writerows">
+<code class="descname">writerows</code><span class="sig-paren">(</span><em>rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/management/commands/export_csv.html#UnicodeWriter.writerows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.management.commands.export_csv.UnicodeWriter.writerows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="proposals.management.commands.export_csv.dict_to_string">
+<code class="descclassname">proposals.management.commands.export_csv.</code><code class="descname">dict_to_string</code><span class="sig-paren">(</span><em>dict_</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/management/commands/export_csv.html#dict_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.management.commands.export_csv.dict_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="proposals.management.commands.regenerate_pdf.html" class="btn btn-neutral float-right" title="proposals.management.commands.regenerate_pdf module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="proposals.management.commands.html" class="btn btn-neutral" title="proposals.management.commands package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

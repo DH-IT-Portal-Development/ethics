@@ -16,3 +16,7 @@ htmlcov/
 
 ### IDE ###
 .idea
+
+### Docs ###
+docs/_build/doctrees/**
+*.doctree

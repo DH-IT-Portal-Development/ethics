@@ -1,0 +1,1237 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>studies.models module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="studies.tests module" href="studies.tests.html" />
+    <link rel="prev" title="studies.forms module" href="studies.forms.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="studies.html">studies package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="studies.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="studies.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="studies.admin.html">studies.admin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.app.html">studies.app module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.forms.html">studies.forms module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">studies.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.tests.html">studies.tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.translation.html">studies.translation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.urls.html">studies.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.utils.html">studies.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="studies.html">studies package</a> &raquo;</li>
+        
+      <li>studies.models module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/studies.models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-studies.models">
+<span id="studies-models-module"></span><h1>studies.models module<a class="headerlink" href="#module-studies.models" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="studies.models.AgeGroup">
+<em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">AgeGroup</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#AgeGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.AgeGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model to store participant age groups.
+The model has fields for the age range, a description and whether this age group is considered adult.
+The ‘needs_details’ field is used to determine whether the ‘necessity’ field on Study needs to be filled.
+The ‘max_net_duration’ field is used in the automatic review to check the target Session duration is not exceeded.
+The ‘is_active’ field is used for when the age groups need to be redefined. Create new ones for the groups that need
+to be redefined, and set the old ones to inactive. This is needed to preserve old proposals for the archive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>age_min</strong> (<em>PositiveIntegerField</em>) – Age min</li>
+<li><strong>age_max</strong> (<em>PositiveIntegerField</em>) – Age max</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>is_adult</strong> (<em>BooleanField</em>) – Is adult</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>max_net_duration</strong> (<em>PositiveIntegerField</em>) – Max net duration</li>
+<li><strong>is_active</strong> (<em>BooleanField</em>) – Is active</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="studies.models.AgeGroup.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.AgeGroup.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.AgeGroup.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#studies.models.AgeGroup.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.AgeGroup.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.AgeGroup.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.age_max">
+<code class="descname">age_max</code><a class="headerlink" href="#studies.models.AgeGroup.age_max" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> age max</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.age_min">
+<code class="descname">age_min</code><a class="headerlink" href="#studies.models.AgeGroup.age_min" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> age min</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.AgeGroup.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.AgeGroup.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.description">
+<code class="descname">description</code><a class="headerlink" href="#studies.models.AgeGroup.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descriptor used for the original translated field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.description_en">
+<code class="descname">description_en</code><a class="headerlink" href="#studies.models.AgeGroup.description_en" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [en]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.description_nl">
+<code class="descname">description_nl</code><a class="headerlink" href="#studies.models.AgeGroup.description_nl" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [nl]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.AgeGroup.get_deferred_fields">
+<code class="descname">get_deferred_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.AgeGroup.get_deferred_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.id">
+<code class="descname">id</code><a class="headerlink" href="#studies.models.AgeGroup.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.is_active">
+<code class="descname">is_active</code><a class="headerlink" href="#studies.models.AgeGroup.is_active" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> is active</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.is_adult">
+<code class="descname">is_adult</code><a class="headerlink" href="#studies.models.AgeGroup.is_adult" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> is adult</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.max_net_duration">
+<code class="descname">max_net_duration</code><a class="headerlink" href="#studies.models.AgeGroup.max_net_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> max net duration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.needs_details">
+<code class="descname">needs_details</code><a class="headerlink" href="#studies.models.AgeGroup.needs_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> needs details</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.objects">
+<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#studies.models.AgeGroup.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="studies.models.AgeGroup.refresh_from_db">
+<code class="descname">refresh_from_db</code><span class="sig-paren">(</span><em>using=None</em>, <em>fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.AgeGroup.refresh_from_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.AgeGroup.study_set">
+<code class="descname">study_set</code><a class="headerlink" href="#studies.models.AgeGroup.study_set" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?, accesses the M2M <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.models.Compensation">
+<em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Compensation</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Compensation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Compensation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model to store forms of participant compensation.
+The model has fields to keep a certain order and a description.
+The ‘needs_details’ field is used to determine whether the ‘compensation_details’ field on Study needs to be filled.
+The ‘requires_review’ field is used in the automatic review to tag anomalous forms of compensation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="studies.models.Compensation.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Compensation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.Compensation.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#studies.models.Compensation.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Compensation.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Compensation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Compensation.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Compensation.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.description">
+<code class="descname">description</code><a class="headerlink" href="#studies.models.Compensation.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descriptor used for the original translated field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.description_en">
+<code class="descname">description_en</code><a class="headerlink" href="#studies.models.Compensation.description_en" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [en]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.description_nl">
+<code class="descname">description_nl</code><a class="headerlink" href="#studies.models.Compensation.description_nl" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [nl]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Compensation.get_deferred_fields">
+<code class="descname">get_deferred_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Compensation.get_deferred_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.id">
+<code class="descname">id</code><a class="headerlink" href="#studies.models.Compensation.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.needs_details">
+<code class="descname">needs_details</code><a class="headerlink" href="#studies.models.Compensation.needs_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> needs details</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.objects">
+<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#studies.models.Compensation.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.order">
+<code class="descname">order</code><a class="headerlink" href="#studies.models.Compensation.order" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> order</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Compensation.refresh_from_db">
+<code class="descname">refresh_from_db</code><span class="sig-paren">(</span><em>using=None</em>, <em>fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Compensation.refresh_from_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.requires_review">
+<code class="descname">requires_review</code><a class="headerlink" href="#studies.models.Compensation.requires_review" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> requires review</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Compensation.study_set">
+<code class="descname">study_set</code><a class="headerlink" href="#studies.models.Compensation.study_set" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?, accesses the M2M <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.models.Documents">
+<em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Documents</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Documents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model to store consent forms for a study and/or a proposal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>study</strong> (OneToOneField to <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</li>
+<li><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</li>
+<li><strong>informed_consent</strong> (<em>FileField</em>) – Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)</li>
+<li><strong>briefing</strong> (<em>FileField</em>) – Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)</li>
+<li><strong>director_consent_declaration</strong> (<em>FileField</em>) – If it is already signed, upload the signed declaration form. If it is not signed yet, you can upload the unsigned document and send the document when it is signed to the secretary of the EtCL</li>
+<li><strong>director_consent_information</strong> (<em>FileField</em>) – Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)</li>
+<li><strong>parents_information</strong> (<em>FileField</em>) – Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="studies.models.Documents.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Documents.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.Documents.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#studies.models.Documents.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.briefing">
+<code class="descname">briefing</code><a class="headerlink" href="#studies.models.Documents.briefing" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.director_consent_declaration">
+<code class="descname">director_consent_declaration</code><a class="headerlink" href="#studies.models.Documents.director_consent_declaration" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.director_consent_information">
+<code class="descname">director_consent_information</code><a class="headerlink" href="#studies.models.Documents.director_consent_information" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.id">
+<code class="descname">id</code><a class="headerlink" href="#studies.models.Documents.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.informed_consent">
+<code class="descname">informed_consent</code><a class="headerlink" href="#studies.models.Documents.informed_consent" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#studies.models.Documents.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.parents_information">
+<code class="descname">parents_information</code><a class="headerlink" href="#studies.models.Documents.parents_information" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)
+<strong>Return type:</strong> <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldFile</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.proposal">
+<code class="descname">proposal</code><a class="headerlink" href="#studies.models.Documents.proposal" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> proposal, accesses the <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.proposal_id">
+<code class="descname">proposal_id</code><a class="headerlink" href="#studies.models.Documents.proposal_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> proposal</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Documents.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Documents.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Documents.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be a bit cleaner we do not save if this object is new, not connected to a study and if the document fields are
+empty.</p>
+<p>The edit consent form page contains 2 extra forms, but those are optional. However, Django creates instances
+for these forms anyway, so we have to</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.study">
+<code class="descname">study</code><a class="headerlink" href="#studies.models.Documents.study" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study, accesses the <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Documents.study_id">
+<code class="descname">study_id</code><a class="headerlink" href="#studies.models.Documents.study_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.models.Recruitment">
+<em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Recruitment</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Recruitment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Recruitment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model to store forms of participant recruitment.
+The model has fields to keep a certain order and a description.
+The ‘is_local’ field is used to determine whether the ‘inform_local_staff’ field on Proposal needs to be filled.
+The ‘needs_details’ field is used to determine whether the ‘recruitment_details’ field on Study needs to be filled.
+The ‘requires_review’ field is used in the automatic review to tag anomalous forms of recruitment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>is_local</strong> (<em>BooleanField</em>) – Is local</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="studies.models.Recruitment.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Recruitment.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.Recruitment.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#studies.models.Recruitment.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Recruitment.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Recruitment.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Recruitment.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Recruitment.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.description">
+<code class="descname">description</code><a class="headerlink" href="#studies.models.Recruitment.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descriptor used for the original translated field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.description_en">
+<code class="descname">description_en</code><a class="headerlink" href="#studies.models.Recruitment.description_en" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [en]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.description_nl">
+<code class="descname">description_nl</code><a class="headerlink" href="#studies.models.Recruitment.description_nl" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [nl]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Recruitment.get_deferred_fields">
+<code class="descname">get_deferred_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Recruitment.get_deferred_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.id">
+<code class="descname">id</code><a class="headerlink" href="#studies.models.Recruitment.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.is_local">
+<code class="descname">is_local</code><a class="headerlink" href="#studies.models.Recruitment.is_local" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> is local</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.needs_details">
+<code class="descname">needs_details</code><a class="headerlink" href="#studies.models.Recruitment.needs_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> needs details</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.objects">
+<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#studies.models.Recruitment.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.order">
+<code class="descname">order</code><a class="headerlink" href="#studies.models.Recruitment.order" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> order</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Recruitment.refresh_from_db">
+<code class="descname">refresh_from_db</code><span class="sig-paren">(</span><em>using=None</em>, <em>fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Recruitment.refresh_from_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.requires_review">
+<code class="descname">requires_review</code><a class="headerlink" href="#studies.models.Recruitment.requires_review" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> requires review</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Recruitment.study_set">
+<code class="descname">study_set</code><a class="headerlink" href="#studies.models.Recruitment.study_set" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Hoe worden de deelnemers geworven?, accesses the M2M <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.models.Study">
+<em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Study</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model to store a study within a Proposal.
+A Study consists of participant details, experiment design and consent forms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>name</strong> (<em>CharField</em>) – Naam traject</li>
+<li><strong>legally_incapable</strong> (<em>BooleanField</em>) – Wilsonbekwame volwassenen zijn volwassenen die waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen.</li>
+<li><strong>legally_incapable_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>has_traits</strong> (<em>NullBooleanField</em>) – Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. is dit in uw studie bij (een deel van) de deelnemers het geval?</li>
+<li><strong>traits_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>necessity</strong> (<em>CharField</em>) – Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers te testen?</li>
+<li><strong>necessity_reason</strong> (<em>TextField</em>) – Leg uit waarom</li>
+<li><strong>recruitment_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>compensation</strong> (ForeignKey to <a class="reference internal" href="#studies.models.Compensation" title="studies.models.Compensation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compensation</span></code></a>) – Het standaardbedrag voor vergoeding aan de deelnemers is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een cadeautje.</li>
+<li><strong>compensation_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>has_intervention</strong> (<em>BooleanField</em>) – Interventieonderzoek</li>
+<li><strong>has_observation</strong> (<em>BooleanField</em>) – Observatieonderzoek</li>
+<li><strong>has_sessions</strong> (<em>BooleanField</em>) – Taakonderzoek</li>
+<li><strong>passive_consent</strong> (<em>NullBooleanField</em>) – Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. U kunt de templates vinden op de ETCL-website.</li>
+<li><strong>passive_consent_details</strong> (<em>TextField</em>) – Licht uw antwoord toe. wij willen u wijzen op het reglement, sectie 3.1 ‘d’ en ‘e’. passive consent is slechts in enkele gevallen toegestaan en draagt niet de voorkeur van de commissie.</li>
+<li><strong>sessions_number</strong> (<em>PositiveIntegerField</em>) – Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.</li>
+<li><strong>deception</strong> (<em>CharField</em>) – Misleiding is het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. Denk aan zaken als een bewust misleidende “cover story” voor het experiment; het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat hierbij niet om fillers.</li>
+<li><strong>deception_details</strong> (<em>TextField</em>) – Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.</li>
+<li><strong>negativity</strong> (<em>CharField</em>) – Bevat bovenstaand onderzoekstraject elementen die &lt;em&gt;tijdens&lt;/em&gt; de deelname niet-triviale negatieve emoties kunnen opwekken? denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie taken.</li>
+<li><strong>negativity_details</strong> (<em>TextField</em>) – Licht uw antwoord toe.</li>
+<li><strong>stressful</strong> (<em>CharField</em>) – Dit zou bijvoorbeeld het geval kunnen zijn bij een ‘onmenselijk’ lange en uitputtende taak, een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.</li>
+<li><strong>stressful_details</strong> (<em>TextField</em>) – Licht uw antwoord toe. geef concrete voorbeelden van de relevante aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.</li>
+<li><strong>risk</strong> (<em>CharField</em>) – Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, economische schade door data-koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de risico’s van “routine”-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, onder begeleiding van adequaat geschoolde specialisten).</li>
+<li><strong>risk_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</li>
+<li><strong>age_groups</strong> (<em>ManyToManyField</em>) – De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.</li>
+<li><strong>traits</strong> (<em>ManyToManyField</em>) – Selecteer de bijzondere kenmerken van uw proefpersonen</li>
+<li><strong>recruitment</strong> (<em>ManyToManyField</em>) – Hoe worden de deelnemers geworven?</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="studies.models.Study.DESIGNS">
+<code class="descname">DESIGNS</code><em class="property"> = ((0, 'Observatieonderzoek'), (1, 'Interventieonderzoek'), (2, 'Taakonderzoek'))</em><a class="headerlink" href="#studies.models.Study.DESIGNS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.Study.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Study.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.INTERVENTION">
+<code class="descname">INTERVENTION</code><em class="property"> = 1</em><a class="headerlink" href="#studies.models.Study.INTERVENTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.Study.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#studies.models.Study.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.OBSERVATION">
+<code class="descname">OBSERVATION</code><em class="property"> = 0</em><a class="headerlink" href="#studies.models.Study.OBSERVATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.SESSIONS">
+<code class="descname">SESSIONS</code><em class="property"> = 2</em><a class="headerlink" href="#studies.models.Study.SESSIONS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.age_groups">
+<code class="descname">age_groups</code><a class="headerlink" href="#studies.models.Study.age_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?, accesses the M2M <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.compensation">
+<code class="descname">compensation</code><a class="headerlink" href="#studies.models.Study.compensation" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?, accesses the <a class="reference internal" href="#studies.models.Compensation" title="studies.models.Compensation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compensation</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.compensation_details">
+<code class="descname">compensation_details</code><a class="headerlink" href="#studies.models.Study.compensation_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Namelijk</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.compensation_id">
+<code class="descname">compensation_id</code><a class="headerlink" href="#studies.models.Study.compensation_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.deception">
+<code class="descname">deception</code><a class="headerlink" href="#studies.models.Study.deception" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.deception_details">
+<code class="descname">deception_details</code><a class="headerlink" href="#studies.models.Study.deception_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.design_completed">
+<code class="descname">design_completed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.design_completed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.design_completed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the design phase has been completed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.design_started">
+<code class="descname">design_started</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.design_started"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.design_started" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the design phase has started</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.documents">
+<code class="descname">documents</code><a class="headerlink" href="#studies.models.Study.documents" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study, accesses the <a class="reference internal" href="#studies.models.Documents" title="studies.models.Documents"><code class="xref py py-class docutils literal notranslate"><span class="pre">Documents</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.first_session">
+<code class="descname">first_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.first_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.first_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first Session in this Study</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.get_deception_display">
+<code class="descname">get_deception_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.get_deception_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#studies.models.Study.deception" title="studies.models.Study.deception"><code class="xref py py-attr docutils literal notranslate"><span class="pre">deception</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.get_documents_object">
+<code class="descname">get_documents_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.get_documents_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.get_documents_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the document object for this study</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.get_necessity_display">
+<code class="descname">get_necessity_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.get_necessity_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#studies.models.Study.necessity" title="studies.models.Study.necessity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">necessity</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.get_negativity_display">
+<code class="descname">get_negativity_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.get_negativity_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#studies.models.Study.negativity" title="studies.models.Study.negativity"><code class="xref py py-attr docutils literal notranslate"><span class="pre">negativity</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.get_risk_display">
+<code class="descname">get_risk_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.get_risk_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#studies.models.Study.risk" title="studies.models.Study.risk"><code class="xref py py-attr docutils literal notranslate"><span class="pre">risk</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.get_stressful_display">
+<code class="descname">get_stressful_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Study.get_stressful_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#studies.models.Study.stressful" title="studies.models.Study.stressful"><code class="xref py py-attr docutils literal notranslate"><span class="pre">stressful</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.has_children">
+<code class="descname">has_children</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.has_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.has_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the Study contains non-adult AgeGroups</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.has_intervention">
+<code class="descname">has_intervention</code><a class="headerlink" href="#studies.models.Study.has_intervention" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Interventieonderzoek</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.has_missing_forms">
+<code class="descname">has_missing_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.has_missing_forms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.has_missing_forms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.has_missing_sessions">
+<code class="descname">has_missing_sessions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.has_missing_sessions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.has_missing_sessions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.has_observation">
+<code class="descname">has_observation</code><a class="headerlink" href="#studies.models.Study.has_observation" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Observatieonderzoek</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.has_participants_below_age">
+<code class="descname">has_participants_below_age</code><span class="sig-paren">(</span><em>age</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.has_participants_below_age"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.has_participants_below_age" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the Study contains AgeGroups with ages below the specified age</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.has_sessions">
+<code class="descname">has_sessions</code><a class="headerlink" href="#studies.models.Study.has_sessions" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Taakonderzoek</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.has_traits">
+<code class="descname">has_traits</code><a class="headerlink" href="#studies.models.Study.has_traits" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is dit in uw studie bij (een deel van) de deelnemers het geval?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.id">
+<code class="descname">id</code><a class="headerlink" href="#studies.models.Study.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.intervention">
+<code class="descname">intervention</code><a class="headerlink" href="#studies.models.Study.intervention" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study, accesses the <a class="reference internal" href="interventions.models.html#interventions.models.Intervention" title="interventions.models.Intervention"><code class="xref py py-class docutils literal notranslate"><span class="pre">Intervention</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.is_completed">
+<code class="descname">is_completed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.is_completed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.is_completed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the whole Study has been completed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.last_session">
+<code class="descname">last_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.last_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.last_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the last Session in this Study</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.legally_incapable">
+<code class="descname">legally_incapable</code><a class="headerlink" href="#studies.models.Study.legally_incapable" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Maakt uw studie gebruik van wils&lt;u&gt;on&lt;/u&gt;bekwame (volwassen) deelnemers?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.legally_incapable_details">
+<code class="descname">legally_incapable_details</code><a class="headerlink" href="#studies.models.Study.legally_incapable_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Licht toe</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.name">
+<code class="descname">name</code><a class="headerlink" href="#studies.models.Study.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Naam traject</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.necessity">
+<code class="descname">necessity</code><a class="headerlink" href="#studies.models.Study.necessity" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het geselecteerde type deelnemer aan de studie te laten meedoen?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.necessity_reason">
+<code class="descname">necessity_reason</code><a class="headerlink" href="#studies.models.Study.necessity_reason" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Leg uit waarom</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.needs_additional_external_forms">
+<code class="descname">needs_additional_external_forms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.needs_additional_external_forms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.needs_additional_external_forms" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks if the school/other external institution forms are needed when passive consent is false</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.negativity">
+<code class="descname">negativity</code><a class="headerlink" href="#studies.models.Study.negativity" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Bevat bovenstaand onderzoekstraject elementen die &lt;em&gt;tijdens&lt;/em&gt; de deelname niet-triviale negatieve emoties kunnen opwekken? Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie taken.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.negativity_details">
+<code class="descname">negativity_details</code><a class="headerlink" href="#studies.models.Study.negativity_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Licht uw antwoord toe.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#studies.models.Study.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.observation">
+<code class="descname">observation</code><a class="headerlink" href="#studies.models.Study.observation" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study, accesses the <a class="reference internal" href="observations.models.html#observations.models.Observation" title="observations.models.Observation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observation</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.order">
+<code class="descname">order</code><a class="headerlink" href="#studies.models.Study.order" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> order</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.passive_consent">
+<code class="descname">passive_consent</code><a class="headerlink" href="#studies.models.Study.passive_consent" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Maakt u gebruik van passieve informed consent?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.passive_consent_details">
+<code class="descname">passive_consent_details</code><a class="headerlink" href="#studies.models.Study.passive_consent_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Licht uw antwoord toe. Wij willen u wijzen op het reglement, sectie 3.1 ‘d’ en ‘e’. Passive consent is slechts in enkele gevallen toegestaan en draagt niet de voorkeur van de commissie.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.proposal">
+<code class="descname">proposal</code><a class="headerlink" href="#studies.models.Study.proposal" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> proposal, accesses the <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.proposal_id">
+<code class="descname">proposal_id</code><a class="headerlink" href="#studies.models.Study.proposal_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> proposal</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.recruitment">
+<code class="descname">recruitment</code><a class="headerlink" href="#studies.models.Study.recruitment" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Hoe worden de deelnemers geworven?, accesses the M2M <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.recruitment_details">
+<code class="descname">recruitment_details</code><a class="headerlink" href="#studies.models.Study.recruitment_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Licht toe</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Study.research_settings_contains_schools">
+<code class="descname">research_settings_contains_schools</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Study.research_settings_contains_schools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Study.research_settings_contains_schools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if any research track contains a school in it’s setting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.risk">
+<code class="descname">risk</code><a class="headerlink" href="#studies.models.Study.risk" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Zijn de risico’s op psychische, fysieke, of andere (bijv. economische, juridische) schade door deelname aan bovenstaand onderzoekstraject &lt;em&gt;meer dan&lt;/em&gt; minimaal? D.w.z. ligt de kans op en/of omvang van mogelijke schade bij de deelnemers duidelijk &lt;em&gt;boven&lt;/em&gt; het “achtergrondrisico”?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.risk_details">
+<code class="descname">risk_details</code><a class="headerlink" href="#studies.models.Study.risk_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Licht toe</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.session_set">
+<code class="descname">session_set</code><a class="headerlink" href="#studies.models.Study.session_set" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> study, accesses the M2M <a class="reference internal" href="tasks.models.html#tasks.models.Session" title="tasks.models.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.sessions_number">
+<code class="descname">sessions_number</code><a class="headerlink" href="#studies.models.Study.sessions_number" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.stressful">
+<code class="descname">stressful</code><a class="headerlink" href="#studies.models.Study.stressful" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Bevat bovenstaand onderzoekstraject elementen die tijdens de deelname zodanig belastend zijn dat deze &lt;em&gt;ondanks de verkregen informed consent&lt;/em&gt; vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf, of bij ouders of andere vertegenwoordigers?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.stressful_details">
+<code class="descname">stressful_details</code><a class="headerlink" href="#studies.models.Study.stressful_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Licht uw antwoord toe. Geef concrete voorbeelden van de relevante aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.traits">
+<code class="descname">traits</code><a class="headerlink" href="#studies.models.Study.traits" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Selecteer de bijzondere kenmerken van uw proefpersonen, accesses the M2M <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Study.traits_details">
+<code class="descname">traits_details</code><a class="headerlink" href="#studies.models.Study.traits_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Namelijk</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.models.Trait">
+<em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Trait</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Trait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Trait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>A model to store participant traits.
+The model has fields to keep a certain order and a description.
+The ‘needs_details’ field is used to determine whether the ‘necessity’ field on Study needs to be filled.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="studies.models.Trait.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Trait.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="studies.models.Trait.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#studies.models.Trait.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Trait.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Trait.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Trait.clean_fields">
+<code class="descname">clean_fields</code><span class="sig-paren">(</span><em>exclude=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Trait.clean_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.description">
+<code class="descname">description</code><a class="headerlink" href="#studies.models.Trait.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descriptor used for the original translated field.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.description_en">
+<code class="descname">description_en</code><a class="headerlink" href="#studies.models.Trait.description_en" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [en]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.description_nl">
+<code class="descname">description_nl</code><a class="headerlink" href="#studies.models.Trait.description_nl" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> description [nl]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Trait.get_deferred_fields">
+<code class="descname">get_deferred_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Trait.get_deferred_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.id">
+<code class="descname">id</code><a class="headerlink" href="#studies.models.Trait.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.needs_details">
+<code class="descname">needs_details</code><a class="headerlink" href="#studies.models.Trait.needs_details" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> needs details</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.objects">
+<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#studies.models.Trait.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.order">
+<code class="descname">order</code><a class="headerlink" href="#studies.models.Trait.order" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> order</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="studies.models.Trait.refresh_from_db">
+<code class="descname">refresh_from_db</code><span class="sig-paren">(</span><em>using=None</em>, <em>fields=None</em><span class="sig-paren">)</span><a class="headerlink" href="#studies.models.Trait.refresh_from_db" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.models.Trait.study_set">
+<code class="descname">study_set</code><a class="headerlink" href="#studies.models.Trait.study_set" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Selecteer de bijzondere kenmerken van uw proefpersonen, accesses the M2M <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a> model.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="studies.tests.html" class="btn btn-neutral float-right" title="studies.tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="studies.forms.html" class="btn btn-neutral" title="studies.forms module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

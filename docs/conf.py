@@ -32,8 +32,11 @@ django.setup()
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinxcontrib.apidoc',
     'sphinx.ext.autodoc',
+    'sphinxcontrib_django',
     'sphinx.ext.coverage',
+    'sphinx.ext.viewcode'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -52,8 +55,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'ETCL'
-copyright = u'2017, Martijn van der Klis'
-author = u'Martijn van der Klis'
+copyright = u'2018, Martijn van der Klis & Ty Mees'
+author = u'Martijn van der Klis & Ty Mees'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -114,7 +117,7 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -231,7 +234,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'ETCL.tex', u'ETCL Documentation',
-     u'Martijn van der Klis', 'manual'),
+     u'Martijn van der Klis & Ty Mees', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -290,3 +293,13 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+
+apidoc_module_dir = '..'
+apidoc_output_dir = 'reference'
+apidoc_excluded_paths = ['docs', '*/migrations', 'manage.py']
+apidoc_separate_modules = True
+apidoc_module_first = True
+apidoc_toc_file = 'index'
+
+todo_include_todos = True

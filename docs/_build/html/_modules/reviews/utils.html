@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>reviews.utils &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>reviews.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for reviews.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="k">import</span> <span class="n">send_mail</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="k">import</span> <span class="n">render_to_string</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="k">import</span> <span class="n">timezone</span>
+
+<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span>
+<span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">get_secretary</span>
+<span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Task</span>
+<span class="kn">from</span> <span class="nn">proposals.utils</span> <span class="k">import</span> <span class="n">notify_local_staff</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Review</span><span class="p">,</span> <span class="n">Decision</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<div class="viewcode-block" id="start_review"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_review">[docs]</a><span class="k">def</span> <span class="nf">start_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts a Review for the given Proposal.</span>
+
+<span class="sd">    If the proposal needs a supervisor, start the supervisor phase. Otherwise, start the assignment phase.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">relation</span><span class="o">.</span><span class="n">needs_supervisor</span><span class="p">:</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="n">start_supervisor_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="n">start_assignment_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">review</span></div>
+
+
+<div class="viewcode-block" id="start_supervisor_phase"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_supervisor_phase">[docs]</a><span class="k">def</span> <span class="nf">start_supervisor_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts the supervisor phase:</span>
+<span class="sd">    - Set the Review status to SUPERVISOR</span>
+<span class="sd">    - Set date_submitted_supervisor to current date/time</span>
+<span class="sd">    - Create a Decision for the supervisor</span>
+<span class="sd">    - Send an e-mail to the creator</span>
+<span class="sd">    - Send an e-mail to the supervisor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span> <span class="n">date_start</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">SUPERVISOR</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="n">proposal</span><span class="o">.</span><span class="n">date_submitted_supervisor</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span>
+    <span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="n">decision</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="p">)</span>
+
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: bevestiging indienen concept-aanmelding&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;supervisor&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">get_secretary</span><span class="p">()</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/concept_creator.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
+
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: beoordelen als eindverantwoordelijke&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;creator&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;proposal_url&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:decide&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">pk</span><span class="p">,)),</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">get_secretary</span><span class="p">()</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;revision&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">is_revision</span><span class="p">,</span>
+        <span class="s1">&#39;revision_type&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">type</span><span class="p">(),</span>
+        <span class="s1">&#39;my_supervised&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:my_supervised&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/concept_supervisor.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">msg_html</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/concept_supervisor.html&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">email</span><span class="p">],</span> <span class="n">html_message</span><span class="o">=</span><span class="n">msg_html</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">review</span></div>
+
+
+<div class="viewcode-block" id="remind_reviewers"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.remind_reviewers">[docs]</a><span class="k">def</span> <span class="nf">remind_reviewers</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sends an email to a reviewer to remind them to review a proposal.</span>
+<span class="sd">    The reminders are only sent for proposals that are on the short track and need to be reviewed in the next 2 days</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+    <span class="n">next_two_days</span> <span class="o">=</span> <span class="n">today</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">decisions</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">review__stage</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">COMMISSION</span><span class="p">,</span>
+        <span class="n">review__short_route</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">review__date_should_end__gte</span><span class="o">=</span><span class="n">today</span><span class="p">,</span>
+        <span class="n">review__date_should_end__lte</span><span class="o">=</span><span class="n">next_two_days</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">decision</span> <span class="ow">in</span> <span class="n">decisions</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">review</span><span class="o">.</span><span class="n">date_should_end</span><span class="p">)</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="n">decision</span><span class="o">.</span><span class="n">review</span><span class="o">.</span><span class="n">proposal</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;ETCL: beoordelen studie (Herrinering)&#39;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;creator&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+            <span class="s1">&#39;proposal_url&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:decide&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">pk</span><span class="p">,)),</span>
+            <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">get_secretary</span><span class="p">()</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/reminder.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">msg_html</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/reminder.html&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">decision</span><span class="o">.</span><span class="n">reviewer</span><span class="o">.</span><span class="n">email</span><span class="p">],</span> <span class="n">html_message</span><span class="o">=</span><span class="n">msg_html</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="start_assignment_phase"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_assignment_phase">[docs]</a><span class="k">def</span> <span class="nf">start_assignment_phase</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts the assignment phase:</span>
+<span class="sd">    - Set the Review status to ASSIGNMENT</span>
+<span class="sd">    - Do an automatic review to determine whether this Review can follow the short route</span>
+<span class="sd">    - Set date_submitted on Proposal to current date/time</span>
+<span class="sd">    - Create a Decision for all Users in the &#39;Secretaris&#39; Group</span>
+<span class="sd">    - Send an e-mail to these Users</span>
+<span class="sd">    - Send an e-mail to the creator and supervisor</span>
+<span class="sd">    - Send an e-mail to the local staff</span>
+<span class="sd">    :param proposal: the current Proposal</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">)</span>
+    <span class="n">short_route</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span> <span class="n">date_start</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">ASSIGNMENT</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">short_route</span> <span class="o">=</span> <span class="n">short_route</span>
+    <span class="k">if</span> <span class="n">short_route</span><span class="p">:</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">date_should_end</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timezone</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">SHORT_ROUTE_WEEKS</span><span class="p">)</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="n">proposal</span><span class="o">.</span><span class="n">date_submitted</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">SUBMITTED</span>
+    <span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
+    <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">secretary</span><span class="p">)</span>
+
+    <span class="n">notify_secretary_assignment</span><span class="p">(</span><span class="n">review</span><span class="p">)</span>
+
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: aanmelding ontvangen&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;review_date&#39;</span><span class="p">:</span> <span class="n">review</span><span class="o">.</span><span class="n">date_should_end</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">review</span><span class="o">.</span><span class="n">short_route</span><span class="p">:</span>
+        <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/submitted_shortroute.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">msg_html</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/submitted_shortroute.html&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/submitted_longroute.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">msg_html</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/submitted_longroute.html&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">recipients</span> <span class="o">=</span> <span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">email</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">relation</span><span class="o">.</span><span class="n">needs_supervisor</span><span class="p">:</span>
+        <span class="n">recipients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="n">recipients</span><span class="p">,</span> <span class="n">html_message</span><span class="o">=</span><span class="n">msg_html</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">inform_local_staff</span><span class="p">:</span>
+        <span class="n">notify_local_staff</span><span class="p">(</span><span class="n">proposal</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">review</span></div>
+
+
+<div class="viewcode-block" id="start_review_pre_assessment"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_review_pre_assessment">[docs]</a><span class="k">def</span> <span class="nf">start_review_pre_assessment</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts the preliminary assessment Review:</span>
+<span class="sd">    - Set the Review status to ASSIGNMENT</span>
+<span class="sd">    - Set date_submitted on Proposal to current date/time</span>
+<span class="sd">    - Create a Decision for all Users in the &#39;Secretaris&#39; Group</span>
+<span class="sd">    - Send an e-mail to these Users</span>
+<span class="sd">    - Send an e-mail to the creator</span>
+<span class="sd">    :param proposal: the current Proposal</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">review</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span> <span class="n">date_start</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">ASSIGNMENT</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">short_route</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">date_should_end</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">timezone</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">PREASSESSMENT_ROUTE_WEEKS</span><span class="p">)</span>
+    <span class="n">review</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="n">proposal</span><span class="o">.</span><span class="n">date_submitted</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="n">proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">SUBMITTED</span>
+    <span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
+    <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">secretary</span><span class="p">)</span>
+
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe aanvraag voor voortoetsing&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;proposal&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="p">,</span>
+        <span class="s1">&#39;proposal_pdf&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">proposal</span><span class="o">.</span><span class="n">pdf</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/pre_assessment_secretary.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">msg_html</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/pre_assessment_secretary.html&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">secretary</span><span class="o">.</span><span class="n">email</span><span class="p">],</span> <span class="n">html_message</span><span class="o">=</span><span class="n">msg_html</span><span class="p">)</span>
+
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: bevestiging indienen aanvraag voor voortoetsing&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/pre_assessment_creator.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="start_review_route"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.start_review_route">[docs]</a><span class="k">def</span> <span class="nf">start_review_route</span><span class="p">(</span><span class="n">review</span><span class="p">,</span> <span class="n">commission_users</span><span class="p">,</span> <span class="n">use_short_route</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates Decisions and sends notification e-mail to the selected Reviewers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">commission_users</span><span class="p">:</span>
+        <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;mail/assignment_shortroute.txt&#39;</span> <span class="k">if</span> <span class="n">use_short_route</span> <span class="k">else</span> <span class="s1">&#39;mail/assignment_longroute.txt&#39;</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe studie ter beoordeling&#39;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">get_secretary</span><span class="p">()</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+            <span class="s1">&#39;reviewer&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+            <span class="s1">&#39;review_date&#39;</span><span class="p">:</span> <span class="n">review</span><span class="o">.</span><span class="n">date_should_end</span><span class="p">,</span>
+            <span class="s1">&#39;is_pre_assessment&#39;</span><span class="p">:</span> <span class="n">review</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">is_pre_assessment</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="notify_secretary_assignment"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.notify_secretary_assignment">[docs]</a><span class="k">def</span> <span class="nf">notify_secretary_assignment</span><span class="p">(</span><span class="n">review</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Notifies the secretary a Proposal is ready for assigment</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe studie ingediend&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;review&#39;</span><span class="p">:</span> <span class="n">review</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/submitted.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">secretary</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="notify_secretary"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.notify_secretary">[docs]</a><span class="k">def</span> <span class="nf">notify_secretary</span><span class="p">(</span><span class="n">decision</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Notifies a secretary a Decision has been made by one of the members in the Commission</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe beoordeling toegevoegd&#39;</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
+        <span class="s1">&#39;decision&#39;</span><span class="p">:</span> <span class="n">decision</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/decision_notify.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">secretary</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="auto_review"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review">[docs]</a><span class="k">def</span> <span class="nf">auto_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reviews a Proposal machine-wise.</span>
+<span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">proposal</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_intervention</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie is een interventiestudie.&#39;</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">intervention</span><span class="o">.</span><span class="n">settings_requires_review</span><span class="p">():</span>
+                <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie heeft een interventiestudie met deelnemers in de volgende setting: </span><span class="si">{s}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">setting</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">legally_incapable</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie maakt gebruik van wilsonbekwame volwassenen.&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie werkt met passieve informed consent.&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_observation</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">auto_review_observation</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">deception</span> <span class="ow">in</span> <span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">]:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie maakt gebruik van misleiding.&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">compensation</span><span class="o">.</span><span class="n">requires_review</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_traits</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.&#39;</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">session__study</span><span class="o">=</span><span class="n">study</span><span class="p">):</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">auto_review_task</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">task</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">sessions_number</span> <span class="ow">and</span> <span class="n">study</span><span class="o">.</span><span class="n">sessions_number</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek).&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">stressful</span> <span class="ow">in</span> <span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">]:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of </span><span class="se">\</span>
+<span class="s1">als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">risk</span> <span class="ow">in</span> <span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">]:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De onderzoeker geeft aan dat (of twijfelt erover of) de risico</span><span class="se">\&#39;</span><span class="s1">s op psychische of </span><span class="se">\</span>
+<span class="s1">fysieke schade bij deelname aan de studie meer dan minimaal zijn.&#39;</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">session_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">settings_requires_review</span><span class="p">():</span>
+                    <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie heeft sessies met deelnemers in de volgende setting: </span><span class="si">{s}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">setting</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">age_group</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">net_duration</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">age_group</span><span class="o">.</span><span class="n">max_net_duration</span><span class="p">:</span>
+                        <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De totale duur van de taken in sessie </span><span class="si">{s}</span><span class="s1">, exclusief pauzes </span><span class="se">\</span>
+<span class="s1">en andere niet-taak elementen (</span><span class="si">{d}</span><span class="s1"> minuten), is groter dan het streefmaximum (</span><span class="si">{max_d}</span><span class="s1"> minuten) </span><span class="se">\</span>
+<span class="s1">voor de leeftijdsgroep </span><span class="si">{ag}</span><span class="s1">.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">session</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">ag</span><span class="o">=</span><span class="n">age_group</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">session</span><span class="o">.</span><span class="n">net_duration</span><span class="p">(),</span> <span class="n">max_d</span><span class="o">=</span><span class="n">age_group</span><span class="o">.</span><span class="n">max_net_duration</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">reasons</span></div>
+
+
+<div class="viewcode-block" id="auto_review_observation"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review_observation">[docs]</a><span class="k">def</span> <span class="nf">auto_review_observation</span><span class="p">(</span><span class="n">observation</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reviews an Observation machine-wise.</span>
+<span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">observation</span><span class="o">.</span><span class="n">settings_requires_review</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">observation</span><span class="o">.</span><span class="n">settings_requires_review</span><span class="p">():</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie observeert deelnemers in de volgende setting: </span><span class="si">{s}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">setting</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">observation</span><span class="o">.</span><span class="n">is_nonpublic_space</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">observation</span><span class="o">.</span><span class="n">has_advanced_consent</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf.&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">observation</span><span class="o">.</span><span class="n">is_anonymous</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De onderzoeker begeeft zich &quot;under cover&quot; in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.&#39;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">reasons</span></div>
+
+
+<div class="viewcode-block" id="auto_review_task"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review_task">[docs]</a><span class="k">def</span> <span class="nf">auto_review_task</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reviews a Task machine-wise.</span>
+<span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">registration</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">registrations</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">registration</span><span class="o">.</span><span class="n">requires_review</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">registration</span><span class="o">.</span><span class="n">age_min</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">age_group</span> <span class="ow">in</span> <span class="n">study</span><span class="o">.</span><span class="n">age_groups</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">age_group</span><span class="o">.</span><span class="n">age_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">age_group</span><span class="o">.</span><span class="n">age_max</span> <span class="o">&lt;</span> <span class="n">registration</span><span class="o">.</span><span class="n">age_min</span><span class="p">:</span>
+                        <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie gebruikt psychofysiologische metingen bij kinderen onder de </span><span class="si">{}</span><span class="s1"> jaar.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registration</span><span class="o">.</span><span class="n">age_min</span><span class="p">))</span>
+                        <span class="k">break</span>
+
+    <span class="k">for</span> <span class="n">registration_kind</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">registration_kinds</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">registration_kind</span><span class="o">.</span><span class="n">requires_review</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie maakt gebruik van </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">registration_kind</span><span class="o">.</span><span class="n">description</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">reasons</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

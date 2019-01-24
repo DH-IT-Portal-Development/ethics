@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>studies.admin module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="studies.app module" href="studies.app.html" />
+    <link rel="prev" title="studies.views.study_views module" href="studies.views.study_views.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="studies.html">studies package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="studies.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="studies.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">studies.admin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.app.html">studies.app module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.forms.html">studies.forms module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.models.html">studies.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.tests.html">studies.tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.translation.html">studies.translation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.urls.html">studies.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="studies.utils.html">studies.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="studies.html">studies package</a> &raquo;</li>
+        
+      <li>studies.admin module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/studies.admin.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-studies.admin">
+<span id="studies-admin-module"></span><h1>studies.admin module<a class="headerlink" href="#module-studies.admin" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="studies.admin.AgeGroupAdmin">
+<em class="property">class </em><code class="descclassname">studies.admin.</code><code class="descname">AgeGroupAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/admin.html#AgeGroupAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.admin.AgeGroupAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="studies.admin.AgeGroupAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('description', 'age_min', 'is_active', 'age_max', 'is_adult', 'needs_details', 'max_net_duration')</em><a class="headerlink" href="#studies.admin.AgeGroupAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.AgeGroupAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#studies.admin.AgeGroupAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.AgeGroupAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#studies.admin.AgeGroupAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.AgeGroupAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['age_min']</em><a class="headerlink" href="#studies.admin.AgeGroupAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.admin.CompensationAdmin">
+<em class="property">class </em><code class="descclassname">studies.admin.</code><code class="descname">CompensationAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/admin.html#CompensationAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.admin.CompensationAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="studies.admin.CompensationAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('order', 'description', 'needs_details', 'requires_review')</em><a class="headerlink" href="#studies.admin.CompensationAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.CompensationAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#studies.admin.CompensationAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.CompensationAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#studies.admin.CompensationAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.CompensationAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#studies.admin.CompensationAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.admin.RecruitmentAdmin">
+<em class="property">class </em><code class="descclassname">studies.admin.</code><code class="descname">RecruitmentAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/admin.html#RecruitmentAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.admin.RecruitmentAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="studies.admin.RecruitmentAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('order', 'description', 'is_local', 'needs_details', 'requires_review')</em><a class="headerlink" href="#studies.admin.RecruitmentAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.RecruitmentAdmin.list_display_links">
+<code class="descname">list_display_links</code><em class="property"> = ('description',)</em><a class="headerlink" href="#studies.admin.RecruitmentAdmin.list_display_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.RecruitmentAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#studies.admin.RecruitmentAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.RecruitmentAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#studies.admin.RecruitmentAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="studies.admin.TraitAdmin">
+<em class="property">class </em><code class="descclassname">studies.admin.</code><code class="descname">TraitAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/admin.html#TraitAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.admin.TraitAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="studies.admin.TraitAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('order', 'description', 'needs_details')</em><a class="headerlink" href="#studies.admin.TraitAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.TraitAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#studies.admin.TraitAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="studies.admin.TraitAdmin.ordering">
+<code class="descname">ordering</code><em class="property"> = ['order']</em><a class="headerlink" href="#studies.admin.TraitAdmin.ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="studies.app.html" class="btn btn-neutral float-right" title="studies.app module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="studies.views.study_views.html" class="btn btn-neutral" title="studies.views.study_views module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

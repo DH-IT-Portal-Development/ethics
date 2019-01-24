@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>feedback.models module &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="feedback.tests module" href="feedback.tests.html" />
+    <link rel="prev" title="feedback.forms module" href="feedback.forms.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="feedback.html">feedback package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="feedback.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="feedback.admin.html">feedback.admin module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="feedback.forms.html">feedback.forms module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">feedback.models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="feedback.tests.html">feedback.tests module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="feedback.urls.html">feedback.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="feedback.views.html">feedback.views module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reviews.html">reviews package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="studies.html">studies package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tasks.html">tasks package</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">etcl</a> &raquo;</li>
+        
+          <li><a href="feedback.html">feedback package</a> &raquo;</li>
+        
+      <li>feedback.models module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference/feedback.models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-feedback.models">
+<span id="feedback-models-module"></span><h1>feedback.models module<a class="headerlink" href="#module-feedback.models" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="feedback.models.Feedback">
+<em class="property">class </em><code class="descclassname">feedback.models.</code><code class="descname">Feedback</code><span class="sig-paren">(</span><em>id</em>, <em>url</em>, <em>comment</em>, <em>priority</em>, <em>status</em>, <em>date_created</em>, <em>date_modified</em>, <em>submitter</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/feedback/models.html#Feedback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#feedback.models.Feedback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>url</strong> (<em>URLField</em>) – Url</li>
+<li><strong>comment</strong> (<em>TextField</em>) – Feedback</li>
+<li><strong>priority</strong> (<em>IntegerField</em>) – Priority</li>
+<li><strong>status</strong> (<em>IntegerField</em>) – Status</li>
+<li><strong>date_created</strong> (<em>DateTimeField</em>) – Date created</li>
+<li><strong>date_modified</strong> (<em>DateField</em>) – Date modified</li>
+<li><strong>submitter</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Submitter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="feedback.models.Feedback.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#feedback.models.Feedback.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="feedback.models.Feedback.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#feedback.models.Feedback.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.comment">
+<code class="descname">comment</code><a class="headerlink" href="#feedback.models.Feedback.comment" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> Feedback</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.date_created">
+<code class="descname">date_created</code><a class="headerlink" href="#feedback.models.Feedback.date_created" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> date created</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.date_modified">
+<code class="descname">date_modified</code><a class="headerlink" href="#feedback.models.Feedback.date_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> date modified</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="feedback.models.Feedback.get_next_by_date_created">
+<code class="descname">get_next_by_date_created</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#feedback.models.Feedback.get_next_by_date_created" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#feedback.models.Feedback.date_created" title="feedback.models.Feedback.date_created"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_created</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="feedback.models.Feedback.get_next_by_date_modified">
+<code class="descname">get_next_by_date_modified</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#feedback.models.Feedback.get_next_by_date_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds next instance based on <a class="reference internal" href="#feedback.models.Feedback.date_modified" title="feedback.models.Feedback.date_modified"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_modified</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="feedback.models.Feedback.get_previous_by_date_created">
+<code class="descname">get_previous_by_date_created</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#feedback.models.Feedback.get_previous_by_date_created" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#feedback.models.Feedback.date_created" title="feedback.models.Feedback.date_created"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_created</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="feedback.models.Feedback.get_previous_by_date_modified">
+<code class="descname">get_previous_by_date_modified</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#feedback.models.Feedback.get_previous_by_date_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Finds previous instance based on <a class="reference internal" href="#feedback.models.Feedback.date_modified" title="feedback.models.Feedback.date_modified"><code class="xref py py-attr docutils literal notranslate"><span class="pre">date_modified</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="feedback.models.Feedback.get_priority_display">
+<code class="descname">get_priority_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#feedback.models.Feedback.get_priority_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#feedback.models.Feedback.priority" title="feedback.models.Feedback.priority"><code class="xref py py-attr docutils literal notranslate"><span class="pre">priority</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="feedback.models.Feedback.get_status_display">
+<code class="descname">get_status_display</code><span class="sig-paren">(</span><em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#feedback.models.Feedback.get_status_display" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Autogenerated:</strong> Shows the label of the <a class="reference internal" href="#feedback.models.Feedback.status" title="feedback.models.Feedback.status"><code class="xref py py-attr docutils literal notranslate"><span class="pre">status</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.id">
+<code class="descname">id</code><a class="headerlink" href="#feedback.models.Feedback.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> ID</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#feedback.models.Feedback.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.priority">
+<code class="descname">priority</code><a class="headerlink" href="#feedback.models.Feedback.priority" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> priority</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.status">
+<code class="descname">status</code><a class="headerlink" href="#feedback.models.Feedback.status" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> status</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.submitter">
+<code class="descname">submitter</code><a class="headerlink" href="#feedback.models.Feedback.submitter" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> submitter, accesses the <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code> model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.submitter_id">
+<code class="descname">submitter_id</code><a class="headerlink" href="#feedback.models.Feedback.submitter_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> submitter</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="feedback.models.Feedback.url">
+<code class="descname">url</code><a class="headerlink" href="#feedback.models.Feedback.url" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Model field:</strong> url</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="feedback.tests.html" class="btn btn-neutral float-right" title="feedback.tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="feedback.forms.html" class="btn btn-neutral" title="feedback.forms module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

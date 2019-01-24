@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>reviews.tests &mdash; ETCL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> ETCL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Index</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ETCL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>reviews.tests</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for reviews.tests</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core</span> <span class="k">import</span> <span class="n">mail</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span><span class="p">,</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="k">import</span> <span class="n">TestCase</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Review</span><span class="p">,</span> <span class="n">Decision</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">start_review</span><span class="p">,</span> <span class="n">auto_review</span><span class="p">,</span> <span class="n">auto_review_observation</span><span class="p">,</span> <span class="n">auto_review_task</span><span class="p">,</span> <span class="n">notify_secretary</span>
+<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span>
+<span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Relation</span>
+<span class="kn">from</span> <span class="nn">proposals.utils</span> <span class="k">import</span> <span class="n">generate_ref_number</span>
+<span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Study</span><span class="p">,</span> <span class="n">Compensation</span><span class="p">,</span> <span class="n">AgeGroup</span>
+<span class="kn">from</span> <span class="nn">observations.models</span> <span class="k">import</span> <span class="n">Observation</span>
+<span class="kn">from</span> <span class="nn">interventions.models</span> <span class="k">import</span> <span class="n">Intervention</span>
+<span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Task</span><span class="p">,</span> <span class="n">Registration</span><span class="p">,</span> <span class="n">RegistrationKind</span>
+
+
+<div class="viewcode-block" id="BaseReviewTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.BaseReviewTestCase">[docs]</a><span class="k">class</span> <span class="nc">BaseReviewTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="n">fixtures</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relations&#39;</span><span class="p">,</span> <span class="s1">&#39;compensations&#39;</span><span class="p">,</span> <span class="s1">&#39;registrations&#39;</span><span class="p">,</span> <span class="s1">&#39;registrationkinds&#39;</span><span class="p">,</span> <span class="s1">&#39;agegroups&#39;</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="BaseReviewTestCase.setUp"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.BaseReviewTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets up the Users and a default Proposal to use in the tests below.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">secretary</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;secretary&#39;</span><span class="p">,</span> <span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;The&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Secretary&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c1</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;c1&#39;</span><span class="p">,</span> <span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c2</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;c2&#39;</span><span class="p">,</span> <span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Doe&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">supervisor</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="s1">&#39;supervisor&#39;</span><span class="p">,</span> <span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;Jane&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Roe&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">secretary</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c1</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">c2</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p1&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">),</span>
+                                                <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                                                <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">supervisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">supervisor</span><span class="p">,</span>
+                                                <span class="n">relation</span><span class="o">=</span><span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span> <span class="o">=</span> <span class="n">Study</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">proposal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">compensation</span><span class="o">=</span><span class="n">Compensation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ReviewTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.ReviewTestCase">[docs]</a><span class="k">class</span> <span class="nc">ReviewTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="ReviewTestCase.test_start_review"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.ReviewTestCase.test_start_review">[docs]</a>    <span class="k">def</span> <span class="nf">test_start_review</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests starting of a Review from a submitted Proposal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="n">start_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">stage</span><span class="p">,</span> <span class="n">Review</span><span class="o">.</span><span class="n">SUPERVISOR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reviewer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">supervisor</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">decision_set</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: bevestiging indienen concept-aanmelding&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: beoordelen als eindverantwoordelijke&#39;</span><span class="p">)</span>
+
+        <span class="c1"># If the Relation on a Proposal does not require a supervisor, a assignment review should be started.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">relation</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="n">start_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">stage</span><span class="p">,</span> <span class="n">Review</span><span class="o">.</span><span class="n">ASSIGNMENT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reviewer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">secretary</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">decision_set</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: nieuwe studie ingediend&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: aanmelding ontvangen&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SupervisorTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.SupervisorTestCase">[docs]</a><span class="k">class</span> <span class="nc">SupervisorTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="SupervisorTestCase.test_decision_supervisor"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.SupervisorTestCase.test_decision_supervisor">[docs]</a>    <span class="k">def</span> <span class="nf">test_decision_supervisor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether a Decision from the supervisor leads to a change in the Review.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="n">start_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">go</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: bevestiging indienen concept-aanmelding&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: beoordelen als eindverantwoordelijke&#39;</span><span class="p">)</span>
+
+        <span class="n">decision</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">decision</span><span class="o">.</span><span class="n">go</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">APPROVED</span>
+        <span class="n">decision</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">go</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: nieuwe studie ingediend&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;ETCL: aanmelding ontvangen&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AssignmentTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AssignmentTestCase">[docs]</a><span class="k">class</span> <span class="nc">AssignmentTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="AssignmentTestCase.test_assignment"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AssignmentTestCase.test_assignment">[docs]</a>    <span class="k">def</span> <span class="nf">test_assignment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the assignment works correctly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="CommissionTestCase"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.CommissionTestCase">[docs]</a><span class="k">class</span> <span class="nc">CommissionTestCase</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="CommissionTestCase.test_decision_commission"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.CommissionTestCase.test_decision_commission">[docs]</a>    <span class="k">def</span> <span class="nf">test_decision_commission</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests whether the commission phase in a Review works correctly.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set the relation to a supervisor so we can skip the first phase</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">relation</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">review</span> <span class="o">=</span> <span class="n">start_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">stage</span><span class="p">,</span> <span class="n">Review</span><span class="o">.</span><span class="n">ASSIGNMENT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">go</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># Create a Decision for a member of the commission group</span>
+        <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c1</span><span class="p">)</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">COMMISSION</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">decisions</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">decisions</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">decisions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">go</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">APPROVED</span>
+        <span class="n">decisions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">go</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># undecided</span>
+
+        <span class="n">decisions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">go</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">NOT_APPROVED</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;Let</span><span class="se">\&#39;</span><span class="s1">s test &quot;escaping&quot; of &lt; and &gt;&#39;</span>
+        <span class="n">decisions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">comments</span> <span class="o">=</span> <span class="n">c</span>
+        <span class="n">decisions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">go</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>  <span class="c1"># no go</span>
+
+        <span class="n">notify_secretary</span><span class="p">(</span><span class="n">decisions</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">mail</span><span class="o">.</span><span class="n">outbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+
+        <span class="n">decisions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">go</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">APPROVED</span>
+        <span class="n">decisions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">review</span><span class="o">.</span><span class="n">refresh_from_db</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">review</span><span class="o">.</span><span class="n">go</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>  <span class="c1"># go</span></div></div>
+
+
+<div class="viewcode-block" id="AutoReviewTests"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests">[docs]</a><span class="k">class</span> <span class="nc">AutoReviewTests</span><span class="p">(</span><span class="n">BaseReviewTestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_intervention</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">intervention</span> <span class="o">=</span> <span class="n">Intervention</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">multiple_sessions</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">legally_incapable</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">passive_consent</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">deception</span> <span class="o">=</span> <span class="n">DOUBT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_traits</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">sessions_number</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">6</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">stressful</span> <span class="o">=</span> <span class="n">YES</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">7</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">risk</span> <span class="o">=</span> <span class="n">YES</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">8</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review_age_groups"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review_age_groups">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_age_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">age_groups</span> <span class="o">=</span> <span class="n">AgeGroup</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># toddlers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">s1</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tasks_number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">s1_t1</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">s1_t2</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">net_duration</span><span class="p">(),</span> <span class="mi">40</span><span class="p">)</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">s1_t2</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mi">30</span>
+        <span class="n">s1_t2</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">net_duration</span><span class="p">(),</span> <span class="mi">50</span><span class="p">)</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review_observation"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review_observation">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_observation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_observation</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">Observation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">mean_hours</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">is_nonpublic_space</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">has_advanced_consent</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review_observation</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">is_anonymous</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review_observation</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AutoReviewTests.test_auto_review_task"><a class="viewcode-back" href="../../reference/reviews.tests.html#reviews.tests.AutoReviewTests.test_auto_review_task">[docs]</a>    <span class="k">def</span> <span class="nf">test_auto_review_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">age_groups</span> <span class="o">=</span> <span class="n">AgeGroup</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># adolescents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">s1</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tasks_number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">s1_t1</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">session</span><span class="o">=</span><span class="n">s1</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">s1_t1</span><span class="o">.</span><span class="n">registrations</span> <span class="o">=</span> <span class="n">Registration</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>  <span class="c1"># psychofysiological measurements</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span> <span class="n">s1_t1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">s1_t1</span><span class="o">.</span><span class="n">registration_kinds</span> <span class="o">=</span> <span class="n">RegistrationKind</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">requires_review</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># psychofysiological measurements / other</span>
+        <span class="n">s1_t1</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="n">reasons</span> <span class="o">=</span> <span class="n">auto_review_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="p">,</span> <span class="n">s1_t1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reasons</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
