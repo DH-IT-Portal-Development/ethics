@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-20 10:37+0100\n"
+"POT-Creation-Date: 2019-01-24 09:25+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -199,43 +199,48 @@ msgstr "All pending decisions committee members"
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: core/templates/base/menu.html:77
+#: core/templates/base/menu.html:73
+#: reviews/templates/reviews/review_to_conclude.html:8
+msgid "Nog af te handelen studies"
+msgstr "To conclude studies"
+
+#: core/templates/base/menu.html:80
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:80 core/templates/core/index.html:77
+#: core/templates/base/menu.html:83 core/templates/core/index.html:77
 msgid "ETCL website"
 msgstr "ETCL website"
 
-#: core/templates/base/menu.html:83 core/templates/core/index.html:80
+#: core/templates/base/menu.html:86 core/templates/core/index.html:80
 msgid "ETCL reglement"
 msgstr "ETCL regulations"
 
-#: core/templates/base/menu.html:86 core/templates/core/index.html:83
+#: core/templates/base/menu.html:89 core/templates/core/index.html:83
 #: proposals/templates/proposals/proposal_pdf.html:384
 #: proposals/templates/proposals/study_consent.html:8 proposals/utils.py:76
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: core/templates/base/menu.html:89
+#: core/templates/base/menu.html:92
 msgid "FAQs"
 msgstr "FAQs"
 
-#: core/templates/base/menu.html:92 feedback/models.py:20
+#: core/templates/base/menu.html:95 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:18
 msgid "Feedback"
 msgstr "Feedback"
 
-#: core/templates/base/menu.html:97
+#: core/templates/base/menu.html:100
 #: core/templates/registration/logged_out.html:6
 msgid "Uitloggen"
 msgstr "Log out"
 
-#: core/templates/base/menu.html:101
+#: core/templates/base/menu.html:104
 msgid "ETCL-website"
 msgstr "ETCL website"
 
-#: core/templates/base/menu.html:104 core/templates/registration/login.html:6
+#: core/templates/base/menu.html:107 core/templates/registration/login.html:6
 #: core/templates/registration/login.html:23
 msgid "Inloggen"
 msgstr "Log in"
@@ -1069,8 +1074,6 @@ msgid "Is er een revisie geweest na het indienen van deze studie?"
 msgstr "Has this study been amended after it was submitted to the ETCL?"
 
 #: proposals/models.py:205
-#, fuzzy
-#| msgid "Leg uit waarom"
 msgid "Leg uit"
 msgstr "Explain why"
 
@@ -1434,6 +1437,7 @@ msgstr "Cancel"
 
 #: proposals/templates/proposals/proposal_confirmation.html:7
 #: reviews/templates/reviews/decision_list.html:67
+#: reviews/templates/reviews/review_to_conclude.html:66
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
@@ -1452,6 +1456,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_confirmation.html:29
 #: reviews/templates/reviews/decision_list.html:69
+#: reviews/templates/reviews/review_to_conclude.html:68
 msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
 
@@ -1767,6 +1772,7 @@ msgstr "Submit draft application"
 #: reviews/templates/reviews/decision_list_open.html:19
 #: reviews/templates/reviews/decision_supervisor_list_open.html:19
 #: reviews/templates/reviews/review_list.html:18
+#: reviews/templates/reviews/review_to_conclude.html:19
 msgid "Referentienummer"
 msgstr "Reference number"
 
@@ -1775,6 +1781,7 @@ msgstr "Reference number"
 #: reviews/templates/reviews/decision_list.html:20
 #: reviews/templates/reviews/decision_list_open.html:21
 #: reviews/templates/reviews/decision_supervisor_list_open.html:21
+#: reviews/templates/reviews/review_to_conclude.html:20
 msgid "Indiener"
 msgstr "Applicant"
 
@@ -1797,7 +1804,7 @@ msgstr ""
 "supervision. Please note that this form should        be filled in as if you "
 "were that student/PhD candidate.    "
 
-#: proposals/templates/proposals/proposal_form_pre_approved.html:107
+#: proposals/templates/proposals/proposal_form_pre_approved.html:101
 #, python-format
 msgid ""
 "\n"
@@ -1889,6 +1896,7 @@ msgstr ""
 #: reviews/templates/reviews/decision_list_open.html:20
 #: reviews/templates/reviews/decision_supervisor_list_open.html:20
 #: reviews/templates/reviews/review_list.html:19
+#: reviews/templates/reviews/review_to_conclude.html:22
 msgid "Titel studie"
 msgstr "Study title"
 
@@ -1900,6 +1908,7 @@ msgstr "Study type"
 #: reviews/templates/reviews/decision_list.html:24
 #: reviews/templates/reviews/decision_list_open.html:25
 #: reviews/templates/reviews/decision_supervisor_list_open.html:24
+#: reviews/templates/reviews/review_to_conclude.html:24
 msgid "Datum ingediend"
 msgstr "Date submitted"
 
@@ -1913,12 +1922,14 @@ msgstr "Last edited"
 #: reviews/templates/reviews/decision_list_open.html:27
 #: reviews/templates/reviews/decision_supervisor_list_open.html:26
 #: reviews/templates/reviews/review_list.html:21
+#: reviews/templates/reviews/review_to_conclude.html:28
 #: tasks/templates/tasks/task_list.html:11
 msgid "Acties"
 msgstr "Actions"
 
 #: proposals/templates/proposals/proposal_list.html:80
 #: reviews/templates/reviews/decision_list.html:58
+#: reviews/templates/reviews/review_to_conclude.html:57
 msgid "Beslissen"
 msgstr "Decide"
 
@@ -2765,6 +2776,7 @@ msgid "Beslissing"
 msgstr "Decision"
 
 #: reviews/models.py:44 reviews/templates/reviews/decision_list.html:27
+#: reviews/templates/reviews/review_to_conclude.html:27
 msgid "Afhandeling"
 msgstr "Action"
 
@@ -2866,31 +2878,37 @@ msgstr "My results"
 
 #: reviews/templates/reviews/decision_list.html:21
 #: reviews/templates/reviews/decision_list_open.html:22
+#: reviews/templates/reviews/review_to_conclude.html:21
 msgid "Eindverantwoordelijke"
 msgstr "Researcher with final responsibility"
 
 #: reviews/templates/reviews/decision_list.html:23
 #: reviews/templates/reviews/decision_list_open.html:24
 #: reviews/templates/reviews/decision_supervisor_list_open.html:23
+#: reviews/templates/reviews/review_to_conclude.html:23
 msgid "Fase"
 msgstr "Phase"
 
 #: reviews/templates/reviews/decision_list.html:25
 #: reviews/templates/reviews/decision_list_open.html:26
 #: reviews/templates/reviews/decision_supervisor_list_open.html:25
+#: reviews/templates/reviews/review_to_conclude.html:25
 msgid "Gewenste einddatum"
 msgstr "Desired end date"
 
 #: reviews/templates/reviews/decision_list.html:26
+#: reviews/templates/reviews/review_to_conclude.html:26
 msgid "Mijn besluit"
 msgstr "My decision"
 
 #: reviews/templates/reviews/decision_list.html:42
 #: reviews/templates/reviews/review_table.html:17
+#: reviews/templates/reviews/review_to_conclude.html:41
 msgid "open"
 msgstr "open"
 
 #: reviews/templates/reviews/decision_list.html:46
+#: reviews/templates/reviews/review_to_conclude.html:45
 msgid ", met revisie"
 msgstr ", with revision"
 
@@ -2898,23 +2916,28 @@ msgstr ", with revision"
 #: reviews/templates/reviews/decision_list_open.html:43
 #: reviews/templates/reviews/decision_supervisor_list_open.html:42
 #: reviews/templates/reviews/review_list.html:31
+#: reviews/templates/reviews/review_to_conclude.html:52
 msgid "Studie inzien"
 msgstr "Show study"
 
 #: reviews/templates/reviews/decision_list.html:54
 #: reviews/templates/reviews/decision_list_open.html:44
+#: reviews/templates/reviews/review_to_conclude.html:53
 msgid "Details"
 msgstr "Details"
 
 #: reviews/templates/reviews/decision_list.html:56
+#: reviews/templates/reviews/review_to_conclude.html:55
 msgid "Aanstellen"
 msgstr "Appoint"
 
 #: reviews/templates/reviews/decision_list.html:60
+#: reviews/templates/reviews/review_to_conclude.html:59
 msgid "Afsluiten"
 msgstr "Conclude"
 
 #: reviews/templates/reviews/decision_list.html:63
+#: reviews/templates/reviews/review_to_conclude.html:62
 msgid "Website export tekst"
 msgstr "Website export text"
 
@@ -3427,20 +3450,6 @@ msgstr ""
 msgid "Maakt u gebruik van passieve informed consent?"
 msgstr "Will you use passive informed consent?"
 
-#: studies/models.py:200
-msgid ""
-"Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders "
-"niet laat ondertekenen, maar in plaats daarvan de leiding van die "
-"instelling, dan maakt u gebruik van passieve informed consent. U kunt de "
-"templates vinden op <a href=\"https://etcl.wp.hum.uu.nl/"
-"toestemmingsverklaringen/\" target=\"_blank\">de ETCL-website</a>."
-msgstr ""
-"If you recruit children from an institution (including schools) without "
-"their parents' signature, gaining permission from the management of the "
-"institution instead, this constitutes passive informed consent. You can find "
-"the templates on <a href=\"https://etcl.wp.hum.uu.nl/"
-"toestemmingsverklaringen/\" target=\"_blank\">the ETCL website</a>."
-
 #: studies/models.py:207
 msgid ""
 "Licht uw antwoord toe. Wij willen u wijzen op het reglement, sectie 3.1 'd' "
@@ -3532,22 +3541,6 @@ msgstr ""
 "questions (or even cause outrage), for example from colleagues, the "
 "participants themselves, or parents or other representatives?"
 
-#: studies/models.py:258
-msgid ""
-"Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en "
-"uitputtende taak, een zeer confronterende vragenlijst, of voortdurend "
-"vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of "
-"een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de "
-"door de deelnemer ervaren belasting tijdens het onderzoek, niet om de "
-"opgelopen psychische of fysieke schade door het onderzoek."
-msgstr ""
-"This might be the case in 'inhumanely' long and exhausting tasks or a very "
-"confrontational questionnaire, or continual destructive feedback, for "
-"example, but it might also include a perceived invasion of privacy, or other "
-"lack of respect. Please note, this is a question of the burden perceived by "
-"the participant during the study, not psychological or physical damage "
-"incurred."
-
 #: studies/models.py:269
 msgid ""
 "Licht uw antwoord toe. Geef concrete voorbeelden van de relevante aspecten "
@@ -3571,34 +3564,6 @@ msgstr ""
 "damage due to participation in the research trajectory above <em>more than</"
 "em> minimal? I.e. is the chance of and/or magnitude of potential damage to "
 "participants clearly <em>above</em> that of the \"background risk\"?"
-
-#: studies/models.py:281
-msgid ""
-"Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante "
-"leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. "
-"Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen "
-"beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van "
-"zelfbeeld, stigmatisering door anderen, economische schade door data-"
-"koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke "
-"schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -"
-"onderzoeken of -procedures die in alledaagse didactische, psychologische of "
-"medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een "
-"stressbestendigheids-<em>assessment</em>, een intelligentie- of "
-"persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
-"alles, waar relevant, onder begeleiding van adequaat geschoolde "
-"specialisten)."
-msgstr ""
-"Background risk is that which healthy average citizens in the relevant age "
-"category normally encounter in their daily lives. Consider the damage of "
-"consequences to the participant or others if particular information becomes "
-"available, e.g. in terms of self-image, stigmatisation by others, economic "
-"damage due to linking of data etc. The background risk of psychological and "
-"physical damage also encompasses e.g. the risks of ‘routine’ tests, studies "
-"or procedures which take place in everyday pedagogical, psychological or "
-"medical contexts (such as a final academic exam, a driving test, a stress "
-"resistance assessment, an intelligence or personality test, or a heartrate "
-"measurement after physical exertion; all under the supervision of adequately "
-"trained specialists where relevant)."
 
 #: studies/models.py:395
 #, python-format
@@ -4300,3 +4265,58 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "Wanneer u kinderen via een instelling (dus ook school) werft en u de "
+#~ "ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die "
+#~ "instelling, dan maakt u gebruik van passieve informed consent. U kunt de "
+#~ "templates vinden op <a href=\"https://etcl.wp.hum.uu.nl/"
+#~ "toestemmingsverklaringen/\" target=\"_blank\">de ETCL-website</a>."
+#~ msgstr ""
+#~ "If you recruit children from an institution (including schools) without "
+#~ "their parents' signature, gaining permission from the management of the "
+#~ "institution instead, this constitutes passive informed consent. You can "
+#~ "find the templates on <a href=\"https://etcl.wp.hum.uu.nl/"
+#~ "toestemmingsverklaringen/\" target=\"_blank\">the ETCL website</a>."
+
+#~ msgid ""
+#~ "Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en "
+#~ "uitputtende taak, een zeer confronterende vragenlijst, of voortdurend "
+#~ "vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, "
+#~ "of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag "
+#~ "om de door de deelnemer ervaren belasting tijdens het onderzoek, niet om "
+#~ "de opgelopen psychische of fysieke schade door het onderzoek."
+#~ msgstr ""
+#~ "This might be the case in 'inhumanely' long and exhausting tasks or a "
+#~ "very confrontational questionnaire, or continual destructive feedback, "
+#~ "for example, but it might also include a perceived invasion of privacy, "
+#~ "or other lack of respect. Please note, this is a question of the burden "
+#~ "perceived by the participant during the study, not psychological or "
+#~ "physical damage incurred."
+
+#~ msgid ""
+#~ "Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de "
+#~ "relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten "
+#~ "deel valt. Denk bij schade ook aan de gevolgen die het voor de deelnemer "
+#~ "of anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. op "
+#~ "het vlak van zelfbeeld, stigmatisering door anderen, economische schade "
+#~ "door data-koppeling, et cetera. Het achtergrondrisico voor psychische en "
+#~ "fysieke schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -"
+#~ "onderzoeken of -procedures die in alledaagse didactische, psychologische "
+#~ "of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, "
+#~ "een stressbestendigheids-<em>assessment</em>, een intelligentie- of "
+#~ "persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
+#~ "alles, waar relevant, onder begeleiding van adequaat geschoolde "
+#~ "specialisten)."
+#~ msgstr ""
+#~ "Background risk is that which healthy average citizens in the relevant "
+#~ "age category normally encounter in their daily lives. Consider the damage "
+#~ "of consequences to the participant or others if particular information "
+#~ "becomes available, e.g. in terms of self-image, stigmatisation by others, "
+#~ "economic damage due to linking of data etc. The background risk of "
+#~ "psychological and physical damage also encompasses e.g. the risks of "
+#~ "‘routine’ tests, studies or procedures which take place in everyday "
+#~ "pedagogical, psychological or medical contexts (such as a final academic "
+#~ "exam, a driving test, a stress resistance assessment, an intelligence or "
+#~ "personality test, or a heartrate measurement after physical exertion; all "
+#~ "under the supervision of adequately trained specialists where relevant)."

@@ -4,7 +4,7 @@ from .views import \
     DecisionListView, DecisionMyOpenView, SupervisorDecisionOpenView, DecisionOpenView, \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, \
-    DecisionUpdateView
+    DecisionUpdateView, ToConcludeProposalView
 
 app_name = 'reviews'
 
@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^my_open/$', DecisionMyOpenView.as_view(), name='my_open'),
     url(r'^open/$', DecisionOpenView.as_view(), name='open'),
     url(r'^open_supervisors/$', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),
+    url(r'^to_conclude/$', ToConcludeProposalView.as_view(),
+        name='to_conclude'),
 
     url(r'^show/(?P<pk>\d+)/$', ReviewDetailView.as_view(), name='detail'),
 
