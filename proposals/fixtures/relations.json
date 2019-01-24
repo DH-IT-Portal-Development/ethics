@@ -4,7 +4,7 @@
         "check_in_course": true,
         "check_pre_assessment": false,
         "needs_supervisor": true,
-        "order": 1,
+        "order": 5,
         "description_nl": "als student in TLC Bachelorprogramma of -cursus",
         "description_en": "as a student in a TLC Bachelor's programme or course"
     },
@@ -16,7 +16,7 @@
         "check_in_course": true,
         "check_pre_assessment": false,
         "needs_supervisor": true,
-        "order": 2,
+        "order": 4,
         "description_nl": "als student in TLC Masterprogramma of -cursus",
         "description_en": "as a student in a TLC Master's programme or course"
     },
@@ -40,7 +40,7 @@
         "check_in_course": false,
         "check_pre_assessment": true,
         "needs_supervisor": true,
-        "order": 4,
+        "order": 2,
         "description_nl": "als AIO / promovendus verbonden aan het UiL OTS",
         "description_en": "as a PhD affiliated to the UiL OTS"
     },
@@ -52,7 +52,7 @@
         "check_in_course": false,
         "check_pre_assessment": true,
         "needs_supervisor": false,
-        "order": 5,
+        "order": 1,
         "description_nl": "als postdoc, UD, UHD, of HL verbonden aan het UiL OTS",
         "description_en": "as a postdoc, UD, UHD, or HL affiliated to the UiL OTS"
     },
