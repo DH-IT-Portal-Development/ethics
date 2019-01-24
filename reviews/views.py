@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
@@ -42,6 +43,21 @@ class DecisionOpenView(GroupRequiredMixin, generic.ListView):
         return Decision.objects.filter(go='').exclude(review__stage=Review.SUPERVISOR)
 
 
+class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
+    context_object_name = 'reviews'
+    template_name = 'reviews/review_to_conclude.html'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_queryset(self):
+        """Returns all open Committee Decisions of all Users"""
+        return Review.objects.filter(
+            Q(stage=Review.CLOSING) | Q(stage=Review.CLOSED)
+        ).filter(
+            proposal__date_confirmed=None,
+            continuation=Review.GO
+        )
+
+
 class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
     """
     This page displays all proposals to be reviewed by supervisors. Not to be confused with SupervisorView, which
@@ -52,7 +68,9 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
     group_required = settings.GROUP_SECRETARY
 
     def get_queryset(self):
-        """Returns all open Supervisor Decisions of all Users"""
+        """Returns all studies that still need conclusion actions by the
+        secretary
+        """
         return Decision.objects.filter(
             go='',
             review__stage=Review.SUPERVISOR,

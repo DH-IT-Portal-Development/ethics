@@ -46,9 +46,22 @@
         "description_en": "otherwise",
         "description_nl": "anders",
         "requires_review": true,
-        "order": 4
+        "order": 5
     },
     "model": "studies.recruitment",
     "pk": 4
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": true,
+        "description": "Amazon Mechanical Turk (MTurk),",
+        "description_en": "Amazon Mechanical Turk (MTurk)",
+        "description_nl": "Amazon Mechanical Turk (MTurk)",
+        "requires_review": true,
+        "order": 4
+    },
+    "model": "studies.recruitment",
+    "pk": 5
 }
 ]
