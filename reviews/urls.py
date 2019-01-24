@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^(?P<committee>\w+)/my_open/$', DecisionMyOpenView.as_view(), name='my_open'),
     url(r'^(?P<committee>\w+)/open/$', DecisionOpenView.as_view(), name='open'),
     url(r'^(?P<committee>\w+)/open_supervisors/$', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),
-    url(r'^to_conclude/$', ToConcludeProposalView.as_view(),
+    url(r'^(?P<committee>\w+)/to_conclude/$', ToConcludeProposalView.as_view(),
         name='to_conclude'),
 
     url(r'^show/(?P<pk>\d+)/$', ReviewDetailView.as_view(), name='detail'),

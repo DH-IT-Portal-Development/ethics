@@ -69,6 +69,9 @@
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' 'FETC' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
                 </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:to_conclude' 'FETC' %}">{% trans "Nog af te handelen studies" %}</a>
+                </li>
                 {% endif %}
             </ul>
         </li>
@@ -91,7 +94,7 @@
                     <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' 'ETCL' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:to_conclude' %}">{% trans "Nog af te handelen studies" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:to_conclude' 'ETCL' %}">{% trans "Nog af te handelen studies" %}</a>
                 </li>
                 {% endif %}
             </ul>

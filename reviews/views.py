@@ -53,7 +53,8 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         ).exclude(review__stage=Review.SUPERVISOR)
 
 
-class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
+class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
+                             generic.ListView):
     context_object_name = 'reviews'
     template_name = 'reviews/review_to_conclude.html'
     group_required = settings.GROUP_SECRETARY
@@ -64,7 +65,8 @@ class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
             Q(stage=Review.CLOSING) | Q(stage=Review.CLOSED)
         ).filter(
             proposal__date_confirmed=None,
-            continuation=Review.GO
+            continuation=Review.GO,
+            proposal__reviewing_committee=self.committee
         )
 
 
