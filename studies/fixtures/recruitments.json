@@ -60,6 +60,8 @@
         "description_nl": "Amazon Mechanical Turk (MTurk)",
         "requires_review": true,
         "order": 4
-    }
+    },
+    "model": "studies.recruitment",
+    "pk": 5
 }
 ]
