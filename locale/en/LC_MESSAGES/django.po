@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-24 09:25+0100\n"
+"POT-Creation-Date: 2019-01-31 08:52+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -133,114 +133,118 @@ msgid "Nieuwe studie starten"
 msgstr "Start a new application"
 
 #: core/templates/base/menu.html:17
+msgid "Nieuwe voortoetsing studie starten"
+msgstr "Start a new preliminary assessment application"
+
+#: core/templates/base/menu.html:20
 msgid ""
 "Nieuwe studie starten (die al goedgekeurd is door een andere ethische "
 "toetsings comissie)"
 msgstr ""
 "Start a new application (that has been approved by another ethics committee)"
 
-#: core/templates/base/menu.html:20
+#: core/templates/base/menu.html:23
 msgid "Bestaande studie kopiëren"
 msgstr "Copy existing application"
 
-#: core/templates/base/menu.html:23 proposals/views/proposal_views.py:86
+#: core/templates/base/menu.html:26 proposals/views/proposal_views.py:86
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
-#: core/templates/base/menu.html:26 proposals/views/proposal_views.py:142
+#: core/templates/base/menu.html:29 proposals/views/proposal_views.py:142
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
-#: core/templates/base/menu.html:29 proposals/views/proposal_views.py:97
+#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:97
 msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
-#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:109
+#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:109
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
-#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:120
+#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:120
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
-#: core/templates/base/menu.html:38
+#: core/templates/base/menu.html:41
 msgid "Al mijn studies"
 msgstr "All my applications"
 
-#: core/templates/base/menu.html:43
+#: core/templates/base/menu.html:46
 msgid "UiL OTS archief"
 msgstr "UiL OTS archive"
 
-#: core/templates/base/menu.html:46
+#: core/templates/base/menu.html:49
 msgid "Alle UiL OTS-studies bekijken"
 msgstr "View all UiL OTS applications"
 
-#: core/templates/base/menu.html:50
+#: core/templates/base/menu.html:53
 msgid "Site-export"
 msgstr "Site-export"
 
-#: core/templates/base/menu.html:57
+#: core/templates/base/menu.html:60
 msgid "Commissie"
 msgstr "Committee"
 
-#: core/templates/base/menu.html:60
+#: core/templates/base/menu.html:63
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
-#: core/templates/base/menu.html:63
+#: core/templates/base/menu.html:66
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: core/templates/base/menu.html:67
+#: core/templates/base/menu.html:70
 msgid "Alle openstaande besluiten commissieleden"
 msgstr "All pending decisions committee members"
 
-#: core/templates/base/menu.html:70
+#: core/templates/base/menu.html:73
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: core/templates/base/menu.html:73
+#: core/templates/base/menu.html:76
 #: reviews/templates/reviews/review_to_conclude.html:8
 msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
-#: core/templates/base/menu.html:80
+#: core/templates/base/menu.html:83
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:83 core/templates/core/index.html:77
+#: core/templates/base/menu.html:86 core/templates/core/index.html:80
 msgid "ETCL website"
 msgstr "ETCL website"
 
-#: core/templates/base/menu.html:86 core/templates/core/index.html:80
+#: core/templates/base/menu.html:89 core/templates/core/index.html:83
 msgid "ETCL reglement"
 msgstr "ETCL regulations"
 
-#: core/templates/base/menu.html:89 core/templates/core/index.html:83
+#: core/templates/base/menu.html:92 core/templates/core/index.html:86
 #: proposals/templates/proposals/proposal_pdf.html:384
 #: proposals/templates/proposals/study_consent.html:8 proposals/utils.py:76
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: core/templates/base/menu.html:92
+#: core/templates/base/menu.html:95
 msgid "FAQs"
 msgstr "FAQs"
 
-#: core/templates/base/menu.html:95 feedback/models.py:20
+#: core/templates/base/menu.html:98 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:18
 msgid "Feedback"
 msgstr "Feedback"
 
-#: core/templates/base/menu.html:100
+#: core/templates/base/menu.html:103
 #: core/templates/registration/logged_out.html:6
 msgid "Uitloggen"
 msgstr "Log out"
 
-#: core/templates/base/menu.html:104
+#: core/templates/base/menu.html:107
 msgid "ETCL-website"
 msgstr "ETCL website"
 
-#: core/templates/base/menu.html:107 core/templates/registration/login.html:6
+#: core/templates/base/menu.html:110 core/templates/registration/login.html:6
 #: core/templates/registration/login.html:23
 msgid "Inloggen"
 msgstr "Log in"
@@ -319,6 +323,11 @@ msgid "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)"
 msgstr "Register a new study (from a copy of an old study)"
 
 #: core/templates/core/index.html:44
+msgid ""
+"Een nieuwe studie aanmelden (voor voortoetsting t.b.v. subsidieaanvraag)"
+msgstr "Register a new study (preliminary assessment for the purpose of subsidy applications)"
+
+#: core/templates/core/index.html:47
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 msgid ""
 "Een nieuwe studie aanmelden (die al goedgekeurd is door een andere ethische "
@@ -326,47 +335,47 @@ msgid ""
 msgstr ""
 "Register a new study (that has been approved by another ethics committee)"
 
-#: core/templates/core/index.html:47
+#: core/templates/core/index.html:50
 msgid "Een amendement indienen"
 msgstr "Submit an amendment"
 
-#: core/templates/core/index.html:50
+#: core/templates/core/index.html:53
 msgid "Mijn conceptstudies bekijken"
 msgstr "View my draft applications"
 
-#: core/templates/core/index.html:53
+#: core/templates/core/index.html:56
 msgid "Mijn oefenstudies bekijken"
 msgstr "View my practice applications"
 
-#: core/templates/core/index.html:56
+#: core/templates/core/index.html:59
 msgid "Mijn ingediende studies bekijken"
 msgstr "View my submitted applications"
 
-#: core/templates/core/index.html:59
+#: core/templates/core/index.html:62
 msgid "Mijn afgehandelde studies bekijken"
 msgstr "View my processed applications"
 
-#: core/templates/core/index.html:62
+#: core/templates/core/index.html:65
 msgid "Mijn studies als eindverantwoordelijke bekijken"
 msgstr "View my supervised applications"
 
-#: core/templates/core/index.html:65
+#: core/templates/core/index.html:68
 msgid "Al mijn studies bekijken"
 msgstr "View all my applications"
 
-#: core/templates/core/index.html:71
+#: core/templates/core/index.html:74
 msgid "Alle afgehandelde en goedgekeurde UiL OTS-studies bekijken"
 msgstr "View all processed and approved UiL OTS applications"
 
-#: core/templates/core/index.html:86
+#: core/templates/core/index.html:89
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: core/templates/core/index.html:89
+#: core/templates/core/index.html:92
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: core/templates/core/index.html:95
+#: core/templates/core/index.html:98
 #, python-format
 msgid ""
 "\n"
@@ -379,7 +388,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: core/templates/core/index.html:100
+#: core/templates/core/index.html:103
 msgid ""
 "\n"
 "    Klik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren "
