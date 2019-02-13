@@ -3,7 +3,7 @@ django-auth-ldap
 django-braces
 django-easy-pdf
 django-modeltranslation
-mysqlclient
+mysqlclient<1.4.0
 xhtml2pdf
 sphinx
 sphinx_rtd_theme
