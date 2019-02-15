@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
-from core.views import AllowErrorsMixin, UpdateView, DeleteView
+from core.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import TaskForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Task
@@ -14,7 +14,7 @@ from ..utils import get_task_progress
 ######################
 # CRUD actions on Task
 ######################
-class TaskUpdate(AllowErrorsMixin, UpdateView):
+class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Updates a Task"""
     model = Task
     form_class = TaskForm

@@ -9,8 +9,9 @@ from django.utils.translation import ugettext_lazy as _
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, UserFormKwargsMixin
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
-from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
+from core.views import AllowErrorsOnBackbuttonMixin, CreateView, UpdateView, DeleteView
 from core.utils import get_secretary
+from proposals.utils.validate_proposal import get_form_errors
 from reviews.utils import start_review, start_review_pre_assessment
 
 from ..copy import copy_proposal
@@ -170,7 +171,7 @@ class ProposalMixin(UserFormKwargsMixin):
             return reverse('proposals:wmo_create', args=(proposal.pk,))
 
 
-class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
+class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     def get_initial(self):
         """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
@@ -191,7 +192,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
         return context
 
 
-class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
+class ProposalUpdate(ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_context_data(self, **kwargs):
         """Adds 'create'/'no_back' to template context"""
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
@@ -239,7 +240,7 @@ class ProposalDataManagement(UpdateView):
         return reverse('proposals:consent', args=(self.object.pk,))
 
 
-class ProposalSubmit(AllowErrorsMixin, UpdateView):
+class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
@@ -250,6 +251,13 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         kwargs = super(ProposalSubmit, self).get_form_kwargs()
         kwargs['proposal'] = self.get_object()
         return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProposalSubmit, self).get_context_data(**kwargs)
+
+        context['errors'] = get_form_errors(self.get_object())
+
+        return context
 
     def form_valid(self, form):
         """

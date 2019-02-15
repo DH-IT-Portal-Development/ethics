@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from .utils import is_empty
+from ..utils import is_empty
 
 
 class ConditionalModelForm(forms.ModelForm):

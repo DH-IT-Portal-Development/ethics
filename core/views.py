@@ -168,7 +168,7 @@ class UserSearchView(LoginRequiredMixin, generic.View):
 ################
 # Helpers
 ################
-class AllowErrorsMixin(object):
+class AllowErrorsOnBackbuttonMixin(object):
     def form_invalid(self, form):
         """
         On back button, allow form to have errors.
@@ -176,7 +176,7 @@ class AllowErrorsMixin(object):
         if 'save_back' in self.request.POST:
             return HttpResponseRedirect(self.get_back_url())
         else:
-            return super(AllowErrorsMixin, self).form_invalid(form)
+            return super(AllowErrorsOnBackbuttonMixin, self).form_invalid(form)
 
 
 class UserAllowedMixin(SingleObjectMixin):

@@ -1,11 +1,11 @@
 from django import forms
 
-from core.forms import ConditionalModelForm
+from core.forms import ConditionalModelForm, SoftValidationMixin
 from core.utils import YES_NO
 from .models import Intervention
 
 
-class InterventionForm(ConditionalModelForm):
+class InterventionForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Intervention
         fields = [
@@ -16,13 +16,14 @@ class InterventionForm(ConditionalModelForm):
             'measurement', 'extra_task'
         ]
         widgets = {
-            'setting': forms.CheckboxSelectMultiple(),
-            'supervision': forms.RadioSelect(choices=YES_NO),
+            'setting':           forms.CheckboxSelectMultiple(),
+            'supervision':       forms.RadioSelect(choices=YES_NO),
             'multiple_sessions': forms.RadioSelect(choices=YES_NO),
-            'leader_has_coc': forms.RadioSelect(choices=YES_NO),
-            'has_controls': forms.RadioSelect(choices=YES_NO),
-            'extra_task': forms.RadioSelect(choices=YES_NO),
+            'leader_has_coc':    forms.RadioSelect(choices=YES_NO),
+            'has_controls':      forms.RadioSelect(choices=YES_NO),
+            'extra_task':        forms.RadioSelect(choices=YES_NO),
         }
+
 
     def __init__(self, *args, **kwargs):
         """
@@ -37,6 +38,10 @@ class InterventionForm(ConditionalModelForm):
             del self.fields['supervision']
             del self.fields['leader_has_coc']
 
+    def get_soft_validation_fields(self):
+        # We want soft validation on all fields
+        return self.fields.keys()
+
     def clean(self):
         """
         Check for conditional requirements:
@@ -46,9 +51,23 @@ class InterventionForm(ConditionalModelForm):
         """
         cleaned_data = super(InterventionForm, self).clean()
 
-        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
+        self.mark_soft_required(
+            cleaned_data,
+            'setting',
+            'period',
+            'experimenter',
+            'description',
+            'measurement',
+        )
+
+        self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details',
+                                       'setting_details')
         if self.study.has_children():
-            self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
-            self.check_dependency(cleaned_data, 'supervision', 'leader_has_coc', f1_value=False)
-        self.check_dependency(cleaned_data, 'has_controls', 'controls_description')
-        self.check_dependency(cleaned_data, 'multiple_sessions', 'session_frequency')
+            self.check_dependency_multiple(cleaned_data, 'setting',
+                                           'needs_supervision', 'supervision')
+            self.check_dependency(cleaned_data, 'supervision', 'leader_has_coc',
+                                  f1_value=False)
+        self.check_dependency(cleaned_data, 'has_controls',
+                              'controls_description')
+        self.check_dependency(cleaned_data, 'multiple_sessions',
+                              'session_frequency')

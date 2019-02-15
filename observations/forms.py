@@ -3,12 +3,12 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
-from core.forms import ConditionalModelForm
+from core.forms import ConditionalModelForm, SoftValidationMixin
 from core.utils import YES_NO
 from .models import Observation
 
 
-class ObservationForm(ConditionalModelForm):
+class ObservationForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Observation
         fields = [
@@ -50,6 +50,10 @@ class ObservationForm(ConditionalModelForm):
             del self.fields['supervision']
             del self.fields['leader_has_coc']
 
+    def get_soft_validation_fields(self):
+        # We want soft validation of all fields
+        return self.fields.keys()
+
     def clean(self):
         """
         Check for conditional requirements:
@@ -58,6 +62,14 @@ class ObservationForm(ConditionalModelForm):
         - For all default anonymity questions, if true, the appropiate explain fields need to be filled
         """
         cleaned_data = super(ObservationForm, self).clean()
+
+        self.mark_soft_required(
+            cleaned_data,
+            'setting',
+            'details_who',
+            'details_why',
+            'details_frequency',
+        )
 
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
         if self.study.has_children():

@@ -4,14 +4,14 @@ from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from core.forms import ConditionalModelForm
+from core.forms import ConditionalModelForm, SoftValidationMixin
 from core.models import YES_NO_DOUBT, YES, DOUBT
 from core.utils import YES_NO
 from .models import Study, AgeGroup, Documents
 from .utils import check_necessity_required
 
 
-class StudyForm(ConditionalModelForm):
+class StudyForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
@@ -40,6 +40,7 @@ class StudyForm(ConditionalModelForm):
         - Remove the empty label for compensation/necessity
         - Reset the choices for necessity
         """
+        self._soft_validation_fields = self._meta.fields
         self.proposal = kwargs.pop('proposal', None)
 
         super(StudyForm, self).__init__(*args, **kwargs)
@@ -140,7 +141,7 @@ class StudyConsentForm(ConditionalModelForm):
         cleaned_data = super(StudyConsentForm, self).clean()
 
 
-class StudyEndForm(ConditionalModelForm):
+class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
@@ -156,6 +157,17 @@ class StudyEndForm(ConditionalModelForm):
             'risk': forms.RadioSelect(),
         }
 
+    _soft_validation_fields = [
+        'deception',
+        'deception_details',
+        'negativity',
+        'negativity_details',
+        'stressful',
+        'stressful_details',
+        'risk',
+        'risk_detail',
+    ]
+
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
@@ -168,16 +180,12 @@ class StudyEndForm(ConditionalModelForm):
 
         self.fields['deception'].empty_label = None
         self.fields['deception'].choices = YES_NO_DOUBT
-        self.fields['deception'].required = True
         self.fields['negativity'].empty_label = None
         self.fields['negativity'].choices = YES_NO_DOUBT
-        self.fields['negativity'].required = True
         self.fields['stressful'].empty_label = None
         self.fields['stressful'].choices = YES_NO_DOUBT
-        self.fields['stressful'].required = True
         self.fields['risk'].empty_label = None
         self.fields['risk'].choices = YES_NO_DOUBT
-        self.fields['risk'].required = True
 
         self.fields['negativity'].label = mark_safe(self.fields['negativity'].label)
         self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)
@@ -196,6 +204,17 @@ class StudyEndForm(ConditionalModelForm):
         - If risk is set to yes, make sure risk_details has been filled out
         """
         cleaned_data = super(StudyEndForm, self).clean()
+
+        # TODO: find a way to hide this on the first view
+        self.mark_soft_required(
+            cleaned_data,
+            'negativity',
+            'stressful',
+            'risk',
+        )
+
+        if 'deception' in self.fields:
+            self.mark_soft_required(cleaned_data, 'deception')
 
         self.check_dependency_list(cleaned_data, 'deception', 'deception_details', f1_value_list=[YES, DOUBT])
         self.check_dependency_list(cleaned_data, 'negativity', 'negativity_details', f1_value_list=[YES, DOUBT])

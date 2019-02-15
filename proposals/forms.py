@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from braces.forms import UserKwargModelFormMixin
 
-from core.forms import ConditionalModelForm
+from core.forms import ConditionalModelForm, SoftValidationMixin
 from core.models import YES_NO_DOUBT, YES, NO, DOUBT
 from core.utils import YES_NO, get_users_as_list
 from .models import Proposal, Wmo, Relation
@@ -16,7 +16,8 @@ from .utils import check_local_facilities
 from .widgets import SelectMultipleUser
 
 
-class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
+class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
+                   ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = [
@@ -45,6 +46,20 @@ class ProposalForm(UserKwargModelFormMixin, ConditionalModelForm):
                 'unique': _('Er bestaat al een studie met deze titel.'),
             },
         }
+
+    _soft_validation_fields = ['relation',
+                               'supervisor',
+                               'other_applicants',
+                               'applicants',
+                               'other_stakeholders',
+                               'stakeholders',
+                               'summary',
+                               'pre_assessment_pdf',
+                               'funding',
+                               'funding_details',
+                               'funding_name',
+                               'pre_approval_institute',
+                               'pre_approval_pdf']
 
     def __init__(self, *args, **kwargs):
         """
@@ -116,6 +131,14 @@ van het UiL OTS worden opgenomen.')
         """
         cleaned_data = super(ProposalForm, self).clean()
 
+        if 'funding' in self.fields:
+            self.mark_soft_required(cleaned_data, 'funding')
+
+        self.mark_soft_required(cleaned_data, 'relation')
+
+        if 'summary' in self.fields:
+            self.mark_soft_required(cleaned_data, 'summary')
+
         relation = cleaned_data.get('relation')
         if relation and relation.needs_supervisor and not cleaned_data.get('supervisor'):
             error = forms.ValidationError(_('U dient een eindverantwoordelijke op te geven.'), code='required')
@@ -178,7 +201,7 @@ class ProposalConfirmationForm(forms.ModelForm):
         fields = ['date_confirmed', 'confirmation_comments']
 
 
-class WmoForm(ConditionalModelForm):
+class WmoForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Wmo
         fields = [
@@ -191,11 +214,16 @@ class WmoForm(ConditionalModelForm):
             'is_behavioristic': forms.RadioSelect(),
         }
 
+    _soft_validation_fields = ['metc_details', 'metc_institution',
+                               'is_medical', 'is_behavioristic']
+
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from is_medical/is_behavioristic field and reset the choices
         """
         super(WmoForm, self).__init__(*args, **kwargs)
+        self.fields['metc'].empty_label = None
+        self.fields['metc'].choices = YES_NO_DOUBT
         self.fields['is_medical'].empty_label = None
         self.fields['is_medical'].choices = YES_NO_DOUBT
         self.fields['is_behavioristic'].empty_label = None
@@ -208,6 +236,10 @@ class WmoForm(ConditionalModelForm):
         - If metc is not checked, check if is_medical or is_behavioristic is set
         """
         cleaned_data = super(WmoForm, self).clean()
+
+        if 'metc' not in cleaned_data or not cleaned_data['metc']:
+            self.add_error('metc', _('Dit veld is verplicht om verder te '
+                                     'gaan.'))
 
         self.check_dependency(cleaned_data, 'metc', 'metc_details', f1_value=YES)
         self.check_dependency(cleaned_data, 'metc', 'metc_institution',
@@ -301,7 +333,8 @@ class StudyStartForm(forms.ModelForm):
         cleaned_data = super(StudyStartForm, self).clean()
 
         if cleaned_data['studies_similar'] is None:
-            self.add_error('studies_similar', _('Dit veld is verplicht.'))
+            self.add_error('studies_similar', _('Dit veld is verplicht om '
+                                                'verder te gaan.'))
         elif not cleaned_data['studies_similar']:
             nr_studies = cleaned_data['studies_number']
             if cleaned_data['studies_number'] < 2:

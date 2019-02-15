@@ -32,11 +32,14 @@ class Setting(models.Model):
 class SettingModel(models.Model):
     setting = models.ManyToManyField(
         Setting,
-        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'))
+        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'),
+        blank=True, # TODO: mark this as soft required in ALL forms
+    )
     setting_details = models.CharField(
         _('Namelijk'),
         max_length=200,
-        blank=True)
+        blank=True,
+    )
     supervision = models.NullBooleanField(
         _('Vindt het afnemen van de taak plaats onder het toeziend oog \
 van de leraar of een ander persoon die bevoegd is?')

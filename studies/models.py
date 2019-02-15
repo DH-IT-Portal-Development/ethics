@@ -177,6 +177,7 @@ te testen?'),
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
 cadeautje.'),
         null=True,
+        blank=True,
         on_delete=models.CASCADE)
     compensation_details = models.CharField(
         _('Namelijk'),

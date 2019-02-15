@@ -15,6 +15,10 @@ from easy_pdf.rendering import render_to_pdf
 from core.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
+__all__ = ['available_urls', 'generate_ref_number', 'generate_pdf',
+           'check_local_facilities', 'notify_local_staff']
+
+
 def available_urls(proposal):
     """
     Returns the available URLs for the given Proposal.
@@ -97,7 +101,7 @@ def generate_ref_number(user):
     where nr is the number of Proposals created by the current User in the
     current year.
     """
-    from .models import Proposal
+    from ..models import Proposal
 
     current_year = datetime.now().year
     try:

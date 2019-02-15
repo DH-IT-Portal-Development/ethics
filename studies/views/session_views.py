@@ -3,7 +3,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from core.views import AllowErrorsMixin, UpdateView
+from core.views import AllowErrorsOnBackbuttonMixin, UpdateView
 from tasks.models import Session
 
 from ..forms import SessionStartForm
@@ -14,7 +14,7 @@ from ..utils import get_study_progress
 ######################
 # Actions on a Session
 ######################
-class SessionStart(AllowErrorsMixin, UpdateView):
+class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Initial creation of Sessions"""
     model = Study
     form_class = SessionStartForm
