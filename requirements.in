@@ -10,3 +10,4 @@ sphinx_rtd_theme
 sphinxcontrib-apidoc
 sphinxcontrib-django
 html5lib
+django-user-agents

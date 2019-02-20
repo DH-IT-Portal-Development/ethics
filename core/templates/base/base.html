@@ -50,6 +50,16 @@
             {% endif %}
             </div>
         {% endif %}
+
+        {% if request.user_agent.browser.family == 'IE' %}
+            <div class="warning">
+                {% blocktrans %}
+                    Het lijkt er op dat u Internet Explorer gebruikt, waar deze applicatie niet correct onder draait. Wij willen u aanraden om een andere browser te gebruiken, enkele voorbeelden zijn Firefox, Safari of Chrome.<br/>
+                    Onze excuses voor het ongemak.
+                {% endblocktrans %}
+            </div>
+        {% endif %}
+
         {% block sidebar %}{% endblock %}
         {% block notitle %}
             <h2>{% block title %}{% endblock %}</h2>
