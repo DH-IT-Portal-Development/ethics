@@ -1,36 +1,60 @@
+from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from braces.views import LoginRequiredMixin, GroupRequiredMixin
-
-from core.utils import get_secretary, get_reviewers
+from core.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
-
-from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
-from .mixins import UserAllowedMixin, AutoReviewMixin
-from .models import Review, Decision
-from .utils import start_review_route, notify_secretary
+from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm
+from .mixins import AutoReviewMixin, UserAllowedMixin
+from .models import Decision, Review
+from .utils import notify_secretary, start_review_route
 
 
 class DecisionListView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
+    template_name = 'reviews/decision_list.html'
     group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
     def get_queryset(self):
         """Returns all Decisions of the current User"""
-        return Decision.objects.filter(reviewer=self.request.user)
+        decisions = {}
+        objects = Decision.objects.filter(
+            reviewer=self.request.user
+        )
+
+        for obj in objects:
+            proposal = obj.review.proposal
+            if proposal not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
 
 
 class DecisionMyOpenView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
+    template_name = 'reviews/decision_list.html'
     group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
-        return Decision.objects.filter(reviewer=self.request.user, go='')
+        decisions = {}
+        objects = Decision.objects.filter(reviewer=self.request.user, go='')
+
+        for obj in objects:
+            proposal = obj.review.proposal
+            if proposal not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
 
 
 class DecisionOpenView(GroupRequiredMixin, generic.ListView):
@@ -40,7 +64,20 @@ class DecisionOpenView(GroupRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        return Decision.objects.filter(go='').exclude(review__stage=Review.SUPERVISOR)
+        decisions = {}
+        objects = Decision.objects.filter(go='').exclude(
+            review__stage=Review.SUPERVISOR
+        )
+
+        for obj in objects:
+            proposal = obj.review.proposal
+            if proposal not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
 
 
 class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
@@ -50,18 +87,30 @@ class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        return Review.objects.filter(
+        reviews = {}
+        objects = Review.objects.filter(
             Q(stage=Review.CLOSING) | Q(stage=Review.CLOSED)
         ).filter(
             proposal__date_confirmed=None,
             continuation=Review.GO
         )
 
+        for obj in objects:
+            proposal = obj.proposal
+            if proposal not in reviews:
+                reviews[proposal.pk] = obj
+            else:
+                if reviews[proposal.pk].pk < obj.pk:
+                    reviews[proposal.pk] = obj
+
+        return [value for key, value in reviews.items()]
+
 
 class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
     """
-    This page displays all proposals to be reviewed by supervisors. Not to be confused with SupervisorView, which
-    displays all open reviews for a specific supervisor. Viewable for the secretary only!
+    This page displays all proposals to be reviewed by supervisors. Not to be
+    confused with SupervisorView, which displays all open reviews for a specific
+     supervisor. Viewable for the secretary only!
     """
     context_object_name = 'decisions'
     template_name = 'reviews/decision_supervisor_list_open.html'
@@ -71,26 +120,53 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
         """Returns all studies that still need conclusion actions by the
         secretary
         """
-        return Decision.objects.filter(
+        objects = Decision.objects.filter(
             go='',
             review__stage=Review.SUPERVISOR,
             review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR
         )
+        decisions = {}
+
+        for obj in objects:
+            proposal = obj.review.proposal
+            if proposal not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
 
 
 class SupervisorView(LoginRequiredMixin, generic.ListView):
     """
-        This page displays all proposals to be reviewed by a specific supervisors. Not to be confused with
-        SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
+        This page displays all proposals to be reviewed by a specific
+        supervisors. Not to be confused with SupervisorDecisionOpenView, which
+        displays all open reviews for all supervisors.
         """
     context_object_name = 'decisions'
 
     def get_queryset(self):
         """Returns all the current open Decisions for the current User"""
-        return Decision.objects.filter(review__date_end=None, review__stage=Review.SUPERVISOR, reviewer=self.request.user)
+        objects = Decision.objects.filter(
+            review__date_end=None,
+            review__stage=Review.SUPERVISOR,
+            reviewer=self.request.user)
+        decisions = {}
+
+        for obj in objects:
+            proposal = obj.review.proposal
+            if proposal not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
 
 
-class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.DetailView):
+class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin,
+                       generic.DetailView):
     """
     Shows the Decisions for a Review
     """
@@ -121,13 +197,15 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             current_reviewers = set(review.current_reviewers())
             selected_reviewers = set(form.cleaned_data['reviewers'])
             new_reviewers = selected_reviewers - current_reviewers
-            obsolete_reviewers = current_reviewers - selected_reviewers - {get_secretary()}
+            obsolete_reviewers = current_reviewers - selected_reviewers - {
+            get_secretary()}
 
             # Create a new Decision for new reviewers
             start_review_route(form.instance, new_reviewers, route)
 
             # Remove the Decision for obsolete reviewers
-            Decision.objects.filter(review=review, reviewer__in=obsolete_reviewers).delete()
+            Decision.objects.filter(review=review,
+                                    reviewer__in=obsolete_reviewers).delete()
         else:
             # Directly mark this Proposal as closed: applicants should start a revision Proposal
             for decision in Decision.objects.filter(review=review):
@@ -160,7 +238,8 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         review = self.get_object()
 
         kwargs = super(ReviewCloseView, self).get_form_kwargs()
-        kwargs['allow_long_route_continuation'] = review.short_route and not review.proposal.is_pre_assessment
+        kwargs[
+            'allow_long_route_continuation'] = review.short_route and not review.proposal.is_pre_assessment
         return kwargs
 
     def get_initial(self):
@@ -203,7 +282,8 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
 
         proposal.in_archive = form.cleaned_data['in_archive']
         proposal.has_minor_revision = form.cleaned_data['has_minor_revision']
-        proposal.minor_revision_description = form.cleaned_data['minor_revision_description']
+        proposal.minor_revision_description = form.cleaned_data[
+            'minor_revision_description']
         proposal.save()
 
         form.instance.stage = Review.CLOSED
@@ -211,7 +291,8 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         return super(ReviewCloseView, self).form_valid(form)
 
 
-class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
+                         generic.UpdateView):
     """
     Allows a User to make a Decision on a Review.
     """
@@ -222,7 +303,8 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
         if self.request.user.is_superuser:
             return True
         user_groups = self.request.user.groups.values_list("name", flat=True)
-        return {settings.GROUP_SECRETARY, settings.GROUP_COMMISSION}.intersection(set(user_groups))
+        return {settings.GROUP_SECRETARY,
+                settings.GROUP_COMMISSION}.intersection(set(user_groups))
 
     def get_success_url(self):
         if self.is_reviewer():

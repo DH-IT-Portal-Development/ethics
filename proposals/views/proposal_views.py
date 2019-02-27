@@ -48,7 +48,9 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_my_proposals(self):
-        return Proposal.objects.filter(Q(applicants=self.request.user) | Q(supervisor=self.request.user))
+        return Proposal.objects.filter(
+            Q(applicants=self.request.user) | Q(supervisor=self.request.user)
+        ).distinct()
 
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):

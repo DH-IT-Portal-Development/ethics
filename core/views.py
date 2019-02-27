@@ -1,28 +1,26 @@
 # -*- encoding: utf-8 -*-
+import ldap
+from braces.views import LoginRequiredMixin
 from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse
+from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import Q
+from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
-from django.core.exceptions import PermissionDenied, ImproperlyConfigured
+from django.shortcuts import render
+from django.urls import reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
-from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.forms import modelformset_factory
 
-from braces.views import LoginRequiredMixin
-
-from proposals.models import Proposal
-from observations.models import Observation
 from interventions.models import Intervention
+from observations.models import Observation
+from proposals.models import Proposal
 from tasks.models import Session, Task
-
-import ldap
 
 # We set up a custom LDAP connection here, separate from the Django auth one
 try:
@@ -57,9 +55,13 @@ def check_requires(request):
     """
     values = map(int, request.POST.getlist('value[]'))
     model = apps.get_model(request.POST.get('app'), request.POST.get('model'))
-    required_values = model.objects.filter(**{request.POST.get('field'): True}).values_list('id', flat=True)
+    required_values = model.objects.filter(**{
+        request.POST.get('field'): True
+    }).values_list('id', flat=True)
     result = bool(set(required_values).intersection(values))
-    return JsonResponse({'result': result})
+    return JsonResponse({
+                            'result': result
+                        })
 
 
 def user_search(query, page):
@@ -80,7 +82,8 @@ def user_search(query, page):
     elif page == u'1':
         # Otherwise we search through the users with a given query
         data = User.objects.filter(
-            Q(username__icontains=query) | Q(first_name__icontains=query) | Q(last_name__icontains=query))
+            Q(username__icontains=query) | Q(first_name__icontains=query) | Q(
+                last_name__icontains=query))
         users = format_user_info(data)
 
     # We need results from the LDAP if either, this is page 2, or page 1 has no results for now
@@ -105,16 +108,20 @@ def user_search(query, page):
         for _, data in ldap_connection.result(msgid)[1]:
             # Add them to the users, with a ldap_ prefix in the ID so we can distinguish this when processing the form
             users.append({
-                'id': 'ldap_' + data.get('uid')[0].decode("utf-8") ,
-                'text': '{}: {}'.format(data.get('uid')[0].decode("utf-8") , data.get('displayName')[0].decode("utf-8") )
+                'id':   'ldap_' + data.get('uid')[0].decode("utf-8"),
+                'text': '{}: {}'.format(data.get('uid')[0].decode("utf-8"),
+                                        data.get('displayName')[0].decode(
+                                            "utf-8"))
             })
 
     # Return a formatted dict with the results
     return {
-        'results': users,
+        'results':    users,
         # Paging-more should be true if there are no LDAP results included in this page, the LDAP is available and
         # the query is not a wildcard
-        'pagination': {'more': not ldap_results_needed and ldap_available and query != '*'}
+        'pagination': {
+            'more': not ldap_results_needed and ldap_available and query != '*'
+        }
     }
 
 
@@ -149,7 +156,10 @@ def escape_ldap_input(string):
 
 def format_user_info(lst):
     """This will format a user object into a displayable format"""
-    return [{'id': x.pk, 'text': u'{}: {}'.format(x.username, x.get_full_name())} for x in lst]
+    return [{
+                'id':   x.pk,
+                'text': u'{}: {}'.format(x.username, x.get_full_name())
+            } for x in lst]
 
 
 class UserSearchView(LoginRequiredMixin, generic.View):
@@ -194,7 +204,9 @@ class UserAllowedMixin(SingleObjectMixin):
 
         if isinstance(obj, Proposal):
             proposal = obj
-        elif isinstance(obj, Observation) or isinstance(obj, Intervention) or isinstance(obj, Session):
+        elif isinstance(obj, Observation) or isinstance(obj,
+                                                        Intervention) or isinstance(
+                obj, Session):
             proposal = obj.study.proposal
         elif isinstance(obj, Task):
             proposal = obj.session.study.proposal
@@ -203,11 +215,14 @@ class UserAllowedMixin(SingleObjectMixin):
 
         applicants = proposal.applicants.all()
         if proposal.supervisor:
-            supervisor = get_user_model().objects.filter(pk=proposal.supervisor.pk)
+            supervisor = get_user_model().objects.filter(
+                pk=proposal.supervisor.pk)
         else:
             supervisor = get_user_model().objects.none()
-        commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
-        commission |= get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
+        commission = get_user_model().objects.filter(
+            groups__name=settings.GROUP_SECRETARY)
+        commission |= get_user_model().objects.filter(
+            groups__name=settings.GROUP_COMMISSION)
 
         if proposal.status >= Proposal.SUBMITTED:
             if self.request.user not in commission:
@@ -220,6 +235,7 @@ class UserAllowedMixin(SingleObjectMixin):
                 raise PermissionDenied
 
         return obj
+
 
 class FormSetUserAllowedMixin(UserAllowedMixin):
 
@@ -238,7 +254,9 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
 
             if isinstance(obj, Proposal):
                 proposal = obj
-            elif isinstance(obj, Observation) or isinstance(obj, Intervention) or isinstance(obj, Session):
+            elif isinstance(obj, Observation) or isinstance(obj,
+                                                            Intervention) or isinstance(
+                    obj, Session):
                 proposal = obj.study.proposal
             elif isinstance(obj, Task):
                 proposal = obj.session.study.proposal
@@ -247,11 +265,14 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
 
             applicants = proposal.applicants.all()
             if proposal.supervisor:
-                supervisor = get_user_model().objects.filter(pk=proposal.supervisor.pk)
+                supervisor = get_user_model().objects.filter(
+                    pk=proposal.supervisor.pk)
             else:
                 supervisor = get_user_model().objects.none()
-            commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
-            commission |= get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
+            commission = get_user_model().objects.filter(
+                groups__name=settings.GROUP_SECRETARY)
+            commission |= get_user_model().objects.filter(
+                groups__name=settings.GROUP_COMMISSION)
 
             if proposal.status >= Proposal.SUBMITTED:
                 if self.request.user not in commission:
@@ -265,21 +286,28 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
 
 
 class CreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
-    """Generic create view including success message and login required mixins"""
+    """Generic create view including success message and login required
+    mixins"""
+
     def get_success_url(self):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
 
-class UpdateView(LoginRequiredMixin, SuccessMessageMixin, UserAllowedMixin, generic.UpdateView):
-    """Generic update view including success message, user allowed and login required mixins"""
+class UpdateView(LoginRequiredMixin, SuccessMessageMixin, UserAllowedMixin,
+                 generic.UpdateView):
+    """Generic update view including success message, user allowed and login
+    required mixins"""
+
     def get_success_url(self):
         """Sets the success_url based on the submit button pressed"""
         return success_url(self)
 
-class FormSetUpdateView(FormSetUserAllowedMixin, LoginRequiredMixin, SuccessMessageMixin, generic.View):
-    """ Generic update view that uses a formset. This allows you to edit multiple forms of the same type on the
-    same page.
+
+class FormSetUpdateView(FormSetUserAllowedMixin, LoginRequiredMixin,
+                        SuccessMessageMixin, generic.View):
+    """ Generic update view that uses a formset. This allows you to edit
+    multiple forms of the same type on the same page.
     """
     form = None
     _formset = None
@@ -293,29 +321,35 @@ class FormSetUpdateView(FormSetUserAllowedMixin, LoginRequiredMixin, SuccessMess
     def post(self, request, *args, **kwargs):
         self._on_request()
 
-        formset = self._formset(request.POST, request.FILES, queryset=self.objects)
+        formset = self._formset(request.POST, request.FILES,
+                                queryset=self.objects)
         self.pre_validation(formset)
         if formset.is_valid():
             self.save_form(formset)
             return HttpResponseRedirect(self.get_success_url())
         else:
-            return render(request, self.template_name, self.get_context_data(formset=formset))
+            return render(request, self.template_name,
+                          self.get_context_data(formset=formset))
 
     def pre_validation(self, formset):
-        "This method can be overridden to manipulate the formset before validation"
+        """This method can be overridden to manipulate the formset before
+        validation"""
         pass
 
     def save_form(self, formset):
         formset.save()
 
     def _on_request(self):
-        self._formset = modelformset_factory(self.form._meta.model, form=self.form, extra=self.extra)
+        self._formset = modelformset_factory(self.form._meta.model,
+                                             form=self.form, extra=self.extra)
         self.objects = self.get_queryset()
         self.check_allowed()
 
     def get_queryset(self):
         if self.queryset is None:
-            raise ImproperlyConfigured("Either override get_queryset, or provide a queryset class variable")
+            raise ImproperlyConfigured(
+                "Either override get_queryset, or provide a queryset class "
+                "variable")
 
         return self.queryset
 
@@ -334,8 +368,11 @@ class FormSetUpdateView(FormSetUserAllowedMixin, LoginRequiredMixin, SuccessMess
 
         return kwargs
 
+
 class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
-    """Generic delete view including login required and user allowed mixin and alternative for success message"""
+    """Generic delete view including login required and user allowed mixin and
+    alternative for success message"""
+
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super(DeleteView, self).delete(request, *args, **kwargs)
