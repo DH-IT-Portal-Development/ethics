@@ -198,7 +198,15 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             selected_reviewers = set(form.cleaned_data['reviewers'])
             new_reviewers = selected_reviewers - current_reviewers
             obsolete_reviewers = current_reviewers - selected_reviewers - {
-            get_secretary()}
+                get_secretary()}
+
+            # Set the proper end date
+            # It should be 2 weeks for short_routes
+            if route:
+                form.instance.date_should_end = timezone.now() + \
+                                                timezone.timedelta(
+                                                    weeks=settings.SHORT_ROUTE_WEEKS
+                                                )
 
             # Create a new Decision for new reviewers
             start_review_route(form.instance, new_reviewers, route)
