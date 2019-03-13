@@ -202,12 +202,12 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
 
             # Set the proper end date
             # It should be 2 weeks for short_routes
-            if route:
+            if route and form.instance.date_should_end is None:
                 form.instance.date_should_end = timezone.now() + \
                                                 timezone.timedelta(
                                                     weeks=settings.SHORT_ROUTE_WEEKS
                                                 )
-            else:
+            elif form.instance.date_should_end is not None:
                 # We have no desired end date for long track reviews
                 form.instance.date_should_end = None
 
