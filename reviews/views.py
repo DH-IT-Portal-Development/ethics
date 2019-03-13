@@ -207,6 +207,9 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
                                                 timezone.timedelta(
                                                     weeks=settings.SHORT_ROUTE_WEEKS
                                                 )
+            else:
+                # We have no desired end date for long track reviews
+                form.instance.date_should_end = None
 
             # Create a new Decision for new reviewers
             start_review_route(form.instance, new_reviewers, route)
