@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-31 08:52+0100\n"
+"POT-Creation-Date: 2019-02-20 08:44+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -88,7 +88,24 @@ msgstr ""
 msgid "ETCL UiL OTS"
 msgstr "ETCL UiL OTS"
 
-#: core/templates/base/base.html:59
+#: core/templates/base/base.html:56
+msgid ""
+"\n"
+"                    Het lijkt er op dat u Internet Explorer gebruikt, waar "
+"deze applicatie niet correct onder draait. Wij willen u aanraden om een "
+"andere browser te gebruiken, enkele voorbeelden zijn Firefox, Safari of "
+"Chrome.<br/>\n"
+"                    Onze excuses voor het ongemak.\n"
+"                "
+msgstr ""
+"\n"
+"                    It looks like you are using Internet Explorer. This "
+"application may not work correctly in this browser. We suggest you use a "
+"different browser, like Firefox, Safari or Chrome.<br/>\n"
+"                    Our apologies for the inconvenience.\n"
+"                "
+
+#: core/templates/base/base.html:69
 msgid "Dit is het oefenportaal."
 msgstr "This is the practice portal."
 
@@ -325,7 +342,9 @@ msgstr "Register a new study (from a copy of an old study)"
 #: core/templates/core/index.html:44
 msgid ""
 "Een nieuwe studie aanmelden (voor voortoetsting t.b.v. subsidieaanvraag)"
-msgstr "Register a new study (preliminary assessment for the purpose of subsidy applications)"
+msgstr ""
+"Register a new study (preliminary assessment for the purpose of subsidy "
+"applications)"
 
 #: core/templates/core/index.html:47
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
@@ -457,11 +476,11 @@ msgstr[1] "This field can contain a maximum of %(limit_value)d words."
 msgid "Alleen .pdf- of .doc(x)-bestanden zijn toegestaan."
 msgstr "Only .pdf or .doc(x) files are accepted."
 
-#: etcl/settings.py:107
+#: etcl/settings.py:109
 msgid "Nederlands"
 msgstr "Dutch"
 
-#: etcl/settings.py:108
+#: etcl/settings.py:110
 msgid "Engels"
 msgstr "English"
 

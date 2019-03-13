@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'modeltranslation',
 
     'django.contrib.admin',
+    'django_user_agents',
 )
 
 MIDDLEWARE = (
@@ -60,6 +61,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 )
 
 TEMPLATES = [

@@ -91,7 +91,6 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "pre_assessment_pdf" %}</th><td><a href="{{ BASE_URL }}{{ proposal.pre_assessment_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
             </tr>
-            {% endif %}
         </table>
 
         {% with wmo=proposal.wmo %}

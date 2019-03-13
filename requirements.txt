@@ -12,6 +12,7 @@ django-auth-ldap==1.7.0
 django-braces==1.13.0
 django-easy-pdf==0.1.1
 django-modeltranslation==0.12.2
+django-user-agents==0.3.2
 django==1.11.20
 docutils==0.14            # via sphinx
 html5lib==1.0.1
@@ -39,6 +40,8 @@ sphinx==1.8.4
 sphinxcontrib-apidoc==0.3.0
 sphinxcontrib-django==0.4
 sphinxcontrib-websupport==1.1.0  # via sphinx
+ua-parser==0.8.0          # via user-agents
 urllib3==1.24.1           # via requests
+user-agents==1.1.0        # via django-user-agents
 webencodings==0.5.1       # via html5lib
 xhtml2pdf==0.2.3
