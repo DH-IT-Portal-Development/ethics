@@ -131,6 +131,7 @@ def copy_study_to_proposal(proposal, study):
 
     copy_documents_to_study(old_pk, s)
 
+
 def copy_documents_to_study(study_old, study):
     from .models import Documents
 
@@ -141,6 +142,7 @@ def copy_documents_to_study(study_old, study):
     d.proposal = study.proposal
     d.study = study
     d.save()
+
 
 def copy_documents_to_proposal(proposal_old, proposal):
     from .models import Documents
