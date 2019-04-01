@@ -33,18 +33,13 @@ python-ldap==3.2.0        # via django-auth-ldap
 pytz==2018.9              # via babel, django
 reportlab==3.5.17         # via django-easy-pdf, xhtml2pdf
 requests==2.21.0          # via sphinx
-six==1.12.0               # via html5lib, packaging, xhtml2pdf
+six==1.12.0               # via html5lib, packaging, sphinx, xhtml2pdf
 snowballstemmer==1.2.1    # via sphinx
 sphinx-rtd-theme==0.4.3
-sphinx==2.0.0
+sphinx==1.8.5
 sphinxcontrib-apidoc==0.3.0
-sphinxcontrib-applehelp==1.0.1  # via sphinx
-sphinxcontrib-devhelp==1.0.1  # via sphinx
 sphinxcontrib-django==0.4
-sphinxcontrib-htmlhelp==1.0.1  # via sphinx
-sphinxcontrib-jsmath==1.0.1  # via sphinx
-sphinxcontrib-qthelp==1.0.2  # via sphinx
-sphinxcontrib-serializinghtml==1.1.1  # via sphinx
+sphinxcontrib-websupport==1.1.0  # via sphinx
 ua-parser==0.8.0          # via user-agents
 urllib3==1.24.1           # via requests
 user-agents==1.1.0        # via django-user-agents
