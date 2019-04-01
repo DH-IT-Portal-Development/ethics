@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
-from etcl import settings
+from fetc import settings
 from studies.models import Study
 from studies.utils import get_study_progress
 

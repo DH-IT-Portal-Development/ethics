@@ -7,7 +7,7 @@ __pycache__/
 
 ### Project-specific ###
 media/
-etcl/ldap_settings.py
+fetc/ldap_settings.py
 *.sqlite3
 
 ### Coverage ###

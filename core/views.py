@@ -25,7 +25,7 @@ from tasks.models import Session, Task
 # We set up a custom LDAP connection here, separate from the Django auth one
 try:
     # This will trigger an exception if LDAP is not configured
-    from etcl.ldap_settings import *
+    from fetc.ldap_settings import *
 
     # If it is configured, we open a connection and bind our credentials to it.
     ldap_connection = ldap.initialize(AUTH_LDAP_SERVER_URI)
