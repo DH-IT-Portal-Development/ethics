@@ -1,11 +1,32 @@
 from django import forms
+from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
-
+from django.conf import settings
 from core.forms import ConditionalModelForm
-from core.utils import YES_NO, get_reviewers
+from core.utils import YES_NO, get_reviewers_from_group
+from proposals.models import Proposal
 from .models import Review, Decision
 
 SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route')), (None, _('direct naar revisie'))]
+
+
+class ChangeChamberForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = ['reviewing_committee']
+
+    def __init__(self, *args, **kwargs):
+        super(ChangeChamberForm, self).__init__(*args, **kwargs)
+
+        general_chamber = Group.objects.get(name=settings.GROUP_GENERAL_CHAMBER)
+        linguistics_chamber = Group.objects.get(
+            name=settings.GROUP_LINGUISTICS_CHAMBER
+        )
+
+        self.fields['reviewing_committee'].choices = (
+            (general_chamber.pk, _('Algemene Kamer')),
+            (linguistics_chamber.pk, _('Linguïstiek Kamer')),
+        )
 
 
 class ReviewAssignForm(ConditionalModelForm):
@@ -21,9 +42,14 @@ class ReviewAssignForm(ConditionalModelForm):
         - Adds a field to select reviewers for this Proposal
         """
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
+
+        reviewers = get_reviewers_from_group(
+            self.instance.proposal.reviewing_committee
+        )
+
         self.fields['reviewers'] = forms.ModelMultipleChoiceField(
             initial=self.instance.current_reviewers(),
-            queryset=get_reviewers(), # TODO: find a fix for this!!
+            queryset=reviewers,
             widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}),
             required=False
         )

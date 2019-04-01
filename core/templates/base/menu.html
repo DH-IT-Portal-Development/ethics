@@ -55,7 +55,7 @@
                 {% endif %}
             </ul>
         </li>
-        {% if user|in_fetc %}
+        {% if user|in_general_chamber %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
             <a href="#" class="pure-menu-link">{% trans "Algemene Kamer" %}</a>
             <ul class="pure-menu-children">
@@ -79,7 +79,7 @@
             </ul>
         </li>
         {% endif %}
-        {% if user|in_etcl %}
+        {% if user|in_linguistics_chamber %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
             <a href="#" class="pure-menu-link">{% trans "Linguïstiek Kamer" %}</a>
             <ul class="pure-menu-children">

@@ -1,7 +1,7 @@
 [
     {
         "fields": {
-            "name": "ETCL",
+            "name": "LK",
             "permissions": []
         },
         "model": "auth.group",
@@ -17,7 +17,7 @@
     },
     {
         "fields": {
-            "name": "FETC",
+            "name": "AK",
             "permissions": []
         },
         "model": "auth.group",

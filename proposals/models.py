@@ -46,6 +46,22 @@ class Funding(models.Model):
 
 
 @python_2_unicode_compatible
+class Institution(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    reviewing_chamber = models.ForeignKey(
+        Group,
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
+
+@python_2_unicode_compatible
 class Proposal(models.Model):
     DRAFT = 1
     SUBMITTED_TO_SUPERVISOR = 40
@@ -81,7 +97,15 @@ class Proposal(models.Model):
         verbose_name=_(
             'Door welke comissie dient deze studie te worden beoordeeld?'
         ),
-        help_text="",  # TODO: help text
+        help_text="",
+        on_delete=models.PROTECT,
+    )
+
+    institution = models.ForeignKey(
+        Institution,
+        verbose_name=_(
+            'Aan welk onderzoeksinstituut bent u verbonden?'
+        ),
         on_delete=models.PROTECT,
     )
 

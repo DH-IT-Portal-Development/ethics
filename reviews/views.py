@@ -7,7 +7,8 @@ from django.views import generic
 
 from core.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
-from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm
+from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm, \
+    ChangeChamberForm
 from .mixins import AutoReviewMixin, UserAllowedMixin, CommitteeMixin
 from .models import Decision, Review
 from .utils import notify_secretary, start_review_route
@@ -16,8 +17,11 @@ from .utils import notify_secretary, start_review_route
 class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
     template_name = 'reviews/decision_list.html'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_ETCL,
-                      settings.GROUP_FETC]
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
 
     def get_queryset(self):
         """Returns all Decisions of the current User"""
@@ -41,8 +45,11 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
     template_name = 'reviews/decision_list.html'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_ETCL,
-                      settings.GROUP_FETC]
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
@@ -183,6 +190,17 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin,
     Shows the Decisions for a Review
     """
     model = Review
+
+
+class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
+                       generic.UpdateView):
+    model = Proposal
+    form_class = ChangeChamberForm
+    template_name = 'reviews/change_chamber_form.html'
+
+    def get_success_url(self):
+        committee = self.object.reviewing_committee.name
+        return reverse('reviews:my_open', args=[committee])
 
 
 class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
@@ -328,9 +346,9 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
         if self.request.user.is_superuser:
             return True
         user_groups = self.request.user.groups.values_list("name", flat=True)
-        # TODO: make this work with more groups properly
-        return {settings.GROUP_SECRETARY, settings.GROUP_ETCL}.intersection(
-            set(user_groups))
+        return {settings.GROUP_SECRETARY, settings.GROUP_LINGUISTICS_CHAMBER,
+                settings.GROUP_GENERAL_CHAMBER
+                }.intersection(set(user_groups))
 
     def get_success_url(self):
         if self.is_reviewer():

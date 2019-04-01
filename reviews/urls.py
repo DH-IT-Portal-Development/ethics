@@ -1,10 +1,11 @@
 from django.conf.urls import url
 
 from .views import \
-    DecisionListView, DecisionMyOpenView, SupervisorDecisionOpenView, DecisionOpenView, \
+    DecisionListView, DecisionMyOpenView, SupervisorDecisionOpenView, \
+    DecisionOpenView, \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, \
-    DecisionUpdateView, ToConcludeProposalView
+    DecisionUpdateView, ToConcludeProposalView, ChangeChamberView
 
 app_name = 'reviews'
 
@@ -20,6 +21,8 @@ urlpatterns = [
     url(r'^show/(?P<pk>\d+)/$', ReviewDetailView.as_view(), name='detail'),
 
     url(r'^assign/(?P<pk>\d+)/$', ReviewAssignView.as_view(), name='assign'),
+    url(r'^change_chamber/(?P<pk>\d+)/$', ChangeChamberView.as_view(),
+        name='change_chamber'),
     url(r'^close/(?P<pk>\d+)/$', ReviewCloseView.as_view(), name='close'),
 
     url(r'^decide/(?P<pk>\d+)/$', DecisionUpdateView.as_view(), name='decide'),

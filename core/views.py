@@ -194,7 +194,7 @@ class UserAllowedMixin(SingleObjectMixin):
         """
         Allows access to a proposal based on the status of a Proposal
         and the position of the User. He can be:
-        - in the 'SECRETARY', 'FETC' or 'ETCL' group
+        - in the 'SECRETARY', 'GENERAL_CHAMBER' or 'LINGUISTICS_CHAMBER' group
         - an applicant of this Proposal
         - a supervisor of this Proposal
         If the status of the Proposal is not in line with the status of the User,
@@ -220,10 +220,12 @@ class UserAllowedMixin(SingleObjectMixin):
         else:
             supervisor = get_user_model().objects.none()
         commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
-        if proposal.reviewing_committee.name == settings.GROUP_ETCL:
-            commission |= get_user_model().objects.filter(groups__name=settings.GROUP_ETCL)
-        if proposal.reviewing_committee.name == settings.GROUP_FETC:
-            commission |= get_user_model().objects.filter(groups__name=settings.GROUP_FETC)
+        if proposal.reviewing_committee.name == settings.GROUP_LINGUISTICS_CHAMBER:
+            commission |= get_user_model().objects.filter(
+                groups__name=settings.GROUP_LINGUISTICS_CHAMBER)
+        if proposal.reviewing_committee.name == settings.GROUP_GENERAL_CHAMBER:
+            commission |= get_user_model().objects.filter(
+                groups__name=settings.GROUP_GENERAL_CHAMBER)
 
         if proposal.status >= Proposal.SUBMITTED:
             if self.request.user not in commission:
@@ -244,7 +246,7 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
         """
         Allows access to a proposal based on the status of a Proposal
         and the position of the User. He can be:
-        - in the 'SECRETARY', 'ETCL' or 'FETC' group
+        - in the 'SECRETARY', 'LINGUISITICS_CHAMBER' or 'GENERAL_CHAMBER' group
         - an applicant of this Proposal
         - a supervisor of this Proposal
         If the status of the Proposal is not in line with the status of the User,
@@ -272,14 +274,14 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
                 supervisor = get_user_model().objects.none()
             commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
 
-            if proposal.reviewing_committee.name == settings.GROUP_ETCL:
+            if proposal.reviewing_committee.name == settings.GROUP_LINGUISTICS_CHAMBER:
                 commission |= get_user_model().objects.filter(
-                    groups__name=settings.GROUP_ETCL
+                    groups__name=settings.GROUP_LINGUISTICS_CHAMBER
                 )
 
-            if proposal.reviewing_committee.name == settings.GROUP_FETC:
+            if proposal.reviewing_committee.name == settings.GROUP_GENERAL_CHAMBER:
                 commission |= get_user_model().objects.filter(
-                    groups__name=settings.GROUP_FETC
+                    groups__name=settings.GROUP_GENERAL_CHAMBER
                 )
 
             if proposal.status >= Proposal.SUBMITTED:

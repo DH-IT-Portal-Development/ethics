@@ -1,17 +1,16 @@
 # -*- encoding: utf-8 -*-
 
+from braces.forms import UserKwargModelFormMixin
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from braces.forms import UserKwargModelFormMixin
-
 from core.forms import ConditionalModelForm, SoftValidationMixin
-from core.models import YES_NO_DOUBT, YES, NO, DOUBT
+from core.models import DOUBT, NO, YES, YES_NO_DOUBT
 from core.utils import YES_NO, get_users_as_list
-from .models import Proposal, Wmo, Relation
+from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
 from .widgets import SelectMultipleUser
 
@@ -22,7 +21,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         model = Proposal
         fields = [
             'is_pre_approved',
-            'reviewing_committee',
+            'institution',
             'relation', 'supervisor',
             'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
@@ -32,14 +31,16 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'pre_approval_institute', 'pre_approval_pdf'
         ]
         widgets = {
-            'is_pre_approved':     forms.RadioSelect(choices=YES_NO),
-            'reviewing_committee': forms.RadioSelect(),
-            'relation':            forms.RadioSelect(),
-            'other_applicants':    forms.RadioSelect(choices=YES_NO),
-            'other_stakeholders':  forms.RadioSelect(choices=YES_NO),
-            'summary':             forms.Textarea(attrs={'cols': 50}),
-            'funding':             forms.CheckboxSelectMultiple(),
-            'applicants':          SelectMultipleUser()
+            'is_pre_approved':    forms.RadioSelect(choices=YES_NO),
+            'institution':        forms.RadioSelect(),
+            'relation':           forms.RadioSelect(),
+            'other_applicants':   forms.RadioSelect(choices=YES_NO),
+            'other_stakeholders': forms.RadioSelect(choices=YES_NO),
+            'summary':            forms.Textarea(attrs={
+                'cols': 50
+            }),
+            'funding':            forms.CheckboxSelectMultiple(),
+            'applicants':         SelectMultipleUser()
         }
         error_messages = {
             'title': {
@@ -77,6 +78,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
 
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
+        self.fields['institution'].empty_label = None
 
         applicants = get_user_model().objects.all()
 
@@ -84,19 +86,20 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
 
         instance = kwargs.get('instance')
 
-        self.fields['other_stakeholders'].label = mark_safe(self.fields['other_stakeholders'].label)
+        self.fields['other_stakeholders'].label = mark_safe(
+            self.fields['other_stakeholders'].label)
 
         # If you are already defined as a supervisor, we have to set it to you
         if instance is not None and instance.supervisor == self.user:
             supervisors = [self.user]
 
-        self.fields['supervisor'].choices = [(None, _('Selecteer...'))] + get_users_as_list(supervisors)
+        self.fields['supervisor'].choices = [(None, _(
+            'Selecteer...'))] + get_users_as_list(supervisors)
         self.fields['applicants'].choices = get_users_as_list(applicants)
 
-        self.fields['reviewing_committee'].choices = [(x.pk, x.name) for x in Group.objects.exclude(id=2)]
-
         if in_course:
-            self.fields['relation'].queryset = Relation.objects.filter(check_in_course=True)
+            self.fields['relation'].queryset = Relation.objects.filter(
+                check_in_course=True)
             self.fields['supervisor'].label = _('Docent')
             self.fields['supervisor'].help_text = _('Vul hier de docent van \
 de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop \
@@ -104,7 +107,8 @@ de studie inkijken in de portal. De studie zal niet in het semipublieke archief 
 van het UiL OTS worden opgenomen.')
 
         if is_pre_assessment:
-            self.fields['relation'].queryset = Relation.objects.filter(check_pre_assessment=True)
+            self.fields['relation'].queryset = Relation.objects.filter(
+                check_pre_assessment=True)
             self.fields['pre_assessment_pdf'].required = True
             del self.fields['summary']
             del self.fields['funding']
@@ -142,29 +146,41 @@ van het UiL OTS worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'summary')
 
         relation = cleaned_data.get('relation')
-        if relation and relation.needs_supervisor and not cleaned_data.get('supervisor'):
-            error = forms.ValidationError(_('U dient een eindverantwoordelijke op te geven.'), code='required')
+        if relation and relation.needs_supervisor and not cleaned_data.get(
+                'supervisor'):
+            error = forms.ValidationError(
+                _('U dient een eindverantwoordelijke op te geven.'),
+                code='required')
             self.add_error('supervisor', error)
 
-        if cleaned_data.get('other_applicants') and len(cleaned_data.get('applicants')) == 1:
-            error = forms.ValidationError(_('U heeft geen andere onderzoekers geselecteerd.'), code='required')
+        if cleaned_data.get('other_applicants') and len(
+                cleaned_data.get('applicants')) == 1:
+            error = forms.ValidationError(
+                _('U heeft geen andere onderzoekers geselecteerd.'),
+                code='required')
             self.add_error('applicants', error)
 
         if 'is_pre_approved' in cleaned_data:
             if not cleaned_data['is_pre_approved']:
                 error = forms.ValidationError(
-                    _('Indien u geen toestemming heeft van een andere ethische commissie, dient u het normale formulier in '
-                      'te vullen. Ga terug naar de startpagina, en selecteer "Een nieuwe studie aanmelden (from scratch in '
-                      'een leeg formulier)" of "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)".')
+                    _(
+                        'Indien u geen toestemming heeft van een andere ethische commissie, dient u het normale formulier in '
+                        'te vullen. Ga terug naar de startpagina, en selecteer "Een nieuwe studie aanmelden (from scratch in '
+                        'een leeg formulier)" of "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)".')
                 )
                 self.add_error('is_pre_approved', error)
 
-            self.check_dependency(cleaned_data, 'is_pre_approved', 'pre_approval_pdf')
-            self.check_dependency(cleaned_data, 'is_pre_approved', 'pre_approval_institute')
+            self.check_dependency(cleaned_data, 'is_pre_approved',
+                                  'pre_approval_pdf')
+            self.check_dependency(cleaned_data, 'is_pre_approved',
+                                  'pre_approval_institute')
 
-        self.check_dependency(cleaned_data, 'other_stakeholders', 'stakeholders')
-        self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details', 'funding_details')
-        self.check_dependency_multiple(cleaned_data, 'funding', 'needs_name', 'funding_name')
+        self.check_dependency(cleaned_data, 'other_stakeholders',
+                              'stakeholders')
+        self.check_dependency_multiple(cleaned_data, 'funding', 'needs_details',
+                                       'funding_details')
+        self.check_dependency_multiple(cleaned_data, 'funding', 'needs_name',
+                                       'funding_name')
 
 
 class ProposalStartPracticeForm(forms.Form):
@@ -211,8 +227,8 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
             'is_medical', 'is_behavioristic',
         ]
         widgets = {
-            'metc': forms.RadioSelect(),
-            'is_medical': forms.RadioSelect(),
+            'metc':             forms.RadioSelect(),
+            'is_medical':       forms.RadioSelect(),
             'is_behavioristic': forms.RadioSelect(),
         }
 
@@ -243,12 +259,16 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
             self.add_error('metc', _('Dit veld is verplicht om verder te '
                                      'gaan.'))
 
-        self.check_dependency(cleaned_data, 'metc', 'metc_details', f1_value=YES)
+        self.check_dependency(cleaned_data, 'metc', 'metc_details',
+                              f1_value=YES)
         self.check_dependency(cleaned_data, 'metc', 'metc_institution',
                               f1_value=YES,
-                              error_message=_('U dient een instelling op te geven.'))
-        self.check_dependency_list(cleaned_data, 'metc', 'is_medical', f1_value_list=[NO, DOUBT])
-        self.check_dependency_list(cleaned_data, 'metc', 'is_behavioristic', f1_value_list=[NO, DOUBT])
+                              error_message=_(
+                                  'U dient een instelling op te geven.'))
+        self.check_dependency_list(cleaned_data, 'metc', 'is_medical',
+                                   f1_value_list=[NO, DOUBT])
+        self.check_dependency_list(cleaned_data, 'metc', 'is_behavioristic',
+                                   f1_value_list=[NO, DOUBT])
 
 
 class WmoCheckForm(forms.ModelForm):
@@ -258,8 +278,8 @@ class WmoCheckForm(forms.ModelForm):
             'metc', 'is_medical', 'is_behavioristic',
         ]
         widgets = {
-            'metc': forms.RadioSelect(),
-            'is_medical': forms.RadioSelect(),
+            'metc':             forms.RadioSelect(),
+            'is_medical':       forms.RadioSelect(),
             'is_behavioristic': forms.RadioSelect(),
         }
 
@@ -282,7 +302,7 @@ class WmoApplicationForm(ConditionalModelForm):
         ]
         widgets = {
             'metc_application': forms.RadioSelect(choices=YES_NO),
-            'metc_decision': forms.RadioSelect(choices=YES_NO),
+            'metc_decision':    forms.RadioSelect(choices=YES_NO),
         }
 
     def clean(self):
@@ -292,21 +312,28 @@ class WmoApplicationForm(ConditionalModelForm):
         """
         cleaned_data = super(WmoApplicationForm, self).clean()
 
-        self.check_dependency(cleaned_data, 'metc_decision', 'metc_decision_pdf')
+        self.check_dependency(cleaned_data, 'metc_decision',
+                              'metc_decision_pdf')
 
 
 class StudyStartForm(forms.ModelForm):
-    study_name_1 = forms.CharField(label=_('Naam traject 1'), max_length=15, required=False)
-    study_name_2 = forms.CharField(label=_('Naam traject 2'), max_length=15, required=False)
-    study_name_3 = forms.CharField(label=_('Naam traject 3'), max_length=15, required=False)
-    study_name_4 = forms.CharField(label=_('Naam traject 4'), max_length=15, required=False)
-    study_name_5 = forms.CharField(label=_('Naam traject 5'), max_length=15, required=False)
+    study_name_1 = forms.CharField(label=_('Naam traject 1'), max_length=15,
+                                   required=False)
+    study_name_2 = forms.CharField(label=_('Naam traject 2'), max_length=15,
+                                   required=False)
+    study_name_3 = forms.CharField(label=_('Naam traject 3'), max_length=15,
+                                   required=False)
+    study_name_4 = forms.CharField(label=_('Naam traject 4'), max_length=15,
+                                   required=False)
+    study_name_5 = forms.CharField(label=_('Naam traject 5'), max_length=15,
+                                   required=False)
 
     class Meta:
         model = Proposal
         fields = [
             'studies_similar', 'studies_number',
-            'study_name_1', 'study_name_2', 'study_name_3', 'study_name_4', 'study_name_5'
+            'study_name_1', 'study_name_2', 'study_name_3', 'study_name_4',
+            'study_name_5'
         ]
         widgets = {
             'studies_similar': forms.RadioSelect(choices=YES_NO),
@@ -340,7 +367,8 @@ class StudyStartForm(forms.ModelForm):
         elif not cleaned_data['studies_similar']:
             nr_studies = cleaned_data['studies_number']
             if cleaned_data['studies_number'] < 2:
-                self.add_error('studies_number', _('Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
+                self.add_error('studies_number', _(
+                    'Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
             for n in range(nr_studies):
                 if n >= 5:
                     break
@@ -372,7 +400,8 @@ class ProposalSubmitForm(forms.ModelForm):
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
-        self.fields['inform_local_staff'].label = mark_safe(self.fields['inform_local_staff'].label)
+        self.fields['inform_local_staff'].label = mark_safe(
+            self.fields['inform_local_staff'].label)
 
         if not check_local_facilities(self.proposal):
             del self.fields['inform_local_staff']
@@ -392,23 +421,37 @@ class ProposalSubmitForm(forms.ModelForm):
                 documents = Documents.objects.get(study=study)
                 if study.passive_consent:
                     if not documents.director_consent_declaration:
-                        self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
+                        self.add_error('comments', _(
+                            'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
+                            study.order))
                     if not documents.director_consent_information:
-                        self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+                        self.add_error('comments', _(
+                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
+                            study.order))
                     if not documents.parents_information:
-                        self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+                        self.add_error('comments', _(
+                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
+                            study.order))
                 else:
                     if not documents.informed_consent:
-                        self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
+                        self.add_error('comments', _(
+                            'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
+                            study.order))
                     if not documents.briefing:
-                        self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+                        self.add_error('comments', _(
+                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
+                            study.order))
 
                 if study.needs_additional_external_forms():
                     if not documents.director_consent_declaration:
-                        self.add_error('comments', _('Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(study.order))
+                        self.add_error('comments', _(
+                            'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
+                            study.order))
                     if not documents.director_consent_information:
-                        self.add_error('comments', _('Informatiebrief voor traject {} nog niet toegevoegd.').format(study.order))
+                        self.add_error('comments', _(
+                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
+                            study.order))
 
-
-        if check_local_facilities(self.proposal) and cleaned_data['inform_local_staff'] is None:
+        if check_local_facilities(self.proposal) and cleaned_data[
+            'inform_local_staff'] is None:
             self.add_error('inform_local_staff', _('Dit veld is verplicht.'))

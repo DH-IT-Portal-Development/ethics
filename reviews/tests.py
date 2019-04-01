@@ -17,7 +17,8 @@ from tasks.models import Session, Task, Registration, RegistrationKind
 
 
 class BaseReviewTestCase(TestCase):
-    fixtures = ['relations', 'compensations', 'registrations', 'registrationkinds', 'agegroups', 'groups']
+    fixtures = ['relations', 'compensations', 'registrations',
+                'registrationkinds', 'agegroups', 'groups', 'institutions']
 
     def setUp(self):
         """
@@ -30,14 +31,15 @@ class BaseReviewTestCase(TestCase):
         self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret', first_name='Jane', last_name='Roe')
 
         self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_ETCL))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_ETCL))
+        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
 
         self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                                 date_start=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4),
-                                                reviewing_committee=Group.objects.get(name=settings.GROUP_ETCL)
+                                                reviewing_committee=Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER),
+                                                institution_id=1
                                                 )
         self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=2))
 

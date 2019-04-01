@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.utils.functional import cached_property
 from django.views.generic.base import ContextMixin
 from django.views.generic.detail import SingleObjectMixin
+from django.utils.translation import ugettext as _
 
 from .models import Decision, Review
 from .utils import auto_review
@@ -42,6 +43,10 @@ class CommitteeMixin(ContextMixin):
         context = super(CommitteeMixin, self).get_context_data(**kwargs)
 
         context['committee'] = self.committee
+        context['committee_name'] = _('Algemene Kamer')
+
+        if self.committee.name == 'LK':
+            context['committee_name'] = _('Linguïstiek Kamer')
 
         return context
 

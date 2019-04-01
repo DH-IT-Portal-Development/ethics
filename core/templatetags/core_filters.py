@@ -6,19 +6,19 @@ register = template.Library()
 
 
 @register.filter
-def in_etcl(current_user):
+def in_linguistics_chamber(current_user):
     """
     Check whether the current user is in the 'ETCL' or 'Secretaris' group
     """
-    return Group.objects.get(name=settings.GROUP_ETCL) in current_user.groups.all() or \
+    return Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER) in current_user.groups.all() or \
         Group.objects.get(name=settings.GROUP_SECRETARY) in current_user.groups.all()
 
 @register.filter
-def in_fetc(current_user):
+def in_general_chamber(current_user):
     """
     Check whether the current user is in the 'FETC' or 'Secretaris' group
     """
-    return Group.objects.get(name=settings.GROUP_FETC) in current_user.groups.all() or \
+    return Group.objects.get(name=settings.GROUP_GENERAL_CHAMBER) in current_user.groups.all() or \
         Group.objects.get(name=settings.GROUP_SECRETARY) in current_user.groups.all()
 
 
