@@ -26,15 +26,15 @@ class BaseProposalTestCase(TestCase):
             email='test@test.nl',
             password='more_secret')
         Group.objects.get(name='Secretaris').user_set.add(self.secretary)
-        self.etcl = Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
+        self.chamber = Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
         self.institution = Institution.objects.get(pk=1)
-        self.etcl.user_set.add(self.secretary)
+        self.chamber.user_set.add(self.secretary)
         self.relation = Relation.objects.get(pk=4)
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                           date_start=datetime.now(),
                                           created_by=self.user,
                                           relation=self.relation,
-                                          reviewing_committee=self.etcl,
+                                          reviewing_committee=self.chamber,
                                           institution=self.institution)
         self.p1.applicants.add(self.user)
         self.p1.save()
@@ -50,7 +50,7 @@ class ProposalTestCase(BaseProposalTestCase):
                                      date_start=datetime.now(),
                                      created_by=self.user,
                                      relation=self.relation,
-                                     reviewing_committee=self.etcl,
+                                     reviewing_committee=self.chamber,
                                      institution=self.institution)
         self.assertEqual(ref_number, 'test0101-02-' + current_year)
 
@@ -65,7 +65,7 @@ class ProposalTestCase(BaseProposalTestCase):
                                      date_start=datetime.now(),
                                      created_by=user2,
                                      relation=self.relation,
-                                     reviewing_committee=self.etcl,
+                                     reviewing_committee=self.chamber,
                                      institution=self.institution)
         self.assertEqual(p3.reference_number, 'test0102-01-' + current_year)
 
@@ -175,7 +175,7 @@ class ProposalsViewTestCase(BaseProposalTestCase):
                                      date_start=datetime.now(),
                                      created_by=user2,
                                      relation=self.relation,
-                                     reviewing_committee=self.etcl,
+                                     reviewing_committee=self.chamber,
                                      institution=self.institution)
         p2.applicants.add(user2)
         p2.save()
