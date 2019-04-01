@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-20 08:44+0100\n"
+"POT-Creation-Date: 2019-04-01 11:14+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,10 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: core/forms.py:11 core/forms.py:20 core/forms.py:29 core/forms.py:38
-#: core/forms.py:48 proposals/forms.py:299 proposals/forms.py:309
-#: proposals/forms.py:374 studies/forms.py:86 studies/forms.py:96
-#: studies/forms.py:101 tasks/forms.py:75
+#: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
+#: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
+#: core/forms/conditional_form.py:48 core/forms/mixins.py:83
+#: proposals/forms.py:347 proposals/forms.py:412 studies/forms.py:87
+#: studies/forms.py:97 studies/forms.py:102 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -48,13 +49,13 @@ msgstr "Setting"
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: core/models.py:37 observations/models.py:100 proposals/models.py:104
-#: studies/models.py:151 studies/models.py:182 tasks/models.py:136
-#: tasks/models.py:144
+#: core/models.py:39 observations/models.py:115 proposals/models.py:137
+#: studies/models.py:151 studies/models.py:183 tasks/models.py:151
+#: tasks/models.py:163
 msgid "Namelijk"
 msgstr "Please specify"
 
-#: core/models.py:41
+#: core/models.py:44
 msgid ""
 "Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of "
 "een ander persoon die bevoegd is?"
@@ -62,13 +63,13 @@ msgstr ""
 "Will the task be conducted under the supervision of the teacher or another "
 "qualified person?"
 
-#: core/models.py:45
+#: core/models.py:48
 msgid "Is de testleider in het bezit van een VOG?"
 msgstr ""
 "Does the test leader hold a Certificate of Conduct (Verklaring Omtrent "
 "Gedrag, VOG)?"
 
-#: core/models.py:46
+#: core/models.py:49
 msgid ""
 "Iedereen die op een school werkt moet in het bezit         zijn van een "
 "Verklaring Omtrent Gedrag (VOG, zie         <a href=\"https://www.justis.nl/"
@@ -85,8 +86,9 @@ msgstr ""
 "school probably will ask about this certificate."
 
 #: core/templates/base/base.html:8 core/templates/base/base.html:40
-msgid "ETCL UiL OTS"
-msgstr "ETCL UiL OTS"
+#: core/templates/base/menu.html:60
+msgid "FETC-GW"
+msgstr "FEtC-H"
 
 #: core/templates/base/base.html:56
 msgid ""
@@ -113,25 +115,25 @@ msgstr "This is the practice portal."
 msgid "<< Opslaan en vorige stap"
 msgstr "<< Save and go back to previous step"
 
-#: core/templates/base/form_buttons.html:7
+#: core/templates/base/form_buttons.html:8
 msgid "Opslaan en volgende stap >>"
 msgstr "Save and go to next step >>"
 
-#: core/templates/base/form_buttons.html:13
+#: core/templates/base/form_buttons.html:15
 msgid "Terug naar startpagina"
 msgstr "Back to start page"
 
-#: core/templates/base/form_buttons.html:18
-#: core/templates/base/form_buttons.html:22
-#: core/templates/base/form_buttons.html:26
+#: core/templates/base/form_buttons.html:20
+#: core/templates/base/form_buttons.html:24
+#: core/templates/base/form_buttons.html:28
 msgid "Terug naar begin studie"
 msgstr "Back to the beginning of the study"
 
-#: core/templates/base/form_buttons.html:32
+#: core/templates/base/form_buttons.html:34
 msgid "Terug naar begin traject"
 msgstr "Back to the beginning of the trajectory"
 
-#: core/templates/base/form_buttons.html:37
+#: core/templates/base/form_buttons.html:39
 msgid "Terug naar begin sessie"
 msgstr "Back to the beginning of the session"
 
@@ -140,8 +142,8 @@ msgstr "Back to the beginning of the session"
 msgid "Startpagina"
 msgstr "Start page"
 
-#: core/templates/base/menu.html:11 core/templates/core/index.html:35
-#: proposals/views/proposal_views.py:131
+#: core/templates/base/menu.html:11 core/templates/core/index.html:38
+#: proposals/views/proposal_views.py:134
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -164,23 +166,23 @@ msgstr ""
 msgid "Bestaande studie kopiëren"
 msgstr "Copy existing application"
 
-#: core/templates/base/menu.html:26 proposals/views/proposal_views.py:86
+#: core/templates/base/menu.html:26 proposals/views/proposal_views.py:89
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
-#: core/templates/base/menu.html:29 proposals/views/proposal_views.py:142
+#: core/templates/base/menu.html:29 proposals/views/proposal_views.py:145
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
-#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:97
+#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:100
 msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
-#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:109
+#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:112
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
-#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:120
+#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:123
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -189,138 +191,134 @@ msgid "Al mijn studies"
 msgstr "All my applications"
 
 #: core/templates/base/menu.html:46
-msgid "UiL OTS archief"
-msgstr "UiL OTS archive"
+msgid "Archief"
+msgstr "Archive"
 
 #: core/templates/base/menu.html:49
-msgid "Alle UiL OTS-studies bekijken"
-msgstr "View all UiL OTS applications"
+msgid "Alle studies bekijken"
+msgstr "View all applications"
 
 #: core/templates/base/menu.html:53
 msgid "Site-export"
 msgstr "Site-export"
 
-#: core/templates/base/menu.html:60
-msgid "Commissie"
-msgstr "Committee"
-
-#: core/templates/base/menu.html:63
+#: core/templates/base/menu.html:63 core/templates/base/menu.html:87
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
-#: core/templates/base/menu.html:66
+#: core/templates/base/menu.html:66 core/templates/base/menu.html:90
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: core/templates/base/menu.html:70
+#: core/templates/base/menu.html:70 core/templates/base/menu.html:94
 msgid "Alle openstaande besluiten commissieleden"
 msgstr "All pending decisions committee members"
 
-#: core/templates/base/menu.html:73
+#: core/templates/base/menu.html:73 core/templates/base/menu.html:97
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: core/templates/base/menu.html:76
+#: core/templates/base/menu.html:76 core/templates/base/menu.html:100
 #: reviews/templates/reviews/review_to_conclude.html:8
 msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
-#: core/templates/base/menu.html:83
+#: core/templates/base/menu.html:84
+msgid "ETCL"
+msgstr "ETCL"
+
+#: core/templates/base/menu.html:107
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:86 core/templates/core/index.html:80
-msgid "ETCL website"
-msgstr "ETCL website"
+#: core/templates/base/menu.html:110 core/templates/core/index.html:83
+msgid "FETC-GW website"
+msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:89 core/templates/core/index.html:83
-msgid "ETCL reglement"
-msgstr "ETCL regulations"
+#: core/templates/base/menu.html:113
+msgid "FETC-GW reglement"
+msgstr "FEtC-H regulations"
 
-#: core/templates/base/menu.html:92 core/templates/core/index.html:86
+#: core/templates/base/menu.html:116 core/templates/core/index.html:92
 #: proposals/templates/proposals/proposal_pdf.html:384
-#: proposals/templates/proposals/study_consent.html:8 proposals/utils.py:76
+#: proposals/templates/proposals/study_consent.html:8
+#: proposals/utils/proposal_utils.py:80
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: core/templates/base/menu.html:95
+#: core/templates/base/menu.html:119
 msgid "FAQs"
 msgstr "FAQs"
 
-#: core/templates/base/menu.html:98 feedback/models.py:20
+#: core/templates/base/menu.html:122 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:18
 msgid "Feedback"
 msgstr "Feedback"
 
-#: core/templates/base/menu.html:103
+#: core/templates/base/menu.html:127
 #: core/templates/registration/logged_out.html:6
 msgid "Uitloggen"
 msgstr "Log out"
 
-#: core/templates/base/menu.html:107
-msgid "ETCL-website"
-msgstr "ETCL website"
+#: core/templates/base/menu.html:131
+msgid "FETC-GW-website"
+msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:110 core/templates/registration/login.html:6
+#: core/templates/base/menu.html:134 core/templates/registration/login.html:6
 #: core/templates/registration/login.html:23
 msgid "Inloggen"
 msgstr "Log in"
 
-#: core/templates/base/sidebar.html:24
-msgid ""
-"Enige gemaakte wijzigingen zijn nog niet opgeslagen! Weet je zeker dat je "
-"verder wilt gaan? (Opslaan kan door op 'volgende stap' te drukken.)"
-msgstr ""
-"Any changes to this form have not been saved yet! Are you sure you want to "
-"leave this page? (You can save the form by pressing 'next step'.)"
-
-#: core/templates/base/sidebar.html:29
+#: core/templates/base/sidebar.html:26
 msgid "Toon navigatie"
 msgstr "Show navigation"
 
-#: core/templates/base/sidebar.html:31
+#: core/templates/base/sidebar.html:28
 msgid "Sluit navigatie"
 msgstr "Close navigation"
 
-#: core/templates/base/sidebar.html:32
+#: core/templates/base/sidebar.html:29
 msgid "Voortgang"
 msgstr "Progress"
 
-#: core/templates/core/index.html:18
+#: core/templates/core/index.html:19
+#, python-format
 msgid ""
 "\n"
-"    In deze webportal van de Ethische Toetsingscommissie Linguïstiek kunt u\n"
-"    alle <strong>praktische zaken</strong> rondom de ethische toetsing van "
-"uw\n"
-"    UiL-OTS onderzoek regelen. U kunt een nieuwe studie bij de commissie\n"
-"    aanmelden, maar ook bekijken wat er allemaal eerder door uzelf is "
-"aangemeld.\n"
-"    Verder kunt u alle UiL OTS studies zien die de ETCL heeft goedgekeurd.\n"
+"    In dit webportaal van de Facultaire Ethische Toetsingscommissie\n"
+"    Geesteswetenschappen (FETC-GW) kunt u  alle <strong>praktische zaken\n"
+"    </strong> rondom de ethische toetsing van uw onderzoek regelen. U kunt "
+"een\n"
+"    nieuwe studie bij de commissie aanmelden, maar ook bekijken wat er "
+"allemaal\n"
+"    eerder door uzelf is aangemeld. Verder kunt u alle afgehandelde en "
+"goedgekeurde\n"
+"    studies zien in het <a href=\"%(archive_url)s\">archief van dit portaal</"
+"a>.\n"
 "    Voor noodzakelijke achtergrondinformatie verwijzen we naar de\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/\" target=\"_blank\">UU-webpagina van "
-"de ETCL</a>,\n"
-"    alsmede naar het\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/reglement/\" target=\"_blank"
-"\">reglement</a>.\n"
+"    <a href=\"http://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU-webpagina "
+"van de FETC-GW</a>,\n"
+"    alsmede naar het reglement van\n"
+"    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" target="
+"\"_blank\">de Algemene Kamer (AK)</a> en\n"
+"    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
+"target=\"_blank\">de Linguïstiek Kamer (LK)</a>.\n"
 "    "
 msgstr ""
 "\n"
-"    This web portal for the Ethical Assessment Committee Linguistics for "
-"Linguistics enables you to organise\n"
-"    all <strong>practical matters</strong> relating to the ethical "
-"assessment of your\n"
-"    UiL OTS research. You can register a new study with the committee\n"
-"    as well as viewing all your previous applications.\n"
-"    You can also see all UiL OTS studies approved by the ETCL.\n"
-"    For necessary background information please refer to the\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/\" target=\"_blank\">UU ETCL webpage</"
-"a>,\n"
-"    or to the\n"
-"    <a href=\"http://etcl.wp.hum.uu.nl/reglement/\" target=\"_blank"
-"\">regulations</a>.\n"
-"    "
+" This web portal of the Faculty Ethics assessment Committee Humanities (FEtC-"
+"H) enables you to organize all <strong>practical matters</strong> relating "
+"to the ethics assessment of your research. You can register a new study with "
+"the committee as well as viewing all your previous applications. You can "
+"also view all processed and approved studies in <a href=\"%(archive_url)s"
+"\">the portal’s archive</a>. For necessary background information please "
+"refer to the <a href=\"http://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU "
+"FEtC-H webpage</a>, or to the regulations of the <a href=\"http://fetc.wp."
+"hum.uu.nl/reglement-algemene-kamer/\" target=\"_blank\"> General Chamber</a> "
+"or <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
+"target=\"_blank\">the Linguistics Chamber </a>    "
 
-#: core/templates/core/index.html:31
+#: core/templates/core/index.html:34
 msgid ""
 "\n"
 "    In deze portal kunt u het volgende doen:\n"
@@ -330,23 +328,23 @@ msgstr ""
 "    In this portal you can do the following:\n"
 "    "
 
-#: core/templates/core/index.html:38
+#: core/templates/core/index.html:41
 msgid ""
 "Een nieuwe studie aanmelden (<em>from scratch</em> in een leeg formulier)"
 msgstr "Register a new study (<em>from scratch</em> in an empty form)"
 
-#: core/templates/core/index.html:41
+#: core/templates/core/index.html:44
 msgid "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)"
 msgstr "Register a new study (from a copy of an old study)"
 
-#: core/templates/core/index.html:44
+#: core/templates/core/index.html:47
 msgid ""
 "Een nieuwe studie aanmelden (voor voortoetsting t.b.v. subsidieaanvraag)"
 msgstr ""
 "Register a new study (preliminary assessment for the purpose of subsidy "
 "applications)"
 
-#: core/templates/core/index.html:47
+#: core/templates/core/index.html:50
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 msgid ""
 "Een nieuwe studie aanmelden (die al goedgekeurd is door een andere ethische "
@@ -354,69 +352,81 @@ msgid ""
 msgstr ""
 "Register a new study (that has been approved by another ethics committee)"
 
-#: core/templates/core/index.html:50
+#: core/templates/core/index.html:53
 msgid "Een amendement indienen"
 msgstr "Submit an amendment"
 
-#: core/templates/core/index.html:53
+#: core/templates/core/index.html:56
 msgid "Mijn conceptstudies bekijken"
 msgstr "View my draft applications"
 
-#: core/templates/core/index.html:56
+#: core/templates/core/index.html:59
 msgid "Mijn oefenstudies bekijken"
 msgstr "View my practice applications"
 
-#: core/templates/core/index.html:59
+#: core/templates/core/index.html:62
 msgid "Mijn ingediende studies bekijken"
 msgstr "View my submitted applications"
 
-#: core/templates/core/index.html:62
+#: core/templates/core/index.html:65
 msgid "Mijn afgehandelde studies bekijken"
 msgstr "View my processed applications"
 
-#: core/templates/core/index.html:65
+#: core/templates/core/index.html:68
 msgid "Mijn studies als eindverantwoordelijke bekijken"
 msgstr "View my supervised applications"
 
-#: core/templates/core/index.html:68
+#: core/templates/core/index.html:71
 msgid "Al mijn studies bekijken"
 msgstr "View all my applications"
 
 #: core/templates/core/index.html:74
-msgid "Alle afgehandelde en goedgekeurde UiL OTS-studies bekijken"
-msgstr "View all processed and approved UiL OTS applications"
+msgid "FETC-GW archief"
+msgstr "FEtC-H archive"
+
+#: core/templates/core/index.html:77
+msgid "Alle afgehandelde en goedgekeurde studies bekijken"
+msgstr "View all processed and approved studies"
+
+#: core/templates/core/index.html:86
+msgid "Reglement Algemene Kamer (GC)"
+msgstr "Regulations General Chamber (GC)"
 
 #: core/templates/core/index.html:89
+msgid "Reglement Linguïstiek Kamer (LC)"
+msgstr "Regulations Linguistics Chamber (LC)"
+
+#: core/templates/core/index.html:95
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: core/templates/core/index.html:92
+#: core/templates/core/index.html:98
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: core/templates/core/index.html:98
+#: core/templates/core/index.html:104
 #, python-format
 msgid ""
 "\n"
-"    Welkom bij het portal van de ETCL. U kunt <a href=\"%(the_url)s\">hier</"
-"a> inloggen met uw Solis-ID.\n"
+"    Welkom bij het portal van de FETC-GW. U kunt <a href=\"%(the_url)s"
+"\">hier</a> inloggen met uw Solis-ID.\n"
 "    "
 msgstr ""
 "\n"
-"\t Welcome to the ETCL web portal. You can sign in <a href=\"%(the_url)s"
+"\t Welcome to the FEtC-H web portal. You can sign in <a href=\"%(the_url)s"
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: core/templates/core/index.html:103
+#: core/templates/core/index.html:109
 msgid ""
 "\n"
-"    Klik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren "
-"naar de ETCL-website.\n"
+"    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren "
+"naar de FETC-GW-website.\n"
 "    "
 msgstr ""
 "\n"
 "    Click <a href=\"http://etcl.wp.hum.uu.nl\">here</a> to return to the "
-"ETCL website.\n"
+"FEtC-H website.\n"
 "    "
 
 #: core/templates/registration/logged_out.html:13
@@ -578,39 +588,39 @@ msgstr "What is the period in which the intervention will take place?"
 msgid "De interventie vindt plaats binnen het schooljaar 2018-2019"
 msgstr "The intervention will take place in the academic year 2018-2019"
 
-#: interventions/models.py:20
+#: interventions/models.py:23
 msgid "Zal de interventie vaker dan één keer plaatsvinden?"
 msgstr "Will there be more than one intervention session?"
 
-#: interventions/models.py:25
+#: interventions/models.py:28
 msgid "Wat is de frequentie van de interventie?"
 msgstr "What is the frequency of the intervention?"
 
-#: interventions/models.py:29
+#: interventions/models.py:33
 msgid "Wat is de duur van de interventie per sessie in minuten?"
 msgstr "What is the duration of the intervention session in minutes?"
 
-#: interventions/models.py:32
+#: interventions/models.py:39
 msgid "Wie voert de interventie uit?"
 msgstr "Who will conduct the intervention?"
 
-#: interventions/models.py:34
+#: interventions/models.py:44
 msgid "Geef een beschrijving van de experimentele interventie"
 msgstr "Give a description of the experimental intervention"
 
-#: interventions/models.py:36
+#: interventions/models.py:49
 msgid "Is er sprake van een controlegroep?"
 msgstr "Is there a control group?"
 
-#: interventions/models.py:39
+#: interventions/models.py:54
 msgid "Geef een beschrijving van de controleinterventie"
 msgstr "Give a description of the control intervention"
 
-#: interventions/models.py:43
+#: interventions/models.py:59
 msgid "Hoe wordt het effect van de interventie gemeten?"
 msgstr "How will the effect of the intervention be measured?"
 
-#: interventions/models.py:44
+#: interventions/models.py:60
 msgid ""
 "Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet "
 "behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina "
@@ -620,12 +630,12 @@ msgstr ""
 "part of the regular educational package, you should also check \"task-based "
 "research\" on the previous page."
 
-#: interventions/models.py:49
+#: interventions/models.py:67
 msgid "Voert de leerling nog een taak uit die niet onder het leerplan valt?"
 msgstr ""
 "Does the pupil have to perform a task that is not part of the curriculum?"
 
-#: interventions/models.py:50
+#: interventions/models.py:68
 msgid ""
 "Moet het nog een taak doen, zoals het invullen van een "
 "(onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?"
@@ -633,7 +643,7 @@ msgstr ""
 "For example, does the pupil have to fill out a (research) questionnaire that "
 "is not part of intervention?"
 
-#: interventions/models.py:56
+#: interventions/models.py:74
 msgid "Hoe vaak per week vindt de interventiesessie plaats?"
 msgstr "How many times a week will the intervention session take place?"
 
@@ -705,42 +715,42 @@ msgstr ""
 "method. One question to be answered will be whether the teachers explain the "
 "new method well in understandable language. "
 
-#: observations/models.py:47
+#: observations/models.py:48
 msgid "Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd."
 msgstr ""
 "Describe <b>how often and how long</b> the participant will be observed."
 
-#: observations/models.py:48
+#: observations/models.py:49
 msgid ""
 "Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd."
 msgstr ""
 "For example: Each teacher will be observed during 5 lessons of 45 minutes. "
 
-#: observations/models.py:52
+#: observations/models.py:55
 msgid "Wordt er anoniem geobserveerd?"
 msgstr "Will the observation be anonymous?"
 
-#: observations/models.py:53
+#: observations/models.py:56
 msgid ""
 "Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft."
 msgstr "As might happen on forums where the researcher also has an account."
 
-#: observations/models.py:56 observations/models.py:64
-#: observations/models.py:75 proposals/models.py:354 studies/models.py:141
-#: studies/models.py:171 studies/models.py:299
+#: observations/models.py:61 observations/models.py:71
+#: observations/models.py:84 proposals/models.py:444 studies/models.py:141
+#: studies/models.py:171 studies/models.py:300
 msgid "Licht toe"
 msgstr "Explain"
 
-#: observations/models.py:61
+#: observations/models.py:66
 msgid "Doet de onderzoeker zich voor als behorende tot de doelgroep?"
 msgstr ""
 "Will the researcher present him/herself as belonging to the target group?"
 
-#: observations/models.py:69
+#: observations/models.py:76
 msgid "Wordt er geobserveerd in een niet-openbare ruimte?"
 msgstr "Will observations be made in a non-public space?"
 
-#: observations/models.py:70
+#: observations/models.py:77
 msgid ""
 "Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een "
 "hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor "
@@ -750,11 +760,11 @@ msgstr ""
 "negotiation, during a police interrogation or in a forum for which an "
 "account must be created."
 
-#: observations/models.py:80
+#: observations/models.py:89
 msgid "Vindt informed consent van tevoren plaats?"
 msgstr "Will informed consent take place beforehand?"
 
-#: observations/models.py:84
+#: observations/models.py:94
 msgid ""
 "Heeft u toestemming nodig van een (samenwerkende) instantie om deze "
 "observatie te mogen uitvoeren?"
@@ -762,23 +772,23 @@ msgstr ""
 "Do you need permission from a (collaborating) institution in order to carry "
 "out this observation?"
 
-#: observations/models.py:88
+#: observations/models.py:100
 msgid "Welke instantie?"
 msgstr "Which institution?"
 
-#: observations/models.py:92
+#: observations/models.py:106
 msgid "Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)"
 msgstr "Upload the permission document (in .pdf or .doc(x)-format) here"
 
-#: observations/models.py:98
+#: observations/models.py:113
 msgid "Hoe wordt het gedrag geregistreerd?"
 msgstr "How will the behaviour be recorded?"
 
-#: observations/models.py:107
+#: observations/models.py:122
 msgid "Op hoeveel dagen wordt er geobserveerd (per deelnemer)?"
 msgstr "How many days will observations be taken on (per participant)?"
 
-#: observations/models.py:111
+#: observations/models.py:126
 msgid "Hoeveel uur wordt er gemiddeld per dag geobserveerd?"
 msgstr "How many hours of observation will take place on average per day?"
 
@@ -831,19 +841,19 @@ msgstr ""
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/forms.py:42 proposals/forms.py:156
+#: proposals/forms.py:46 proposals/forms.py:184
 msgid "Er bestaat al een studie met deze titel."
 msgstr "There is already an existing study with this title."
 
-#: proposals/forms.py:73
+#: proposals/forms.py:91
 msgid "Selecteer..."
 msgstr "Select..."
 
-#: proposals/forms.py:78
+#: proposals/forms.py:98
 msgid "Docent"
 msgstr "Professor"
 
-#: proposals/forms.py:79
+#: proposals/forms.py:99
 msgid ""
 "Vul hier de docent van de cursus in waarbinnen je deze portal moet "
 "doorlopen. De docent kan na afloop de studie inkijken in de portal. De "
@@ -853,15 +863,15 @@ msgstr ""
 "taking. The professor is able to look at your study in the portal. This "
 "study will not be published in the semipublic archive of the UiL OTS."
 
-#: proposals/forms.py:116
+#: proposals/forms.py:144
 msgid "U dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the researcher with final responsibility."
 
-#: proposals/forms.py:120
+#: proposals/forms.py:148
 msgid "U heeft geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:126
+#: proposals/forms.py:154
 msgid ""
 "Indien u geen toestemming heeft van een andere ethische commissie, dient u "
 "het normale formulier in te vullen. Ga terug naar de startpagina, en "
@@ -874,35 +884,41 @@ msgstr ""
 "\"Register a new study (from scratch in an empty form)\" or \"Register a new "
 "study (from a copy of an old study)\"."
 
-#: proposals/forms.py:142
+#: proposals/forms.py:170
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:210
+#: proposals/forms.py:241 proposals/forms.py:336
+#, fuzzy
+#| msgid "Dit veld is verplicht."
+msgid "Dit veld is verplicht om verder te gaan."
+msgstr "This field is required."
+
+#: proposals/forms.py:247
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:260
+#: proposals/forms.py:297
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:261
+#: proposals/forms.py:298
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:262
+#: proposals/forms.py:299
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:263
+#: proposals/forms.py:300
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:264
+#: proposals/forms.py:301
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:303
+#: proposals/forms.py:341
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -910,12 +926,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:355 proposals/forms.py:362 proposals/forms.py:368
+#: proposals/forms.py:393 proposals/forms.py:400 proposals/forms.py:406
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:357 proposals/forms.py:359 proposals/forms.py:364
-#: proposals/forms.py:370
+#: proposals/forms.py:395 proposals/forms.py:397 proposals/forms.py:402
+#: proposals/forms.py:408
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -923,35 +939,39 @@ msgstr "Information letter for trajectory {} not yet added."
 msgid "Concept"
 msgstr "Draft"
 
-#: proposals/models.py:58
+#: proposals/models.py:59
 msgid "Opgestuurd ter beoordeling door eindverantwoordelijke"
 msgstr "Sent for assessment by the researcher with final responsibility"
 
-#: proposals/models.py:59
+#: proposals/models.py:60
 msgid "Opgestuurd ter beoordeling door ETCL"
 msgstr "Sent for assessment by ETCL"
 
-#: proposals/models.py:61
+#: proposals/models.py:62
 msgid "Studie is beoordeeld door ETCL"
 msgstr "Application has been assessed by ETCL"
 
-#: proposals/models.py:62
+#: proposals/models.py:63
 msgid "Studie is beoordeeld door METC"
 msgstr "Application has been assessed by METC"
 
-#: proposals/models.py:68
+#: proposals/models.py:69
 msgid "in het kader van een cursus"
 msgstr "in the context of a course"
 
-#: proposals/models.py:69
+#: proposals/models.py:70
 msgid "om de portal te exploreren"
 msgstr "to explore the portal"
 
-#: proposals/models.py:77
+#: proposals/models.py:82
+msgid "Door welke comissie dient deze studie te worden beoordeeld?"
+msgstr ""
+
+#: proposals/models.py:89
 msgid "Wat is, indien bekend, de beoogde startdatum van uw studie?"
 msgstr "What is the intended start date of your study, if known?"
 
-#: proposals/models.py:81
+#: proposals/models.py:96
 msgid ""
 "Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle "
 "formele correspondentie."
@@ -959,7 +979,7 @@ msgstr ""
 "What is the title of your study? This title will be used in all formal "
 "correspondence."
 
-#: proposals/models.py:84
+#: proposals/models.py:99
 msgid ""
 "De titel die u hier opgeeft is zichtbaar voor de ETCL-leden en, wanneer de "
 "studie is goedgekeurd, ook voor alle UiL-OTS medewerkers die in het archief "
@@ -971,7 +991,7 @@ msgstr ""
 "portal. The title cannot be identical to that of a study you have previously "
 "submitted."
 
-#: proposals/models.py:89
+#: proposals/models.py:107
 msgid ""
 "Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. "
 "Gebruik maximaal 200 woorden."
@@ -979,40 +999,40 @@ msgstr ""
 "Give a clear, concise description of the research question or questions. Use "
 "a maximum of 200 words."
 
-#: proposals/models.py:92
+#: proposals/models.py:115
 msgid ""
 "Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie "
 "betrokken?"
 msgstr "Are there any other UiL OTS researchers involved in this study?"
 
-#: proposals/models.py:95
+#: proposals/models.py:121
 msgid "Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?"
 msgstr ""
 "Are there any other researchers from outside UiL OTS involved in this study?"
 
-#: proposals/models.py:98
+#: proposals/models.py:126
 msgid "Andere betrokkenen"
 msgstr "Other people involved"
 
-#: proposals/models.py:102
+#: proposals/models.py:132
 msgid "Hoe wordt dit onderzoek gefinancierd?"
 msgstr "How is this study funded?"
 
-#: proposals/models.py:108
+#: proposals/models.py:143
 msgid "Wat is de naam van het gefinancierde project?"
 msgstr "What is the name of the funded project?"
 
-#: proposals/models.py:111
+#: proposals/models.py:147
 msgid ""
 "De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt "
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:113 proposals/models.py:190 reviews/models.py:117
+#: proposals/models.py:152 proposals/models.py:251 reviews/models.py:117
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
-#: proposals/models.py:116
+#: proposals/models.py:157
 msgid ""
 "<p>U hebt aangegeven dat u gebruik wilt gaan maken van één van de "
 "faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het "
@@ -1035,11 +1055,11 @@ msgstr ""
 "> - The title of the study <br/> - The planned starting date <br/> - The "
 "facilities you intend to use (database, lab, Zep software)"
 
-#: proposals/models.py:137
+#: proposals/models.py:181
 msgid "Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)"
 msgstr "Upload your application here (in .pdf or .doc(x)-format)"
 
-#: proposals/models.py:142
+#: proposals/models.py:188
 msgid ""
 "Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd "
 "deze EtCL commissie?"
@@ -1047,11 +1067,11 @@ msgstr ""
 "Do you have formal approval from an ethics committee, other than this EtCL "
 "committee?"
 
-#: proposals/models.py:148
+#: proposals/models.py:195
 msgid "Welk instituut heeft de studie goedgekeurd?"
 msgstr "Which institute has approved the study?"
 
-#: proposals/models.py:154
+#: proposals/models.py:203
 msgid ""
 "Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of ."
 "doc(x)-formaat)"
@@ -1059,19 +1079,19 @@ msgstr ""
 "Please upload the formal approval letter from this institute here (in .pdf "
 "or .doc(x)-format)"
 
-#: proposals/models.py:160
+#: proposals/models.py:209
 msgid "Ik vul de portal in in het kader van een cursus"
 msgstr "I am using this portal in the context of a course"
 
-#: proposals/models.py:163
+#: proposals/models.py:214
 msgid "Ik vul de portal in om de portal te exploreren"
 msgstr "I am using this portal to explore the portal"
 
-#: proposals/models.py:170
+#: proposals/models.py:222
 msgid "Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?"
 msgstr "Will all participant groups essentially follow the same trajectory?"
 
-#: proposals/models.py:171
+#: proposals/models.py:223
 msgid ""
 "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is "
 "sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek "
@@ -1089,37 +1109,37 @@ msgstr ""
 "different variant of the intervention at the same time (in which case the "
 "variants of the intervention used should be specified in the description)."
 
-#: proposals/models.py:180
+#: proposals/models.py:234
 msgid "Hoeveel verschillende trajecten zijn er?"
 msgstr "How many different trajectories are there?"
 
-#: proposals/models.py:201
+#: proposals/models.py:263
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:204 reviews/forms.py:62
+#: proposals/models.py:268 reviews/forms.py:62
 msgid "Is er een revisie geweest na het indienen van deze studie?"
 msgstr "Has this study been amended after it was submitted to the ETCL?"
 
-#: proposals/models.py:205
+#: proposals/models.py:273
 msgid "Leg uit"
 msgstr "Explain why"
 
-#: proposals/models.py:210
+#: proposals/models.py:281
 msgid "In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?"
 msgstr "In what capacity are you involved in this UiL OTS study?"
 
-#: proposals/models.py:219
+#: proposals/models.py:296
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: proposals/models.py:225
+#: proposals/models.py:302
 #: proposals/templates/proposals/proposal_export_list.html:17
 #: proposals/templates/proposals/proposal_list.html:63
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
-#: proposals/models.py:228
+#: proposals/models.py:305
 msgid ""
 "Aan het einde van de procedure kunt u deze studie ter verificatie naar uw "
 "eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie "
@@ -1130,56 +1150,56 @@ msgstr ""
 "final responsibility can then make adjustments and submit the study to the "
 "ETCL."
 
-#: proposals/models.py:236
+#: proposals/models.py:314
 msgid "Te kopiëren studie"
 msgstr "Application to be copied"
 
-#: proposals/models.py:237
+#: proposals/models.py:316
 msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
-#: proposals/models.py:240
+#: proposals/models.py:322
 msgid "Is deze studie een revisie van of amendement op een ingediende studie?"
 msgstr ""
 "Is this session a revision or an amendment of a previously submitted study?"
 
-#: proposals/models.py:306
+#: proposals/models.py:391
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:309
+#: proposals/models.py:394
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:311 reviews/templates/reviews/review_detail.html:63
+#: proposals/models.py:396 reviews/templates/reviews/review_detail.html:63
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:313
+#: proposals/models.py:398
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:315
+#: proposals/models.py:400
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:317
+#: proposals/models.py:402
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:341
+#: proposals/models.py:429
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:342
+#: proposals/models.py:430
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:343
+#: proposals/models.py:431
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:347
+#: proposals/models.py:435
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1187,11 +1207,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:357
+#: proposals/models.py:449
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:361
+#: proposals/models.py:455
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1199,7 +1219,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:363
+#: proposals/models.py:457
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1220,7 +1240,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:376
+#: proposals/models.py:472
 msgid ""
 "Worden de deelnemers aan een handeling onderworpen of worden hen "
 "gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
@@ -1228,7 +1248,7 @@ msgstr ""
 "Will the participants undergo treatment or will rules of conduct be imposed "
 "on them (as defined by the WMO)?"
 
-#: proposals/models.py:378
+#: proposals/models.py:474
 msgid ""
 "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
 "weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. "
@@ -1242,7 +1262,7 @@ msgstr ""
 "given to the participants, and they are observed exclusively in their lives "
 "as they would normally have acted without observation."
 
-#: proposals/models.py:388
+#: proposals/models.py:486
 msgid ""
 "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
 "ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
@@ -1251,15 +1271,15 @@ msgstr ""
 "with the ETCL. Has an application for this study already been submitted to a "
 "METC?"
 
-#: proposals/models.py:393
+#: proposals/models.py:493
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:396
+#: proposals/models.py:498
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:423
+#: proposals/models.py:535
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -1503,7 +1523,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils.py:77
+#: proposals/utils/proposal_utils.py:81
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -1652,7 +1672,11 @@ msgstr ""
 #: proposals/templates/proposals/proposal_pdf_empty.html:59
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:59
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:59
-#: proposals/utils.py:28 proposals/utils.py:43 proposals/utils.py:54
+#: proposals/utils/proposal_utils.py:32 proposals/utils/proposal_utils.py:47
+#: proposals/utils/proposal_utils.py:58 proposals/utils/validate_proposal.py:33
+#: proposals/utils/validate_proposal.py:43
+#: proposals/utils/validate_proposal.py:50
+#: proposals/utils/validate_proposal.py:57
 msgid "Algemene informatie over de studie"
 msgstr "General information about the study"
 
@@ -1667,7 +1691,7 @@ msgstr "unknown"
 #: proposals/templates/proposals/proposal_diff.html:96
 #: proposals/templates/proposals/proposal_pdf.html:127
 #: proposals/templates/proposals/proposal_pdf_empty.html:100
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:98
+#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:97
 #: proposals/templates/proposals/wmo_form.html:7
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?"
@@ -1684,7 +1708,8 @@ msgstr "Registration with the METC"
 #: proposals/templates/proposals/proposal_diff.html:165
 #: proposals/templates/proposals/proposal_pdf.html:167
 #: proposals/templates/proposals/proposal_pdf_empty.html:133
-#: proposals/templates/proposals/study_start.html:7 proposals/utils.py:63
+#: proposals/templates/proposals/study_start.html:7
+#: proposals/utils/proposal_utils.py:67 proposals/utils/validate_proposal.py:87
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -1790,7 +1815,7 @@ msgid "Informed consent formulieren voor het onderzoek"
 msgstr "Informed consent forms for the study"
 
 #: proposals/templates/proposals/proposal_diff.html:600
-#: proposals/templates/proposals/proposal_submit.html:95
+#: proposals/templates/proposals/proposal_submit.html:118
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
@@ -2024,7 +2049,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/proposal_pdf.html:444
 #: proposals/templates/proposals/proposal_pdf_empty.html:388
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:128
-#: proposals/templates/proposals/proposal_submit.html:97
+#: proposals/templates/proposals/proposal_submit.html:120
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2071,8 +2096,8 @@ msgstr ""
 "(reference number %(reference_number)s, submitted by %(submitter)s)\n"
 "    "
 
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:121
-#: proposals/templates/proposals/proposal_submit.html:93
+#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:120
+#: proposals/templates/proposals/proposal_submit.html:116
 msgid "Aanvraag voor voortoetsing versturen"
 msgstr "Submit application for preliminary assessment"
 
@@ -2323,12 +2348,13 @@ msgstr ""
 "    the project, in order for the EtCL to be able to review your project.\n"
 "    "
 
-#: proposals/templates/proposals/proposal_submit.html:8 proposals/utils.py:37
-#: proposals/utils.py:46
+#: proposals/templates/proposals/proposal_submit.html:8
+#: proposals/utils/proposal_utils.py:41 proposals/utils/proposal_utils.py:50
 msgid "Aanvraag voor voortoetsing klaar voor versturen"
 msgstr "Application for preliminary assessment ready to submit"
 
-#: proposals/templates/proposals/proposal_submit.html:10 proposals/utils.py:78
+#: proposals/templates/proposals/proposal_submit.html:10
+#: proposals/utils/proposal_utils.py:82
 msgid "Concept-aanmelding klaar voor versturen"
 msgstr "Draft application ready to submit"
 
@@ -2428,18 +2454,29 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:70
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd "
+#| "voor traject %(study_order)s.\n"
+#| "    Die kunt u op <a href=\"%(consent_link)s\">deze pagina</a> alsnog "
+#| "toevoegen.\n"
+#| "    Als u deze formulieren nog niet klaar hebt, kunt u ook op een later "
+#| "moment terugkeren;\n"
+#| "    uw studie is reeds opgeslagen en terug te vinden onder \"Mijn "
+#| "concepten\".\n"
+#| "    "
 msgid ""
 "\n"
-"    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd "
-"voor traject %(study_order)s.\n"
-"    Die kunt u op <a href=\"%(consent_link)s\">deze pagina</a> alsnog "
-"toevoegen.\n"
-"    Als u deze formulieren nog niet klaar hebt, kunt u ook op een later "
-"moment terugkeren;\n"
-"    uw studie is reeds opgeslagen en terug te vinden onder \"Mijn concepten"
-"\".\n"
-"    "
+"            U heeft nog geen toestemmingsverklaring of informatiebrief "
+"toegevoegd voor traject %(study_order)s.\n"
+"            Die kunt u op <a href=\"%(consent_link)s\">deze pagina</a> "
+"alsnog toevoegen.\n"
+"            Als u deze formulieren nog niet klaar hebt, kunt u ook op een "
+"later moment terugkeren;\n"
+"            uw studie is reeds opgeslagen en terug te vinden onder \"Mijn "
+"concepten\".\n"
+"            "
 msgstr ""
 "\n"
 "    You have not yet added a declaration of consent or information letter "
@@ -2450,20 +2487,43 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:81
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "        U heeft aangeven dat uw interventie een extra taak heeft, maar "
+#| "nog geen taakonderzoek toegevoegd voor traject %(study_order)s.\n"
+#| "        Die kunt u op <a href=\"%(study_link)s\">deze pagina</a> alsnog "
+#| "aanmaken.\n"
+#| "        "
 msgid ""
 "\n"
-"        U heeft aangeven dat uw interventie een extra taak heeft, maar nog "
-"geen taakonderzoek toegevoegd voor traject %(study_order)s.\n"
-"        Die kunt u op <a href=\"%(study_link)s\">deze pagina</a> alsnog "
+"            U heeft aangeven dat uw interventie een extra taak heeft, maar "
+"nog geen taakonderzoek toegevoegd voor traject %(study_order)s.\n"
+"            Die kunt u op <a href=\"%(study_link)s\">deze pagina</a> alsnog "
 "aanmaken.\n"
-"        "
+"            "
 msgstr ""
 "\n"
 "You have indicated that your intervention study contains an extra task, but "
 "the task-based research form is missing for trajectory %(study_order)s.\n"
 " You can add it on <a href=\"%(study_link)s\">this page</a>.\n"
 "        "
+
+#: proposals/templates/proposals/proposal_submit.html:92
+msgid ""
+"\n"
+"        Er zijn nog errors gevonden op de volgende pagina's:\n"
+"    "
+msgstr ""
+
+#: proposals/templates/proposals/proposal_submit.html:104
+msgid ""
+"\n"
+"        Dit komt waarschijnlijk doordat u nog niet alle verplichte velden "
+"heeft ingevuld. U kunt uw aanmelding pas versturen wanneer deze fouten "
+"gecorrigeerd zijn.\n"
+"    "
+msgstr ""
 
 #: proposals/templates/proposals/proposal_submitted.html:8
 msgid "Aanvraag voor voortoetsing verstuurd"
@@ -2644,43 +2704,95 @@ msgstr "WMO check"
 msgid "Opnieuw beginnen"
 msgstr "Start again"
 
-#: proposals/utils.py:30 proposals/utils.py:56
+#: proposals/utils/proposal_utils.py:34 proposals/utils/proposal_utils.py:60
+#: proposals/utils/validate_proposal.py:69
+#: proposals/utils/validate_proposal.py:76
 msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
-#: proposals/utils.py:199 reviews/utils.py:223
+#: proposals/utils/proposal_utils.py:203 reviews/utils.py:223
 msgid "ETCL: nieuwe studie ingediend"
 msgstr "ETCL: new application submitted"
 
-#: proposals/views/proposal_views.py:27
+#: proposals/utils/validate_proposal.py:98
+#, fuzzy
+#| msgid "De deelnemers"
+msgid "De deelnemers (traject {})"
+msgstr "Participants"
+
+#: proposals/utils/validate_proposal.py:106
+#, fuzzy
+#| msgid "De onderzoekstype(n)"
+msgid "De onderzoekstype(n) (traject {})"
+msgstr "Type(s) of research"
+
+#: proposals/utils/validate_proposal.py:119
+#: proposals/utils/validate_proposal.py:128
+#, fuzzy
+#| msgid "Het interventieonderzoek"
+msgid "Het interventieonderzoek (traject {})"
+msgstr "Intervention study"
+
+#: proposals/utils/validate_proposal.py:143
+#: proposals/utils/validate_proposal.py:152
+#, fuzzy
+#| msgid "Het observatieonderzoek"
+msgid "Het observatieonderzoek (traject {})"
+msgstr "Observational study"
+
+#: proposals/utils/validate_proposal.py:163
+#, fuzzy
+#| msgid "Het takenonderzoek: sessie {}"
+msgid "Het takenonderzoek (traject {})"
+msgstr "Task-based research: session {}"
+
+#: proposals/utils/validate_proposal.py:178
+#, fuzzy
+#| msgid "Het takenonderzoek: sessie {} taak {}"
+msgid "Het takenonderzoek: sessie {} (traject {})"
+msgstr "Task-based research: session {} task {}"
+
+#: proposals/utils/validate_proposal.py:195
+#, fuzzy
+#| msgid "Het takenonderzoek: sessie {} taak {}"
+msgid "Het takenonderzoek: sessie {} taak {} (traject {})"
+msgstr "Task-based research: session {} task {}"
+
+#: proposals/utils/validate_proposal.py:212
+#, fuzzy
+#| msgid "Overzicht van takenonderzoek: sessie {}"
+msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
+msgstr "Overview of task-based research: session {}"
+
+#: proposals/views/proposal_views.py:28
 msgid "Publiek archief"
 msgstr "Public archive"
 
-#: proposals/views/proposal_views.py:28
+#: proposals/views/proposal_views.py:29
 msgid "Dit overzicht toont alle goedgekeurde studies."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:87
+#: proposals/views/proposal_views.py:90
 msgid "Dit overzicht toont al uw nog niet ingediende studies."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:98
+#: proposals/views/proposal_views.py:101
 msgid "Dit overzicht toont al uw ingediende studies."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:110
+#: proposals/views/proposal_views.py:113
 msgid "Dit overzicht toont al uw beoordeelde studies."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:121
+#: proposals/views/proposal_views.py:124
 msgid "Dit overzicht toont al uw studies waar u eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:132
+#: proposals/views/proposal_views.py:135
 msgid "Dit overzicht toont al uw studies."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:143
+#: proposals/views/proposal_views.py:146
 msgid ""
 "Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -2688,20 +2800,20 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:162
+#: proposals/views/proposal_views.py:165
 #, python-format
 msgid "Studie %(title)s bewerkt"
 msgstr "Application %(title)s edited"
 
-#: proposals/views/proposal_views.py:207
+#: proposals/views/proposal_views.py:210
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:246
+#: proposals/views/proposal_views.py:249
 msgid "Studie verzonden"
 msgstr "Application submitted"
 
-#: proposals/views/proposal_views.py:295
+#: proposals/views/proposal_views.py:306
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3351,11 +3463,11 @@ msgstr ""
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: studies/forms.py:72
+#: studies/forms.py:73
 msgid "U dient minimaal een bijzonder kenmerk te selecteren."
 msgstr "You are required to select at least one special characteristic."
 
-#: studies/forms.py:118
+#: studies/forms.py:119
 msgid "U dient minstens één van de opties te selecteren"
 msgstr "You must select at least one of the options"
 
@@ -3371,17 +3483,17 @@ msgstr "{} years old and above"
 msgid "Werving"
 msgstr "Recruitment"
 
-#: studies/models.py:113 studies/models.py:191
+#: studies/models.py:113 studies/models.py:192
 #: studies/templates/studies/study_end.html:85
 msgid "Observatieonderzoek"
 msgstr "Observational research"
 
-#: studies/models.py:114 studies/models.py:188
+#: studies/models.py:114 studies/models.py:189
 #: studies/templates/studies/study_end.html:55
 msgid "Interventieonderzoek"
 msgstr "Interventional research"
 
-#: studies/models.py:115 studies/models.py:194
+#: studies/models.py:115 studies/models.py:195
 msgid "Taakonderzoek"
 msgstr "Task-based research"
 
@@ -3474,11 +3586,11 @@ msgstr ""
 "The standard sum for compensation of participants is €10 per hour. Minors "
 "are not permitted to receive money, but can be given a gift."
 
-#: studies/models.py:199
+#: studies/models.py:200
 msgid "Maakt u gebruik van passieve informed consent?"
 msgstr "Will you use passive informed consent?"
 
-#: studies/models.py:207
+#: studies/models.py:208
 msgid ""
 "Licht uw antwoord toe. Wij willen u wijzen op het reglement, sectie 3.1 'd' "
 "en 'e'. Passive consent is slechts in enkele gevallen toegestaan en draagt "
@@ -3488,11 +3600,11 @@ msgstr ""
 "'d' and 'e'. Passive consent is allowed under certain situations but is not "
 "preferred by the committee."
 
-#: studies/models.py:214
+#: studies/models.py:215
 msgid "Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?"
 msgstr "How many sessions of tasks will the participants take part in?"
 
-#: studies/models.py:217
+#: studies/models.py:218
 msgid ""
 "Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen "
 "tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer "
@@ -3506,7 +3618,7 @@ msgstr ""
 "experiment to consist of two sessions. If multiple tasks are executed on the "
 "same day, with breaks in between, this is still considered to be one session."
 
-#: studies/models.py:224
+#: studies/models.py:225
 msgid ""
 "Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de "
 "deelnemer?"
@@ -3514,7 +3626,7 @@ msgstr ""
 "Does the above research trajectory involve misrepresentation to the "
 "participant?"
 
-#: studies/models.py:226
+#: studies/models.py:227
 msgid ""
 "Misleiding is het doelbewust verschaffen van inaccurate informatie over het "
 "doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. "
@@ -3531,7 +3643,7 @@ msgstr ""
 "crucial memory task without announcing it, or giving false feedback. Fillers "
 "do not count as misrepresentation."
 
-#: studies/models.py:237
+#: studies/models.py:238
 msgid ""
 "Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden "
 "gedebrieft."
@@ -3539,7 +3651,7 @@ msgstr ""
 "Give an explanation and describe how and when the participant will be "
 "debriefed."
 
-#: studies/models.py:241
+#: studies/models.py:242
 msgid ""
 "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens</em> de "
 "deelname niet-triviale negatieve emoties kunnen opwekken? Denk hierbij "
@@ -3552,11 +3664,11 @@ msgstr ""
 "consider emotionally probing questions, insulting utterances, negative "
 "feedback, and frustrating, difficult, (very) long and/or (very) boring tasks."
 
-#: studies/models.py:250
+#: studies/models.py:251
 msgid "Licht uw antwoord toe."
 msgstr "Explain your answer."
 
-#: studies/models.py:253
+#: studies/models.py:254
 msgid ""
 "Bevat bovenstaand onderzoekstraject elementen die tijdens de deelname "
 "zodanig belastend zijn dat deze <em>ondanks de verkregen informed consent</"
@@ -3569,7 +3681,7 @@ msgstr ""
 "questions (or even cause outrage), for example from colleagues, the "
 "participants themselves, or parents or other representatives?"
 
-#: studies/models.py:269
+#: studies/models.py:270
 msgid ""
 "Licht uw antwoord toe. Geef concrete voorbeelden van de relevante aspecten "
 "van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende "
@@ -3581,7 +3693,7 @@ msgstr ""
 "utterances in the task, or of very confrontational questions in a "
 "questionnaire), so that the committee can form a proper picture."
 
-#: studies/models.py:276
+#: studies/models.py:277
 msgid ""
 "Zijn de risico's op psychische, fysieke, of andere (bijv. economische, "
 "juridische) schade door deelname aan bovenstaand onderzoekstraject <em>meer "
@@ -3593,21 +3705,21 @@ msgstr ""
 "em> minimal? I.e. is the chance of and/or magnitude of potential damage to "
 "participants clearly <em>above</em> that of the \"background risk\"?"
 
-#: studies/models.py:395
+#: studies/models.py:396
 #, python-format
 msgid "Study details for proposal %s"
 msgstr "Study details for proposal %s"
 
-#: studies/models.py:408
+#: studies/models.py:409
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:412
+#: studies/models.py:413
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:418
+#: studies/models.py:419
 msgid ""
 "Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het "
 "departement (in .pdf of .doc(x)-format)"
@@ -3615,7 +3727,7 @@ msgstr ""
 "Please upload the declaration of consent for the school director/head of the "
 "department (in .pdf of .doc(x)-format)"
 
-#: studies/models.py:427
+#: studies/models.py:428
 msgid ""
 "Upload hier de informatiebrief voor de schoolleider/hoofd van het "
 "departement (in .pdf of .doc(x)-formaat)"
@@ -3623,7 +3735,7 @@ msgstr ""
 "Please upload the the information letter for the school director/head of the "
 "department (in .pdf of .doc(x)-format)"
 
-#: studies/models.py:433
+#: studies/models.py:434
 msgid ""
 "Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)"
 msgstr ""
@@ -4016,6 +4128,16 @@ msgstr "Necessity"
 msgid "Vergoeding"
 msgstr "Compensation"
 
+#: studies/templates/studies/study_form.html:104
+#, python-format
+msgid ""
+"\n"
+"                Let op! U heeft de vraag <a href=\"%(url)s\">'In welke "
+"hoedanigheid bent u betrokken bij deze UiL OTS studie?'</a> nog niet "
+"ingevuld, waardoor deze pagina nog kan veranderen op basis van uw antwoord.\n"
+"            "
+msgstr ""
+
 #: studies/templates/studies/study_title.html:6
 #, python-format
 msgid ""
@@ -4067,7 +4189,7 @@ msgstr "All fields can be edited after copying."
 msgid "Te kopiëren sessie"
 msgstr "Session to be copied"
 
-#: tasks/forms.py:139
+#: tasks/forms.py:168
 msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
 msgstr ""
 "The total duration of the session must be at least as long as the net "
@@ -4090,7 +4212,7 @@ msgstr ""
 "electrodes, session debriefing and a short (<3 minute) exit interview are "
 "not counted as tasks."
 
-#: tasks/models.py:24
+#: tasks/models.py:26
 #, python-format
 msgid ""
 "De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave "
@@ -4104,19 +4226,19 @@ msgstr ""
 "task, breaks between tasks, and debriefing? (in case of a lab visit from "
 "entering the lab until leaving)"
 
-#: tasks/models.py:76
+#: tasks/models.py:80
 msgid "Sessie {}"
 msgstr "Session {}"
 
-#: tasks/models.py:91
+#: tasks/models.py:95
 msgid "Vastlegging gedrag"
 msgstr "Registration of behaviour"
 
-#: tasks/models.py:115
+#: tasks/models.py:119
 msgid "Wat is de naam van de taak?"
 msgstr "What is the title of the task?"
 
-#: tasks/models.py:118
+#: tasks/models.py:125
 msgid ""
 "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe deze "
 "taak (en de eventuele manipulaties daarbinnen) aan de beantwoording van uw "
@@ -4132,7 +4254,7 @@ msgstr ""
 "participant. The committee members need to be in the clear on your exact "
 "plans."
 
-#: tasks/models.py:125
+#: tasks/models.py:135
 msgid ""
 "Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, "
 "dus vanaf het moment dat de taak van start gaat tot en met het einde van de "
@@ -4146,7 +4268,7 @@ msgstr ""
 "criterion), <strong>indicate the maximum duration that can reasonably be "
 "expected</strong>."
 
-#: tasks/models.py:134
+#: tasks/models.py:147
 msgid ""
 "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak "
 "vastgelegd?"
@@ -4154,11 +4276,11 @@ msgstr ""
 "How will the behaviour or the state of the participant be recorded in this "
 "task?"
 
-#: tasks/models.py:141
+#: tasks/models.py:158
 msgid "Kies het soort meting"
 msgstr "Select the type of measurement"
 
-#: tasks/models.py:148
+#: tasks/models.py:169
 msgid ""
 "Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of "
 "toestand?"
@@ -4166,11 +4288,11 @@ msgstr ""
 "Will the participant receive feedback on his/her behaviour or state during "
 "or after this task?"
 
-#: tasks/models.py:150
+#: tasks/models.py:173
 msgid "Beschrijf hoe de feedback wordt gegeven."
 msgstr "Describe how the feedback will be given."
 
-#: tasks/models.py:173
+#: tasks/models.py:197
 msgid "Taak {} in sessie {}"
 msgstr "Task {} in session {}"
 
@@ -4293,58 +4415,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid ""
-#~ "Wanneer u kinderen via een instelling (dus ook school) werft en u de "
-#~ "ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die "
-#~ "instelling, dan maakt u gebruik van passieve informed consent. U kunt de "
-#~ "templates vinden op <a href=\"https://etcl.wp.hum.uu.nl/"
-#~ "toestemmingsverklaringen/\" target=\"_blank\">de ETCL-website</a>."
-#~ msgstr ""
-#~ "If you recruit children from an institution (including schools) without "
-#~ "their parents' signature, gaining permission from the management of the "
-#~ "institution instead, this constitutes passive informed consent. You can "
-#~ "find the templates on <a href=\"https://etcl.wp.hum.uu.nl/"
-#~ "toestemmingsverklaringen/\" target=\"_blank\">the ETCL website</a>."
-
-#~ msgid ""
-#~ "Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en "
-#~ "uitputtende taak, een zeer confronterende vragenlijst, of voortdurend "
-#~ "vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, "
-#~ "of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag "
-#~ "om de door de deelnemer ervaren belasting tijdens het onderzoek, niet om "
-#~ "de opgelopen psychische of fysieke schade door het onderzoek."
-#~ msgstr ""
-#~ "This might be the case in 'inhumanely' long and exhausting tasks or a "
-#~ "very confrontational questionnaire, or continual destructive feedback, "
-#~ "for example, but it might also include a perceived invasion of privacy, "
-#~ "or other lack of respect. Please note, this is a question of the burden "
-#~ "perceived by the participant during the study, not psychological or "
-#~ "physical damage incurred."
-
-#~ msgid ""
-#~ "Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de "
-#~ "relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten "
-#~ "deel valt. Denk bij schade ook aan de gevolgen die het voor de deelnemer "
-#~ "of anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. op "
-#~ "het vlak van zelfbeeld, stigmatisering door anderen, economische schade "
-#~ "door data-koppeling, et cetera. Het achtergrondrisico voor psychische en "
-#~ "fysieke schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -"
-#~ "onderzoeken of -procedures die in alledaagse didactische, psychologische "
-#~ "of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, "
-#~ "een stressbestendigheids-<em>assessment</em>, een intelligentie- of "
-#~ "persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
-#~ "alles, waar relevant, onder begeleiding van adequaat geschoolde "
-#~ "specialisten)."
-#~ msgstr ""
-#~ "Background risk is that which healthy average citizens in the relevant "
-#~ "age category normally encounter in their daily lives. Consider the damage "
-#~ "of consequences to the participant or others if particular information "
-#~ "becomes available, e.g. in terms of self-image, stigmatisation by others, "
-#~ "economic damage due to linking of data etc. The background risk of "
-#~ "psychological and physical damage also encompasses e.g. the risks of "
-#~ "‘routine’ tests, studies or procedures which take place in everyday "
-#~ "pedagogical, psychological or medical contexts (such as a final academic "
-#~ "exam, a driving test, a stress resistance assessment, an intelligence or "
-#~ "personality test, or a heartrate measurement after physical exertion; all "
-#~ "under the supervision of adequately trained specialists where relevant)."

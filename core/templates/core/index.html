@@ -15,16 +15,19 @@
 {% block content %} 
 {% if user.is_authenticated %}
 <p>
+    {% url 'proposals:archive' as archive_url %}
     {% blocktrans %}
-    In deze webportal van de Ethische Toetsingscommissie Linguïstiek kunt u
-    alle <strong>praktische zaken</strong> rondom de ethische toetsing van uw
-    UiL-OTS onderzoek regelen. U kunt een nieuwe studie bij de commissie
-    aanmelden, maar ook bekijken wat er allemaal eerder door uzelf is aangemeld.
-    Verder kunt u alle UiL OTS studies zien die de ETCL heeft goedgekeurd.
+    In dit webportaal van de Facultaire Ethische Toetsingscommissie
+    Geesteswetenschappen (FETC-GW) kunt u  alle <strong>praktische zaken
+    </strong> rondom de ethische toetsing van uw onderzoek regelen. U kunt een
+    nieuwe studie bij de commissie aanmelden, maar ook bekijken wat er allemaal
+    eerder door uzelf is aangemeld. Verder kunt u alle afgehandelde en goedgekeurde
+    studies zien in het <a href="{{ archive_url }}">archief van dit portaal</a>.
     Voor noodzakelijke achtergrondinformatie verwijzen we naar de
-    <a href="http://etcl.wp.hum.uu.nl/" target="_blank">UU-webpagina van de ETCL</a>,
-    alsmede naar het
-    <a href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">reglement</a>.
+    <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">UU-webpagina van de FETC-GW</a>,
+    alsmede naar het reglement van
+    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">de Algemene Kamer (AK)</a> en
+    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">de Linguïstiek Kamer (LK)</a>.
     {% endblocktrans %}
 </p>
 <p>
@@ -68,22 +71,25 @@
         <a href="{% url 'proposals:my_archive' %}">{% trans "Al mijn studies bekijken" %}</a>
     </li>
 </ul>
-<h3>UiL OTS archief</h3>
+<h3>{% trans 'FETC-GW archief' %}</h3>
 <ul>
     <li>
-        <a href="{% url 'proposals:archive' %}">{% trans "Alle afgehandelde en goedgekeurde UiL OTS-studies bekijken" %}</a>
+        <a href="{% url 'proposals:archive' %}">{% trans "Alle afgehandelde en goedgekeurde studies bekijken" %}</a>
     </li>
 </ul>
 <h3>Help</h3>
 <ul>
     <li>
-        <a href="http://etcl.wp.hum.uu.nl/" target="_blank">{% trans "ETCL website" %}</a>
+        <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">{% trans "FETC-GW website" %}</a>
     </li>
     <li>
-        <a href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">{% trans "ETCL reglement" %}</a>
+        <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">{% trans "Reglement Algemene Kamer (GC)" %}</a>
     </li>
     <li>
-        <a href="http://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
+        <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">{% trans "Reglement Linguïstiek Kamer (LC)" %}</a>
+    </li>
+    <li>
+        <a href="http://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
     </li>
     <li>
         <a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
@@ -96,12 +102,12 @@
 <p>
     {% url 'login' as the_url %}
     {% blocktrans %}
-    Welkom bij het portal van de ETCL. U kunt <a href="{{ the_url }}">hier</a> inloggen met uw Solis-ID.
+    Welkom bij het portal van de FETC-GW. U kunt <a href="{{ the_url }}">hier</a> inloggen met uw Solis-ID.
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans %}
-    Klik <a href="http://etcl.wp.hum.uu.nl">hier</a> om terug te keren naar de ETCL-website.
+    Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
     {% endblocktrans %}
 </p>
 

@@ -57,7 +57,7 @@
         </li>
         {% if user|in_fetc %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">{% trans "FETC" %}</a>
+            <a href="#" class="pure-menu-link">{% trans "FETC-GW" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'reviews:my_open' 'FETC' %}">{% trans "Mijn openstaande besluiten" %}</a>
@@ -107,13 +107,13 @@
             <a href="#" class="pure-menu-link">{% trans "Help" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/" target="_blank">{% trans "ETCL website" %}</a>
+                    <a class="pure-menu-link" href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">{% trans "FETC-GW website" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">{% trans "ETCL reglement" %}</a>
+                    <a class="pure-menu-link" href="http://fetc-gw.wp.hum.uu.nl/reglement/" target="_blank">{% trans "FETC-GW reglement" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
+                    <a class="pure-menu-link" href="http://fetc.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
                 </li>
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'faqs:list' %}">{% trans "FAQs" %}</a>
@@ -128,7 +128,7 @@
         </li>
         {% else %}
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl" target="_blank">{% trans "ETCL-website" %}</a>
+            <a class="pure-menu-link" href="http://fetc-gw.wp.hum.uu.nl" target="_blank">{% trans "FETC-GW-website" %}</a>
         </li>
         <li class="pure-menu-item">
             <a class="pure-menu-link" href="{% url 'login' %}"><em>{% trans "Inloggen" %}</em></a>
