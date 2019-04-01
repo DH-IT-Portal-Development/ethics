@@ -6,12 +6,12 @@
 #
 alabaster==0.7.12         # via sphinx
 babel==2.6.0              # via sphinx
-certifi==2018.11.29       # via requests
+certifi==2019.3.9         # via requests
 chardet==3.0.4            # via requests
 django-auth-ldap==1.7.0
 django-braces==1.13.0
 django-easy-pdf==0.1.1
-django-modeltranslation==0.12.2
+django-modeltranslation==0.13
 django-user-agents==0.3.2
 django==1.11.20
 docutils==0.14            # via sphinx
@@ -19,27 +19,32 @@ html5lib==1.0.1
 idna==2.8                 # via requests
 imagesize==1.1.0          # via sphinx
 jinja2==2.10              # via sphinx
-markupsafe==1.1.0         # via jinja2
+markupsafe==1.1.1         # via jinja2
 mysqlclient==1.3.14
 packaging==19.0           # via sphinx
-pbr==5.1.2                # via sphinxcontrib-apidoc
+pbr==5.1.3                # via sphinxcontrib-apidoc
 pillow==5.4.1             # via reportlab, xhtml2pdf
 pyasn1-modules==0.2.4     # via python-ldap
 pyasn1==0.4.5             # via pyasn1-modules, python-ldap
 pygments==2.3.1           # via sphinx
 pyparsing==2.3.1          # via packaging
 pypdf2==1.26.0            # via xhtml2pdf
-python-ldap==3.1.0        # via django-auth-ldap
+python-ldap==3.2.0        # via django-auth-ldap
 pytz==2018.9              # via babel, django
-reportlab==3.5.13         # via django-easy-pdf, xhtml2pdf
+reportlab==3.5.17         # via django-easy-pdf, xhtml2pdf
 requests==2.21.0          # via sphinx
-six==1.12.0               # via html5lib, packaging, sphinx, xhtml2pdf
+six==1.12.0               # via html5lib, packaging, xhtml2pdf
 snowballstemmer==1.2.1    # via sphinx
 sphinx-rtd-theme==0.4.3
-sphinx==1.8.4
+sphinx==2.0.0
 sphinxcontrib-apidoc==0.3.0
+sphinxcontrib-applehelp==1.0.1  # via sphinx
+sphinxcontrib-devhelp==1.0.1  # via sphinx
 sphinxcontrib-django==0.4
-sphinxcontrib-websupport==1.1.0  # via sphinx
+sphinxcontrib-htmlhelp==1.0.1  # via sphinx
+sphinxcontrib-jsmath==1.0.1  # via sphinx
+sphinxcontrib-qthelp==1.0.2  # via sphinx
+sphinxcontrib-serializinghtml==1.1.1  # via sphinx
 ua-parser==0.8.0          # via user-agents
 urllib3==1.24.1           # via requests
 user-agents==1.1.0        # via django-user-agents
