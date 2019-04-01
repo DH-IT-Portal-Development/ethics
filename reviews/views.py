@@ -98,11 +98,12 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
         """Returns all open Committee Decisions of all Users"""
         reviews = {}
         objects = Review.objects.filter(
-            Q(stage=Review.CLOSING) | Q(stage=Review.CLOSED)
+            stage__gte=Review.CLOSING,
+            proposal__status=Proposal.SUBMITTED,
+            proposal__reviewing_committee=self.committee,
         ).filter(
-            proposal__date_confirmed=None,
-            continuation=Review.GO,
-            proposal__reviewing_committee=self.committee
+            Q(continuation=Review.GO) |
+            Q(continuation=None)
         )
 
         for obj in objects:

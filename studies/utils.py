@@ -131,8 +131,19 @@ def copy_study_to_proposal(proposal, study):
 
     copy_documents_to_study(old_pk, s)
 
+
 def copy_documents_to_study(study_old, study):
     from .models import Documents
+
+    try:
+        # Study will automatically create an empty Documents entry for itself on
+        # save. We don't want that one, so we delete that one before copying the
+        # old one over.
+        empty_documents = Documents.objects.get(study=study)
+        if empty_documents:
+            empty_documents.delete()
+    except Documents.DoesNotExist:
+        pass
 
     documents = Documents.objects.get(study__pk=study_old)
 
@@ -141,6 +152,7 @@ def copy_documents_to_study(study_old, study):
     d.proposal = study.proposal
     d.study = study
     d.save()
+
 
 def copy_documents_to_proposal(proposal_old, proposal):
     from .models import Documents
