@@ -57,10 +57,10 @@ class Proposal(models.Model):
 
         (SUBMITTED_TO_SUPERVISOR,
          _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
-        (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
+        (SUBMITTED, _('Opgestuurd ter beoordeling door FETC-GW')),
 
-        (DECISION_MADE, _('Studie is beoordeeld door ETCL')),
-        (WMO_DECISION_MADE, _('Studie is beoordeeld door METC')),
+        (DECISION_MADE, _('Studie is beoordeeld door FETC-GW')),
+        (WMO_DECISION_MADE, _('Studie is beoordeeld door FETC-GW')),
     )
 
     COURSE = '1'
@@ -97,7 +97,7 @@ class Proposal(models.Model):
         max_length=200,
         unique=True,
         help_text=_('De titel die u hier opgeeft is zichtbaar voor de \
-ETCL-leden en, wanneer de studie is goedgekeurd, ook voor alle UiL-OTS \
+FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle \
 medewerkers die in het archief van deze portal kijken. De titel mag niet \
 identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
     )
@@ -112,13 +112,16 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
 
     other_applicants = models.BooleanField(
         _(
-            'Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie betrokken?'
+            'Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?'
         ),
         default=False,
     )
 
     other_stakeholders = models.BooleanField(
-        _('Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?'),
+        _('Zijn er nog andere onderzoekers bij deze studie betrokken '
+          'die <strong>niet</strong> geaffilieerd zijn aan een van de '
+          'onderzoeksinstituten van de Faculteit Geestwetenschappen van de '
+          'UU? '),
         default=False,
     )
 
@@ -185,7 +188,8 @@ Zep software)'),
 
     is_pre_approved = models.NullBooleanField(
         _(
-            'Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze EtCL commissie?'),
+            'Heeft u formele toestemming van een ethische toetsingcommissie, '
+            'uitgezonderd deze FETC-GW commissie?'),
         default=None,
         null=True,
         blank=True,
@@ -279,7 +283,7 @@ gebruikt worden).'),
     relation = models.ForeignKey(
         Relation,
         verbose_name=_('In welke hoedanigheid bent u betrokken \
-bij deze UiL OTS studie?'),
+bij deze studie?'),
         on_delete=models.CASCADE,
         blank=True,
         null=True,
@@ -303,7 +307,7 @@ bij deze UiL OTS studie?'),
         blank=True,
         null=True,
         help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke \
-sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'),
+sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de FETC-GW.'),
         on_delete=models.CASCADE,
     )
 

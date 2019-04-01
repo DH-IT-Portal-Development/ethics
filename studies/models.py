@@ -112,7 +112,7 @@ class Study(models.Model):
     DESIGNS = (
         (OBSERVATION, _('Observatieonderzoek')),
         (INTERVENTION, _('Interventieonderzoek')),
-        (SESSIONS, _('Taakonderzoek')),
+        (SESSIONS, _('Taakonderzoek en interviews')),
     )
 
     order = models.PositiveIntegerField()
@@ -192,7 +192,7 @@ cadeautje.'),
         _('Observatieonderzoek'),
         default=False)
     has_sessions = models.BooleanField(
-        _('Taakonderzoek'),
+        _('Taakonderzoek en interviews'),
         default=False)
 
     # Fields with respect to informed consent

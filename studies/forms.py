@@ -103,7 +103,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                 self.add_error('passive_consent_details', error)
 
 
-
 class StudyDesignForm(forms.ModelForm):
     class Meta:
         model = Study

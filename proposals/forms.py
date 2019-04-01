@@ -84,6 +84,8 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
 
         instance = kwargs.get('instance')
 
+        self.fields['other_stakeholders'].label = mark_safe(self.fields['other_stakeholders'].label)
+
         # If you are already defined as a supervisor, we have to set it to you
         if instance is not None and instance.supervisor == self.user:
             supervisors = [self.user]
