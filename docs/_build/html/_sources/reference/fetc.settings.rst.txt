@@ -1,7 +1,7 @@
-etcl.settings module
+fetc.settings module
 ====================
 
-.. automodule:: etcl.settings
+.. automodule:: fetc.settings
     :members:
     :undoc-members:
     :show-inheritance:

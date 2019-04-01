@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>proposals.views.proposal_views module &mdash; ETCL 1.0 documentation</title>
+  <title>proposals.views.proposal_views module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="proposals.views.study_views module" href="proposals.views.study_views.html" />
     <link rel="prev" title="proposals.views package" href="proposals.views.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,15 +92,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="proposals.html">proposals package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="proposals.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="proposals.management.html">proposals.management package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="proposals.templatetags.html">proposals.templatetags package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.utils.html">proposals.utils package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="proposals.views.html">proposals.views package</a></li>
 </ul>
 </li>
@@ -124,7 +127,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -551,7 +554,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalCreate">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalCreate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsOnBackbuttonMixin" title="core.views.AllowErrorsOnBackbuttonMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsOnBackbuttonMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalCreate.form_valid">
 <code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalCreate.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalCreate.form_valid" title="Permalink to this definition">¶</a></dt>
@@ -800,7 +803,7 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalSubmit">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalSubmit</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.views.html#core.views.AllowErrorsOnBackbuttonMixin" title="core.views.AllowErrorsOnBackbuttonMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsOnBackbuttonMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalSubmit.form_class">
 <code class="descname">form_class</code><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit.form_class" title="Permalink to this definition">¶</a></dt>
@@ -811,8 +814,8 @@ are provided as kwargs to this method.</p>
 <dt id="proposals.views.proposal_views.ProposalSubmit.form_valid">
 <code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmit.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit.form_valid" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>Save the PDF on the Proposal</li>
-<li>Start the review process on submission (though not for practice Proposals)</li>
+<li><p>Save the PDF on the Proposal</p></li>
+<li><p>Start the review process on submission (though not for practice Proposals)</p></li>
 </ul>
 </dd></dl>
 
@@ -820,6 +823,12 @@ are provided as kwargs to this method.</p>
 <dt id="proposals.views.proposal_views.ProposalSubmit.get_back_url">
 <code class="descname">get_back_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmit.get_back_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit.get_back_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return to the data management view</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="proposals.views.proposal_views.ProposalSubmit.get_context_data">
+<code class="descname">get_context_data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalSubmit.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalSubmit.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert the form into the context dict.</p>
 </dd></dl>
 
 <dl class="method">
@@ -946,7 +955,13 @@ are provided as kwargs to this method.</p>
 <dl class="class">
 <dt id="proposals.views.proposal_views.ProposalUpdate">
 <em class="property">class </em><code class="descclassname">proposals.views.proposal_views.</code><code class="descname">ProposalUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#proposals.views.proposal_views.ProposalMixin" title="proposals.views.proposal_views.ProposalMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.views.proposal_views.ProposalMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsOnBackbuttonMixin" title="core.views.AllowErrorsOnBackbuttonMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsOnBackbuttonMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dl class="method">
+<dt id="proposals.views.proposal_views.ProposalUpdate.form_valid">
+<code class="descname">form_valid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdate.form_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdate.form_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets created_by to current user and generates a reference number</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="proposals.views.proposal_views.ProposalUpdate.get_context_data">
 <code class="descname">get_context_data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/views/proposal_views.html#ProposalUpdate.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.views.proposal_views.ProposalUpdate.get_context_data" title="Permalink to this definition">¶</a></dt>
@@ -996,7 +1011,7 @@ are provided as kwargs to this method.</p>
 
 <dl class="attribute">
 <dt id="proposals.views.proposal_views.ProposalsExportView.group_required">
-<code class="descname">group_required</code><em class="property"> = ['Secretaris', 'Commissie']</em><a class="headerlink" href="#proposals.views.proposal_views.ProposalsExportView.group_required" title="Permalink to this definition">¶</a></dt>
+<code class="descname">group_required</code><em class="property"> = ['Secretaris', 'AK', 'LK']</em><a class="headerlink" href="#proposals.views.proposal_views.ProposalsExportView.group_required" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1067,7 +1082,7 @@ are provided as kwargs to this method.</p>
         <a href="proposals.views.study_views.html" class="btn btn-neutral float-right" title="proposals.views.study_views module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="proposals.views.html" class="btn btn-neutral" title="proposals.views package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="proposals.views.html" class="btn btn-neutral float-left" title="proposals.views package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1076,7 +1091,7 @@ are provided as kwargs to this method.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -1093,26 +1108,16 @@ are provided as kwargs to this method.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

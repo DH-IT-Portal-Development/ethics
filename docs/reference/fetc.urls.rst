@@ -1,7 +1,7 @@
-etcl.urls module
+fetc.urls module
 ================
 
-.. automodule:: etcl.urls
+.. automodule:: fetc.urls
     :members:
     :undoc-members:
     :show-inheritance:

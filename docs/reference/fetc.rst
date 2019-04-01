@@ -1,7 +1,7 @@
-etcl package
+fetc package
 ============
 
-.. automodule:: etcl
+.. automodule:: fetc
     :members:
     :undoc-members:
     :show-inheritance:
@@ -11,8 +11,8 @@ Submodules
 
 .. toctree::
 
-   etcl.ldap_settings
-   etcl.settings
-   etcl.urls
-   etcl.wsgi
+   fetc.ldap_settings
+   fetc.settings
+   fetc.urls
+   fetc.wsgi
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Structure &mdash; ETCL 1.0 documentation</title>
+  <title>Structure &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tests" href="tests.html" />
     <link rel="prev" title="E-Mail" href="install/mail.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -119,7 +121,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -175,43 +177,40 @@
 <h1>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h1>
 <p>This Django project consists of ten apps that can be divided into three categories:</p>
 <ul class="simple">
-<li><dl class="first docutils">
-<dt>Core</dt>
-<dd><ul class="first last">
-<li><em>etcl</em>: Main directory with settings and a WSGI configuration.</li>
-<li><em>core</em>: Core functionality, reusable models, views, forms and templates.</li>
+<li><dl class="simple">
+<dt>Core</dt><dd><ul>
+<li><p><em>etcl</em>: Main directory with settings and a WSGI configuration.</p></li>
+<li><p><em>core</em>: Core functionality, reusable models, views, forms and templates.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Proposals</dt>
-<dd><ul class="first last">
-<li><em>proposals</em>: Main application that binds together all applications below. Allows participants to give general information on their study.</li>
-<li><em>studies</em>: Allows users to add more in-detail information on their study.</li>
-<li><em>observations</em>: Allows users to specify the observation part of their study (if applicable).</li>
-<li><em>interventions</em>: Allows users to specify the intervention part of their study (if applicable).</li>
-<li><em>tasks</em>: Allows users to specify tasks in their study (if applicable). Tasks can be grouped in one or more sessions.</li>
-<li><em>reviews</em>: Allows the committee to review proposals.</li>
+<li><dl class="simple">
+<dt>Proposals</dt><dd><ul>
+<li><p><em>proposals</em>: Main application that binds together all applications below. Allows participants to give general information on their study.</p></li>
+<li><p><em>studies</em>: Allows users to add more in-detail information on their study.</p></li>
+<li><p><em>observations</em>: Allows users to specify the observation part of their study (if applicable).</p></li>
+<li><p><em>interventions</em>: Allows users to specify the intervention part of their study (if applicable).</p></li>
+<li><p><em>tasks</em>: Allows users to specify tasks in their study (if applicable). Tasks can be grouped in one or more sessions.</p></li>
+<li><p><em>reviews</em>: Allows the committee to review proposals.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Feedback</dt>
-<dd><ul class="first last">
-<li><em>feedback</em>: Allows users to give feedback on the application: with what parts did they struggle?</li>
-<li><em>faqs</em>: Provides users with answers to frequently asked questions about the application.</li>
+<li><dl class="simple">
+<dt>Feedback</dt><dd><ul>
+<li><p><em>feedback</em>: Allows users to give feedback on the application: with what parts did they struggle?</p></li>
+<li><p><em>faqs</em>: Provides users with answers to frequently asked questions about the application.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>In the code a ‘research project’ is called a proposal, but this term is not used outside of development. Using this
 term near users can lead to some confused looks, be warned ;)</p>
-<p class="last">It’s generally safe to use the word ‘study’.</p>
+<p>It’s generally safe to use the word ‘study’.</p>
 </div>
 <div class="section" id="core">
 <h2>Core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h2>
@@ -245,9 +244,9 @@ finish up, after which they will either start anew with the next study, or be re
 researchers can supply additional consent forms. In that case, the system will create a new <code class="docutils literal notranslate"><span class="pre">Documents</span></code> object without
 a reference to a study.</p>
 <p>A warning about datamanagement is next, after which the researcher can submit it for review.</p>
-<div class="figure" id="id1">
+<div class="figure align-center" id="id1">
 <img alt="Proposal flow diagram" src="../_images/proposal-flow.png" />
-<p class="caption"><span class="caption-text">A (very) simple illustration of the order in which a proposal is created</span></p>
+<p class="caption"><span class="caption-text">A (very) simple illustration of the order in which a proposal is created</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 <div class="section" id="reviewing">
@@ -267,7 +266,7 @@ a reference to a study.</p>
         <a href="tests.html" class="btn btn-neutral float-right" title="Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="install/mail.html" class="btn btn-neutral" title="E-Mail" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="install/mail.html" class="btn btn-neutral float-left" title="E-Mail" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -276,7 +275,7 @@ a reference to a study.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -293,26 +292,16 @@ a reference to a study.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

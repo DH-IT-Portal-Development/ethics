@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tasks.models &mdash; ETCL 1.0 documentation</title>
+  <title>tasks.models &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -171,14 +173,18 @@
         <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">MinValueValidator</span><span class="p">(</span><span class="mi">1</span><span class="p">)],</span>
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wanneer u bijvoorbeeld eerst de deelnemer observeert </span><span class="se">\</span>
 <span class="s1">en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven &quot;2&quot; in. </span><span class="se">\</span>
-<span class="s1">Electrodes plakken, sessie-debriefing en kort (&lt; 3 minuten) exit-interview gelden niet als een taak.&#39;</span><span class="p">))</span>
+<span class="s1">Electrodes plakken, sessie-debriefing en kort (&lt; 3 minuten) exit-interview gelden niet als een taak.&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
     <span class="n">tasks_duration</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;De totale geschatte netto taakduur van uw sessie komt </span><span class="se">\</span>
 <span class="s1">op basis van uw opgave per taak uit op &lt;strong&gt;</span><span class="si">%d</span><span class="s1"> minuten&lt;/strong&gt;. </span><span class="se">\</span>
 <span class="s1">Hoe lang duurt &lt;em&gt;de totale sessie&lt;/em&gt;, inclusief ontvangst, </span><span class="se">\</span>
 <span class="s1">instructies per taak, pauzes tussen taken, en debriefing? </span><span class="se">\</span>
 <span class="s1">(bij labbezoek dus van binnenkomst tot vertrek)&#39;</span><span class="p">),</span>
-        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="c1"># References</span>
     <span class="n">study</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Study</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
@@ -265,14 +271,20 @@
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wat is de naam van de taak?&#39;</span><span class="p">),</span>
-        <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort </span><span class="se">\</span>
 <span class="s1">uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de </span><span class="se">\</span>
 <span class="s1">beantwoording van uw onderzoeksvragen bijdraagt. </span><span class="se">\</span>
 <span class="s1">Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli </span><span class="se">\</span>
 <span class="s1">dat u van plan bent aan de deelnemer aan te bieden. </span><span class="se">\</span>
-<span class="s1">Het moet voor de commissieleden duidelijk zijn wat u precies gaat doen.&#39;</span><span class="p">))</span>
+<span class="s1">Het moet voor de commissieleden duidelijk zijn wat u precies gaat doen.&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">duration</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wat is de duur van deze taak van begin tot eind in &lt;strong&gt;minuten&lt;/strong&gt;, </span><span class="se">\</span>
 <span class="s1">dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak </span><span class="se">\</span>
@@ -280,27 +292,41 @@
 <span class="s1">Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), </span><span class="se">\</span>
 <span class="s1">geef dan &lt;strong&gt;het redelijkerwijs te verwachten maximum op&lt;/strong&gt;.&#39;</span><span class="p">),</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">MinValueValidator</span><span class="p">(</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">MinValueValidator</span><span class="p">(</span><span class="mi">1</span><span class="p">)],</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">registrations</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
         <span class="n">Registration</span><span class="p">,</span>
-        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?&#39;</span><span class="p">))</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
     <span class="n">registrations_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Namelijk&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">registration_kinds</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
         <span class="n">RegistrationKind</span><span class="p">,</span>
         <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Kies het soort meting&#39;</span><span class="p">),</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">registration_kinds_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Namelijk&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">feedback</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">NullBooleanField</span><span class="p">(</span>
-        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?&#39;</span><span class="p">))</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
     <span class="n">feedback_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf hoe de feedback wordt gegeven.&#39;</span><span class="p">),</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="c1"># References</span>
     <span class="n">session</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Session</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
@@ -335,7 +361,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -352,26 +378,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

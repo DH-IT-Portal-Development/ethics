@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>etcl.ldap_settings module &mdash; ETCL 1.0 documentation</title>
+  <title>fetc.settings module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="etcl.settings module" href="etcl.settings.html" />
-    <link rel="prev" title="etcl package" href="etcl.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
+    <link rel="next" title="fetc.urls module" href="fetc.urls.html" />
+    <link rel="prev" title="fetc.ldap_settings module" href="fetc.ldap_settings.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,18 +92,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="etcl.html">etcl package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="etcl.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">etcl.ldap_settings module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="etcl.settings.html">etcl.settings module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="etcl.urls.html">etcl.urls module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="etcl.wsgi.html">etcl.wsgi module</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="fetc.html">fetc package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="fetc.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="fetc.ldap_settings.html">fetc.ldap_settings module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">fetc.settings module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fetc.urls.html">fetc.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fetc.wsgi.html">fetc.wsgi module</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
@@ -124,7 +126,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -157,15 +159,15 @@
         
           <li><a href="index.html">etcl</a> &raquo;</li>
         
-          <li><a href="etcl.html">etcl package</a> &raquo;</li>
+          <li><a href="fetc.html">fetc package</a> &raquo;</li>
         
-      <li>etcl.ldap_settings module</li>
+      <li>fetc.settings module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/reference/etcl.ldap_settings.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/reference/fetc.settings.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -178,8 +180,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-etcl.ldap_settings">
-<span id="etcl-ldap-settings-module"></span><h1>etcl.ldap_settings module<a class="headerlink" href="#module-etcl.ldap_settings" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-fetc.settings">
+<span id="fetc-settings-module"></span><h1>fetc.settings module<a class="headerlink" href="#module-fetc.settings" title="Permalink to this headline">¶</a></h1>
+<p>Django settings for fetc project.</p>
+<p>Generated by ‘django-admin startproject’ using Django 1.8.9.</p>
+<p>For more information on this file, see
+<a class="reference external" href="https://docs.djangoproject.com/en/1.8/topics/settings/">https://docs.djangoproject.com/en/1.8/topics/settings/</a></p>
+<p>For the full list of settings and their values, see
+<a class="reference external" href="https://docs.djangoproject.com/en/1.8/ref/settings/">https://docs.djangoproject.com/en/1.8/ref/settings/</a></p>
 </div>
 
 
@@ -190,10 +198,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="etcl.settings.html" class="btn btn-neutral float-right" title="etcl.settings module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="fetc.urls.html" class="btn btn-neutral float-right" title="fetc.urls module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="etcl.html" class="btn btn-neutral" title="etcl package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fetc.ldap_settings.html" class="btn btn-neutral float-left" title="fetc.ldap_settings module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -202,7 +210,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -219,26 +227,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

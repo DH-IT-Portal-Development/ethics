@@ -1,7 +1,7 @@
-etcl.wsgi module
+fetc.wsgi module
 ================
 
-.. automodule:: etcl.wsgi
+.. automodule:: fetc.wsgi
     :members:
     :undoc-members:
     :show-inheritance:

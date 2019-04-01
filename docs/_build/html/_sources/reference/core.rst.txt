@@ -11,6 +11,7 @@ Subpackages
 
 .. toctree::
 
+    core.forms
     core.management
     core.templatetags
 
@@ -20,7 +21,6 @@ Submodules
 .. toctree::
 
    core.admin
-   core.forms
    core.models
    core.tests
    core.translation
