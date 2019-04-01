@@ -29,6 +29,6 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-admin.site.site_header = 'ETCL'
-admin.site.site_title = 'ETCL administratie'
-admin.site.index_title = 'ETCL administratie'
+admin.site.site_header = 'FETC-GW'
+admin.site.site_title = 'FETC-GW administratie'
+admin.site.index_title = 'FETC-GW administratie'

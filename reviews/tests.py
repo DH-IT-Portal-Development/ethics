@@ -55,8 +55,8 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(mail.outbox[0].subject, 'ETCL: bevestiging indienen concept-aanmelding')
-        self.assertEqual(mail.outbox[1].subject, 'ETCL: beoordelen als eindverantwoordelijke')
+        self.assertEqual(mail.outbox[0].subject, 'FETC-GW: bevestiging indienen concept-aanmelding')
+        self.assertEqual(mail.outbox[1].subject, 'FETC-GW: beoordelen als eindverantwoordelijke')
 
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
         self.proposal.relation = Relation.objects.get(pk=5)
@@ -68,8 +68,8 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(mail.outbox[2].subject, 'ETCL: nieuwe studie ingediend')
-        self.assertEqual(mail.outbox[3].subject, 'ETCL: aanmelding ontvangen')
+        self.assertEqual(mail.outbox[2].subject, 'FETC-GW: nieuwe studie ingediend')
+        self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
 
 
 class SupervisorTestCase(BaseReviewTestCase):
@@ -81,8 +81,8 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, None)
 
         self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(mail.outbox[0].subject, 'ETCL: bevestiging indienen concept-aanmelding')
-        self.assertEqual(mail.outbox[1].subject, 'ETCL: beoordelen als eindverantwoordelijke')
+        self.assertEqual(mail.outbox[0].subject, 'FETC-GW: bevestiging indienen concept-aanmelding')
+        self.assertEqual(mail.outbox[1].subject, 'FETC-GW: beoordelen als eindverantwoordelijke')
 
         decision = Decision.objects.filter(review=review)[0]
         decision.go = Decision.APPROVED
@@ -91,8 +91,8 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(mail.outbox[2].subject, 'ETCL: nieuwe studie ingediend')
-        self.assertEqual(mail.outbox[3].subject, 'ETCL: aanmelding ontvangen')
+        self.assertEqual(mail.outbox[2].subject, 'FETC-GW: nieuwe studie ingediend')
+        self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
 
 
 class AssignmentTestCase(BaseReviewTestCase):

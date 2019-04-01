@@ -1,12 +1,12 @@
-# Translation file for the etcl web application
+# Translation file for the fetc-h web application
 # Copyright (C) 2016
-# This file is distributed under the same license as the etcl package.
+# This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-01 13:04+0200\n"
+"POT-Creation-Date: 2019-04-01 13:37+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -75,18 +75,17 @@ msgid ""
 "Verklaring Omtrent Gedrag (VOG, zie         <a href=\"https://www.justis.nl/"
 "producten/vog/\"         target=\"_blank\">https://www.justis.nl/producten/"
 "vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te "
-"vragen.         De ETCL neemt hierin een adviserende rol en wil de "
+"vragen.         De FETC-GW neemt hierin een adviserende rol en wil de "
 "onderzoekers         waarschuwen dat de school om een VOG kan vragen."
 msgstr ""
 "Anybody who works at a school needs to be able to show a Certificate of "
 "Conduct (VOG, see <a href=\"https://www.justis.nl/producten/vog/\" target="
 "\"_blank\">https://www.justis.nl/producten/vog/</a>). It is the "
 "responsibility of the school to verify if the employees have such a VOG. The "
-"role of the EtCL in this matter is just to inform the researchers that the "
+"role of the FEtC-H in this matter is just to inform the researchers that the "
 "school probably will ask about this certificate."
 
 #: core/templates/base/base.html:8 core/templates/base/base.html:40
-#: core/templates/base/menu.html:60
 msgid "FETC-GW"
 msgstr "FEtC-H"
 
@@ -202,6 +201,10 @@ msgstr "View all applications"
 msgid "Site-export"
 msgstr "Site-export"
 
+#: core/templates/base/menu.html:60
+msgid "Algemene Kamer"
+msgstr "General Chamber"
+
 #: core/templates/base/menu.html:63 core/templates/base/menu.html:87
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
@@ -224,8 +227,8 @@ msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
 #: core/templates/base/menu.html:84
-msgid "ETCL"
-msgstr "ETCL"
+msgid "Linguïstiek Kamer"
+msgstr "Linguistics Chamber"
 
 #: core/templates/base/menu.html:107
 msgid "Help"
@@ -235,36 +238,40 @@ msgstr "Help"
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:113
-msgid "FETC-GW reglement"
-msgstr "FEtC-H regulations"
+#: core/templates/base/menu.html:113 core/templates/core/index.html:86
+msgid "Reglement Algemene Kamer (AK)"
+msgstr "Regulations General Chamber (GC)"
 
-#: core/templates/base/menu.html:116 core/templates/core/index.html:92
+#: core/templates/base/menu.html:116
+msgid " Reglement Linguïstiek Kamer (LK) "
+msgstr "Regulations Linguistics Chamber (LC)"
+
+#: core/templates/base/menu.html:119 core/templates/core/index.html:92
 #: proposals/templates/proposals/proposal_pdf.html:384
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:80
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: core/templates/base/menu.html:119
+#: core/templates/base/menu.html:122
 msgid "FAQs"
 msgstr "FAQs"
 
-#: core/templates/base/menu.html:122 feedback/models.py:20
+#: core/templates/base/menu.html:125 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:18
 msgid "Feedback"
 msgstr "Feedback"
 
-#: core/templates/base/menu.html:127
+#: core/templates/base/menu.html:130
 #: core/templates/registration/logged_out.html:6
 msgid "Uitloggen"
 msgstr "Log out"
 
-#: core/templates/base/menu.html:131
+#: core/templates/base/menu.html:134
 msgid "FETC-GW-website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:134 core/templates/registration/login.html:6
+#: core/templates/base/menu.html:137 core/templates/registration/login.html:6
 #: core/templates/registration/login.html:23
 msgid "Inloggen"
 msgstr "Log in"
@@ -388,12 +395,8 @@ msgstr "FEtC-H archive"
 msgid "Alle afgehandelde en goedgekeurde studies bekijken"
 msgstr "View all processed and approved studies"
 
-#: core/templates/core/index.html:86
-msgid "Reglement Algemene Kamer (GC)"
-msgstr "Regulations General Chamber (GC)"
-
 #: core/templates/core/index.html:89
-msgid "Reglement Linguïstiek Kamer (LC)"
+msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
 #: core/templates/core/index.html:95
@@ -425,7 +428,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    Click <a href=\"http://etcl.wp.hum.uu.nl\">here</a> to return to the "
+"    Click <a href=\"http://fetc-gw.wp.hum.uu.nl\">here</a> to return to the "
 "FEtC-H website.\n"
 "    "
 
@@ -449,13 +452,13 @@ msgstr ""
 #: core/templates/registration/logged_out.html:23
 msgid ""
 "\n"
-"\tKlik <a href=\"http://etcl.wp.hum.uu.nl\">hier</a> om terug te keren naar "
-"de ETCL-website.\n"
+"\tKlik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren "
+"naar de FETC-GW-website.\n"
 "\t"
 msgstr ""
 "\n"
-"\tClick <a href=\"http://etcl.wp.hum.uu.nl\">here</a> to return to the ETCL "
-"website.\n"
+"\tClick <a href=\"http://fetc-gw.wp.hum.uu.nl\">here</a> to return to the "
+"FEtC-H website.\n"
 "\t"
 
 #: core/templates/registration/login.html:14
@@ -532,8 +535,8 @@ msgid "Feedback versturen"
 msgstr "Send feedback"
 
 #: feedback/templates/feedback/feedback_form.html:14
-msgid "Hier kunt u feedback achterlaten op het ETCL portal."
-msgstr "You can leave feedback on the ETCL portal here."
+msgid "Hier kunt u feedback achterlaten op het FETC-GW portal."
+msgstr "You can leave feedback on the FEtC-H portal here."
 
 #: feedback/templates/feedback/feedback_form.html:20
 #: observations/templates/observations/observation_update_attachments.html:33
@@ -1118,7 +1121,7 @@ msgstr "Date confirmation sent"
 
 #: proposals/models.py:272 reviews/forms.py:62
 msgid "Is er een revisie geweest na het indienen van deze studie?"
-msgstr "Has this study been amended after it was submitted to the ETCL?"
+msgstr "Has this study been amended after it was submitted?"
 
 #: proposals/models.py:277
 msgid "Leg uit"
@@ -1264,11 +1267,11 @@ msgstr ""
 #: proposals/models.py:490
 msgid ""
 "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
-"ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
+"FETC-GW te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
 msgstr ""
 "Your study must be assessed by a METC, but it still needs to be registered "
-"with the ETCL. Has an application for this study already been submitted to a "
-"METC?"
+"with the FEtC-H. Has an application for this study already been submitted to "
+"a METC?"
 
 #: proposals/models.py:497
 msgid "Is de METC al tot een beslissing gekomen?"
@@ -2006,12 +2009,12 @@ msgstr "Hide"
 #, python-format
 msgid ""
 "\n"
-"    ETCL - <em>%(title)s</em> (referentienummer %(reference_number)s, "
+"    FETC-GW - <em>%(title)s</em> (referentienummer %(reference_number)s, "
 "ingediend door %(submitter)s)\n"
 "    "
 msgstr ""
 "\n"
-"    ETCL - <em>%(title)s</em> (reference number %(reference_number)s, "
+"    FEtC-H - <em>%(title)s</em> (reference number %(reference_number)s, "
 "submitted by %(submitter)s)\n"
 "    "
 
@@ -2055,12 +2058,13 @@ msgstr "Submit application"
 #: proposals/templates/proposals/proposal_pdf_empty.html:41
 msgid ""
 "\n"
-"    ETCL - <em>naam aanvraag</em> (referentienummer <em>referentienummer</"
+"    FETC-GW - <em>naam aanvraag</em> (referentienummer <em>referentienummer</"
 "em>)\n"
 "    "
 msgstr ""
 "\n"
-"    ETCL - <em>study name</em> (reference number <em>reference number</em>)\n"
+"    FEtC-H - <em>study name</em> (reference number <em>reference number</"
+"em>)\n"
 "    "
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:55
@@ -2086,12 +2090,12 @@ msgstr "Task"
 #, python-format
 msgid ""
 "\n"
-"    ETCL - Aanvraag voor voortoetsing <em>%(title)s</em> (referentienummer "
-"%(reference_number)s, ingediend door %(submitter)s)\n"
+"    FETC-GW - Aanvraag voor voortoetsing <em>%(title)s</em> "
+"(referentienummer %(reference_number)s, ingediend door %(submitter)s)\n"
 "    "
 msgstr ""
 "\n"
-"    ETCL - Application for preliminary assessment <em>%(title)s</em> "
+"    FEtC-H - Application for preliminary assessment <em>%(title)s</em> "
 "(reference number %(reference_number)s, submitted by %(submitter)s)\n"
 "    "
 
@@ -2317,11 +2321,11 @@ msgid ""
 msgstr ""
 "\n"
 "    This preliminary assessment of the grant application does not replace \n"
-"    regular EtCL assessment of specific studies; once applications have "
+"    regular FEtC-H assessment of specific studies; once applications have "
 "been \n"
 "    approved and been worked out in detail they should still be submitted "
 "to \n"
-"    the FEtC-GW for thorough assessment.\n"
+"    the FEtC-H for thorough assessment.\n"
 "    "
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:43
@@ -2375,13 +2379,13 @@ msgid ""
 "\n"
 "    Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd "
 "kunt u de aanmelding\n"
-"    nu ter beoordeling naar de ETCL versturen.\n"
+"    nu ter beoordeling naar de FETC-GW versturen.\n"
 "    "
 msgstr ""
 "\n"
 "    If you are sure your study is adequately specified, you can now submit "
 "the application\n"
-"    to the ETCL for assessment.\n"
+"    to the FEtC-H for assessment.\n"
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:34
@@ -2681,8 +2685,8 @@ msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
 #: proposals/utils/proposal_utils.py:203 reviews/utils.py:223
-msgid "ETCL: nieuwe studie ingediend"
-msgstr "ETCL: new application submitted"
+msgid "FETC-GW: nieuwe studie ingediend"
+msgstr "FEtC-H: new application submitted"
 
 #: proposals/utils/validate_proposal.py:98
 msgid "De deelnemers (traject {})"
@@ -2841,16 +2845,16 @@ msgid "Afgesloten"
 msgstr "Concluded"
 
 #: reviews/models.py:34
-msgid "Goedkeuring door ETCL"
-msgstr "Approval by ETCL"
+msgid "Goedkeuring door FETC-GW"
+msgstr "Approval by FEtC-H"
 
 #: reviews/models.py:35
 msgid "Revisie noodzakelijk"
 msgstr "Revision necessary"
 
 #: reviews/models.py:36
-msgid "Afwijzing door ETCL"
-msgstr "Rejection by ETCL"
+msgid "Afwijzing door FETC-GW"
+msgstr "Rejection by FEtC-H"
 
 #: reviews/models.py:37
 msgid "Open review met lange (4-weken) route"
@@ -3177,8 +3181,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        A revision was made to this study after it was submitted to the "
-"ETCL .\n"
+"        A revision was made to this study after it was submitted to the FEtC-"
+"H .\n"
 "    "
 
 #: reviews/templates/reviews/review_detail.html:68
@@ -3269,39 +3273,39 @@ msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
 #: reviews/utils.py:51
-msgid "ETCL: bevestiging indienen concept-aanmelding"
-msgstr "ETCL: confirmation of draft application submission"
+msgid "FETC-GW: bevestiging indienen concept-aanmelding"
+msgstr "FEtC-H: confirmation of draft application submission"
 
 #: reviews/utils.py:59
-msgid "ETCL: beoordelen als eindverantwoordelijke"
-msgstr "ETCL: assess as researcher with final responsibility"
+msgid "FETC-GW: beoordelen als eindverantwoordelijke"
+msgstr "FEtC-H: assess as researcher with final responsibility"
 
 #: reviews/utils.py:136
-msgid "ETCL: aanmelding ontvangen"
-msgstr "ETCL: application received"
+msgid "FETC-GW: aanmelding ontvangen"
+msgstr "FEtC-H: application received"
 
 #: reviews/utils.py:181
-msgid "ETCL: nieuwe aanvraag voor voortoetsing"
-msgstr "ETCL: new application for preliminary assessment"
+msgid "FETC-GW: nieuwe aanvraag voor voortoetsing"
+msgstr "FEtC-H: new application for preliminary assessment"
 
 #: reviews/utils.py:191
-msgid "ETCL: bevestiging indienen aanvraag voor voortoetsing"
+msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
-"ETCL: confirmation of submission of application for preliminary assessment"
+"FEtC-H: confirmation of submission of application for preliminary assessment"
 
 #: reviews/utils.py:207
-msgid "ETCL: nieuwe studie ter beoordeling"
-msgstr "ETCL: new study for assessment"
+msgid "FETC-GW: nieuwe studie ter beoordeling"
+msgstr "FEtC-H: new study for assessment"
 
 #: reviews/utils.py:237
-msgid "ETCL: nieuwe beoordeling toegevoegd"
-msgstr "ETCL: new decision added"
+msgid "FETC-GW: nieuwe beoordeling toegevoegd"
+msgstr "FEtC-H: new decision added"
 
-#: reviews/utils.py:256
+#: reviews/utils.py:257
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:260
+#: reviews/utils.py:261
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -3310,25 +3314,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils.py:263
+#: reviews/utils.py:264
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:266
+#: reviews/utils.py:267
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:272
+#: reviews/utils.py:273
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:275
+#: reviews/utils.py:276
 msgid "De beloning van deelnemers wijkt af van de UiL OTS standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the UiL OTS standard "
 "regulations."
 
-#: reviews/utils.py:278
+#: reviews/utils.py:279
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -3336,7 +3340,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:284
+#: reviews/utils.py:285
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -3344,7 +3348,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:287
+#: reviews/utils.py:288
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -3354,7 +3358,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:291
+#: reviews/utils.py:292
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -3364,13 +3368,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:298
+#: reviews/utils.py:299
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:302
+#: reviews/utils.py:303
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -3381,13 +3385,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:318
+#: reviews/utils.py:320
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:322
+#: reviews/utils.py:324
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -3395,7 +3399,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:324
+#: reviews/utils.py:326
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -3405,7 +3409,7 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:341
+#: reviews/utils.py:344
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -3413,7 +3417,7 @@ msgstr ""
 "The study uses psychophysiological measurements on children under {} year(s) "
 "old."
 
-#: reviews/utils.py:346
+#: reviews/utils.py:349
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
@@ -4384,6 +4388,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Taakonderzoek  en interviews"
-#~ msgstr "Task-based research  en interviews"

@@ -488,7 +488,7 @@ slechts dan kan "nee" ingevuld worden.'),
 
     metc_application = models.BooleanField(
         _('Uw studie moet beoordeeld worden door de METC, maar dient nog \
-wel bij de ETCL te worden geregistreerd. Is deze studie al aangemeld \
+wel bij de FETC-GW te worden geregistreerd. Is deze studie al aangemeld \
 bij een METC?'),
         default=False,
     )

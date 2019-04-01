@@ -200,7 +200,7 @@ def notify_local_staff(proposal):
 
     secretary = get_secretary()
 
-    subject = _('ETCL: nieuwe studie ingediend')
+    subject = _('FETC-GW: nieuwe studie ingediend')
     params = {
         'secretary': secretary.get_full_name(),
         'proposal': proposal,

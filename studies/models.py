@@ -202,8 +202,8 @@ cadeautje.'),
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
 passieve informed consent. U kunt de templates vinden op \
-<a href="https://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" \
-target="_blank">de ETCL-website</a>.')))
+<a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" \
+target="_blank">de FETC-GW-website</a>.')))
     passive_consent_details = models.TextField(
         _('Licht uw antwoord toe. Wij willen u wijzen op het reglement, \
 sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
@@ -421,7 +421,7 @@ class Documents(models.Model):
         validators=[validate_pdf_or_doc],
         help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
                    'you can upload the unsigned document and send the document when it is signed to the'
-                   ' secretary of the EtCL')
+                   ' secretary of the FEtC-H')
     )
 
     director_consent_information = models.FileField(
