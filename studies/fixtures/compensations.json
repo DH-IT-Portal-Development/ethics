@@ -15,8 +15,8 @@
         "requires_review": false,
         "needs_details": false,
         "order": 2,
-        "description_nl": "geld, standaardbedrag (10 euro per uur) of minder",
-        "description_en": "money, default compensation (10 euro per hour) or less"
+        "description_nl": "geld, 10 euro per uur of minder",
+        "description_en": "money, 10 euro per hour or less"
     },
     "model": "studies.compensation",
     "pk": 2
@@ -26,8 +26,8 @@
         "requires_review": true,
         "needs_details": true,
         "order": 3,
-        "description_nl": "geld, meer dan 10 euro per uur",
-        "description_en": "money, more than 10 euro per hour"
+        "description_nl": "geld, (meer dan 10 euro per uur)",
+        "description_en": "money, (more than 10 euro per hour)"
     },
     "model": "studies.compensation",
     "pk": 3
