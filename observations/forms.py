@@ -16,7 +16,7 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
             'details_who', 'details_why', 'details_frequency',
             'is_anonymous', 'is_anonymous_details', 'is_in_target_group',
             'is_in_target_group_details', 'is_nonpublic_space', 'is_nonpublic_space_details',
-            'has_advanced_consent',
+            'has_advanced_consent', 'has_advanced_consent_details',
             'needs_approval', 'approval_institution',
             'registrations', 'registrations_details',
         ]

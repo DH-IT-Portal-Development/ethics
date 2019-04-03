@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-03 10:05+0200\n"
+"POT-Creation-Date: 2019-04-03 10:30+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -20,8 +20,8 @@ msgstr ""
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
 #: core/forms/conditional_form.py:48 core/forms/mixins.py:83
-#: proposals/forms.py:377 proposals/forms.py:457 studies/forms.py:87
-#: studies/forms.py:97 studies/forms.py:102 tasks/forms.py:84
+#: proposals/forms.py:377 proposals/forms.py:457 studies/forms.py:100
+#: studies/forms.py:111 studies/forms.py:117 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -39,7 +39,7 @@ msgstr "uncertain"
 
 #: core/models.py:27
 #: interventions/templates/interventions/intervention_form.html:25
-#: observations/templates/observations/observation_form.html:32
+#: observations/templates/observations/observation_form.html:34
 #: studies/templates/studies/study_end.html:63
 #: studies/templates/studies/study_end.html:93
 msgid "Setting"
@@ -49,7 +49,7 @@ msgstr "Setting"
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: core/models.py:39 observations/models.py:115 proposals/models.py:164
+#: core/models.py:39 observations/models.py:129 proposals/models.py:164
 #: studies/models.py:151 studies/models.py:183 tasks/models.py:151
 #: tasks/models.py:163
 msgid "Namelijk"
@@ -688,11 +688,11 @@ msgstr ""
 msgid "Interventie opgeslagen"
 msgstr "Intervention saved"
 
-#: observations/models.py:32
+#: observations/models.py:34
 msgid "Beschrijf <b>wie</b> er wordt geobserveerd."
 msgstr "Describe <b>who</b> will be observed."
 
-#: observations/models.py:33
+#: observations/models.py:36
 msgid ""
 "Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies "
 "van de deelnemer wordt geobserveerd. Bijvoorbeeld: De leraar zal "
@@ -703,11 +703,11 @@ msgstr ""
 "will be observed. For example: The teacher will be observed. The observation "
 "of interest is the interaction between the teacher and his/her pupils."
 
-#: observations/models.py:40
+#: observations/models.py:43
 msgid "Beschrijf <b>waarom</b> er wordt geobserveerd."
 msgstr "Describe <b>why</b> the participant will be observed."
 
-#: observations/models.py:41
+#: observations/models.py:45
 msgid ""
 "Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie "
 "is inzicht te krijgen in hoe de leerkracht omgaat met de uitleg van de "
@@ -719,42 +719,42 @@ msgstr ""
 "method. One question to be answered will be whether the teachers explain the "
 "new method well in understandable language. "
 
-#: observations/models.py:48
+#: observations/models.py:53
 msgid "Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd."
 msgstr ""
 "Describe <b>how often and how long</b> the participant will be observed."
 
-#: observations/models.py:49
+#: observations/models.py:54
 msgid ""
 "Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd."
 msgstr ""
 "For example: Each teacher will be observed during 5 lessons of 45 minutes. "
 
-#: observations/models.py:55
+#: observations/models.py:60
 msgid "Wordt er anoniem geobserveerd?"
 msgstr "Will the observation be anonymous?"
 
-#: observations/models.py:56
+#: observations/models.py:62
 msgid ""
 "Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft."
 msgstr "As might happen on forums where the researcher also has an account."
 
-#: observations/models.py:61 observations/models.py:71
-#: observations/models.py:84 proposals/models.py:472 studies/models.py:141
+#: observations/models.py:67 observations/models.py:77
+#: observations/models.py:90 proposals/models.py:472 studies/models.py:141
 #: studies/models.py:171 studies/models.py:300
 msgid "Licht toe"
 msgstr "Explain"
 
-#: observations/models.py:66
+#: observations/models.py:72
 msgid "Doet de onderzoeker zich voor als behorende tot de doelgroep?"
 msgstr ""
 "Will the researcher present him/herself as belonging to the target group?"
 
-#: observations/models.py:76
+#: observations/models.py:82
 msgid "Wordt er geobserveerd in een niet-openbare ruimte?"
 msgstr "Will observations be made in a non-public space?"
 
-#: observations/models.py:77
+#: observations/models.py:83
 msgid ""
 "Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een "
 "hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor "
@@ -764,11 +764,19 @@ msgstr ""
 "negotiation, during a police interrogation or in a forum for which an "
 "account must be created."
 
-#: observations/models.py:89
+#: observations/models.py:95
 msgid "Vindt informed consent van tevoren plaats?"
 msgstr "Will informed consent take place beforehand?"
 
-#: observations/models.py:94
+#: observations/models.py:101
+msgid ""
+"Leg uit waarom informed consent niet van te voren plaatsvindt en geef ook op "
+"welke wijze dit achteraf verzorgd wordt."
+msgstr ""
+"Please explain why informed consent is not taken beforehand and how it will "
+"be taken afterwards."
+
+#: observations/models.py:108
 msgid ""
 "Heeft u toestemming nodig van een (samenwerkende) instantie om deze "
 "observatie te mogen uitvoeren?"
@@ -776,23 +784,23 @@ msgstr ""
 "Do you need permission from a (collaborating) institution in order to carry "
 "out this observation?"
 
-#: observations/models.py:100
+#: observations/models.py:114
 msgid "Welke instantie?"
 msgstr "Which institution?"
 
-#: observations/models.py:106
+#: observations/models.py:120
 msgid "Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)"
 msgstr "Upload the permission document (in .pdf or .doc(x)-format) here"
 
-#: observations/models.py:113
+#: observations/models.py:127
 msgid "Hoe wordt het gedrag geregistreerd?"
 msgstr "How will the behaviour be recorded?"
 
-#: observations/models.py:122
+#: observations/models.py:135
 msgid "Op hoeveel dagen wordt er geobserveerd (per deelnemer)?"
 msgstr "How many days will observations be taken on (per participant)?"
 
-#: observations/models.py:126
+#: observations/models.py:139
 msgid "Hoeveel uur wordt er gemiddeld per dag geobserveerd?"
 msgstr "How many hours of observation will take place on average per day?"
 
@@ -803,19 +811,19 @@ msgstr "How many hours of observation will take place on average per day?"
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
-#: observations/templates/observations/observation_form.html:33
+#: observations/templates/observations/observation_form.html:35
 msgid "Details observatie"
 msgstr "Details of observation"
 
-#: observations/templates/observations/observation_form.html:34
+#: observations/templates/observations/observation_form.html:36
 msgid "Anonimiteit"
 msgstr "Anonymity"
 
-#: observations/templates/observations/observation_form.html:35
+#: observations/templates/observations/observation_form.html:37
 msgid "Toestemming"
 msgstr "Permission"
 
-#: observations/templates/observations/observation_form.html:36
+#: observations/templates/observations/observation_form.html:38
 msgid "Registratie gedrag"
 msgstr "Recording behaviour"
 
@@ -1400,7 +1408,7 @@ msgstr "yes,no,"
 #: proposals/templates/proposals/pdf/observation_v2.html:42
 #: proposals/templates/proposals/pdf/observation_v2.html:50
 #: proposals/templates/proposals/pdf/observation_v2.html:57
-#: proposals/templates/proposals/pdf/observation_v2.html:62
+#: proposals/templates/proposals/pdf/observation_v2.html:67
 #: proposals/templates/proposals/proposal_diff.html:36
 #: proposals/templates/proposals/proposal_diff.html:37
 #: proposals/templates/proposals/proposal_diff.html:48
@@ -3488,11 +3496,18 @@ msgstr ""
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: studies/forms.py:73
+#: studies/forms.py:36 studies/models.py:130
+msgid ""
+"Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
+msgstr ""
+"Does your study make use of (adult) participants <u>incapable</u> of "
+"informed consent?"
+
+#: studies/forms.py:81
 msgid "U dient minimaal een bijzonder kenmerk te selecteren."
 msgstr "You are required to select at least one special characteristic."
 
-#: studies/forms.py:118
+#: studies/forms.py:135
 msgid "U dient minstens één van de opties te selecteren"
 msgstr "You must select at least one of the options"
 
@@ -3537,13 +3552,6 @@ msgid ""
 msgstr ""
 "If the intended age group is 5-7 year-olds, for example, then you should "
 "fill in 4-5 and 6-11."
-
-#: studies/models.py:130
-msgid ""
-"Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
-msgstr ""
-"Does your study make use of (adult) participants <u>incapable</u> of "
-"informed consent?"
 
 #: studies/models.py:132
 msgid ""

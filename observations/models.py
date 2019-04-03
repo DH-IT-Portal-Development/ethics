@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
-from django.db import models
+
 from django.core.validators import MaxValueValidator
-from django.utils.translation import ugettext_lazy as _
+from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
 from core.models import SettingModel
 from core.validators import validate_pdf_or_doc
 from studies.models import Study
+
 
 @python_2_unicode_compatible
 class Registration(models.Model):
@@ -22,30 +24,33 @@ class Registration(models.Model):
 
 
 class Observation(SettingModel):
-
     # This is used internally to provide backwards compatibility with the old version of this model. All old fields are
     # still used if this is 1.
-    version = models.PositiveIntegerField('INTERNAL - Describes which version of the observation model is used',
-                                          default=2)
+    version = models.PositiveIntegerField(
+        'INTERNAL - Describes which version of the observation model is used',
+        default=2)
 
     details_who = models.TextField(
         _('Beschrijf <b>wie</b> er wordt geobserveerd.'),
-        help_text=_('Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt'
-                    ' geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie '
-                    'tussen leraar en leerling in kaart brengen.'),
+        help_text=_(
+            'Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt'
+            ' geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie '
+            'tussen leraar en leerling in kaart brengen.'),
         blank=True,
     )
 
     details_why = models.TextField(
         _('Beschrijf <b>waarom</b> er wordt geobserveerd.'),
-        help_text=_('Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen '
-                    'in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste '
-                    'manier en in begrijpelijke taal?'),
+        help_text=_(
+            'Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen '
+            'in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste '
+            'manier en in begrijpelijke taal?'),
         blank=True,
     )
 
     details_frequency = models.TextField(
-        _('Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd.'),
+        _(
+            'Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd.'),
         help_text=_('Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten '
                     'worden geobserveerd.'),
         blank=True,
@@ -53,7 +58,8 @@ class Observation(SettingModel):
 
     is_anonymous = models.BooleanField(
         _('Wordt er anoniem geobserveerd?'),
-        help_text=_('Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.'),
+        help_text=_(
+            'Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.'),
         default=False,
     )
 
@@ -90,6 +96,14 @@ een account voor moet worden aangemaakt.'),
         default=True,
     )
 
+    has_advanced_consent_details = models.TextField(
+        _(
+            'Leg uit waarom informed consent niet van te voren plaatsvindt en '
+            'geef ook op welke wijze dit achteraf verzorgd wordt.'
+        ),
+        blank=True,
+    )
+
     needs_approval = models.BooleanField(
         _('Heeft u toestemming nodig van een (samenwerkende) instantie \
 om deze observatie te mogen uitvoeren?'),
@@ -115,7 +129,6 @@ om deze observatie te mogen uitvoeren?'),
         _('Namelijk'),
         max_length=200,
         blank=True)
-
 
     # Legacy, only used in v1
     days = models.PositiveIntegerField(
