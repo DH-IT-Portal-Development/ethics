@@ -33,6 +33,7 @@ def copy_proposal(self, form):
     copy_proposal.date_reviewed_supervisor = None
     copy_proposal.date_submitted = None
     copy_proposal.date_reviewed = None
+    copy_proposal.date_confirmed = None
     copy_proposal.is_exploration = False
     copy_proposal.in_course = False
     copy_proposal.is_revision = form.cleaned_data['is_revision']
