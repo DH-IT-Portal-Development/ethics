@@ -90,7 +90,8 @@ class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
         reviews = {}
         objects = Review.objects.filter(
             stage__gte=Review.CLOSING,
-            proposal__status=Proposal.SUBMITTED,
+            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__date_confirmed=None,
         ).filter(
             Q(continuation=Review.GO) |
             Q(continuation=None)
