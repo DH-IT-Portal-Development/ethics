@@ -5,9 +5,9 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from core.forms import ConditionalModelForm, SoftValidationMixin
-from core.models import YES_NO_DOUBT, YES, DOUBT
+from core.models import DOUBT, YES, YES_NO_DOUBT
 from core.utils import YES_NO
-from .models import Study, AgeGroup, Documents
+from .models import AgeGroup, Documents, Study
 from .utils import check_necessity_required
 
 
@@ -23,14 +23,19 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             'compensation', 'compensation_details',
         ]
         widgets = {
-            'age_groups': forms.CheckboxSelectMultiple(),
-            'passive_consent': forms.RadioSelect(choices=YES_NO),
+            'age_groups':        forms.CheckboxSelectMultiple(),
+            'passive_consent':   forms.RadioSelect(choices=YES_NO),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
-            'has_traits': forms.RadioSelect(choices=YES_NO),
-            'traits': forms.CheckboxSelectMultiple(),
-            'necessity': forms.RadioSelect(),
-            'recruitment': forms.CheckboxSelectMultiple(),
-            'compensation': forms.RadioSelect(),
+            'has_traits':        forms.RadioSelect(choices=YES_NO),
+            'traits':            forms.CheckboxSelectMultiple(),
+            'necessity':         forms.RadioSelect(),
+            'recruitment':       forms.CheckboxSelectMultiple(),
+            'compensation':      forms.RadioSelect(),
+        }
+        labels = {
+            'legally_incapable': mark_safe(_('Maakt uw studie gebruik van '
+                                             'wils<u>on</u>bekwame ('
+                                             'volwassen) deelnemers?'))
         }
 
     def __init__(self, *args, **kwargs):
@@ -44,12 +49,13 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.proposal = kwargs.pop('proposal', None)
 
         super(StudyForm, self).__init__(*args, **kwargs)
-        self.fields['legally_incapable'].label = mark_safe(self.fields['legally_incapable'].label)
+        self.fields['legally_incapable'].label = "Geert"
         self.fields['compensation'].empty_label = None
         self.fields['necessity'].empty_label = None
         self.fields['necessity'].choices = YES_NO_DOUBT
 
-        self.fields['age_groups'].queryset = AgeGroup.objects.filter(is_active=True)
+        self.fields['age_groups'].queryset = AgeGroup.objects.filter(
+            is_active=True)
 
     def clean(self):
         """
@@ -68,23 +74,31 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
 
         self.necessity_required(cleaned_data)
         self.passive_consent(cleaned_data)
-        self.check_dependency(cleaned_data, 'legally_incapable', 'legally_incapable_details')
+        self.check_dependency(cleaned_data, 'legally_incapable',
+                              'legally_incapable_details')
         self.check_empty(cleaned_data, 'has_traits')
-        self.check_dependency(cleaned_data, 'has_traits', 'traits', _('U dient minimaal een bijzonder kenmerk te selecteren.'))
-        self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details', 'traits_details')
-        self.check_dependency_singular(cleaned_data, 'compensation', 'needs_details', 'compensation_details')
-        self.check_dependency_multiple(cleaned_data, 'recruitment', 'needs_details', 'recruitment_details')
+        self.check_dependency(cleaned_data, 'has_traits', 'traits', _(
+            'U dient minimaal een bijzonder kenmerk te selecteren.'))
+        self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details',
+                                       'traits_details')
+        self.check_dependency_singular(cleaned_data, 'compensation',
+                                       'needs_details', 'compensation_details')
+        self.check_dependency_multiple(cleaned_data, 'recruitment',
+                                       'needs_details', 'recruitment_details')
 
     def necessity_required(self, cleaned_data):
         """
         Check whether necessity_reason was required and if so, if it has been filled out.
         """
-        age_groups = cleaned_data['age_groups'].values_list('id', flat=True) if 'age_groups' in cleaned_data else []
+        age_groups = cleaned_data['age_groups'].values_list('id',
+                                                            flat=True) if 'age_groups' in cleaned_data else []
         has_traits = bool(cleaned_data['has_traits'])
         legally_incapable = bool(cleaned_data['legally_incapable'])
-        if check_necessity_required(self.proposal, age_groups, has_traits, legally_incapable):
+        if check_necessity_required(self.proposal, age_groups, has_traits,
+                                    legally_incapable):
             if not cleaned_data['necessity_reason']:
-                error = forms.ValidationError(_('Dit veld is verplicht.'), code='required')
+                error = forms.ValidationError(_('Dit veld is verplicht.'),
+                                              code='required')
                 self.add_error('necessity_reason', error)
 
     def passive_consent(self, cleaned_data):
@@ -94,12 +108,14 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
 
         if cleaned_data['age_groups'].filter(is_adult=False).exists():
             if not 'passive_consent' in cleaned_data:
-                error = forms.ValidationError(_('Dit veld is verplicht.'), code='required')
+                error = forms.ValidationError(_('Dit veld is verplicht.'),
+                                              code='required')
                 self.add_error('passive_consent', error)
 
-
-            if cleaned_data['passive_consent'] and not cleaned_data['passive_consent_details']:
-                error = forms.ValidationError(_('Dit veld is verplicht.'), code='required')
+            if cleaned_data['passive_consent'] and not cleaned_data[
+                'passive_consent_details']:
+                error = forms.ValidationError(_('Dit veld is verplicht.'),
+                                              code='required')
                 self.add_error('passive_consent_details', error)
 
 
@@ -114,9 +130,11 @@ class StudyDesignForm(forms.ModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        if not (cleaned_data.get('has_intervention') or cleaned_data.get('has_observation') or cleaned_data.get('has_sessions')):
+        if not (cleaned_data.get('has_intervention') or cleaned_data.get(
+                'has_observation') or cleaned_data.get('has_sessions')):
             msg = _(u'U dient minstens één van de opties te selecteren')
-            self.add_error('has_sessions', forms.ValidationError(msg, code='required'))
+            self.add_error('has_sessions',
+                           forms.ValidationError(msg, code='required'))
 
 
 class StudyConsentForm(ConditionalModelForm):
@@ -133,7 +151,7 @@ class StudyConsentForm(ConditionalModelForm):
         ]
         widgets = {
             'proposal': forms.HiddenInput,
-            'study': forms.HiddenInput
+            'study':    forms.HiddenInput
         }
 
     def clean(self):
@@ -150,10 +168,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             'risk', 'risk_details'
         ]
         widgets = {
-            'deception': forms.RadioSelect(),
+            'deception':  forms.RadioSelect(),
             'negativity': forms.RadioSelect(),
-            'stressful': forms.RadioSelect(),
-            'risk': forms.RadioSelect(),
+            'stressful':  forms.RadioSelect(),
+            'risk':       forms.RadioSelect(),
         }
 
     _soft_validation_fields = [
@@ -186,8 +204,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         self.fields['risk'].empty_label = None
         self.fields['risk'].choices = YES_NO_DOUBT
 
-        self.fields['negativity'].label = mark_safe(self.fields['negativity'].label)
-        self.fields['stressful'].label = mark_safe(self.fields['stressful'].label)
+        self.fields['negativity'].label = mark_safe(
+            self.fields['negativity'].label)
+        self.fields['stressful'].label = mark_safe(
+            self.fields['stressful'].label)
         self.fields['risk'].label = mark_safe(self.fields['risk'].label)
 
         if not self.study.has_sessions:
@@ -215,17 +235,24 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         if 'deception' in self.fields:
             self.mark_soft_required(cleaned_data, 'deception')
 
-        self.check_dependency_list(cleaned_data, 'deception', 'deception_details', f1_value_list=[YES, DOUBT])
-        self.check_dependency_list(cleaned_data, 'negativity', 'negativity_details', f1_value_list=[YES, DOUBT])
-        self.check_dependency_list(cleaned_data, 'stressful', 'stressful_details', f1_value_list=[YES, DOUBT])
-        self.check_dependency_list(cleaned_data, 'risk', 'risk_details', f1_value_list=[YES, DOUBT])
+        self.check_dependency_list(cleaned_data, 'deception',
+                                   'deception_details',
+                                   f1_value_list=[YES, DOUBT])
+        self.check_dependency_list(cleaned_data, 'negativity',
+                                   'negativity_details',
+                                   f1_value_list=[YES, DOUBT])
+        self.check_dependency_list(cleaned_data, 'stressful',
+                                   'stressful_details',
+                                   f1_value_list=[YES, DOUBT])
+        self.check_dependency_list(cleaned_data, 'risk', 'risk_details',
+                                   f1_value_list=[YES, DOUBT])
 
 
 class StudyUpdateAttachmentsForm(forms.ModelForm):
     class Meta:
         model = Documents
         fields = [
-            #'passive_consent',
+            # 'passive_consent',
             'informed_consent',
             'briefing',
             'director_consent_declaration',
@@ -233,7 +260,7 @@ class StudyUpdateAttachmentsForm(forms.ModelForm):
             'parents_information'
         ]
         widgets = {
-            #'passive_consent': forms.HiddenInput
+            # 'passive_consent': forms.HiddenInput
         }
 
 

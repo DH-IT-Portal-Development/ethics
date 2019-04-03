@@ -89,6 +89,16 @@ $(function() {
     gespecificeerd moeten worden.
     {% endblocktrans %}
 </p>
+<p>
+    {% blocktrans %}
+    NB: Ook wanneer u met verschillende leeftijdsgroepen
+    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante
+    leeftijdsgroepen naar
+    <a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">de
+    verschillende soort toestemmingsverklaringen</a> die de FETC aanbiedt op de
+    website
+    {% endblocktrans %}
+</p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>
         {{ form.as_table }}

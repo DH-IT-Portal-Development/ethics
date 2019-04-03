@@ -241,7 +241,6 @@ class ProposalStart(generic.TemplateView):
         """Adds secretary and link to regulations to template context"""
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context['secretary'] = get_secretary()
-        context['regulations'] = 'https://fetc-gw.wp.hum.uu.nl/reglement/'
         return context
 
 
