@@ -381,9 +381,6 @@ geschoolde specialisten).')),
         if self.passive_consent:
             return False
 
-        if self.has_observation and self.observation.needs_approval:
-            return True
-
         return self.research_settings_contains_schools() and not self.has_participants_below_age(16)
 
 
