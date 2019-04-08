@@ -5,7 +5,7 @@ django-easy-pdf
 django-modeltranslation
 mysqlclient<1.4.0
 xhtml2pdf
-sphinx
+sphinx<2
 sphinx_rtd_theme
 sphinxcontrib-apidoc
 sphinxcontrib-django
