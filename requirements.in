@@ -11,3 +11,4 @@ sphinxcontrib-apidoc
 sphinxcontrib-django
 html5lib
 django-user-agents
+pillow<6
