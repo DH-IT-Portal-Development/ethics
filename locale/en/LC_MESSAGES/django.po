@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-16 13:08+0200\n"
+"POT-Creation-Date: 2019-05-28 15:26+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -869,11 +869,11 @@ msgstr "Professor"
 msgid ""
 "Vul hier de docent van de cursus in waarbinnen u deze portal moet doorlopen. "
 "De docent kan na afloop de studie inkijken in de portal. De studie zal niet "
-"in het semipublieke archief van het UiL OTS worden opgenomen."
+"in het semipublieke archief van het FETC-GW worden opgenomen."
 msgstr ""
 "Here you should fill in the name of the professor of the course you are "
 "taking. The professor is able to look at your study in the portal. This "
-"study will not be published in the semipublic archive of the UiL OTS."
+"study will not be published in the semipublic archive of the FEtC-H."
 
 #: proposals/forms.py:152
 msgid "U dient een eindverantwoordelijke op te geven."
@@ -2879,8 +2879,8 @@ msgid "Selecteer de commissieleden"
 msgstr "Select committee members"
 
 #: reviews/forms.py:85
-msgid "Voeg deze studie toe aan het UiL OTS archief"
-msgstr "Add this study to the UiL OTS archive"
+msgid "Voeg deze studie toe aan het archief"
+msgstr "Add this study to the archive"
 
 #: reviews/forms.py:91
 msgid "Opmerkingen over revisie"
@@ -3398,12 +3398,12 @@ msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
 #: reviews/utils.py:276
-msgid "De beloning van deelnemers wijkt af van de UiL OTS standaardregeling."
+msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
-"The compensation to participants differs from that of the UiL OTS standard "
+"The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils.py:279
+#: reviews/utils.py:280
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -3411,7 +3411,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:285
+#: reviews/utils.py:286
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -3419,7 +3419,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:288
+#: reviews/utils.py:289
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -3429,7 +3429,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:292
+#: reviews/utils.py:293
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -3439,13 +3439,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:299
+#: reviews/utils.py:300
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:303
+#: reviews/utils.py:304
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -3456,13 +3456,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:320
+#: reviews/utils.py:321
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:324
+#: reviews/utils.py:325
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -3470,7 +3470,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:326
+#: reviews/utils.py:327
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -3480,7 +3480,7 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:344
+#: reviews/utils.py:345
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -3488,7 +3488,7 @@ msgstr ""
 "The study uses psychophysiological measurements on children under {} year(s) "
 "old."
 
-#: reviews/utils.py:349
+#: reviews/utils.py:350
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 

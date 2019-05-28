@@ -104,7 +104,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             self.fields['supervisor'].help_text = _('Vul hier de docent van \
 de cursus in waarbinnen u deze portal moet doorlopen. De docent kan na afloop \
 de studie inkijken in de portal. De studie zal niet in het semipublieke archief \
-van het UiL OTS worden opgenomen.')
+van het FETC-GW worden opgenomen.')
 
         if is_pre_assessment:
             self.fields['relation'].queryset = Relation.objects.filter(

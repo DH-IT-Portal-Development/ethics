@@ -82,7 +82,7 @@ class ReviewCloseForm(forms.ModelForm):
         if not allow_long_route_continuation:
             self.fields['continuation'].choices = [x for x in Review.CONTINUATIONS if x[0] != Review.LONG_ROUTE]
 
-        self.fields['in_archive'].label = _('Voeg deze studie toe aan het UiL OTS archief')
+        self.fields['in_archive'].label = _('Voeg deze studie toe aan het archief')
         self.fields['in_archive'].widget = forms.RadioSelect(choices=YES_NO)
 
         self.fields['has_minor_revision'].label = _('Is er een revisie geweest na het indienen van deze studie?')

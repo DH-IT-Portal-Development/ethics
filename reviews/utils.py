@@ -273,7 +273,8 @@ def auto_review(proposal):
             reasons.append(_('De studie maakt gebruik van misleiding.'))
 
         if study.compensation.requires_review:
-            reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
+            reasons.append(_('De beloning van deelnemers wijkt af van de '
+                             'standaardregeling.'))
 
         if study.has_traits:
             reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
