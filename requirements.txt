@@ -13,7 +13,7 @@ django-braces==1.13.0
 django-easy-pdf==0.1.1
 django-modeltranslation==0.13.1
 django-user-agents==0.3.2
-django==1.11.20
+django==1.11.21
 docutils==0.14            # via sphinx
 html5lib==1.0.1
 idna==2.8                 # via requests
@@ -45,3 +45,5 @@ urllib3==1.24.3           # via requests
 user-agents==2.0          # via django-user-agents
 webencodings==0.5.1       # via html5lib
 xhtml2pdf==0.2.3
+
+#
