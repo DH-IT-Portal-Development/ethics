@@ -26,7 +26,7 @@ pbr==5.3.1                # via sphinxcontrib-apidoc
 pillow==5.4.1
 pyasn1-modules==0.2.5     # via python-ldap
 pyasn1==0.4.5             # via pyasn1-modules, python-ldap
-pygments==2.4.2           # via sphinx
+pygments==2.3.1
 pyparsing==2.4.0          # via packaging
 pypdf2==1.26.0            # via xhtml2pdf
 python-ldap==3.2.0        # via django-auth-ldap
