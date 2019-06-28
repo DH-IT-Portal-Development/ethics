@@ -33,6 +33,6 @@ However, since October 2016, there is a full English translation available, comp
 Translations in other languages are welcome, of course.
 
 .. _Django: https://www.djangoproject.com/
-.. _Ethical Committee Linguistics: https://fetc-gw.wp.hum.uu.nl
+.. _Faculty Ethics Committee - Humanities: https://fetc-gw.wp.hum.uu.nl
 .. _Utrecht University: https://www.uu.nl
 .. _Anna Asbury: http://www.annaasbury.com/
