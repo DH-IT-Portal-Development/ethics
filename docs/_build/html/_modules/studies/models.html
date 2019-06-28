@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>studies.models &mdash; ETCL 1.0 documentation</title>
+  <title>studies.models &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -264,7 +266,7 @@
     <span class="n">DESIGNS</span> <span class="o">=</span> <span class="p">(</span>
         <span class="p">(</span><span class="n">OBSERVATION</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Observatieonderzoek&#39;</span><span class="p">)),</span>
         <span class="p">(</span><span class="n">INTERVENTION</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Interventieonderzoek&#39;</span><span class="p">)),</span>
-        <span class="p">(</span><span class="n">SESSIONS</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taakonderzoek&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="n">SESSIONS</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taakonderzoek en interviews&#39;</span><span class="p">)),</span>
     <span class="p">)</span>
 
     <span class="n">order</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
@@ -329,6 +331,7 @@
 <span class="s1">is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een </span><span class="se">\</span>
 <span class="s1">cadeautje.&#39;</span><span class="p">),</span>
         <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
     <span class="n">compensation_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Namelijk&#39;</span><span class="p">),</span>
@@ -343,7 +346,7 @@
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Observatieonderzoek&#39;</span><span class="p">),</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">has_sessions</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
-        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taakonderzoek&#39;</span><span class="p">),</span>
+        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Taakonderzoek en interviews&#39;</span><span class="p">),</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1"># Fields with respect to informed consent</span>
@@ -353,8 +356,8 @@
 <span class="s1">(dus ook school) werft en u de ouders niet laat ondertekenen, maar in </span><span class="se">\</span>
 <span class="s1">plaats daarvan de leiding van die instelling, dan maakt u gebruik van </span><span class="se">\</span>
 <span class="s1">passieve informed consent. U kunt de templates vinden op </span><span class="se">\</span>
-<span class="s1">&lt;a href=&quot;https://etcl.wp.hum.uu.nl/toestemmingsverklaringen/&quot; </span><span class="se">\</span>
-<span class="s1">target=&quot;_blank&quot;&gt;de ETCL-website&lt;/a&gt;.&#39;</span><span class="p">)))</span>
+<span class="s1">&lt;a href=&quot;https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/&quot; </span><span class="se">\</span>
+<span class="s1">target=&quot;_blank&quot;&gt;de FETC-GW-website&lt;/a&gt;.&#39;</span><span class="p">)))</span>
     <span class="n">passive_consent_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht uw antwoord toe. Wij willen u wijzen op het reglement, </span><span class="se">\</span>
 <span class="s1">sectie 3.1 </span><span class="se">\&#39;</span><span class="s1">d</span><span class="se">\&#39;</span><span class="s1"> en </span><span class="se">\&#39;</span><span class="s1">e</span><span class="se">\&#39;</span><span class="s1">. Passive consent is slechts in enkele gevallen </span><span class="se">\</span>
@@ -572,7 +575,7 @@
         <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">],</span>
         <span class="n">help_text</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;If it is already signed, upload the signed declaration form. If it is not signed yet, &#39;</span>
                    <span class="s1">&#39;you can upload the unsigned document and send the document when it is signed to the&#39;</span>
-                   <span class="s1">&#39; secretary of the EtCL&#39;</span><span class="p">)</span>
+                   <span class="s1">&#39; secretary of the FEtC-H&#39;</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="n">director_consent_information</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
@@ -618,7 +621,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -635,26 +638,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

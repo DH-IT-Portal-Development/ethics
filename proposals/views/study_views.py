@@ -3,7 +3,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from core.views import AllowErrorsMixin, UpdateView, FormSetUpdateView
+from core.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
 from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
 from studies.utils import create_documents_for_study
@@ -11,7 +11,7 @@ from ..forms import StudyStartForm
 from ..models import Proposal
 
 
-class StudyStart(AllowErrorsMixin, UpdateView):
+class StudyStart(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Proposal
     form_class = StudyStartForm
     template_name = 'proposals/study_start.html'
@@ -54,7 +54,7 @@ class StudyStart(AllowErrorsMixin, UpdateView):
         return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))
 
 
-class StudyConsent(AllowErrorsMixin, FormSetUpdateView):
+class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
     """
     Allows the applicant to add informed consent to their Studies
     """

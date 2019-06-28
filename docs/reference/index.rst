@@ -5,9 +5,9 @@ etcl
    :maxdepth: 4
 
    core
-   etcl
    faqs
    feedback
+   fetc
    interventions
    observations
    proposals

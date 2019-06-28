@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>tasks.models module &mdash; ETCL 1.0 documentation</title>
+  <title>tasks.models module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="tasks.tests module" href="tasks.tests.html" />
     <link rel="prev" title="tasks.mixins module" href="tasks.mixins.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,9 +92,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
@@ -129,7 +131,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -189,26 +191,22 @@
 <dt id="tasks.models.Registration">
 <em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">Registration</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>is_local</em>, <em>needs_details</em>, <em>needs_kind</em>, <em>requires_review</em>, <em>age_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tasks/models.html#Registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.models.Registration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
-<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
-<li><strong>description</strong> (<em>CharField</em>) – Description</li>
-<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
-<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
-<li><strong>is_local</strong> (<em>BooleanField</em>) – Is local</li>
-<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
-<li><strong>needs_kind</strong> (<em>BooleanField</em>) – Needs kind</li>
-<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
-<li><strong>age_min</strong> (<em>PositiveIntegerField</em>) – Age min</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
+<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
+<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
+<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
+<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
+<li><p><strong>is_local</strong> (<em>BooleanField</em>) – Is local</p></li>
+<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
+<li><p><strong>needs_kind</strong> (<em>BooleanField</em>) – Needs kind</p></li>
+<li><p><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</p></li>
+<li><p><strong>age_min</strong> (<em>PositiveIntegerField</em>) – Age min</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="exception">
 <dt id="tasks.models.Registration.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.Registration.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -286,7 +284,7 @@
 
 <dl class="attribute">
 <dt id="tasks.models.Registration.objects">
-<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#tasks.models.Registration.objects" title="Permalink to this definition">¶</a></dt>
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#tasks.models.Registration.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -324,24 +322,20 @@
 <dt id="tasks.models.RegistrationKind">
 <em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">RegistrationKind</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>needs_details</em>, <em>requires_review</em>, <em>registration</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tasks/models.html#RegistrationKind"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.models.RegistrationKind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
-<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
-<li><strong>description</strong> (<em>CharField</em>) – Description</li>
-<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
-<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
-<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
-<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
-<li><strong>registration</strong> (ForeignKey to <a class="reference internal" href="#tasks.models.Registration" title="tasks.models.Registration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Registration</span></code></a>) – Registration</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
+<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
+<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
+<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
+<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
+<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
+<li><p><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</p></li>
+<li><p><strong>registration</strong> (ForeignKey to <a class="reference internal" href="#tasks.models.Registration" title="tasks.models.Registration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Registration</span></code></a>) – Registration</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="exception">
 <dt id="tasks.models.RegistrationKind.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.RegistrationKind.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -401,7 +395,7 @@
 
 <dl class="attribute">
 <dt id="tasks.models.RegistrationKind.objects">
-<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#tasks.models.RegistrationKind.objects" title="Permalink to this definition">¶</a></dt>
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#tasks.models.RegistrationKind.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -445,25 +439,21 @@
 <dt id="tasks.models.Session">
 <em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">Session</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>order</em>, <em>tasks_number</em>, <em>tasks_duration</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tasks/models.html#Session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.models.Session" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.models.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
-<li><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</li>
-<li><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</li>
-<li><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De ETCL neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</li>
-<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
-<li><strong>tasks_number</strong> (<em>PositiveIntegerField</em>) – Wanneer u bijvoorbeeld eerst de deelnemer observeert en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven “2” in. Electrodes plakken, sessie-debriefing en kort (&lt; 3 minuten) exit-interview gelden niet als een taak.</li>
-<li><strong>tasks_duration</strong> (<em>PositiveIntegerField</em>) – De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op &lt;strong&gt;%d minuten&lt;/strong&gt;. hoe lang duurt &lt;em&gt;de totale sessie&lt;/em&gt;, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)</li>
-<li><strong>study</strong> (ForeignKey to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</li>
-<li><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
+<li><p><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</p></li>
+<li><p><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</p></li>
+<li><p><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</p></li>
+<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
+<li><p><strong>tasks_number</strong> (<em>PositiveIntegerField</em>) – Wanneer u bijvoorbeeld eerst de deelnemer observeert en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven “2” in. Electrodes plakken, sessie-debriefing en kort (&lt; 3 minuten) exit-interview gelden niet als een taak.</p></li>
+<li><p><strong>tasks_duration</strong> (<em>PositiveIntegerField</em>) – De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op &lt;strong&gt;%d minuten&lt;/strong&gt;. hoe lang duurt &lt;em&gt;de totale sessie&lt;/em&gt;, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)</p></li>
+<li><p><strong>study</strong> (ForeignKey to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</p></li>
+<li><p><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="exception">
 <dt id="tasks.models.Session.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.Session.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -568,28 +558,24 @@
 <dt id="tasks.models.Task">
 <em class="property">class </em><code class="descclassname">tasks.models.</code><code class="descname">Task</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>name</em>, <em>description</em>, <em>duration</em>, <em>registrations_details</em>, <em>registration_kinds_details</em>, <em>feedback</em>, <em>feedback_details</em>, <em>session</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tasks/models.html#Task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.models.Task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
-<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
-<li><strong>name</strong> (<em>CharField</em>) – Wat is de naam van de taak?</li>
-<li><strong>description</strong> (<em>TextField</em>) – Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de beantwoording van uw onderzoeksvragen bijdraagt. geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli dat u van plan bent aan de deelnemer aan te bieden. het moet voor de commissieleden duidelijk zijn wat u precies gaat doen.</li>
-<li><strong>duration</strong> (<em>PositiveIntegerField</em>) – Wat is de duur van deze taak van begin tot eind in &lt;strong&gt;minuten&lt;/strong&gt;, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), geef dan &lt;strong&gt;het redelijkerwijs te verwachten maximum op&lt;/strong&gt;.</li>
-<li><strong>registrations_details</strong> (<em>CharField</em>) – Namelijk</li>
-<li><strong>registration_kinds_details</strong> (<em>CharField</em>) – Namelijk</li>
-<li><strong>feedback</strong> (<em>NullBooleanField</em>) – Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?</li>
-<li><strong>feedback_details</strong> (<em>TextField</em>) – Beschrijf hoe de feedback wordt gegeven.</li>
-<li><strong>session</strong> (ForeignKey to <a class="reference internal" href="#tasks.models.Session" title="tasks.models.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>) – Session</li>
-<li><strong>registrations</strong> (<em>ManyToManyField</em>) – Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?</li>
-<li><strong>registration_kinds</strong> (<em>ManyToManyField</em>) – Kies het soort meting</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
+<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
+<li><p><strong>name</strong> (<em>CharField</em>) – Wat is de naam van de taak?</p></li>
+<li><p><strong>description</strong> (<em>TextField</em>) – Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de beantwoording van uw onderzoeksvragen bijdraagt. geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli dat u van plan bent aan de deelnemer aan te bieden. het moet voor de commissieleden duidelijk zijn wat u precies gaat doen.</p></li>
+<li><p><strong>duration</strong> (<em>PositiveIntegerField</em>) – Wat is de duur van deze taak van begin tot eind in &lt;strong&gt;minuten&lt;/strong&gt;, dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak (exclusief instructie maar inclusief oefensessie)? indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), geef dan &lt;strong&gt;het redelijkerwijs te verwachten maximum op&lt;/strong&gt;.</p></li>
+<li><p><strong>registrations_details</strong> (<em>CharField</em>) – Namelijk</p></li>
+<li><p><strong>registration_kinds_details</strong> (<em>CharField</em>) – Namelijk</p></li>
+<li><p><strong>feedback</strong> (<em>NullBooleanField</em>) – Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?</p></li>
+<li><p><strong>feedback_details</strong> (<em>TextField</em>) – Beschrijf hoe de feedback wordt gegeven.</p></li>
+<li><p><strong>session</strong> (ForeignKey to <a class="reference internal" href="#tasks.models.Session" title="tasks.models.Session"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></a>) – Session</p></li>
+<li><p><strong>registrations</strong> (<em>ManyToManyField</em>) – Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?</p></li>
+<li><p><strong>registration_kinds</strong> (<em>ManyToManyField</em>) – Kies het soort meting</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="exception">
 <dt id="tasks.models.Task.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#tasks.models.Task.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -711,7 +697,7 @@
         <a href="tasks.tests.html" class="btn btn-neutral float-right" title="tasks.tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tasks.mixins.html" class="btn btn-neutral" title="tasks.mixins module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tasks.mixins.html" class="btn btn-neutral float-left" title="tasks.mixins module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -720,7 +706,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -737,26 +723,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

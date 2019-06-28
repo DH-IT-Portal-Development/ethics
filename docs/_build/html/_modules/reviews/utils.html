@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>reviews.utils &mdash; ETCL 1.0 documentation</title>
+  <title>reviews.utils &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -200,7 +202,7 @@
 
     <span class="n">decision</span> <span class="o">=</span> <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="p">)</span>
 
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: bevestiging indienen concept-aanmelding&#39;</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: bevestiging indienen concept-aanmelding&#39;</span><span class="p">)</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;supervisor&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
         <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">get_secretary</span><span class="p">()</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
@@ -208,7 +210,7 @@
     <span class="n">msg_plain</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/concept_creator.txt&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">email</span><span class="p">])</span>
 
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: beoordelen als eindverantwoordelijke&#39;</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: beoordelen als eindverantwoordelijke&#39;</span><span class="p">)</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;creator&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
         <span class="s1">&#39;proposal_url&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:decide&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">pk</span><span class="p">,)),</span>
@@ -243,7 +245,7 @@
     <span class="k">for</span> <span class="n">decision</span> <span class="ow">in</span> <span class="n">decisions</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">review</span><span class="o">.</span><span class="n">date_should_end</span><span class="p">)</span>
         <span class="n">proposal</span> <span class="o">=</span> <span class="n">decision</span><span class="o">.</span><span class="n">review</span><span class="o">.</span><span class="n">proposal</span>
-        <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;ETCL: beoordelen studie (Herrinering)&#39;</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="s1">&#39;FETC-GW: beoordelen studie (Herrinering)&#39;</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;creator&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="o">.</span><span class="n">created_by</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
             <span class="s1">&#39;proposal_url&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:decide&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">pk</span><span class="p">,)),</span>
@@ -285,7 +287,7 @@
 
     <span class="n">notify_secretary_assignment</span><span class="p">(</span><span class="n">review</span><span class="p">)</span>
 
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: aanmelding ontvangen&#39;</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: aanmelding ontvangen&#39;</span><span class="p">)</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
         <span class="s1">&#39;review_date&#39;</span><span class="p">:</span> <span class="n">review</span><span class="o">.</span><span class="n">date_should_end</span><span class="p">,</span>
@@ -330,7 +332,7 @@
     <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
     <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">secretary</span><span class="p">)</span>
 
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe aanvraag voor voortoetsing&#39;</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: nieuwe aanvraag voor voortoetsing&#39;</span><span class="p">)</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
         <span class="s1">&#39;proposal&#39;</span><span class="p">:</span> <span class="n">proposal</span><span class="p">,</span>
@@ -340,7 +342,7 @@
     <span class="n">msg_html</span> <span class="o">=</span> <span class="n">render_to_string</span><span class="p">(</span><span class="s1">&#39;mail/pre_assessment_secretary.html&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">secretary</span><span class="o">.</span><span class="n">email</span><span class="p">],</span> <span class="n">html_message</span><span class="o">=</span><span class="n">msg_html</span><span class="p">)</span>
 
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: bevestiging indienen aanvraag voor voortoetsing&#39;</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: bevestiging indienen aanvraag voor voortoetsing&#39;</span><span class="p">)</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
     <span class="p">}</span>
@@ -356,7 +358,7 @@
         <span class="n">Decision</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">review</span><span class="o">=</span><span class="n">review</span><span class="p">,</span> <span class="n">reviewer</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
 
         <span class="n">template</span> <span class="o">=</span> <span class="s1">&#39;mail/assignment_shortroute.txt&#39;</span> <span class="k">if</span> <span class="n">use_short_route</span> <span class="k">else</span> <span class="s1">&#39;mail/assignment_longroute.txt&#39;</span>
-        <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe studie ter beoordeling&#39;</span><span class="p">)</span>
+        <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: nieuwe studie ter beoordeling&#39;</span><span class="p">)</span>
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">get_secretary</span><span class="p">()</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
             <span class="s1">&#39;reviewer&#39;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
@@ -372,7 +374,7 @@
 <span class="sd">    Notifies the secretary a Proposal is ready for assigment</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe studie ingediend&#39;</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: nieuwe studie ingediend&#39;</span><span class="p">)</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
         <span class="s1">&#39;review&#39;</span><span class="p">:</span> <span class="n">review</span><span class="p">,</span>
@@ -386,7 +388,7 @@
 <span class="sd">    Notifies a secretary a Decision has been made by one of the members in the Commission</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">secretary</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
-    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;ETCL: nieuwe beoordeling toegevoegd&#39;</span><span class="p">)</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;FETC-GW: nieuwe beoordeling toegevoegd&#39;</span><span class="p">)</span>
     <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;secretary&#39;</span><span class="p">:</span> <span class="n">secretary</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">(),</span>
         <span class="s1">&#39;decision&#39;</span><span class="p">:</span> <span class="n">decision</span><span class="p">,</span>
@@ -398,7 +400,8 @@
 <div class="viewcode-block" id="auto_review"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review">[docs]</a><span class="k">def</span> <span class="nf">auto_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reviews a Proposal machine-wise.</span>
-<span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
+<span class="sd">    Based on the regulations on</span>
+<span class="sd">    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -461,7 +464,8 @@
 <div class="viewcode-block" id="auto_review_observation"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review_observation">[docs]</a><span class="k">def</span> <span class="nf">auto_review_observation</span><span class="p">(</span><span class="n">observation</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reviews an Observation machine-wise.</span>
-<span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
+<span class="sd">    Based on the regulations on</span>
+<span class="sd">    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -481,7 +485,8 @@
 <div class="viewcode-block" id="auto_review_task"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review_task">[docs]</a><span class="k">def</span> <span class="nf">auto_review_task</span><span class="p">(</span><span class="n">study</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reviews a Task machine-wise.</span>
-<span class="sd">    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.</span>
+<span class="sd">    Based on the regulations on</span>
+<span class="sd">    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -510,7 +515,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -527,26 +532,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

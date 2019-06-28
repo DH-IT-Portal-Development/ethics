@@ -32,7 +32,7 @@ def check_necessity_required(proposal, age_groups, has_traits, legally_incapable
     """
     from .models import AgeGroup
 
-    if not proposal.relation.needs_supervisor:
+    if proposal.relation and not proposal.relation.needs_supervisor:
         result = False
     else:
         required_values = AgeGroup.objects.filter(needs_details=True).values_list('id', flat=True)

@@ -7,7 +7,7 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
-from core.views import AllowErrorsMixin, UpdateView
+from core.views import AllowErrorsOnBackbuttonMixin, UpdateView
 from core.utils import string_to_bool
 from proposals.models import Proposal
 from interventions.models import Intervention
@@ -21,7 +21,7 @@ from ..utils import check_has_adults, check_necessity_required, get_study_progre
 #######################
 # CRUD actions on Study
 #######################
-class StudyUpdate(AllowErrorsMixin, UpdateView):
+class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Updates a Study from a StudyForm"""
     model = Study
     form_class = StudyForm
@@ -56,7 +56,7 @@ class StudyUpdate(AllowErrorsMixin, UpdateView):
 ###############
 # Other actions
 ###############
-class StudyDesign(AllowErrorsMixin, UpdateView):
+class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Study
     form_class = StudyDesignForm
     success_message = _('Studieontwerp opgeslagen')
@@ -98,7 +98,7 @@ class StudyDesign(AllowErrorsMixin, UpdateView):
         """
         return reverse('studies:update', args=(self.kwargs['pk'],))
 
-class StudyEnd(AllowErrorsMixin, UpdateView):
+class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     """
     Completes a Study
     """

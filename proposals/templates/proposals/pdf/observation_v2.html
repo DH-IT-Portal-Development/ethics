@@ -56,6 +56,11 @@
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th><td>{{ observation.has_advanced_consent|yesno:_("ja,nee") }}</td>
     </tr>
+        {% if not observation.has_advanced_consent %}
+        <tr>
+            <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent_details" %}</th><td>{{ observation.has_advanced_consent_details }}</td>
+        </tr>
+        {% endif %}
     {% endif %}
     {% if observation.setting.all|needs_details:"is_school" %}
     <tr>

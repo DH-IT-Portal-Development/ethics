@@ -5,7 +5,7 @@
 {% load core_filters %}
 
 {% block title %}
-{% trans "Mijn besluiten" %}
+{{ committee_name }} - {% trans "Mijn besluiten" %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
@@ -54,6 +54,7 @@
                 <a href="{% url 'reviews:detail' review.pk %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
                 {% if user|is_secretary and review.stage == review.ASSIGNMENT %}
                     <a href="{% url 'reviews:assign' review.pk %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
+                    <a href="{% url 'reviews:change_chamber' review.proposal.pk %}"><img src="{% static 'reviews/images/folder_edit.png' %}" title="{% trans 'Verplaats naar andere kamer' %}"></a>
                 {% elif not review.date_end %}
                     <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
                 {% elif user|is_secretary and review.stage == review.CLOSING %}

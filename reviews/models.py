@@ -31,9 +31,9 @@ class Review(models.Model):
     LONG_ROUTE = 3
     METC = 4
     CONTINUATIONS = (
-        (GO, _('Goedkeuring door ETCL')),
+        (GO, _('Goedkeuring door FETC-GW')),
         (REVISION, _('Revisie noodzakelijk')),
-        (NO_GO, _('Afwijzing door ETCL')),
+        (NO_GO, _('Afwijzing door FETC-GW')),
         (LONG_ROUTE, _('Open review met lange (4-weken) route')),
         (METC, _('Laat opnieuw beoordelen door METC')),
     )

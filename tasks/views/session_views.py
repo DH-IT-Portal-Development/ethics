@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
 
-from core.views import AllowErrorsMixin, UpdateView, DeleteView
+from core.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import TaskStartForm, TaskEndForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Session, Task
@@ -47,7 +47,7 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
 ##################
 # Actions on Tasks
 ##################
-class TaskStart(AllowErrorsMixin, UpdateView):
+class TaskStart(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Initial creation of Tasks for a Session"""
     model = Session
     form_class = TaskStartForm
@@ -123,7 +123,7 @@ class TaskStart(AllowErrorsMixin, UpdateView):
             return reverse('studies:session_start', args=(self.object.study.pk,))
 
 
-class TaskEnd(AllowErrorsMixin, UpdateView):
+class TaskEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Completes a Session"""
     model = Session
     form_class = TaskEndForm

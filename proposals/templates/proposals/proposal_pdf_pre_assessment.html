@@ -39,7 +39,7 @@
 {% block page_header %}
 <div id="page-header">
     {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name %}
-    ETCL - Aanvraag voor voortoetsing <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
+    FETC-GW - Aanvraag voor voortoetsing <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
     {% endblocktrans %}
 </div>
 {% endblock %}

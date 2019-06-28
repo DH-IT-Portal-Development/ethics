@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext as _
 
 from core.models import YES, DOUBT
-from core.views import CreateView, UpdateView
+from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from core.utils import get_secretary
 
 from ..models import Proposal, Wmo
@@ -17,7 +17,7 @@ from ..forms import WmoForm, WmoApplicationForm, WmoCheckForm
 #####################
 # CRUD actions on WMO
 #####################
-class WmoMixin(object):
+class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
     model = Wmo
     form_class = WmoForm
 

@@ -3,9 +3,9 @@
 {% block content_nl %}
 {% endblock %}
 
-Namens de ETCL, met de vriendelijke groeten,
+Namens de FETC-GW, met de vriendelijke groeten,
 
-de ETCL secretaris
+de FETC-GW secretaris
 {{ secretary }}
 
 ~~~~~
@@ -13,7 +13,7 @@ de ETCL secretaris
 {% block content_en %}
 {% endblock %}
 
-Kind regards on behalf of the EtCL,
+Kind regards on behalf of the FEtC-H,
 
-the secretary of the EtCL
+the secretary of the FEtC-H
 {{ secretary }}

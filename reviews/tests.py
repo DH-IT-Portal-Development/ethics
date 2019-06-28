@@ -17,7 +17,8 @@ from tasks.models import Session, Task, Registration, RegistrationKind
 
 
 class BaseReviewTestCase(TestCase):
-    fixtures = ['relations', 'compensations', 'registrations', 'registrationkinds', 'agegroups', 'groups']
+    fixtures = ['relations', 'compensations', 'registrations',
+                'registrationkinds', 'agegroups', 'groups', 'institutions']
 
     def setUp(self):
         """
@@ -30,13 +31,16 @@ class BaseReviewTestCase(TestCase):
         self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret', first_name='Jane', last_name='Roe')
 
         self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_COMMISSION))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_COMMISSION))
+        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
 
         self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                                 date_start=datetime.now(),
                                                 created_by=self.user, supervisor=self.supervisor,
-                                                relation=Relation.objects.get(pk=4))
+                                                relation=Relation.objects.get(pk=4),
+                                                reviewing_committee=Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER),
+                                                institution_id=1
+                                                )
         self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=2))
 
 
@@ -53,8 +57,8 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(mail.outbox[0].subject, 'ETCL: bevestiging indienen concept-aanmelding')
-        self.assertEqual(mail.outbox[1].subject, 'ETCL: beoordelen als eindverantwoordelijke')
+        self.assertEqual(mail.outbox[0].subject, 'FETC-GW: bevestiging indienen concept-aanmelding')
+        self.assertEqual(mail.outbox[1].subject, 'FETC-GW: beoordelen als eindverantwoordelijke')
 
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
         self.proposal.relation = Relation.objects.get(pk=5)
@@ -66,8 +70,8 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(mail.outbox[2].subject, 'ETCL: nieuwe studie ingediend')
-        self.assertEqual(mail.outbox[3].subject, 'ETCL: aanmelding ontvangen')
+        self.assertEqual(mail.outbox[2].subject, 'FETC-GW: nieuwe studie ingediend')
+        self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
 
 
 class SupervisorTestCase(BaseReviewTestCase):
@@ -79,8 +83,8 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, None)
 
         self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(mail.outbox[0].subject, 'ETCL: bevestiging indienen concept-aanmelding')
-        self.assertEqual(mail.outbox[1].subject, 'ETCL: beoordelen als eindverantwoordelijke')
+        self.assertEqual(mail.outbox[0].subject, 'FETC-GW: bevestiging indienen concept-aanmelding')
+        self.assertEqual(mail.outbox[1].subject, 'FETC-GW: beoordelen als eindverantwoordelijke')
 
         decision = Decision.objects.filter(review=review)[0]
         decision.go = Decision.APPROVED
@@ -89,8 +93,8 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(mail.outbox[2].subject, 'ETCL: nieuwe studie ingediend')
-        self.assertEqual(mail.outbox[3].subject, 'ETCL: aanmelding ontvangen')
+        self.assertEqual(mail.outbox[2].subject, 'FETC-GW: nieuwe studie ingediend')
+        self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
 
 
 class AssignmentTestCase(BaseReviewTestCase):

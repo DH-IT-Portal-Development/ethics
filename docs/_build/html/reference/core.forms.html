@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>core.forms module &mdash; ETCL 1.0 documentation</title>
+  <title>core.forms package &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="core.models module" href="core.models.html" />
-    <link rel="prev" title="core.admin module" href="core.admin.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
+    <link rel="next" title="core.forms.conditional_form module" href="core.forms.conditional_form.html" />
+    <link rel="prev" title="core package" href="core.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,24 +92,18 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="core.html">core package</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="core.html#subpackages">Subpackages</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="core.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="core.admin.html">core.admin module</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">core.forms module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.models.html">core.models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.tests.html">core.tests module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.translation.html">core.translation module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.urls.html">core.urls module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.utils.html">core.utils module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.validators.html">core.validators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.views.html">core.views module</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="core.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">core.forms package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="core.management.html">core.management package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="core.templatetags.html">core.templatetags package</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#submodules">Submodules</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
@@ -130,7 +126,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -165,7 +161,7 @@
         
           <li><a href="core.html">core package</a> &raquo;</li>
         
-      <li>core.forms module</li>
+      <li>core.forms package</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -185,43 +181,16 @@
            <div itemprop="articleBody">
             
   <div class="section" id="module-core.forms">
-<span id="core-forms-module"></span><h1>core.forms module<a class="headerlink" href="#module-core.forms" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="core.forms.ConditionalModelForm">
-<em class="property">class </em><code class="descclassname">core.forms.</code><code class="descname">ConditionalModelForm</code><span class="sig-paren">(</span><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.utils.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em>, <em>use_required_attribute=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.models.ModelForm</span></code></p>
-<dl class="method">
-<dt id="core.forms.ConditionalModelForm.check_dependency">
-<code class="descname">check_dependency</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f2</em>, <em>f1_value=True</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm.check_dependency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="core.forms.ConditionalModelForm.check_dependency_list">
-<code class="descname">check_dependency_list</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f2</em>, <em>f1_value_list</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm.check_dependency_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="core.forms.ConditionalModelForm.check_dependency_multiple">
-<code class="descname">check_dependency_multiple</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f1_field</em>, <em>f2</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm.check_dependency_multiple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_multiple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="core.forms.ConditionalModelForm.check_dependency_singular">
-<code class="descname">check_dependency_singular</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>f1_field</em>, <em>f2</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm.check_dependency_singular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm.check_dependency_singular" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="core.forms.ConditionalModelForm.check_empty">
-<code class="descname">check_empty</code><span class="sig-paren">(</span><em>cleaned_data</em>, <em>f1</em>, <em>error_message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/forms.html#ConditionalModelForm.check_empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.forms.ConditionalModelForm.check_empty" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="core.forms.ConditionalModelForm.media">
-<code class="descname">media</code><a class="headerlink" href="#core.forms.ConditionalModelForm.media" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<span id="core-forms-package"></span><h1>core.forms package<a class="headerlink" href="#module-core.forms" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core.forms.conditional_form.html">core.forms.conditional_form module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.forms.mixins.html">core.forms.mixins module</a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -232,10 +201,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="core.models.html" class="btn btn-neutral float-right" title="core.models module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="core.forms.conditional_form.html" class="btn btn-neutral float-right" title="core.forms.conditional_form module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="core.admin.html" class="btn btn-neutral" title="core.admin module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="core.html" class="btn btn-neutral float-left" title="core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -244,7 +213,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -261,26 +230,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

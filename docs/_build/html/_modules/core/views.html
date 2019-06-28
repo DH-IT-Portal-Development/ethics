@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>core.views &mdash; ETCL 1.0 documentation</title>
+  <title>core.views &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -151,35 +153,33 @@
             
   <h1>Source code for core.views</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">ldap</span>
+<span class="kn">from</span> <span class="nn">braces.views</span> <span class="k">import</span> <span class="n">LoginRequiredMixin</span>
 <span class="kn">from</span> <span class="nn">django.apps</span> <span class="k">import</span> <span class="n">apps</span>
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
 <span class="kn">from</span> <span class="nn">django.contrib</span> <span class="k">import</span> <span class="n">messages</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="k">import</span> <span class="n">get_user_model</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
 <span class="kn">from</span> <span class="nn">django.contrib.messages.views</span> <span class="k">import</span> <span class="n">SuccessMessageMixin</span>
-<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="n">ImproperlyConfigured</span><span class="p">,</span> <span class="n">PermissionDenied</span>
 <span class="kn">from</span> <span class="nn">django.db.models</span> <span class="k">import</span> <span class="n">Q</span>
+<span class="kn">from</span> <span class="nn">django.forms</span> <span class="k">import</span> <span class="n">modelformset_factory</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">HttpResponseRedirect</span><span class="p">,</span> <span class="n">JsonResponse</span>
-<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="n">PermissionDenied</span><span class="p">,</span> <span class="n">ImproperlyConfigured</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
 <span class="kn">from</span> <span class="nn">django.views</span> <span class="k">import</span> <span class="n">generic</span>
 <span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="k">import</span> <span class="n">csrf_exempt</span>
 <span class="kn">from</span> <span class="nn">django.views.generic.detail</span> <span class="k">import</span> <span class="n">SingleObjectMixin</span>
-<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
-<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="k">import</span> <span class="n">render</span>
-<span class="kn">from</span> <span class="nn">django.forms</span> <span class="k">import</span> <span class="n">modelformset_factory</span>
 
-<span class="kn">from</span> <span class="nn">braces.views</span> <span class="k">import</span> <span class="n">LoginRequiredMixin</span>
-
-<span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
-<span class="kn">from</span> <span class="nn">observations.models</span> <span class="k">import</span> <span class="n">Observation</span>
 <span class="kn">from</span> <span class="nn">interventions.models</span> <span class="k">import</span> <span class="n">Intervention</span>
+<span class="kn">from</span> <span class="nn">observations.models</span> <span class="k">import</span> <span class="n">Observation</span>
+<span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
 <span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Task</span>
-
-<span class="kn">import</span> <span class="nn">ldap</span>
 
 <span class="c1"># We set up a custom LDAP connection here, separate from the Django auth one</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># This will trigger an exception if LDAP is not configured</span>
-    <span class="kn">from</span> <span class="nn">etcl.ldap_settings</span> <span class="k">import</span> <span class="o">*</span>
+    <span class="kn">from</span> <span class="nn">fetc.ldap_settings</span> <span class="k">import</span> <span class="o">*</span>
 
     <span class="c1"># If it is configured, we open a connection and bind our credentials to it.</span>
     <span class="n">ldap_connection</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="n">AUTH_LDAP_SERVER_URI</span><span class="p">)</span>
@@ -209,9 +209,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">values</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s1">&#39;value[]&#39;</span><span class="p">))</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">),</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">))</span>
-    <span class="n">required_values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">):</span> <span class="kc">True</span><span class="p">})</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">required_values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">**</span><span class="p">{</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field&#39;</span><span class="p">):</span> <span class="kc">True</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">required_values</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">})</span></div>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span>
+                            <span class="s1">&#39;result&#39;</span><span class="p">:</span> <span class="n">result</span>
+                        <span class="p">})</span></div>
 
 
 <div class="viewcode-block" id="user_search"><a class="viewcode-back" href="../../reference/core.views.html#core.views.user_search">[docs]</a><span class="k">def</span> <span class="nf">user_search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
@@ -232,7 +236,8 @@
     <span class="k">elif</span> <span class="n">page</span> <span class="o">==</span> <span class="sa">u</span><span class="s1">&#39;1&#39;</span><span class="p">:</span>
         <span class="c1"># Otherwise we search through the users with a given query</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="n">Q</span><span class="p">(</span><span class="n">username__icontains</span><span class="o">=</span><span class="n">query</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">first_name__icontains</span><span class="o">=</span><span class="n">query</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">last_name__icontains</span><span class="o">=</span><span class="n">query</span><span class="p">))</span>
+            <span class="n">Q</span><span class="p">(</span><span class="n">username__icontains</span><span class="o">=</span><span class="n">query</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">first_name__icontains</span><span class="o">=</span><span class="n">query</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span>
+                <span class="n">last_name__icontains</span><span class="o">=</span><span class="n">query</span><span class="p">))</span>
         <span class="n">users</span> <span class="o">=</span> <span class="n">format_user_info</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="c1"># We need results from the LDAP if either, this is page 2, or page 1 has no results for now</span>
@@ -257,16 +262,20 @@
         <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">ldap_connection</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">msgid</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span>
             <span class="c1"># Add them to the users, with a ldap_ prefix in the ID so we can distinguish this when processing the form</span>
             <span class="n">users</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;ldap_&#39;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">,</span>
-                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;displayName&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="p">)</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span>   <span class="s1">&#39;ldap_&#39;</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uid&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+                                        <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;displayName&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span>
+                                            <span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
             <span class="p">})</span>
 
     <span class="c1"># Return a formatted dict with the results</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="n">users</span><span class="p">,</span>
+        <span class="s1">&#39;results&#39;</span><span class="p">:</span>    <span class="n">users</span><span class="p">,</span>
         <span class="c1"># Paging-more should be true if there are no LDAP results included in this page, the LDAP is available and</span>
         <span class="c1"># the query is not a wildcard</span>
-        <span class="s1">&#39;pagination&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;more&#39;</span><span class="p">:</span> <span class="ow">not</span> <span class="n">ldap_results_needed</span> <span class="ow">and</span> <span class="n">ldap_available</span> <span class="ow">and</span> <span class="n">query</span> <span class="o">!=</span> <span class="s1">&#39;*&#39;</span><span class="p">}</span>
+        <span class="s1">&#39;pagination&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;more&#39;</span><span class="p">:</span> <span class="ow">not</span> <span class="n">ldap_results_needed</span> <span class="ow">and</span> <span class="n">ldap_available</span> <span class="ow">and</span> <span class="n">query</span> <span class="o">!=</span> <span class="s1">&#39;*&#39;</span>
+        <span class="p">}</span>
     <span class="p">}</span></div>
 
 
@@ -301,7 +310,10 @@
 
 <div class="viewcode-block" id="format_user_info"><a class="viewcode-back" href="../../reference/core.views.html#core.views.format_user_info">[docs]</a><span class="k">def</span> <span class="nf">format_user_info</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This will format a user object into a displayable format&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">pk</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">())}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="p">[{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span>   <span class="n">x</span><span class="o">.</span><span class="n">pk</span><span class="p">,</span>
+                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">get_full_name</span><span class="p">())</span>
+            <span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="UserSearchView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UserSearchView">[docs]</a><span class="k">class</span> <span class="nc">UserSearchView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">View</span><span class="p">):</span>
@@ -320,15 +332,15 @@
 <span class="c1">################</span>
 <span class="c1"># Helpers</span>
 <span class="c1">################</span>
-<div class="viewcode-block" id="AllowErrorsMixin"><a class="viewcode-back" href="../../reference/core.views.html#core.views.AllowErrorsMixin">[docs]</a><span class="k">class</span> <span class="nc">AllowErrorsMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="AllowErrorsMixin.form_invalid"><a class="viewcode-back" href="../../reference/core.views.html#core.views.AllowErrorsMixin.form_invalid">[docs]</a>    <span class="k">def</span> <span class="nf">form_invalid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+<div class="viewcode-block" id="AllowErrorsOnBackbuttonMixin"><a class="viewcode-back" href="../../reference/core.views.html#core.views.AllowErrorsOnBackbuttonMixin">[docs]</a><span class="k">class</span> <span class="nc">AllowErrorsOnBackbuttonMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AllowErrorsOnBackbuttonMixin.form_invalid"><a class="viewcode-back" href="../../reference/core.views.html#core.views.AllowErrorsOnBackbuttonMixin.form_invalid">[docs]</a>    <span class="k">def</span> <span class="nf">form_invalid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        On back button, allow form to have errors.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;save_back&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_back_url</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_invalid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">AllowErrorsOnBackbuttonMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_invalid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="UserAllowedMixin"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UserAllowedMixin">[docs]</a><span class="k">class</span> <span class="nc">UserAllowedMixin</span><span class="p">(</span><span class="n">SingleObjectMixin</span><span class="p">):</span>
@@ -336,7 +348,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allows access to a proposal based on the status of a Proposal</span>
 <span class="sd">        and the position of the User. He can be:</span>
-<span class="sd">        - in the &#39;SECRETARY&#39; or &#39;COMMISSION&#39; group</span>
+<span class="sd">        - in the &#39;SECRETARY&#39;, &#39;GENERAL_CHAMBER&#39; or &#39;LINGUISTICS_CHAMBER&#39; group</span>
 <span class="sd">        - an applicant of this Proposal</span>
 <span class="sd">        - a supervisor of this Proposal</span>
 <span class="sd">        If the status of the Proposal is not in line with the status of the User,</span>
@@ -346,7 +358,9 @@
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Proposal</span><span class="p">):</span>
             <span class="n">proposal</span> <span class="o">=</span> <span class="n">obj</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Observation</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Intervention</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Session</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Observation</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span>
+                                                        <span class="n">Intervention</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="n">obj</span><span class="p">,</span> <span class="n">Session</span><span class="p">):</span>
             <span class="n">proposal</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">proposal</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Task</span><span class="p">):</span>
             <span class="n">proposal</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">proposal</span>
@@ -355,11 +369,17 @@
 
         <span class="n">applicants</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">applicants</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="p">:</span>
-            <span class="n">supervisor</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+            <span class="n">supervisor</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">pk</span><span class="o">=</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">supervisor</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
         <span class="n">commission</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">)</span>
-        <span class="n">commission</span> <span class="o">|=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">reviewing_committee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_LINGUISTICS_CHAMBER</span><span class="p">:</span>
+            <span class="n">commission</span> <span class="o">|=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_LINGUISTICS_CHAMBER</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">reviewing_committee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_GENERAL_CHAMBER</span><span class="p">:</span>
+            <span class="n">commission</span> <span class="o">|=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_GENERAL_CHAMBER</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">commission</span><span class="p">:</span>
@@ -373,13 +393,14 @@
 
         <span class="k">return</span> <span class="n">obj</span></div></div>
 
+
 <div class="viewcode-block" id="FormSetUserAllowedMixin"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUserAllowedMixin">[docs]</a><span class="k">class</span> <span class="nc">FormSetUserAllowedMixin</span><span class="p">(</span><span class="n">UserAllowedMixin</span><span class="p">):</span>
 
 <div class="viewcode-block" id="FormSetUserAllowedMixin.check_allowed"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUserAllowedMixin.check_allowed">[docs]</a>    <span class="k">def</span> <span class="nf">check_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allows access to a proposal based on the status of a Proposal</span>
 <span class="sd">        and the position of the User. He can be:</span>
-<span class="sd">        - in the &#39;SECRETARY&#39; or &#39;COMMISSION&#39; group</span>
+<span class="sd">        - in the &#39;SECRETARY&#39;, &#39;LINGUISITICS_CHAMBER&#39; or &#39;GENERAL_CHAMBER&#39; group</span>
 <span class="sd">        - an applicant of this Proposal</span>
 <span class="sd">        - a supervisor of this Proposal</span>
 <span class="sd">        If the status of the Proposal is not in line with the status of the User,</span>
@@ -390,7 +411,9 @@
 
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Proposal</span><span class="p">):</span>
                 <span class="n">proposal</span> <span class="o">=</span> <span class="n">obj</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Observation</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Intervention</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Session</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Observation</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span>
+                                                            <span class="n">Intervention</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
+                    <span class="n">obj</span><span class="p">,</span> <span class="n">Session</span><span class="p">):</span>
                 <span class="n">proposal</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">proposal</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Task</span><span class="p">):</span>
                 <span class="n">proposal</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">proposal</span>
@@ -399,11 +422,21 @@
 
             <span class="n">applicants</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">applicants</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="p">:</span>
-                <span class="n">supervisor</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
+                <span class="n">supervisor</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">pk</span><span class="o">=</span><span class="n">proposal</span><span class="o">.</span><span class="n">supervisor</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">supervisor</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">none</span><span class="p">()</span>
             <span class="n">commission</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">)</span>
-            <span class="n">commission</span> <span class="o">|=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">reviewing_committee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_LINGUISTICS_CHAMBER</span><span class="p">:</span>
+                <span class="n">commission</span> <span class="o">|=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_LINGUISTICS_CHAMBER</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">reviewing_committee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_GENERAL_CHAMBER</span><span class="p">:</span>
+                <span class="n">commission</span> <span class="o">|=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                    <span class="n">groups__name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_GENERAL_CHAMBER</span>
+                <span class="p">)</span>
 
             <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">commission</span><span class="p">:</span>
@@ -417,21 +450,28 @@
 
 
 <div class="viewcode-block" id="CreateView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.CreateView">[docs]</a><span class="k">class</span> <span class="nc">CreateView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">SuccessMessageMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">CreateView</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generic create view including success message and login required mixins&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Generic create view including success message and login required</span>
+<span class="sd">    mixins&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="CreateView.get_success_url"><a class="viewcode-back" href="../../reference/core.views.html#core.views.CreateView.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the success_url based on the submit button pressed&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="UpdateView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UpdateView">[docs]</a><span class="k">class</span> <span class="nc">UpdateView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">SuccessMessageMixin</span><span class="p">,</span> <span class="n">UserAllowedMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">UpdateView</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generic update view including success message, user allowed and login required mixins&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="UpdateView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UpdateView">[docs]</a><span class="k">class</span> <span class="nc">UpdateView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">SuccessMessageMixin</span><span class="p">,</span> <span class="n">UserAllowedMixin</span><span class="p">,</span>
+                 <span class="n">generic</span><span class="o">.</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic update view including success message, user allowed and login</span>
+<span class="sd">    required mixins&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="UpdateView.get_success_url"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UpdateView.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the success_url based on the submit button pressed&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
 
-<div class="viewcode-block" id="FormSetUpdateView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUpdateView">[docs]</a><span class="k">class</span> <span class="nc">FormSetUpdateView</span><span class="p">(</span><span class="n">FormSetUserAllowedMixin</span><span class="p">,</span> <span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">SuccessMessageMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">View</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Generic update view that uses a formset. This allows you to edit multiple forms of the same type on the</span>
-<span class="sd">    same page.</span>
+
+<div class="viewcode-block" id="FormSetUpdateView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUpdateView">[docs]</a><span class="k">class</span> <span class="nc">FormSetUpdateView</span><span class="p">(</span><span class="n">FormSetUserAllowedMixin</span><span class="p">,</span> <span class="n">LoginRequiredMixin</span><span class="p">,</span>
+                        <span class="n">SuccessMessageMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">View</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Generic update view that uses a formset. This allows you to edit</span>
+<span class="sd">    multiple forms of the same type on the same page.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">form</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_formset</span> <span class="o">=</span> <span class="kc">None</span>
@@ -445,29 +485,35 @@
 <div class="viewcode-block" id="FormSetUpdateView.post"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUpdateView.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_request</span><span class="p">()</span>
 
-        <span class="n">formset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_formset</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">,</span> <span class="n">queryset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span>
+        <span class="n">formset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_formset</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">FILES</span><span class="p">,</span>
+                                <span class="n">queryset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pre_validation</span><span class="p">(</span><span class="n">formset</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">formset</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_form</span><span class="p">(</span><span class="n">formset</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_success_url</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="n">formset</span><span class="o">=</span><span class="n">formset</span><span class="p">))</span></div>
+            <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_name</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="n">formset</span><span class="o">=</span><span class="n">formset</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="FormSetUpdateView.pre_validation"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUpdateView.pre_validation">[docs]</a>    <span class="k">def</span> <span class="nf">pre_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formset</span><span class="p">):</span>
-        <span class="s2">&quot;This method can be overridden to manipulate the formset before validation&quot;</span>
+        <span class="sd">&quot;&quot;&quot;This method can be overridden to manipulate the formset before</span>
+<span class="sd">        validation&quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="FormSetUpdateView.save_form"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUpdateView.save_form">[docs]</a>    <span class="k">def</span> <span class="nf">save_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formset</span><span class="p">):</span>
         <span class="n">formset</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_on_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_formset</span> <span class="o">=</span> <span class="n">modelformset_factory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">form</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extra</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_formset</span> <span class="o">=</span> <span class="n">modelformset_factory</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+                                             <span class="n">form</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">extra</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_allowed</span><span class="p">()</span>
 
 <div class="viewcode-block" id="FormSetUpdateView.get_queryset"><a class="viewcode-back" href="../../reference/core.views.html#core.views.FormSetUpdateView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="s2">&quot;Either override get_queryset, or provide a queryset class variable&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span>
+                <span class="s2">&quot;Either override get_queryset, or provide a queryset class &quot;</span>
+                <span class="s2">&quot;variable&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queryset</span></div>
 
@@ -486,8 +532,11 @@
 
         <span class="k">return</span> <span class="n">kwargs</span></div></div>
 
+
 <div class="viewcode-block" id="DeleteView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.DeleteView">[docs]</a><span class="k">class</span> <span class="nc">DeleteView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">UserAllowedMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">DeleteView</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generic delete view including login required and user allowed mixin and alternative for success message&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Generic delete view including login required and user allowed mixin and</span>
+<span class="sd">    alternative for success message&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="DeleteView.delete"><a class="viewcode-back" href="../../reference/core.views.html#core.views.DeleteView.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">messages</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">success_message</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">DeleteView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
@@ -512,7 +561,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -529,26 +578,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -43,37 +43,61 @@
             </ul>
         </li>
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">{% trans "UiL OTS archief" %}</a>
+            <a href="#" class="pure-menu-link">{% trans "Archief" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Alle UiL OTS-studies bekijken" %}</a>
+                    <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Alle studies bekijken" %}</a>
                 </li>
-                {% if user|in_commission %}
+                {% if user|is_secretary %}
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'proposals:archive_export' %}">{% trans "Site-export" %}</a>
                 </li>
                 {% endif %}
             </ul>
         </li>
-        {% if user|in_commission %}
+        {% if user|in_general_chamber %}
         <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-            <a href="#" class="pure-menu-link">{% trans "Commissie" %}</a>
+            <a href="#" class="pure-menu-link">{% trans "Algemene Kamer" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:my_open' %}">{% trans "Mijn openstaande besluiten" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:my_open' 'AK' %}">{% trans "Mijn openstaande besluiten" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:my_archive' %}">{% trans "Al mijn besluiten" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:my_archive' 'AK' %}">{% trans "Al mijn besluiten" %}</a>
                 </li>
                 {% if user|is_secretary %}
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:open' %}">{% trans "Alle openstaande besluiten commissieleden" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:open' 'AK' %}">{% trans "Alle openstaande besluiten commissieleden" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' 'AK' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'reviews:to_conclude' %}">{% trans "Nog af te handelen studies" %}</a>
+                    <a class="pure-menu-link" href="{% url 'reviews:to_conclude' 'AK' %}">{% trans "Nog af te handelen studies" %}</a>
+                </li>
+                {% endif %}
+            </ul>
+        </li>
+        {% endif %}
+        {% if user|in_linguistics_chamber %}
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" class="pure-menu-link">{% trans "Linguïstiek Kamer" %}</a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:my_open' 'LK' %}">{% trans "Mijn openstaande besluiten" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:my_archive' 'LK' %}">{% trans "Al mijn besluiten" %}</a>
+                </li>
+                {% if user|is_secretary %}
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:open' 'LK' %}">{% trans "Alle openstaande besluiten commissieleden" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:open_supervisors' 'LK' %}">{% trans "Alle openstaande besluiten eindverantwoordelijken" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:to_conclude' 'LK' %}">{% trans "Nog af te handelen studies" %}</a>
                 </li>
                 {% endif %}
             </ul>
@@ -83,13 +107,16 @@
             <a href="#" class="pure-menu-link">{% trans "Help" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/" target="_blank">{% trans "ETCL website" %}</a>
+                    <a class="pure-menu-link" href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">{% trans "FETC-GW website" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/reglement/" target="_blank">{% trans "ETCL reglement" %}</a>
+                    <a class="pure-menu-link" href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">{% trans "Reglement Algemene Kamer (AK)" %}</a>
                 </li>
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
+                    <a class="pure-menu-link" href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">{% trans " Reglement Linguïstiek Kamer (LK) " %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="http://fetc.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">{% trans "Informed consent formulieren" %}</a>
                 </li>
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'faqs:list' %}">{% trans "FAQs" %}</a>
@@ -104,7 +131,7 @@
         </li>
         {% else %}
         <li class="pure-menu-item">
-            <a class="pure-menu-link" href="http://etcl.wp.hum.uu.nl" target="_blank">{% trans "ETCL-website" %}</a>
+            <a class="pure-menu-link" href="http://fetc-gw.wp.hum.uu.nl" target="_blank">{% trans "FETC-GW-website" %}</a>
         </li>
         <li class="pure-menu-item">
             <a class="pure-menu-link" href="{% url 'login' %}"><em>{% trans "Inloggen" %}</em></a>

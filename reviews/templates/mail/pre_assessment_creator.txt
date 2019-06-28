@@ -3,11 +3,11 @@
 {% block content_nl %}
 Beste collega,
 
-Uw aanvraag voor voortoetsing is ingediend. De ETCL zal haar best doen binnen één week uitsluitsel te geven. U hoort zo snel mogelijk van ons.
+Uw aanvraag voor voortoetsing is ingediend. De FETC-GW zal haar best doen binnen één week uitsluitsel te geven. U hoort zo snel mogelijk van ons.
 {% endblock %}
 
 {% block content_en %}
 Dear colleague,
 
-Your pre-assessment application has been submitted. The EtCL will try to review your study within one week after tomorrow. You will hear from us as soon as possible.
+Your pre-assessment application has been submitted. The FEtC-H will try to review your study within one week after tomorrow. You will hear from us as soon as possible.
 {% endblock %}

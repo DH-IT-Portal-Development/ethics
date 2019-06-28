@@ -4,7 +4,9 @@
 	{% if not no_back %}
 	<input class="pure-button pure-button-secondary" type="submit" name="save_back" value="{% trans '<< Opslaan en vorige stap' %}" />
 	{% endif %}
+    {% if not no_forward %}
 	<input class="pure-button pure-button-primary" type="submit" name="save_continue" value="{{ next_text|default:_('Opslaan en volgende stap >>') }}" />
+    {% endif %}
 </nav>
 
 {% if not no_back %}

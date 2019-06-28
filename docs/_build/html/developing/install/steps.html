@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation Steps &mdash; ETCL 1.0 documentation</title>
+  <title>Installation Steps &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="E-Mail" href="mail.html" />
     <link rel="prev" title="Local development installation" href="index.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -121,7 +123,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -181,49 +183,49 @@
 <div class="section" id="preparing-the-source">
 <h2>Preparing the source<a class="headerlink" href="#preparing-the-source" title="Permalink to this headline">¶</a></h2>
 <p>Clone the git repository</p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone
 </pre></div>
 </div>
 <p>Create a Python 3 virtual environment for this project and activate it:</p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="n">DIR</span>
-<span class="n">source</span> <span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python3 -m venv DIR
+<span class="nb">source</span> venv/bin/activate
 </pre></div>
 </div>
 <p>Install the requirements (in a virtualenv):</p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install -r requirements.txt
 </pre></div>
 </div>
 <p>Modify the settings file (<cite>etcl/settings.py</cite>) to your liking.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">It is recommended to keep the default database settings, as developing with a sqlite db is easier</p>
+<p class="admonition-title">Tip</p>
+<p>It is recommended to keep the default database settings, as developing with a sqlite db is easier</p>
 </div>
 </div>
 <div class="section" id="filling-a-database">
 <h2>Filling a database<a class="headerlink" href="#filling-a-database" title="Permalink to this headline">¶</a></h2>
 <p>Run the database migrations:</p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">migrate</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python manage.py migrate
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This will also create a sqlitedb file if it’s missing</p>
+<p class="admonition-title">Note</p>
+<p>This will also create a sqlitedb file if it’s missing</p>
 </div>
 <p>Load all fixtures using <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">loaddata</span></code>.</p>
 <p>This command requires you to specify each fixture file, as it doesn’t auto detect them.
 For example:</p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">loadddata</span> <span class="n">relations</span><span class="o">.</span><span class="n">json</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python manage.py loadddata relations.json
 </pre></div>
 </div>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
+<p class="admonition-title">Tip</p>
 <p>You can find and install all fixture files with the following shell command (GNU tools only):</p>
-<div class="code shell last highlight-default notranslate"><div class="highlight"><pre><span></span>find $directory -type f -wholename &quot;*fixtures/*.json&quot; -print0 | xargs -0 python manage.py loaddata
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>find <span class="nv">$directory</span> -type f -wholename <span class="s2">&quot;*fixtures/*.json&quot;</span> -print0 <span class="p">|</span> xargs -0 python manage.py loaddata
 </pre></div>
 </div>
 </div>
 <p>Create a superuser</p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">createsuperuser</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python manage.py createsuperuser
 </pre></div>
 </div>
 </div>
@@ -235,15 +237,15 @@ as an argument.</p>
 <p>Example: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">localhost:8080</span></code> or <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">8080</span></code></p>
 <p>Add additional users in the admin interface</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">You can find the admin interface at <code class="docutils literal notranslate"><span class="pre">server:port/admin</span></code>. If you are using the default settings, this would be
+<p class="admonition-title">Tip</p>
+<p>You can find the admin interface at <code class="docutils literal notranslate"><span class="pre">server:port/admin</span></code>. If you are using the default settings, this would be
 <a class="reference external" href="http://localhost:8000/admin">http://localhost:8000/admin</a>.</p>
 </div>
 <p>The application requires one user to be part of the ‘secretary’ group. You can set this is the admin interface.
 That same user should also be member of the ‘committee’ group.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">You should create at least 2 user accounts, as you require a seperate account to act as a supervisor.</p>
+<p class="admonition-title">Tip</p>
+<p>You should create at least 2 user accounts, as you require a seperate account to act as a supervisor.</p>
 </div>
 </div>
 <div class="section" id="you-are-ready-to-roll">
@@ -264,7 +266,7 @@ it detects changed source files, so you don’t have to do this yourself (most o
         <a href="mail.html" class="btn btn-neutral float-right" title="E-Mail" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Local development installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Local development installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -273,7 +275,7 @@ it detects changed source files, so you don’t have to do this yourself (most o
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -290,26 +292,16 @@ it detects changed source files, so you don’t have to do this yourself (most o
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -3,19 +3,19 @@
 {% block content_nl %}
 Beste collega,
 
-Uw aanmelding is door de ETCL ontvangen. De automatische screening van de portal heeft op basis van de door u gegeven beschrijving voorlopig de status "standaard UiL OTS onderzoek" gekregen.
-Dit houdt in dat u binnen uiterlijk twee werkweken een eerste beoordeling van de ETCL tegemoet mag zien.
+Uw aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door u gegeven beschrijving voorlopig de status "standaard GW onderzoek" gekregen.
+Dit houdt in dat u binnen uiterlijk twee werkweken een eerste beoordeling van de FETC-GW tegemoet mag zien.
 
-Zoals beschreven in het reglement kan dat een snelle goedkeuring zijn, maar het is ook mogelijk dat uw studie op grond van deze eerste ETCL beoordeling alsnog als "niet-standaard UiL OTS-onderzoek" wordt gekenmerkt (in welk geval de beoordeling langer zal duren, zie hiervoor appendix B van het reglement (http://etcl.wp.hum.uu.nl/reglement/) voor hulp bij het inschatten van wat valt onder niet-standaard UiL OTS onderzoek en de sectie 2.8 van het reglement (http://etcl.wp.hum.uu.nl/reglement/) voor de mogelijke tijdspaden.
+Zoals beschreven in het reglement kan dat een snelle goedkeuring zijn, maar het is ook mogelijk dat uw studie op grond van deze eerste FETC-GW beoordeling alsnog als "niet-standaard UiL OTS-onderzoek" wordt gekenmerkt (in welk geval de beoordeling langer zal duren, zie hiervoor appendix B van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor hulp bij het inschatten van wat valt onder niet-standaard UiL OTS onderzoek en de sectie 2.8 van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor de mogelijke tijdspaden.
 Houdt u hier a.u.b. rekening mee.
 {% endblock %}
 
 {% block content_en %}
 Dear colleague,
 
-The EtCL has received your application. The automatic screening of the portal has given your study the status of "standard UiL OTS research".
+The FEtC-H has received your application. The automatic screening of the portal has given your study the status of "standard research".
 This means that you will receive an assessment within two working weeks.
 
-As stated in the EtCL regulations, one possible outcome is that your study will be quickly approved as is; a second possibility is that your study after initial assessment will be marked as "non-standard UiL OTS research", see appendix B in the regulations (http://etcl.wp.hum.uu.nl/regulations/) for information. If the latter case, see section 2.8, p. 14 (http://etcl.wp.hum.uu.nl/regulations/) for the possible time paths.
+As stated in the FEtC-H regulations, one possible outcome is that your study will be quickly approved as is; a second possibility is that your study after initial assessment will be marked as "non-standard UiL OTS research", see appendix B in the regulations (http://fetc-gw.wp.hum.uu.nl/regulations/) for information. If the latter case, see section 2.8, p. 14 (http://fetc-gw.wp.hum.uu.nl/regulations/) for the possible time paths.
 Please be aware of these possibilities and the different time paths involved.
 {% endblock %}

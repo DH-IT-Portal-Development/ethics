@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Deployment steps &mdash; ETCL 1.0 documentation</title>
+  <title>Deployment steps &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Webserver" href="webserver.html" />
     <link rel="prev" title="Server Deployment" href="index.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -136,7 +138,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -198,34 +200,32 @@ that step 6 has been completed!</p>
 <h2>1. Install prerequisites<a class="headerlink" href="#install-prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>The following packages needs to be installed:</p>
 <ul>
-<li><p class="first">Webserver with WSGI support. See ‘<a class="reference internal" href="webserver.html"><span class="doc">Webserver</span></a>’.</p>
-</li>
-<li><p class="first">Database. See ‘<a class="reference internal" href="database.html"><span class="doc">Database</span></a>’.</p>
-</li>
-<li><p class="first">Python 3:</p>
+<li><p>Webserver with WSGI support. See ‘<a class="reference internal" href="webserver.html"><span class="doc">Webserver</span></a>’.</p></li>
+<li><p>Database. See ‘<a class="reference internal" href="database.html"><span class="doc">Database</span></a>’.</p></li>
+<li><p>Python 3:</p>
 <blockquote>
 <div><ul class="simple">
-<li>python3</li>
-<li>python3-dev</li>
-<li>python3-tk</li>
+<li><p>python3</p></li>
+<li><p>python3-dev</p></li>
+<li><p>python3-tk</p></li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first">Other packages:</p>
+<li><p>Other packages:</p>
 <blockquote>
 <div><ul class="simple">
-<li>libtiff5-dev</li>
-<li>libjpeg62-turbo-dev</li>
-<li>zlib1g-dev</li>
-<li>libfreetype6-dev</li>
-<li>liblcms2-dev</li>
-<li>libwebp-dev</li>
-<li>tcl8.6-dev</li>
-<li>tk8.6-dev</li>
-<li>libldap2-dev</li>
-<li>libsasl2-dev</li>
-<li>libssl-dev</li>
-<li>gettext</li>
+<li><p>libtiff5-dev</p></li>
+<li><p>libjpeg62-turbo-dev</p></li>
+<li><p>zlib1g-dev</p></li>
+<li><p>libfreetype6-dev</p></li>
+<li><p>liblcms2-dev</p></li>
+<li><p>libwebp-dev</p></li>
+<li><p>tcl8.6-dev</p></li>
+<li><p>tk8.6-dev</p></li>
+<li><p>libldap2-dev</p></li>
+<li><p>libsasl2-dev</p></li>
+<li><p>libssl-dev</p></li>
+<li><p>gettext</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -237,36 +237,36 @@ that step 6 has been completed!</p>
 of a <code class="docutils literal notranslate"><span class="pre">data</span></code> folder, next to the webroot and private folders.</p>
 <p>All folders should be owned by the <code class="docutils literal notranslate"><span class="pre">www-data</span></code> user and group.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>None of the folders should be in a webroot, as this could expose sensitive information like passwords to the world.</p>
-<p class="last">Webserver access to folder that need it is handled later in this guide.</p>
+<p>Webserver access to folder that need it is handled later in this guide.</p>
 </div>
 <p>Below is an overview of all folders we need, plus examples on how to get this folder</p>
 <div class="section" id="source">
 <h3>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h3>
 <p>This folder will hold the application source code. You should create this by cloning the source code from git. This way
 you can update the code later by doing a simple git pull.</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; source
-$ chown www-data:www-data source
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; <span class="nb">source</span>
+$ chown www-data:www-data <span class="nb">source</span>
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Currently, we use a bare clone of the repository on GitHub as the source repo on the production server. This is
 to make sure we do not accidentally push code to production.</p>
 <p>This would make the procedure on production:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; /path/to/repo --bare
-$ git clone /path/to/repo source
-$ chown www-data:www-data source
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; /path/to/repo --bare
+$ git clone /path/to/repo <span class="nb">source</span>
+$ chown www-data:www-data <span class="nb">source</span>
 </pre></div>
 </div>
-<p class="last">When updating, you can either figure out how to update a bare repo, or you can delete the bare repo and re-clone.</p>
+<p>When updating, you can either figure out how to update a bare repo, or you can delete the bare repo and re-clone.</p>
 </div>
 </div>
 <div class="section" id="media">
 <h3>Media<a class="headerlink" href="#media" title="Permalink to this headline">¶</a></h3>
 <p>This folder will hold all user uploaded/generated files.</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir uploads
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ mkdir uploads
 $ chown www-data:www-data uploads
 </pre></div>
 </div>
@@ -274,7 +274,7 @@ $ chown www-data:www-data uploads
 <div class="section" id="static">
 <h3>Static<a class="headerlink" href="#static" title="Permalink to this headline">¶</a></h3>
 <p>This folder will be used for all static application files (css, images, etc).</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; static
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone &lt;repo&gt; static
 $ chown www-data:www-data static
 </pre></div>
 </div>
@@ -283,7 +283,7 @@ $ chown www-data:www-data static
 <h3>Virtual environment<a class="headerlink" href="#virtual-environment" title="Permalink to this headline">¶</a></h3>
 <p>This folder will hold the virtual environment that holds the application dependencies. It’s best to create the env as
 the www-data user.</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># su www-data
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># su www-data</span>
 $ python3 -m venv env
 </pre></div>
 </div>
@@ -293,8 +293,8 @@ $ python3 -m venv env
 <h2>3. Python dependencies<a class="headerlink" href="#python-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>By this point you should be able to install your dependencies. You will also need to install <cite>pip-tools</cite>.</p>
 <p>As your virtual environment should be owned by www-data, it’s best to install these dependencies as www-data.</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span># su www-data
-$ source env/bin/activate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># su www-data</span>
+$ <span class="nb">source</span> env/bin/activate
 $ pip install pip-tools
 $ pip install -r source/requirements.txt
 </pre></div>
@@ -309,22 +309,22 @@ $ pip install -r source/requirements.txt
 <code class="docutils literal notranslate"><span class="pre">/etc/apache2/conf-enabled</span></code>.</p>
 <p>An example config is provided in the ‘<a class="reference internal" href="webserver.html"><span class="doc">Webserver</span></a>’ page. Use this to configure Apache2 to fit your situation.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Do not restart Apache2 yet! This should be done at the end of the guide.</p>
+<p class="admonition-title">Warning</p>
+<p>Do not restart Apache2 yet! This should be done at the end of the guide.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>Technically it’s better to create the config file in <code class="docutils literal notranslate"><span class="pre">conf-available</span></code> and then make a symlink to this file in
 <code class="docutils literal notranslate"><span class="pre">conf-enabled</span></code>.</p>
-<p class="last">However, the puppet script doesn’t do this, as that requires more effort ¯\_(ツ)_/¯.</p>
+<p>However, the puppet script doesn’t do this, as that requires more effort ¯\_(ツ)_/¯.</p>
 </div>
 </div>
 <div class="section" id="application">
 <h3>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h3>
 <p><em>See</em> ‘<a class="reference internal" href="configuration.html"><span class="doc">Application configuration</span></a>’ <em>for detailed information.</em></p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The puppet module actually performs this step just after cloning the repository.</p>
+<p class="admonition-title">Note</p>
+<p>The puppet module actually performs this step just after cloning the repository.</p>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> file supplied with the source code is meant for development purposes. On a live server we want some
 additional settings.</p>
@@ -336,7 +336,7 @@ additional settings.</p>
 <p><em>See</em> ‘<a class="reference internal" href="database.html"><span class="doc">Database</span></a>’ <em>for more information.</em></p>
 <p>Create the database and database user as specified in the config file you just created.</p>
 <p>After that, we need to install our application into it. For this, we use Django migrations:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> env/bin/activate
 $ python source/manage.py migrate
 </pre></div>
 </div>
@@ -347,11 +347,11 @@ database.</p>
 <p>First we need to load all our fixtures. We can do this with the <code class="docutils literal notranslate"><span class="pre">loaddata</span></code> management command. You do need to specify
 all the individual fixture files individually.</p>
 <p>If you’re on a POSIX system with GNU tools, you can use the following command to install all fixtures:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>find $directory -type f -wholename &quot;*fixtures/*.json&quot; -print0 | xargs -0 python manage.py loaddata
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find <span class="nv">$directory</span> -type f -wholename <span class="s2">&quot;*fixtures/*.json&quot;</span> -print0 <span class="p">|</span> xargs -0 python manage.py loaddata
 </pre></div>
 </div>
 <p>You also need to create a super user, using the <code class="docutils literal notranslate"><span class="pre">createsuperuser</span></code> management command:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> env/bin/activate
 $ python source/manage.py createsuperuser
 </pre></div>
 </div>
@@ -359,13 +359,13 @@ $ python source/manage.py createsuperuser
 which can be found in <code class="docutils literal notranslate"><span class="pre">/admin</span></code> through your favourite browser. Make sure this user is part of the <code class="docutils literal notranslate"><span class="pre">committee</span></code> and
 <code class="docutils literal notranslate"><span class="pre">secretary</span></code> groups.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>If using LDAP accounts, you can also add this user directly from the LDAP with the following management command:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> env/bin/activate
 $ python sourve/manage.py add_ldap_users &lt;username&gt;
 </pre></div>
 </div>
-<p class="last">You still need to add this account to the proper groups through the admin interface, but this way your user can log
+<p>You still need to add this account to the proper groups through the admin interface, but this way your user can log
 in with his/her LDAP credentials.</p>
 </div>
 </div>
@@ -373,20 +373,20 @@ in with his/her LDAP credentials.</p>
 <div class="section" id="cron-production-only">
 <h2>6. Cron (production only)<a class="headerlink" href="#cron-production-only" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>This step is <strong>not</strong> handled by the puppet module!</p>
-<p class="last">Manual configuration is necessary.</p>
+<p>Manual configuration is necessary.</p>
 </div>
 <p>Everyday at 7 AM, a cron task is scheduled to run a management command. This command sends out review reminders when
 certain criteria are met.</p>
 <p>To enable this, create a file in <code class="docutils literal notranslate"><span class="pre">/etc/cron.d/</span></code> to run the following command:</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">send_reminders</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">send_reminders</span>
 </pre></div>
 </div>
 <p>It’s probably best to send the output to <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code>, as the sysadmin’s probably panick when they get errors they
 don’t know.</p>
 <p>An example of a full Cron definition (taken straight from the then-current production server):</p>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">7</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">hum</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">etcl</span><span class="o">.</span><span class="n">hum</span><span class="o">.</span><span class="n">uu</span><span class="o">.</span><span class="n">nl</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">etcl</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">/</span><span class="n">hum</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">etcl</span><span class="o">.</span><span class="n">hum</span><span class="o">.</span><span class="n">uu</span><span class="o">.</span><span class="n">nl</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">etcl</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">send_reminders</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">7</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="n">hum</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">etcl</span><span class="o">.</span><span class="n">hum</span><span class="o">.</span><span class="n">uu</span><span class="o">.</span><span class="n">nl</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">etcl</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">/</span><span class="n">hum</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">etcl</span><span class="o">.</span><span class="n">hum</span><span class="o">.</span><span class="n">uu</span><span class="o">.</span><span class="n">nl</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">etcl</span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">send_reminders</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -399,7 +399,7 @@ restart Apache.</p>
 <p>When Django is run in production mode, it doesn’t serve static files like the development server does. This means that
 we need to collect all static files in a folder that Apache2 can use to serve the files.</p>
 <p>This can be achieved by running the <code class="docutils literal notranslate"><span class="pre">collectstatic</span></code> management command:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> env/bin/activate
 $ python sourve/manage.py manage.py collectstatic --noinput
 </pre></div>
 </div>
@@ -409,7 +409,7 @@ $ python sourve/manage.py manage.py collectstatic --noinput
 <h3>Translation file<a class="headerlink" href="#translation-file" title="Permalink to this headline">¶</a></h3>
 <p>To make sure we use the right translation file, we recompile it from the source file.</p>
 <p>This can be achieved by running the <code class="docutils literal notranslate"><span class="pre">collectstatic</span></code> management command:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ source env/bin/activate
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">source</span> env/bin/activate
 $ python sourve/manage.py manage.py compilemessages
 </pre></div>
 </div>
@@ -418,7 +418,7 @@ $ python sourve/manage.py manage.py compilemessages
 <h3>Restart Apache<a class="headerlink" href="#restart-apache" title="Permalink to this headline">¶</a></h3>
 <p>Now it’s finally time to finish our deploy, by restarting apache. This can be done in your preferred way.</p>
 <p>Some examples:</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo &#39;Ignore me, I&#39;m a workaround&#39;
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ echo &#39;Ignore me, I&#39;m a workaround&#39;
 # systemctl restart apache2
 # service apache2 restart
 # /usr/sbin/apache2ctl -k graceful
@@ -439,7 +439,7 @@ $ python sourve/manage.py manage.py compilemessages
         <a href="webserver.html" class="btn btn-neutral float-right" title="Webserver" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Server Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Server Deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -448,7 +448,7 @@ $ python sourve/manage.py manage.py compilemessages
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -465,26 +465,16 @@ $ python sourve/manage.py manage.py compilemessages
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

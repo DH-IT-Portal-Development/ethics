@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>reviews.views module &mdash; ETCL 1.0 documentation</title>
+  <title>reviews.views module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="studies package" href="studies.html" />
     <link rel="prev" title="reviews.utils module" href="reviews.utils.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,9 +92,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
@@ -129,7 +131,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -186,9 +188,38 @@
   <div class="section" id="module-reviews.views">
 <span id="reviews-views-module"></span><h1>reviews.views module<a class="headerlink" href="#module-reviews.views" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
+<dt id="reviews.views.ChangeChamberView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">ChangeChamberView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#ChangeChamberView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.ChangeChamberView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="reviews.mixins.html#reviews.mixins.UserAllowedMixin" title="reviews.mixins.UserAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.mixins.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.UpdateView</span></code></p>
+<dl class="attribute">
+<dt id="reviews.views.ChangeChamberView.form_class">
+<code class="descname">form_class</code><a class="headerlink" href="#reviews.views.ChangeChamberView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="reviews.forms.html#reviews.forms.ChangeChamberForm" title="reviews.forms.ChangeChamberForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.forms.ChangeChamberForm</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ChangeChamberView.get_success_url">
+<code class="descname">get_success_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#ChangeChamberView.get_success_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.ChangeChamberView.get_success_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the supplied URL.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ChangeChamberView.model">
+<code class="descname">model</code><a class="headerlink" href="#reviews.views.ChangeChamberView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">proposals.models.Proposal</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ChangeChamberView.template_name">
+<code class="descname">template_name</code><em class="property"> = 'reviews/change_chamber_form.html'</em><a class="headerlink" href="#reviews.views.ChangeChamberView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="reviews.views.DecisionListView">
 <em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">DecisionListView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#DecisionListView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.DecisionListView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <a class="reference internal" href="reviews.mixins.html#reviews.mixins.CommitteeMixin" title="reviews.mixins.CommitteeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.mixins.CommitteeMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
 <dl class="attribute">
 <dt id="reviews.views.DecisionListView.context_object_name">
 <code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.DecisionListView.context_object_name" title="Permalink to this definition">¶</a></dt>
@@ -202,7 +233,12 @@
 
 <dl class="attribute">
 <dt id="reviews.views.DecisionListView.group_required">
-<code class="descname">group_required</code><em class="property"> = ['Secretaris', 'Commissie']</em><a class="headerlink" href="#reviews.views.DecisionListView.group_required" title="Permalink to this definition">¶</a></dt>
+<code class="descname">group_required</code><em class="property"> = ['Secretaris', 'AK', 'LK']</em><a class="headerlink" href="#reviews.views.DecisionListView.group_required" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.DecisionListView.template_name">
+<code class="descname">template_name</code><em class="property"> = 'reviews/decision_list.html'</em><a class="headerlink" href="#reviews.views.DecisionListView.template_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -210,7 +246,7 @@
 <dl class="class">
 <dt id="reviews.views.DecisionMyOpenView">
 <em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">DecisionMyOpenView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#DecisionMyOpenView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.DecisionMyOpenView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <a class="reference internal" href="reviews.mixins.html#reviews.mixins.CommitteeMixin" title="reviews.mixins.CommitteeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.mixins.CommitteeMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
 <dl class="attribute">
 <dt id="reviews.views.DecisionMyOpenView.context_object_name">
 <code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.DecisionMyOpenView.context_object_name" title="Permalink to this definition">¶</a></dt>
@@ -224,7 +260,12 @@
 
 <dl class="attribute">
 <dt id="reviews.views.DecisionMyOpenView.group_required">
-<code class="descname">group_required</code><em class="property"> = ['Secretaris', 'Commissie']</em><a class="headerlink" href="#reviews.views.DecisionMyOpenView.group_required" title="Permalink to this definition">¶</a></dt>
+<code class="descname">group_required</code><em class="property"> = ['Secretaris', 'AK', 'LK']</em><a class="headerlink" href="#reviews.views.DecisionMyOpenView.group_required" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.DecisionMyOpenView.template_name">
+<code class="descname">template_name</code><em class="property"> = 'reviews/decision_list.html'</em><a class="headerlink" href="#reviews.views.DecisionMyOpenView.template_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -232,7 +273,7 @@
 <dl class="class">
 <dt id="reviews.views.DecisionOpenView">
 <em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">DecisionOpenView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#DecisionOpenView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.DecisionOpenView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <a class="reference internal" href="reviews.mixins.html#reviews.mixins.CommitteeMixin" title="reviews.mixins.CommitteeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.mixins.CommitteeMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
 <dl class="attribute">
 <dt id="reviews.views.DecisionOpenView.context_object_name">
 <code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.DecisionOpenView.context_object_name" title="Permalink to this definition">¶</a></dt>
@@ -405,9 +446,12 @@ that are not of preliminary assessment Proposals.</p>
 <dl class="class">
 <dt id="reviews.views.SupervisorDecisionOpenView">
 <em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">SupervisorDecisionOpenView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#SupervisorDecisionOpenView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.SupervisorDecisionOpenView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
-<p>This page displays all proposals to be reviewed by supervisors. Not to be confused with SupervisorView, which
-displays all open reviews for a specific supervisor. Viewable for the secretary only!</p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <a class="reference internal" href="reviews.mixins.html#reviews.mixins.CommitteeMixin" title="reviews.mixins.CommitteeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.mixins.CommitteeMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<p>This page displays all proposals to be reviewed by supervisors. Not to be
+confused with SupervisorView, which displays all open reviews for a specific</p>
+<blockquote>
+<div><p>supervisor. Viewable for the secretary only!</p>
+</div></blockquote>
 <dl class="attribute">
 <dt id="reviews.views.SupervisorDecisionOpenView.context_object_name">
 <code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.SupervisorDecisionOpenView.context_object_name" title="Permalink to this definition">¶</a></dt>
@@ -416,7 +460,8 @@ displays all open reviews for a specific supervisor. Viewable for the secretary 
 <dl class="method">
 <dt id="reviews.views.SupervisorDecisionOpenView.get_queryset">
 <code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#SupervisorDecisionOpenView.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.SupervisorDecisionOpenView.get_queryset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns all open Supervisor Decisions of all Users</p>
+<dd><p>Returns all studies that still need conclusion actions by the
+secretary</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -435,8 +480,9 @@ displays all open reviews for a specific supervisor. Viewable for the secretary 
 <dt id="reviews.views.SupervisorView">
 <em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">SupervisorView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#SupervisorView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.SupervisorView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
-<p>This page displays all proposals to be reviewed by a specific supervisors. Not to be confused with
-SupervisorDecisionOpenView, which displays all open reviews for all supervisors.</p>
+<p>This page displays all proposals to be reviewed by a specific
+supervisors. Not to be confused with SupervisorDecisionOpenView, which
+displays all open reviews for all supervisors.</p>
 <dl class="attribute">
 <dt id="reviews.views.SupervisorView.context_object_name">
 <code class="descname">context_object_name</code><em class="property"> = 'decisions'</em><a class="headerlink" href="#reviews.views.SupervisorView.context_object_name" title="Permalink to this definition">¶</a></dt>
@@ -447,6 +493,33 @@ SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
 <code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#SupervisorView.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.SupervisorView.get_queryset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all the current open Decisions for the current User</p>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reviews.views.ToConcludeProposalView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">ToConcludeProposalView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#ToConcludeProposalView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.ToConcludeProposalView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <a class="reference internal" href="reviews.mixins.html#reviews.mixins.CommitteeMixin" title="reviews.mixins.CommitteeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.mixins.CommitteeMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dl class="attribute">
+<dt id="reviews.views.ToConcludeProposalView.context_object_name">
+<code class="descname">context_object_name</code><em class="property"> = 'reviews'</em><a class="headerlink" href="#reviews.views.ToConcludeProposalView.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.ToConcludeProposalView.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#ToConcludeProposalView.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.ToConcludeProposalView.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all open Committee Decisions of all Users</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ToConcludeProposalView.group_required">
+<code class="descname">group_required</code><em class="property"> = 'Secretaris'</em><a class="headerlink" href="#reviews.views.ToConcludeProposalView.group_required" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.ToConcludeProposalView.template_name">
+<code class="descname">template_name</code><em class="property"> = 'reviews/review_to_conclude.html'</em><a class="headerlink" href="#reviews.views.ToConcludeProposalView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -463,7 +536,7 @@ SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
         <a href="studies.html" class="btn btn-neutral float-right" title="studies package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="reviews.utils.html" class="btn btn-neutral" title="reviews.utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="reviews.utils.html" class="btn btn-neutral float-left" title="reviews.utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -472,7 +545,7 @@ SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -489,26 +562,16 @@ SupervisorDecisionOpenView, which displays all open reviews for all supervisors.
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

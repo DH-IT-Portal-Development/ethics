@@ -30,7 +30,7 @@ def get_task_progress(task):
 def session_urls(study):
     urls = list()
 
-    tasks_url = AvailableURL(title=_('Het takenonderzoek'), margin=2)
+    tasks_url = AvailableURL(title=_('Het takenonderzoek en interviews'), margin=2)
 
     if study.has_sessions:
         tasks_url.url = reverse('studies:session_start', args=(study.pk,))

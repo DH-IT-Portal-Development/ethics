@@ -25,7 +25,7 @@ from tasks.models import Session, Task
 # We set up a custom LDAP connection here, separate from the Django auth one
 try:
     # This will trigger an exception if LDAP is not configured
-    from etcl.ldap_settings import *
+    from fetc.ldap_settings import *
 
     # If it is configured, we open a connection and bind our credentials to it.
     ldap_connection = ldap.initialize(AUTH_LDAP_SERVER_URI)
@@ -178,7 +178,7 @@ class UserSearchView(LoginRequiredMixin, generic.View):
 ################
 # Helpers
 ################
-class AllowErrorsMixin(object):
+class AllowErrorsOnBackbuttonMixin(object):
     def form_invalid(self, form):
         """
         On back button, allow form to have errors.
@@ -186,7 +186,7 @@ class AllowErrorsMixin(object):
         if 'save_back' in self.request.POST:
             return HttpResponseRedirect(self.get_back_url())
         else:
-            return super(AllowErrorsMixin, self).form_invalid(form)
+            return super(AllowErrorsOnBackbuttonMixin, self).form_invalid(form)
 
 
 class UserAllowedMixin(SingleObjectMixin):
@@ -194,7 +194,7 @@ class UserAllowedMixin(SingleObjectMixin):
         """
         Allows access to a proposal based on the status of a Proposal
         and the position of the User. He can be:
-        - in the 'SECRETARY' or 'COMMISSION' group
+        - in the 'SECRETARY', 'GENERAL_CHAMBER' or 'LINGUISTICS_CHAMBER' group
         - an applicant of this Proposal
         - a supervisor of this Proposal
         If the status of the Proposal is not in line with the status of the User,
@@ -219,10 +219,13 @@ class UserAllowedMixin(SingleObjectMixin):
                 pk=proposal.supervisor.pk)
         else:
             supervisor = get_user_model().objects.none()
-        commission = get_user_model().objects.filter(
-            groups__name=settings.GROUP_SECRETARY)
-        commission |= get_user_model().objects.filter(
-            groups__name=settings.GROUP_COMMISSION)
+        commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
+        if proposal.reviewing_committee.name == settings.GROUP_LINGUISTICS_CHAMBER:
+            commission |= get_user_model().objects.filter(
+                groups__name=settings.GROUP_LINGUISTICS_CHAMBER)
+        if proposal.reviewing_committee.name == settings.GROUP_GENERAL_CHAMBER:
+            commission |= get_user_model().objects.filter(
+                groups__name=settings.GROUP_GENERAL_CHAMBER)
 
         if proposal.status >= Proposal.SUBMITTED:
             if self.request.user not in commission:
@@ -243,7 +246,7 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
         """
         Allows access to a proposal based on the status of a Proposal
         and the position of the User. He can be:
-        - in the 'SECRETARY' or 'COMMISSION' group
+        - in the 'SECRETARY', 'LINGUISITICS_CHAMBER' or 'GENERAL_CHAMBER' group
         - an applicant of this Proposal
         - a supervisor of this Proposal
         If the status of the Proposal is not in line with the status of the User,
@@ -269,10 +272,17 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
                     pk=proposal.supervisor.pk)
             else:
                 supervisor = get_user_model().objects.none()
-            commission = get_user_model().objects.filter(
-                groups__name=settings.GROUP_SECRETARY)
-            commission |= get_user_model().objects.filter(
-                groups__name=settings.GROUP_COMMISSION)
+            commission = get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)
+
+            if proposal.reviewing_committee.name == settings.GROUP_LINGUISTICS_CHAMBER:
+                commission |= get_user_model().objects.filter(
+                    groups__name=settings.GROUP_LINGUISTICS_CHAMBER
+                )
+
+            if proposal.reviewing_committee.name == settings.GROUP_GENERAL_CHAMBER:
+                commission |= get_user_model().objects.filter(
+                    groups__name=settings.GROUP_GENERAL_CHAMBER
+                )
 
             if proposal.status >= Proposal.SUBMITTED:
                 if self.request.user not in commission:

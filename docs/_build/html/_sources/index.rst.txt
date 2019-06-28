@@ -2,8 +2,8 @@
 Introduction
 ############
 
-Welcome to the ETCL's documentation! This Django_ project allows a user to apply a research project for ethical review.
-It was custom-tailored for the `Ethical Committee Linguistics`_ (ETCL) of `Utrecht University`_.
+Welcome to the FEtC-H's documentation! This Django_ project allows a user to apply a research project for ethical review.
+It was custom-tailored for the `Faculty Ethics Committee - Humanities`_ (FEtC-H) of `Utrecht University`_.
 
 This documentation is meant to give (new) maintainers/developers of the codebase a general overview of the project and
 to document procedure.
@@ -29,5 +29,5 @@ Indices and tables
 * :ref:`search`
 
 .. _Django: https://www.djangoproject.com/
-.. _Ethical Committee Linguistics: https://etcl.wp.hum.uu.nl
+.. _Ethical Committee Linguistics: https://fetc-gw.wp.hum.uu.nl
 .. _Utrecht University: https://www.uu.nl

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>interventions.views module &mdash; ETCL 1.0 documentation</title>
+  <title>interventions.views module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="observations package" href="observations.html" />
     <link rel="prev" title="interventions.utils module" href="interventions.utils.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,9 +92,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="interventions.html">interventions package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="interventions.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="interventions.forms.html">interventions.forms module</a></li>
@@ -126,7 +128,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -185,7 +187,7 @@
 <dl class="class">
 <dt id="interventions.views.InterventionCreate">
 <em class="property">class </em><code class="descclassname">interventions.views.</code><code class="descname">InterventionCreate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/views.html#InterventionCreate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.views.InterventionCreate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#interventions.views.InterventionMixin" title="interventions.views.InterventionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">interventions.views.InterventionMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#interventions.views.InterventionMixin" title="interventions.views.InterventionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">interventions.views.InterventionMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsOnBackbuttonMixin" title="core.views.AllowErrorsOnBackbuttonMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsOnBackbuttonMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.CreateView" title="core.views.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.CreateView</span></code></a></p>
 <p>Creates a Intervention from a InterventionForm</p>
 <dl class="method">
 <dt id="interventions.views.InterventionCreate.form_valid">
@@ -255,7 +257,7 @@
 <dl class="class">
 <dt id="interventions.views.InterventionUpdate">
 <em class="property">class </em><code class="descclassname">interventions.views.</code><code class="descname">InterventionUpdate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/views.html#InterventionUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.views.InterventionUpdate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#interventions.views.InterventionMixin" title="interventions.views.InterventionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">interventions.views.InterventionMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsMixin" title="core.views.AllowErrorsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#interventions.views.InterventionMixin" title="interventions.views.InterventionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">interventions.views.InterventionMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.AllowErrorsOnBackbuttonMixin" title="core.views.AllowErrorsOnBackbuttonMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.AllowErrorsOnBackbuttonMixin</span></code></a>, <a class="reference internal" href="core.views.html#core.views.UpdateView" title="core.views.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UpdateView</span></code></a></p>
 <p>Updates a Intervention from an InterventionForm</p>
 <dl class="method">
 <dt id="interventions.views.InterventionUpdate.get_study">
@@ -278,7 +280,7 @@
         <a href="observations.html" class="btn btn-neutral float-right" title="observations package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="interventions.utils.html" class="btn btn-neutral" title="interventions.utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="interventions.utils.html" class="btn btn-neutral float-left" title="interventions.utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -287,7 +289,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -304,26 +306,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
