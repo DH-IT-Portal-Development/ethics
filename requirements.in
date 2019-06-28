@@ -1,11 +1,11 @@
 Django>=1.11,<2.0
-django-auth-ldap
+django-auth-ldap<2 # Py 3.4 compat
 django-braces
 django-easy-pdf
 django-modeltranslation
-mysqlclient<1.4.0
+mysqlclient<1.4.0 # Py 3.4 compat
 xhtml2pdf
-sphinx<2.0.0
+sphinx<2.0.0 # Py 3.4 compat
 sphinx_rtd_theme
 sphinxcontrib-apidoc
 sphinxcontrib-django

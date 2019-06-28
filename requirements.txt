@@ -8,7 +8,7 @@ alabaster==0.7.12         # via sphinx
 babel==2.7.0              # via sphinx
 certifi==2019.6.16        # via requests
 chardet==3.0.4            # via requests
-django-auth-ldap==2.0.0
+django-auth-ldap==1.7.0
 django-braces==1.13.0
 django-easy-pdf==0.1.1
 django-modeltranslation==0.13.1
