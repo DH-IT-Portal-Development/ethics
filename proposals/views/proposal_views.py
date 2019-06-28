@@ -1,23 +1,25 @@
 # -*- encoding: utf-8 -*-
 
+from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
+    UserFormKwargsMixin
 from django.conf import settings
-from django.urls import reverse
 from django.db.models import Q
-from django.views import generic
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-
-from braces.views import GroupRequiredMixin, LoginRequiredMixin, UserFormKwargsMixin
+from django.views import generic
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
-from core.views import AllowErrorsMixin, CreateView, UpdateView, DeleteView
 from core.utils import get_secretary
+from core.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
+    UpdateView
+from proposals.utils.validate_proposal import get_form_errors
 from reviews.utils import start_review, start_review_pre_assessment
-
 from ..copy import copy_proposal
-from ..forms import ProposalForm, ProposalDataManagementForm, ProposalSubmitForm, \
-    ProposalConfirmationForm, ProposalCopyForm, ProposalStartPracticeForm
+from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
+    ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
+    ProposalSubmitForm
 from ..models import Proposal
-from ..utils import generate_ref_number, generate_pdf
+from ..utils import generate_pdf, generate_ref_number
 
 
 ############
@@ -55,7 +57,11 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER
+    ]
     template_name_suffix = '_export_list'
 
     def get_queryset(self):
@@ -92,7 +98,8 @@ class MyConceptsView(ProposalsView):
 
     def get_queryset(self):
         """Returns all non-submitted Proposals for the current User"""
-        return self.get_my_proposals().filter(status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
+        return self.get_my_proposals().filter(
+            status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
 
 class MySubmittedView(ProposalsView):
@@ -103,8 +110,9 @@ class MySubmittedView(ProposalsView):
 
     def get_queryset(self):
         """Returns all submitted Proposals for the current User"""
-        return self.get_my_proposals().filter(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
-                                              status__lt=Proposal.DECISION_MADE)
+        return self.get_my_proposals().filter(
+            status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
+            status__lt=Proposal.DECISION_MADE)
 
 
 class MyCompletedView(ProposalsView):
@@ -115,12 +123,14 @@ class MyCompletedView(ProposalsView):
 
     def get_queryset(self):
         """Returns all completed Proposals for the current User"""
-        return self.get_my_proposals().filter(status__gte=Proposal.DECISION_MADE)
+        return self.get_my_proposals().filter(
+            status__gte=Proposal.DECISION_MADE)
 
 
 class MySupervisedView(ProposalsView):
     title = _('Mijn studies als eindverantwoordelijke')
-    body = _('Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
+    body = _(
+        'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
     is_modifiable = True
     is_submitted = True
 
@@ -149,10 +159,11 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
 
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
-        return Proposal.objects.filter(Q(in_course=True) | Q(is_exploration=True),
-                                       Q(applicants=self.request.user) |
-                                       (Q(supervisor=self.request.user) &
-                                        Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR)))
+        return Proposal.objects.filter(
+            Q(in_course=True) | Q(is_exploration=True),
+            Q(applicants=self.request.user) |
+            (Q(supervisor=self.request.user) &
+             Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR)))
 
 
 ##########################
@@ -172,7 +183,7 @@ class ProposalMixin(UserFormKwargsMixin):
             return reverse('proposals:wmo_create', args=(proposal.pk,))
 
 
-class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
+class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     def get_initial(self):
         """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
@@ -183,6 +194,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
         """Sets created_by to current user and generates a reference number"""
         form.instance.created_by = self.request.user
         form.instance.reference_number = generate_ref_number(self.request.user)
+        form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -193,7 +205,13 @@ class ProposalCreate(ProposalMixin, AllowErrorsMixin, CreateView):
         return context
 
 
-class ProposalUpdate(ProposalMixin, AllowErrorsMixin, UpdateView):
+class ProposalUpdate(ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+
+    def form_valid(self, form):
+        """Sets created_by to current user and generates a reference number"""
+        form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
+        return super(ProposalUpdate, self).form_valid(form)
+
     def get_context_data(self, **kwargs):
         """Adds 'create'/'no_back' to template context"""
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
@@ -223,7 +241,6 @@ class ProposalStart(generic.TemplateView):
         """Adds secretary and link to regulations to template context"""
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context['secretary'] = get_secretary()
-        context['regulations'] = 'https://etcl.wp.hum.uu.nl/reglement/'
         return context
 
 
@@ -241,7 +258,7 @@ class ProposalDataManagement(UpdateView):
         return reverse('proposals:consent', args=(self.object.pk,))
 
 
-class ProposalSubmit(AllowErrorsMixin, UpdateView):
+class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
@@ -252,6 +269,13 @@ class ProposalSubmit(AllowErrorsMixin, UpdateView):
         kwargs = super(ProposalSubmit, self).get_form_kwargs()
         kwargs['proposal'] = self.get_object()
         return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProposalSubmit, self).get_context_data(**kwargs)
+
+        context['errors'] = get_form_errors(self.get_object())
+
+        return context
 
     def form_valid(self, form):
         """
@@ -288,7 +312,8 @@ class ProposalConfirmation(GroupRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         """On confirmation, return to the Review archive"""
-        return reverse('reviews:my_archive')
+        committee = self.object.reviewing_committee.name
+        return reverse('reviews:my_archive', args=[committee])
 
 
 class ProposalCopy(UserFormKwargsMixin, CreateView):
@@ -311,7 +336,8 @@ class ProposalCopyRevision(ProposalCopy):
         return initial
 
 
-class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin, generic.DetailView):
+class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
+                    generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_pdf.html'
 
@@ -392,6 +418,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
 class ProposalSubmittedPreAssessment(ProposalSubmitted):
     template_name = 'proposals/proposal_submitted.html'
 
+
 #############
 # Pre-Aproved
 #############
@@ -413,13 +440,13 @@ class PreApprovedMixin(ProposalMixin):
 
 
 class ProposalCreatePreApproved(PreApprovedMixin, ProposalCreate):
-
     template_name = 'proposals/proposal_form_pre_approved.html'
 
     def form_valid(self, form):
         """Sets is_pre_approved to True"""
         form.instance.is_pre_approved = True
         return super(ProposalCreatePreApproved, self).form_valid(form)
+
 
 class ProposalUpdatePreApproved(PreApprovedMixin, ProposalUpdate):
     pass
@@ -441,7 +468,8 @@ class ProposalSubmitPreApproved(ProposalSubmit):
 
     def get_next_url(self):
         """After submission, go to the thank-you view"""
-        return reverse('proposals:submitted_pre_approved', args=(self.object.pk,))
+        return reverse('proposals:submitted_pre_approved',
+                       args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the update page"""
@@ -450,6 +478,7 @@ class ProposalSubmitPreApproved(ProposalSubmit):
 
 class ProposalSubmittedPreApproved(ProposalSubmitted):
     template_name = 'proposals/proposal_submitted.html'
+
 
 ##########
 # Practice
@@ -468,7 +497,8 @@ class ProposalStartPractice(generic.FormView):
 
     def get_success_url(self):
         """Go to the creation for a practice Proposal"""
-        return reverse('proposals:create_practice', args=(self.request.POST['practice_reason'],))
+        return reverse('proposals:create_practice',
+                       args=(self.request.POST['practice_reason'],))
 
 
 class ProposalCreatePractice(ProposalCreate):
@@ -487,7 +517,8 @@ class ProposalCreatePractice(ProposalCreate):
     def form_valid(self, form):
         """Sets in_course and is_exploration"""
         form.instance.in_course = self.kwargs['reason'] == Proposal.COURSE
-        form.instance.is_exploration = self.kwargs['reason'] == Proposal.EXPLORATION
+        form.instance.is_exploration = self.kwargs[
+                                           'reason'] == Proposal.EXPLORATION
         return super(ProposalCreatePractice, self).form_valid(form)
 
 

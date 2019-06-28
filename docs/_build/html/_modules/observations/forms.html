@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>observations.forms &mdash; ETCL 1.0 documentation</title>
+  <title>observations.forms &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -155,12 +157,12 @@
 <span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">forms</span>
 <span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="k">import</span> <span class="n">mark_safe</span>
 
-<span class="kn">from</span> <span class="nn">core.forms</span> <span class="k">import</span> <span class="n">ConditionalModelForm</span>
+<span class="kn">from</span> <span class="nn">core.forms</span> <span class="k">import</span> <span class="n">ConditionalModelForm</span><span class="p">,</span> <span class="n">SoftValidationMixin</span>
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">YES_NO</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Observation</span>
 
 
-<div class="viewcode-block" id="ObservationForm"><a class="viewcode-back" href="../../reference/observations.forms.html#observations.forms.ObservationForm">[docs]</a><span class="k">class</span> <span class="nc">ObservationForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="ObservationForm"><a class="viewcode-back" href="../../reference/observations.forms.html#observations.forms.ObservationForm">[docs]</a><span class="k">class</span> <span class="nc">ObservationForm</span><span class="p">(</span><span class="n">SoftValidationMixin</span><span class="p">,</span> <span class="n">ConditionalModelForm</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Observation</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
@@ -202,6 +204,10 @@
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervision&#39;</span><span class="p">]</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;leader_has_coc&#39;</span><span class="p">]</span></div>
 
+<div class="viewcode-block" id="ObservationForm.get_soft_validation_fields"><a class="viewcode-back" href="../../reference/observations.forms.html#observations.forms.ObservationForm.get_soft_validation_fields">[docs]</a>    <span class="k">def</span> <span class="nf">get_soft_validation_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># We want soft validation of all fields</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="ObservationForm.clean"><a class="viewcode-back" href="../../reference/observations.forms.html#observations.forms.ObservationForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check for conditional requirements:</span>
@@ -210,6 +216,14 @@
 <span class="sd">        - For all default anonymity questions, if true, the appropiate explain fields need to be filled</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ObservationForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mark_soft_required</span><span class="p">(</span>
+            <span class="n">cleaned_data</span><span class="p">,</span>
+            <span class="s1">&#39;setting&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;details_who&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;details_why&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;details_frequency&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;setting&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;setting_details&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_children</span><span class="p">():</span>
@@ -243,7 +257,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -260,26 +274,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

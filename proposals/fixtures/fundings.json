@@ -5,8 +5,8 @@
         "needs_details": false,
         "needs_name": false,
         "order": 1,
-        "description_nl": "uit de 1e geldstroom (bijv. UiL OTS, TLC, Ba-/Ma-/RMa-opleiding)",
-        "description_en": "direct government funding (e.g. UiL OTS, TLC, Ba-/Ma-/RMa-education)"
+        "description_nl": "uit de 1e geldstroom (bijv. ICON, OFR, OGK, UiL OTS, Ba-/Ma-/RMa-opleiding)",
+        "description_en": "direct government funding (e.g. ICON, OFR, OGK, UiL OTS, Ba-/Ma-/RMa-education)"
     },
     "model": "proposals.funding",
     "pk": 1

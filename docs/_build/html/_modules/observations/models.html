@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>observations.models &mdash; ETCL 1.0 documentation</title>
+  <title>observations.models &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -184,37 +186,44 @@
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf &lt;b&gt;wie&lt;/b&gt; er wordt geobserveerd.&#39;</span><span class="p">),</span>
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt&#39;</span>
                     <span class="s1">&#39; geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie &#39;</span>
-                    <span class="s1">&#39;tussen leraar en leerling in kaart brengen.&#39;</span><span class="p">)</span>
-
+                    <span class="s1">&#39;tussen leraar en leerling in kaart brengen.&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">details_why</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf &lt;b&gt;waarom&lt;/b&gt; er wordt geobserveerd.&#39;</span><span class="p">),</span>
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen &#39;</span>
                     <span class="s1">&#39;in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste &#39;</span>
-                    <span class="s1">&#39;manier en in begrijpelijke taal?&#39;</span><span class="p">)</span>
+                    <span class="s1">&#39;manier en in begrijpelijke taal?&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">details_frequency</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf &lt;b&gt;hoe vaak en hoe lang&lt;/b&gt; de observant wordt geobserveerd.&#39;</span><span class="p">),</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd.&#39;</span><span class="p">)</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten &#39;</span>
+                    <span class="s1">&#39;worden geobserveerd.&#39;</span><span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">is_anonymous</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wordt er anoniem geobserveerd?&#39;</span><span class="p">),</span>
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.&#39;</span><span class="p">),</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">is_anonymous_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht toe&#39;</span><span class="p">),</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">is_in_target_group</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Doet de onderzoeker zich voor als behorende tot de doelgroep?&#39;</span><span class="p">),</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">is_in_target_group_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht toe&#39;</span><span class="p">),</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">is_nonpublic_space</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
@@ -222,28 +231,36 @@
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Bijvoorbeeld er wordt geobserveerd bij iemand thuis, </span><span class="se">\</span>
 <span class="s1">tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar </span><span class="se">\</span>
 <span class="s1">een account voor moet worden aangemaakt.&#39;</span><span class="p">),</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">is_nonpublic_space_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht toe&#39;</span><span class="p">),</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">has_advanced_consent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Vindt informed consent van tevoren plaats?&#39;</span><span class="p">),</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">needs_approval</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Heeft u toestemming nodig van een (samenwerkende) instantie </span><span class="se">\</span>
 <span class="s1">om deze observatie te mogen uitvoeren?&#39;</span><span class="p">),</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">approval_institution</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Welke instantie?&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">approval_document</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FileField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)&#39;</span><span class="p">),</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">])</span>
+        <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_pdf_or_doc</span><span class="p">],</span>
+    <span class="p">)</span>
 
     <span class="n">registrations</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span>
         <span class="n">Registration</span><span class="p">,</span>
@@ -283,7 +300,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -300,26 +317,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

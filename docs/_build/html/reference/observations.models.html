@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>observations.models module &mdash; ETCL 1.0 documentation</title>
+  <title>observations.models module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="observations.tests module" href="observations.tests.html" />
     <link rel="prev" title="observations.forms module" href="observations.forms.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,9 +92,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="observations.html">observations package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="observations.html#submodules">Submodules</a><ul class="current">
@@ -128,7 +130,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -188,40 +190,36 @@
 <dt id="observations.models.Observation">
 <em class="property">class </em><code class="descclassname">observations.models.</code><code class="descname">Observation</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>version</em>, <em>details_who</em>, <em>details_why</em>, <em>details_frequency</em>, <em>is_anonymous</em>, <em>is_anonymous_details</em>, <em>is_in_target_group</em>, <em>is_in_target_group_details</em>, <em>is_nonpublic_space</em>, <em>is_nonpublic_space_details</em>, <em>has_advanced_consent</em>, <em>needs_approval</em>, <em>approval_institution</em>, <em>approval_document</em>, <em>registrations_details</em>, <em>days</em>, <em>mean_hours</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/observations/models.html#Observation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#observations.models.Observation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.models.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
-<li><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</li>
-<li><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</li>
-<li><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De ETCL neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</li>
-<li><strong>version</strong> (<em>PositiveIntegerField</em>) – Internal - describes which version of the observation model is used</li>
-<li><strong>details_who</strong> (<em>TextField</em>) – Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie tussen leraar en leerling in kaart brengen.</li>
-<li><strong>details_why</strong> (<em>TextField</em>) – Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste manier en in begrijpelijke taal?</li>
-<li><strong>details_frequency</strong> (<em>TextField</em>) – Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd.</li>
-<li><strong>is_anonymous</strong> (<em>BooleanField</em>) – Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.</li>
-<li><strong>is_anonymous_details</strong> (<em>TextField</em>) – Licht toe</li>
-<li><strong>is_in_target_group</strong> (<em>BooleanField</em>) – Doet de onderzoeker zich voor als behorende tot de doelgroep?</li>
-<li><strong>is_in_target_group_details</strong> (<em>TextField</em>) – Licht toe</li>
-<li><strong>is_nonpublic_space</strong> (<em>BooleanField</em>) – Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor moet worden aangemaakt.</li>
-<li><strong>is_nonpublic_space_details</strong> (<em>TextField</em>) – Licht toe</li>
-<li><strong>has_advanced_consent</strong> (<em>BooleanField</em>) – Vindt informed consent van tevoren plaats?</li>
-<li><strong>needs_approval</strong> (<em>BooleanField</em>) – Heeft u toestemming nodig van een (samenwerkende) instantie om deze observatie te mogen uitvoeren?</li>
-<li><strong>approval_institution</strong> (<em>CharField</em>) – Welke instantie?</li>
-<li><strong>approval_document</strong> (<em>FileField</em>) – Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)</li>
-<li><strong>registrations_details</strong> (<em>CharField</em>) – Namelijk</li>
-<li><strong>days</strong> (<em>PositiveIntegerField</em>) – Op hoeveel dagen wordt er geobserveerd (per deelnemer)?</li>
-<li><strong>mean_hours</strong> (<em>DecimalField</em>) – Hoeveel uur wordt er gemiddeld per dag geobserveerd?</li>
-<li><strong>study</strong> (OneToOneField to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</li>
-<li><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</li>
-<li><strong>registrations</strong> (<em>ManyToManyField</em>) – Hoe wordt het gedrag geregistreerd?</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
+<li><p><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</p></li>
+<li><p><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</p></li>
+<li><p><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</p></li>
+<li><p><strong>version</strong> (<em>PositiveIntegerField</em>) – Internal - describes which version of the observation model is used</p></li>
+<li><p><strong>details_who</strong> (<em>TextField</em>) – Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie tussen leraar en leerling in kaart brengen.</p></li>
+<li><p><strong>details_why</strong> (<em>TextField</em>) – Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste manier en in begrijpelijke taal?</p></li>
+<li><p><strong>details_frequency</strong> (<em>TextField</em>) – Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd.</p></li>
+<li><p><strong>is_anonymous</strong> (<em>BooleanField</em>) – Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.</p></li>
+<li><p><strong>is_anonymous_details</strong> (<em>TextField</em>) – Licht toe</p></li>
+<li><p><strong>is_in_target_group</strong> (<em>BooleanField</em>) – Doet de onderzoeker zich voor als behorende tot de doelgroep?</p></li>
+<li><p><strong>is_in_target_group_details</strong> (<em>TextField</em>) – Licht toe</p></li>
+<li><p><strong>is_nonpublic_space</strong> (<em>BooleanField</em>) – Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor moet worden aangemaakt.</p></li>
+<li><p><strong>is_nonpublic_space_details</strong> (<em>TextField</em>) – Licht toe</p></li>
+<li><p><strong>has_advanced_consent</strong> (<em>BooleanField</em>) – Vindt informed consent van tevoren plaats?</p></li>
+<li><p><strong>needs_approval</strong> (<em>BooleanField</em>) – Heeft u toestemming nodig van een (samenwerkende) instantie om deze observatie te mogen uitvoeren?</p></li>
+<li><p><strong>approval_institution</strong> (<em>CharField</em>) – Welke instantie?</p></li>
+<li><p><strong>approval_document</strong> (<em>FileField</em>) – Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)</p></li>
+<li><p><strong>registrations_details</strong> (<em>CharField</em>) – Namelijk</p></li>
+<li><p><strong>days</strong> (<em>PositiveIntegerField</em>) – Op hoeveel dagen wordt er geobserveerd (per deelnemer)?</p></li>
+<li><p><strong>mean_hours</strong> (<em>DecimalField</em>) – Hoeveel uur wordt er gemiddeld per dag geobserveerd?</p></li>
+<li><p><strong>study</strong> (OneToOneField to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</p></li>
+<li><p><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</p></li>
+<li><p><strong>registrations</strong> (<em>ManyToManyField</em>) – Hoe wordt het gedrag geregistreerd?</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="exception">
 <dt id="observations.models.Observation.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#observations.models.Observation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -378,22 +376,18 @@
 <dt id="observations.models.Registration">
 <em class="property">class </em><code class="descclassname">observations.models.</code><code class="descname">Registration</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>needs_details</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/observations/models.html#Registration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#observations.models.Registration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
-<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
-<li><strong>description</strong> (<em>CharField</em>) – Description</li>
-<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
-<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
-<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
+<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
+<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
+<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
+<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
+<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="exception">
 <dt id="observations.models.Registration.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#observations.models.Registration.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -453,7 +447,7 @@
 
 <dl class="attribute">
 <dt id="observations.models.Registration.objects">
-<code class="descname">objects</code><em class="property"> = &lt;modeltranslation.manager.MultilingualManager object&gt;</em><a class="headerlink" href="#observations.models.Registration.objects" title="Permalink to this definition">¶</a></dt>
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#observations.models.Registration.objects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -488,7 +482,7 @@
         <a href="observations.tests.html" class="btn btn-neutral float-right" title="observations.tests module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="observations.forms.html" class="btn btn-neutral" title="observations.forms module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="observations.forms.html" class="btn btn-neutral float-left" title="observations.forms module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -497,7 +491,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -514,26 +508,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

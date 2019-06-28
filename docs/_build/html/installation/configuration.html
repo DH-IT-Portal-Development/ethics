@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Application configuration &mdash; ETCL 1.0 documentation</title>
+  <title>Application configuration &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="etcl" href="../reference/index.html" />
     <link rel="prev" title="Database" href="database.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -130,7 +132,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -238,8 +240,8 @@ backend.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">ModelBackend</span></code> is still needed as it’s used to assign users to groups internally. We cannot use the LDAP for this,
 as the LDAP does not contain the necessary information.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Always create user accounts from the LDAP if you can, as this is connected to the university’s IAM system. Local
+<p class="admonition-title">Warning</p>
+<p>Always create user accounts from the LDAP if you can, as this is connected to the university’s IAM system. Local
 accounts are <strong>evil</strong> and should only be used in emergencies!</p>
 </div>
 </div>
@@ -248,9 +250,9 @@ accounts are <strong>evil</strong> and should only be used in emergencies!</p>
 <p>This is the location of the LDAP you want to use. Please include the <code class="docutils literal notranslate"><span class="pre">ldap://</span></code>.</p>
 <p>For the ETCL we use an ICT&amp;Media LDAP: <code class="docutils literal notranslate"><span class="pre">ldap://ldap.hum.uu.nl</span></code></p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>While it might seem logical to use the <code class="docutils literal notranslate"><span class="pre">ldaps://</span></code> protocol, it’s not recommended to do so.</p>
-<p class="last">Secure connections can be enforced with the <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_START_TLS</span></code> setting.</p>
+<p>Secure connections can be enforced with the <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_START_TLS</span></code> setting.</p>
 </div>
 </div>
 <div class="section" id="auth-ldap-start-tls">
@@ -274,8 +276,8 @@ empty.</p>
 constant. Use <code class="docutils literal notranslate"><span class="pre">%(user)s</span></code> where the user’s username should be in the DN.</p>
 <p>For example: <code class="docutils literal notranslate"><span class="pre">uid=%(user)s,ou=People,dc=uu,dc=nl</span></code></p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You can also configure the LDAP auth to use an LDAP search instead of a direct match. More information can be found
+<p class="admonition-title">Note</p>
+<p>You can also configure the LDAP auth to use an LDAP search instead of a direct match. More information can be found
 in the <a class="reference external" href="https://django-auth-ldap.readthedocs.io/en/latest/authentication.html#search-bind">corresponding documentation</a>.</p>
 </div>
 </div>
@@ -291,9 +293,9 @@ in the <a class="reference external" href="https://django-auth-ldap.readthedocs.
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
+<p class="admonition-title">Warning</p>
 <p>If you enter an invalid LDAP field, no error will be given and an empty string will be supplied to the auth model.</p>
-<p class="last">Please double check all values.</p>
+<p>Please double check all values.</p>
 </div>
 </div>
 <div class="section" id="auth-ldap-always-update-user">
@@ -315,7 +317,7 @@ in the <a class="reference external" href="https://django-auth-ldap.readthedocs.
         <a href="../reference/index.html" class="btn btn-neutral float-right" title="etcl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="database.html" class="btn btn-neutral" title="Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="database.html" class="btn btn-neutral float-left" title="Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -324,7 +326,7 @@ in the <a class="reference external" href="https://django-auth-ldap.readthedocs.
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -341,26 +343,16 @@ in the <a class="reference external" href="https://django-auth-ldap.readthedocs.
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

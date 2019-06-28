@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>modeltranslation.translator &mdash; ETCL 1.0 documentation</title>
+  <title>modeltranslation.translator &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -151,7 +153,9 @@
             
   <h1>Source code for modeltranslation.translator</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">VERSION</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span> <span class="nn">django</span>
 <span class="kn">from</span> <span class="nn">django.utils.six</span> <span class="k">import</span> <span class="n">with_metaclass</span>
 <span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="n">ImproperlyConfigured</span>
 <span class="kn">from</span> <span class="nn">django.db.models</span> <span class="k">import</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">OneToOneField</span>
@@ -165,10 +169,6 @@
 <span class="kn">from</span> <span class="nn">modeltranslation.manager</span> <span class="k">import</span> <span class="p">(</span><span class="n">MultilingualManager</span><span class="p">,</span> <span class="n">MultilingualQuerysetManager</span><span class="p">,</span>
                                       <span class="n">rewrite_lookup_key</span><span class="p">,</span> <span class="n">append_translated</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">modeltranslation.utils</span> <span class="k">import</span> <span class="n">build_localized_fieldname</span><span class="p">,</span> <span class="n">parse_field</span>
-
-
-<span class="n">NEW_RELATED_API</span> <span class="o">=</span> <span class="n">VERSION</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
-<span class="n">NEW_DEFERRED_API</span> <span class="o">=</span> <span class="n">NEW_MANAGER_API</span> <span class="o">=</span> <span class="n">NEW_ABSTRACT_API</span> <span class="o">=</span> <span class="n">VERSION</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">AlreadyRegistered</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -313,12 +313,8 @@
     <span class="c1"># Rebuild information about parents fields. If there are opts.local_fields, field cache would be</span>
     <span class="c1"># invalidated (by model._meta.add_field() function). Otherwise, we need to do it manually.</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">local_fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">_fill_fields_cache</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="c1"># Django 1.8 removed _fill_fields_cache</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">_expire_cache</span><span class="p">()</span>
-            <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_fields</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">_expire_cache</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_fields</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">has_custom_queryset</span><span class="p">(</span><span class="n">manager</span><span class="p">):</span>
@@ -326,6 +322,29 @@
     <span class="n">old_diff</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="s1">&#39;get_query_set&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Manager</span><span class="p">,</span> <span class="s1">&#39;get_query_set&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">new_diff</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="s1">&#39;get_queryset&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Manager</span><span class="p">,</span> <span class="s1">&#39;get_queryset&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">old_diff</span> <span class="ow">or</span> <span class="n">new_diff</span>
+
+
+<span class="k">def</span> <span class="nf">patch_manager_class</span><span class="p">(</span><span class="n">manager</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">MultilingualManager</span><span class="p">):</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">Manager</span><span class="p">:</span>
+        <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">MultilingualManager</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">class</span> <span class="nc">NewMultilingualManager</span><span class="p">(</span><span class="n">MultilingualManager</span><span class="p">,</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>
+                                     <span class="n">MultilingualQuerysetManager</span><span class="p">):</span>
+            <span class="n">_old_module</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__module__</span>
+            <span class="n">_old_class</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+
+            <span class="k">def</span> <span class="nf">deconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">(</span>
+                    <span class="kc">False</span><span class="p">,</span>  <span class="c1"># as_manager</span>
+                    <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_old_module</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_class</span><span class="p">),</span>  <span class="c1"># manager_class</span>
+                    <span class="kc">None</span><span class="p">,</span>  <span class="c1"># qs_class</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_constructor_args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># args</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_constructor_args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>  <span class="c1"># kwargs</span>
+                <span class="p">)</span>
+
+        <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">NewMultilingualManager</span>
 
 
 <span class="k">def</span> <span class="nf">add_manager</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
@@ -337,54 +356,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">abstract</span><span class="p">:</span>
         <span class="k">return</span>
+    <span class="c1"># Make all managers local for this model to fix patching parent model managers</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">local_managers</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">managers</span>
 
-    <span class="k">def</span> <span class="nf">patch_manager_class</span><span class="p">(</span><span class="n">manager</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span> <span class="n">MultilingualManager</span><span class="p">):</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">Manager</span><span class="p">:</span>
-            <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">MultilingualManager</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">class</span> <span class="nc">NewMultilingualManager</span><span class="p">(</span><span class="n">MultilingualManager</span><span class="p">,</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>
-                                         <span class="n">MultilingualQuerysetManager</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">VERSION</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-                    <span class="n">use_for_related_fields</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
-                        <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span>
-                        <span class="s2">&quot;use_for_related_fields&quot;</span><span class="p">,</span>
-                        <span class="ow">not</span> <span class="n">has_custom_queryset</span><span class="p">(</span><span class="n">manager</span><span class="p">),</span>
-                    <span class="p">)</span>
-                <span class="n">_old_module</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__module__</span>
-                <span class="n">_old_class</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-
-                <span class="k">def</span> <span class="nf">deconstruct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-                    <span class="k">return</span> <span class="p">(</span>
-                        <span class="kc">False</span><span class="p">,</span>  <span class="c1"># as_manager</span>
-                        <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_old_module</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_class</span><span class="p">),</span>  <span class="c1"># manager_class</span>
-                        <span class="kc">None</span><span class="p">,</span>  <span class="c1"># qs_class</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_constructor_args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="c1"># args</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_constructor_args</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>  <span class="c1"># kwargs</span>
-                    <span class="p">)</span>
-
-            <span class="n">manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">NewMultilingualManager</span>
-
-    <span class="k">if</span> <span class="n">NEW_MANAGER_API</span><span class="p">:</span>
-        <span class="c1"># Inspired by django.db.models.options.Options.managers (find all</span>
-        <span class="c1"># managers by following the normal Python MRO rules), but keeps the</span>
-        <span class="c1"># original managers instead of making copies.</span>
-        <span class="n">managers</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="n">bases</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">mro</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s1">&#39;_meta&#39;</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">bases</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">manager</span> <span class="ow">in</span> <span class="n">base</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">local_managers</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">manager</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="n">managers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
-                <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">manager</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">managers</span> <span class="o">=</span> <span class="p">((</span><span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span>
-                     <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">concrete_managers</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">abstract_managers</span><span class="p">))</span>
-
-    <span class="k">for</span> <span class="n">current_manager</span> <span class="ow">in</span> <span class="n">managers</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">current_manager</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">local_managers</span><span class="p">:</span>
         <span class="n">prev_class</span> <span class="o">=</span> <span class="n">current_manager</span><span class="o">.</span><span class="vm">__class__</span>
         <span class="n">patch_manager_class</span><span class="p">(</span><span class="n">current_manager</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">_default_manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">prev_class</span><span class="p">:</span>
@@ -395,10 +370,8 @@
             <span class="c1"># share the same class.</span>
             <span class="n">model</span><span class="o">.</span><span class="n">_default_manager</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">current_manager</span><span class="o">.</span><span class="vm">__class__</span>
     <span class="n">patch_manager_class</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">_base_manager</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">VERSION</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">base_manager_name</span> <span class="o">=</span> <span class="s1">&#39;objects&#39;</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="p">,</span> <span class="s2">&quot;_expire_cache&quot;</span><span class="p">):</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">_expire_cache</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">base_manager_name</span> <span class="o">=</span> <span class="s1">&#39;objects&#39;</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">_expire_cache</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">patch_constructor</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
@@ -409,12 +382,11 @@
 
     <span class="k">def</span> <span class="nf">new_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mt_init</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="n">NEW_DEFERRED_API</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deferred</span><span class="p">:</span>
-            <span class="n">populate_translation_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-                <span class="n">new_key</span> <span class="o">=</span> <span class="n">rewrite_lookup_key</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-                <span class="c1"># Old key is intentionally left in case old_init wants to play with it</span>
-                <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">new_key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="n">populate_translation_fields</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">new_key</span> <span class="o">=</span> <span class="n">rewrite_lookup_key</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            <span class="c1"># Old key is intentionally left in case old_init wants to play with it</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">new_key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
         <span class="n">old_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="fm">__init__</span> <span class="o">=</span> <span class="n">new_init</span>
 
@@ -476,37 +448,6 @@
             <span class="n">fields</span> <span class="o">=</span> <span class="n">append_translated</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">old_refresh_from_db</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">using</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="n">refresh_from_db</span> <span class="o">=</span> <span class="n">new_refresh_from_db</span>
-
-
-<span class="k">def</span> <span class="nf">patch_metaclass</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Monkey patches original model metaclass to exclude translated fields on deferred subclasses.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">old_mcs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span>
-
-    <span class="k">class</span> <span class="nc">translation_deferred_mcs</span><span class="p">(</span><span class="n">old_mcs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This metaclass is essential for deferred subclasses (obtained via only/defer) to work.</span>
-
-<span class="sd">        When deferred subclass is created, some translated fields descriptors could be overridden</span>
-<span class="sd">        by DeferredAttribute - which would cause translation retrieval to fail.</span>
-<span class="sd">        Prevent this from happening with deleting those attributes from class being created.</span>
-<span class="sd">        This metaclass would be called from django.db.models.query_utils.deferred_class_factory</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_deferred&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                <span class="n">opts</span> <span class="o">=</span> <span class="n">translator</span><span class="o">.</span><span class="n">get_options_for_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-                <span class="n">were_deferred</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-                <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="n">attrs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">field_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
-                        <span class="c1"># Field was deferred. Store this for future reference.</span>
-                        <span class="n">were_deferred</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">were_deferred</span><span class="p">):</span>
-                    <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;_fields_were_deferred&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">were_deferred</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">translation_deferred_mcs</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
-    <span class="c1"># Assign to __metaclass__ wouldn&#39;t work, since metaclass search algorithm check for __class__.</span>
-    <span class="c1"># http://docs.python.org/2/reference/datamodel.html#__metaclass__</span>
-    <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">translation_deferred_mcs</span>
 
 
 <span class="k">def</span> <span class="nf">delete_cache_fields</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
@@ -580,6 +521,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">class</span> <span class="nc">NewSingleObjectDescriptor</span><span class="p">(</span><span class="n">LanguageCacheSingleObjectDescriptor</span><span class="p">,</span> <span class="n">ro_descriptor</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
         <span class="k">pass</span>
+
+    <span class="k">if</span> <span class="n">django</span><span class="o">.</span><span class="n">VERSION</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">ro_descriptor</span><span class="o">.</span><span class="n">related</span><span class="o">.</span><span class="n">get_cache_name</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+            <span class="n">NewSingleObjectDescriptor</span><span class="o">.</span><span class="n">get_cache_name</span><span class="p">,</span>
+            <span class="n">ro_descriptor</span><span class="p">,</span>
+        <span class="p">)</span>
+
     <span class="n">ro_descriptor</span><span class="o">.</span><span class="n">accessor</span> <span class="o">=</span> <span class="n">ro_descriptor</span><span class="o">.</span><span class="n">related</span><span class="o">.</span><span class="n">get_accessor_name</span><span class="p">()</span>
     <span class="n">ro_descriptor</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">NewSingleObjectDescriptor</span>
 
@@ -618,9 +566,10 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">descendants</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
                                    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">!=</span> <span class="n">model</span><span class="p">]</span>
-                    <span class="k">raise</span> <span class="n">DescendantRegistered</span><span class="p">(</span>
-                        <span class="s1">&#39;Model &quot;</span><span class="si">%s</span><span class="s1">&quot; cannot be registered after its subclass&#39;</span>
-                        <span class="s1">&#39; &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">descendants</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                    <span class="k">if</span> <span class="n">descendants</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">DescendantRegistered</span><span class="p">(</span>
+                            <span class="s1">&#39;Model &quot;</span><span class="si">%s</span><span class="s1">&quot; cannot be registered after its subclass&#39;</span>
+                            <span class="s1">&#39; &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">descendants</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
             <span class="c1"># Find inherited fields and create options instance for the model.</span>
             <span class="n">opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_options_for_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">opts_class</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
@@ -647,11 +596,11 @@
             <span class="n">add_translation_fields</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
 
         <span class="c1"># Delete all fields cache for related model (parent and children)</span>
-        <span class="n">related</span> <span class="o">=</span> <span class="p">((</span>
+        <span class="n">related</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_fields</span><span class="p">()</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">one_to_many</span> <span class="ow">or</span> <span class="n">f</span><span class="o">.</span><span class="n">one_to_one</span><span class="p">)</span> <span class="ow">and</span>
             <span class="n">f</span><span class="o">.</span><span class="n">auto_created</span>
-        <span class="p">)</span> <span class="k">if</span> <span class="n">NEW_RELATED_API</span> <span class="k">else</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_all_related_objects</span><span class="p">())</span>
+        <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">related_obj</span> <span class="ow">in</span> <span class="n">related</span><span class="p">:</span>
             <span class="n">delete_cache_fields</span><span class="p">(</span><span class="n">related_obj</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
@@ -663,19 +612,12 @@
         <span class="n">patch_constructor</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
         <span class="c1"># Connect signal for model</span>
-        <span class="k">if</span> <span class="n">NEW_DEFERRED_API</span><span class="p">:</span>
-            <span class="n">post_init</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">delete_mt_init</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># deferred models have their own classes and the `sender` does not match.</span>
-            <span class="c1"># Connect signal for all models.</span>
-            <span class="n">post_init</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">delete_mt_init</span><span class="p">,</span> <span class="n">dispatch_uid</span><span class="o">=</span><span class="s2">&quot;modeltranslation&quot;</span><span class="p">)</span>
+        <span class="n">post_init</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">delete_mt_init</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
 
         <span class="c1"># Patch clean_fields to verify form field clearing</span>
         <span class="n">patch_clean_fields</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
         <span class="c1"># Patch __metaclass__ and other methods to allow deferring to work</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">NEW_DEFERRED_API</span><span class="p">:</span>
-            <span class="n">patch_metaclass</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="n">patch_get_deferred_fields</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
         <span class="n">patch_refresh_from_db</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
@@ -701,24 +643,18 @@
                 <span class="nb">setattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">get_attname</span><span class="p">(),</span> <span class="n">desc</span><span class="p">)</span>
 
                 <span class="c1"># Set related field names on other model</span>
-                <span class="k">if</span> <span class="n">NEW_RELATED_API</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">is_hidden</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">is_hidden</span><span class="p">():</span>
                     <span class="n">other_opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_options_for_model</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
                     <span class="n">other_opts</span><span class="o">.</span><span class="n">related</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="n">other_opts</span><span class="o">.</span><span class="n">related_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">related_query_name</span><span class="p">())</span>
                     <span class="c1"># Add manager in case of non-registered model</span>
                     <span class="n">add_manager</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="ow">not</span> <span class="n">NEW_RELATED_API</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">field</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">is_hidden</span><span class="p">():</span>
-                    <span class="n">other_opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_options_for_model</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">to</span><span class="p">)</span>
-                    <span class="n">other_opts</span><span class="o">.</span><span class="n">related</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="n">other_opts</span><span class="o">.</span><span class="n">related_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">related_query_name</span><span class="p">())</span>
-                    <span class="n">add_manager</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">to</span><span class="p">)</span>  <span class="c1"># Add manager in case of non-registered model</span>
 
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">OneToOneField</span><span class="p">):</span>
                 <span class="c1"># Fix translated_field caching for SingleRelatedObjectDescriptor</span>
                 <span class="n">sro_descriptor</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="nb">getattr</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">remote_field</span><span class="o">.</span><span class="n">get_accessor_name</span><span class="p">())</span>
-                    <span class="k">if</span> <span class="n">NEW_RELATED_API</span>
-                    <span class="k">else</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">to</span><span class="p">,</span> <span class="n">field</span><span class="o">.</span><span class="n">related</span><span class="o">.</span><span class="n">get_accessor_name</span><span class="p">()))</span>
+                <span class="p">)</span>
                 <span class="n">patch_related_object_descriptor_caching</span><span class="p">(</span><span class="n">sro_descriptor</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_or_iterable</span><span class="p">):</span>
@@ -761,8 +697,6 @@
 <span class="sd">        Returns an instance of translation options with translated fields</span>
 <span class="sd">        defined for the ``model`` and inherited from superclasses.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">NEW_DEFERRED_API</span> <span class="ow">and</span> <span class="n">model</span><span class="o">.</span><span class="n">_deferred</span><span class="p">:</span>
-            <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">proxy_for_model</span>
         <span class="k">if</span> <span class="n">model</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registry</span><span class="p">:</span>
             <span class="c1"># Create a new type for backwards compatibility.</span>
             <span class="n">opts</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">TranslationOptions&quot;</span> <span class="o">%</span> <span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
@@ -813,7 +747,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -830,26 +764,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

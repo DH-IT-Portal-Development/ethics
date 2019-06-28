@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>interventions.forms module &mdash; ETCL 1.0 documentation</title>
+  <title>interventions.forms module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="interventions.models module" href="interventions.models.html" />
     <link rel="prev" title="interventions package" href="interventions.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -90,9 +92,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="interventions.html">interventions package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="interventions.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">interventions.forms module</a></li>
@@ -126,7 +128,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -185,13 +187,13 @@
 <dl class="class">
 <dt id="interventions.forms.InterventionForm">
 <em class="property">class </em><code class="descclassname">interventions.forms.</code><code class="descname">InterventionForm</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/forms.html#InterventionForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.forms.InterventionForm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="core.forms.html#core.forms.ConditionalModelForm" title="core.forms.ConditionalModelForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.forms.ConditionalModelForm</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="core.forms.mixins.html#core.forms.mixins.SoftValidationMixin" title="core.forms.mixins.SoftValidationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.forms.mixins.SoftValidationMixin</span></code></a>, <a class="reference internal" href="core.forms.conditional_form.html#core.forms.conditional_form.ConditionalModelForm" title="core.forms.conditional_form.ConditionalModelForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.forms.conditional_form.ConditionalModelForm</span></code></a></p>
 <dl class="method">
 <dt id="interventions.forms.InterventionForm.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/forms.html#InterventionForm.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.forms.InterventionForm.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>Set the Study for later reference</li>
-<li>Don’t ask the supervision question when there are only adult AgeGroups in this Study</li>
+<li><p>Set the Study for later reference</p></li>
+<li><p>Don’t ask the supervision question when there are only adult AgeGroups in this Study</p></li>
 </ul>
 </dd></dl>
 
@@ -203,6 +205,11 @@
 - If has_controls is True, controls_description is required
 - If multiple_sessions is True, session_frequency is required</p>
 </dd></dl>
+
+<dl class="method">
+<dt id="interventions.forms.InterventionForm.get_soft_validation_fields">
+<code class="descname">get_soft_validation_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/forms.html#InterventionForm.get_soft_validation_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.forms.InterventionForm.get_soft_validation_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="interventions.forms.InterventionForm.media">
@@ -224,7 +231,7 @@
         <a href="interventions.models.html" class="btn btn-neutral float-right" title="interventions.models module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="interventions.html" class="btn btn-neutral" title="interventions package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="interventions.html" class="btn btn-neutral float-left" title="interventions package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -233,7 +240,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -250,26 +257,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

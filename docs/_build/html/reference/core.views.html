@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>core.views module &mdash; ETCL 1.0 documentation</title>
+  <title>core.views module &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,38 +17,40 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="etcl package" href="etcl.html" />
+    <link rel="next" title="faqs package" href="faqs.html" />
     <link rel="prev" title="core.validators module" href="core.validators.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../index.html" class="icon icon-home"> ETCL
+            <a href="../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -93,7 +95,6 @@
 <li class="toctree-l3"><a class="reference internal" href="core.html#subpackages">Subpackages</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="core.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="core.admin.html">core.admin module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="core.forms.html">core.forms module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="core.models.html">core.models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="core.tests.html">core.tests module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="core.translation.html">core.translation module</a></li>
@@ -105,9 +106,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fetc.html">fetc package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="interventions.html">interventions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="proposals.html">proposals package</a></li>
@@ -130,7 +131,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ETCL</a>
+          <a href="../index.html">FEtC-H</a>
         
       </nav>
 
@@ -187,12 +188,12 @@
   <div class="section" id="module-core.views">
 <span id="core-views-module"></span><h1>core.views module<a class="headerlink" href="#module-core.views" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="core.views.AllowErrorsMixin">
-<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">AllowErrorsMixin</code><a class="reference internal" href="../_modules/core/views.html#AllowErrorsMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.AllowErrorsMixin" title="Permalink to this definition">¶</a></dt>
+<dt id="core.views.AllowErrorsOnBackbuttonMixin">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">AllowErrorsOnBackbuttonMixin</code><a class="reference internal" href="../_modules/core/views.html#AllowErrorsOnBackbuttonMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.AllowErrorsOnBackbuttonMixin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
-<dt id="core.views.AllowErrorsMixin.form_invalid">
-<code class="descname">form_invalid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#AllowErrorsMixin.form_invalid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.AllowErrorsMixin.form_invalid" title="Permalink to this definition">¶</a></dt>
+<dt id="core.views.AllowErrorsOnBackbuttonMixin.form_invalid">
+<code class="descname">form_invalid</code><span class="sig-paren">(</span><em>form</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#AllowErrorsOnBackbuttonMixin.form_invalid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.AllowErrorsOnBackbuttonMixin.form_invalid" title="Permalink to this definition">¶</a></dt>
 <dd><p>On back button, allow form to have errors.</p>
 </dd></dl>
 
@@ -202,7 +203,8 @@
 <dt id="core.views.CreateView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">CreateView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#CreateView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.CreateView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.messages.views.SuccessMessageMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.CreateView</span></code></p>
-<p>Generic create view including success message and login required mixins</p>
+<p>Generic create view including success message and login required
+mixins</p>
 <dl class="method">
 <dt id="core.views.CreateView.get_success_url">
 <code class="descname">get_success_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#CreateView.get_success_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.CreateView.get_success_url" title="Permalink to this definition">¶</a></dt>
@@ -215,7 +217,8 @@
 <dt id="core.views.DeleteView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">DeleteView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#DeleteView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.DeleteView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <a class="reference internal" href="#core.views.UserAllowedMixin" title="core.views.UserAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.DeleteView</span></code></p>
-<p>Generic delete view including login required and user allowed mixin and alternative for success message</p>
+<p>Generic delete view including login required and user allowed mixin and
+alternative for success message</p>
 <dl class="method">
 <dt id="core.views.DeleteView.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#DeleteView.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.DeleteView.delete" title="Permalink to this definition">¶</a></dt>
@@ -229,8 +232,8 @@ redirects to the success URL.</p>
 <dt id="core.views.FormSetUpdateView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">FormSetUpdateView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#FormSetUpdateView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.FormSetUpdateView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#core.views.FormSetUserAllowedMixin" title="core.views.FormSetUserAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.FormSetUserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.messages.views.SuccessMessageMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></p>
-<p>Generic update view that uses a formset. This allows you to edit multiple forms of the same type on the
-same page.</p>
+<p>Generic update view that uses a formset. This allows you to edit
+multiple forms of the same type on the same page.</p>
 <dl class="attribute">
 <dt id="core.views.FormSetUpdateView.extra">
 <code class="descname">extra</code><em class="property"> = 0</em><a class="headerlink" href="#core.views.FormSetUpdateView.extra" title="Permalink to this definition">¶</a></dt>
@@ -274,7 +277,8 @@ same page.</p>
 <dl class="method">
 <dt id="core.views.FormSetUpdateView.pre_validation">
 <code class="descname">pre_validation</code><span class="sig-paren">(</span><em>formset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#FormSetUpdateView.pre_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.FormSetUpdateView.pre_validation" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method can be overridden to manipulate the formset before validation</p>
+<dd><p>This method can be overridden to manipulate the formset before
+validation</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -298,7 +302,7 @@ same page.</p>
 <code class="descname">check_allowed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#FormSetUserAllowedMixin.check_allowed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.FormSetUserAllowedMixin.check_allowed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows access to a proposal based on the status of a Proposal
 and the position of the User. He can be:
-- in the ‘SECRETARY’ or ‘COMMISSION’ group
+- in the ‘SECRETARY’, ‘LINGUISITICS_CHAMBER’ or ‘GENERAL_CHAMBER’ group
 - an applicant of this Proposal
 - a supervisor of this Proposal
 If the status of the Proposal is not in line with the status of the User,
@@ -322,7 +326,8 @@ a PermissionDenied is raised.</p>
 <dt id="core.views.UpdateView">
 <em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">UpdateView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#UpdateView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.UpdateView" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.messages.views.SuccessMessageMixin</span></code>, <a class="reference internal" href="#core.views.UserAllowedMixin" title="core.views.UserAllowedMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.views.UserAllowedMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.UpdateView</span></code></p>
-<p>Generic update view including success message, user allowed and login required mixins</p>
+<p>Generic update view including success message, user allowed and login
+required mixins</p>
 <dl class="method">
 <dt id="core.views.UpdateView.get_success_url">
 <code class="descname">get_success_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#UpdateView.get_success_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.UpdateView.get_success_url" title="Permalink to this definition">¶</a></dt>
@@ -340,7 +345,7 @@ a PermissionDenied is raised.</p>
 <code class="descname">get_object</code><span class="sig-paren">(</span><em>queryset=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#UserAllowedMixin.get_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.UserAllowedMixin.get_object" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows access to a proposal based on the status of a Proposal
 and the position of the User. He can be:
-- in the ‘SECRETARY’ or ‘COMMISSION’ group
+- in the ‘SECRETARY’, ‘GENERAL_CHAMBER’ or ‘LINGUISTICS_CHAMBER’ group
 - an applicant of this Proposal
 - a supervisor of this Proposal
 If the status of the Proposal is not in line with the status of the User,
@@ -376,16 +381,14 @@ a PermissionDenied is raised.</p>
 <code class="descclassname">core.views.</code><code class="descname">escape_ldap_input</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#escape_ldap_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.escape_ldap_input" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function escapes the user input such that all values are seen as text, not filter instructions.</p>
 <p>TL;DR: prevents LDAP injection</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>string</em>) – The to be escaped string</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return string:</th><td class="field-body">The escaped string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string</strong> (<em>string</em>) – The to be escaped string</p>
+</dd>
+<dt class="field-even">Return string</dt>
+<dd class="field-even"><p>The escaped string</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -418,10 +421,10 @@ LDAP users. Page 2 will return LDAP users.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="etcl.html" class="btn btn-neutral float-right" title="etcl package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="faqs.html" class="btn btn-neutral float-right" title="faqs package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="core.validators.html" class="btn btn-neutral" title="core.validators module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="core.validators.html" class="btn btn-neutral float-left" title="core.validators module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -430,7 +433,7 @@ LDAP users. Page 2 will return LDAP users.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -447,26 +450,16 @@ LDAP users. Page 2 will return LDAP users.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

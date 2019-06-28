@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction &mdash; ETCL 1.0 documentation</title>
+  <title>Introduction &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,37 +17,39 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="General" href="general/index.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="#" class="icon icon-home"> ETCL
+            <a href="#" class="icon icon-home"> FEtC-H
           
 
           
@@ -102,7 +104,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">ETCL</a>
+          <a href="#">FEtC-H</a>
         
       </nav>
 
@@ -154,8 +156,8 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to the ETCL’s documentation! This <a class="reference external" href="https://www.djangoproject.com/">Django</a> project allows a user to apply a research project for ethical review.
-It was custom-tailored for the <a class="reference external" href="https://etcl.wp.hum.uu.nl">Ethical Committee Linguistics</a> (ETCL) of <a class="reference external" href="https://www.uu.nl">Utrecht University</a>.</p>
+<p>Welcome to the FEtC-H’s documentation! This <a class="reference external" href="https://www.djangoproject.com/">Django</a> project allows a user to apply a research project for ethical review.
+It was custom-tailored for the <a href="#id1"><span class="problematic" id="id2">`Faculty Ethics Committee - Humanities`_</span></a> (FEtC-H) of <a class="reference external" href="https://www.uu.nl">Utrecht University</a>.</p>
 <p>This documentation is meant to give (new) maintainers/developers of the codebase a general overview of the project and
 to document procedure.</p>
 <p>For reference, a code reference is also included. This reference is auto-generated using the docstrings in the code.
@@ -187,9 +189,9 @@ to document procedure.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">etcl</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="reference/core.html">core package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reference/etcl.html">etcl package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/feedback.html">feedback package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/fetc.html">fetc package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/interventions.html">interventions package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/observations.html">observations package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reference/proposals.html">proposals package</a></li>
@@ -203,9 +205,9 @@ to document procedure.</p>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -228,7 +230,7 @@ to document procedure.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -245,26 +247,16 @@ to document procedure.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -1,8 +1,8 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from core.views import CreateView, UpdateView, AllowErrorsMixin
-from etcl import settings
+from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
+from fetc import settings
 from studies.models import Study
 from studies.utils import get_study_progress
 
@@ -61,7 +61,7 @@ class AttachmentsUpdate(UpdateView):
     group_required = settings.GROUP_SECRETARY
 
 
-class ObservationCreate(ObservationMixin, AllowErrorsMixin, CreateView):
+class ObservationCreate(ObservationMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     """Creates an Observation from a ObservationForm"""
 
     def form_valid(self, form):
@@ -74,7 +74,7 @@ class ObservationCreate(ObservationMixin, AllowErrorsMixin, CreateView):
         return Study.objects.get(pk=self.kwargs['pk'])
 
 
-class ObservationUpdate(ObservationMixin, AllowErrorsMixin, UpdateView):
+class ObservationUpdate(ObservationMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
     """Updates a Observation from a ObservationForm"""
 
     def get_study(self):

@@ -4,18 +4,20 @@ from datetime import datetime
 from django.test import TestCase, RequestFactory
 from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.conf import settings
 
 from core.models import Setting, YES, NO
 from interventions.models import Intervention
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment
-from .models import Proposal, Relation, Wmo
+from .models import Proposal, Relation, Wmo, Institution
 from .utils import generate_ref_number, check_local_facilities
 from .views.proposal_views import MyProposalsView
 
 
 class BaseProposalTestCase(TestCase):
-    fixtures = ['relations', 'compensations', 'recruitments', 'settings', 'registrations', 'groups']
+    fixtures = ['relations', 'compensations', 'recruitments', 'settings',
+                'registrations', 'groups', 'institutions']
 
     def setUp(self):
         self.user = User.objects.create_user(username='test0101', email='test@test.com', password='secret')
@@ -24,10 +26,16 @@ class BaseProposalTestCase(TestCase):
             email='test@test.nl',
             password='more_secret')
         Group.objects.get(name='Secretaris').user_set.add(self.secretary)
+        self.chamber = Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
+        self.institution = Institution.objects.get(pk=1)
+        self.chamber.user_set.add(self.secretary)
         self.relation = Relation.objects.get(pk=4)
         self.p1 = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
                                           date_start=datetime.now(),
-                                          created_by=self.user, relation=self.relation)
+                                          created_by=self.user,
+                                          relation=self.relation,
+                                          reviewing_committee=self.chamber,
+                                          institution=self.institution)
         self.p1.applicants.add(self.user)
         self.p1.save()
 
@@ -40,7 +48,10 @@ class ProposalTestCase(BaseProposalTestCase):
         ref_number = generate_ref_number(self.user)
         p2 = Proposal.objects.create(title='p2', reference_number=ref_number,
                                      date_start=datetime.now(),
-                                     created_by=self.user, relation=self.relation)
+                                     created_by=self.user,
+                                     relation=self.relation,
+                                     reviewing_committee=self.chamber,
+                                     institution=self.institution)
         self.assertEqual(ref_number, 'test0101-02-' + current_year)
 
         # Delete a proposal, check new reference number
@@ -52,7 +63,10 @@ class ProposalTestCase(BaseProposalTestCase):
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
         p3 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2),
                                      date_start=datetime.now(),
-                                     created_by=user2, relation=self.relation)
+                                     created_by=user2,
+                                     relation=self.relation,
+                                     reviewing_committee=self.chamber,
+                                     institution=self.institution)
         self.assertEqual(p3.reference_number, 'test0102-01-' + current_year)
 
     def test_status(self):
@@ -159,7 +173,10 @@ class ProposalsViewTestCase(BaseProposalTestCase):
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
         p2 = Proposal.objects.create(title='p3', reference_number=generate_ref_number(user2),
                                      date_start=datetime.now(),
-                                     created_by=user2, relation=self.relation)
+                                     created_by=user2,
+                                     relation=self.relation,
+                                     reviewing_committee=self.chamber,
+                                     institution=self.institution)
         p2.applicants.add(user2)
         p2.save()
 

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 import django.utils.six as six
 
@@ -22,7 +23,16 @@ def get_secretary():
 
 
 def get_reviewers():
-    return get_user_model().objects.filter(groups__name=settings.GROUP_COMMISSION)
+    return get_user_model().objects.filter(
+        Q(groups__name=settings.GROUP_GENERAL_CHAMBER) |
+        Q(groups__name=settings.GROUP_LINGUISTICS_CHAMBER)
+    )
+
+
+def get_reviewers_from_group(group):
+    return get_user_model().objects.filter(
+        groups__name=group
+    )
 
 
 def string_to_bool(s):

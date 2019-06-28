@@ -1,0 +1,46 @@
+[
+   {
+      "model":"proposals.institution",
+      "pk":1,
+      "fields":{
+         "order":4,
+         "description":"Utrecht instituut voor Linguistiek OTS (UiL OTS)",
+         "description_nl":"Utrecht instituut voor Linguistiek OTS (UiL OTS)",
+         "description_en":"Utrecht Institute of Linguistics OTS (UiL OTS)",
+         "reviewing_chamber":1
+      }
+   },
+   {
+      "model":"proposals.institution",
+      "pk":2,
+      "fields":{
+         "order":1,
+         "description":"Onderzoekinstituut voor Filosofie en Religiewetenschap (OFR)",
+         "description_nl":"Onderzoekinstituut voor Filosofie en Religiewetenschap (OFR)",
+         "description_en":"Research Institute for Philosophy and Religious Studies (OFR)",
+         "reviewing_chamber":3
+      }
+   },
+   {
+      "model":"proposals.institution",
+      "pk":3,
+      "fields":{
+         "order":2,
+         "description":"Onderzoekinstituut voor Geschiedenis en Kunstgeschiedenis (OGK)",
+         "description_nl":"Onderzoekinstituut voor Geschiedenis en Kunstgeschiedenis (OGK)",
+         "description_en":"Research Institute for History and Art History (OGK)",
+         "reviewing_chamber":3
+      }
+   },
+   {
+      "model":"proposals.institution",
+      "pk":4,
+      "fields":{
+         "order":3,
+         "description":"Instituut voor Cultuurwetenschappelijk Onderzoek (ICON)",
+         "description_nl":"Instituut voor Cultuurwetenschappelijk Onderzoek (ICON)",
+         "description_en":"Institute for Cultural Inquiry (ICON)",
+         "reviewing_chamber":3
+      }
+   }
+]

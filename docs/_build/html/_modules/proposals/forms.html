@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>proposals.forms &mdash; ETCL 1.0 documentation</title>
+  <title>proposals.forms &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -152,26 +154,28 @@
   <h1>Source code for proposals.forms</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
 
+<span class="kn">from</span> <span class="nn">braces.forms</span> <span class="k">import</span> <span class="n">UserKwargModelFormMixin</span>
 <span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">forms</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="k">import</span> <span class="n">get_user_model</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">Group</span>
 <span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="k">import</span> <span class="n">mark_safe</span>
 <span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
 
-<span class="kn">from</span> <span class="nn">braces.forms</span> <span class="k">import</span> <span class="n">UserKwargModelFormMixin</span>
-
-<span class="kn">from</span> <span class="nn">core.forms</span> <span class="k">import</span> <span class="n">ConditionalModelForm</span>
-<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES_NO_DOUBT</span><span class="p">,</span> <span class="n">YES</span><span class="p">,</span> <span class="n">NO</span><span class="p">,</span> <span class="n">DOUBT</span>
+<span class="kn">from</span> <span class="nn">core.forms</span> <span class="k">import</span> <span class="n">ConditionalModelForm</span><span class="p">,</span> <span class="n">SoftValidationMixin</span>
+<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">DOUBT</span><span class="p">,</span> <span class="n">NO</span><span class="p">,</span> <span class="n">YES</span><span class="p">,</span> <span class="n">YES_NO_DOUBT</span>
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">YES_NO</span><span class="p">,</span> <span class="n">get_users_as_list</span>
-<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Wmo</span><span class="p">,</span> <span class="n">Relation</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Relation</span><span class="p">,</span> <span class="n">Wmo</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">check_local_facilities</span>
 <span class="kn">from</span> <span class="nn">.widgets</span> <span class="k">import</span> <span class="n">SelectMultipleUser</span>
 
 
-<div class="viewcode-block" id="ProposalForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">ConditionalModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">SoftValidationMixin</span><span class="p">,</span>
+                   <span class="n">ConditionalModelForm</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;is_pre_approved&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;institution&#39;</span><span class="p">,</span>
             <span class="s1">&#39;relation&#39;</span><span class="p">,</span> <span class="s1">&#39;supervisor&#39;</span><span class="p">,</span>
             <span class="s1">&#39;other_applicants&#39;</span><span class="p">,</span> <span class="s1">&#39;applicants&#39;</span><span class="p">,</span>
             <span class="s1">&#39;other_stakeholders&#39;</span><span class="p">,</span> <span class="s1">&#39;stakeholders&#39;</span><span class="p">,</span>
@@ -181,19 +185,36 @@
             <span class="s1">&#39;pre_approval_institute&#39;</span><span class="p">,</span> <span class="s1">&#39;pre_approval_pdf&#39;</span>
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;is_pre_approved&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-            <span class="s1">&#39;relation&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-            <span class="s1">&#39;other_applicants&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
+            <span class="s1">&#39;is_pre_approved&#39;</span><span class="p">:</span>    <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
+            <span class="s1">&#39;institution&#39;</span><span class="p">:</span>        <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;relation&#39;</span><span class="p">:</span>           <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;other_applicants&#39;</span><span class="p">:</span>   <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
             <span class="s1">&#39;other_stakeholders&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-            <span class="s1">&#39;summary&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;cols&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}),</span>
-            <span class="s1">&#39;funding&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
-            <span class="s1">&#39;applicants&#39;</span><span class="p">:</span> <span class="n">SelectMultipleUser</span><span class="p">()</span>
+            <span class="s1">&#39;summary&#39;</span><span class="p">:</span>            <span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;cols&#39;</span><span class="p">:</span> <span class="mi">50</span>
+            <span class="p">}),</span>
+            <span class="s1">&#39;funding&#39;</span><span class="p">:</span>            <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
+            <span class="s1">&#39;applicants&#39;</span><span class="p">:</span>         <span class="n">SelectMultipleUser</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="n">error_messages</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s1">&#39;unique&#39;</span><span class="p">:</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Er bestaat al een studie met deze titel.&#39;</span><span class="p">),</span>
             <span class="p">},</span>
         <span class="p">}</span>
+
+    <span class="n">_soft_validation_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;supervisor&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;other_applicants&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;applicants&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;other_stakeholders&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;stakeholders&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;summary&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;pre_assessment_pdf&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;funding&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;funding_details&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;funding_name&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;pre_approval_institute&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;pre_approval_pdf&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="ProposalForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -211,6 +232,7 @@
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ProposalForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;institution&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">applicants</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
@@ -218,15 +240,20 @@
 
         <span class="n">instance</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;instance&#39;</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;other_stakeholders&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;other_stakeholders&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+
         <span class="c1"># If you are already defined as a supervisor, we have to set it to you</span>
         <span class="k">if</span> <span class="n">instance</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">instance</span><span class="o">.</span><span class="n">supervisor</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">:</span>
             <span class="n">supervisors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervisor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Selecteer...&#39;</span><span class="p">))]</span> <span class="o">+</span> <span class="n">get_users_as_list</span><span class="p">(</span><span class="n">supervisors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervisor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Selecteer...&#39;</span><span class="p">))]</span> <span class="o">+</span> <span class="n">get_users_as_list</span><span class="p">(</span><span class="n">supervisors</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;applicants&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">get_users_as_list</span><span class="p">(</span><span class="n">applicants</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">in_course</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">check_in_course</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">check_in_course</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervisor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Docent&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervisor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Vul hier de docent van </span><span class="se">\</span>
 <span class="s1">de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop </span><span class="se">\</span>
@@ -234,7 +261,8 @@
 <span class="s1">van het UiL OTS worden opgenomen.&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">is_pre_assessment</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">check_pre_assessment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+                <span class="n">check_pre_assessment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;pre_assessment_pdf&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">required</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;summary&#39;</span><span class="p">]</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;funding&#39;</span><span class="p">]</span>
@@ -263,30 +291,50 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
 
+        <span class="k">if</span> <span class="s1">&#39;funding&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mark_soft_required</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;funding&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mark_soft_required</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;relation&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;summary&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mark_soft_required</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;summary&#39;</span><span class="p">)</span>
+
         <span class="n">relation</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;relation&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">relation</span> <span class="ow">and</span> <span class="n">relation</span><span class="o">.</span><span class="n">needs_supervisor</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supervisor&#39;</span><span class="p">):</span>
-            <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;U dient een eindverantwoordelijke op te geven.&#39;</span><span class="p">),</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">relation</span> <span class="ow">and</span> <span class="n">relation</span><span class="o">.</span><span class="n">needs_supervisor</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s1">&#39;supervisor&#39;</span><span class="p">):</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;U dient een eindverantwoordelijke op te geven.&#39;</span><span class="p">),</span>
+                <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;supervisor&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;other_applicants&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;applicants&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;U heeft geen andere onderzoekers geselecteerd.&#39;</span><span class="p">),</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;other_applicants&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;applicants&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;U heeft geen andere onderzoekers geselecteerd.&#39;</span><span class="p">),</span>
+                <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;applicants&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="s1">&#39;is_pre_approved&#39;</span> <span class="ow">in</span> <span class="n">cleaned_data</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;is_pre_approved&#39;</span><span class="p">]:</span>
                 <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
-                    <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Indien u geen toestemming heeft van een andere ethische commissie, dient u het normale formulier in &#39;</span>
-                      <span class="s1">&#39;te vullen. Ga terug naar de startpagina, en selecteer &quot;Een nieuwe studie aanmelden (from scratch in &#39;</span>
-                      <span class="s1">&#39;een leeg formulier)&quot; of &quot;Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)&quot;.&#39;</span><span class="p">)</span>
+                    <span class="n">_</span><span class="p">(</span>
+                        <span class="s1">&#39;Indien u geen toestemming heeft van een andere ethische commissie, dient u het normale formulier in &#39;</span>
+                        <span class="s1">&#39;te vullen. Ga terug naar de startpagina, en selecteer &quot;Een nieuwe studie aanmelden (from scratch in &#39;</span>
+                        <span class="s1">&#39;een leeg formulier)&quot; of &quot;Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)&quot;.&#39;</span><span class="p">)</span>
                 <span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;is_pre_approved&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;is_pre_approved&#39;</span><span class="p">,</span> <span class="s1">&#39;pre_approval_pdf&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;is_pre_approved&#39;</span><span class="p">,</span> <span class="s1">&#39;pre_approval_institute&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;is_pre_approved&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;pre_approval_pdf&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;is_pre_approved&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;pre_approval_institute&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;other_stakeholders&#39;</span><span class="p">,</span> <span class="s1">&#39;stakeholders&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;funding&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;funding_details&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;funding&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_name&#39;</span><span class="p">,</span> <span class="s1">&#39;funding_name&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;other_stakeholders&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;stakeholders&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;funding&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;funding_details&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;funding&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_name&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;funding_name&#39;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="ProposalStartPracticeForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalStartPracticeForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalStartPracticeForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
@@ -325,7 +373,7 @@
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;date_confirmed&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmation_comments&#39;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="WmoForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoForm">[docs]</a><span class="k">class</span> <span class="nc">WmoForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="WmoForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoForm">[docs]</a><span class="k">class</span> <span class="nc">WmoForm</span><span class="p">(</span><span class="n">SoftValidationMixin</span><span class="p">,</span> <span class="n">ConditionalModelForm</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Wmo</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
@@ -333,16 +381,21 @@
             <span class="s1">&#39;is_medical&#39;</span><span class="p">,</span> <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;metc&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-            <span class="s1">&#39;is_medical&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;metc&#39;</span><span class="p">:</span>             <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;is_medical&#39;</span><span class="p">:</span>       <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
             <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
         <span class="p">}</span>
+
+    <span class="n">_soft_validation_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;metc_details&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_institution&#39;</span><span class="p">,</span>
+                               <span class="s1">&#39;is_medical&#39;</span><span class="p">,</span> <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="WmoForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Remove empty label from is_medical/is_behavioristic field and reset the choices</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WmoForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;metc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;metc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_medical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_medical&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;is_behavioristic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
@@ -356,12 +409,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">WmoForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_details&#39;</span><span class="p">,</span> <span class="n">f1_value</span><span class="o">=</span><span class="n">YES</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;metc&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cleaned_data</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;metc&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht om verder te &#39;</span>
+                                     <span class="s1">&#39;gaan.&#39;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_details&#39;</span><span class="p">,</span>
+                              <span class="n">f1_value</span><span class="o">=</span><span class="n">YES</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_institution&#39;</span><span class="p">,</span>
                               <span class="n">f1_value</span><span class="o">=</span><span class="n">YES</span><span class="p">,</span>
-                              <span class="n">error_message</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;U dient een instelling op te geven.&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;is_medical&#39;</span><span class="p">,</span> <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">NO</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">,</span> <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">NO</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span></div></div>
+                              <span class="n">error_message</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+                                  <span class="s1">&#39;U dient een instelling op te geven.&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;is_medical&#39;</span><span class="p">,</span>
+                                   <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">NO</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">,</span>
+                                   <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">NO</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="WmoCheckForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoCheckForm">[docs]</a><span class="k">class</span> <span class="nc">WmoCheckForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
@@ -371,8 +432,8 @@
             <span class="s1">&#39;metc&#39;</span><span class="p">,</span> <span class="s1">&#39;is_medical&#39;</span><span class="p">,</span> <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;metc&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-            <span class="s1">&#39;is_medical&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;metc&#39;</span><span class="p">:</span>             <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;is_medical&#39;</span><span class="p">:</span>       <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
             <span class="s1">&#39;is_behavioristic&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
         <span class="p">}</span>
 
@@ -395,7 +456,7 @@
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;metc_application&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-            <span class="s1">&#39;metc_decision&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
+            <span class="s1">&#39;metc_decision&#39;</span><span class="p">:</span>    <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
         <span class="p">}</span>
 
 <div class="viewcode-block" id="WmoApplicationForm.clean"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.WmoApplicationForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -405,21 +466,28 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">WmoApplicationForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc_decision&#39;</span><span class="p">,</span> <span class="s1">&#39;metc_decision_pdf&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;metc_decision&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;metc_decision_pdf&#39;</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="StudyStartForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.StudyStartForm">[docs]</a><span class="k">class</span> <span class="nc">StudyStartForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-    <span class="n">study_name_1</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 1&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">study_name_2</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 2&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">study_name_3</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 3&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">study_name_4</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 4&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">study_name_5</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 5&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">study_name_1</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 1&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                                   <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">study_name_2</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 2&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                                   <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">study_name_3</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 3&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                                   <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">study_name_4</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 4&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                                   <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">study_name_5</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Naam traject 5&#39;</span><span class="p">),</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                                   <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;studies_similar&#39;</span><span class="p">,</span> <span class="s1">&#39;studies_number&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;study_name_1&#39;</span><span class="p">,</span> <span class="s1">&#39;study_name_2&#39;</span><span class="p">,</span> <span class="s1">&#39;study_name_3&#39;</span><span class="p">,</span> <span class="s1">&#39;study_name_4&#39;</span><span class="p">,</span> <span class="s1">&#39;study_name_5&#39;</span>
+            <span class="s1">&#39;study_name_1&#39;</span><span class="p">,</span> <span class="s1">&#39;study_name_2&#39;</span><span class="p">,</span> <span class="s1">&#39;study_name_3&#39;</span><span class="p">,</span> <span class="s1">&#39;study_name_4&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;study_name_5&#39;</span>
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;studies_similar&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
@@ -448,11 +516,13 @@
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudyStartForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;studies_similar&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;studies_similar&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;studies_similar&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht om &#39;</span>
+                                                <span class="s1">&#39;verder te gaan.&#39;</span><span class="p">))</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;studies_similar&#39;</span><span class="p">]:</span>
             <span class="n">nr_studies</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;studies_number&#39;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;studies_number&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;studies_number&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.&#39;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;studies_number&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                    <span class="s1">&#39;Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.&#39;</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nr_studies</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
                     <span class="k">break</span>
@@ -484,7 +554,8 @@
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ProposalSubmitForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">check_local_facilities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">):</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span></div>
@@ -504,25 +575,39 @@
                 <span class="n">documents</span> <span class="o">=</span> <span class="n">Documents</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">study</span><span class="o">=</span><span class="n">study</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">:</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_declaration</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Toestemmingsverklaring voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                            <span class="s1">&#39;Toestemmingsverklaring voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_information</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                            <span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">parents_information</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                            <span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">informed_consent</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Toestemmingsverklaring voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                            <span class="s1">&#39;Toestemmingsverklaring voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">briefing</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                            <span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
 
                 <span class="k">if</span> <span class="n">study</span><span class="o">.</span><span class="n">needs_additional_external_forms</span><span class="p">():</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_declaration</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Toestemmingsverklaring voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                            <span class="s1">&#39;Toestemmingsverklaring voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="o">.</span><span class="n">director_consent_information</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;comments&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+                            <span class="s1">&#39;Informatiebrief voor traject </span><span class="si">{}</span><span class="s1"> nog niet toegevoegd.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">study</span><span class="o">.</span><span class="n">order</span><span class="p">))</span>
 
-
-        <span class="k">if</span> <span class="n">check_local_facilities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">check_local_facilities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cleaned_data</span><span class="p">[</span>
+            <span class="s1">&#39;inform_local_staff&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;inform_local_staff&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">))</span></div></div>
 </pre></div>
 
@@ -536,7 +621,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -553,26 +638,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

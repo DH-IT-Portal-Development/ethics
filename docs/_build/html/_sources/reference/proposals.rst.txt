@@ -13,6 +13,7 @@ Subpackages
 
     proposals.management
     proposals.templatetags
+    proposals.utils
     proposals.views
 
 Submodules
@@ -27,6 +28,5 @@ Submodules
    proposals.tests
    proposals.translation
    proposals.urls
-   proposals.utils
    proposals.widgets
 

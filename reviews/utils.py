@@ -48,7 +48,7 @@ def start_supervisor_phase(proposal):
 
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
 
-    subject = _('ETCL: bevestiging indienen concept-aanmelding')
+    subject = _('FETC-GW: bevestiging indienen concept-aanmelding')
     params = {
         'supervisor': proposal.supervisor.get_full_name(),
         'secretary': get_secretary().get_full_name(),
@@ -56,7 +56,7 @@ def start_supervisor_phase(proposal):
     msg_plain = render_to_string('mail/concept_creator.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
 
-    subject = _('ETCL: beoordelen als eindverantwoordelijke')
+    subject = _('FETC-GW: beoordelen als eindverantwoordelijke')
     params = {
         'creator': proposal.created_by.get_full_name(),
         'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
@@ -91,7 +91,7 @@ def remind_reviewers():
     for decision in decisions:
         print(decision.review.date_should_end)
         proposal = decision.review.proposal
-        subject = 'ETCL: beoordelen studie (Herrinering)'
+        subject = 'FETC-GW: beoordelen studie (Herrinering)'
         params = {
             'creator': proposal.created_by.get_full_name(),
             'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
@@ -133,7 +133,7 @@ def start_assignment_phase(proposal):
 
     notify_secretary_assignment(review)
 
-    subject = _('ETCL: aanmelding ontvangen')
+    subject = _('FETC-GW: aanmelding ontvangen')
     params = {
         'secretary': secretary.get_full_name(),
         'review_date': review.date_should_end,
@@ -178,7 +178,7 @@ def start_review_pre_assessment(proposal):
     secretary = get_secretary()
     Decision.objects.create(review=review, reviewer=secretary)
 
-    subject = _('ETCL: nieuwe aanvraag voor voortoetsing')
+    subject = _('FETC-GW: nieuwe aanvraag voor voortoetsing')
     params = {
         'secretary': secretary.get_full_name(),
         'proposal': proposal,
@@ -188,7 +188,7 @@ def start_review_pre_assessment(proposal):
     msg_html = render_to_string('mail/pre_assessment_secretary.html', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email], html_message=msg_html)
 
-    subject = _('ETCL: bevestiging indienen aanvraag voor voortoetsing')
+    subject = _('FETC-GW: bevestiging indienen aanvraag voor voortoetsing')
     params = {
         'secretary': secretary.get_full_name(),
     }
@@ -204,7 +204,7 @@ def start_review_route(review, commission_users, use_short_route):
         Decision.objects.create(review=review, reviewer=user)
 
         template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
-        subject = _('ETCL: nieuwe studie ter beoordeling')
+        subject = _('FETC-GW: nieuwe studie ter beoordeling')
         params = {
             'secretary': get_secretary().get_full_name(),
             'reviewer': user.get_full_name(),
@@ -220,7 +220,7 @@ def notify_secretary_assignment(review):
     Notifies the secretary a Proposal is ready for assigment
     """
     secretary = get_secretary()
-    subject = _('ETCL: nieuwe studie ingediend')
+    subject = _('FETC-GW: nieuwe studie ingediend')
     params = {
         'secretary': secretary.get_full_name(),
         'review': review,
@@ -234,7 +234,7 @@ def notify_secretary(decision):
     Notifies a secretary a Decision has been made by one of the members in the Commission
     """
     secretary = get_secretary()
-    subject = _('ETCL: nieuwe beoordeling toegevoegd')
+    subject = _('FETC-GW: nieuwe beoordeling toegevoegd')
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
@@ -246,7 +246,8 @@ def notify_secretary(decision):
 def auto_review(proposal):
     """
     Reviews a Proposal machine-wise.
-    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
+    Based on the regulations on
+    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
     """
     reasons = []
 
@@ -272,7 +273,8 @@ def auto_review(proposal):
             reasons.append(_('De studie maakt gebruik van misleiding.'))
 
         if study.compensation.requires_review:
-            reasons.append(_('De beloning van deelnemers wijkt af van de UiL OTS standaardregeling.'))
+            reasons.append(_('De beloning van deelnemers wijkt af van de '
+                             'standaardregeling.'))
 
         if study.has_traits:
             reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
@@ -309,7 +311,8 @@ voor de leeftijdsgroep {ag}.').format(s=session.order, ag=age_group, d=session.n
 def auto_review_observation(observation):
     """
     Reviews an Observation machine-wise.
-    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
+    Based on the regulations on
+    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
     """
     reasons = []
 
@@ -329,7 +332,8 @@ def auto_review_observation(observation):
 def auto_review_task(study, task):
     """
     Reviews a Task machine-wise.
-    Based on the regulations on http://etcl.wp.hum.uu.nl/reglement/.
+    Based on the regulations on
+    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
     """
     reasons = []
 

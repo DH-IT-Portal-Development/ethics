@@ -28,7 +28,9 @@ $(function() {
     depends_on_value('is_anonymous', 'True', 'is_anonymous_details');
     depends_on_value('is_in_target_group', 'True', 'is_in_target_group_details');
     depends_on_value('is_nonpublic_space', 'True', 'is_nonpublic_space_details');
-    
+
+    depends_on_value('has_advanced_consent', 'False', 'has_advanced_consent_details');
+
     add_title('setting', "{% trans 'Setting' %}");
     add_title('details_who', "{% trans 'Details observatie' %}");
     add_title('is_anonymous', "{% trans 'Anonimiteit' %}");

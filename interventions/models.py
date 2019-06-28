@@ -14,48 +14,70 @@ class Intervention(SettingModel):
 
     period = models.TextField(
         _('Wat is de periode waarbinnen de interventie plaatsvindt?'),
-        help_text=_('De interventie vindt plaats binnen het schooljaar 2018-2019'))
+        help_text=_('De interventie vindt plaats binnen het schooljaar '
+                    '2018-2019'),
+        blank=True,
+    )
 
     multiple_sessions = models.BooleanField(
         _('Zal de interventie vaker dan één keer plaatsvinden?'),
-        default=False
+        default=False,
     )
 
     session_frequency = models.TextField(
         _('Wat is de frequentie van de interventie?'),
-        blank=True)
+        blank=True,
+    )
 
     duration = models.PositiveIntegerField(
-        _('Wat is de duur van de interventie per sessie in minuten?'))
+        _('Wat is de duur van de interventie per sessie in minuten?'),
+        blank=True,
+        null=True,
+    )
 
     experimenter = models.TextField(
-        _('Wie voert de interventie uit?'))
+        _('Wie voert de interventie uit?'),
+        blank=True,
+    )
+
     description = models.TextField(
-        _('Geef een beschrijving van de experimentele interventie'))
+        _('Geef een beschrijving van de experimentele interventie'),
+        blank=True,
+    )
+
     has_controls = models.BooleanField(
         _('Is er sprake van een controlegroep?'),
-        default=False)
+        default=False,
+    )
+
     controls_description = models.TextField(
         _('Geef een beschrijving van de controleinterventie'),
-        blank=True)
+        blank=True,
+    )
 
     measurement = models.TextField(
         _('Hoe wordt het effect van de interventie gemeten?'),
         help_text=_('Wanneer u de deelnemer extra taken laat uitvoeren, \
 dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet \
-u op de vorige pagina ook "takenonderzoek" aanvinken.'))
+u op de vorige pagina ook "takenonderzoek" aanvinken.'),
+        blank=True,
+    )
 
     extra_task = models.BooleanField(
         _('Voert de leerling nog een taak uit die niet onder het leerplan valt?'),
         help_text=_('Moet het nog een taak doen, zoals het invullen van een (onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?'),
-        default=False
+        default=False,
     )
 
     # Legacy, not used in version 2 of the form
     amount_per_week = models.PositiveIntegerField(
-        _('Hoe vaak per week vindt de interventiesessie plaats?'), blank=True, default=1)
+        _('Hoe vaak per week vindt de interventiesessie plaats?'),
+        blank=True,
+        default=1,
+    )
 
     # References
     study = models.OneToOneField(
         Study,
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+    )

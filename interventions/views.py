@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from core.views import CreateView, UpdateView, AllowErrorsMixin
+from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from studies.models import Study
 from studies.utils import get_study_progress
 
@@ -53,7 +53,7 @@ class InterventionMixin(object):
         raise NotImplementedError
 
 
-class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
+class InterventionCreate(InterventionMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     """Creates a Intervention from a InterventionForm"""
 
     def form_valid(self, form):
@@ -66,7 +66,7 @@ class InterventionCreate(InterventionMixin, AllowErrorsMixin, CreateView):
         return Study.objects.get(pk=self.kwargs['pk'])
 
 
-class InterventionUpdate(InterventionMixin, AllowErrorsMixin, UpdateView):
+class InterventionUpdate(InterventionMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
     """Updates a Intervention from an InterventionForm"""
 
     def get_study(self):

@@ -19,14 +19,18 @@ class Session(SettingModel):
         validators=[MinValueValidator(1)],
         help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer observeert \
 en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
-Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.'))
+Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
+    )
+
     tasks_duration = models.PositiveIntegerField(
         _('De totale geschatte netto taakduur van uw sessie komt \
 op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
 Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, \
 instructies per taak, pauzes tussen taken, en debriefing? \
 (bij labbezoek dus van binnenkomst tot vertrek)'),
-        null=True)
+        null=True,
+        blank=True,
+    )
 
     # References
     study = models.ForeignKey(Study, on_delete=models.CASCADE)
@@ -113,14 +117,20 @@ class Task(models.Model):
     order = models.PositiveIntegerField()
     name = models.CharField(
         _('Wat is de naam van de taak?'),
-        max_length=200)
+        max_length=200,
+        blank=True,
+    )
+
     description = models.TextField(
         _('Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
 uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
 beantwoording van uw onderzoeksvragen bijdraagt. \
 Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli \
 dat u van plan bent aan de deelnemer aan te bieden. \
-Het moet voor de commissieleden duidelijk zijn wat u precies gaat doen.'))
+Het moet voor de commissieleden duidelijk zijn wat u precies gaat doen.'),
+        blank=True,
+    )
+
     duration = models.PositiveIntegerField(
         _('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, \
 dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak \
@@ -128,27 +138,41 @@ dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak
 Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), \
 geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
         default=0,
-        validators=[MinValueValidator(1)])
+        validators=[MinValueValidator(1)],
+        blank=True,
+    )
+
     registrations = models.ManyToManyField(
         Registration,
-        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'))
+        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?')
+    )
+
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,
-        blank=True)
+        blank=True,
+    )
+
     registration_kinds = models.ManyToManyField(
         RegistrationKind,
         verbose_name=_('Kies het soort meting'),
-        blank=True)
+        blank=True,
+    )
+
     registration_kinds_details = models.CharField(
         _('Namelijk'),
         max_length=200,
-        blank=True)
+        blank=True,
+    )
+
     feedback = models.NullBooleanField(
-        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'))
+        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?')
+    )
+
     feedback_details = models.TextField(
         _('Beschrijf hoe de feedback wordt gegeven.'),
-        blank=True)
+        blank=True,
+    )
 
     # References
     session = models.ForeignKey(Session, on_delete=models.CASCADE)

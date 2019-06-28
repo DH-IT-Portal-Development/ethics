@@ -4,12 +4,12 @@ from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from core.forms import ConditionalModelForm
+from core.forms import ConditionalModelForm, SoftValidationMixin
 from core.utils import YES_NO
 from .models import Session, Task
 
 
-class TaskStartForm(ConditionalModelForm):
+class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
     is_copy = forms.BooleanField(
         label=_('Is deze sessie een kopie van een voorgaande sessie?'),
         help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar.'),
@@ -33,6 +33,10 @@ class TaskStartForm(ConditionalModelForm):
             'leader_has_coc': forms.RadioSelect(choices=YES_NO),
         }
 
+    _soft_validation_fields = [
+        'setting', 'setting_details', 'supervision', 'leader_has_coc'
+    ]
+
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
@@ -52,6 +56,7 @@ class TaskStartForm(ConditionalModelForm):
             del self.fields['is_copy']
             del self.fields['parent_session']
 
+        # TODO: add warning
         if not self.study.has_children():
             del self.fields['supervision']
             del self.fields['leader_has_coc']
@@ -65,6 +70,8 @@ class TaskStartForm(ConditionalModelForm):
         """
         cleaned_data = super(TaskStartForm, self).clean()
 
+        self.mark_soft_required(cleaned_data, 'setting')
+
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
         if self.study.has_children():
             self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
@@ -72,10 +79,12 @@ class TaskStartForm(ConditionalModelForm):
 
         self.check_dependency(cleaned_data, 'is_copy', 'parent_session')
         if not cleaned_data.get('is_copy') and not cleaned_data.get('tasks_number'):
-            self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht.'), code='required'))
+            # Prevent double required errors
+            if 'tasks_number' not in self.errors:
+                self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht.'), code='required'))
 
 
-class TaskForm(ConditionalModelForm):
+class TaskForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Task
         fields = [
@@ -94,6 +103,10 @@ class TaskForm(ConditionalModelForm):
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['duration'].label = mark_safe(self.fields['duration'].label)
 
+    def get_soft_validation_fields(self):
+        # All fields should be validated softly
+        return self.fields.keys()
+
     def clean(self):
         """
         Check for conditional requirements:
@@ -105,6 +118,14 @@ class TaskForm(ConditionalModelForm):
         """
         cleaned_data = super(TaskForm, self).clean()
 
+        self.mark_soft_required(
+            cleaned_data,
+            'name',
+            'description',
+            'duration',
+            #'registrations',
+        )
+
         self.check_empty(cleaned_data, 'feedback')
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_kind', 'registration_kinds')
         self.check_dependency_multiple(cleaned_data, 'registrations', 'needs_details', 'registrations_details')
@@ -112,7 +133,7 @@ class TaskForm(ConditionalModelForm):
         self.check_dependency(cleaned_data, 'feedback', 'feedback_details')
 
 
-class TaskEndForm(forms.ModelForm):
+class TaskEndForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Session
         fields = ['tasks_duration']
@@ -125,9 +146,17 @@ class TaskEndForm(forms.ModelForm):
         super(TaskEndForm, self).__init__(*args, **kwargs)
 
         tasks_duration = self.fields['tasks_duration']
-        tasks_duration.required = True
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
+
+    _soft_validation_fields = ['tasks_duration']
+
+    def clean(self):
+        cleaned_data = super(TaskEndForm, self).clean()
+
+        self.mark_soft_required(cleaned_data, 'tasks_duration')
+
+        return cleaned_data
 
     def clean_tasks_duration(self):
         """
@@ -135,7 +164,7 @@ class TaskEndForm(forms.ModelForm):
         """
         tasks_duration = self.cleaned_data.get('tasks_duration')
 
-        if tasks_duration < self.instance.net_duration():
+        if tasks_duration and tasks_duration < self.instance.net_duration():
             raise forms.ValidationError(_('Totale sessieduur moet minstens gelijk zijn aan netto sessieduur.'), code='comparison')
 
         return tasks_duration

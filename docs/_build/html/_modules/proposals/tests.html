@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>proposals.tests &mdash; ETCL 1.0 documentation</title>
+  <title>proposals.tests &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../index.html" class="icon icon-home"> ETCL
+            <a href="../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">ETCL</a>
+          <a href="../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -156,18 +158,20 @@
 <span class="kn">from</span> <span class="nn">django.test</span> <span class="k">import</span> <span class="n">TestCase</span><span class="p">,</span> <span class="n">RequestFactory</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span><span class="p">,</span> <span class="n">Group</span>
 <span class="kn">from</span> <span class="nn">django.core.files.uploadedfile</span> <span class="k">import</span> <span class="n">SimpleUploadedFile</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
 
 <span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">Setting</span><span class="p">,</span> <span class="n">YES</span><span class="p">,</span> <span class="n">NO</span>
 <span class="kn">from</span> <span class="nn">interventions.models</span> <span class="k">import</span> <span class="n">Intervention</span>
 <span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Task</span><span class="p">,</span> <span class="n">Registration</span>
 <span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Study</span><span class="p">,</span> <span class="n">Recruitment</span>
-<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Relation</span><span class="p">,</span> <span class="n">Wmo</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Relation</span><span class="p">,</span> <span class="n">Wmo</span><span class="p">,</span> <span class="n">Institution</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">generate_ref_number</span><span class="p">,</span> <span class="n">check_local_facilities</span>
 <span class="kn">from</span> <span class="nn">.views.proposal_views</span> <span class="k">import</span> <span class="n">MyProposalsView</span>
 
 
 <div class="viewcode-block" id="BaseProposalTestCase"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.BaseProposalTestCase">[docs]</a><span class="k">class</span> <span class="nc">BaseProposalTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="n">fixtures</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relations&#39;</span><span class="p">,</span> <span class="s1">&#39;compensations&#39;</span><span class="p">,</span> <span class="s1">&#39;recruitments&#39;</span><span class="p">,</span> <span class="s1">&#39;settings&#39;</span><span class="p">,</span> <span class="s1">&#39;registrations&#39;</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">]</span>
+    <span class="n">fixtures</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relations&#39;</span><span class="p">,</span> <span class="s1">&#39;compensations&#39;</span><span class="p">,</span> <span class="s1">&#39;recruitments&#39;</span><span class="p">,</span> <span class="s1">&#39;settings&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;registrations&#39;</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">,</span> <span class="s1">&#39;institutions&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="BaseProposalTestCase.setUp"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.BaseProposalTestCase.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;test0101&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
@@ -176,10 +180,16 @@
             <span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@test.nl&#39;</span><span class="p">,</span>
             <span class="n">password</span><span class="o">=</span><span class="s1">&#39;more_secret&#39;</span><span class="p">)</span>
         <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Secretaris&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">user_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">secretary</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chamber</span> <span class="o">=</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_LINGUISTICS_CHAMBER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">institution</span> <span class="o">=</span> <span class="n">Institution</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="o">.</span><span class="n">user_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">secretary</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relation</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p1</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p1&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">),</span>
                                           <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-                                          <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">)</span>
+                                          <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                          <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                          <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                          <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="o">.</span><span class="n">applicants</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div></div>
 
@@ -192,7 +202,10 @@
         <span class="n">ref_number</span> <span class="o">=</span> <span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
         <span class="n">p2</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p2&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">ref_number</span><span class="p">,</span>
                                      <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-                                     <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">)</span>
+                                     <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                     <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                     <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                     <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number</span><span class="p">,</span> <span class="s1">&#39;test0101-02-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span>
 
         <span class="c1"># Delete a proposal, check new reference number</span>
@@ -204,7 +217,10 @@
         <span class="n">user2</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;test0102&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
         <span class="n">p3</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p3&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">generate_ref_number</span><span class="p">(</span><span class="n">user2</span><span class="p">),</span>
                                      <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-                                     <span class="n">created_by</span><span class="o">=</span><span class="n">user2</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">)</span>
+                                     <span class="n">created_by</span><span class="o">=</span><span class="n">user2</span><span class="p">,</span>
+                                     <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                     <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                     <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">reference_number</span><span class="p">,</span> <span class="s1">&#39;test0102-01-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ProposalTestCase.test_status"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalTestCase.test_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -311,7 +327,10 @@
         <span class="n">user2</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;test0102&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
         <span class="n">p2</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p3&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">generate_ref_number</span><span class="p">(</span><span class="n">user2</span><span class="p">),</span>
                                      <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
-                                     <span class="n">created_by</span><span class="o">=</span><span class="n">user2</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">)</span>
+                                     <span class="n">created_by</span><span class="o">=</span><span class="n">user2</span><span class="p">,</span>
+                                     <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                     <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                     <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
         <span class="n">p2</span><span class="o">.</span><span class="n">applicants</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user2</span><span class="p">)</span>
         <span class="n">p2</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 
@@ -370,7 +389,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -387,26 +406,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

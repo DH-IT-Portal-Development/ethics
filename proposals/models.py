@@ -2,15 +2,15 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import Group
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext_lazy as _
 
-from core.models import YES_NO_DOUBT, YES
+from core.models import YES, YES_NO_DOUBT
 from core.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import available_urls
-
 
 SUMMARY_MAX_WORDS = 200
 
@@ -46,6 +46,22 @@ class Funding(models.Model):
 
 
 @python_2_unicode_compatible
+class Institution(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    reviewing_chamber = models.ForeignKey(
+        Group,
+        on_delete=models.PROTECT,
+    )
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
+
+@python_2_unicode_compatible
 class Proposal(models.Model):
     DRAFT = 1
     SUBMITTED_TO_SUPERVISOR = 40
@@ -55,11 +71,12 @@ class Proposal(models.Model):
     STATUSES = (
         (DRAFT, _('Concept')),
 
-        (SUBMITTED_TO_SUPERVISOR, _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
-        (SUBMITTED, _('Opgestuurd ter beoordeling door ETCL')),
+        (SUBMITTED_TO_SUPERVISOR,
+         _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
+        (SUBMITTED, _('Opgestuurd ter beoordeling door FETC-GW')),
 
-        (DECISION_MADE, _('Studie is beoordeeld door ETCL')),
-        (WMO_DECISION_MADE, _('Studie is beoordeeld door METC')),
+        (DECISION_MADE, _('Studie is beoordeeld door FETC-GW')),
+        (WMO_DECISION_MADE, _('Studie is beoordeeld door FETC-GW')),
     )
 
     COURSE = '1'
@@ -72,46 +89,97 @@ class Proposal(models.Model):
     # Fields of a proposal
     reference_number = models.CharField(
         max_length=16,
-        unique=True)
+        unique=True
+    )
+
+    reviewing_committee = models.ForeignKey(
+        Group,
+        verbose_name=_(
+            'Door welke comissie dient deze studie te worden beoordeeld?'
+        ),
+        help_text="",
+        on_delete=models.PROTECT,
+    )
+
+    institution = models.ForeignKey(
+        Institution,
+        verbose_name=_(
+            'Aan welk onderzoeksinstituut bent u verbonden?'
+        ),
+        on_delete=models.PROTECT,
+    )
+
     date_start = models.DateField(
         _('Wat is, indien bekend, de beoogde startdatum van uw studie?'),
         blank=True,
-        null=True)
+        null=True,
+    )
+
     title = models.CharField(
-        _('Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.'),
+        _(
+            'Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.'),
         max_length=200,
         unique=True,
         help_text=_('De titel die u hier opgeeft is zichtbaar voor de \
-ETCL-leden en, wanneer de studie is goedgekeurd, ook voor alle UiL-OTS \
+FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle \
 medewerkers die in het archief van deze portal kijken. De titel mag niet \
-identiek zijn aan een vorige titel van een studie die u heeft ingediend.'))
+identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
+    )
+
     summary = models.TextField(
-        _('Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'),
-        validators=[MaxWordsValidator(SUMMARY_MAX_WORDS)])
+        _(
+            'Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'
+        ),
+        validators=[MaxWordsValidator(SUMMARY_MAX_WORDS)],
+        blank=True,
+    )
+
     other_applicants = models.BooleanField(
-        _('Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie betrokken?'),
-        default=False)
+        _(
+            'Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?'
+        ),
+        default=False,
+    )
+
     other_stakeholders = models.BooleanField(
-        _('Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?'),
-        default=False)
+        _('Zijn er nog andere onderzoekers bij deze studie betrokken '
+          'die <strong>niet</strong> geaffilieerd zijn aan een van de '
+          'onderzoeksinstituten van de Faculteit Geestwetenschappen van de '
+          'UU? '),
+        default=False,
+    )
+
     stakeholders = models.TextField(
         _('Andere betrokkenen'),
-        blank=True)
+        blank=True,
+    )
+
     funding = models.ManyToManyField(
         Funding,
-        verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'))
+        verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'),
+        blank=True,
+    )
+
     funding_details = models.CharField(
         _('Namelijk'),
         max_length=200,
-        blank=True)
+        blank=True,
+    )
+
     funding_name = models.CharField(
         _('Wat is de naam van het gefinancierde project?'),
         max_length=200,
         blank=True,
-        help_text=_('De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.'))
+        help_text=_(
+            'De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.'
+        ),
+    )
+
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
-        blank=True)
+        blank=True,
+    )
+
     inform_local_staff = models.NullBooleanField(
         _('<p>U hebt aangegeven dat u gebruik wilt gaan maken van één \
 van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
@@ -127,41 +195,53 @@ worden doorgestuurd:</p> \
 - De beoogde startdatum <br/> \
 - Van welke faciliteiten u gebruik wilt maken (database, lab, \
 Zep software)'),
-        default=None)
+        default=None,
+    )
+
     in_archive = models.BooleanField(default=False)
 
     public = models.BooleanField(default=True)
 
     is_pre_assessment = models.BooleanField(default=False)
+
     pre_assessment_pdf = models.FileField(
         _('Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+    )
 
     is_pre_approved = models.NullBooleanField(
-        _('Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze EtCL commissie?'),
+        _(
+            'Heeft u formele toestemming van een ethische toetsingcommissie, '
+            'uitgezonderd deze FETC-GW commissie?'),
         default=None,
         null=True,
-        blank=True
+        blank=True,
     )
+
     pre_approval_institute = models.CharField(
         _('Welk instituut heeft de studie goedgekeurd?'),
         max_length=200,
         blank=True,
-        null=True
+        null=True,
     )
+
     pre_approval_pdf = models.FileField(
-        _('Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
+        _(
+            'Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
     )
 
     in_course = models.BooleanField(
         _('Ik vul de portal in in het kader van een cursus'),
-        default=False)
+        default=False,
+    )
+
     is_exploration = models.BooleanField(
         _('Ik vul de portal in om de portal te exploreren'),
-        default=False)
+        default=False,
+    )
 
     pdf = models.FileField(blank=True)
 
@@ -175,20 +255,30 @@ een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
 helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
 hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
 dan wel bij de beschrijving van de interventie welke varianten precies \
-gebruikt worden).'))
+gebruikt worden).'),
+    )
+
     studies_number = models.PositiveIntegerField(
         _('Hoeveel verschillende trajecten zijn er?'),
         default=1,
-        validators=[MinValueValidator(1), MaxValueValidator(5)])
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+    )
 
     # Status
-    status = models.PositiveIntegerField(choices=STATUSES, default=DRAFT)
-    status_review = models.NullBooleanField(default=None)
+    status = models.PositiveIntegerField(
+        choices=STATUSES,
+        default=DRAFT,
+    )
+
+    status_review = models.NullBooleanField(
+        default=None,
+    )
 
     # Confirmation
     confirmation_comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
-        blank=True)
+        blank=True,
+    )
 
     # Dates for bookkeeping
     date_created = models.DateTimeField(auto_now_add=True)
@@ -199,46 +289,67 @@ gebruikt worden).'))
     date_reviewed = models.DateTimeField(null=True)
     date_confirmed = models.DateField(
         _('Datum bevestigingsbrief verstuurd'),
-        null=True)
+        null=True,
+    )
 
-    has_minor_revision = models.BooleanField(_('Is er een revisie geweest na het indienen van deze studie?'), default=False)
-    minor_revision_description = models.TextField(_('Leg uit'), null=True, blank=True)
+    has_minor_revision = models.BooleanField(
+        _('Is er een revisie geweest na het indienen van deze studie?'),
+        default=False,
+    )
+
+    minor_revision_description = models.TextField(
+        _('Leg uit'),
+        null=True,
+        blank=True,
+    )
 
     # References to other models
     relation = models.ForeignKey(
         Relation,
         verbose_name=_('In welke hoedanigheid bent u betrokken \
-bij deze UiL OTS studie?'),
-        on_delete=models.CASCADE)
+bij deze studie?'),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='created_by',
-        on_delete=models.CASCADE)
+        on_delete=models.CASCADE,
+    )
+
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
-        related_name='applicants',)
-        #help_text=_('Als uw medeonderzoeker niet in de lijst voorkomt, \
-#vraag hem dan een keer in te loggen in het webportaal.'))
+        related_name='applicants',
+    )
+
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
         blank=True,
         null=True,
         help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke \
-sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de ETCL.'),
-        on_delete=models.CASCADE)
+sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de FETC-GW.'),
+        on_delete=models.CASCADE,
+    )
 
     # Copying an existing Proposal
     parent = models.ForeignKey(
         'self',
         null=True,
         verbose_name=_('Te kopiëren studie'),
-        help_text=_('Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'),
-        on_delete=models.CASCADE)
+        help_text=_(
+            'Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'),
+        on_delete=models.CASCADE,
+    )
+
     is_revision = models.BooleanField(
-        _('Is deze studie een revisie van of amendement op een ingediende studie?'),
-        default=False
+        _(
+            'Is deze studie een revisie van of amendement op een ingediende studie?'
+        ),
+        default=False,
     )
 
     def is_practice(self):
@@ -266,11 +377,13 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""
-        return self.study_set.order_by('order')[0] if self.study_set.count() else None
+        return self.study_set.order_by('order')[
+            0] if self.study_set.count() else None
 
     def last_study(self):
         """Returns the last Study in this Proposal, or None if there's none."""
-        return self.study_set.order_by('-order')[0] if self.study_set.count() else None
+        return self.study_set.order_by('-order')[
+            0] if self.study_set.count() else None
 
     def current_study(self):
         """
@@ -323,7 +436,9 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         from reviews.models import Review, Decision
 
         if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
-            decisions = Decision.objects.filter(review__proposal=self, review__stage=Review.SUPERVISOR).order_by('-pk')
+            decisions = Decision.objects.filter(review__proposal=self,
+                                                review__stage=Review.SUPERVISOR).order_by(
+                '-pk')
 
             return decisions[0]
 
@@ -331,6 +446,7 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         if self.is_practice():
             return '{} ({}) (Practice)'.format(self.title, self.created_by)
         return '{} ({})'.format(self.title, self.created_by)
+
 
 @python_2_unicode_compatible
 class Wmo(models.Model):
@@ -348,15 +464,21 @@ class Wmo(models.Model):
 andere instelling waar toetsing door een METC verplicht is gesteld?'),
         max_length=1,
         choices=YES_NO_DOUBT,
-        blank=False,
-        default=None)
+        blank=True,
+        default=None,
+    )
+
     metc_details = models.TextField(
         _('Licht toe'),
-        blank=True)
+        blank=True,
+    )
+
     metc_institution = models.CharField(
         _('Welke instelling?'),
         max_length=200,
-        blank=True)
+        blank=True,
+    )
+
     is_medical = models.CharField(
         _('Is de onderzoeksvraag medisch-wetenschappelijk van aard \
 (zoals gedefinieerd door de WMO)?'),
@@ -371,7 +493,9 @@ onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk \
 onderzoek, 2005, ccmo.nl)'),
         max_length=1,
         choices=YES_NO_DOUBT,
-        blank=True)
+        blank=True,
+    )
+
     is_behavioristic = models.CharField(
         _('Worden de deelnemers aan een handeling onderworpen of worden \
 hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
@@ -383,27 +507,42 @@ worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, \
 slechts dan kan "nee" ingevuld worden.'),
         max_length=1,
         choices=YES_NO_DOUBT,
-        blank=True)
+        blank=True,
+    )
+
     metc_application = models.BooleanField(
         _('Uw studie moet beoordeeld worden door de METC, maar dient nog \
-wel bij de ETCL te worden geregistreerd. Is deze studie al aangemeld \
+wel bij de FETC-GW te worden geregistreerd. Is deze studie al aangemeld \
 bij een METC?'),
-        default=False)
+        default=False,
+    )
+
     metc_decision = models.BooleanField(
         _('Is de METC al tot een beslissing gekomen?'),
-        default=False)
+        default=False,
+    )
+
     metc_decision_pdf = models.FileField(
         _('Upload hier de beslissing van het METC \
 (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+    )
 
     # Status
-    status = models.PositiveIntegerField(choices=WMO_STATUSES, default=NO_WMO)
+    status = models.PositiveIntegerField(
+        choices=WMO_STATUSES,
+        default=NO_WMO,
+    )
+
     enforced_by_commission = models.BooleanField(default=False)
 
     # References
-    proposal = models.OneToOneField(Proposal, primary_key=True, on_delete=models.CASCADE)
+    proposal = models.OneToOneField(
+        Proposal,
+        primary_key=True,
+        on_delete=models.CASCADE,
+    )
 
     def save(self, *args, **kwargs):
         """Sets the correct status on save of a WMO"""
@@ -411,7 +550,8 @@ bij een METC?'),
         super(Wmo, self).save(*args, **kwargs)
 
     def update_status(self):
-        if self.metc == YES or (self.is_medical == YES and self.is_behavioristic == YES) or self.enforced_by_commission:
+        if self.metc == YES or (
+                self.is_medical == YES and self.is_behavioristic == YES) or self.enforced_by_commission:
             if self.metc_decision and self.metc_decision_pdf:
                 self.status = self.JUDGED
             else:
@@ -420,4 +560,5 @@ bij een METC?'),
             self.status = self.NO_WMO
 
     def __str__(self):
-        return _('WMO {title}, status {status}').format(title=self.proposal.title, status=self.status)
+        return _('WMO {title}, status {status}').format(
+            title=self.proposal.title, status=self.status)

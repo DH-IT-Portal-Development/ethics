@@ -7,22 +7,28 @@ from django.views import generic
 
 from core.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
-from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm
-from .mixins import AutoReviewMixin, UserAllowedMixin
+from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm, \
+    ChangeChamberForm
+from .mixins import AutoReviewMixin, UserAllowedMixin, CommitteeMixin
 from .models import Decision, Review
 from .utils import notify_secretary, start_review_route
 
 
-class DecisionListView(GroupRequiredMixin, generic.ListView):
+class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
     template_name = 'reviews/decision_list.html'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
 
     def get_queryset(self):
         """Returns all Decisions of the current User"""
         decisions = {}
         objects = Decision.objects.filter(
-            reviewer=self.request.user
+            reviewer=self.request.user,
+            review__proposal__reviewing_committee=self.committee
         )
 
         for obj in objects:
@@ -36,15 +42,23 @@ class DecisionListView(GroupRequiredMixin, generic.ListView):
         return [value for key, value in decisions.items()]
 
 
-class DecisionMyOpenView(GroupRequiredMixin, generic.ListView):
+class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
     template_name = 'reviews/decision_list.html'
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
         decisions = {}
-        objects = Decision.objects.filter(reviewer=self.request.user, go='')
+        objects = Decision.objects.filter(
+            reviewer=self.request.user,
+            go='',
+            review__proposal__reviewing_committee=self.committee
+        )
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -57,7 +71,7 @@ class DecisionMyOpenView(GroupRequiredMixin, generic.ListView):
         return [value for key, value in decisions.items()]
 
 
-class DecisionOpenView(GroupRequiredMixin, generic.ListView):
+class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
     template_name = 'reviews/decision_list_open.html'
     group_required = settings.GROUP_SECRETARY
@@ -65,9 +79,10 @@ class DecisionOpenView(GroupRequiredMixin, generic.ListView):
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
         decisions = {}
-        objects = Decision.objects.filter(go='').exclude(
-            review__stage=Review.SUPERVISOR
-        )
+        objects = Decision.objects.filter(
+            go='',
+            review__proposal__reviewing_committee=self.committee
+        ).exclude(review__stage=Review.SUPERVISOR)
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -80,7 +95,8 @@ class DecisionOpenView(GroupRequiredMixin, generic.ListView):
         return [value for key, value in decisions.items()]
 
 
-class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
+class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
+                             generic.ListView):
     context_object_name = 'reviews'
     template_name = 'reviews/review_to_conclude.html'
     group_required = settings.GROUP_SECRETARY
@@ -92,6 +108,7 @@ class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
             stage__gte=Review.CLOSING,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__date_confirmed=None,
+            proposal__reviewing_committee=self.committee,
         ).filter(
             Q(continuation=Review.GO) |
             Q(continuation=None)
@@ -108,7 +125,7 @@ class ToConcludeProposalView(GroupRequiredMixin, generic.ListView):
         return [value for key, value in reviews.items()]
 
 
-class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
+class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     """
     This page displays all proposals to be reviewed by supervisors. Not to be
     confused with SupervisorView, which displays all open reviews for a specific
@@ -125,7 +142,8 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, generic.ListView):
         objects = Decision.objects.filter(
             go='',
             review__stage=Review.SUPERVISOR,
-            review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR
+            review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR,
+            review__proposal__reviewing_committee=self.committee
         )
         decisions = {}
 
@@ -175,6 +193,17 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin,
     model = Review
 
 
+class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
+                       generic.UpdateView):
+    model = Proposal
+    form_class = ChangeChamberForm
+    template_name = 'reviews/change_chamber_form.html'
+
+    def get_success_url(self):
+        committee = self.object.reviewing_committee.name
+        return reverse('reviews:my_open', args=[committee])
+
+
 class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
@@ -185,7 +214,8 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        return reverse('reviews:my_open')
+        committee = self.object.proposal.reviewing_committee.name
+        return reverse('reviews:my_open', args=[committee])
 
     def form_valid(self, form):
         """Updates the Review stage and start the selected Review route for the selected Users."""
@@ -240,7 +270,8 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        return reverse('reviews:my_archive')
+        committee = self.object.proposal.reviewing_committee.name
+        return reverse('reviews:my_archive', args=[committee])
 
     def get_form_kwargs(self):
         """
@@ -316,12 +347,14 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
         if self.request.user.is_superuser:
             return True
         user_groups = self.request.user.groups.values_list("name", flat=True)
-        return {settings.GROUP_SECRETARY,
-                settings.GROUP_COMMISSION}.intersection(set(user_groups))
+        return {settings.GROUP_SECRETARY, settings.GROUP_LINGUISTICS_CHAMBER,
+                settings.GROUP_GENERAL_CHAMBER
+                }.intersection(set(user_groups))
 
     def get_success_url(self):
         if self.is_reviewer():
-            return reverse('reviews:my_archive')
+            committee = self.object.review.proposal.reviewing_committee.name
+            return reverse('reviews:my_archive',  args=[committee])
         else:
             return reverse('proposals:my_archive')
 

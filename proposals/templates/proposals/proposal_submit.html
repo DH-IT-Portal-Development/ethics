@@ -27,7 +27,7 @@
     {% endblocktrans %}
     {% blocktrans %}
     Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
-    nu ter beoordeling naar de ETCL versturen.
+    nu ter beoordeling naar de FETC-GW versturen.
     {% endblocktrans %}
 
     {% elif proposal.relation.needs_supervisor %}
@@ -44,7 +44,7 @@
     {% endblocktrans %}
     {% blocktrans %}
     Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
-    nu ter beoordeling naar de ETCL versturen.
+    nu ter beoordeling naar de FETC-GW versturen.
     {% endblocktrans %}
     {% endif %}
 </p>
@@ -63,38 +63,62 @@
 </p>
 
 {% if not proposal.is_pre_assessment and not proposal.is_practice %}
-{% for study in proposal.study_set.all %}
-{% if study.has_missing_forms %}
+    {% for study in proposal.study_set.all %}
+        {% if study.has_missing_forms %}
+            <div class="warning">
+            {% url "proposals:consent" proposal.pk as consent_link %}
+            {% blocktrans with study_order=study.order%}
+            U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}.
+            Die kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
+            Als u deze formulieren nog niet klaar hebt, kunt u ook op een later moment terugkeren;
+            uw studie is reeds opgeslagen en terug te vinden onder "Mijn concepten".
+            {% endblocktrans %}
+            </div>
+        {% endif %}
+        {% if  study.has_missing_sessions %}
+            <div class="warning">
+            {% url "studies:design" study.pk as study_link %}
+            {% blocktrans with study_order=study.order%}
+            U heeft aangeven dat uw interventie een extra taak heeft, maar nog geen taakonderzoek toegevoegd voor traject {{ study_order }}.
+            Die kunt u op <a href="{{ study_link }}">deze pagina</a> alsnog aanmaken.
+            {% endblocktrans %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if errors %}
     <div class="warning">
-    {% url "proposals:consent" proposal.pk as consent_link %}
-    {% blocktrans with study_order=study.order%}
-    U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject {{ study_order }}.
-    Die kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
-    Als u deze formulieren nog niet klaar hebt, kunt u ook op een later moment terugkeren;
-    uw studie is reeds opgeslagen en terug te vinden onder "Mijn concepten".
+    {% blocktrans %}
+        Er zijn nog errors gevonden op de volgende pagina's:
+    {% endblocktrans %}
+    <ul>
+        {% for error in errors %}
+        <li>
+            <a href="{{ error.url }}">
+                {{ error.page_name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% blocktrans %}
+        Dit komt waarschijnlijk doordat u nog niet alle verplichte velden heeft ingevuld. U kunt uw aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
     {% endblocktrans %}
     </div>
-{% endif %}
-    {% if  study.has_missing_sessions %}
-        <div class="warning">
-        {% url "studies:design" study.pk as study_link %}
-        {% blocktrans with study_order=study.order%}
-        U heeft aangeven dat uw interventie een extra taak heeft, maar nog geen taakonderzoek toegevoegd voor traject {{ study_order }}.
-        Die kunt u op <a href="{{ study_link }}">deze pagina</a> alsnog aanmaken.
-        {% endblocktrans %}
-        </div>
-    {% endif %}
-{% endfor %}
 {% endif %}
 
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% if proposal.is_pre_assessment %}
-    {% include "base/form_buttons.html" with next_text=_("Aanvraag voor voortoetsing versturen") %}
-    {% elif proposal.relation.needs_supervisor %}
-    {% include "base/form_buttons.html" with next_text=_("Concept-aanmelding versturen") %}
+    {% if errors %}
+        {% include "base/form_buttons.html" with no_forward=1 %}
     {% else %}
-    {% include "base/form_buttons.html" with next_text=_("Aanmelding versturen") %}
+        {% if proposal.is_pre_assessment %}
+            {% include "base/form_buttons.html" with next_text=_("Aanvraag voor voortoetsing versturen") %}
+        {% elif proposal.relation.needs_supervisor %}
+            {% include "base/form_buttons.html" with next_text=_("Concept-aanmelding versturen") %}
+        {% else %}
+            {% include "base/form_buttons.html" with next_text=_("Aanmelding versturen") %}
+        {% endif %}
     {% endif %}
 </form>
 {% endblock %}

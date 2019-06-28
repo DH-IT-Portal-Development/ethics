@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>proposals.views.proposal_views &mdash; ETCL 1.0 documentation</title>
+  <title>proposals.views.proposal_views &mdash; FEtC-H 1.0 documentation</title>
   
 
   
@@ -17,36 +17,38 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> ETCL
+            <a href="../../../index.html" class="icon icon-home"> FEtC-H
           
 
           
@@ -101,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">ETCL</a>
+          <a href="../../../index.html">FEtC-H</a>
         
       </nav>
 
@@ -152,24 +154,26 @@
   <h1>Source code for proposals.views.proposal_views</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
 
+<span class="kn">from</span> <span class="nn">braces.views</span> <span class="k">import</span> <span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">LoginRequiredMixin</span><span class="p">,</span> \
+    <span class="n">UserFormKwargsMixin</span>
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
-<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
 <span class="kn">from</span> <span class="nn">django.db.models</span> <span class="k">import</span> <span class="n">Q</span>
-<span class="kn">from</span> <span class="nn">django.views</span> <span class="k">import</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
 <span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
-
-<span class="kn">from</span> <span class="nn">braces.views</span> <span class="k">import</span> <span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">UserFormKwargsMixin</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="k">import</span> <span class="n">generic</span>
 <span class="kn">from</span> <span class="nn">easy_pdf.views</span> <span class="k">import</span> <span class="n">PDFTemplateResponseMixin</span><span class="p">,</span> <span class="n">PDFTemplateView</span>
 
-<span class="kn">from</span> <span class="nn">core.views</span> <span class="k">import</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">,</span> <span class="n">DeleteView</span>
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">get_secretary</span>
+<span class="kn">from</span> <span class="nn">core.views</span> <span class="k">import</span> <span class="n">AllowErrorsOnBackbuttonMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">,</span> <span class="n">DeleteView</span><span class="p">,</span> \
+    <span class="n">UpdateView</span>
+<span class="kn">from</span> <span class="nn">proposals.utils.validate_proposal</span> <span class="k">import</span> <span class="n">get_form_errors</span>
 <span class="kn">from</span> <span class="nn">reviews.utils</span> <span class="k">import</span> <span class="n">start_review</span><span class="p">,</span> <span class="n">start_review_pre_assessment</span>
-
 <span class="kn">from</span> <span class="nn">..copy</span> <span class="k">import</span> <span class="n">copy_proposal</span>
-<span class="kn">from</span> <span class="nn">..forms</span> <span class="k">import</span> <span class="n">ProposalForm</span><span class="p">,</span> <span class="n">ProposalDataManagementForm</span><span class="p">,</span> <span class="n">ProposalSubmitForm</span><span class="p">,</span> \
-    <span class="n">ProposalConfirmationForm</span><span class="p">,</span> <span class="n">ProposalCopyForm</span><span class="p">,</span> <span class="n">ProposalStartPracticeForm</span>
+<span class="kn">from</span> <span class="nn">..forms</span> <span class="k">import</span> <span class="n">ProposalConfirmationForm</span><span class="p">,</span> <span class="n">ProposalCopyForm</span><span class="p">,</span> \
+    <span class="n">ProposalDataManagementForm</span><span class="p">,</span> <span class="n">ProposalForm</span><span class="p">,</span> <span class="n">ProposalStartPracticeForm</span><span class="p">,</span> \
+    <span class="n">ProposalSubmitForm</span>
 <span class="kn">from</span> <span class="nn">..models</span> <span class="k">import</span> <span class="n">Proposal</span>
-<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">generate_ref_number</span><span class="p">,</span> <span class="n">generate_pdf</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="k">import</span> <span class="n">generate_pdf</span><span class="p">,</span> <span class="n">generate_ref_number</span>
 
 
 <span class="c1">############</span>
@@ -200,12 +204,18 @@
         <span class="k">return</span> <span class="n">context</span></div>
 
 <div class="viewcode-block" id="ProposalsView.get_my_proposals"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalsView.get_my_proposals">[docs]</a>    <span class="k">def</span> <span class="nf">get_my_proposals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">supervisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">))</span></div></div>
+        <span class="k">return</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">Q</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">supervisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="ProposalsExportView"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalsExportView">[docs]</a><span class="k">class</span> <span class="nc">ProposalsExportView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">ListView</span><span class="p">):</span>
     <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;proposals&#39;</span>
-    <span class="n">group_required</span> <span class="o">=</span> <span class="p">[</span><span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_COMMISSION</span><span class="p">]</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">,</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_GENERAL_CHAMBER</span><span class="p">,</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_LINGUISTICS_CHAMBER</span>
+    <span class="p">]</span>
     <span class="n">template_name_suffix</span> <span class="o">=</span> <span class="s1">&#39;_export_list&#39;</span>
 
 <div class="viewcode-block" id="ProposalsExportView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalsExportView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -242,7 +252,8 @@
 
 <div class="viewcode-block" id="MyConceptsView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MyConceptsView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all non-submitted Proposals for the current User&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status__lt</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">status__lt</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="MySubmittedView"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MySubmittedView">[docs]</a><span class="k">class</span> <span class="nc">MySubmittedView</span><span class="p">(</span><span class="n">ProposalsView</span><span class="p">):</span>
@@ -253,8 +264,9 @@
 
 <div class="viewcode-block" id="MySubmittedView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MySubmittedView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all submitted Proposals for the current User&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span><span class="p">,</span>
-                                              <span class="n">status__lt</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">DECISION_MADE</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span><span class="p">,</span>
+            <span class="n">status__lt</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">DECISION_MADE</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="MyCompletedView"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MyCompletedView">[docs]</a><span class="k">class</span> <span class="nc">MyCompletedView</span><span class="p">(</span><span class="n">ProposalsView</span><span class="p">):</span>
@@ -265,12 +277,14 @@
 
 <div class="viewcode-block" id="MyCompletedView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MyCompletedView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all completed Proposals for the current User&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">DECISION_MADE</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">DECISION_MADE</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="MySupervisedView"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MySupervisedView">[docs]</a><span class="k">class</span> <span class="nc">MySupervisedView</span><span class="p">(</span><span class="n">ProposalsView</span><span class="p">):</span>
     <span class="n">title</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Mijn studies als eindverantwoordelijke&#39;</span><span class="p">)</span>
-    <span class="n">body</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.&#39;</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span>
+        <span class="s1">&#39;Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.&#39;</span><span class="p">)</span>
     <span class="n">is_modifiable</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">is_submitted</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -299,10 +313,11 @@
 
 <div class="viewcode-block" id="MyPracticeView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MyPracticeView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all practice Proposals for the current User&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">in_course</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">is_exploration</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                                       <span class="n">Q</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span> <span class="o">|</span>
-                                       <span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">supervisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span> <span class="o">&amp;</span>
-                                        <span class="n">Q</span><span class="p">(</span><span class="n">status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span><span class="p">)))</span></div></div>
+        <span class="k">return</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">Q</span><span class="p">(</span><span class="n">in_course</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">is_exploration</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">Q</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span> <span class="o">|</span>
+            <span class="p">(</span><span class="n">Q</span><span class="p">(</span><span class="n">supervisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span> <span class="o">&amp;</span>
+             <span class="n">Q</span><span class="p">(</span><span class="n">status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED_TO_SUPERVISOR</span><span class="p">)))</span></div></div>
 
 
 <span class="c1">##########################</span>
@@ -322,7 +337,7 @@
             <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:wmo_create&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalCreate"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreate">[docs]</a><span class="k">class</span> <span class="nc">ProposalCreate</span><span class="p">(</span><span class="n">ProposalMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalCreate"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreate">[docs]</a><span class="k">class</span> <span class="nc">ProposalCreate</span><span class="p">(</span><span class="n">ProposalMixin</span><span class="p">,</span> <span class="n">AllowErrorsOnBackbuttonMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
 <div class="viewcode-block" id="ProposalCreate.get_initial"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreate.get_initial">[docs]</a>    <span class="k">def</span> <span class="nf">get_initial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets initial applicant to current User&quot;&quot;&quot;</span>
         <span class="n">initial</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalCreate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_initial</span><span class="p">()</span>
@@ -333,6 +348,7 @@
         <span class="sd">&quot;&quot;&quot;Sets created_by to current user and generates a reference number&quot;&quot;&quot;</span>
         <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">created_by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span>
         <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">reference_number</span> <span class="o">=</span> <span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">reviewing_committee</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">institution</span><span class="o">.</span><span class="n">reviewing_chamber</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalCreate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ProposalCreate.get_context_data"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreate.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -343,7 +359,13 @@
         <span class="k">return</span> <span class="n">context</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalUpdate"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdate">[docs]</a><span class="k">class</span> <span class="nc">ProposalUpdate</span><span class="p">(</span><span class="n">ProposalMixin</span><span class="p">,</span> <span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalUpdate"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdate">[docs]</a><span class="k">class</span> <span class="nc">ProposalUpdate</span><span class="p">(</span><span class="n">ProposalMixin</span><span class="p">,</span> <span class="n">AllowErrorsOnBackbuttonMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ProposalUpdate.form_valid"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdate.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets created_by to current user and generates a reference number&quot;&quot;&quot;</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">reviewing_committee</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">institution</span><span class="o">.</span><span class="n">reviewing_chamber</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalUpdate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ProposalUpdate.get_context_data"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdate.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds &#39;create&#39;/&#39;no_back&#39; to template context&quot;&quot;&quot;</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalUpdate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -373,7 +395,7 @@
         <span class="sd">&quot;&quot;&quot;Adds secretary and link to regulations to template context&quot;&quot;&quot;</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;secretary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
-        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;regulations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;https://etcl.wp.hum.uu.nl/reglement/&#39;</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;regulations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;https://fetc-gw.wp.hum.uu.nl/reglement/&#39;</span>
         <span class="k">return</span> <span class="n">context</span></div></div>
 
 
@@ -391,7 +413,7 @@
         <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:consent&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalSubmit"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmit</span><span class="p">(</span><span class="n">AllowErrorsMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalSubmit"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmit</span><span class="p">(</span><span class="n">AllowErrorsOnBackbuttonMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
     <span class="n">form_class</span> <span class="o">=</span> <span class="n">ProposalSubmitForm</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_submit.html&#39;</span>
@@ -402,6 +424,13 @@
         <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalSubmit</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;proposal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">kwargs</span></div>
+
+<div class="viewcode-block" id="ProposalSubmit.get_context_data"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalSubmit</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;errors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_form_errors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
 
 <div class="viewcode-block" id="ProposalSubmit.form_valid"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmit.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -438,7 +467,8 @@
 
 <div class="viewcode-block" id="ProposalConfirmation.get_success_url"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalConfirmation.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;On confirmation, return to the Review archive&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:my_archive&#39;</span><span class="p">)</span></div></div>
+        <span class="n">committee</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">reviewing_committee</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;reviews:my_archive&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">committee</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="ProposalCopy"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCopy">[docs]</a><span class="k">class</span> <span class="nc">ProposalCopy</span><span class="p">(</span><span class="n">UserFormKwargsMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
@@ -461,7 +491,8 @@
         <span class="k">return</span> <span class="n">initial</span></div></div>
 
 
-<div class="viewcode-block" id="ProposalAsPdf"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalAsPdf">[docs]</a><span class="k">class</span> <span class="nc">ProposalAsPdf</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">PDFTemplateResponseMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">DetailView</span><span class="p">):</span>
+<div class="viewcode-block" id="ProposalAsPdf"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalAsPdf">[docs]</a><span class="k">class</span> <span class="nc">ProposalAsPdf</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">PDFTemplateResponseMixin</span><span class="p">,</span>
+                    <span class="n">generic</span><span class="o">.</span><span class="n">DetailView</span><span class="p">):</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_pdf.html&#39;</span>
 
@@ -542,6 +573,7 @@
 <div class="viewcode-block" id="ProposalSubmittedPreAssessment"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreAssessment">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmittedPreAssessment</span><span class="p">(</span><span class="n">ProposalSubmitted</span><span class="p">):</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_submitted.html&#39;</span></div>
 
+
 <span class="c1">#############</span>
 <span class="c1"># Pre-Aproved</span>
 <span class="c1">#############</span>
@@ -563,13 +595,13 @@
 
 
 <div class="viewcode-block" id="ProposalCreatePreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalCreatePreApproved</span><span class="p">(</span><span class="n">PreApprovedMixin</span><span class="p">,</span> <span class="n">ProposalCreate</span><span class="p">):</span>
-
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_form_pre_approved.html&#39;</span>
 
 <div class="viewcode-block" id="ProposalCreatePreApproved.form_valid"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePreApproved.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets is_pre_approved to True&quot;&quot;&quot;</span>
         <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">is_pre_approved</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalCreatePreApproved</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
+
 
 <div class="viewcode-block" id="ProposalUpdatePreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalUpdatePreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalUpdatePreApproved</span><span class="p">(</span><span class="n">PreApprovedMixin</span><span class="p">,</span> <span class="n">ProposalUpdate</span><span class="p">):</span>
     <span class="k">pass</span></div>
@@ -591,7 +623,8 @@
 
 <div class="viewcode-block" id="ProposalSubmitPreApproved.get_next_url"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;After submission, go to the thank-you view&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submitted_pre_approved&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:submitted_pre_approved&#39;</span><span class="p">,</span>
+                       <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">pk</span><span class="p">,))</span></div>
 
 <div class="viewcode-block" id="ProposalSubmitPreApproved.get_back_url"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmitPreApproved.get_back_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_back_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return to the update page&quot;&quot;&quot;</span>
@@ -600,6 +633,7 @@
 
 <div class="viewcode-block" id="ProposalSubmittedPreApproved"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalSubmittedPreApproved">[docs]</a><span class="k">class</span> <span class="nc">ProposalSubmittedPreApproved</span><span class="p">(</span><span class="n">ProposalSubmitted</span><span class="p">):</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;proposals/proposal_submitted.html&#39;</span></div>
+
 
 <span class="c1">##########</span>
 <span class="c1"># Practice</span>
@@ -618,7 +652,8 @@
 
 <div class="viewcode-block" id="ProposalStartPractice.get_success_url"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalStartPractice.get_success_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Go to the creation for a practice Proposal&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:create_practice&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;practice_reason&#39;</span><span class="p">],))</span></div></div>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;proposals:create_practice&#39;</span><span class="p">,</span>
+                       <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;practice_reason&#39;</span><span class="p">],))</span></div></div>
 
 
 <div class="viewcode-block" id="ProposalCreatePractice"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePractice">[docs]</a><span class="k">class</span> <span class="nc">ProposalCreatePractice</span><span class="p">(</span><span class="n">ProposalCreate</span><span class="p">):</span>
@@ -637,7 +672,8 @@
 <div class="viewcode-block" id="ProposalCreatePractice.form_valid"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalCreatePractice.form_valid">[docs]</a>    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets in_course and is_exploration&quot;&quot;&quot;</span>
         <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">in_course</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;reason&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">COURSE</span>
-        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">is_exploration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;reason&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">EXPLORATION</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">is_exploration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span>
+                                           <span class="s1">&#39;reason&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">EXPLORATION</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalCreatePractice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span></div></div>
 
 
@@ -659,7 +695,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Martijn van der Klis &amp; Ty Mees
+        &copy; Copyright 2019, Martijn van der Klis &amp; Ty Mees
 
     </p>
   </div>
@@ -676,26 +712,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

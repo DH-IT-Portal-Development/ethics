@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %}
-{% trans "Het takenonderzoek" %}
+{% trans "Het takenonderzoek en interviews" %}
 {% endblock %}
 
 {% block progress %}{{ progress }}{% endblock %}
@@ -19,17 +19,17 @@
 {% include "studies/study_title.html" %}
 <p>
     {% blocktrans %}
-    In de volgende vragen gaan we nader in op wat u in uw takenonderzoek van uw deelnemers zal verlangen. Daarbij gelden de volgende definities:
+    In de volgende vragen gaan we nader in op wat u in uw onderzoek van uw deelnemers zal verlangen. Daarbij gelden de volgende definities:
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans %}
-    <strong>Sessie:</strong> Het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een deelnemer vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de deelnemer ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes.
+    <strong>Sessie:</strong> Het geheel van de voor uw studie benodigde betrokkenheid die u op één dag van een deelnemer vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat u de deelnemer ontvangt tot het moment dat u afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes. Bij veldwerk is dat de tijd dat u met de deelnemer in interactie bent op één dag.
     {% endblocktrans %}
 </p>
 <p>
     {% blocktrans %}
-    <strong>Taak:</strong> Een coherente verzameling handelingen die u via een gesproken of geschreven taak-instructie aan de deelnemer oplegt, en ook als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: "Beluister de volgende 200 zinnetjes en druk op een knop als u een fout ontdekt", "Vul persoonlijkheidsvragenlijst X in", "Speel 10 minuten met uw kind zoals u dat thuis doet"). Indien de specifieke opdracht aan de deelnemer per item varieert (bijvoorbeeld: "bij een Nederlandse zin beoordeelt u de betekenis, bij een Engelse zin de grammatica"), beschouw dit dan gewoon als één taak.
+    <strong>Taak:</strong> Een coherente verzameling handelingen die u via een gesproken of geschreven taak-instructie aan de deelnemer oplegt, en ook als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: "Beluister de volgende 200 zinnetjes en druk op een knop als u een fout ontdekt", "Vul persoonlijkheidsvragenlijst X in", "Speel 10 minuten met uw kind zoals u dat thuis doet", “houd 1 week een dagboek bij van uw media-gebruik”, “wilt u uw gender identiteit beschrijven”, “maak foto’s van plekken in uw leefomgeving die u bedreigend en inspirerend vindt”, “zoek en deel met ons 10 foto’s uit uw prive-archief om uw levensverhaal te kunnen vertellen”). Indien de specifieke opdracht aan de deelnemer per item varieert (bijvoorbeeld: "bij een Nederlandse zin beoordeelt u de betekenis, bij een Engelse zin de grammatica"), beschouw dit dan gewoon als één taak.
     {% endblocktrans %}
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}

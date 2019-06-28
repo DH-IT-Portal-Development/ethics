@@ -1,7 +1,7 @@
 {% block content %}
 {% endblock %}
 
-Namens de ETCL, met de vriendelijke groeten,
+Namens de FETC-GW, met de vriendelijke groeten,
 
-de ETCL secretaris
+de FETC-GW secretaris
 {{ secretary }}
