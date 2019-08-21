@@ -32,6 +32,10 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
     is_submitted = True
     context_object_name = 'proposals'
 
+    # Used to set the default dataTable ordering
+    sort_column = 3
+    sort_direction = "desc"
+
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
@@ -46,6 +50,8 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         context['modifiable'] = self.is_modifiable
         context['submitted'] = self.is_submitted
         context['is_secretary'] = self.request.user == get_secretary()
+        context['sort_column'] = self.sort_column
+        context['sort_direction'] = self.sort_direction
 
         return context
 
@@ -96,6 +102,9 @@ class MyConceptsView(ProposalsView):
     is_modifiable = True
     is_submitted = False
 
+    # Last modifed
+    sort_column = 6
+
     def get_queryset(self):
         """Returns all non-submitted Proposals for the current User"""
         return self.get_my_proposals().filter(
@@ -145,6 +154,8 @@ class MyProposalsView(ProposalsView):
     is_modifiable = True
     is_submitted = True
 
+    sort_column = 6
+
     def get_queryset(self):
         """Returns all Proposals for the current User"""
         return self.get_my_proposals()
@@ -156,6 +167,8 @@ class MyPracticeView(ProposalsView):
 onderzoeker of eindverantwoordelijke bij betrokken bent.')
     is_modifiable = True
     is_submitted = False
+
+    sort_column = 6
 
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
