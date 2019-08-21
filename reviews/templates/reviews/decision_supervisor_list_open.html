@@ -13,6 +13,16 @@
 {% block content %}
 <p>
 </p>
+<script>
+    $(document).ready(function () {
+        var table = $('.dataTable').dataTable({
+            "retrieve": true {# Used to retrieve the existing object #}
+        }).api();
+
+        table.order([5, "desc"]);
+        table.draw();
+    });
+</script>
 <table class="dataTable display">
     <thead>
         <tr>

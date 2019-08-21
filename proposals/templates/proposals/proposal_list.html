@@ -4,56 +4,71 @@
 {% load i18n %}
 
 {% block title %}
-{{ title }}
+    {{ title }}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
-{% static "proposals/images/page_white_go.png" as img_next %}
-{% static "proposals/images/arrow_divide.png" as img_diff %}
-{% static "proposals/images/delete.png" as img_delete %}
-{% static "core/images/page_white_acrobat.png" as img_pdf %}
-{% static "proposals/images/folder_delete.png" as img_hide %}
-<p>
-    {{ body }}
-</p>
-<h3>{% trans "Uitleg" %}</h3>
-<ul>
-    {% if modifiable %}
-    <li>
-        {% blocktrans %}
-        Klik op <img src="{{ img_next }}" title="Naar volgende stap"> om naar de volgende stap in het proces te gaan.
-        {% endblocktrans %}
-    </li>
-    <li>
-        {% blocktrans %}
-        Klik op <img src="{{ img_diff }}" title="Toon verschillen"> om de verschillen met de voorgaande versie te zien (alleen beschikbaar voor revisies/amendementen).
-        {% endblocktrans %}
-    </li>
-    <li>
-        {% blocktrans %}
-        Klik op <img src="{{ img_delete }}" title="Verwijderen"> om uw studie te verwijderen.
-        {% endblocktrans %}
-    </li>
-    {% endif %}
-    {% if submitted %}
-    <li>
-        {% blocktrans %}
-        Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
-        {% endblocktrans %}
-    </li>
-    {% endif %}
-    {% if is_secretary %}
-    <li>
-        {% blocktrans %}
-        Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende studie te verbergen uit het archief.
-        {% endblocktrans %}
-    </li>
-    {% endif %}
-</ul>
-<table class="dataTable display">
-    <thead>
+    {% static "proposals/images/page_white_go.png" as img_next %}
+    {% static "proposals/images/arrow_divide.png" as img_diff %}
+    {% static "proposals/images/delete.png" as img_delete %}
+    {% static "core/images/page_white_acrobat.png" as img_pdf %}
+    {% static "proposals/images/folder_delete.png" as img_hide %}
+    <p>
+        {{ body }}
+    </p>
+    <h3>{% trans "Uitleg" %}</h3>
+    <ul>
+        {% if modifiable %}
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_next }}" title="Naar volgende stap"> om naar de volgende stap in het proces
+                    te gaan.
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_diff }}" title="Toon verschillen"> om de verschillen met de voorgaande
+                    versie te zien (alleen beschikbaar voor revisies/amendementen).
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_delete }}" title="Verwijderen"> om uw studie te verwijderen.
+                {% endblocktrans %}
+            </li>
+        {% endif %}
+        {% if submitted %}
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
+                {% endblocktrans %}
+            </li>
+        {% endif %}
+        {% if is_secretary %}
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende studie te verbergen uit het
+                    archief.
+                {% endblocktrans %}
+            </li>
+        {% endif %}
+    </ul>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('.dataTable').dataTable({
+                "retrieve": true {# Used to retrieve the existing object #}
+            }).api();
+
+            table.order([{{ sort_column }}, "{{ sort_direction }}"]);
+            table.draw();
+        });
+    </script>
+
+    <table class="dataTable display">
+        <thead>
         <tr>
             <th>{% trans "Referentienummer" %}</th>
             <th>{% trans "Titel studie" %}</th>
@@ -64,42 +79,48 @@
             <th>{% trans "Laatst bijgewerkt" %}</th>
             <th>{% trans "Acties" %}</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         {% for proposal in proposals %}
-        <tr>
-            <td>{{ proposal.reference_number }}</td>
-            <td>{{ proposal.title }}</td>
-            <td>{{ proposal.type }}</td>
-            <td data-order="{{ proposal.date_submitted|date:'c' }}">{{ proposal.date_submitted|date:"j M Y, G:i" }}</td>
-            <td>{{ proposal.created_by.get_full_name }}</td>
-            <td>{{ proposal.supervisor.get_full_name }}</td>
-            <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
-            <td>
-                {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
-                <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
-                {% endif %}
-                {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-                {% if user in proposal.applicants.all or user == proposal.supervisor %}
-                <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}" title="{% trans 'Naar volgende stap' %}"></a>
-                {% endif %}
-                {% if proposal.is_revision %}
-                <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}"></a>
-                {% endif %}
-                <a href="{% url 'proposals:delete' proposal.pk %}"><img src="{{ img_delete }}" title="{% trans 'Verwijderen' %}"></a>
-                {% elif proposal.pdf %}
-                <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
-                {% else %}
-                <a href="{% url 'proposals:pdf' proposal.pk %}" target="_blank"><img src="{{ img_pdf }}" title="{% trans 'Inzien' %}"></a>
-                {% endif %}
-                {% if proposal.in_archive and is_secretary %}
-                    <a href="{% url 'proposals:archive_hide' proposal.pk %}">
-                        <img src="{{ img_hide }}" title="{% trans 'Verberg' %}">
-                    </a>
-                {% endif %}
-            </td>
-        </tr>
+            <tr>
+                <td>{{ proposal.reference_number }}</td>
+                <td>{{ proposal.title }}</td>
+                <td>{{ proposal.type }}</td>
+                <td data-order="{{ proposal.date_submitted|date:'c' }}">{{ proposal.date_submitted|date:"j M Y, G:i" }}</td>
+                <td>{{ proposal.created_by.get_full_name }}</td>
+                <td>{{ proposal.supervisor.get_full_name }}</td>
+                <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
+                <td>
+                    {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
+                        <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}"><img
+                                src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                    {% endif %}
+                    {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
+                        {% if user in proposal.applicants.all or user == proposal.supervisor %}
+                            <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}"
+                                                                       title="{% trans 'Naar volgende stap' %}"></a>
+                        {% endif %}
+                        {% if proposal.is_revision %}
+                            <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}"
+                                                                                  title="{% trans 'Toon verschillen' %}"></a>
+                        {% endif %}
+                        <a href="{% url 'proposals:delete' proposal.pk %}"><img src="{{ img_delete }}"
+                                                                                title="{% trans 'Verwijderen' %}"></a>
+                    {% elif proposal.pdf %}
+                        <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{{ img_pdf }}"
+                                                                              title="{% trans 'Inzien' %}"></a>
+                    {% else %}
+                        <a href="{% url 'proposals:pdf' proposal.pk %}" target="_blank"><img src="{{ img_pdf }}"
+                                                                                             title="{% trans 'Inzien' %}"></a>
+                    {% endif %}
+                    {% if proposal.in_archive and is_secretary %}
+                        <a href="{% url 'proposals:archive_hide' proposal.pk %}">
+                            <img src="{{ img_hide }}" title="{% trans 'Verberg' %}">
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 {% endblock %}
