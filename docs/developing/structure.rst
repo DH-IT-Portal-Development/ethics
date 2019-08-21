@@ -5,7 +5,7 @@ Structure
 This Django project consists of ten apps that can be divided into three categories:
 
 - Core
-    - *etcl*: Main directory with settings and a WSGI configuration.
+    - *fetc*: Main directory with settings and a WSGI configuration.
     - *core*: Core functionality, reusable models, views, forms and templates.
 
 - Proposals

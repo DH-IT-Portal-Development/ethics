@@ -26,7 +26,7 @@ Install the requirements (in a virtualenv):
 
     pip install -r requirements.txt
 
-Modify the settings file (`etcl/settings.py`) to your liking.
+Modify the settings file (`fetc/settings.py`) to your liking.
 
 .. tip::
     It is recommended to keep the default database settings, as developing with a sqlite db is easier

@@ -88,7 +88,7 @@ that case, follow these steps to manually create an account:
 
 - SSH into the server
 - Switch to either www-data or root user
-- Navigate to installation directory
+- Navigate to installation directory (Probably in ``/hum/web/[HOSTNAME]/data``)
 - Activate the virtualenvironment (:code:`source env/bin/activate`)
 - Navigate to the 'source' folder
 - Run :code:`python manage.py add_ldap_users [SOLIS-ID]`

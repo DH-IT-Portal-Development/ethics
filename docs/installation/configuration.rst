@@ -26,7 +26,7 @@ Email
 ldap_settings.py
 ================
 By default, the project doesn't have the required files to use LDAP based authentication. To enable this, you need to
-create a file called ``ldap_settings.py`` in the ``etcl`` folder using the following template:
+create a file called ``ldap_settings.py`` in the ``fetc`` folder using the following template:
 
 .. code-block:: python
 
@@ -72,7 +72,7 @@ AUTH_LDAP_SERVER_URI
 --------------------
 This is the location of the LDAP you want to use. Please include the ``ldap://``.
 
-For the ETCL we use an ICT&Media LDAP: ``ldap://ldap.hum.uu.nl``
+For the FEtC-H we use an ICT&Media LDAP: ``ldap://ldap.hum.uu.nl``
 
 .. note::
 
