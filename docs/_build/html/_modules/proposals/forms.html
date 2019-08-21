@@ -256,9 +256,9 @@
                 <span class="n">check_in_course</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervisor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Docent&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;supervisor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Vul hier de docent van </span><span class="se">\</span>
-<span class="s1">de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop </span><span class="se">\</span>
+<span class="s1">de cursus in waarbinnen u deze portal moet doorlopen. De docent kan na afloop </span><span class="se">\</span>
 <span class="s1">de studie inkijken in de portal. De studie zal niet in het semipublieke archief </span><span class="se">\</span>
-<span class="s1">van het UiL OTS worden opgenomen.&#39;</span><span class="p">)</span>
+<span class="s1">van het FETC-GW worden opgenomen.&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">is_pre_assessment</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Relation</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>

@@ -535,9 +535,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_observation</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">observation</span><span class="o">.</span><span class="n">needs_approval</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">research_settings_contains_schools</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_participants_below_age</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span></div>
 
 

@@ -188,8 +188,8 @@ different package. For example, Debian uses the <code class="docutils literal no
 <p>Python virtual environments and <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code> do not mix together easily. This is because <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code> actually contains
 an embedded version of the CPython interpreter.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The embedded interpreter should not be confused with <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code>’s embedded mode. Both embedded mod and daemon mode
+<p class="first admonition-title">Note</p>
+<p class="last">The embedded interpreter should not be confused with <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code>’s embedded mode. Both embedded mod and daemon mode
 use the embedded interpreter. Embedded mode only embeds the interpreter in the main Apache2 process instead of
 creating a seperate process.</p>
 </div>
@@ -201,14 +201,14 @@ shouldn’t have any problems.</p>
 it’s python libraries. This can be done by specifying the <code class="docutils literal notranslate"><span class="pre">python-path</span></code> variable in the Apache <code class="docutils literal notranslate"><span class="pre">WSGIDaemonProcess</span></code>
 setting.</p>
 <div class="admonition attention">
-<p class="admonition-title">Attention</p>
+<p class="first admonition-title">Attention</p>
 <p>You need to specify both the site-packages folder of your virtualenv and the folder containing your source files. You
 need to seperate both folders with a <code class="docutils literal notranslate"><span class="pre">:</span></code>.</p>
 <p>For example:</p>
-<div class="highlight-apacheconf notranslate"><div class="highlight"><pre><span></span><span class="nb">WSGIDaemonProcess</span> etcl python-path=/path/to/app_src:/path/to/env/lib/python{version}/site-packages lang=&#39;en_US.UTF-8&#39; locale=&#39;en_US.UTF-8&#39;
+<div class="code apacheconf highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WSGIDaemonProcess</span> <span class="n">etcl</span> <span class="n">python</span><span class="o">-</span><span class="n">path</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">app_src</span><span class="p">:</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python</span><span class="p">{</span><span class="n">version</span><span class="p">}</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span> <span class="n">lang</span><span class="o">=</span><span class="s1">&#39;en_US.UTF-8&#39;</span> <span class="n">locale</span><span class="o">=</span><span class="s1">&#39;en_US.UTF-8&#39;</span>
 </pre></div>
 </div>
-<p>The lang and locale parameters are optional, but encouraged.</p>
+<p class="last">The lang and locale parameters are optional, but encouraged.</p>
 </div>
 </div>
 <div class="section" id="vhost-config">
@@ -223,29 +223,29 @@ to the vHost file needs to be done in the main Puppet config for the VM.</p>
 <div class="section" id="example-config">
 <h3>Example config<a class="headerlink" href="#example-config" title="Permalink to this headline">¶</a></h3>
 <p>Based upon code provided in the <a class="reference external" href="https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/modwsgi/">Django documentation</a></p>
-<div class="highlight-apacheconf notranslate"><div class="highlight"><pre><span></span><span class="c"># This disables embedded mode, which removes a lot of Apache overhead</span>
-<span class="nb">WSGIRestrictEmbedded</span> <span class="k">On</span>
+<div class="code apacheconf highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This disables embedded mode, which removes a lot of Apache overhead</span>
+<span class="n">WSGIRestrictEmbedded</span> <span class="n">On</span>
 
-<span class="nb">WSGIScriptAlias</span> / <span class="sx">/path/to/wsgi/wsgi.py</span>
-<span class="nb">WSGIDaemonProcess</span> etcl python-path= &lt;See above&gt;
-<span class="nb">WSGIProcessGroup</span> etcl
+<span class="n">WSGIScriptAlias</span> <span class="o">/</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">wsgi</span><span class="o">/</span><span class="n">wsgi</span><span class="o">.</span><span class="n">py</span>
+<span class="n">WSGIDaemonProcess</span> <span class="n">etcl</span> <span class="n">python</span><span class="o">-</span><span class="n">path</span><span class="o">=</span> <span class="o">&lt;</span><span class="n">See</span> <span class="n">above</span><span class="o">&gt;</span>
+<span class="n">WSGIProcessGroup</span> <span class="n">etcl</span>
 
-<span class="nb">Alias</span> <span class="sx">/static/</span> <span class="sx">/path/to/static_folder/</span>
-<span class="nb">Alias</span> <span class="sx">/media/</span> <span class="sx">/path/to/media_folder/</span>
+<span class="n">Alias</span> <span class="o">/</span><span class="n">static</span><span class="o">/</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">static_folder</span><span class="o">/</span>
+<span class="n">Alias</span> <span class="o">/</span><span class="n">media</span><span class="o">/</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">media_folder</span><span class="o">/</span>
 
-<span class="nt">&lt;Directory</span> <span class="s">/path/to/static_folder/</span><span class="nt">&gt;</span>
-    <span class="nb">Require</span> <span class="k">all</span> granted
-<span class="nt">&lt;/Directory&gt;</span>
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">static_folder</span><span class="o">/&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
 
-<span class="nt">&lt;Directory</span> <span class="s">/path/to/media_folder/</span><span class="nt">&gt;</span>
-    <span class="nb">Require</span> <span class="k">all</span> granted
-<span class="nt">&lt;/Directory&gt;</span>
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">media_folder</span><span class="o">/&gt;</span>
+    <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
 
-<span class="nt">&lt;Directory</span> <span class="s">/path/to/source_folder/</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Files</span> <span class="s">wsgi.py</span><span class="nt">&gt;</span>
-        <span class="nb">Require</span> <span class="k">all</span> granted
-    <span class="nt">&lt;/Files&gt;</span>
-<span class="nt">&lt;/Directory&gt;</span>
+<span class="o">&lt;</span><span class="n">Directory</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">source_folder</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">Files</span> <span class="n">wsgi</span><span class="o">.</span><span class="n">py</span><span class="o">&gt;</span>
+        <span class="n">Require</span> <span class="nb">all</span> <span class="n">granted</span>
+    <span class="o">&lt;/</span><span class="n">Files</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">Directory</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>

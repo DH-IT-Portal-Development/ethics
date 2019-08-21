@@ -177,40 +177,43 @@
 <h1>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h1>
 <p>This Django project consists of ten apps that can be divided into three categories:</p>
 <ul class="simple">
-<li><dl class="simple">
-<dt>Core</dt><dd><ul>
-<li><p><em>etcl</em>: Main directory with settings and a WSGI configuration.</p></li>
-<li><p><em>core</em>: Core functionality, reusable models, views, forms and templates.</p></li>
+<li><dl class="first docutils">
+<dt>Core</dt>
+<dd><ul class="first last">
+<li><em>etcl</em>: Main directory with settings and a WSGI configuration.</li>
+<li><em>core</em>: Core functionality, reusable models, views, forms and templates.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>Proposals</dt><dd><ul>
-<li><p><em>proposals</em>: Main application that binds together all applications below. Allows participants to give general information on their study.</p></li>
-<li><p><em>studies</em>: Allows users to add more in-detail information on their study.</p></li>
-<li><p><em>observations</em>: Allows users to specify the observation part of their study (if applicable).</p></li>
-<li><p><em>interventions</em>: Allows users to specify the intervention part of their study (if applicable).</p></li>
-<li><p><em>tasks</em>: Allows users to specify tasks in their study (if applicable). Tasks can be grouped in one or more sessions.</p></li>
-<li><p><em>reviews</em>: Allows the committee to review proposals.</p></li>
+<li><dl class="first docutils">
+<dt>Proposals</dt>
+<dd><ul class="first last">
+<li><em>proposals</em>: Main application that binds together all applications below. Allows participants to give general information on their study.</li>
+<li><em>studies</em>: Allows users to add more in-detail information on their study.</li>
+<li><em>observations</em>: Allows users to specify the observation part of their study (if applicable).</li>
+<li><em>interventions</em>: Allows users to specify the intervention part of their study (if applicable).</li>
+<li><em>tasks</em>: Allows users to specify tasks in their study (if applicable). Tasks can be grouped in one or more sessions.</li>
+<li><em>reviews</em>: Allows the committee to review proposals.</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><dl class="simple">
-<dt>Feedback</dt><dd><ul>
-<li><p><em>feedback</em>: Allows users to give feedback on the application: with what parts did they struggle?</p></li>
-<li><p><em>faqs</em>: Provides users with answers to frequently asked questions about the application.</p></li>
+<li><dl class="first docutils">
+<dt>Feedback</dt>
+<dd><ul class="first last">
+<li><em>feedback</em>: Allows users to give feedback on the application: with what parts did they struggle?</li>
+<li><em>faqs</em>: Provides users with answers to frequently asked questions about the application.</li>
 </ul>
 </dd>
 </dl>
 </li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="first admonition-title">Note</p>
 <p>In the code a ‘research project’ is called a proposal, but this term is not used outside of development. Using this
 term near users can lead to some confused looks, be warned ;)</p>
-<p>It’s generally safe to use the word ‘study’.</p>
+<p class="last">It’s generally safe to use the word ‘study’.</p>
 </div>
 <div class="section" id="core">
 <h2>Core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h2>
@@ -244,9 +247,9 @@ finish up, after which they will either start anew with the next study, or be re
 researchers can supply additional consent forms. In that case, the system will create a new <code class="docutils literal notranslate"><span class="pre">Documents</span></code> object without
 a reference to a study.</p>
 <p>A warning about datamanagement is next, after which the researcher can submit it for review.</p>
-<div class="figure align-center" id="id1">
+<div class="figure" id="id1">
 <img alt="Proposal flow diagram" src="../_images/proposal-flow.png" />
-<p class="caption"><span class="caption-text">A (very) simple illustration of the order in which a proposal is created</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-text">A (very) simple illustration of the order in which a proposal is created</span></p>
 </div>
 </div>
 <div class="section" id="reviewing">

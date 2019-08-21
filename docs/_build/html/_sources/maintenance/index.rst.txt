@@ -55,6 +55,57 @@ you can use the following global steps as a guide.
 Sporadic tasks / Frequently encountered problems
 ================================================
 
+Adding new users
+----------------
+
+There are two kinds of users in the portal: local accounts, which only exist in the application and LDAP (Solis)
+accounts, which exist mainly in the LDAP. (Certain attributes are stored in the application and are updated on every
+login).
+
+Local accounts will always work, even if the LDAP is unavailable. Note: local accounts should only be used on
+acceptation or in emergencies, as the UU likes to have central control over accounts.
+
+Adding local accounts
+~~~~~~~~~~~~~~~~~~~~~
+
+Browse to the admin page, and click 'add' next to 'users'.
+
+Note: If you accidentally created a local account when a LDAP account was needed, you can follow the steps in 'Manually
+adding LDAP (Solis) accounts'. The local account will automatically be updated to a LDAP account.
+
+Automatic LDAP (Solis) account creation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a user does not yet exist in the application, an account will be created automatically upon successful
+authentication. This requires no action on our side.
+
+Manually adding LDAP (Solis) accounts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes it's not convenient to wait for the automatic creation of LDAP accounts, as this requires the end-user to do
+something. This isn't always ideal, for example when a request for a new Committee or Secretary account comes in. In
+that case, follow these steps to manually create an account:
+
+- SSH into the server
+- Switch to either www-data or root user
+- Navigate to installation directory
+- Activate the virtualenvironment (:code:`source env/bin/activate`)
+- Navigate to the 'source' folder
+- Run :code:`python manage.py add_ldap_users [SOLIS-ID]`
+
+Setting a new secretary
+-----------------------
+
+Sometimes a different secretary needs to be set. This is done by going to the admin interface -> Users.
+Find the desired user, and add them to the secretary group. Then, find the old secretary and remove him/her from the
+secretary group.
+
+.. warning::
+
+    There should only be one(!) secretary at any time! The application isn't designed to handle more than one, and will
+    pick the first one it finds. (This cannot be predicted as it's dictated by the SQL server, which isn't transparent
+    about it's default ordering).
+
 New user cannot log in
 ----------------------
 

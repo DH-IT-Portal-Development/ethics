@@ -153,14 +153,16 @@
             
   <h1>Source code for observations.models</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
-<span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+
 <span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="k">import</span> <span class="n">MaxValueValidator</span>
-<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
 <span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="k">import</span> <span class="n">python_2_unicode_compatible</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
 
 <span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">SettingModel</span>
 <span class="kn">from</span> <span class="nn">core.validators</span> <span class="k">import</span> <span class="n">validate_pdf_or_doc</span>
 <span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Study</span>
+
 
 <div class="viewcode-block" id="Registration"><a class="viewcode-back" href="../../reference/observations.models.html#observations.models.Registration">[docs]</a><span class="nd">@python_2_unicode_compatible</span>
 <span class="k">class</span> <span class="nc">Registration</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -176,30 +178,33 @@
 
 
 <div class="viewcode-block" id="Observation"><a class="viewcode-back" href="../../reference/observations.models.html#observations.models.Observation">[docs]</a><span class="k">class</span> <span class="nc">Observation</span><span class="p">(</span><span class="n">SettingModel</span><span class="p">):</span>
-
     <span class="c1"># This is used internally to provide backwards compatibility with the old version of this model. All old fields are</span>
     <span class="c1"># still used if this is 1.</span>
-    <span class="n">version</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span><span class="s1">&#39;INTERNAL - Describes which version of the observation model is used&#39;</span><span class="p">,</span>
-                                          <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span>
+        <span class="s1">&#39;INTERNAL - Describes which version of the observation model is used&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="n">details_who</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf &lt;b&gt;wie&lt;/b&gt; er wordt geobserveerd.&#39;</span><span class="p">),</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt&#39;</span>
-                    <span class="s1">&#39; geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie &#39;</span>
-                    <span class="s1">&#39;tussen leraar en leerling in kaart brengen.&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt&#39;</span>
+            <span class="s1">&#39; geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie &#39;</span>
+            <span class="s1">&#39;tussen leraar en leerling in kaart brengen.&#39;</span><span class="p">),</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">details_why</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf &lt;b&gt;waarom&lt;/b&gt; er wordt geobserveerd.&#39;</span><span class="p">),</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen &#39;</span>
-                    <span class="s1">&#39;in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste &#39;</span>
-                    <span class="s1">&#39;manier en in begrijpelijke taal?&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen &#39;</span>
+            <span class="s1">&#39;in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste &#39;</span>
+            <span class="s1">&#39;manier en in begrijpelijke taal?&#39;</span><span class="p">),</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">details_frequency</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
-        <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Beschrijf &lt;b&gt;hoe vaak en hoe lang&lt;/b&gt; de observant wordt geobserveerd.&#39;</span><span class="p">),</span>
+        <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Beschrijf &lt;b&gt;hoe vaak en hoe lang&lt;/b&gt; de observant wordt geobserveerd.&#39;</span><span class="p">),</span>
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten &#39;</span>
                     <span class="s1">&#39;worden geobserveerd.&#39;</span><span class="p">),</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -207,7 +212,8 @@
 
     <span class="n">is_anonymous</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Wordt er anoniem geobserveerd?&#39;</span><span class="p">),</span>
-        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.&#39;</span><span class="p">),</span>
+        <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft.&#39;</span><span class="p">),</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
 
@@ -244,6 +250,14 @@
         <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="n">has_advanced_consent_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
+        <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;Leg uit waarom informed consent niet van te voren plaatsvindt en &#39;</span>
+            <span class="s1">&#39;geef ook op welke wijze dit achteraf verzorgd wordt.&#39;</span>
+        <span class="p">),</span>
+        <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
     <span class="n">needs_approval</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Heeft u toestemming nodig van een (samenwerkende) instantie </span><span class="se">\</span>
 <span class="s1">om deze observatie te mogen uitvoeren?&#39;</span><span class="p">),</span>
@@ -269,7 +283,6 @@
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Namelijk&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
 
     <span class="c1"># Legacy, only used in v1</span>
     <span class="n">days</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">(</span>

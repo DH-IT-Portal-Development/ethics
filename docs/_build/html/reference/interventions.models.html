@@ -188,30 +188,34 @@
 <dt id="interventions.models.Intervention">
 <em class="property">class </em><code class="descclassname">interventions.models.</code><code class="descname">Intervention</code><span class="sig-paren">(</span><em>id</em>, <em>setting_details</em>, <em>supervision</em>, <em>leader_has_coc</em>, <em>version</em>, <em>period</em>, <em>multiple_sessions</em>, <em>session_frequency</em>, <em>duration</em>, <em>experimenter</em>, <em>description</em>, <em>has_controls</em>, <em>controls_description</em>, <em>measurement</em>, <em>extra_task</em>, <em>amount_per_week</em>, <em>study</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/interventions/models.html#Intervention"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interventions.models.Intervention" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="core.models.html#core.models.SettingModel" title="core.models.SettingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">core.models.SettingModel</span></code></a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</p></li>
-<li><p><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</p></li>
-<li><p><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</p></li>
-<li><p><strong>version</strong> (<em>PositiveIntegerField</em>) – Internal - describes which version of the intervention model is used</p></li>
-<li><p><strong>period</strong> (<em>TextField</em>) – De interventie vindt plaats binnen het schooljaar 2018-2019</p></li>
-<li><p><strong>multiple_sessions</strong> (<em>BooleanField</em>) – Zal de interventie vaker dan één keer plaatsvinden?</p></li>
-<li><p><strong>session_frequency</strong> (<em>TextField</em>) – Wat is de frequentie van de interventie?</p></li>
-<li><p><strong>duration</strong> (<em>PositiveIntegerField</em>) – Wat is de duur van de interventie per sessie in minuten?</p></li>
-<li><p><strong>experimenter</strong> (<em>TextField</em>) – Wie voert de interventie uit?</p></li>
-<li><p><strong>description</strong> (<em>TextField</em>) – Geef een beschrijving van de experimentele interventie</p></li>
-<li><p><strong>has_controls</strong> (<em>BooleanField</em>) – Is er sprake van een controlegroep?</p></li>
-<li><p><strong>controls_description</strong> (<em>TextField</em>) – Geef een beschrijving van de controleinterventie</p></li>
-<li><p><strong>measurement</strong> (<em>TextField</em>) – Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina ook “takenonderzoek” aanvinken.</p></li>
-<li><p><strong>extra_task</strong> (<em>BooleanField</em>) – Moet het nog een taak doen, zoals het invullen van een (onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?</p></li>
-<li><p><strong>amount_per_week</strong> (<em>PositiveIntegerField</em>) – Hoe vaak per week vindt de interventiesessie plaats?</p></li>
-<li><p><strong>study</strong> (OneToOneField to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</p></li>
-<li><p><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</li>
+<li><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</li>
+<li><strong>version</strong> (<em>PositiveIntegerField</em>) – Internal - describes which version of the intervention model is used</li>
+<li><strong>period</strong> (<em>TextField</em>) – De interventie vindt plaats binnen het schooljaar 2018-2019</li>
+<li><strong>multiple_sessions</strong> (<em>BooleanField</em>) – Zal de interventie vaker dan één keer plaatsvinden?</li>
+<li><strong>session_frequency</strong> (<em>TextField</em>) – Wat is de frequentie van de interventie?</li>
+<li><strong>duration</strong> (<em>PositiveIntegerField</em>) – Wat is de duur van de interventie per sessie in minuten?</li>
+<li><strong>experimenter</strong> (<em>TextField</em>) – Wie voert de interventie uit?</li>
+<li><strong>description</strong> (<em>TextField</em>) – Geef een beschrijving van de experimentele interventie</li>
+<li><strong>has_controls</strong> (<em>BooleanField</em>) – Is er sprake van een controlegroep?</li>
+<li><strong>controls_description</strong> (<em>TextField</em>) – Geef een beschrijving van de controleinterventie</li>
+<li><strong>measurement</strong> (<em>TextField</em>) – Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina ook “takenonderzoek” aanvinken.</li>
+<li><strong>extra_task</strong> (<em>BooleanField</em>) – Moet het nog een taak doen, zoals het invullen van een (onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?</li>
+<li><strong>amount_per_week</strong> (<em>PositiveIntegerField</em>) – Hoe vaak per week vindt de interventiesessie plaats?</li>
+<li><strong>study</strong> (OneToOneField to <a class="reference internal" href="studies.models.html#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</li>
+<li><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="interventions.models.Intervention.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#interventions.models.Intervention.DoesNotExist" title="Permalink to this definition">¶</a></dt>

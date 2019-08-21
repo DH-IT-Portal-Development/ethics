@@ -240,8 +240,8 @@ backend.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">ModelBackend</span></code> is still needed as it’s used to assign users to groups internally. We cannot use the LDAP for this,
 as the LDAP does not contain the necessary information.</p>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Always create user accounts from the LDAP if you can, as this is connected to the university’s IAM system. Local
+<p class="first admonition-title">Warning</p>
+<p class="last">Always create user accounts from the LDAP if you can, as this is connected to the university’s IAM system. Local
 accounts are <strong>evil</strong> and should only be used in emergencies!</p>
 </div>
 </div>
@@ -250,9 +250,9 @@ accounts are <strong>evil</strong> and should only be used in emergencies!</p>
 <p>This is the location of the LDAP you want to use. Please include the <code class="docutils literal notranslate"><span class="pre">ldap://</span></code>.</p>
 <p>For the ETCL we use an ICT&amp;Media LDAP: <code class="docutils literal notranslate"><span class="pre">ldap://ldap.hum.uu.nl</span></code></p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="first admonition-title">Note</p>
 <p>While it might seem logical to use the <code class="docutils literal notranslate"><span class="pre">ldaps://</span></code> protocol, it’s not recommended to do so.</p>
-<p>Secure connections can be enforced with the <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_START_TLS</span></code> setting.</p>
+<p class="last">Secure connections can be enforced with the <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_START_TLS</span></code> setting.</p>
 </div>
 </div>
 <div class="section" id="auth-ldap-start-tls">
@@ -276,8 +276,8 @@ empty.</p>
 constant. Use <code class="docutils literal notranslate"><span class="pre">%(user)s</span></code> where the user’s username should be in the DN.</p>
 <p>For example: <code class="docutils literal notranslate"><span class="pre">uid=%(user)s,ou=People,dc=uu,dc=nl</span></code></p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You can also configure the LDAP auth to use an LDAP search instead of a direct match. More information can be found
+<p class="first admonition-title">Note</p>
+<p class="last">You can also configure the LDAP auth to use an LDAP search instead of a direct match. More information can be found
 in the <a class="reference external" href="https://django-auth-ldap.readthedocs.io/en/latest/authentication.html#search-bind">corresponding documentation</a>.</p>
 </div>
 </div>
@@ -293,9 +293,9 @@ in the <a class="reference external" href="https://django-auth-ldap.readthedocs.
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<p class="first admonition-title">Warning</p>
 <p>If you enter an invalid LDAP field, no error will be given and an empty string will be supplied to the auth model.</p>
-<p>Please double check all values.</p>
+<p class="last">Please double check all values.</p>
 </div>
 </div>
 <div class="section" id="auth-ldap-always-update-user">
