@@ -14,6 +14,7 @@ from core.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     UpdateView
 from proposals.utils.validate_proposal import get_form_errors
 from reviews.utils import start_review, start_review_pre_assessment
+from studies.models import Documents
 from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
@@ -358,6 +359,19 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
         """Adds 'BASE_URL' to template context"""
         context = super(ProposalAsPdf, self).get_context_data(**kwargs)
         context['BASE_URL'] = settings.BASE_URL
+
+        documents = {
+            'extra': []
+        }
+
+        for document in Documents.objects.filter(proposal=self.object).all():
+            if document.study:
+                documents[document.study.pk] = document
+            else:
+                documents['extra'].append(document)
+
+        context['documents'] = documents
+
         return context
 
 
