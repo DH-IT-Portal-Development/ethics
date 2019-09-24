@@ -434,12 +434,12 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             <table>
                 {% if extra_documents.informed_consent %}
                     <tr>
-                        <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
+                        <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ extra_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
                     </tr>
                 {% endif %}
                 {% if extra_documents.briefing %}
                     <tr>
-                        <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.briefing.url }}">{% trans "Download" %}</a></td>
+                        <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ extra_documents.briefing.url }}">{% trans "Download" %}</a></td>
                     </tr>
                 {% endif %}
             </table>
