@@ -88,7 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
 </ul>
 
             
@@ -260,7 +260,8 @@
         <span class="n">reviews</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">objects</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="n">stage__gte</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">CLOSING</span><span class="p">,</span>
-            <span class="n">proposal__status</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED</span><span class="p">,</span>
+            <span class="n">proposal__status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED</span><span class="p">,</span>
+            <span class="n">proposal__date_confirmed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">proposal__reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">committee</span><span class="p">,</span>
         <span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="n">Q</span><span class="p">(</span><span class="n">continuation</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">GO</span><span class="p">)</span> <span class="o">|</span>

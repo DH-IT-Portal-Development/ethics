@@ -88,7 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">etcl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">fetc</a></li>
 </ul>
 
             
@@ -186,6 +186,10 @@
     <span class="n">is_submitted</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;proposals&#39;</span>
 
+    <span class="c1"># Used to set the default dataTable ordering</span>
+    <span class="n">sort_column</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">sort_direction</span> <span class="o">=</span> <span class="s2">&quot;desc&quot;</span>
+
 <div class="viewcode-block" id="ProposalsView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.ProposalsView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all the Proposals that have been decided positively upon&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">DECISION_MADE</span><span class="p">,</span>
@@ -200,6 +204,8 @@
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;modifiable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_modifiable</span>
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;submitted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_submitted</span>
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;is_secretary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="o">==</span> <span class="n">get_secretary</span><span class="p">()</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;sort_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_column</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;sort_direction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort_direction</span>
 
         <span class="k">return</span> <span class="n">context</span></div>
 
@@ -250,6 +256,9 @@
     <span class="n">is_modifiable</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">is_submitted</span> <span class="o">=</span> <span class="kc">False</span>
 
+    <span class="c1"># Last modifed</span>
+    <span class="n">sort_column</span> <span class="o">=</span> <span class="mi">6</span>
+
 <div class="viewcode-block" id="MyConceptsView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MyConceptsView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all non-submitted Proposals for the current User&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
@@ -299,6 +308,8 @@
     <span class="n">is_modifiable</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">is_submitted</span> <span class="o">=</span> <span class="kc">True</span>
 
+    <span class="n">sort_column</span> <span class="o">=</span> <span class="mi">6</span>
+
 <div class="viewcode-block" id="MyProposalsView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MyProposalsView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all Proposals for the current User&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_my_proposals</span><span class="p">()</span></div></div>
@@ -310,6 +321,8 @@
 <span class="s1">onderzoeker of eindverantwoordelijke bij betrokken bent.&#39;</span><span class="p">)</span>
     <span class="n">is_modifiable</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">is_submitted</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">sort_column</span> <span class="o">=</span> <span class="mi">6</span>
 
 <div class="viewcode-block" id="MyPracticeView.get_queryset"><a class="viewcode-back" href="../../../reference/proposals.views.proposal_views.html#proposals.views.proposal_views.MyPracticeView.get_queryset">[docs]</a>    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns all practice Proposals for the current User&quot;&quot;&quot;</span>
@@ -395,7 +408,6 @@
         <span class="sd">&quot;&quot;&quot;Adds secretary and link to regulations to template context&quot;&quot;&quot;</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalStart</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;secretary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_secretary</span><span class="p">()</span>
-        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;regulations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;https://fetc-gw.wp.hum.uu.nl/reglement/&#39;</span>
         <span class="k">return</span> <span class="n">context</span></div></div>
 
 

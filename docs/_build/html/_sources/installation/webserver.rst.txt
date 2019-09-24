@@ -8,7 +8,7 @@ information on the WSGI spec, see `PEP333`_ and `PEP3333`_.
 .. _PEP333: https://www.python.org/dev/peps/pep-333/
 .. _PEP3333: https://www.python.org/dev/peps/pep-3333/
 
-A WSGI application is supplied in the :mod:`etcl.wsgi` module. You can point your webserver to this file, providing that
+A WSGI application is supplied in the :mod:`fetc.wsgi` module. You can point your webserver to this file, providing that
 your webserver speaks WSGI.
 
 Apache

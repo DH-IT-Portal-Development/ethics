@@ -3,6 +3,7 @@ django-auth-ldap<2 # Py 3.4 compat
 django-braces
 django-easy-pdf
 django-modeltranslation
+django-impersonate
 mysqlclient<1.4.0 # Py 3.4 compat
 xhtml2pdf
 sphinx<2.0.0 # Py 3.4 compat
@@ -14,3 +15,5 @@ django-user-agents
 pillow<6
 pygments<2.4
 requests<2.22
+
+reportlab==3.5.23

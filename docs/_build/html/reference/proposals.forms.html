@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
@@ -162,7 +162,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">etcl</a> &raquo;</li>
+          <li><a href="index.html">fetc</a> &raquo;</li>
         
           <li><a href="proposals.html">proposals package</a> &raquo;</li>
         
@@ -235,13 +235,13 @@
 <dt id="proposals.forms.ProposalForm.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/forms.html#ProposalForm.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.forms.ProposalForm.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li><p>Remove empty label from relation field</p></li>
-<li><p>Don’t allow to pick yourself or a superuser as supervisor, unless you already are</p></li>
-<li><p>Add a None-option for supervisor</p></li>
-<li><p>Don’t allow to pick a superuser as applicant</p></li>
-<li><p>If this is a practice Proposal, limit the relation choices</p></li>
-<li><p>Remove summary for preliminary assessment Proposals</p></li>
-<li><p>Set pre_assessment_pdf required for preliminary assessment Proposals, otherwise remove</p></li>
+<li>Remove empty label from relation field</li>
+<li>Don’t allow to pick yourself or a superuser as supervisor, unless you already are</li>
+<li>Add a None-option for supervisor</li>
+<li>Don’t allow to pick a superuser as applicant</li>
+<li>If this is a practice Proposal, limit the relation choices</li>
+<li>Remove summary for preliminary assessment Proposals</li>
+<li>Set pre_assessment_pdf required for preliminary assessment Proposals, otherwise remove</li>
 </ul>
 </dd></dl>
 
@@ -270,7 +270,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.forms.Form</span></code></p>
 <p><strong>Form fields:</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">practice_reason</span></code>: Ik vul de portal in (<code class="xref py py-class docutils literal notranslate"><span class="pre">ChoiceField</span></code>)</p></li>
+<li><code class="docutils literal notranslate"><span class="pre">practice_reason</span></code>: Ik vul de portal in (<code class="xref py py-class docutils literal notranslate"><span class="pre">ChoiceField</span></code>)</li>
 </ul>
 <dl class="attribute">
 <dt id="proposals.forms.ProposalStartPracticeForm.media">
@@ -287,8 +287,8 @@
 <dt id="proposals.forms.ProposalSubmitForm.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/forms.html#ProposalSubmitForm.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.forms.ProposalSubmitForm.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li><p>Mark the label of inform_local_staff as safe</p></li>
-<li><p>Check if the inform_local_staff question should be asked</p></li>
+<li>Mark the label of inform_local_staff as safe</li>
+<li>Check if the inform_local_staff question should be asked</li>
 </ul>
 </dd></dl>
 
@@ -315,8 +315,8 @@
 <dt id="proposals.forms.StudyStartForm.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/forms.html#StudyStartForm.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.forms.StudyStartForm.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li><p>Set the Proposal for later reference</p></li>
-<li><p>Set initial data for the study_name fields</p></li>
+<li>Set the Proposal for later reference</li>
+<li>Set initial data for the study_name fields</li>
 </ul>
 </dd></dl>
 
@@ -362,7 +362,7 @@
 <dt id="proposals.forms.WmoCheckForm.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/forms.html#WmoCheckForm.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.forms.WmoCheckForm.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li><p>Remove empty label from is_medical/is_behavioristic field and reset the choices</p></li>
+<li>Remove empty label from is_medical/is_behavioristic field and reset the choices</li>
 </ul>
 </dd></dl>
 
@@ -381,7 +381,7 @@
 <dt id="proposals.forms.WmoForm.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/forms.html#WmoForm.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.forms.WmoForm.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li><p>Remove empty label from is_medical/is_behavioristic field and reset the choices</p></li>
+<li>Remove empty label from is_medical/is_behavioristic field and reset the choices</li>
 </ul>
 </dd></dl>
 

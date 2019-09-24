@@ -88,7 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
 </ul>
 
             
@@ -159,9 +159,9 @@
 <span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
 
 <span class="kn">from</span> <span class="nn">core.forms</span> <span class="k">import</span> <span class="n">ConditionalModelForm</span><span class="p">,</span> <span class="n">SoftValidationMixin</span>
-<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES_NO_DOUBT</span><span class="p">,</span> <span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span>
+<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">DOUBT</span><span class="p">,</span> <span class="n">YES</span><span class="p">,</span> <span class="n">YES_NO_DOUBT</span>
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">YES_NO</span>
-<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Study</span><span class="p">,</span> <span class="n">AgeGroup</span><span class="p">,</span> <span class="n">Documents</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">AgeGroup</span><span class="p">,</span> <span class="n">Documents</span><span class="p">,</span> <span class="n">Study</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">check_necessity_required</span>
 
 
@@ -177,14 +177,19 @@
             <span class="s1">&#39;compensation&#39;</span><span class="p">,</span> <span class="s1">&#39;compensation_details&#39;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;age_groups&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
-            <span class="s1">&#39;passive_consent&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
+            <span class="s1">&#39;age_groups&#39;</span><span class="p">:</span>        <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
+            <span class="s1">&#39;passive_consent&#39;</span><span class="p">:</span>   <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
             <span class="s1">&#39;legally_incapable&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-            <span class="s1">&#39;has_traits&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
-            <span class="s1">&#39;traits&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
-            <span class="s1">&#39;necessity&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-            <span class="s1">&#39;recruitment&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
-            <span class="s1">&#39;compensation&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;has_traits&#39;</span><span class="p">:</span>        <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
+            <span class="s1">&#39;traits&#39;</span><span class="p">:</span>            <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
+            <span class="s1">&#39;necessity&#39;</span><span class="p">:</span>         <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;recruitment&#39;</span><span class="p">:</span>       <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
+            <span class="s1">&#39;compensation&#39;</span><span class="p">:</span>      <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;legally_incapable&#39;</span><span class="p">:</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Maakt uw studie gebruik van &#39;</span>
+                                             <span class="s1">&#39;wils&lt;u&gt;on&lt;/u&gt;bekwame (&#39;</span>
+                                             <span class="s1">&#39;volwassen) deelnemers?&#39;</span><span class="p">))</span>
         <span class="p">}</span>
 
 <div class="viewcode-block" id="StudyForm.__init__"><a class="viewcode-back" href="../../reference/studies.forms.html#proposals.views.study_views.StudyForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -198,12 +203,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;proposal&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">StudyForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;legally_incapable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;legally_incapable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;legally_incapable&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Geert&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;compensation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;necessity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;necessity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;age_groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">AgeGroup</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;age_groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">AgeGroup</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">is_active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="StudyForm.clean"><a class="viewcode-back" href="../../reference/studies.forms.html#proposals.views.study_views.StudyForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -222,23 +228,31 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">necessity_required</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">passive_consent</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;legally_incapable&#39;</span><span class="p">,</span> <span class="s1">&#39;legally_incapable_details&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;legally_incapable&#39;</span><span class="p">,</span>
+                              <span class="s1">&#39;legally_incapable_details&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_empty</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;has_traits&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;has_traits&#39;</span><span class="p">,</span> <span class="s1">&#39;traits&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;U dient minimaal een bijzonder kenmerk te selecteren.&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;traits&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;traits_details&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_singular</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;compensation&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;compensation_details&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;recruitment&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;recruitment_details&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;has_traits&#39;</span><span class="p">,</span> <span class="s1">&#39;traits&#39;</span><span class="p">,</span> <span class="n">_</span><span class="p">(</span>
+            <span class="s1">&#39;U dient minimaal een bijzonder kenmerk te selecteren.&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;traits&#39;</span><span class="p">,</span> <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;traits_details&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_singular</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;compensation&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;compensation_details&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_multiple</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;recruitment&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;needs_details&#39;</span><span class="p">,</span> <span class="s1">&#39;recruitment_details&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="StudyForm.necessity_required"><a class="viewcode-back" href="../../reference/studies.forms.html#proposals.views.study_views.StudyForm.necessity_required">[docs]</a>    <span class="k">def</span> <span class="nf">necessity_required</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cleaned_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check whether necessity_reason was required and if so, if it has been filled out.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">age_groups</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;age_groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;age_groups&#39;</span> <span class="ow">in</span> <span class="n">cleaned_data</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="n">age_groups</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;age_groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span>
+                                                            <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;age_groups&#39;</span> <span class="ow">in</span> <span class="n">cleaned_data</span> <span class="k">else</span> <span class="p">[]</span>
         <span class="n">has_traits</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;has_traits&#39;</span><span class="p">])</span>
         <span class="n">legally_incapable</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;legally_incapable&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">check_necessity_required</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">,</span> <span class="n">age_groups</span><span class="p">,</span> <span class="n">has_traits</span><span class="p">,</span> <span class="n">legally_incapable</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">check_necessity_required</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proposal</span><span class="p">,</span> <span class="n">age_groups</span><span class="p">,</span> <span class="n">has_traits</span><span class="p">,</span>
+                                    <span class="n">legally_incapable</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;necessity_reason&#39;</span><span class="p">]:</span>
-                <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">),</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">),</span>
+                                              <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;necessity_reason&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="StudyForm.passive_consent"><a class="viewcode-back" href="../../reference/studies.forms.html#proposals.views.study_views.StudyForm.passive_consent">[docs]</a>    <span class="k">def</span> <span class="nf">passive_consent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cleaned_data</span><span class="p">):</span>
@@ -248,12 +262,14 @@
 
         <span class="k">if</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;age_groups&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">is_adult</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;passive_consent&#39;</span> <span class="ow">in</span> <span class="n">cleaned_data</span><span class="p">:</span>
-                <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">),</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">),</span>
+                                              <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;passive_consent&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
-
-            <span class="k">if</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;passive_consent&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;passive_consent_details&#39;</span><span class="p">]:</span>
-                <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">),</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;passive_consent&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">cleaned_data</span><span class="p">[</span>
+                <span class="s1">&#39;passive_consent_details&#39;</span><span class="p">]:</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld is verplicht.&#39;</span><span class="p">),</span>
+                                              <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;passive_consent_details&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span></div></div>
 
 
@@ -268,9 +284,11 @@
 <span class="sd">        - at least one of the fields has to be checked</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">StudyDesignForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;has_intervention&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;has_observation&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;has_sessions&#39;</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;has_intervention&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s1">&#39;has_observation&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;has_sessions&#39;</span><span class="p">)):</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;U dient minstens één van de opties te selecteren&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;has_sessions&#39;</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">))</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;has_sessions&#39;</span><span class="p">,</span>
+                           <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">))</span></div></div>
 
 
 <div class="viewcode-block" id="StudyConsentForm"><a class="viewcode-back" href="../../reference/studies.forms.html#proposals.views.study_views.StudyConsentForm">[docs]</a><span class="k">class</span> <span class="nc">StudyConsentForm</span><span class="p">(</span><span class="n">ConditionalModelForm</span><span class="p">):</span>
@@ -287,7 +305,7 @@
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;proposal&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">HiddenInput</span><span class="p">,</span>
-            <span class="s1">&#39;study&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">HiddenInput</span>
+            <span class="s1">&#39;study&#39;</span><span class="p">:</span>    <span class="n">forms</span><span class="o">.</span><span class="n">HiddenInput</span>
         <span class="p">}</span>
 
 <div class="viewcode-block" id="StudyConsentForm.clean"><a class="viewcode-back" href="../../reference/studies.forms.html#proposals.views.study_views.StudyConsentForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -304,10 +322,10 @@
             <span class="s1">&#39;risk&#39;</span><span class="p">,</span> <span class="s1">&#39;risk_details&#39;</span>
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;deception&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;deception&#39;</span><span class="p">:</span>  <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
             <span class="s1">&#39;negativity&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-            <span class="s1">&#39;stressful&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
-            <span class="s1">&#39;risk&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;stressful&#39;</span><span class="p">:</span>  <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
+            <span class="s1">&#39;risk&#39;</span><span class="p">:</span>       <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(),</span>
         <span class="p">}</span>
 
     <span class="n">_soft_validation_fields</span> <span class="o">=</span> <span class="p">[</span>
@@ -340,8 +358,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;risk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;risk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">YES_NO_DOUBT</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;negativity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;negativity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;stressful&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;stressful&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;negativity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;negativity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;stressful&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;stressful&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;risk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;risk&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">study</span><span class="o">.</span><span class="n">has_sessions</span><span class="p">:</span>
@@ -369,17 +389,24 @@
         <span class="k">if</span> <span class="s1">&#39;deception&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mark_soft_required</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;deception&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;deception&#39;</span><span class="p">,</span> <span class="s1">&#39;deception_details&#39;</span><span class="p">,</span> <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;negativity&#39;</span><span class="p">,</span> <span class="s1">&#39;negativity_details&#39;</span><span class="p">,</span> <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;stressful&#39;</span><span class="p">,</span> <span class="s1">&#39;stressful_details&#39;</span><span class="p">,</span> <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;risk&#39;</span><span class="p">,</span> <span class="s1">&#39;risk_details&#39;</span><span class="p">,</span> <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;deception&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;deception_details&#39;</span><span class="p">,</span>
+                                   <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;negativity&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;negativity_details&#39;</span><span class="p">,</span>
+                                   <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;stressful&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;stressful_details&#39;</span><span class="p">,</span>
+                                   <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_dependency_list</span><span class="p">(</span><span class="n">cleaned_data</span><span class="p">,</span> <span class="s1">&#39;risk&#39;</span><span class="p">,</span> <span class="s1">&#39;risk_details&#39;</span><span class="p">,</span>
+                                   <span class="n">f1_value_list</span><span class="o">=</span><span class="p">[</span><span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="StudyUpdateAttachmentsForm"><a class="viewcode-back" href="../../reference/studies.forms.html#proposals.views.study_views.StudyUpdateAttachmentsForm">[docs]</a><span class="k">class</span> <span class="nc">StudyUpdateAttachmentsForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Documents</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="c1">#&#39;passive_consent&#39;,</span>
+            <span class="c1"># &#39;passive_consent&#39;,</span>
             <span class="s1">&#39;informed_consent&#39;</span><span class="p">,</span>
             <span class="s1">&#39;briefing&#39;</span><span class="p">,</span>
             <span class="s1">&#39;director_consent_declaration&#39;</span><span class="p">,</span>
@@ -387,7 +414,7 @@
             <span class="s1">&#39;parents_information&#39;</span>
         <span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="c1">#&#39;passive_consent&#39;: forms.HiddenInput</span>
+            <span class="c1"># &#39;passive_consent&#39;: forms.HiddenInput</span>
         <span class="p">}</span></div>
 
 

@@ -94,6 +94,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sporadic-tasks-frequently-encountered-problems">Sporadic tasks / Frequently encountered problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-new-users">Adding new users</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#adding-local-accounts">Adding local accounts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#automatic-ldap-solis-account-creation">Automatic LDAP (Solis) account creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#manually-adding-ldap-solis-accounts">Manually adding LDAP (Solis) accounts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-a-new-secretary">Setting a new secretary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#new-user-cannot-log-in">New user cannot log in</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fixing-proposals">Fixing proposals</a></li>
 </ul>
@@ -102,7 +109,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">fetc</a></li>
 </ul>
 
             
@@ -179,19 +186,21 @@ in a more neutral manner.</p>
 <p>The dependencies used by the applications become outdated (and insecure) and should be updated semi-often.</p>
 <p>Luckily, updating dependencies is very easy:</p>
 <ol class="arabic">
-<li><p>Run the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip-compile -U
+<li><p class="first">Run the following command:</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span><span class="o">-</span><span class="nb">compile</span> <span class="o">-</span><span class="n">U</span>
 </pre></div>
 </div>
 <p>This should update the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> with the latest versions. If it doesn’t, you can copy paste the terminal
 output into <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code></p>
 </li>
-<li><p>Test if everything is still working</p></li>
-<li><p>Deploy the update on the servers</p></li>
+<li><p class="first">Test if everything is still working</p>
+</li>
+<li><p class="first">Deploy the update on the servers</p>
+</li>
 </ol>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>You should use this guide for Django patch updates only. For feature updates (2.0 to 2.1 for example), see the next
+<p class="first admonition-title">Warning</p>
+<p class="last">You should use this guide for Django patch updates only. For feature updates (2.0 to 2.1 for example), see the next
 section.</p>
 </div>
 </div>
@@ -201,22 +210,67 @@ section.</p>
 April 2020. However, one might decide to update to the latest feature update, or to the next LTS version. In that case,
 you can use the following global steps as a guide.</p>
 <ol class="arabic simple">
-<li><p>Update Django’s version constraints in <code class="docutils literal notranslate"><span class="pre">requirements.in</span></code> to next version in the series.</p></li>
-<li><p>Go through Django’s migration guide for that version and apply necessary changes</p></li>
-<li><p>Test your changes</p></li>
-<li><p>If everything works, go back to step 1 until you have reached the desired version.</p></li>
-<li><p>Check if the application uses deprecated functions and try to migrate to the replacements (saves you or someone else
-a lot of time later).</p></li>
+<li>Update Django’s version constraints in <code class="docutils literal notranslate"><span class="pre">requirements.in</span></code> to next version in the series.</li>
+<li>Go through Django’s migration guide for that version and apply necessary changes</li>
+<li>Test your changes</li>
+<li>If everything works, go back to step 1 until you have reached the desired version.</li>
+<li>Check if the application uses deprecated functions and try to migrate to the replacements (saves you or someone else
+a lot of time later).</li>
 </ol>
 </div>
 </div>
 <div class="section" id="sporadic-tasks-frequently-encountered-problems">
 <h2>Sporadic tasks / Frequently encountered problems<a class="headerlink" href="#sporadic-tasks-frequently-encountered-problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="adding-new-users">
+<h3>Adding new users<a class="headerlink" href="#adding-new-users" title="Permalink to this headline">¶</a></h3>
+<p>There are two kinds of users in the portal: local accounts, which only exist in the application and LDAP (Solis)
+accounts, which exist mainly in the LDAP. (Certain attributes are stored in the application and are updated on every
+login).</p>
+<p>Local accounts will always work, even if the LDAP is unavailable. Note: local accounts should only be used on
+acceptation or in emergencies, as the UU likes to have central control over accounts.</p>
+<div class="section" id="adding-local-accounts">
+<h4>Adding local accounts<a class="headerlink" href="#adding-local-accounts" title="Permalink to this headline">¶</a></h4>
+<p>Browse to the admin page, and click ‘add’ next to ‘users’.</p>
+<p>Note: If you accidentally created a local account when a LDAP account was needed, you can follow the steps in ‘Manually
+adding LDAP (Solis) accounts’. The local account will automatically be updated to a LDAP account.</p>
+</div>
+<div class="section" id="automatic-ldap-solis-account-creation">
+<h4>Automatic LDAP (Solis) account creation<a class="headerlink" href="#automatic-ldap-solis-account-creation" title="Permalink to this headline">¶</a></h4>
+<p>If a user does not yet exist in the application, an account will be created automatically upon successful
+authentication. This requires no action on our side.</p>
+</div>
+<div class="section" id="manually-adding-ldap-solis-accounts">
+<h4>Manually adding LDAP (Solis) accounts<a class="headerlink" href="#manually-adding-ldap-solis-accounts" title="Permalink to this headline">¶</a></h4>
+<p>Sometimes it’s not convenient to wait for the automatic creation of LDAP accounts, as this requires the end-user to do
+something. This isn’t always ideal, for example when a request for a new Committee or Secretary account comes in. In
+that case, follow these steps to manually create an account:</p>
+<ul class="simple">
+<li>SSH into the server</li>
+<li>Switch to either www-data or root user</li>
+<li>Navigate to installation directory (Probably in <code class="docutils literal notranslate"><span class="pre">/hum/web/[HOSTNAME]/data</span></code>)</li>
+<li>Activate the virtualenvironment (<code class="code docutils literal notranslate"><span class="pre">source</span> <span class="pre">env/bin/activate</span></code>)</li>
+<li>Navigate to the ‘source’ folder</li>
+<li>Run <code class="code docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">add_ldap_users</span> <span class="pre">[SOLIS-ID]</span></code></li>
+</ul>
+</div>
+</div>
+<div class="section" id="setting-a-new-secretary">
+<h3>Setting a new secretary<a class="headerlink" href="#setting-a-new-secretary" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes a different secretary needs to be set. This is done by going to the admin interface -&gt; Users.
+Find the desired user, and add them to the secretary group. Then, find the old secretary and remove him/her from the
+secretary group.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">There should only be one(!) secretary at any time! The application isn’t designed to handle more than one, and will
+pick the first one it finds. (This cannot be predicted as it’s dictated by the SQL server, which isn’t transparent
+about it’s default ordering).</p>
+</div>
+</div>
 <div class="section" id="new-user-cannot-log-in">
 <h3>New user cannot log in<a class="headerlink" href="#new-user-cannot-log-in" title="Permalink to this headline">¶</a></h3>
 <p>Only users in the HUM-LDAP can log into the system. If a user reports they cannot log in, check if they are in the LDAP.</p>
 <p>You can quickly do this with:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python manage.py add_ldap_users SOLISID
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">add_ldap_users</span> <span class="n">SOLISID</span>
 </pre></div>
 </div>
 <p>If this errors, the user is not in the LDAP.
@@ -227,13 +281,13 @@ Otherwise, an account will be created/updated for that user. (Which confirms tha
 <p>Sometimes an update can cause some problems with draft proposals. To fix these, one might go into the database itself,
 but this is hard. A better way is to do this through the Django shell.</p>
 <p>Simply run the following command to start a shell:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python manage.py shell
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">shell</span>
 </pre></div>
 </div>
 <p>You can then import the model classes and modify them.</p>
 <p>In the following simple example, we are going to create a Documents object for a study that is missing one</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">proposals.models</span> <span class="kn">import</span> <span class="n">Proposal</span>
-<span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">studies.models</span> <span class="kn">import</span> <span class="n">Documents</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
+<span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Documents</span>
 <span class="o">&gt;&gt;</span> <span class="n">proposal</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 <span class="o">&gt;&gt;</span> <span class="n">study</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">all</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 <span class="o">&gt;&gt;</span> <span class="n">documents</span> <span class="o">=</span> <span class="n">Documents</span><span class="p">()</span>
@@ -243,8 +297,8 @@ but this is hard. A better way is to do this through the Django shell.</p>
 </pre></div>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>Install bpython if it isn’t installed yet. It will give you autocompletion in the shell, and more!</p>
+<p class="first admonition-title">Tip</p>
+<p class="last">Install bpython if it isn’t installed yet. It will give you autocompletion in the shell, and more!</p>
 </div>
 </div>
 </div>

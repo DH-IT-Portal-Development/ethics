@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="etcl" href="../reference/index.html" />
+    <link rel="next" title="fetc" href="../reference/index.html" />
     <link rel="prev" title="Database" href="database.html" /> 
 </head>
 
@@ -117,7 +117,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">etcl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">fetc</a></li>
 </ul>
 
             
@@ -209,7 +209,7 @@ production/acceptation server.</p>
 <div class="section" id="ldap-settings-py">
 <h2>ldap_settings.py<a class="headerlink" href="#ldap-settings-py" title="Permalink to this headline">¶</a></h2>
 <p>By default, the project doesn’t have the required files to use LDAP based authentication. To enable this, you need to
-create a file called <code class="docutils literal notranslate"><span class="pre">ldap_settings.py</span></code> in the <code class="docutils literal notranslate"><span class="pre">etcl</span></code> folder using the following template:</p>
+create a file called <code class="docutils literal notranslate"><span class="pre">ldap_settings.py</span></code> in the <code class="docutils literal notranslate"><span class="pre">fetc</span></code> folder using the following template:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="n">AUTHENTICATION_BACKENDS</span> <span class="o">=</span> <span class="p">(</span>
@@ -240,19 +240,19 @@ backend.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">ModelBackend</span></code> is still needed as it’s used to assign users to groups internally. We cannot use the LDAP for this,
 as the LDAP does not contain the necessary information.</p>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Always create user accounts from the LDAP if you can, as this is connected to the university’s IAM system. Local
+<p class="first admonition-title">Warning</p>
+<p class="last">Always create user accounts from the LDAP if you can, as this is connected to the university’s IAM system. Local
 accounts are <strong>evil</strong> and should only be used in emergencies!</p>
 </div>
 </div>
 <div class="section" id="auth-ldap-server-uri">
 <h3>AUTH_LDAP_SERVER_URI<a class="headerlink" href="#auth-ldap-server-uri" title="Permalink to this headline">¶</a></h3>
 <p>This is the location of the LDAP you want to use. Please include the <code class="docutils literal notranslate"><span class="pre">ldap://</span></code>.</p>
-<p>For the ETCL we use an ICT&amp;Media LDAP: <code class="docutils literal notranslate"><span class="pre">ldap://ldap.hum.uu.nl</span></code></p>
+<p>For the FEtC-H we use an ICT&amp;Media LDAP: <code class="docutils literal notranslate"><span class="pre">ldap://ldap.hum.uu.nl</span></code></p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
+<p class="first admonition-title">Note</p>
 <p>While it might seem logical to use the <code class="docutils literal notranslate"><span class="pre">ldaps://</span></code> protocol, it’s not recommended to do so.</p>
-<p>Secure connections can be enforced with the <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_START_TLS</span></code> setting.</p>
+<p class="last">Secure connections can be enforced with the <code class="docutils literal notranslate"><span class="pre">AUTH_LDAP_START_TLS</span></code> setting.</p>
 </div>
 </div>
 <div class="section" id="auth-ldap-start-tls">
@@ -276,8 +276,8 @@ empty.</p>
 constant. Use <code class="docutils literal notranslate"><span class="pre">%(user)s</span></code> where the user’s username should be in the DN.</p>
 <p>For example: <code class="docutils literal notranslate"><span class="pre">uid=%(user)s,ou=People,dc=uu,dc=nl</span></code></p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You can also configure the LDAP auth to use an LDAP search instead of a direct match. More information can be found
+<p class="first admonition-title">Note</p>
+<p class="last">You can also configure the LDAP auth to use an LDAP search instead of a direct match. More information can be found
 in the <a class="reference external" href="https://django-auth-ldap.readthedocs.io/en/latest/authentication.html#search-bind">corresponding documentation</a>.</p>
 </div>
 </div>
@@ -293,9 +293,9 @@ in the <a class="reference external" href="https://django-auth-ldap.readthedocs.
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="admonition-title">Warning</p>
+<p class="first admonition-title">Warning</p>
 <p>If you enter an invalid LDAP field, no error will be given and an empty string will be supplied to the auth model.</p>
-<p>Please double check all values.</p>
+<p class="last">Please double check all values.</p>
 </div>
 </div>
 <div class="section" id="auth-ldap-always-update-user">
@@ -314,7 +314,7 @@ in the <a class="reference external" href="https://django-auth-ldap.readthedocs.
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../reference/index.html" class="btn btn-neutral float-right" title="etcl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../reference/index.html" class="btn btn-neutral float-right" title="fetc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="database.html" class="btn btn-neutral float-left" title="Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

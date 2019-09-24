@@ -88,7 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">etcl</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
 </ul>
 
             
@@ -236,7 +236,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_long_route_continuation</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;continuation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Review</span><span class="o">.</span><span class="n">CONTINUATIONS</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Review</span><span class="o">.</span><span class="n">LONG_ROUTE</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;in_archive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Voeg deze studie toe aan het UiL OTS archief&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;in_archive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Voeg deze studie toe aan het archief&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;in_archive&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;has_minor_revision&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Is er een revisie geweest na het indienen van deze studie?&#39;</span><span class="p">)</span>

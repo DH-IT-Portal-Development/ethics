@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="faqs.html">faqs package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="faqs.html#submodules">Submodules</a><ul class="current">
@@ -159,7 +159,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">etcl</a> &raquo;</li>
+          <li><a href="index.html">fetc</a> &raquo;</li>
         
           <li><a href="faqs.html">faqs package</a> &raquo;</li>
         
@@ -188,20 +188,24 @@
 <dt id="faqs.models.Faq">
 <em class="property">class </em><code class="descclassname">faqs.models.</code><code class="descname">Faq</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>question</em>, <em>answer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/faqs/models.html#Faq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#faqs.models.Faq" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
-<li><p><strong>question</strong> (<em>TextField</em>) – Question</p></li>
-<li><p><strong>question_nl</strong> (<em>TranslationTextField</em>) – Question [nl]</p></li>
-<li><p><strong>question_en</strong> (<em>TranslationTextField</em>) – Question [en]</p></li>
-<li><p><strong>answer</strong> (<em>TextField</em>) – Answer</p></li>
-<li><p><strong>answer_nl</strong> (<em>TranslationTextField</em>) – Answer [nl]</p></li>
-<li><p><strong>answer_en</strong> (<em>TranslationTextField</em>) – Answer [en]</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>question</strong> (<em>TextField</em>) – Question</li>
+<li><strong>question_nl</strong> (<em>TranslationTextField</em>) – Question [nl]</li>
+<li><strong>question_en</strong> (<em>TranslationTextField</em>) – Question [en]</li>
+<li><strong>answer</strong> (<em>TextField</em>) – Answer</li>
+<li><strong>answer_nl</strong> (<em>TranslationTextField</em>) – Answer [nl]</li>
+<li><strong>answer_en</strong> (<em>TranslationTextField</em>) – Answer [en]</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="faqs.models.Faq.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#faqs.models.Faq.DoesNotExist" title="Permalink to this definition">¶</a></dt>

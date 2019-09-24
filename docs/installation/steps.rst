@@ -248,7 +248,7 @@ This can be achieved by running the ``collectstatic`` management command:
     $ source env/bin/activate
     $ python sourve/manage.py manage.py collectstatic --noinput
 
-This will copy all static files to the folder specified in ``etcl/settings.py``.
+This will copy all static files to the folder specified in ``fetc/settings.py``.
 
 Translation file
 ----------------

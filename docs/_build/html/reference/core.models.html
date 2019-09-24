@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="core.html">core package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="core.html#subpackages">Subpackages</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="core.html#submodules">Submodules</a><ul class="current">
@@ -162,7 +162,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">etcl</a> &raquo;</li>
+          <li><a href="index.html">fetc</a> &raquo;</li>
         
           <li><a href="core.html">core package</a> &raquo;</li>
         
@@ -191,22 +191,26 @@
 <dt id="core.models.Setting">
 <em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">Setting</code><span class="sig-paren">(</span><em>id</em>, <em>order</em>, <em>description</em>, <em>is_local</em>, <em>needs_details</em>, <em>needs_supervision</em>, <em>requires_review</em>, <em>is_school</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/models.html#Setting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.models.Setting" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
-<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
-<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
-<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
-<li><p><strong>is_local</strong> (<em>BooleanField</em>) – Is local</p></li>
-<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
-<li><p><strong>needs_supervision</strong> (<em>BooleanField</em>) – Needs supervision</p></li>
-<li><p><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</p></li>
-<li><p><strong>is_school</strong> (<em>BooleanField</em>) – Needs external permission</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>is_local</strong> (<em>BooleanField</em>) – Is local</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>needs_supervision</strong> (<em>BooleanField</em>) – Needs supervision</li>
+<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
+<li><strong>is_school</strong> (<em>BooleanField</em>) – Needs external permission</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="core.models.Setting.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#core.models.Setting.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -328,16 +332,20 @@
 <dt id="core.models.SettingModel">
 <em class="property">class </em><code class="descclassname">core.models.</code><code class="descname">SettingModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/models.html#SettingModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.models.SettingModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</p></li>
-<li><p><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</p></li>
-<li><p><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</p></li>
-<li><p><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>setting_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>supervision</strong> (<em>NullBooleanField</em>) – Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?</li>
+<li><strong>leader_has_coc</strong> (<em>NullBooleanField</em>) – Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a class="reference external" href="https://www.justis.nl/producten/vog/">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.</li>
+<li><strong>setting</strong> (<em>ManyToManyField</em>) – Geef aan waar de dataverzameling plaatsvindt</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="core.models.SettingModel.leader_has_coc">
 <code class="descname">leader_has_coc</code><a class="headerlink" href="#core.models.SettingModel.leader_has_coc" title="Permalink to this definition">¶</a></dt>

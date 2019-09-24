@@ -173,7 +173,6 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
     {% get_extra_documents extra_documents review.proposal %}
     {% for documents in extra_documents %}
         <h3>{% trans 'Extra formulieren' %} {{ extra_form_counter }}</h3>
-        {{ extra_form_counter.increment }}
         <ul>
             {% if documents.informed_consent %}
             <li>
@@ -185,7 +184,7 @@ Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
             {% endif %}
             {% if documents.briefing %}
             <li>
-                <a href="{{ study_documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
+                <a href="{{ documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
                 <a href="{% url 'studies:attachments' documents.pk %}">
                     <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
                 </a>

@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
@@ -162,7 +162,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">etcl</a> &raquo;</li>
+          <li><a href="index.html">fetc</a> &raquo;</li>
         
           <li><a href="reviews.html">reviews package</a> &raquo;</li>
         
@@ -191,18 +191,22 @@
 <dt id="reviews.models.Decision">
 <em class="property">class </em><code class="descclassname">reviews.models.</code><code class="descname">Decision</code><span class="sig-paren">(</span><em>id</em>, <em>go</em>, <em>date_decision</em>, <em>comments</em>, <em>review</em>, <em>reviewer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/models.html#Decision"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.models.Decision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>go</strong> (<em>CharField</em>) – Beslissing</p></li>
-<li><p><strong>date_decision</strong> (<em>DateTimeField</em>) – Date decision</p></li>
-<li><p><strong>comments</strong> (<em>TextField</em>) – Ruimte voor eventuele opmerkingen</p></li>
-<li><p><strong>review</strong> (ForeignKey to <a class="reference internal" href="#reviews.models.Review" title="reviews.models.Review"><code class="xref py py-class docutils literal notranslate"><span class="pre">Review</span></code></a>) – Review</p></li>
-<li><p><strong>reviewer</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Reviewer</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>go</strong> (<em>CharField</em>) – Beslissing</li>
+<li><strong>date_decision</strong> (<em>DateTimeField</em>) – Date decision</li>
+<li><strong>comments</strong> (<em>TextField</em>) – Ruimte voor eventuele opmerkingen</li>
+<li><strong>review</strong> (ForeignKey to <a class="reference internal" href="#reviews.models.Review" title="reviews.models.Review"><code class="xref py py-class docutils literal notranslate"><span class="pre">Review</span></code></a>) – Review</li>
+<li><strong>reviewer</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Reviewer</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="reviews.models.Decision.APPROVAL">
 <code class="descname">APPROVAL</code><em class="property"> = (('Y', 'goedgekeurd'), ('N', 'niet goegekeurd'), ('?', 'revisie noodzakelijk'))</em><a class="headerlink" href="#reviews.models.Decision.APPROVAL" title="Permalink to this definition">¶</a></dt>
@@ -306,21 +310,25 @@
 <dt id="reviews.models.Review">
 <em class="property">class </em><code class="descclassname">reviews.models.</code><code class="descname">Review</code><span class="sig-paren">(</span><em>id</em>, <em>stage</em>, <em>short_route</em>, <em>go</em>, <em>continuation</em>, <em>date_start</em>, <em>date_end</em>, <em>date_should_end</em>, <em>proposal</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/models.html#Review"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.models.Review" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>stage</strong> (<em>PositiveIntegerField</em>) – Stage</p></li>
-<li><p><strong>short_route</strong> (<em>NullBooleanField</em>) – Route</p></li>
-<li><p><strong>go</strong> (<em>NullBooleanField</em>) – Beslissing</p></li>
-<li><p><strong>continuation</strong> (<em>PositiveIntegerField</em>) – Afhandeling</p></li>
-<li><p><strong>date_start</strong> (<em>DateTimeField</em>) – Date start</p></li>
-<li><p><strong>date_end</strong> (<em>DateTimeField</em>) – Date end</p></li>
-<li><p><strong>date_should_end</strong> (<em>DateField</em>) – Date should end</p></li>
-<li><p><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>stage</strong> (<em>PositiveIntegerField</em>) – Stage</li>
+<li><strong>short_route</strong> (<em>NullBooleanField</em>) – Route</li>
+<li><strong>go</strong> (<em>NullBooleanField</em>) – Beslissing</li>
+<li><strong>continuation</strong> (<em>PositiveIntegerField</em>) – Afhandeling</li>
+<li><strong>date_start</strong> (<em>DateTimeField</em>) – Date start</li>
+<li><strong>date_end</strong> (<em>DateTimeField</em>) – Date end</li>
+<li><strong>date_should_end</strong> (<em>DateField</em>) – Date should end</li>
+<li><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="reviews.models.Review.ASSIGNMENT">
 <code class="descname">ASSIGNMENT</code><em class="property"> = 1</em><a class="headerlink" href="#reviews.models.Review.ASSIGNMENT" title="Permalink to this definition">¶</a></dt>

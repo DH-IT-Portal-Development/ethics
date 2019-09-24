@@ -90,7 +90,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">etcl</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
@@ -162,7 +162,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">etcl</a> &raquo;</li>
+          <li><a href="index.html">fetc</a> &raquo;</li>
         
           <li><a href="studies.html">studies package</a> &raquo;</li>
         
@@ -197,22 +197,26 @@ The ‘needs_details’ field is used to determine whether the ‘necessity’ f
 The ‘max_net_duration’ field is used in the automatic review to check the target Session duration is not exceeded.
 The ‘is_active’ field is used for when the age groups need to be redefined. Create new ones for the groups that need
 to be redefined, and set the old ones to inactive. This is needed to preserve old proposals for the archive.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>age_min</strong> (<em>PositiveIntegerField</em>) – Age min</p></li>
-<li><p><strong>age_max</strong> (<em>PositiveIntegerField</em>) – Age max</p></li>
-<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
-<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
-<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
-<li><p><strong>is_adult</strong> (<em>BooleanField</em>) – Is adult</p></li>
-<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
-<li><p><strong>max_net_duration</strong> (<em>PositiveIntegerField</em>) – Max net duration</p></li>
-<li><p><strong>is_active</strong> (<em>BooleanField</em>) – Is active</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>age_min</strong> (<em>PositiveIntegerField</em>) – Age min</li>
+<li><strong>age_max</strong> (<em>PositiveIntegerField</em>) – Age max</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>is_adult</strong> (<em>BooleanField</em>) – Is adult</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>max_net_duration</strong> (<em>PositiveIntegerField</em>) – Max net duration</li>
+<li><strong>is_active</strong> (<em>BooleanField</em>) – Is active</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="studies.models.AgeGroup.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.AgeGroup.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -326,19 +330,23 @@ to be redefined, and set the old ones to inactive. This is needed to preserve ol
 The model has fields to keep a certain order and a description.
 The ‘needs_details’ field is used to determine whether the ‘compensation_details’ field on Study needs to be filled.
 The ‘requires_review’ field is used in the automatic review to tag anomalous forms of compensation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
-<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
-<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
-<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
-<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
-<li><p><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="studies.models.Compensation.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Compensation.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -431,20 +439,24 @@ The ‘requires_review’ field is used in the automatic review to tag anomalous
 <em class="property">class </em><code class="descclassname">studies.models.</code><code class="descname">Documents</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/studies/models.html#Documents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#studies.models.Documents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>A model to store consent forms for a study and/or a proposal</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>study</strong> (OneToOneField to <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</p></li>
-<li><p><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</p></li>
-<li><p><strong>informed_consent</strong> (<em>FileField</em>) – Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)</p></li>
-<li><p><strong>briefing</strong> (<em>FileField</em>) – Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)</p></li>
-<li><p><strong>director_consent_declaration</strong> (<em>FileField</em>) – If it is already signed, upload the signed declaration form. If it is not signed yet, you can upload the unsigned document and send the document when it is signed to the secretary of the FEtC-H</p></li>
-<li><p><strong>director_consent_information</strong> (<em>FileField</em>) – Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)</p></li>
-<li><p><strong>parents_information</strong> (<em>FileField</em>) – Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>study</strong> (OneToOneField to <a class="reference internal" href="#studies.models.Study" title="studies.models.Study"><code class="xref py py-class docutils literal notranslate"><span class="pre">Study</span></code></a>) – Study</li>
+<li><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</li>
+<li><strong>informed_consent</strong> (<em>FileField</em>) – Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)</li>
+<li><strong>briefing</strong> (<em>FileField</em>) – Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)</li>
+<li><strong>director_consent_declaration</strong> (<em>FileField</em>) – If it is already signed, upload the signed declaration form. If it is not signed yet, you can upload the unsigned document and send the document when it is signed to the secretary of the FEtC-H</li>
+<li><strong>director_consent_information</strong> (<em>FileField</em>) – Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)</li>
+<li><strong>parents_information</strong> (<em>FileField</em>) – Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="studies.models.Documents.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Documents.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -547,20 +559,24 @@ The model has fields to keep a certain order and a description.
 The ‘is_local’ field is used to determine whether the ‘inform_local_staff’ field on Proposal needs to be filled.
 The ‘needs_details’ field is used to determine whether the ‘recruitment_details’ field on Study needs to be filled.
 The ‘requires_review’ field is used in the automatic review to tag anomalous forms of recruitment.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
-<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
-<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
-<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
-<li><p><strong>is_local</strong> (<em>BooleanField</em>) – Is local</p></li>
-<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
-<li><p><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>is_local</strong> (<em>BooleanField</em>) – Is local</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
+<li><strong>requires_review</strong> (<em>BooleanField</em>) – Requires review</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="studies.models.Recruitment.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Recruitment.DoesNotExist" title="Permalink to this definition">¶</a></dt>
@@ -660,42 +676,46 @@ The ‘requires_review’ field is used in the automatic review to tag anomalous
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
 <p>A model to store a study within a Proposal.
 A Study consists of participant details, experiment design and consent forms.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
-<li><p><strong>name</strong> (<em>CharField</em>) – Naam traject</p></li>
-<li><p><strong>legally_incapable</strong> (<em>BooleanField</em>) – Wilsonbekwame volwassenen zijn volwassenen die waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen.</p></li>
-<li><p><strong>legally_incapable_details</strong> (<em>TextField</em>) – Licht toe</p></li>
-<li><p><strong>has_traits</strong> (<em>NullBooleanField</em>) – Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. is dit in uw studie bij (een deel van) de deelnemers het geval?</p></li>
-<li><p><strong>traits_details</strong> (<em>CharField</em>) – Namelijk</p></li>
-<li><p><strong>necessity</strong> (<em>CharField</em>) – Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers te testen?</p></li>
-<li><p><strong>necessity_reason</strong> (<em>TextField</em>) – Leg uit waarom</p></li>
-<li><p><strong>recruitment_details</strong> (<em>TextField</em>) – Licht toe</p></li>
-<li><p><strong>compensation</strong> (ForeignKey to <a class="reference internal" href="#studies.models.Compensation" title="studies.models.Compensation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compensation</span></code></a>) – Het standaardbedrag voor vergoeding aan de deelnemers is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een cadeautje.</p></li>
-<li><p><strong>compensation_details</strong> (<em>CharField</em>) – Namelijk</p></li>
-<li><p><strong>has_intervention</strong> (<em>BooleanField</em>) – Interventieonderzoek</p></li>
-<li><p><strong>has_observation</strong> (<em>BooleanField</em>) – Observatieonderzoek</p></li>
-<li><p><strong>has_sessions</strong> (<em>BooleanField</em>) – Taakonderzoek en interviews</p></li>
-<li><p><strong>passive_consent</strong> (<em>NullBooleanField</em>) – Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. U kunt de templates vinden op de FETC-GW-website.</p></li>
-<li><p><strong>passive_consent_details</strong> (<em>TextField</em>) – Licht uw antwoord toe. wij willen u wijzen op het reglement, sectie 3.1 ‘d’ en ‘e’. passive consent is slechts in enkele gevallen toegestaan en draagt niet de voorkeur van de commissie.</p></li>
-<li><p><strong>sessions_number</strong> (<em>PositiveIntegerField</em>) – Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.</p></li>
-<li><p><strong>deception</strong> (<em>CharField</em>) – Misleiding is het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. Denk aan zaken als een bewust misleidende “cover story” voor het experiment; het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat hierbij niet om fillers.</p></li>
-<li><p><strong>deception_details</strong> (<em>TextField</em>) – Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.</p></li>
-<li><p><strong>negativity</strong> (<em>CharField</em>) – Bevat bovenstaand onderzoekstraject elementen die &lt;em&gt;tijdens&lt;/em&gt; de deelname niet-triviale negatieve emoties kunnen opwekken? denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie taken.</p></li>
-<li><p><strong>negativity_details</strong> (<em>TextField</em>) – Licht uw antwoord toe.</p></li>
-<li><p><strong>stressful</strong> (<em>CharField</em>) – Dit zou bijvoorbeeld het geval kunnen zijn bij een ‘onmenselijk’ lange en uitputtende taak, een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.</p></li>
-<li><p><strong>stressful_details</strong> (<em>TextField</em>) – Licht uw antwoord toe. geef concrete voorbeelden van de relevante aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.</p></li>
-<li><p><strong>risk</strong> (<em>CharField</em>) – Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, economische schade door data-koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de risico’s van “routine”-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, onder begeleiding van adequaat geschoolde specialisten).</p></li>
-<li><p><strong>risk_details</strong> (<em>TextField</em>) – Licht toe</p></li>
-<li><p><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</p></li>
-<li><p><strong>age_groups</strong> (<em>ManyToManyField</em>) – De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.</p></li>
-<li><p><strong>traits</strong> (<em>ManyToManyField</em>) – Selecteer de bijzondere kenmerken van uw proefpersonen</p></li>
-<li><p><strong>recruitment</strong> (<em>ManyToManyField</em>) – Hoe worden de deelnemers geworven?</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>name</strong> (<em>CharField</em>) – Naam traject</li>
+<li><strong>legally_incapable</strong> (<em>BooleanField</em>) – Wilsonbekwame volwassenen zijn volwassenen die waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen.</li>
+<li><strong>legally_incapable_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>has_traits</strong> (<em>NullBooleanField</em>) – Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. is dit in uw studie bij (een deel van) de deelnemers het geval?</li>
+<li><strong>traits_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>necessity</strong> (<em>CharField</em>) – Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers te testen?</li>
+<li><strong>necessity_reason</strong> (<em>TextField</em>) – Leg uit waarom</li>
+<li><strong>recruitment_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>compensation</strong> (ForeignKey to <a class="reference internal" href="#studies.models.Compensation" title="studies.models.Compensation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compensation</span></code></a>) – Het standaardbedrag voor vergoeding aan de deelnemers is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een cadeautje.</li>
+<li><strong>compensation_details</strong> (<em>CharField</em>) – Namelijk</li>
+<li><strong>has_intervention</strong> (<em>BooleanField</em>) – Interventieonderzoek</li>
+<li><strong>has_observation</strong> (<em>BooleanField</em>) – Observatieonderzoek</li>
+<li><strong>has_sessions</strong> (<em>BooleanField</em>) – Taakonderzoek en interviews</li>
+<li><strong>passive_consent</strong> (<em>NullBooleanField</em>) – Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. U kunt de templates vinden op de FETC-GW-website.</li>
+<li><strong>passive_consent_details</strong> (<em>TextField</em>) – Licht uw antwoord toe. wij willen u wijzen op het reglement, sectie 3.1 ‘d’ en ‘e’. passive consent is slechts in enkele gevallen toegestaan en draagt niet de voorkeur van de commissie.</li>
+<li><strong>sessions_number</strong> (<em>PositiveIntegerField</em>) – Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.</li>
+<li><strong>deception</strong> (<em>CharField</em>) – Misleiding is het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. Denk aan zaken als een bewust misleidende “cover story” voor het experiment; het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat hierbij niet om fillers.</li>
+<li><strong>deception_details</strong> (<em>TextField</em>) – Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden gedebrieft.</li>
+<li><strong>negativity</strong> (<em>CharField</em>) – Bevat bovenstaand onderzoekstraject elementen die &lt;em&gt;tijdens&lt;/em&gt; de deelname niet-triviale negatieve emoties kunnen opwekken? denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie taken.</li>
+<li><strong>negativity_details</strong> (<em>TextField</em>) – Licht uw antwoord toe.</li>
+<li><strong>stressful</strong> (<em>CharField</em>) – Dit zou bijvoorbeeld het geval kunnen zijn bij een ‘onmenselijk’ lange en uitputtende taak, een zeer confronterende vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade door het onderzoek.</li>
+<li><strong>stressful_details</strong> (<em>TextField</em>) – Licht uw antwoord toe. geef concrete voorbeelden van de relevante aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de taak, of van zeer confronterende vragen in een vragenlijst), zodat de commissie zich een goed beeld kan vormen.</li>
+<li><strong>risk</strong> (<em>CharField</em>) – Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van zelfbeeld, stigmatisering door anderen, economische schade door data-koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke schade omvat bijvoorbeeld ook de risico’s van “routine”-tests, -onderzoeken of -procedures die in alledaagse didactische, psychologische of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een stressbestendigheids-assessment, een intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit alles, waar relevant, onder begeleiding van adequaat geschoolde specialisten).</li>
+<li><strong>risk_details</strong> (<em>TextField</em>) – Licht toe</li>
+<li><strong>proposal</strong> (ForeignKey to <a class="reference internal" href="proposals.models.html#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Proposal</li>
+<li><strong>age_groups</strong> (<em>ManyToManyField</em>) – De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.</li>
+<li><strong>traits</strong> (<em>ManyToManyField</em>) – Selecteer de bijzondere kenmerken van uw proefpersonen</li>
+<li><strong>recruitment</strong> (<em>ManyToManyField</em>) – Hoe worden de deelnemers geworven?</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="attribute">
 <dt id="studies.models.Study.DESIGNS">
 <code class="descname">DESIGNS</code><em class="property"> = ((0, 'Observatieonderzoek'), (1, 'Interventieonderzoek'), (2, 'Taakonderzoek en interviews'))</em><a class="headerlink" href="#studies.models.Study.DESIGNS" title="Permalink to this definition">¶</a></dt>
@@ -1058,18 +1078,22 @@ A Study consists of participant details, experiment design and consent forms.</p
 <p>A model to store participant traits.
 The model has fields to keep a certain order and a description.
 The ‘needs_details’ field is used to determine whether the ‘necessity’ field on Study needs to be filled.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>id</strong> (<em>AutoField</em>) – Id</p></li>
-<li><p><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</p></li>
-<li><p><strong>description</strong> (<em>CharField</em>) – Description</p></li>
-<li><p><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</p></li>
-<li><p><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</p></li>
-<li><p><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</p></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>id</strong> (<em>AutoField</em>) – Id</li>
+<li><strong>order</strong> (<em>PositiveIntegerField</em>) – Order</li>
+<li><strong>description</strong> (<em>CharField</em>) – Description</li>
+<li><strong>description_nl</strong> (<em>TranslationCharField</em>) – Description [nl]</li>
+<li><strong>description_en</strong> (<em>TranslationCharField</em>) – Description [en]</li>
+<li><strong>needs_details</strong> (<em>BooleanField</em>) – Needs details</li>
 </ul>
-</dd>
-</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="exception">
 <dt id="studies.models.Trait.DoesNotExist">
 <em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#studies.models.Trait.DoesNotExist" title="Permalink to this definition">¶</a></dt>

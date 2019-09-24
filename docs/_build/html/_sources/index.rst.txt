@@ -29,5 +29,5 @@ Indices and tables
 * :ref:`search`
 
 .. _Django: https://www.djangoproject.com/
-.. _Ethical Committee Linguistics: https://fetc-gw.wp.hum.uu.nl
+.. _Faculty Ethics Committee - Humanities: https://fetc-gw.wp.hum.uu.nl
 .. _Utrecht University: https://www.uu.nl
