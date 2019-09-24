@@ -3,6 +3,7 @@ django-auth-ldap<2 # Py 3.4 compat
 django-braces
 django-easy-pdf
 django-modeltranslation
+django-impersonate
 mysqlclient<1.4.0 # Py 3.4 compat
 xhtml2pdf
 sphinx<2.0.0 # Py 3.4 compat

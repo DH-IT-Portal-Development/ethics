@@ -47,6 +47,7 @@ INSTALLED_APPS = (
 
     'easy_pdf',
     'modeltranslation',
+    'impersonate',
 
     'django.contrib.admin',
     'django_user_agents',
@@ -62,6 +63,7 @@ MIDDLEWARE = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
+    'impersonate.middleware.ImpersonateMiddleware',
 )
 
 TEMPLATES = [

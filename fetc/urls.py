@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^faqs/', include('faqs.urls')),
 
     url(r'^admin/', admin.site.urls),
+    url(r'^impersonate/', include('impersonate.urls')),
 
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
