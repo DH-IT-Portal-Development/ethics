@@ -1,8 +1,9 @@
-### Django ###
+### Django/Python ###
 *.log
 *.pot
 *.pyc
 __pycache__/
+.env*
 
 
 ### Project-specific ###
