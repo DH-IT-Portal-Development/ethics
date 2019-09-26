@@ -15,7 +15,8 @@ from easy_pdf.rendering import render_to_pdf
 from core.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
-__all__ = ['available_urls', 'generate_ref_number', 'generate_pdf',
+__all__ = ['available_urls', 'generate_ref_number',
+           'generate_revision_ref_number', 'generate_pdf',
            'check_local_facilities', 'notify_local_staff']
 
 
@@ -95,22 +96,93 @@ def available_urls(proposal):
 
 def generate_ref_number(user):
     """
-    Generates a reference number for a Proposal.
+    Generates a reference number for a new(!) Proposal.
+    NOTE: Use generate_revision_ref_number to create reference numbers for
+    revisions! This function will always create a new ref.num. with version = 1
+
     :param user: the creator of this Proposal, the currently logged-in User
-    :return: a reference number in the format {username}-{nr}-{current_year},
-    where nr is the number of Proposals created by the current User in the
-    current year.
+    :return: a reference number in the format {username}-{nr}-{vr}-{
+    current_year}, where nr is the number of Proposals created by the current
+    User in the current year excluding revisions. Vr is the version of this
+    proposal, this function will always return vr = 1.
     """
     from ..models import Proposal
 
+    # Set default values
     current_year = datetime.now().year
-    try:
-        last_proposal = Proposal.objects.filter(created_by=user).filter(date_created__year=current_year).latest('date_created')
-        proposal_number = int(last_proposal.reference_number.split('-')[1]) + 1
-    except Proposal.DoesNotExist:
-        proposal_number = 1
+    proposal_number = 1
+    version_number = 1
 
-    return '{}-{:02}-{}'.format(user.username, proposal_number, current_year)
+    try:
+        # We get the last proposal for this year by selecting all proposals
+        # for this user, with a reference number ending with the current year.
+        # Lastly, we sort it by the reference number and take last item from the
+        # QS.
+        # Note that it's ordered alphabetical, so it's important that the
+        # numbers are padded with a zero for proper ordering!
+        last_proposal = Proposal.objects.filter(
+            created_by=user,
+            reference_number__endswith=current_year,
+        ).order_by('reference_number').last()
+        # last() returns None when the QS is empty
+        if last_proposal:
+            proposal_number = int(last_proposal.reference_number.split('-')[1]) + 1
+    except Proposal.DoesNotExist:
+        pass
+
+    return '{}-{:02}-{:02}-{}'.format(
+        user.username,
+        proposal_number,
+        version_number,
+        current_year
+    )
+
+
+def generate_revision_ref_number(parent):
+    """
+    Generates a new reference number for revisions of a proposal.
+    This is done by looking up the last revision of the specified proposal,
+    not by incrementing the version of the specified proposal.
+    (The latter will fail spectacularly when a user makes 2 revisions from the
+    same proposal)
+    :param parent: The proposal that will be revised
+    :return: a reference number in the format {username}-{nr}-{vr}-{
+    current_year}, where nr is the number of Proposals created by the current
+    User in the current year excluding revisions. This method will use the
+    same nr as the parent. Vr is the version of this proposal, this function
+    will use the next available version number (this might not be the same as
+    parent.vr + 1, as that one might already exist).
+    """
+    from ..models import Proposal
+
+    parent_parts = parent.reference_number.split('-')
+    username = parent_parts[0]
+    proposal_number = int(parent_parts[1])
+
+    # If we have 4 parts, the ref.number is in the new user-nr-vr-year format
+    if len(parent_parts) == 4:
+        year = parent_parts[3]
+    else:
+        # Otherwise, we assume it's in the old user-nr-year format
+        year = parent_parts[2]
+
+    # Count all proposals by matching all proposals with the same user-nr
+    # part and the same year. (This way we find both old and new style ref.nums)
+    num_versions = Proposal.objects.filter(
+        reference_number__istartswith="{}-{:02}".format(username,
+                                                        proposal_number),
+        reference_number__endswith=str(year)
+    ).count()
+
+    # The new revision is number of current versions + 1
+    version_number = num_versions + 1
+
+    return '{}-{:02}-{:02}-{}'.format(
+        username,
+        proposal_number,
+        version_number,
+        year
+    )
 
 
 def generate_pdf(proposal, template):

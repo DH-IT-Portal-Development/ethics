@@ -11,7 +11,7 @@ from interventions.models import Intervention
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment
 from .models import Proposal, Relation, Wmo, Institution
-from .utils import generate_ref_number, check_local_facilities
+from .utils import generate_ref_number, check_local_facilities, generate_revision_ref_number
 from .views.proposal_views import MyProposalsView
 
 
@@ -52,12 +52,12 @@ class ProposalTestCase(BaseProposalTestCase):
                                      relation=self.relation,
                                      reviewing_committee=self.chamber,
                                      institution=self.institution)
-        self.assertEqual(ref_number, 'test0101-02-' + current_year)
+        self.assertEqual(ref_number, 'test0101-02-01-' + current_year)
 
         # Delete a proposal, check new reference number
         p2.delete()
         ref_number2 = generate_ref_number(self.user)
-        self.assertEqual(ref_number2, 'test0101-02-' + current_year)
+        self.assertEqual(ref_number2, 'test0101-02-01-' + current_year)
 
         # Add a proposal for another user
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
@@ -67,7 +67,66 @@ class ProposalTestCase(BaseProposalTestCase):
                                      relation=self.relation,
                                      reviewing_committee=self.chamber,
                                      institution=self.institution)
-        self.assertEqual(p3.reference_number, 'test0102-01-' + current_year)
+        self.assertEqual(p3.reference_number, 'test0102-01-01-' + current_year)
+
+    def test_revision_reference_number(self):
+        current_year = str(datetime.now().year)
+
+        # Add a revision proposal for p1, check new reference number
+        # Should be 01-02 (first proposal, second version)
+        ref_number = generate_revision_ref_number(self.p1)
+        p2 = Proposal.objects.create(title='p2', reference_number=ref_number,
+                                     date_start=datetime.now(),
+                                     created_by=self.user,
+                                     relation=self.relation,
+                                     reviewing_committee=self.chamber,
+                                     is_revision=True,
+                                     parent=self.p1,
+                                     institution=self.institution)
+        self.assertEqual(ref_number, 'test0101-01-02-' + current_year)
+
+        # Add a proposal for the same user, check new reference number
+        # Should be 02-01 (second proposal, first version)
+        ref_number = generate_ref_number(self.user)
+        p3 = Proposal.objects.create(title='p3', reference_number=ref_number,
+                                     date_start=datetime.now(),
+                                     created_by=self.user,
+                                     relation=self.relation,
+                                     reviewing_committee=self.chamber,
+                                     institution=self.institution)
+        self.assertEqual(ref_number, 'test0101-02-01-' + current_year)
+
+        # Add new proposal using an old 3-part ref.number and make a revision
+        # number using the proposal.
+        # Should be 01-02-1997 (First proposal in 1997, second version)
+        # (The year in the ref.num. and the creation_date won't line up,
+        # but in this case it doesn't matter as generate_revision_ref_number
+        # only looks at the ref.num. of the parent).
+        p4 = Proposal.objects.create(title='p4',
+                                     reference_number='test0101-01-1997',
+                                     date_start=datetime.now(),
+                                     created_by=self.user,
+                                     relation=self.relation,
+                                     reviewing_committee=self.chamber,
+                                     institution=self.institution)
+        ref_number = generate_revision_ref_number(p4)
+        p2 = Proposal.objects.create(title='p5', reference_number=ref_number,
+                                     date_start=datetime.now(),
+                                     created_by=self.user,
+                                     relation=self.relation,
+                                     reviewing_committee=self.chamber,
+                                     is_revision=True,
+                                     parent=p4,
+                                     institution=self.institution)
+        self.assertEqual(ref_number, 'test0101-01-02-1997')
+
+        # Generate a new revision ref.number using the original proposal
+        # This tests whether the right version number is created even if the
+        # parent isn't the latest version
+        # Should be 01-03-1997 (First proposal in 1997, third version)
+        ref_number = generate_revision_ref_number(p4)
+        self.assertEqual(ref_number, 'test0101-01-03-1997')
+
 
     def test_status(self):
         proposal = self.p1
