@@ -88,8 +88,8 @@ class Proposal(models.Model):
 
     # Fields of a proposal
     reference_number = models.CharField(
-        max_length=16,
-        unique=True
+        max_length=20,
+        unique=True,
     )
 
     reviewing_committee = models.ForeignKey(
