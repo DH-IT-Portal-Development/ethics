@@ -51,7 +51,6 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
     _soft_validation_fields = ['relation',
                                'supervisor',
                                'other_applicants',
-                               'applicants',
                                'other_stakeholders',
                                'stakeholders',
                                'summary',
@@ -134,6 +133,7 @@ van het FETC-GW worden opgenomen.')
         - Maximum number of words for summary
         - If this is a pre approved proposal, make sure people say yes to that question
         - If this is a pre approved proposal, make sure people fill in the correct fields
+        - Make sure the user is listed in applicants
         """
         cleaned_data = super(ProposalForm, self).clean()
 
@@ -153,8 +153,16 @@ van het FETC-GW worden opgenomen.')
                 code='required')
             self.add_error('supervisor', error)
 
-        if cleaned_data.get('other_applicants') and len(
-                cleaned_data.get('applicants')) == 1:
+        other_applicants = cleaned_data.get('other_applicants')
+        applicants = cleaned_data.get('applicants')
+
+        # Always make sure the applicant is actually in the applicants list
+        if self.user not in applicants:
+            error = forms.ValidationError(
+                _('U heeft uzelf niet als onderzoekers geselecteerd.'),
+                code='required')
+            self.add_error('applicants', error)
+        elif other_applicants and len(applicants) == 1:
             error = forms.ValidationError(
                 _('U heeft geen andere onderzoekers geselecteerd.'),
                 code='required')
