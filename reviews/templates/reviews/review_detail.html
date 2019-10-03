@@ -5,10 +5,11 @@
 {% load core_filters %}
 {% load i18n %}
 
-{% block title %} 
+{% block title %}
 {% blocktrans with proposal=review.proposal.title %}
 Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
 {% endblocktrans %}
+ - {{ review.proposal.reference_number }}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
