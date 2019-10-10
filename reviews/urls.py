@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from .views import \
-    DecisionListView, DecisionMyOpenView, SupervisorDecisionOpenView, \
+    AllProposalReviewsView, DecisionListView, DecisionMyOpenView, \
+    SupervisorDecisionOpenView, \
     DecisionOpenView, \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, \
@@ -12,6 +13,8 @@ app_name = 'reviews'
 urlpatterns = [
     url(r'^(?P<committee>\w+)/$', DecisionListView.as_view(),
         name='my_archive'),
+    url(r'^(?P<committee>\w+)/all/$', AllProposalReviewsView.as_view(),
+        name='archive'),
     url(r'^(?P<committee>\w+)/my_open/$', DecisionMyOpenView.as_view(), name='my_open'),
     url(r'^(?P<committee>\w+)/open/$', DecisionOpenView.as_view(), name='open'),
     url(r'^(?P<committee>\w+)/open_supervisors/$', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),

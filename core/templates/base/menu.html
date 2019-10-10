@@ -75,6 +75,9 @@
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'reviews:to_conclude' 'AK' %}">{% trans "Nog af te handelen studies" %}</a>
                 </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:archive' 'AK' %}">{% trans "Alle ingezonden studies" %}</a>
+                </li>
                 {% endif %}
             </ul>
         </li>
@@ -98,6 +101,9 @@
                 </li>
                 <li class="pure-menu-item">
                     <a class="pure-menu-link" href="{% url 'reviews:to_conclude' 'LK' %}">{% trans "Nog af te handelen studies" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'reviews:archive' 'LK' %}">{% trans "Alle ingezonden studies" %}</a>
                 </li>
                 {% endif %}
             </ul>

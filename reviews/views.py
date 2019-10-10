@@ -125,6 +125,32 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
         return [value for key, value in reviews.items()]
 
 
+class AllProposalReviewsView(GroupRequiredMixin, CommitteeMixin,
+                             generic.ListView):
+    context_object_name = 'reviews'
+    template_name = 'reviews/review_all_list.html'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_queryset(self):
+        """Returns all open Committee Decisions of all Users"""
+        reviews = {}
+        objects = Review.objects.filter(
+            stage__gte=Review.COMMISSION,
+            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__reviewing_committee=self.committee,
+        )
+
+        for obj in objects:
+            proposal = obj.proposal
+            if proposal not in reviews:
+                reviews[proposal.pk] = obj
+            else:
+                if reviews[proposal.pk].pk < obj.pk:
+                    reviews[proposal.pk] = obj
+
+        return [value for key, value in reviews.items()]
+
+
 class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     """
     This page displays all proposals to be reviewed by supervisors. Not to be
