@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-03 11:11+0200\n"
+"POT-Creation-Date: 2019-10-10 14:46+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -205,73 +205,78 @@ msgstr "Site-export"
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
-#: core/templates/base/menu.html:63 core/templates/base/menu.html:87
+#: core/templates/base/menu.html:63 core/templates/base/menu.html:90
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
-#: core/templates/base/menu.html:66 core/templates/base/menu.html:90
+#: core/templates/base/menu.html:66 core/templates/base/menu.html:93
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: core/templates/base/menu.html:70 core/templates/base/menu.html:94
+#: core/templates/base/menu.html:70 core/templates/base/menu.html:97
 msgid "Alle openstaande besluiten commissieleden"
 msgstr "All pending decisions committee members"
 
-#: core/templates/base/menu.html:73 core/templates/base/menu.html:97
+#: core/templates/base/menu.html:73 core/templates/base/menu.html:100
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: core/templates/base/menu.html:76 core/templates/base/menu.html:100
+#: core/templates/base/menu.html:76 core/templates/base/menu.html:103
 #: reviews/templates/reviews/review_to_conclude.html:8
 msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
-#: core/templates/base/menu.html:84 reviews/forms.py:28 reviews/mixins.py:49
+#: core/templates/base/menu.html:79 core/templates/base/menu.html:106
+#: reviews/templates/reviews/review_all_list.html:8
+msgid "Alle ingezonden studies"
+msgstr "All submitted studies"
+
+#: core/templates/base/menu.html:87 reviews/forms.py:28 reviews/mixins.py:49
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
 
-#: core/templates/base/menu.html:107
+#: core/templates/base/menu.html:113
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:110 core/templates/core/index.html:83
+#: core/templates/base/menu.html:116 core/templates/core/index.html:83
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:113 core/templates/core/index.html:86
+#: core/templates/base/menu.html:119 core/templates/core/index.html:86
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
-#: core/templates/base/menu.html:116
+#: core/templates/base/menu.html:122
 msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/base/menu.html:119 core/templates/core/index.html:92
+#: core/templates/base/menu.html:125 core/templates/core/index.html:92
 #: proposals/templates/proposals/proposal_pdf.html:384
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:81
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: core/templates/base/menu.html:122
+#: core/templates/base/menu.html:128
 msgid "FAQs"
 msgstr "FAQs"
 
-#: core/templates/base/menu.html:125 feedback/models.py:20
+#: core/templates/base/menu.html:131 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:18
 msgid "Feedback"
 msgstr "Feedback"
 
-#: core/templates/base/menu.html:130
+#: core/templates/base/menu.html:136
 #: core/templates/registration/logged_out.html:6
 msgid "Uitloggen"
 msgstr "Log out"
 
-#: core/templates/base/menu.html:134
+#: core/templates/base/menu.html:140
 msgid "FETC-GW-website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:137 core/templates/registration/login.html:6
+#: core/templates/base/menu.html:143 core/templates/registration/login.html:6
 #: core/templates/registration/login.html:23
 msgid "Inloggen"
 msgstr "Log in"
@@ -1191,7 +1196,7 @@ msgstr "Normal"
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:424 reviews/templates/reviews/review_detail.html:63
+#: proposals/models.py:424 reviews/templates/reviews/review_detail.html:64
 msgid "Revisie"
 msgstr "Revision"
 
@@ -1505,6 +1510,7 @@ msgstr "Cancel"
 
 #: proposals/templates/proposals/proposal_confirmation.html:7
 #: reviews/templates/reviews/decision_list.html:78
+#: reviews/templates/reviews/review_all_list.html:74
 #: reviews/templates/reviews/review_to_conclude.html:76
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
@@ -1524,6 +1530,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_confirmation.html:29
 #: reviews/templates/reviews/decision_list.html:80
+#: reviews/templates/reviews/review_all_list.html:76
 #: reviews/templates/reviews/review_to_conclude.html:78
 msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
@@ -1840,6 +1847,7 @@ msgstr "Submit draft application"
 #: reviews/templates/reviews/decision_list.html:29
 #: reviews/templates/reviews/decision_list_open.html:29
 #: reviews/templates/reviews/decision_supervisor_list_open.html:29
+#: reviews/templates/reviews/review_all_list.html:29
 #: reviews/templates/reviews/review_list.html:28
 #: reviews/templates/reviews/review_to_conclude.html:29
 msgid "Referentienummer"
@@ -1850,6 +1858,7 @@ msgstr "Reference number"
 #: reviews/templates/reviews/decision_list.html:30
 #: reviews/templates/reviews/decision_list_open.html:31
 #: reviews/templates/reviews/decision_supervisor_list_open.html:31
+#: reviews/templates/reviews/review_all_list.html:30
 #: reviews/templates/reviews/review_to_conclude.html:30
 msgid "Indiener"
 msgstr "Applicant"
@@ -1993,6 +2002,7 @@ msgstr ""
 #: reviews/templates/reviews/decision_list.html:32
 #: reviews/templates/reviews/decision_list_open.html:30
 #: reviews/templates/reviews/decision_supervisor_list_open.html:30
+#: reviews/templates/reviews/review_all_list.html:32
 #: reviews/templates/reviews/review_list.html:29
 #: reviews/templates/reviews/review_to_conclude.html:32
 msgid "Titel studie"
@@ -2006,6 +2016,7 @@ msgstr "Study type"
 #: reviews/templates/reviews/decision_list.html:34
 #: reviews/templates/reviews/decision_list_open.html:35
 #: reviews/templates/reviews/decision_supervisor_list_open.html:34
+#: reviews/templates/reviews/review_all_list.html:34
 #: reviews/templates/reviews/review_to_conclude.html:34
 msgid "Datum ingediend"
 msgstr "Date submitted"
@@ -2019,6 +2030,7 @@ msgstr "Last edited"
 #: reviews/templates/reviews/decision_list.html:38
 #: reviews/templates/reviews/decision_list_open.html:37
 #: reviews/templates/reviews/decision_supervisor_list_open.html:36
+#: reviews/templates/reviews/review_all_list.html:38
 #: reviews/templates/reviews/review_list.html:31
 #: reviews/templates/reviews/review_to_conclude.html:38
 #: tasks/templates/tasks/task_list.html:11
@@ -2087,7 +2099,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_pdf.html:433
 #: proposals/templates/proposals/study_consent.html:100
-#: reviews/templates/reviews/review_detail.html:175
+#: reviews/templates/reviews/review_detail.html:176
 msgid "Extra formulieren"
 msgstr "Additional forms"
 
@@ -2969,6 +2981,7 @@ msgid "Beslissing"
 msgstr "Decision"
 
 #: reviews/models.py:44 reviews/templates/reviews/decision_list.html:37
+#: reviews/templates/reviews/review_all_list.html:37
 #: reviews/templates/reviews/review_to_conclude.html:37
 msgid "Afhandeling"
 msgstr "Action"
@@ -3080,6 +3093,7 @@ msgstr "My results"
 
 #: reviews/templates/reviews/decision_list.html:31
 #: reviews/templates/reviews/decision_list_open.html:32
+#: reviews/templates/reviews/review_all_list.html:31
 #: reviews/templates/reviews/review_to_conclude.html:31
 msgid "Eindverantwoordelijke"
 msgstr "Researcher with final responsibility"
@@ -3087,6 +3101,7 @@ msgstr "Researcher with final responsibility"
 #: reviews/templates/reviews/decision_list.html:33
 #: reviews/templates/reviews/decision_list_open.html:34
 #: reviews/templates/reviews/decision_supervisor_list_open.html:33
+#: reviews/templates/reviews/review_all_list.html:33
 #: reviews/templates/reviews/review_to_conclude.html:33
 msgid "Fase"
 msgstr "Phase"
@@ -3094,11 +3109,13 @@ msgstr "Phase"
 #: reviews/templates/reviews/decision_list.html:35
 #: reviews/templates/reviews/decision_list_open.html:36
 #: reviews/templates/reviews/decision_supervisor_list_open.html:35
+#: reviews/templates/reviews/review_all_list.html:35
 #: reviews/templates/reviews/review_to_conclude.html:35
 msgid "Gewenste einddatum"
 msgstr "Desired end date"
 
 #: reviews/templates/reviews/decision_list.html:36
+#: reviews/templates/reviews/review_all_list.html:36
 #: reviews/templates/reviews/review_to_conclude.html:36
 msgid "Mijn besluit"
 msgstr "My decision"
@@ -3110,6 +3127,7 @@ msgid "open"
 msgstr "open"
 
 #: reviews/templates/reviews/decision_list.html:56
+#: reviews/templates/reviews/review_all_list.html:55
 #: reviews/templates/reviews/review_to_conclude.html:55
 msgid ", met revisie"
 msgstr ", with revision"
@@ -3117,6 +3135,7 @@ msgstr ", with revision"
 #: reviews/templates/reviews/decision_list.html:63
 #: reviews/templates/reviews/decision_list_open.html:53
 #: reviews/templates/reviews/decision_supervisor_list_open.html:52
+#: reviews/templates/reviews/review_all_list.html:62
 #: reviews/templates/reviews/review_list.html:41
 #: reviews/templates/reviews/review_to_conclude.html:62
 msgid "Studie inzien"
@@ -3124,11 +3143,13 @@ msgstr "Show study"
 
 #: reviews/templates/reviews/decision_list.html:64
 #: reviews/templates/reviews/decision_list_open.html:54
+#: reviews/templates/reviews/review_all_list.html:63
 #: reviews/templates/reviews/review_to_conclude.html:63
 msgid "Details"
 msgstr "Details"
 
 #: reviews/templates/reviews/decision_list.html:66
+#: reviews/templates/reviews/review_all_list.html:65
 #: reviews/templates/reviews/review_to_conclude.html:65
 msgid "Aanstellen"
 msgstr "Appoint"
@@ -3138,11 +3159,13 @@ msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
 #: reviews/templates/reviews/decision_list.html:71
+#: reviews/templates/reviews/review_all_list.html:67
 #: reviews/templates/reviews/review_to_conclude.html:69
 msgid "Afsluiten"
 msgstr "Conclude"
 
 #: reviews/templates/reviews/decision_list.html:74
+#: reviews/templates/reviews/review_all_list.html:70
 #: reviews/templates/reviews/review_to_conclude.html:72
 msgid "Website export tekst"
 msgstr "Website export text"
@@ -3213,7 +3236,7 @@ msgstr ""
 "\n"
 "Details on the review process of study <em>%(proposal)s</em>\n"
 
-#: reviews/templates/reviews/review_detail.html:19
+#: reviews/templates/reviews/review_detail.html:20
 #, python-format
 msgid ""
 "\n"
@@ -3224,7 +3247,7 @@ msgstr ""
 "    Reviewing round started on %(date_start)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:25
+#: reviews/templates/reviews/review_detail.html:26
 #, python-format
 msgid ""
 "\n"
@@ -3235,7 +3258,7 @@ msgstr ""
 "    Reviewing round ended on %(date_end)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:32
+#: reviews/templates/reviews/review_detail.html:33
 #, python-format
 msgid ""
 "\n"
@@ -3246,7 +3269,7 @@ msgstr ""
 "        Continuation: %(continuation)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:38
+#: reviews/templates/reviews/review_detail.html:39
 #, python-format
 msgid ""
 "\n"
@@ -3257,7 +3280,7 @@ msgstr ""
 "    Confirmation sent on %(date_confirmed)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:42
+#: reviews/templates/reviews/review_detail.html:43
 #, python-format
 msgid ""
 "\n"
@@ -3268,7 +3291,7 @@ msgstr ""
 "        Comments: %(comments)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:52
+#: reviews/templates/reviews/review_detail.html:53
 msgid ""
 "\n"
 "        Dit is een aanvraag voor voortoetsing.\n"
@@ -3278,7 +3301,7 @@ msgstr ""
 "    This is an application for preliminary assessment.\n"
 "    "
 
-#: reviews/templates/reviews/review_detail.html:64
+#: reviews/templates/reviews/review_detail.html:65
 msgid ""
 "\n"
 "        Deze studie heeft een risivisie gehad tijdens het beslisproces.\n"
@@ -3289,7 +3312,7 @@ msgstr ""
 "H .\n"
 "    "
 
-#: reviews/templates/reviews/review_detail.html:68
+#: reviews/templates/reviews/review_detail.html:69
 msgid ""
 "\n"
 "            Er zijn de volgende opmerkingen bijgevoegd:<br/>\n"
@@ -3299,60 +3322,60 @@ msgstr ""
 "            The following comments have been provided:<br/>\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:79
+#: reviews/templates/reviews/review_detail.html:80
 msgid "Formulieren bij aanmelding"
 msgstr "Forms for application"
 
-#: reviews/templates/reviews/review_detail.html:85
+#: reviews/templates/reviews/review_detail.html:86
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templates/reviews/review_detail.html:92
+#: reviews/templates/reviews/review_detail.html:93
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templates/reviews/review_detail.html:99
+#: reviews/templates/reviews/review_detail.html:100
 msgid "Toestemmingsbrief andere ethische commissie"
 msgstr "Approvalletter other ethics committee"
 
-#: reviews/templates/reviews/review_detail.html:111
+#: reviews/templates/reviews/review_detail.html:112
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templates/reviews/review_detail.html:113
-#: reviews/templates/reviews/review_detail.html:119
-#: reviews/templates/reviews/review_detail.html:125
-#: reviews/templates/reviews/review_detail.html:132
-#: reviews/templates/reviews/review_detail.html:138
-#: reviews/templates/reviews/review_detail.html:147
-#: reviews/templates/reviews/review_detail.html:155
-#: reviews/templates/reviews/review_detail.html:166
-#: reviews/templates/reviews/review_detail.html:181
-#: reviews/templates/reviews/review_detail.html:189
+#: reviews/templates/reviews/review_detail.html:114
+#: reviews/templates/reviews/review_detail.html:120
+#: reviews/templates/reviews/review_detail.html:126
+#: reviews/templates/reviews/review_detail.html:133
+#: reviews/templates/reviews/review_detail.html:139
+#: reviews/templates/reviews/review_detail.html:148
+#: reviews/templates/reviews/review_detail.html:156
+#: reviews/templates/reviews/review_detail.html:167
+#: reviews/templates/reviews/review_detail.html:182
+#: reviews/templates/reviews/review_detail.html:190
 msgid "Formulier wijzigen"
 msgstr "Change forms"
 
-#: reviews/templates/reviews/review_detail.html:117
-#: reviews/templates/reviews/review_detail.html:145
+#: reviews/templates/reviews/review_detail.html:118
+#: reviews/templates/reviews/review_detail.html:146
 msgid "Consent informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templates/reviews/review_detail.html:123
-#: reviews/templates/reviews/review_detail.html:153
+#: reviews/templates/reviews/review_detail.html:124
+#: reviews/templates/reviews/review_detail.html:154
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templates/reviews/review_detail.html:130
-#: reviews/templates/reviews/review_detail.html:179
+#: reviews/templates/reviews/review_detail.html:131
+#: reviews/templates/reviews/review_detail.html:180
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templates/reviews/review_detail.html:136
-#: reviews/templates/reviews/review_detail.html:187
+#: reviews/templates/reviews/review_detail.html:137
+#: reviews/templates/reviews/review_detail.html:188
 msgid "Briefing"
 msgstr "Briefing"
 
-#: reviews/templates/reviews/review_detail.html:163
+#: reviews/templates/reviews/review_detail.html:164
 msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
