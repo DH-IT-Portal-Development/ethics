@@ -13,6 +13,7 @@ from core.utils import get_secretary
 from core.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     UpdateView
 from proposals.utils.validate_proposal import get_form_errors
+from reviews.mixins import CommitteeMixin
 from reviews.utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from ..copy import copy_proposal
@@ -26,7 +27,8 @@ from ..utils import generate_pdf, generate_ref_number
 ############
 # List views
 ############
-class ProposalsView(LoginRequiredMixin, generic.ListView):
+
+class BaseProposalsView(LoginRequiredMixin, generic.ListView):
     title = _('Publiek archief')
     body = _('Dit overzicht toont alle goedgekeurde studies.')
     is_modifiable = False
@@ -45,7 +47,7 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
                                        public=True)
 
     def get_context_data(self, **kwargs):
-        context = super(ProposalsView, self).get_context_data(**kwargs)
+        context = super(BaseProposalsView, self).get_context_data(**kwargs)
         context['title'] = self.title
         context['body'] = self.body
         context['modifiable'] = self.is_modifiable
@@ -62,6 +64,24 @@ class ProposalsView(LoginRequiredMixin, generic.ListView):
         ).distinct()
 
 
+class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
+
+    @property
+    def title(self):
+        return "{} - {}".format(
+            _('Publiek archief'),
+            self.committee_display_name
+        )
+
+    def get_queryset(self):
+        """Returns all the Proposals that have been decided positively upon"""
+        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
+                                       status_review=True,
+                                       in_archive=True,
+                                       reviewing_committee=self.committee,
+                                       public=True)
+
+
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
     group_required = [
@@ -72,7 +92,8 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     template_name_suffix = '_export_list'
 
     def get_queryset(self):
-        """Returns all the Proposals that have been decided positively upon, or a single one if specified in the URL"""
+        """Returns all the Proposals that have been decided positively upon,
+        or a single one if specified in the URL"""
         pk = self.kwargs.get('pk')
 
         if pk is not None:
@@ -97,7 +118,7 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
         return reverse('proposals:archive')
 
 
-class MyConceptsView(ProposalsView):
+class MyConceptsView(BaseProposalsView):
     title = _('Mijn conceptstudies')
     body = _('Dit overzicht toont al uw nog niet ingediende studies.')
     is_modifiable = True
@@ -112,7 +133,7 @@ class MyConceptsView(ProposalsView):
             status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
 
 
-class MySubmittedView(ProposalsView):
+class MySubmittedView(BaseProposalsView):
     title = _('Mijn ingediende studies')
     body = _('Dit overzicht toont al uw ingediende studies.')
     is_modifiable = False
@@ -125,7 +146,7 @@ class MySubmittedView(ProposalsView):
             status__lt=Proposal.DECISION_MADE)
 
 
-class MyCompletedView(ProposalsView):
+class MyCompletedView(BaseProposalsView):
     title = _('Mijn afgehandelde studies')
     body = _('Dit overzicht toont al uw beoordeelde studies.')
     is_modifiable = False
@@ -137,7 +158,7 @@ class MyCompletedView(ProposalsView):
             status__gte=Proposal.DECISION_MADE)
 
 
-class MySupervisedView(ProposalsView):
+class MySupervisedView(BaseProposalsView):
     title = _('Mijn studies als eindverantwoordelijke')
     body = _(
         'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
@@ -149,7 +170,7 @@ class MySupervisedView(ProposalsView):
         return Proposal.objects.filter(supervisor=self.request.user)
 
 
-class MyProposalsView(ProposalsView):
+class MyProposalsView(BaseProposalsView):
     title = _('Mijn studies')
     body = _('Dit overzicht toont al uw studies.')
     is_modifiable = True
@@ -162,7 +183,7 @@ class MyProposalsView(ProposalsView):
         return self.get_my_proposals()
 
 
-class MyPracticeView(ProposalsView):
+class MyPracticeView(BaseProposalsView):
     title = _('Mijn oefenstudies')
     body = _('Dit overzicht toont alle oefenstudies waar u als student, \
 onderzoeker of eindverantwoordelijke bij betrokken bent.')
