@@ -39,14 +39,20 @@ class CommitteeMixin(ContextMixin):
 
         return Group.objects.get(name=group)
 
+    @cached_property
+    def committee_display_name(self):
+        committee = _('Algemene Kamer')
+
+        if self.committee.name == 'LK':
+            committee = _('Linguïstiek Kamer')
+
+        return committee
+
     def get_context_data(self, **kwargs):
         context = super(CommitteeMixin, self).get_context_data(**kwargs)
 
         context['committee'] = self.committee
-        context['committee_name'] = _('Algemene Kamer')
-
-        if self.committee.name == 'LK':
-            context['committee_name'] = _('Linguïstiek Kamer')
+        context['committee_name'] = self.committee_display_name
 
         return context
 

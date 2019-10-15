@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 14:46+0200\n"
+"POT-Creation-Date: 2019-10-15 11:23+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -142,7 +142,7 @@ msgid "Startpagina"
 msgstr "Start page"
 
 #: core/templates/base/menu.html:11 core/templates/core/index.html:38
-#: proposals/views/proposal_views.py:153
+#: proposals/views/proposal_views.py:173
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -165,23 +165,23 @@ msgstr ""
 msgid "Bestaande studie kopiëren"
 msgstr "Copy existing application"
 
-#: core/templates/base/menu.html:26 proposals/views/proposal_views.py:101
+#: core/templates/base/menu.html:26 proposals/views/proposal_views.py:121
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
-#: core/templates/base/menu.html:29 proposals/views/proposal_views.py:166
+#: core/templates/base/menu.html:29 proposals/views/proposal_views.py:186
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
-#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:116
+#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:136
 msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
-#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:129
+#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:149
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
-#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:141
+#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:161
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -194,89 +194,93 @@ msgid "Archief"
 msgstr "Archive"
 
 #: core/templates/base/menu.html:49
-msgid "Alle studies bekijken"
-msgstr "View all applications"
+msgid "Alle studies bekijken van de Algemene Kamer"
+msgstr "View all applications of the General Chamber"
 
-#: core/templates/base/menu.html:53
+#: core/templates/base/menu.html:52
+msgid "Alle studies bekijken van de Linguïstiek Kamer"
+msgstr "View all applications of the Linguistics Chamber"
+
+#: core/templates/base/menu.html:56
 msgid "Site-export"
 msgstr "Site-export"
 
-#: core/templates/base/menu.html:60 reviews/forms.py:27 reviews/mixins.py:46
+#: core/templates/base/menu.html:63 reviews/forms.py:27 reviews/mixins.py:44
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
-#: core/templates/base/menu.html:63 core/templates/base/menu.html:90
+#: core/templates/base/menu.html:66 core/templates/base/menu.html:93
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
-#: core/templates/base/menu.html:66 core/templates/base/menu.html:93
+#: core/templates/base/menu.html:69 core/templates/base/menu.html:96
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: core/templates/base/menu.html:70 core/templates/base/menu.html:97
+#: core/templates/base/menu.html:73 core/templates/base/menu.html:100
 msgid "Alle openstaande besluiten commissieleden"
 msgstr "All pending decisions committee members"
 
-#: core/templates/base/menu.html:73 core/templates/base/menu.html:100
+#: core/templates/base/menu.html:76 core/templates/base/menu.html:103
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: core/templates/base/menu.html:76 core/templates/base/menu.html:103
+#: core/templates/base/menu.html:79 core/templates/base/menu.html:106
 #: reviews/templates/reviews/review_to_conclude.html:8
 msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
-#: core/templates/base/menu.html:79 core/templates/base/menu.html:106
+#: core/templates/base/menu.html:82 core/templates/base/menu.html:109
 #: reviews/templates/reviews/review_all_list.html:8
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
-#: core/templates/base/menu.html:87 reviews/forms.py:28 reviews/mixins.py:49
+#: core/templates/base/menu.html:90 reviews/forms.py:28 reviews/mixins.py:47
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
 
-#: core/templates/base/menu.html:113
+#: core/templates/base/menu.html:116
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:116 core/templates/core/index.html:83
+#: core/templates/base/menu.html:119 core/templates/core/index.html:86
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:119 core/templates/core/index.html:86
+#: core/templates/base/menu.html:122 core/templates/core/index.html:89
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
-#: core/templates/base/menu.html:122
+#: core/templates/base/menu.html:125
 msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/base/menu.html:125 core/templates/core/index.html:92
+#: core/templates/base/menu.html:128 core/templates/core/index.html:95
 #: proposals/templates/proposals/proposal_pdf.html:384
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:81
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: core/templates/base/menu.html:128
+#: core/templates/base/menu.html:131
 msgid "FAQs"
 msgstr "FAQs"
 
-#: core/templates/base/menu.html:131 feedback/models.py:20
+#: core/templates/base/menu.html:134 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:18
 msgid "Feedback"
 msgstr "Feedback"
 
-#: core/templates/base/menu.html:136
+#: core/templates/base/menu.html:139
 #: core/templates/registration/logged_out.html:6
 msgid "Uitloggen"
 msgstr "Log out"
 
-#: core/templates/base/menu.html:140
+#: core/templates/base/menu.html:143
 msgid "FETC-GW-website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:143 core/templates/registration/login.html:6
+#: core/templates/base/menu.html:146 core/templates/registration/login.html:6
 #: core/templates/registration/login.html:23
 msgid "Inloggen"
 msgstr "Log in"
@@ -397,22 +401,28 @@ msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
 #: core/templates/core/index.html:77
-msgid "Alle afgehandelde en goedgekeurde studies bekijken"
-msgstr "View all processed and approved studies"
+msgid ""
+"Alle afgehandelde en goedgekeurde studies bekijken van de Algemene Kamer"
+msgstr "View all processed and approved studies of the General Chamber"
 
-#: core/templates/core/index.html:89
+#: core/templates/core/index.html:80
+msgid ""
+"Alle afgehandelde en goedgekeurde studies bekijken van de Linguïstiek Kamer"
+msgstr "View all processed and approved studies of the Linguistics Chamber"
+
+#: core/templates/core/index.html:92
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/core/index.html:95
+#: core/templates/core/index.html:98
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: core/templates/core/index.html:98
+#: core/templates/core/index.html:101
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: core/templates/core/index.html:104
+#: core/templates/core/index.html:107
 #, python-format
 msgid ""
 "\n"
@@ -425,7 +435,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: core/templates/core/index.html:109
+#: core/templates/core/index.html:112
 msgid ""
 "\n"
 "    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren "
@@ -2829,35 +2839,35 @@ msgstr "Task-based research: session {} task {} (trajectory {})"
 msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
 
-#: proposals/views/proposal_views.py:30
+#: proposals/views/proposal_views.py:32 proposals/views/proposal_views.py:72
 msgid "Publiek archief"
 msgstr "Public archive"
 
-#: proposals/views/proposal_views.py:31
+#: proposals/views/proposal_views.py:33
 msgid "Dit overzicht toont alle goedgekeurde studies."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:102
+#: proposals/views/proposal_views.py:122
 msgid "Dit overzicht toont al uw nog niet ingediende studies."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:117
+#: proposals/views/proposal_views.py:137
 msgid "Dit overzicht toont al uw ingediende studies."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:130
+#: proposals/views/proposal_views.py:150
 msgid "Dit overzicht toont al uw beoordeelde studies."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:143
+#: proposals/views/proposal_views.py:163
 msgid "Dit overzicht toont al uw studies waar u eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:154
+#: proposals/views/proposal_views.py:174
 msgid "Dit overzicht toont al uw studies."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:167
+#: proposals/views/proposal_views.py:187
 msgid ""
 "Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -2865,20 +2875,20 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:189
+#: proposals/views/proposal_views.py:209
 #, python-format
 msgid "Studie %(title)s bewerkt"
 msgstr "Application %(title)s edited"
 
-#: proposals/views/proposal_views.py:241
+#: proposals/views/proposal_views.py:261
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:279
+#: proposals/views/proposal_views.py:299
 msgid "Studie verzonden"
 msgstr "Application submitted"
 
-#: proposals/views/proposal_views.py:336
+#: proposals/views/proposal_views.py:356
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 

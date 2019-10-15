@@ -46,7 +46,10 @@
             <a href="#" class="pure-menu-link">{% trans "Archief" %}</a>
             <ul class="pure-menu-children">
                 <li class="pure-menu-item">
-                    <a class="pure-menu-link" href="{% url 'proposals:archive' %}">{% trans "Alle studies bekijken" %}</a>
+                    <a class="pure-menu-link" href="{% url 'proposals:archive' 'AK' %}">{% trans "Alle studies bekijken van de Algemene Kamer" %}</a>
+                </li>
+                <li class="pure-menu-item">
+                    <a class="pure-menu-link" href="{% url 'proposals:archive' 'LK' %}">{% trans "Alle studies bekijken van de Linguïstiek Kamer" %}</a>
                 </li>
                 {% if user|is_secretary %}
                 <li class="pure-menu-item">
