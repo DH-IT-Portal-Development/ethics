@@ -43,8 +43,11 @@
         <tr>
             <td>{{ review.proposal.reference_number }}</td>
             <td>{{ review.proposal.title }}</td>
-            <td>{{ review.proposal.created_by.get_full_name }}</td>
-            <td>{{ review.proposal.supervisor.get_full_name }}</td>
+            <td>
+                <a href="{% url 'core:user_detail' review.proposal.created_by.pk %}">
+                    {{ review.proposal.created_by.get_full_name }}
+                </a>
+            </td>            <td>{{ review.proposal.supervisor.get_full_name }}</td>
             <td>{{ decision.reviewer.get_full_name }}</td>
             <td>{{ review.get_stage_display }}</td>
             <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_start|date:"j M Y" }}</td>
