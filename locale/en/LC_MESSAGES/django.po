@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 16:09+0200\n"
+"POT-Creation-Date: 2019-10-24 16:33+0200\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -84,6 +84,166 @@ msgstr ""
 "responsibility of the school to verify if the employees have such a VOG. The "
 "role of the FEtC-H in this matter is just to inform the researchers that the "
 "school probably will ask about this certificate."
+
+#: core/templates/auth/user_detail.html:18
+msgid "Gebruiksersnaam"
+msgstr "Username"
+
+#: core/templates/auth/user_detail.html:26
+#: proposals/templates/proposals/proposal_pdf.html:74
+msgid "E-mail"
+msgstr "E-mail"
+
+#: core/templates/auth/user_detail.html:42
+msgid "Ingediende studies"
+msgstr "Submitted applications"
+
+#: core/templates/auth/user_detail.html:47
+#: proposals/templates/proposals/proposal_export_list.html:15
+#: proposals/templates/proposals/proposal_list.html:73
+#: reviews/templates/reviews/decision_list.html:29
+#: reviews/templates/reviews/decision_list_open.html:29
+#: reviews/templates/reviews/decision_supervisor_list_open.html:29
+#: reviews/templates/reviews/review_all_list.html:29
+#: reviews/templates/reviews/review_list.html:28
+#: reviews/templates/reviews/review_to_conclude.html:29
+msgid "Referentienummer"
+msgstr "Reference number"
+
+#: core/templates/auth/user_detail.html:48
+#: reviews/templates/reviews/decision_list.html:31
+#: reviews/templates/reviews/decision_list_open.html:32
+#: reviews/templates/reviews/review_all_list.html:31
+#: reviews/templates/reviews/review_to_conclude.html:31
+msgid "Eindverantwoordelijke"
+msgstr "Researcher with final responsibility"
+
+#: core/templates/auth/user_detail.html:49
+#: proposals/templates/proposals/proposal_list.html:74
+#: reviews/templates/reviews/decision_list.html:32
+#: reviews/templates/reviews/decision_list_open.html:30
+#: reviews/templates/reviews/decision_supervisor_list_open.html:30
+#: reviews/templates/reviews/review_all_list.html:32
+#: reviews/templates/reviews/review_list.html:29
+#: reviews/templates/reviews/review_to_conclude.html:32
+msgid "Titel studie"
+msgstr "Study title"
+
+#: core/templates/auth/user_detail.html:50
+#: reviews/templates/reviews/decision_list.html:33
+#: reviews/templates/reviews/decision_list_open.html:34
+#: reviews/templates/reviews/decision_supervisor_list_open.html:33
+#: reviews/templates/reviews/review_all_list.html:33
+#: reviews/templates/reviews/review_to_conclude.html:33
+msgid "Fase"
+msgstr "Phase"
+
+#: core/templates/auth/user_detail.html:51
+#: proposals/templates/proposals/proposal_list.html:76
+#: reviews/templates/reviews/decision_list.html:34
+#: reviews/templates/reviews/decision_list_open.html:35
+#: reviews/templates/reviews/decision_supervisor_list_open.html:34
+#: reviews/templates/reviews/review_all_list.html:34
+#: reviews/templates/reviews/review_to_conclude.html:34
+msgid "Datum ingediend"
+msgstr "Date submitted"
+
+#: core/templates/auth/user_detail.html:52
+#: reviews/templates/reviews/decision_list.html:35
+#: reviews/templates/reviews/decision_list_open.html:36
+#: reviews/templates/reviews/decision_supervisor_list_open.html:35
+#: reviews/templates/reviews/review_all_list.html:35
+#: reviews/templates/reviews/review_to_conclude.html:35
+msgid "Gewenste einddatum"
+msgstr "Desired end date"
+
+#: core/templates/auth/user_detail.html:53
+#: reviews/templates/reviews/decision_list.html:36
+#: reviews/templates/reviews/review_all_list.html:36
+#: reviews/templates/reviews/review_to_conclude.html:36
+msgid "Mijn besluit"
+msgstr "My decision"
+
+#: core/templates/auth/user_detail.html:54 reviews/models.py:44
+#: reviews/templates/reviews/decision_list.html:37
+#: reviews/templates/reviews/review_all_list.html:37
+#: reviews/templates/reviews/review_to_conclude.html:37
+msgid "Afhandeling"
+msgstr "Action"
+
+#: core/templates/auth/user_detail.html:55
+#: proposals/templates/proposals/proposal_list.html:80
+#: reviews/templates/reviews/decision_list.html:38
+#: reviews/templates/reviews/decision_list_open.html:37
+#: reviews/templates/reviews/decision_supervisor_list_open.html:36
+#: reviews/templates/reviews/review_all_list.html:38
+#: reviews/templates/reviews/review_list.html:31
+#: reviews/templates/reviews/review_to_conclude.html:38
+#: tasks/templates/tasks/task_list.html:11
+msgid "Acties"
+msgstr "Actions"
+
+#: core/templates/auth/user_detail.html:71
+#: reviews/templates/reviews/decision_list.html:60
+#: reviews/templates/reviews/review_all_list.html:58
+#: reviews/templates/reviews/review_to_conclude.html:58
+msgid ", met revisie"
+msgstr ", with revision"
+
+#: core/templates/auth/user_detail.html:78
+#: reviews/templates/reviews/decision_list.html:67
+#: reviews/templates/reviews/decision_list_open.html:56
+#: reviews/templates/reviews/decision_supervisor_list_open.html:55
+#: reviews/templates/reviews/review_all_list.html:65
+#: reviews/templates/reviews/review_list.html:41
+#: reviews/templates/reviews/review_to_conclude.html:65
+msgid "Studie inzien"
+msgstr "Show study"
+
+#: core/templates/auth/user_detail.html:79
+#: reviews/templates/reviews/decision_list.html:68
+#: reviews/templates/reviews/decision_list_open.html:57
+#: reviews/templates/reviews/review_all_list.html:66
+#: reviews/templates/reviews/review_to_conclude.html:66
+msgid "Details"
+msgstr "Details"
+
+#: core/templates/auth/user_detail.html:81
+#: reviews/templates/reviews/decision_list.html:70
+#: reviews/templates/reviews/review_all_list.html:68
+#: reviews/templates/reviews/review_to_conclude.html:68
+msgid "Aanstellen"
+msgstr "Appoint"
+
+#: core/templates/auth/user_detail.html:83
+#: reviews/templates/reviews/decision_list.html:75
+#: reviews/templates/reviews/review_all_list.html:70
+#: reviews/templates/reviews/review_to_conclude.html:72
+msgid "Afsluiten"
+msgstr "Conclude"
+
+#: core/templates/auth/user_detail.html:86
+#: reviews/templates/reviews/decision_list.html:78
+#: reviews/templates/reviews/review_all_list.html:73
+#: reviews/templates/reviews/review_to_conclude.html:75
+msgid "Website export tekst"
+msgstr "Website export text"
+
+#: core/templates/auth/user_detail.html:90
+#: proposals/templates/proposals/proposal_confirmation.html:7
+#: reviews/templates/reviews/decision_list.html:82
+#: reviews/templates/reviews/review_all_list.html:77
+#: reviews/templates/reviews/review_to_conclude.html:79
+msgid "Bevestigingsbrief versturen"
+msgstr "Send confirmation letter"
+
+#: core/templates/auth/user_detail.html:92
+#: proposals/templates/proposals/proposal_confirmation.html:29
+#: reviews/templates/reviews/decision_list.html:84
+#: reviews/templates/reviews/review_all_list.html:79
+#: reviews/templates/reviews/review_to_conclude.html:81
+msgid "Bevestigingsbrief verstuurd"
+msgstr "Confirmation sent"
 
 #: core/templates/base/base.html:8 core/templates/base/base.html:40
 msgid "FETC-GW"
@@ -1518,13 +1678,6 @@ msgstr "Delete"
 msgid "Annuleren"
 msgstr "Cancel"
 
-#: proposals/templates/proposals/proposal_confirmation.html:7
-#: reviews/templates/reviews/decision_list.html:78
-#: reviews/templates/reviews/review_all_list.html:74
-#: reviews/templates/reviews/review_to_conclude.html:76
-msgid "Bevestigingsbrief versturen"
-msgstr "Send confirmation letter"
-
 #: proposals/templates/proposals/proposal_confirmation.html:23
 #, python-format
 msgid ""
@@ -1537,13 +1690,6 @@ msgstr ""
 "    Please state when the confirmation letter for <em>%(title)s</em> has "
 "been sent here.\n"
 "    "
-
-#: proposals/templates/proposals/proposal_confirmation.html:29
-#: reviews/templates/reviews/decision_list.html:80
-#: reviews/templates/reviews/review_all_list.html:76
-#: reviews/templates/reviews/review_to_conclude.html:78
-msgid "Bevestigingsbrief verstuurd"
-msgstr "Confirmation sent"
 
 #: proposals/templates/proposals/proposal_copy.html:7
 msgid "Studie kopiëren"
@@ -1852,17 +1998,6 @@ msgstr "Informed consent forms for the study"
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
-#: proposals/templates/proposals/proposal_export_list.html:15
-#: proposals/templates/proposals/proposal_list.html:73
-#: reviews/templates/reviews/decision_list.html:29
-#: reviews/templates/reviews/decision_list_open.html:29
-#: reviews/templates/reviews/decision_supervisor_list_open.html:29
-#: reviews/templates/reviews/review_all_list.html:29
-#: reviews/templates/reviews/review_list.html:28
-#: reviews/templates/reviews/review_to_conclude.html:29
-msgid "Referentienummer"
-msgstr "Reference number"
-
 #: proposals/templates/proposals/proposal_export_list.html:16
 #: proposals/templates/proposals/proposal_list.html:77
 #: proposals/templates/proposals/proposal_pdf.html:68
@@ -2009,48 +2144,18 @@ msgstr ""
 "study from the archive.\n"
 "        "
 
-#: proposals/templates/proposals/proposal_list.html:74
-#: reviews/templates/reviews/decision_list.html:32
-#: reviews/templates/reviews/decision_list_open.html:30
-#: reviews/templates/reviews/decision_supervisor_list_open.html:30
-#: reviews/templates/reviews/review_all_list.html:32
-#: reviews/templates/reviews/review_list.html:29
-#: reviews/templates/reviews/review_to_conclude.html:32
-msgid "Titel studie"
-msgstr "Study title"
-
 #: proposals/templates/proposals/proposal_list.html:75
 msgid "Soort studie"
 msgstr "Study type"
-
-#: proposals/templates/proposals/proposal_list.html:76
-#: reviews/templates/reviews/decision_list.html:34
-#: reviews/templates/reviews/decision_list_open.html:35
-#: reviews/templates/reviews/decision_supervisor_list_open.html:34
-#: reviews/templates/reviews/review_all_list.html:34
-#: reviews/templates/reviews/review_to_conclude.html:34
-msgid "Datum ingediend"
-msgstr "Date submitted"
 
 #: proposals/templates/proposals/proposal_list.html:79
 #: reviews/templates/reviews/review_list.html:30
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
-#: proposals/templates/proposals/proposal_list.html:80
-#: reviews/templates/reviews/decision_list.html:38
-#: reviews/templates/reviews/decision_list_open.html:37
-#: reviews/templates/reviews/decision_supervisor_list_open.html:36
-#: reviews/templates/reviews/review_all_list.html:38
-#: reviews/templates/reviews/review_list.html:31
-#: reviews/templates/reviews/review_to_conclude.html:38
-#: tasks/templates/tasks/task_list.html:11
-msgid "Acties"
-msgstr "Actions"
-
 #: proposals/templates/proposals/proposal_list.html:96
-#: reviews/templates/reviews/decision_list.html:69
-#: reviews/templates/reviews/review_to_conclude.html:67
+#: reviews/templates/reviews/decision_list.html:73
+#: reviews/templates/reviews/review_to_conclude.html:70
 msgid "Beslissen"
 msgstr "Decide"
 
@@ -2112,10 +2217,6 @@ msgstr ""
 #: tasks/templates/tasks/task_list.html:7
 msgid "Naam"
 msgstr "Name"
-
-#: proposals/templates/proposals/proposal_pdf.html:74
-msgid "E-mail"
-msgstr "E-mail"
 
 #: proposals/templates/proposals/proposal_pdf.html:442
 #: proposals/templates/proposals/study_consent.html:100
@@ -3000,12 +3101,6 @@ msgstr "Route"
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:44 reviews/templates/reviews/decision_list.html:37
-#: reviews/templates/reviews/review_all_list.html:37
-#: reviews/templates/reviews/review_to_conclude.html:37
-msgid "Afhandeling"
-msgstr "Action"
-
 #: reviews/models.py:105
 msgid "goedgekeurd"
 msgstr "endorsed"
@@ -3111,84 +3206,15 @@ msgstr "Save decision"
 msgid "Mijn besluiten"
 msgstr "My results"
 
-#: reviews/templates/reviews/decision_list.html:31
-#: reviews/templates/reviews/decision_list_open.html:32
-#: reviews/templates/reviews/review_all_list.html:31
-#: reviews/templates/reviews/review_to_conclude.html:31
-msgid "Eindverantwoordelijke"
-msgstr "Researcher with final responsibility"
-
-#: reviews/templates/reviews/decision_list.html:33
-#: reviews/templates/reviews/decision_list_open.html:34
-#: reviews/templates/reviews/decision_supervisor_list_open.html:33
-#: reviews/templates/reviews/review_all_list.html:33
-#: reviews/templates/reviews/review_to_conclude.html:33
-msgid "Fase"
-msgstr "Phase"
-
-#: reviews/templates/reviews/decision_list.html:35
-#: reviews/templates/reviews/decision_list_open.html:36
-#: reviews/templates/reviews/decision_supervisor_list_open.html:35
-#: reviews/templates/reviews/review_all_list.html:35
-#: reviews/templates/reviews/review_to_conclude.html:35
-msgid "Gewenste einddatum"
-msgstr "Desired end date"
-
-#: reviews/templates/reviews/decision_list.html:36
-#: reviews/templates/reviews/review_all_list.html:36
-#: reviews/templates/reviews/review_to_conclude.html:36
-msgid "Mijn besluit"
-msgstr "My decision"
-
-#: reviews/templates/reviews/decision_list.html:52
+#: reviews/templates/reviews/decision_list.html:56
 #: reviews/templates/reviews/review_table.html:17
-#: reviews/templates/reviews/review_to_conclude.html:51
+#: reviews/templates/reviews/review_to_conclude.html:54
 msgid "open"
 msgstr "open"
 
-#: reviews/templates/reviews/decision_list.html:56
-#: reviews/templates/reviews/review_all_list.html:55
-#: reviews/templates/reviews/review_to_conclude.html:55
-msgid ", met revisie"
-msgstr ", with revision"
-
-#: reviews/templates/reviews/decision_list.html:63
-#: reviews/templates/reviews/decision_list_open.html:53
-#: reviews/templates/reviews/decision_supervisor_list_open.html:52
-#: reviews/templates/reviews/review_all_list.html:62
-#: reviews/templates/reviews/review_list.html:41
-#: reviews/templates/reviews/review_to_conclude.html:62
-msgid "Studie inzien"
-msgstr "Show study"
-
-#: reviews/templates/reviews/decision_list.html:64
-#: reviews/templates/reviews/decision_list_open.html:54
-#: reviews/templates/reviews/review_all_list.html:63
-#: reviews/templates/reviews/review_to_conclude.html:63
-msgid "Details"
-msgstr "Details"
-
-#: reviews/templates/reviews/decision_list.html:66
-#: reviews/templates/reviews/review_all_list.html:65
-#: reviews/templates/reviews/review_to_conclude.html:65
-msgid "Aanstellen"
-msgstr "Appoint"
-
-#: reviews/templates/reviews/decision_list.html:67
+#: reviews/templates/reviews/decision_list.html:71
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
-
-#: reviews/templates/reviews/decision_list.html:71
-#: reviews/templates/reviews/review_all_list.html:67
-#: reviews/templates/reviews/review_to_conclude.html:69
-msgid "Afsluiten"
-msgstr "Conclude"
-
-#: reviews/templates/reviews/decision_list.html:74
-#: reviews/templates/reviews/review_all_list.html:70
-#: reviews/templates/reviews/review_to_conclude.html:72
-msgid "Website export tekst"
-msgstr "Website export text"
 
 #: reviews/templates/reviews/decision_list_open.html:8
 msgid "Openstaande besluiten commissieleden"

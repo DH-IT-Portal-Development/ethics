@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 import ldap
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
@@ -20,6 +20,7 @@ from django.views.generic.detail import SingleObjectMixin
 from interventions.models import Intervention
 from observations.models import Observation
 from proposals.models import Proposal
+from reviews.models import Review
 from tasks.models import Session, Task
 
 # We set up a custom LDAP connection here, separate from the Django auth one
@@ -43,6 +44,42 @@ except (ImportError, ldap.LDAPError):
 ################
 class HomeView(generic.TemplateView):
     template_name = 'core/index.html'
+
+
+class UserDetailView(GroupRequiredMixin, generic.DetailView):
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+        settings.GROUP_GENERAL_CHAMBER,
+    ]
+    model = get_user_model()
+    context_object_name = 'user_object'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['reviews'] = self.get_user_reviews()
+
+        return context
+
+    def get_user_reviews(self):
+        """Returns all Committee Reviews of this user"""
+        reviews = {}
+        objects = Review.objects.filter(
+            stage__gte=Review.ASSIGNMENT,
+            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__created_by=self.get_object()
+        )
+
+        for obj in objects:
+            proposal = obj.proposal
+            if proposal not in reviews:
+                reviews[proposal.pk] = obj
+            else:
+                if reviews[proposal.pk].pk < obj.pk:
+                    reviews[proposal.pk] = obj
+
+        return [value for key, value in reviews.items()]
 
 
 ################

@@ -43,7 +43,11 @@
         {% with review=decision.review %}
         <tr>
             <td>{{ review.proposal.reference_number }}</td>
-            <td>{{ review.proposal.created_by.get_full_name }}</td>
+            <td>
+                <a href="{% url 'core:user_detail' review.proposal.created_by.pk %}">
+                    {{ review.proposal.created_by.get_full_name }}
+                </a>
+            </td>
             <td>{{ review.accountable_user.get_full_name }}</td>
             <td>{{ review.proposal.title }}</td>
             <td>{{ review.get_stage_display }}</td>
