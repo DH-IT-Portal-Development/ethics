@@ -223,7 +223,7 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
             is_pre_assessment=False
         ).filter(
             Q(applicants=self.user,) | Q(supervisor=self.user)
-        )
+        ).distinct()
 
 
 class ProposalConfirmationForm(forms.ModelForm):
