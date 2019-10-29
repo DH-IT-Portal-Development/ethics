@@ -4,6 +4,7 @@ from braces.forms import UserKwargModelFormMixin
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
@@ -155,9 +156,10 @@ van het FETC-GW worden opgenomen.')
 
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
+        supervisor = cleaned_data.get('supervisor')
 
         # Always make sure the applicant is actually in the applicants list
-        if self.user not in applicants:
+        if self.user not in applicants and self.user != supervisor:
             error = forms.ValidationError(
                 _('U heeft uzelf niet als onderzoekers geselecteerd.'),
                 code='required')
@@ -217,8 +219,11 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         - the current User is an applicant.
         """
         super(ProposalCopyForm, self).__init__(*args, **kwargs)
-        self.fields['parent'].queryset = Proposal.objects. \
-            filter(applicants=self.user, is_pre_assessment=False)
+        self.fields['parent'].queryset = Proposal.objects.filter(
+            is_pre_assessment=False
+        ).filter(
+            Q(applicants=self.user,) | Q(supervisor=self.user)
+        )
 
 
 class ProposalConfirmationForm(forms.ModelForm):
