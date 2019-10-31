@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-31 15:13+0100\n"
+"POT-Creation-Date: 2019-10-31 16:14+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -532,7 +532,7 @@ msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
 #: core/templates/core/index.html:63
-msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW;"
+msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW."
 msgstr "as an amendment, after your study has been approved by the FEtC-H."
 
 #: core/templates/core/index.html:67
@@ -2009,7 +2009,7 @@ msgid "Informed consent formulieren voor het onderzoek"
 msgstr "Informed consent forms for the study"
 
 #: proposals/templates/proposals/proposal_diff.html:600
-#: proposals/templates/proposals/proposal_submit.html:118
+#: proposals/templates/proposals/proposal_submit.html:126
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
@@ -2242,7 +2242,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/proposal_pdf.html:459
 #: proposals/templates/proposals/proposal_pdf_empty.html:388
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:128
-#: proposals/templates/proposals/proposal_submit.html:120
+#: proposals/templates/proposals/proposal_submit.html:128
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2291,7 +2291,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:120
-#: proposals/templates/proposals/proposal_submit.html:116
+#: proposals/templates/proposals/proposal_submit.html:124
 msgid "Aanvraag voor voortoetsing versturen"
 msgstr "Submit application for preliminary assessment"
 
@@ -3021,7 +3021,7 @@ msgstr "Application deleted"
 msgid "Studie verzonden"
 msgstr "Application submitted"
 
-#: proposals/views/proposal_views.py:357
+#: proposals/views/proposal_views.py:370
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
