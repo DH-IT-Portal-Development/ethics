@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-31 13:08+0100\n"
+"POT-Creation-Date: 2019-10-31 15:13+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
 #: core/forms/conditional_form.py:48 core/forms/mixins.py:83
-#: proposals/forms.py:390 proposals/forms.py:470 studies/forms.py:100
+#: proposals/forms.py:393 proposals/forms.py:473 studies/forms.py:100
 #: studies/forms.py:111 studies/forms.py:117 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -402,11 +402,11 @@ msgstr "Linguistics Chamber"
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:119 core/templates/core/index.html:93
+#: core/templates/base/menu.html:119 core/templates/core/index.html:105
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:122 core/templates/core/index.html:96
+#: core/templates/base/menu.html:122 core/templates/core/index.html:108
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -414,7 +414,7 @@ msgstr "Regulations General Chamber (GC)"
 msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/base/menu.html:128 core/templates/core/index.html:102
+#: core/templates/base/menu.html:128 core/templates/core/index.html:114
 #: proposals/templates/proposals/proposal_pdf.html:393
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:81
@@ -503,89 +503,93 @@ msgstr ""
 "    In this portal you can do the following:\n"
 "    "
 
-#: core/templates/core/index.html:38
+#: core/templates/core/index.html:39
 msgid "Dien een nieuwe studie in"
 msgstr "Submit a new study"
 
-#: core/templates/core/index.html:41
+#: core/templates/core/index.html:43
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: core/templates/core/index.html:44
-msgid "vanuit een kopie van een oude studie;"
+#: core/templates/core/index.html:46
+msgid "op basis van een kopie van een oude studie;"
 msgstr "from a copy of an old study;"
 
-#: core/templates/core/index.html:47
-msgid "voor voortoetsting t.b.v. subsidieaanvraag;"
+#: core/templates/core/index.html:49
+msgid "voor voortoetsing t.b.v. subsidieaanvraag;"
 msgstr "for preliminary assessment regarding subsidy applications;"
 
-#: core/templates/core/index.html:50
-msgid "die al goedgekeurd is door een andere ethische toetsings comissie."
+#: core/templates/core/index.html:52
+msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: core/templates/core/index.html:53
+#: core/templates/core/index.html:56
 msgid "Een gereviseerde studie aanmelden"
 msgstr "Submit a revised version of your study"
 
-#: core/templates/core/index.html:56
-msgid "als een revisie, gebasseerd op opmerkingen van de FEtC-H;"
-msgstr "as a revision, based on comments of the FETC-GW;"
-
 #: core/templates/core/index.html:60
+msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
+msgstr "as a revision, based on comments of the FEtC-H;"
+
+#: core/templates/core/index.html:63
+msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW;"
+msgstr "as an amendment, after your study has been approved by the FEtC-H."
+
+#: core/templates/core/index.html:67
 msgid "Bekijk"
 msgstr "View"
 
-#: core/templates/core/index.html:63
+#: core/templates/core/index.html:71
 msgid "mijn conceptstudies;"
 msgstr "my draft applications;"
 
-#: core/templates/core/index.html:66
+#: core/templates/core/index.html:74
 msgid "mijn oefenstudies;"
 msgstr "my practice applications;"
 
-#: core/templates/core/index.html:69
+#: core/templates/core/index.html:77
 msgid "mijn ingediende studies;"
 msgstr "my submitted applications;"
 
-#: core/templates/core/index.html:72
+#: core/templates/core/index.html:80
 msgid "mijn afgehandelde studies;"
 msgstr "my processed applications;"
 
-#: core/templates/core/index.html:75
+#: core/templates/core/index.html:83
 msgid "mijn studies als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: core/templates/core/index.html:78
+#: core/templates/core/index.html:86
 msgid "al mijn studies."
 msgstr "all my applications."
 
-#: core/templates/core/index.html:81
+#: core/templates/core/index.html:90
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: core/templates/core/index.html:84
+#: core/templates/core/index.html:94
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Algemene Kamer"
 msgstr "View all processed and approved studies of the General Chamber"
 
-#: core/templates/core/index.html:87
+#: core/templates/core/index.html:97
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Linguïstiek Kamer"
 msgstr "View all processed and approved studies of the Linguistics Chamber"
 
-#: core/templates/core/index.html:99
+#: core/templates/core/index.html:111
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/core/index.html:105
+#: core/templates/core/index.html:117
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: core/templates/core/index.html:108
+#: core/templates/core/index.html:120
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: core/templates/core/index.html:114
+#: core/templates/core/index.html:126
 #, python-format
 msgid ""
 "\n"
@@ -598,7 +602,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: core/templates/core/index.html:119
+#: core/templates/core/index.html:131
 msgid ""
 "\n"
 "    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren "
@@ -1082,35 +1086,35 @@ msgstr ""
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:272 proposals/forms.py:378
+#: proposals/forms.py:275 proposals/forms.py:381
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:280
+#: proposals/forms.py:283
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:333
+#: proposals/forms.py:336
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:335
+#: proposals/forms.py:338
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:337
+#: proposals/forms.py:340
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:339
+#: proposals/forms.py:342
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:341
+#: proposals/forms.py:344
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:384
+#: proposals/forms.py:387
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1118,12 +1122,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:438 proposals/forms.py:451 proposals/forms.py:461
+#: proposals/forms.py:441 proposals/forms.py:454 proposals/forms.py:464
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:442 proposals/forms.py:446 proposals/forms.py:455
-#: proposals/forms.py:465
+#: proposals/forms.py:445 proposals/forms.py:449 proposals/forms.py:458
+#: proposals/forms.py:468
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -1675,7 +1679,7 @@ msgid "Verwijderen"
 msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:19
-#: proposals/templates/proposals/proposal_copy.html:19
+#: proposals/templates/proposals/proposal_copy.html:25
 #: tasks/templates/tasks/session_confirm_delete.html:15
 #: tasks/templates/tasks/task_confirm_delete.html:15
 msgid "Annuleren"
@@ -1694,17 +1698,25 @@ msgstr ""
 "been sent here.\n"
 "    "
 
-#: proposals/templates/proposals/proposal_copy.html:7
+#: proposals/templates/proposals/proposal_copy.html:8
+msgid "Studie kopiëren voor revisie"
+msgstr "Copy application for revision"
+
+#: proposals/templates/proposals/proposal_copy.html:10
+msgid "Studie kopiëren voor amendement"
+msgstr "Copy application for amendment"
+
+#: proposals/templates/proposals/proposal_copy.html:12
 msgid "Studie kopiëren"
 msgstr "Copy application"
 
-#: proposals/templates/proposals/proposal_copy.html:14
+#: proposals/templates/proposals/proposal_copy.html:20
 msgid ""
 "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren "
 "aangepast worden."
 msgstr "You can copy a study here. All fields can be edited after copying."
 
-#: proposals/templates/proposals/proposal_copy.html:18
+#: proposals/templates/proposals/proposal_copy.html:24
 msgid "Kopiëren"
 msgstr "Copy"
 
@@ -4572,3 +4584,6 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Revisie/amendement maken"
+#~ msgstr "Copy application for revision/amendment"

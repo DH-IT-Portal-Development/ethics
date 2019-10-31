@@ -362,6 +362,14 @@ class ProposalCopy(UserFormKwargsMixin, CreateView):
         form.instance = copy_proposal(self, form)
         return super(ProposalCopy, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['is_revision'] = False
+        context['is_amendment'] = False
+
+        return context
+
 
 class ProposalCopyRevision(ProposalCopy):
     def get_initial(self):
@@ -369,6 +377,28 @@ class ProposalCopyRevision(ProposalCopy):
         initial = super(ProposalCopyRevision, self).get_initial()
         initial['is_revision'] = True
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['is_revision'] = True
+
+        return context
+
+
+class ProposalCopyAmendment(ProposalCopy):
+    def get_initial(self):
+        """Sets initial value of is_revision to True"""
+        initial = super(ProposalCopyAmendment, self).get_initial()
+        initial['is_revision'] = True
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['is_amendment'] = True
+
+        return context
 
 
 class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,

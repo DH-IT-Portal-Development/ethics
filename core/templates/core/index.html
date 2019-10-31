@@ -35,30 +35,38 @@
     In deze portal kunt u het volgende doen:
     {% endblocktrans %}
 </p>
-<h3>{% trans "Dien een nieuwe studie in" %}</h3>
-<ul>
+<h4 style="margin-bottom: 0">
+    {% trans "Dien een nieuwe studie in" %}
+</h4>
+<ul style="margin-top: 5px">
     <li>
         <a href="{% url 'proposals:start' %}">{% trans "die volledig nieuw is in deze portal;" %}</a>
     </li>
     <li>
-        <a href="{% url 'proposals:copy' %}">{% trans "vanuit een kopie van een oude studie;" %}</a>
+        <a href="{% url 'proposals:copy' %}">{% trans "op basis van een kopie van een oude studie;" %}</a>
     </li>
     <li>
-        <a href="{% url 'proposals:start_pre' %}">{% trans "voor voortoetsting t.b.v. subsidieaanvraag;" %}</a>
+        <a href="{% url 'proposals:start_pre' %}">{% trans "voor voortoetsing t.b.v. subsidieaanvraag;" %}</a>
     </li>
     <li>
-        <a href="{% url 'proposals:start_pre_approved' %}">{% trans "die al goedgekeurd is door een andere ethische toetsings comissie." %}</a>
+        <a href="{% url 'proposals:start_pre_approved' %}">{% trans "die al goedgekeurd is door een andere ethische toetsingscomissie." %}</a>
     </li>
 </ul>
-<h3>{% trans "Een gereviseerde studie aanmelden" %}</h3>
-<ul>
+<h4 style="margin-bottom: 0">
+    {% trans "Een gereviseerde studie aanmelden" %}
+</h4>
+<ul style="margin-top: 5px">
     <li>
-        <a href="{% url 'proposals:copy_revision' %}">{% trans "als een revisie, gebasseerd op opmerkingen van de FEtC-H;" %}</a>
+        <a href="{% url 'proposals:copy_revision' %}">{% trans "als een revisie, gebaseerd op opmerkingen van de FETC-GW;" %}</a>
     </li>
-    {# TODO: amenbement verschil? #}
+    <li>
+        <a href="{% url 'proposals:copy_amendment' %}">{% trans "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW;" %}</a>
+    </li>
 </ul>
-<h3>{% trans "Bekijk" %}</h3>
-<ul>
+<h4  style="margin-bottom: 0">
+    {% trans "Bekijk" %}
+</h4>
+<ul style="margin-top: 5px">
     <li>
         <a href="{% url 'proposals:my_concepts' %}">{% trans "mijn conceptstudies;" %}</a>
     </li>
@@ -78,8 +86,10 @@
         <a href="{% url 'proposals:my_archive' %}">{% trans "al mijn studies." %}</a>
     </li>
 </ul>
-<h3>{% trans 'FETC-GW archief' %}</h3>
-<ul>
+<h4 style="margin-bottom: 0">
+    {% trans 'FETC-GW archief' %}
+</h4>
+<ul style="margin-top: 5px">
     <li>
         <a href="{% url 'proposals:archive' 'AK' %}">{% trans "Alle afgehandelde en goedgekeurde studies bekijken van de Algemene Kamer" %}</a>
     </li>
@@ -87,8 +97,10 @@
         <a href="{% url 'proposals:archive' 'LK' %}">{% trans "Alle afgehandelde en goedgekeurde studies bekijken van de Linguïstiek Kamer" %}</a>
     </li>
 </ul>
-<h3>Help</h3>
-<ul>
+<h4 style="margin-bottom: 0">
+    Help
+</h4>
+<ul style="margin-top: 5px">
     <li>
         <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">{% trans "FETC-GW website" %}</a>
     </li>

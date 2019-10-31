@@ -3,8 +3,14 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "Studie kopiëren" %}
+{% block title %}
+    {% if is_revision %}
+        {% trans "Studie kopiëren voor revisie" %}
+    {% elif is_amendment %}
+        {% trans "Studie kopiëren voor amendement" %}
+    {% else %}
+        {% trans "Studie kopiëren" %}
+    {% endif %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
