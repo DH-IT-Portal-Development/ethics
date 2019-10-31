@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 16:33+0200\n"
+"POT-Creation-Date: 2019-10-31 13:08+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
 #: core/forms/conditional_form.py:48 core/forms/mixins.py:83
-#: proposals/forms.py:385 proposals/forms.py:465 studies/forms.py:100
+#: proposals/forms.py:390 proposals/forms.py:470 studies/forms.py:100
 #: studies/forms.py:111 studies/forms.py:117 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -301,8 +301,7 @@ msgstr "Back to the beginning of the session"
 msgid "Startpagina"
 msgstr "Start page"
 
-#: core/templates/base/menu.html:11 core/templates/core/index.html:38
-#: proposals/views/proposal_views.py:174
+#: core/templates/base/menu.html:11 proposals/views/proposal_views.py:174
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -403,11 +402,11 @@ msgstr "Linguistics Chamber"
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:119 core/templates/core/index.html:86
+#: core/templates/base/menu.html:119 core/templates/core/index.html:93
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:122 core/templates/core/index.html:89
+#: core/templates/base/menu.html:122 core/templates/core/index.html:96
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -415,7 +414,7 @@ msgstr "Regulations General Chamber (GC)"
 msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/base/menu.html:128 core/templates/core/index.html:95
+#: core/templates/base/menu.html:128 core/templates/core/index.html:102
 #: proposals/templates/proposals/proposal_pdf.html:393
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:81
@@ -504,85 +503,89 @@ msgstr ""
 "    In this portal you can do the following:\n"
 "    "
 
+#: core/templates/core/index.html:38
+msgid "Dien een nieuwe studie in"
+msgstr "Submit a new study"
+
 #: core/templates/core/index.html:41
-msgid ""
-"Een nieuwe studie aanmelden (<em>from scratch</em> in een leeg formulier)"
-msgstr "Register a new study (<em>from scratch</em> in an empty form)"
+msgid "die volledig nieuw is in deze portal;"
+msgstr "that is completely new in this portal;"
 
 #: core/templates/core/index.html:44
-msgid "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)"
-msgstr "Register a new study (from a copy of an old study)"
+msgid "vanuit een kopie van een oude studie;"
+msgstr "from a copy of an old study;"
 
 #: core/templates/core/index.html:47
-msgid ""
-"Een nieuwe studie aanmelden (voor voortoetsting t.b.v. subsidieaanvraag)"
-msgstr ""
-"Register a new study (preliminary assessment for the purpose of subsidy "
-"applications)"
+msgid "voor voortoetsting t.b.v. subsidieaanvraag;"
+msgstr "for preliminary assessment regarding subsidy applications;"
 
 #: core/templates/core/index.html:50
-#: proposals/templates/proposals/proposal_start_pre_approved.html:7
-msgid ""
-"Een nieuwe studie aanmelden (die al goedgekeurd is door een andere ethische "
-"toetsings comissie)"
-msgstr ""
-"Register a new study (that has been approved by another ethics committee)"
+msgid "die al goedgekeurd is door een andere ethische toetsings comissie."
+msgstr "that has been approved by another ethics committee."
 
 #: core/templates/core/index.html:53
-msgid "Een amendement indienen"
-msgstr "Submit an amendment"
+msgid "Een gereviseerde studie aanmelden"
+msgstr "Submit a revised version of your study"
 
 #: core/templates/core/index.html:56
-msgid "Mijn conceptstudies bekijken"
-msgstr "View my draft applications"
+msgid "als een revisie, gebasseerd op opmerkingen van de FEtC-H;"
+msgstr "as a revision, based on comments of the FETC-GW;"
 
-#: core/templates/core/index.html:59
-msgid "Mijn oefenstudies bekijken"
-msgstr "View my practice applications"
+#: core/templates/core/index.html:60
+msgid "Bekijk"
+msgstr "View"
 
-#: core/templates/core/index.html:62
-msgid "Mijn ingediende studies bekijken"
-msgstr "View my submitted applications"
+#: core/templates/core/index.html:63
+msgid "mijn conceptstudies;"
+msgstr "my draft applications;"
 
-#: core/templates/core/index.html:65
-msgid "Mijn afgehandelde studies bekijken"
-msgstr "View my processed applications"
+#: core/templates/core/index.html:66
+msgid "mijn oefenstudies;"
+msgstr "my practice applications;"
 
-#: core/templates/core/index.html:68
-msgid "Mijn studies als eindverantwoordelijke bekijken"
-msgstr "View my supervised applications"
+#: core/templates/core/index.html:69
+msgid "mijn ingediende studies;"
+msgstr "my submitted applications;"
 
-#: core/templates/core/index.html:71
-msgid "Al mijn studies bekijken"
-msgstr "View all my applications"
+#: core/templates/core/index.html:72
+msgid "mijn afgehandelde studies;"
+msgstr "my processed applications;"
 
-#: core/templates/core/index.html:74
+#: core/templates/core/index.html:75
+msgid "mijn studies als eindverantwoordelijke;"
+msgstr "my supervised applications;"
+
+#: core/templates/core/index.html:78
+msgid "al mijn studies."
+msgstr "all my applications."
+
+#: core/templates/core/index.html:81
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: core/templates/core/index.html:77
+#: core/templates/core/index.html:84
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Algemene Kamer"
 msgstr "View all processed and approved studies of the General Chamber"
 
-#: core/templates/core/index.html:80
+#: core/templates/core/index.html:87
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Linguïstiek Kamer"
 msgstr "View all processed and approved studies of the Linguistics Chamber"
 
-#: core/templates/core/index.html:92
+#: core/templates/core/index.html:99
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/core/index.html:98
+#: core/templates/core/index.html:105
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: core/templates/core/index.html:101
+#: core/templates/core/index.html:108
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: core/templates/core/index.html:107
+#: core/templates/core/index.html:114
 #, python-format
 msgid ""
 "\n"
@@ -595,7 +598,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: core/templates/core/index.html:112
+#: core/templates/core/index.html:119
 msgid ""
 "\n"
 "    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren "
@@ -1028,19 +1031,19 @@ msgstr ""
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/forms.py:47 proposals/forms.py:210
+#: proposals/forms.py:48 proposals/forms.py:212
 msgid "Er bestaat al een studie met deze titel."
 msgstr "There is already an existing study with this title."
 
-#: proposals/forms.py:96
+#: proposals/forms.py:97
 msgid "Selecteer..."
 msgstr "Select..."
 
-#: proposals/forms.py:102
+#: proposals/forms.py:103
 msgid "Docent"
 msgstr "Professor"
 
-#: proposals/forms.py:103
+#: proposals/forms.py:104
 msgid ""
 "Vul hier de docent van de cursus in waarbinnen u deze portal moet doorlopen. "
 "De docent kan na afloop de studie inkijken in de portal. De studie zal niet "
@@ -1050,19 +1053,19 @@ msgstr ""
 "taking. The professor is able to look at your study in the portal. This "
 "study will not be published in the semipublic archive of the FEtC-H."
 
-#: proposals/forms.py:152
+#: proposals/forms.py:153
 msgid "U dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the researcher with final responsibility."
 
-#: proposals/forms.py:162
+#: proposals/forms.py:164
 msgid "U heeft uzelf niet als onderzoekers geselecteerd."
 msgstr "You have not selected yourself!"
 
-#: proposals/forms.py:167
+#: proposals/forms.py:169
 msgid "U heeft geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:175
+#: proposals/forms.py:177
 msgid ""
 "Indien u geen toestemming heeft van een andere ethische commissie, dient u "
 "het normale formulier in te vullen. Ga terug naar de startpagina, en "
@@ -1075,39 +1078,39 @@ msgstr ""
 "\"Register a new study (from scratch in an empty form)\" or \"Register a new "
 "study (from a copy of an old study)\"."
 
-#: proposals/forms.py:196
+#: proposals/forms.py:198
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:267 proposals/forms.py:373
+#: proposals/forms.py:272 proposals/forms.py:378
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:275
+#: proposals/forms.py:280
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:328
+#: proposals/forms.py:333
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:330
+#: proposals/forms.py:335
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:332
+#: proposals/forms.py:337
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:334
+#: proposals/forms.py:339
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:336
+#: proposals/forms.py:341
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:379
+#: proposals/forms.py:384
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1115,12 +1118,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:433 proposals/forms.py:446 proposals/forms.py:456
+#: proposals/forms.py:438 proposals/forms.py:451 proposals/forms.py:461
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:437 proposals/forms.py:441 proposals/forms.py:450
-#: proposals/forms.py:460
+#: proposals/forms.py:442 proposals/forms.py:446 proposals/forms.py:455
+#: proposals/forms.py:465
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -2426,6 +2429,13 @@ msgstr "Next step >>"
 #: proposals/templates/proposals/proposal_start_practice.html:7
 msgid "Een nieuwe studie aanmelden (oefenportaal)"
 msgstr "Register a new study (practice portal)"
+
+#: proposals/templates/proposals/proposal_start_pre_approved.html:7
+msgid ""
+"Een nieuwe studie aanmelden (die al goedgekeurd is door een andere ethische "
+"toetsings comissie)"
+msgstr ""
+"Register a new study (that has been approved by another ethics committee)"
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
 msgid ""
@@ -4562,40 +4572,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid ""
-#~ "\n"
-#~ "    Om een studie t.a.v. <em>informed consent</em>, belasting en risico's "
-#~ "voor\n"
-#~ "    de deelnemers, en data-management procedures goed te kunnen "
-#~ "beoordelen\n"
-#~ "    heeft de FETC-GW een gedetailleerde specificatie van de studie "
-#~ "nodig.\n"
-#~ "    Na enkele inleidende vragen dient u o.a. op te geven wie er aan "
-#~ "deelnemen,\n"
-#~ "    en welk(e) soort(en) onderzoek de studie omvat: observatieonderzoek,\n"
-#~ "    interventieonderzoek en/of takenonderzoek of interview.\n"
-#~ "    Voor elk type onderzoek dient u vervolgens op te geven hoe uw studie "
-#~ "precies\n"
-#~ "    is vormgegeven. Na dit alles zult u gevraagd worden een inschatting "
-#~ "te geven\n"
-#~ "    van de belasting van, en risico's voor, de deelnemers, en dient u "
-#~ "vervolgens\n"
-#~ "    alle voor uw studie aangepaste formulieren ten bate van <em>informed\n"
-#~ "    consent</em> te uploaden.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "   In order to properly assess a study with respect to <em>informed "
-#~ "consent</em>, burden and risks to participants, and data-management "
-#~ "procedures the FEtC-H needs a detailed description of the study. After a "
-#~ "few introductory questions you are asked to give details about "
-#~ "participants, and what type(s) of research the study includes: "
-#~ "observational research, intervention research and/or task-based or "
-#~ "interview research. For each type of research you are then required to "
-#~ "explain details about the design. You will be asked to estimate the "
-#~ "burden and risks involved for the participants, and to upload all forms "
-#~ "of <em>informed consent</em> adapted to your study.      "
-
-#~ msgid "Algemene kamer"
-#~ msgstr "General Chamber"
