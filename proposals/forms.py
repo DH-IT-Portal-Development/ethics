@@ -223,7 +223,10 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
             is_pre_assessment=False
         ).filter(
             Q(applicants=self.user,) | Q(supervisor=self.user)
-        )
+        ).distinct()
+
+        if 'is_revision' in self.initial and self.initial['is_revision']:
+            self.fields['is_revision'].widget = forms.HiddenInput()
 
 
 class ProposalConfirmationForm(forms.ModelForm):

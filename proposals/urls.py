@@ -11,7 +11,8 @@ from .views.proposal_views import MyConceptsView, MyPracticeView, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
     HideFromArchiveView, ProposalsExportView, ProposalStartPreApproved, \
     ProposalCreatePreApproved, ProposalSubmittedPreApproved, \
-    ProposalSubmitPreApproved, ProposalUpdatePreApproved, ProposalArchiveView
+    ProposalSubmitPreApproved, ProposalUpdatePreApproved, ProposalArchiveView, \
+    ProposalCopyAmendment
 
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
@@ -101,6 +102,8 @@ urlpatterns = [
         url(r'^$', ProposalCopy.as_view(), name='copy'),
         url(r'^revision/$', ProposalCopyRevision.as_view(),
             name='copy_revision'),
+        url(r'^amendment/$', ProposalCopyAmendment.as_view(),
+            name='copy_amendment'),
     ])),
     url(r'^diff/(?P<pk>\d+)/$', ProposalDifference.as_view(), name='diff'),
 
