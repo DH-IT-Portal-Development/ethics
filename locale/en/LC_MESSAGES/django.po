@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-31 16:14+0100\n"
+"POT-Creation-Date: 2019-11-05 10:54+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
 #: core/forms/conditional_form.py:48 core/forms/mixins.py:83
-#: proposals/forms.py:393 proposals/forms.py:473 studies/forms.py:100
+#: proposals/forms.py:390 proposals/forms.py:470 studies/forms.py:100
 #: studies/forms.py:111 studies/forms.py:117 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -1086,35 +1086,35 @@ msgstr ""
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:275 proposals/forms.py:381
+#: proposals/forms.py:272 proposals/forms.py:378
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:283
+#: proposals/forms.py:280
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:336
+#: proposals/forms.py:333
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:338
+#: proposals/forms.py:335
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:340
+#: proposals/forms.py:337
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:342
+#: proposals/forms.py:339
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:344
+#: proposals/forms.py:341
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:387
+#: proposals/forms.py:384
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1122,12 +1122,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:441 proposals/forms.py:454 proposals/forms.py:464
+#: proposals/forms.py:438 proposals/forms.py:451 proposals/forms.py:461
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:445 proposals/forms.py:449 proposals/forms.py:458
-#: proposals/forms.py:468
+#: proposals/forms.py:442 proposals/forms.py:446 proposals/forms.py:455
+#: proposals/forms.py:465
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -1707,8 +1707,8 @@ msgid "Studie kopiëren voor amendement"
 msgstr "Copy application for amendment"
 
 #: proposals/templates/proposals/proposal_copy.html:12
-msgid "Studie kopiëren"
-msgstr "Copy application"
+msgid "Een geheel nieuwe studie indienen op basis van een oude studie"
+msgstr "Submit an entirely new study from a copy of an old study"
 
 #: proposals/templates/proposals/proposal_copy.html:20
 msgid ""
