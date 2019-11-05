@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-05 11:10+0100\n"
+"POT-Creation-Date: 2019-11-05 16:30+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -310,140 +310,143 @@ msgid "Nieuwe studie starten"
 msgstr "Start a new study"
 
 #: core/templates/base/menu.html:17
+msgid "Nieuwe studie starten op basis van een kopie van een oude studie"
+msgstr "Start a new study based on a copy of an old study"
+
+#: core/templates/base/menu.html:20
 msgid "Nieuwe voortoetsing studie starten"
 msgstr "Start a new preliminary assessment study"
 
-#: core/templates/base/menu.html:20
+#: core/templates/base/menu.html:23
 msgid ""
 "Nieuwe studie starten (die al goedgekeurd is door een andere ethische "
 "toetsings comissie)"
-msgstr ""
-"Start a new study (that has been approved by another ethics committee)"
-
-#: core/templates/base/menu.html:23
-msgid "Nieuwe studie starten op basis van een kopie van een oude studie"
-msgstr "Start a new study based on a copy of an old study"
+msgstr "Start a new study (that has been approved by another ethics committee)"
 
 #: core/templates/base/menu.html:26
 msgid "Maak een revisie van een bestaande studie"
 msgstr "Create a revision for an existing study"
 
-#: core/templates/base/menu.html:29 proposals/views/proposal_views.py:122
+#: core/templates/base/menu.html:29
+msgid "Maak een amendement van een al goedgekeurde studie"
+msgstr "Create an amendment to an already approved study"
+
+#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:122
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
-#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:187
+#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:187
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
-#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:137
+#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:137
 msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
-#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:150
+#: core/templates/base/menu.html:41 proposals/views/proposal_views.py:150
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
-#: core/templates/base/menu.html:41 proposals/views/proposal_views.py:162
+#: core/templates/base/menu.html:44 proposals/views/proposal_views.py:162
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
-#: core/templates/base/menu.html:44
+#: core/templates/base/menu.html:47
 msgid "Al mijn studies"
 msgstr "All my applications"
 
-#: core/templates/base/menu.html:49
+#: core/templates/base/menu.html:52
 msgid "Archief"
 msgstr "Archive"
 
-#: core/templates/base/menu.html:52
+#: core/templates/base/menu.html:55
 msgid "Alle studies bekijken van de Algemene Kamer"
 msgstr "View all applications of the General Chamber"
 
-#: core/templates/base/menu.html:55
+#: core/templates/base/menu.html:58
 msgid "Alle studies bekijken van de Linguïstiek Kamer"
 msgstr "View all applications of the Linguistics Chamber"
 
-#: core/templates/base/menu.html:59
+#: core/templates/base/menu.html:62
 msgid "Site-export"
 msgstr "Site-export"
 
-#: core/templates/base/menu.html:66 reviews/forms.py:27 reviews/mixins.py:44
+#: core/templates/base/menu.html:69 reviews/forms.py:27 reviews/mixins.py:44
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
-#: core/templates/base/menu.html:69 core/templates/base/menu.html:96
+#: core/templates/base/menu.html:72 core/templates/base/menu.html:99
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
-#: core/templates/base/menu.html:72 core/templates/base/menu.html:99
+#: core/templates/base/menu.html:75 core/templates/base/menu.html:102
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: core/templates/base/menu.html:76 core/templates/base/menu.html:103
+#: core/templates/base/menu.html:79 core/templates/base/menu.html:106
 msgid "Alle openstaande besluiten commissieleden"
 msgstr "All pending decisions committee members"
 
-#: core/templates/base/menu.html:79 core/templates/base/menu.html:106
+#: core/templates/base/menu.html:82 core/templates/base/menu.html:109
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: core/templates/base/menu.html:82 core/templates/base/menu.html:109
+#: core/templates/base/menu.html:85 core/templates/base/menu.html:112
 #: reviews/templates/reviews/review_to_conclude.html:8
 msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
-#: core/templates/base/menu.html:85 core/templates/base/menu.html:112
+#: core/templates/base/menu.html:88 core/templates/base/menu.html:115
 #: reviews/templates/reviews/review_all_list.html:8
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
-#: core/templates/base/menu.html:93 reviews/forms.py:28 reviews/mixins.py:47
+#: core/templates/base/menu.html:96 reviews/forms.py:28 reviews/mixins.py:47
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
 
-#: core/templates/base/menu.html:119
+#: core/templates/base/menu.html:122
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:122 core/templates/core/index.html:105
+#: core/templates/base/menu.html:125 core/templates/core/index.html:105
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:125 core/templates/core/index.html:108
+#: core/templates/base/menu.html:128 core/templates/core/index.html:108
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
-#: core/templates/base/menu.html:128
+#: core/templates/base/menu.html:131
 msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/base/menu.html:131 core/templates/core/index.html:114
+#: core/templates/base/menu.html:134 core/templates/core/index.html:114
 #: proposals/templates/proposals/proposal_pdf.html:393
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:81
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: core/templates/base/menu.html:134
+#: core/templates/base/menu.html:137
 msgid "FAQs"
 msgstr "FAQs"
 
-#: core/templates/base/menu.html:137 feedback/models.py:20
+#: core/templates/base/menu.html:140 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:18
 msgid "Feedback"
 msgstr "Feedback"
 
-#: core/templates/base/menu.html:142
+#: core/templates/base/menu.html:145
 #: core/templates/registration/logged_out.html:6
 msgid "Uitloggen"
 msgstr "Log out"
 
-#: core/templates/base/menu.html:146
+#: core/templates/base/menu.html:149
 msgid "FETC-GW-website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:149 core/templates/registration/login.html:6
+#: core/templates/base/menu.html:152 core/templates/registration/login.html:6
 #: core/templates/registration/login.html:23
 msgid "Inloggen"
 msgstr "Log in"
@@ -2013,7 +2016,7 @@ msgid "Informed consent formulieren voor het onderzoek"
 msgstr "Informed consent forms for the study"
 
 #: proposals/templates/proposals/proposal_diff.html:600
-#: proposals/templates/proposals/proposal_submit.html:126
+#: proposals/templates/proposals/proposal_submit.html:118
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
@@ -2246,7 +2249,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/proposal_pdf.html:459
 #: proposals/templates/proposals/proposal_pdf_empty.html:388
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:128
-#: proposals/templates/proposals/proposal_submit.html:128
+#: proposals/templates/proposals/proposal_submit.html:120
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2295,7 +2298,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:120
-#: proposals/templates/proposals/proposal_submit.html:124
+#: proposals/templates/proposals/proposal_submit.html:116
 msgid "Aanvraag voor voortoetsing versturen"
 msgstr "Submit application for preliminary assessment"
 
@@ -3025,7 +3028,7 @@ msgstr "Application deleted"
 msgid "Studie verzonden"
 msgstr "Application submitted"
 
-#: proposals/views/proposal_views.py:370
+#: proposals/views/proposal_views.py:357
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
