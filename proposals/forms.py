@@ -205,7 +205,7 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         model = Proposal
         fields = ['parent', 'is_revision', 'title']
         widgets = {
-            'is_revision': forms.RadioSelect(choices=YES_NO),
+            'is_revision': forms.HiddenInput()
         }
         error_messages = {
             'title': {
@@ -224,9 +224,6 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         ).filter(
             Q(applicants=self.user,) | Q(supervisor=self.user)
         ).distinct()
-
-        if 'is_revision' in self.initial and self.initial['is_revision']:
-            self.fields['is_revision'].widget = forms.HiddenInput()
 
 
 class ProposalConfirmationForm(forms.ModelForm):

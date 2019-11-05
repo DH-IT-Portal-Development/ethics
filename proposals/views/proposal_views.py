@@ -357,6 +357,15 @@ class ProposalCopy(UserFormKwargsMixin, CreateView):
     success_message = _('Studie gekopieerd')
     template_name = 'proposals/proposal_copy.html'
 
+    def get_initial(self):
+        """Sets initial value of is_revision to False. It's a hidden field,
+        so this value will also be the actual value. Used for the different
+        behaviour for this class' subclasses
+        """
+        initial = super(ProposalCopy, self).get_initial()
+        initial['is_revision'] = False
+        return initial
+
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""
         form.instance = copy_proposal(self, form)
