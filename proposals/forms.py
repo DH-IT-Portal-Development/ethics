@@ -12,7 +12,7 @@ from core.models import DOUBT, NO, YES, YES_NO_DOUBT
 from core.utils import YES_NO, get_users_as_list
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
-from .validators import validate_title_unique
+from .validators import UniqueTitleValidator
 from .widgets import SelectMultipleUser
 
 
@@ -84,7 +84,9 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         # Only revisions or amendments are allowed to have a title that's not
         # unique.
         if not self.instance or not self.instance.is_revision:
-            self.fields['title'].validators.append(validate_title_unique)
+            self.fields['title'].validators.append(
+                UniqueTitleValidator(self.instance)
+            )
 
         applicants = get_user_model().objects.all()
 
@@ -238,7 +240,7 @@ class ProposalCopyForm(BaseProposalCopyForm):
         super().__init__(*args, **kwargs)
         # Only revisions or amendments are allowed to have a title that's not
         # unique, so we have to attach a validator to this version of the form
-        self.fields['title'].validators.append(validate_title_unique)
+        self.fields['title'].validators.append(UniqueTitleValidator())
 
 
 class RevisionProposalCopyForm(BaseProposalCopyForm):
