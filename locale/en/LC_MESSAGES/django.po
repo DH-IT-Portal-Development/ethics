@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-05 16:30+0100\n"
+"POT-Creation-Date: 2019-11-12 12:32+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
 #: core/forms/conditional_form.py:48 core/forms/mixins.py:83
-#: proposals/forms.py:390 proposals/forms.py:470 studies/forms.py:100
+#: proposals/forms.py:456 proposals/forms.py:536 studies/forms.py:100
 #: studies/forms.py:111 studies/forms.py:117 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -1042,19 +1042,19 @@ msgstr ""
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/forms.py:48 proposals/forms.py:212
+#: proposals/forms.py:48 proposals/forms.py:218 proposals/validators.py:9
 msgid "Er bestaat al een studie met deze titel."
 msgstr "There is already an existing study with this title."
 
-#: proposals/forms.py:97
+#: proposals/forms.py:103
 msgid "Selecteer..."
 msgstr "Select..."
 
-#: proposals/forms.py:103
+#: proposals/forms.py:109
 msgid "Docent"
 msgstr "Professor"
 
-#: proposals/forms.py:104
+#: proposals/forms.py:110
 msgid ""
 "Vul hier de docent van de cursus in waarbinnen u deze portal moet doorlopen. "
 "De docent kan na afloop de studie inkijken in de portal. De studie zal niet "
@@ -1064,19 +1064,19 @@ msgstr ""
 "taking. The professor is able to look at your study in the portal. This "
 "study will not be published in the semipublic archive of the FEtC-H."
 
-#: proposals/forms.py:153
+#: proposals/forms.py:159
 msgid "U dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the researcher with final responsibility."
 
-#: proposals/forms.py:164
+#: proposals/forms.py:170
 msgid "U heeft uzelf niet als onderzoekers geselecteerd."
 msgstr "You have not selected yourself!"
 
-#: proposals/forms.py:169
+#: proposals/forms.py:175
 msgid "U heeft geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:177
+#: proposals/forms.py:183
 msgid ""
 "Indien u geen toestemming heeft van een andere ethische commissie, dient u "
 "het normale formulier in te vullen. Ga terug naar de startpagina, en "
@@ -1089,39 +1089,73 @@ msgstr ""
 "\"Register a new study (from scratch in an empty form)\" or \"Register a new "
 "study (from a copy of an old study)\"."
 
-#: proposals/forms.py:198
+#: proposals/forms.py:204
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:272 proposals/forms.py:378
+#: proposals/forms.py:249 proposals/forms.py:275
+msgid "U kunt de titel van uw studie nu, indien nodig, wijzigen."
+msgstr "You can, if necessary, change the title of your study here."
+
+#: proposals/forms.py:251 proposals/forms.py:277
+msgid ""
+"De titel die u hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer "
+"de studie is goedgekeurd, ook voor alle medewerkers die in het archief van "
+"deze portal kijken."
+msgstr ""
+"The title you submit here will be visible to the FEtC-H members and, if the "
+"study is approved, also to employees viewing the archive of this portal."
+
+#: proposals/forms.py:258
+msgid "Te reviseren studie"
+msgstr "Application to be revised"
+
+#: proposals/forms.py:259
+msgid ""
+"Dit veld toont enkel ingediende, (nog) niet goedgekeurde studies waar u zelf "
+"een medeuitvoerende bent."
+msgstr "This field only shows submitted applications that have not been "
+"approved (yet) in which you are involved."
+
+#: proposals/forms.py:284
+msgid "Te amenderen studie"
+msgstr "Application to be amended"
+
+#: proposals/forms.py:285
+msgid ""
+"Dit veld toont enkel goedgekeurde studies waar u zelf een medeuitvoerende "
+"bent."
+msgstr "This field shows only approved applications in which you are involved."
+
+#: proposals/forms.py:338 proposals/forms.py:444
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:280
+#: proposals/forms.py:346
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:333
+#: proposals/forms.py:399
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:335
+#: proposals/forms.py:401
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:337
+#: proposals/forms.py:403
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:339
+#: proposals/forms.py:405
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:341
+#: proposals/forms.py:407
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:384
+#: proposals/forms.py:450
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1129,12 +1163,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:438 proposals/forms.py:451 proposals/forms.py:461
+#: proposals/forms.py:504 proposals/forms.py:517 proposals/forms.py:527
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:442 proposals/forms.py:446 proposals/forms.py:455
-#: proposals/forms.py:465
+#: proposals/forms.py:508 proposals/forms.py:512 proposals/forms.py:521
+#: proposals/forms.py:531
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -1686,7 +1720,7 @@ msgid "Verwijderen"
 msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:19
-#: proposals/templates/proposals/proposal_copy.html:25
+#: proposals/templates/proposals/proposal_copy.html:32
 #: tasks/templates/tasks/session_confirm_delete.html:15
 #: tasks/templates/tasks/task_confirm_delete.html:15
 msgid "Annuleren"
@@ -1706,24 +1740,38 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_copy.html:8
-msgid "Studie kopiëren voor revisie"
-msgstr "Copy application for revision"
+msgid "Revisie indienen"
+msgstr "Submit a revision"
 
 #: proposals/templates/proposals/proposal_copy.html:10
-msgid "Studie kopiëren voor amendement"
-msgstr "Copy application for amendment"
+msgid "Amendement indienen"
+msgstr "Submit an amendment"
 
 #: proposals/templates/proposals/proposal_copy.html:12
 msgid "Een geheel nieuwe studie indienen op basis van een oude studie"
 msgstr "Submit an entirely new study from a copy of an old study"
 
-#: proposals/templates/proposals/proposal_copy.html:20
+#: proposals/templates/proposals/proposal_copy.html:21
+msgid ""
+"U kunt hier op basis van de vorige versie van uw studie een revisie indienen."
+msgstr ""
+"You can submit a revision here based on the previous version of your study."
+
+#: proposals/templates/proposals/proposal_copy.html:23
+msgid ""
+"U kunt hier op basis van de reeds goedgekeurde studie een amendement "
+"indienen."
+msgstr ""
+"You can submit an amendment here based on the study that has already been "
+"approved"
+
+#: proposals/templates/proposals/proposal_copy.html:25
 msgid ""
 "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren "
 "aangepast worden."
 msgstr "You can copy a study here. All fields can be edited after copying."
 
-#: proposals/templates/proposals/proposal_copy.html:24
+#: proposals/templates/proposals/proposal_copy.html:31
 msgid "Kopiëren"
 msgstr "Copy"
 
@@ -4592,5 +4640,9 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
-#~ msgid "Revisie/amendement maken"
-#~ msgstr "Copy application for revision/amendment"
+#, fuzzy
+#~| msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
+#~ msgid ""
+#~ "Dit veld toont enkel ingediende studies waar u zelf een medeuitvoerende "
+#~ "bent."
+#~ msgstr "This field shows only applications in which you are involved."

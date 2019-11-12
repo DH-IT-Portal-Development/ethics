@@ -119,7 +119,7 @@ class Proposal(models.Model):
         _(
             'Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.'),
         max_length=200,
-        unique=True,
+        unique=False,
         help_text=_('De titel die u hier opgeeft is zichtbaar voor de \
 FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle \
 medewerkers die in het archief van deze portal kijken. De titel mag niet \

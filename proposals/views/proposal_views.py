@@ -19,7 +19,7 @@ from studies.models import Documents
 from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
-    ProposalSubmitForm
+    ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
 from ..models import Proposal
 from ..utils import generate_pdf, generate_ref_number
 
@@ -381,6 +381,8 @@ class ProposalCopy(UserFormKwargsMixin, CreateView):
 
 
 class ProposalCopyRevision(ProposalCopy):
+    form_class = RevisionProposalCopyForm
+
     def get_initial(self):
         """Sets initial value of is_revision to True"""
         initial = super(ProposalCopyRevision, self).get_initial()
@@ -396,6 +398,8 @@ class ProposalCopyRevision(ProposalCopy):
 
 
 class ProposalCopyAmendment(ProposalCopy):
+    form_class = AmendmentProposalCopyForm
+
     def get_initial(self):
         """Sets initial value of is_revision to True"""
         initial = super(ProposalCopyAmendment, self).get_initial()

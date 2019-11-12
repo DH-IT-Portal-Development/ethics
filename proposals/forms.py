@@ -3,7 +3,6 @@
 from braces.forms import UserKwargModelFormMixin
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
@@ -13,6 +12,7 @@ from core.models import DOUBT, NO, YES, YES_NO_DOUBT
 from core.utils import YES_NO, get_users_as_list
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
+from .validators import validate_title_unique
 from .widgets import SelectMultipleUser
 
 
@@ -65,6 +65,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from relation field
+        - Make sure all non-revision/non-amendment studies have an unique name
         - Don't allow to pick yourself or a superuser as supervisor, unless you already are
         - Add a None-option for supervisor
         - Don't allow to pick a superuser as applicant
@@ -79,6 +80,11 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
         self.fields['institution'].empty_label = None
+
+        # Only revisions or amendments are allowed to have a title that's not
+        # unique.
+        if not self.instance or not self.instance.is_revision:
+            self.fields['title'].validators.append(validate_title_unique)
 
         applicants = get_user_model().objects.all()
 
@@ -200,7 +206,7 @@ class ProposalStartPracticeForm(forms.Form):
         widget=forms.RadioSelect())
 
 
-class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
+class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['parent', 'is_revision', 'title']
@@ -214,15 +220,75 @@ class ProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        """
-        Filters the Proposals to only show those where:
-        - the current User is an applicant.
-        """
-        super(ProposalCopyForm, self).__init__(*args, **kwargs)
-        self.fields['parent'].queryset = Proposal.objects.filter(
+        super(BaseProposalCopyForm, self).__init__(*args, **kwargs)
+
+        self.fields['parent'].queryset = self._get_parent_queryset()
+
+    def _get_parent_queryset(self):
+        return Proposal.objects.filter(
             is_pre_assessment=False
         ).filter(
-            Q(applicants=self.user,) | Q(supervisor=self.user)
+            Q(applicants=self.user, ) | Q(supervisor=self.user)
+        ).distinct()
+
+
+class ProposalCopyForm(BaseProposalCopyForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Only revisions or amendments are allowed to have a title that's not
+        # unique, so we have to attach a validator to this version of the form
+        self.fields['title'].validators.append(validate_title_unique)
+
+
+class RevisionProposalCopyForm(BaseProposalCopyForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['title'].label = _('U kunt de titel van uw studie nu, '
+                                       'indien nodig, wijzigen.')
+        self.fields['title'].help_text = _('De titel die u hier opgeeft is '
+                                           'zichtbaar voor de FETC-GW-leden en,'
+                                           ' wanneer de studie is goedgekeurd,'
+                                           ' ook voor alle medewerkers die in'
+                                           ' het archief van deze portal '
+                                           'kijken.')
+
+        self.fields['parent'].label = _('Te reviseren studie')
+        self.fields['parent'].help_text = _('Dit veld toont enkel ingediende,'
+                                            ' (nog) niet goedgekeurde studies '
+                                            'waar u zelf een '
+                                            'medeuitvoerende bent.')
+
+    def _get_parent_queryset(self):
+        return super()._get_parent_queryset().filter(
+            Q(status_review=False, ) | Q(status_review=None)
+        ).distinct()
+
+
+class AmendmentProposalCopyForm(BaseProposalCopyForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['title'].label = _('U kunt de titel van uw studie nu, '
+                                       'indien nodig, wijzigen.')
+        self.fields['title'].help_text = _('De titel die u hier opgeeft is '
+                                           'zichtbaar voor de FETC-GW-leden en,'
+                                           ' wanneer de studie is goedgekeurd,'
+                                           ' ook voor alle medewerkers die in'
+                                           ' het archief van deze portal '
+                                           'kijken.')
+
+        self.fields['parent'].label = _('Te amenderen studie')
+        self.fields['parent'].help_text = _('Dit veld toont enkel goedgekeurde'
+                                            ' studies waar u zelf een '
+                                            'medeuitvoerende bent.')
+
+    def _get_parent_queryset(self):
+        return super()._get_parent_queryset().filter(
+            status_review=True,
         ).distinct()
 
 

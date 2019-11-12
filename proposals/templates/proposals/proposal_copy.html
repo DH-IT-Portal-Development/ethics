@@ -5,9 +5,9 @@
 
 {% block title %}
     {% if is_revision %}
-        {% trans "Studie kopiëren voor revisie" %}
+        {% trans "Revisie indienen" %}
     {% elif is_amendment %}
-        {% trans "Studie kopiëren voor amendement" %}
+        {% trans "Amendement indienen" %}
     {% else %}
         {% trans "Een geheel nieuwe studie indienen op basis van een oude studie" %}
     {% endif %}
@@ -16,12 +16,22 @@
 {% block noprogressbar %}{% endblock %}
 
 {% block content %}
-<p>
-	{% trans "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
-</p>
-<form action="" method="post">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Kopiëren' %}" />
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
-</form>
+    <p>
+        {% if is_revision %}
+            {% trans "U kunt hier op basis van de vorige versie van uw studie een revisie indienen." %}
+        {% elif is_amendment %}
+            {% trans "U kunt hier op basis van de reeds goedgekeurde studie een amendement indienen." %}
+        {% else %}
+            {% trans "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
+        {% endif %}
+
+    </p>
+    <form action="" method="post">{% csrf_token %}
+        <table>{{ form.as_table }}</table>
+        <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Kopiëren' %}" />
+        <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
+    </form>
+    {% if is_revision or is_amendment %}
+        <script src="{% static 'proposals/js/copy.js' %}"></script>
+    {% endif %}
 {% endblock %}
