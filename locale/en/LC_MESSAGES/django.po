@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-12 12:32+0100\n"
+"POT-Creation-Date: 2019-11-14 13:02+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
 #: core/forms/conditional_form.py:48 core/forms/mixins.py:83
-#: proposals/forms.py:456 proposals/forms.py:536 studies/forms.py:100
+#: proposals/forms.py:458 proposals/forms.py:538 studies/forms.py:100
 #: studies/forms.py:111 studies/forms.py:117 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -1042,19 +1042,19 @@ msgstr ""
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/forms.py:48 proposals/forms.py:218 proposals/validators.py:9
+#: proposals/forms.py:48 proposals/forms.py:220 proposals/validators.py:21
 msgid "Er bestaat al een studie met deze titel."
 msgstr "There is already an existing study with this title."
 
-#: proposals/forms.py:103
+#: proposals/forms.py:105
 msgid "Selecteer..."
 msgstr "Select..."
 
-#: proposals/forms.py:109
+#: proposals/forms.py:111
 msgid "Docent"
 msgstr "Professor"
 
-#: proposals/forms.py:110
+#: proposals/forms.py:112
 msgid ""
 "Vul hier de docent van de cursus in waarbinnen u deze portal moet doorlopen. "
 "De docent kan na afloop de studie inkijken in de portal. De studie zal niet "
@@ -1064,19 +1064,19 @@ msgstr ""
 "taking. The professor is able to look at your study in the portal. This "
 "study will not be published in the semipublic archive of the FEtC-H."
 
-#: proposals/forms.py:159
+#: proposals/forms.py:161
 msgid "U dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the researcher with final responsibility."
 
-#: proposals/forms.py:170
+#: proposals/forms.py:172
 msgid "U heeft uzelf niet als onderzoekers geselecteerd."
 msgstr "You have not selected yourself!"
 
-#: proposals/forms.py:175
+#: proposals/forms.py:177
 msgid "U heeft geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:183
+#: proposals/forms.py:185
 msgid ""
 "Indien u geen toestemming heeft van een andere ethische commissie, dient u "
 "het normale formulier in te vullen. Ga terug naar de startpagina, en "
@@ -1089,15 +1089,15 @@ msgstr ""
 "\"Register a new study (from scratch in an empty form)\" or \"Register a new "
 "study (from a copy of an old study)\"."
 
-#: proposals/forms.py:204
+#: proposals/forms.py:206
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:249 proposals/forms.py:275
+#: proposals/forms.py:251 proposals/forms.py:277
 msgid "U kunt de titel van uw studie nu, indien nodig, wijzigen."
 msgstr "You can, if necessary, change the title of your study here."
 
-#: proposals/forms.py:251 proposals/forms.py:277
+#: proposals/forms.py:253 proposals/forms.py:279
 msgid ""
 "De titel die u hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer "
 "de studie is goedgekeurd, ook voor alle medewerkers die in het archief van "
@@ -1106,56 +1106,57 @@ msgstr ""
 "The title you submit here will be visible to the FEtC-H members and, if the "
 "study is approved, also to employees viewing the archive of this portal."
 
-#: proposals/forms.py:258
+#: proposals/forms.py:260
 msgid "Te reviseren studie"
 msgstr "Application to be revised"
 
-#: proposals/forms.py:259
+#: proposals/forms.py:261
 msgid ""
 "Dit veld toont enkel ingediende, (nog) niet goedgekeurde studies waar u zelf "
 "een medeuitvoerende bent."
-msgstr "This field only shows submitted applications that have not been "
-"approved (yet) in which you are involved."
+msgstr ""
+"This field only shows submitted applications that have not been approved "
+"(yet) in which you are involved."
 
-#: proposals/forms.py:284
+#: proposals/forms.py:286
 msgid "Te amenderen studie"
 msgstr "Application to be amended"
 
-#: proposals/forms.py:285
+#: proposals/forms.py:287
 msgid ""
 "Dit veld toont enkel goedgekeurde studies waar u zelf een medeuitvoerende "
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:338 proposals/forms.py:444
+#: proposals/forms.py:340 proposals/forms.py:446
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:346
+#: proposals/forms.py:348
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:399
+#: proposals/forms.py:401
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:401
+#: proposals/forms.py:403
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:403
+#: proposals/forms.py:405
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:405
+#: proposals/forms.py:407
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:407
+#: proposals/forms.py:409
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:450
+#: proposals/forms.py:452
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1163,12 +1164,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:504 proposals/forms.py:517 proposals/forms.py:527
+#: proposals/forms.py:506 proposals/forms.py:519 proposals/forms.py:529
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:508 proposals/forms.py:512 proposals/forms.py:521
-#: proposals/forms.py:531
+#: proposals/forms.py:510 proposals/forms.py:514 proposals/forms.py:523
+#: proposals/forms.py:533
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -3551,11 +3552,15 @@ msgstr "FEtC-H: new study for assessment"
 msgid "FETC-GW: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H: new decision added"
 
-#: reviews/utils.py:257
+#: reviews/utils.py:262
+msgid "De beoogde startdatum ligt voor de datum van indiening"
+msgstr "The intended start date is before the date that the study was submitted"
+
+#: reviews/utils.py:268
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:261
+#: reviews/utils.py:272
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -3564,25 +3569,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils.py:264
+#: reviews/utils.py:275
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:267
+#: reviews/utils.py:278
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:273
+#: reviews/utils.py:284
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:276
+#: reviews/utils.py:287
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils.py:280
+#: reviews/utils.py:291
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -3590,7 +3595,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:286
+#: reviews/utils.py:297
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -3598,7 +3603,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:289
+#: reviews/utils.py:300
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -3608,7 +3613,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:293
+#: reviews/utils.py:304
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -3618,13 +3623,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:300
+#: reviews/utils.py:311
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:304
+#: reviews/utils.py:315
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -3635,13 +3640,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:321
+#: reviews/utils.py:332
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:325
+#: reviews/utils.py:336
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -3649,7 +3654,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:327
+#: reviews/utils.py:338
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -3659,7 +3664,7 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:345
+#: reviews/utils.py:356
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -3667,7 +3672,7 @@ msgstr ""
 "The study uses psychophysiological measurements on children under {} year(s) "
 "old."
 
-#: reviews/utils.py:350
+#: reviews/utils.py:361
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 

@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -9,6 +8,7 @@ from django.utils import timezone
 
 from core.models import YES, DOUBT
 from core.utils import get_secretary
+from proposals.models import Proposal
 from tasks.models import Task
 from proposals.utils import notify_local_staff
 from .models import Review, Decision
@@ -243,13 +243,25 @@ def notify_secretary(decision):
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
 
-def auto_review(proposal):
+def auto_review(proposal: Proposal):
     """
     Reviews a Proposal machine-wise.
     Based on the regulations on
     http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
     """
     reasons = []
+
+    # Use the provided date_submitted if available, otherwise pretend it is
+    # today
+    # (It almost certainly is now, as it's only not set when called in the
+    # submit method)
+    date_submitted = proposal.date_submitted.date()
+    if not date_submitted:
+        date_submitted = datetime.date.today()
+
+    if proposal.date_start and proposal.date_start < date_submitted:
+        reasons.append(_("De beoogde startdatum ligt voor de datum van "
+                         "indiening"))
 
     for study in proposal.study_set.all():
 
