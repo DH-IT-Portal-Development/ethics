@@ -9,7 +9,6 @@ class UniqueTitleValidator:
 
     def __init__(self, proposal: Proposal = None):
         self.proposal = proposal
-        print(proposal)
 
     def __call__(self, value):
         qs = Proposal.objects.filter(title=value)
