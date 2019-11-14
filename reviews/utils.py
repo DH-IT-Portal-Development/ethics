@@ -255,8 +255,9 @@ def auto_review(proposal: Proposal):
     # today
     # (It almost certainly is now, as it's only not set when called in the
     # submit method)
-    date_submitted = proposal.date_submitted.date()
-    if not date_submitted:
+    if proposal.date_submitted:
+        date_submitted = proposal.date_submitted.date()
+    else:
         date_submitted = datetime.date.today()
 
     if proposal.date_start and proposal.date_start < date_submitted:
