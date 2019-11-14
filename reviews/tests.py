@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 
 from django.conf import settings
 from django.core import mail
@@ -35,7 +35,7 @@ class BaseReviewTestCase(TestCase):
         self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
 
         self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
-                                                date_start=datetime.now(),
+                                                date_start=date.today(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4),
                                                 reviewing_committee=Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER),
