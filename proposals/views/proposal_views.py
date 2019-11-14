@@ -19,7 +19,7 @@ from studies.models import Documents
 from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
-    ProposalSubmitForm
+    ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
 from ..models import Proposal
 from ..utils import generate_pdf, generate_ref_number
 
@@ -381,6 +381,8 @@ class ProposalCopy(UserFormKwargsMixin, CreateView):
 
 
 class ProposalCopyRevision(ProposalCopy):
+    form_class = RevisionProposalCopyForm
+
     def get_initial(self):
         """Sets initial value of is_revision to True"""
         initial = super(ProposalCopyRevision, self).get_initial()
@@ -396,6 +398,8 @@ class ProposalCopyRevision(ProposalCopy):
 
 
 class ProposalCopyAmendment(ProposalCopy):
+    form_class = AmendmentProposalCopyForm
+
     def get_initial(self):
         """Sets initial value of is_revision to True"""
         initial = super(ProposalCopyAmendment, self).get_initial()
@@ -419,6 +423,11 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
         """Adds 'BASE_URL' to template context"""
         context = super(ProposalAsPdf, self).get_context_data(**kwargs)
         context['BASE_URL'] = settings.BASE_URL
+
+        if self.object.is_pre_approved:
+            self.template_name = 'proposals/proposal_pdf_pre_approved.html'
+        elif self.object.is_pre_assessment:
+            self.template_name = 'proposals/proposal_pdf_pre_assessment.html'
 
         documents = {
             'extra': []
@@ -546,7 +555,6 @@ class ProposalSubmitPreApproved(ProposalSubmit):
         - Save the pre_approved PDF on the Proposal
         - End the draft phase and start the appropiate review phase (in super function)
         """
-        # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
         success_url = super(ProposalSubmitPreApproved, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
