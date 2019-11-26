@@ -11,9 +11,40 @@ except ImportError:
             pass
 
 
+class SelectUser(forms.Select):
+    """
+    Custom widget to allow a LDAP user to be entered through Select2.
+    Used in combination with an ajax call to core:user_search
+    """
+    allow_multiple_selected = False
+    ldap = LDAPBackend()
+
+    def value_from_datadict(self, data, files, name):
+
+        value = data.get(name, None)
+
+        if value and value.startswith('ldap_'):
+            # Strip the ldap_ from the string
+            uid = value[5:]
+
+            # Import the user and get it's model object
+            user_object = self.ldap.populate_user(uid)
+
+            # Add the user as a valid option
+            self.choices.append((user_object.pk,
+                                 u'{}: {}'.format(user_object.username,
+                                                  user_object.get_full_name())))
+
+            # Redefine the chosen option to the pk of the new user object
+            value = str(user_object.pk)
+
+        return value
+
+
 class SelectMultipleUser(forms.Select):
     """
-    Custom widget to allow LDAP users to be entered through Select2.
+    Custom widget to allow multiple LDAP users to be entered through Select2.
+    Used in combination with an ajax call to core:user_search
     """
     allow_multiple_selected = True
     ldap = LDAPBackend()

@@ -52,6 +52,25 @@ $(function() {
       }
     });
 
+    // AJAX supervisors
+    $('select#id_supervisor').select2({
+      ajax: {
+        url: '{% url 'core:user_search' %}',
+        dataType: 'json',
+        data: function (params) {
+          return {
+            q: params.term || '*',
+            page: params.page || 1
+          }
+        },
+        delay: 1500,
+        error: function (err) {
+            console.log(err)
+        },
+        cache: true
+      }
+    });
+
     // Add a running word count to the summary
     var summary = $("#id_summary");
     if (summary.length)
