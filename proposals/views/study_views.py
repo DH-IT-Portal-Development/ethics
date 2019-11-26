@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from core.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
 from studies.models import Documents, Study
