@@ -13,7 +13,7 @@ from core.utils import YES_NO, get_users_as_list
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
-from .widgets import SelectMultipleUser
+from .widgets import SelectMultipleUser, SelectUser
 
 
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
@@ -41,7 +41,8 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                 'cols': 50
             }),
             'funding':            forms.CheckboxSelectMultiple(),
-            'applicants':         SelectMultipleUser()
+            'applicants':         SelectMultipleUser(),
+            'supervisor':         SelectUser(),
         }
         error_messages = {
             'title': {
