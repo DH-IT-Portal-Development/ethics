@@ -15,6 +15,7 @@ class Registration(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['order']
