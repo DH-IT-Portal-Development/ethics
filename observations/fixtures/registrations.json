@@ -4,7 +4,8 @@
         "needs_details": false,
         "order": 1,
         "description_nl": "logdata",
-        "description_en": "log data"
+        "description_en": "log data",
+        "requires_review": false
     },
     "model": "observations.registration",
     "pk": 1
@@ -14,7 +15,8 @@
         "needs_details": false,
         "order": 2,
         "description_nl": "audio-opname",
-        "description_en": "audio recording"
+        "description_en": "audio recording",
+        "requires_review": false
     },
     "model": "observations.registration",
     "pk": 2
@@ -24,7 +26,8 @@
         "needs_details": false,
         "order": 3,
         "description_nl": "video-opname",
-        "description_en": "video recording"
+        "description_en": "video recording",
+        "requires_review": true
     },
     "model": "observations.registration",
     "pk": 3
@@ -34,7 +37,8 @@
         "needs_details": false,
         "order": 4,
         "description_nl": "notities",
-        "description_en": "notes"
+        "description_en": "notes",
+        "requires_review": false
     },
     "model": "observations.registration",
     "pk": 4
@@ -44,7 +48,8 @@
         "needs_details": true,
         "order": 5,
         "description_nl": "anders",
-        "description_en": "otherwise"
+        "description_en": "otherwise",
+        "requires_review": false
     },
     "model": "observations.registration",
     "pk": 5

@@ -339,6 +339,14 @@ def auto_review_observation(observation):
         if observation.is_anonymous:
             reasons.append(_('De onderzoeker begeeft zich "under cover" in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.'))
 
+    for registration in observation.registrations.all():
+        if registration.requires_review:
+            reasons.append(
+                _('De studie maakt gebruik van {}').format(
+                    registration.description
+                )
+            )
+
     return reasons
 
 

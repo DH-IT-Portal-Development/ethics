@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from core.models import YES, DOUBT
 from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin

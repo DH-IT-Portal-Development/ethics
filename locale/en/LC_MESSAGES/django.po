@@ -4644,10 +4644,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#, fuzzy
-#~| msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
-#~ msgid ""
-#~ "Dit veld toont enkel ingediende studies waar u zelf een medeuitvoerende "
-#~ "bent."
-#~ msgstr "This field shows only applications in which you are involved."
