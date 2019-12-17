@@ -135,6 +135,15 @@ class TaskEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         context['progress'] = get_session_progress(self.object, True)
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+
+        referrer = self.request.META.get('HTTP_REFERRER')
+        if referrer:
+            pass
+
+        return kwargs
+
     def get_next_url(self):
         try:
             # Try to continue to next Session

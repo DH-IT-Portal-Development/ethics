@@ -1,3 +1,5 @@
+from datetime import date
+
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
 from django.db.models import Q
@@ -111,6 +113,7 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
             proposal__reviewing_committee=self.committee,
         ).filter(
             Q(continuation=Review.GO) |
+            Q(continuation=Review.GO_POST_HOC) |
             Q(continuation=None)
         )
 
@@ -151,7 +154,8 @@ class AllProposalReviewsView(GroupRequiredMixin, CommitteeMixin,
         return [value for key, value in reviews.items()]
 
 
-class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
+class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin,
+                                 generic.ListView):
     """
     This page displays all proposals to be reviewed by supervisors. Not to be
     confused with SupervisorView, which displays all open reviews for a specific
@@ -220,7 +224,7 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin,
 
 
 class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
-                       generic.UpdateView):
+                        generic.UpdateView):
     model = Proposal
     form_class = ChangeChamberForm
     template_name = 'reviews/change_chamber_form.html'
@@ -322,15 +326,25 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
 
         initial = super(ReviewCloseView, self).get_initial()
         initial['continuation'] = Review.GO if review.go else Review.NO_GO
+
+        if review.proposal.date_start < date.today():
+            initial['continuation'] = \
+                Review.GO_POST_HOC if initial['continuation'] == Review.GO \
+                    else Review.NO_GO_POST_HOC
+
         initial['in_archive'] = not review.proposal.is_pre_assessment
         return initial
 
     def form_valid(self, form):
         proposal = form.instance.proposal
 
-        if form.instance.continuation in [Review.GO, Review.NO_GO]:
+        if form.instance.continuation in [
+            Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC
+        ]:
             proposal.status = Proposal.DECISION_MADE
-            proposal.status_review = form.instance.continuation == Review.GO
+            proposal.status_review = form.instance.continuation in [
+                Review.GO, Review.GO_POST_HOC
+            ]
             proposal.date_reviewed = timezone.now()
             proposal.save()
         elif form.instance.continuation == Review.LONG_ROUTE:
@@ -380,7 +394,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
     def get_success_url(self):
         if self.is_reviewer():
             committee = self.object.review.proposal.reviewing_committee.name
-            return reverse('reviews:my_archive',  args=[committee])
+            return reverse('reviews:my_archive', args=[committee])
         else:
             return reverse('proposals:my_archive')
 
