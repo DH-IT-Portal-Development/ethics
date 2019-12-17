@@ -38,8 +38,8 @@ class Review(models.Model):
         (NO_GO, _('Afwijzing door FETC-GW')),
         (LONG_ROUTE, _('Open review met lange (4-weken) route')),
         (METC, _('Laat opnieuw beoordelen door METC')),
-        (GO_POST_HOC, _('Goedkeuring door FETC-GW, post-hoc')),
-        (NO_GO_POST_HOC, _('Afwijzing door FETC-GW, post-hoc')),
+        (GO_POST_HOC, _('Positief advies van FETC-GW, post-hoc')),
+        (NO_GO_POST_HOC, _('Negatief advies van FETC-GW, post-hoc')),
     )
 
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)

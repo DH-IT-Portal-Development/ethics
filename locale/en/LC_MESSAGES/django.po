@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-12 16:49+0100\n"
+"POT-Creation-Date: 2019-12-17 13:38+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -222,26 +222,26 @@ msgstr "Appoint"
 msgid "Afsluiten"
 msgstr "Conclude"
 
-#: core/templates/auth/user_detail.html:86
-#: reviews/templates/reviews/decision_list.html:78
-#: reviews/templates/reviews/review_all_list.html:73
-#: reviews/templates/reviews/review_to_conclude.html:75
+#: core/templates/auth/user_detail.html:87
+#: reviews/templates/reviews/decision_list.html:79
+#: reviews/templates/reviews/review_all_list.html:74
+#: reviews/templates/reviews/review_to_conclude.html:76
 msgid "Website export tekst"
 msgstr "Website export text"
 
-#: core/templates/auth/user_detail.html:90
+#: core/templates/auth/user_detail.html:91
 #: proposals/templates/proposals/proposal_confirmation.html:7
-#: reviews/templates/reviews/decision_list.html:82
-#: reviews/templates/reviews/review_all_list.html:77
-#: reviews/templates/reviews/review_to_conclude.html:79
+#: reviews/templates/reviews/decision_list.html:83
+#: reviews/templates/reviews/review_all_list.html:78
+#: reviews/templates/reviews/review_to_conclude.html:80
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
-#: core/templates/auth/user_detail.html:92
+#: core/templates/auth/user_detail.html:93
 #: proposals/templates/proposals/proposal_confirmation.html:29
-#: reviews/templates/reviews/decision_list.html:84
-#: reviews/templates/reviews/review_all_list.html:79
-#: reviews/templates/reviews/review_to_conclude.html:81
+#: reviews/templates/reviews/decision_list.html:85
+#: reviews/templates/reviews/review_all_list.html:80
+#: reviews/templates/reviews/review_to_conclude.html:82
 msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
 
@@ -3171,12 +3171,12 @@ msgid "Laat opnieuw beoordelen door METC"
 msgstr "Submit for reassessment by METC"
 
 #: reviews/models.py:41
-msgid "Goedkeuring door FETC-GW, post-hoc"
-msgstr "Post hoc approval by FEtC-H"
+msgid "Positief advies van FETC-GW, post-hoc"
+msgstr "Post hoc positive advice by FEtC-H"
 
 #: reviews/models.py:42
-msgid "Afwijzing door FETC-GW, post-hoc"
-msgstr "Post hoc rejection by FEtC-H"
+msgid "Negatief advies van FETC-GW, post-hoc"
+msgstr "Post hoc negative advice by FETC-H"
 
 #: reviews/models.py:46
 msgid "Route"
@@ -4653,3 +4653,6 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Afwijzing door FETC-GW, post-hoc"
+#~ msgstr "Post hoc rejection by FEtC-H"
