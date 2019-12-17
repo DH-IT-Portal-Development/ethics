@@ -151,6 +151,9 @@ class TaskEndForm(SoftValidationMixin, forms.ModelForm):
 
     _soft_validation_fields = ['tasks_duration']
 
+    def is_initial_visit(self) -> bool:
+        return True
+
     def clean(self):
         cleaned_data = super(TaskEndForm, self).clean()
 

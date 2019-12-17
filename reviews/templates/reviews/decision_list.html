@@ -73,7 +73,8 @@
                     <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
                 {% elif user|is_secretary and review.stage == review.CLOSING %}
                     <a href="{% url 'reviews:close' review.pk %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
-                {% elif user|is_secretary and review.stage == review.CLOSED and review.continuation == review.GO %}
+                {% elif user|is_secretary and review.stage == review.CLOSED %}
+                    {% if review.continuation == review.GO or review.continuation == review.GO_POST_HOC %}
                     <a href="{% url 'proposals:archive_export' review.proposal.pk %}">
                         <img src="{% static 'reviews/images/website.png' %}" title="{% trans 'Website export tekst' %}">
                     </a>
@@ -84,6 +85,7 @@
                         <img src="{% static 'reviews/images/tick.png' %}" title="{% trans 'Bevestigingsbrief verstuurd' %}">
                         {% endif %}
                     </a>
+                    {% endif %}
                 {% endif %}
             </td>
         </tr>
