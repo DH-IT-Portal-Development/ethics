@@ -1,5 +1,5 @@
-fetc
-====
+ethics
+======
 
 .. toctree::
    :maxdepth: 4

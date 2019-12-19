@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -193,14 +192,20 @@
 
         <span class="k">return</span> <span class="n">Group</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">group</span><span class="p">)</span>
 
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">committee_display_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">committee</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Algemene Kamer&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">committee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;LK&#39;</span><span class="p">:</span>
+            <span class="n">committee</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Linguïstiek Kamer&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">committee</span>
+
 <div class="viewcode-block" id="CommitteeMixin.get_context_data"><a class="viewcode-back" href="../../reference/reviews.mixins.html#reviews.mixins.CommitteeMixin.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">CommitteeMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;committee&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">committee</span>
-        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;committee_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Algemene Kamer&#39;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">committee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;LK&#39;</span><span class="p">:</span>
-            <span class="n">context</span><span class="p">[</span><span class="s1">&#39;committee_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Linguïstiek Kamer&#39;</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;committee_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">committee_display_name</span>
 
         <span class="k">return</span> <span class="n">context</span></div></div>
 

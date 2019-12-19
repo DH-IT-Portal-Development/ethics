@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -242,8 +241,8 @@
 
     <span class="c1"># Fields of a proposal</span>
     <span class="n">reference_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
-        <span class="n">max_length</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
-        <span class="n">unique</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">reviewing_committee</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span>
@@ -273,7 +272,7 @@
         <span class="n">_</span><span class="p">(</span>
             <span class="s1">&#39;Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">unique</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">help_text</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De titel die u hier opgeeft is zichtbaar voor de </span><span class="se">\</span>
 <span class="s1">FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle </span><span class="se">\</span>
 <span class="s1">medewerkers die in het archief van deze portal kijken. De titel mag niet </span><span class="se">\</span>

@@ -13,5 +13,4 @@ This section describes how/why it actually works, but lacks implementation detai
 
     steps
     webserver
-    database
     configuration

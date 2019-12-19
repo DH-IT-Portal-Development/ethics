@@ -28,5 +28,6 @@ Submodules
    proposals.tests
    proposals.translation
    proposals.urls
+   proposals.validators
    proposals.widgets
 

@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -157,7 +156,7 @@
 <span class="kn">from</span> <span class="nn">braces.forms</span> <span class="k">import</span> <span class="n">UserKwargModelFormMixin</span>
 <span class="kn">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">forms</span>
 <span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="k">import</span> <span class="n">get_user_model</span>
-<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">Group</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="k">import</span> <span class="n">Q</span>
 <span class="kn">from</span> <span class="nn">django.utils.safestring</span> <span class="k">import</span> <span class="n">mark_safe</span>
 <span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
 
@@ -166,7 +165,8 @@
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">YES_NO</span><span class="p">,</span> <span class="n">get_users_as_list</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Relation</span><span class="p">,</span> <span class="n">Wmo</span>
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">check_local_facilities</span>
-<span class="kn">from</span> <span class="nn">.widgets</span> <span class="k">import</span> <span class="n">SelectMultipleUser</span>
+<span class="kn">from</span> <span class="nn">.validators</span> <span class="k">import</span> <span class="n">UniqueTitleValidator</span>
+<span class="kn">from</span> <span class="nn">.widgets</span> <span class="k">import</span> <span class="n">SelectMultipleUser</span><span class="p">,</span> <span class="n">SelectUser</span>
 
 
 <div class="viewcode-block" id="ProposalForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">SoftValidationMixin</span><span class="p">,</span>
@@ -194,7 +194,8 @@
                 <span class="s1">&#39;cols&#39;</span><span class="p">:</span> <span class="mi">50</span>
             <span class="p">}),</span>
             <span class="s1">&#39;funding&#39;</span><span class="p">:</span>            <span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">(),</span>
-            <span class="s1">&#39;applicants&#39;</span><span class="p">:</span>         <span class="n">SelectMultipleUser</span><span class="p">()</span>
+            <span class="s1">&#39;applicants&#39;</span><span class="p">:</span>         <span class="n">SelectMultipleUser</span><span class="p">(),</span>
+            <span class="s1">&#39;supervisor&#39;</span><span class="p">:</span>         <span class="n">SelectUser</span><span class="p">(),</span>
         <span class="p">}</span>
         <span class="n">error_messages</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -205,7 +206,6 @@
     <span class="n">_soft_validation_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;supervisor&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;other_applicants&#39;</span><span class="p">,</span>
-                               <span class="s1">&#39;applicants&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;other_stakeholders&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;stakeholders&#39;</span><span class="p">,</span>
                                <span class="s1">&#39;summary&#39;</span><span class="p">,</span>
@@ -219,6 +219,7 @@
 <div class="viewcode-block" id="ProposalForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        - Remove empty label from relation field</span>
+<span class="sd">        - Make sure all non-revision/non-amendment studies have an unique name</span>
 <span class="sd">        - Don&#39;t allow to pick yourself or a superuser as supervisor, unless you already are</span>
 <span class="sd">        - Add a None-option for supervisor</span>
 <span class="sd">        - Don&#39;t allow to pick a superuser as applicant</span>
@@ -233,6 +234,13 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">ProposalForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;relation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;institution&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">empty_label</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Only revisions or amendments are allowed to have a title that&#39;s not</span>
+        <span class="c1"># unique.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">is_revision</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">UniqueTitleValidator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="n">applicants</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
@@ -288,6 +296,7 @@
 <span class="sd">        - Maximum number of words for summary</span>
 <span class="sd">        - If this is a pre approved proposal, make sure people say yes to that question</span>
 <span class="sd">        - If this is a pre approved proposal, make sure people fill in the correct fields</span>
+<span class="sd">        - Make sure the user is listed in applicants</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ProposalForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>
 
@@ -307,8 +316,17 @@
                 <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;supervisor&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;other_applicants&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span>
-                <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;applicants&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">other_applicants</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;other_applicants&#39;</span><span class="p">)</span>
+        <span class="n">applicants</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;applicants&#39;</span><span class="p">)</span>
+        <span class="n">supervisor</span> <span class="o">=</span> <span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;supervisor&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Always make sure the applicant is actually in the applicants list</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">applicants</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">!=</span> <span class="n">supervisor</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;U heeft uzelf niet als onderzoekers geselecteerd.&#39;</span><span class="p">),</span>
+                <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_error</span><span class="p">(</span><span class="s1">&#39;applicants&#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">other_applicants</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">applicants</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">error</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span>
                 <span class="n">_</span><span class="p">(</span><span class="s1">&#39;U heeft geen andere onderzoekers geselecteerd.&#39;</span><span class="p">),</span>
                 <span class="n">code</span><span class="o">=</span><span class="s1">&#39;required&#39;</span><span class="p">)</span>
@@ -344,12 +362,12 @@
         <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="ProposalCopyForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalCopyForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalCopyForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseProposalCopyForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.BaseProposalCopyForm">[docs]</a><span class="k">class</span> <span class="nc">BaseProposalCopyForm</span><span class="p">(</span><span class="n">UserKwargModelFormMixin</span><span class="p">,</span> <span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Proposal</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;is_revision&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">]</span>
         <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;is_revision&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">YES_NO</span><span class="p">),</span>
+            <span class="s1">&#39;is_revision&#39;</span><span class="p">:</span> <span class="n">forms</span><span class="o">.</span><span class="n">HiddenInput</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="n">error_messages</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -357,14 +375,77 @@
             <span class="p">},</span>
         <span class="p">}</span>
 
+<div class="viewcode-block" id="BaseProposalCopyForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.BaseProposalCopyForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseProposalCopyForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_parent_queryset</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_parent_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">is_pre_assessment</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">Q</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">supervisor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ProposalCopyForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalCopyForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalCopyForm</span><span class="p">(</span><span class="n">BaseProposalCopyForm</span><span class="p">):</span>
+
 <div class="viewcode-block" id="ProposalCopyForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalCopyForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Filters the Proposals to only show those where:</span>
-<span class="sd">        - the current User is an applicant.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ProposalCopyForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">queryset</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span> \
-            <span class="nb">filter</span><span class="p">(</span><span class="n">applicants</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">is_pre_assessment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># Only revisions or amendments are allowed to have a title that&#39;s not</span>
+        <span class="c1"># unique, so we have to attach a validator to this version of the form</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">validators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">UniqueTitleValidator</span><span class="p">())</span></div></div>
+
+
+<div class="viewcode-block" id="RevisionProposalCopyForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.RevisionProposalCopyForm">[docs]</a><span class="k">class</span> <span class="nc">RevisionProposalCopyForm</span><span class="p">(</span><span class="n">BaseProposalCopyForm</span><span class="p">):</span>
+
+<div class="viewcode-block" id="RevisionProposalCopyForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.RevisionProposalCopyForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;U kunt de titel van uw studie nu, &#39;</span>
+                                       <span class="s1">&#39;indien nodig, wijzigen.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;De titel die u hier opgeeft is &#39;</span>
+                                           <span class="s1">&#39;zichtbaar voor de FETC-GW-leden en,&#39;</span>
+                                           <span class="s1">&#39; wanneer de studie is goedgekeurd,&#39;</span>
+                                           <span class="s1">&#39; ook voor alle medewerkers die in&#39;</span>
+                                           <span class="s1">&#39; het archief van deze portal &#39;</span>
+                                           <span class="s1">&#39;kijken.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Te reviseren studie&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld toont enkel ingediende,&#39;</span>
+                                            <span class="s1">&#39; (nog) niet goedgekeurde studies &#39;</span>
+                                            <span class="s1">&#39;waar u zelf een &#39;</span>
+                                            <span class="s1">&#39;medeuitvoerende bent.&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_parent_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_parent_queryset</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">Q</span><span class="p">(</span><span class="n">status_review</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">status_review</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="AmendmentProposalCopyForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.AmendmentProposalCopyForm">[docs]</a><span class="k">class</span> <span class="nc">AmendmentProposalCopyForm</span><span class="p">(</span><span class="n">BaseProposalCopyForm</span><span class="p">):</span>
+
+<div class="viewcode-block" id="AmendmentProposalCopyForm.__init__"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.AmendmentProposalCopyForm.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;U kunt de titel van uw studie nu, &#39;</span>
+                                       <span class="s1">&#39;indien nodig, wijzigen.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;De titel die u hier opgeeft is &#39;</span>
+                                           <span class="s1">&#39;zichtbaar voor de FETC-GW-leden en,&#39;</span>
+                                           <span class="s1">&#39; wanneer de studie is goedgekeurd,&#39;</span>
+                                           <span class="s1">&#39; ook voor alle medewerkers die in&#39;</span>
+                                           <span class="s1">&#39; het archief van deze portal &#39;</span>
+                                           <span class="s1">&#39;kijken.&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Te amenderen studie&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">help_text</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Dit veld toont enkel goedgekeurde&#39;</span>
+                                            <span class="s1">&#39; studies waar u zelf een &#39;</span>
+                                            <span class="s1">&#39;medeuitvoerende bent.&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_parent_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_parent_queryset</span><span class="p">()</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">status_review</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="ProposalConfirmationForm"><a class="viewcode-back" href="../../reference/proposals.forms.html#proposals.forms.ProposalConfirmationForm">[docs]</a><span class="k">class</span> <span class="nc">ProposalConfirmationForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>

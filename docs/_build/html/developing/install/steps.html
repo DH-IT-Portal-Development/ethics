@@ -86,11 +86,11 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Development</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">Local development installation</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Installation Steps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#os-dependencies">OS Dependencies</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#preparing-the-source">Preparing the source</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#filling-a-database">Filling a database</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#finishing-touches">Finishing touches</a></li>
@@ -103,12 +103,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../structure.html">Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tests.html">Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../i18n.html">Internationalization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../documentation.html">Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../toolset.html">Toolset</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -180,6 +179,27 @@
   <div class="section" id="installation-steps">
 <h1>Installation Steps<a class="headerlink" href="#installation-steps" title="Permalink to this headline">¶</a></h1>
 <p>Installation of this Django project is quite straightforward:</p>
+<div class="section" id="os-dependencies">
+<h2>OS Dependencies<a class="headerlink" href="#os-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Your host OS needs some packages, below is a list of debian packages:</p>
+<ul class="simple">
+<li>libtiff5-dev</li>
+<li>libjpeg62-turbo-dev</li>
+<li>zlib1g-dev</li>
+<li>libfreetype6-dev</li>
+<li>liblcms2-dev</li>
+<li>libwebp-dev</li>
+<li>tcl8.6-dev</li>
+<li>tk8.6-dev</li>
+<li>libldap2-dev</li>
+<li>libsasl2-dev</li>
+<li>libssl-dev</li>
+<li>gettext</li>
+</ul>
+<p>Pip might throw errors while installing <cite>mysqlclient</cite> if you do not have a mysql-dev package. That package is not needed
+for development, so you can (temporarily) comment out that dependency if you run into problems. (Or just install the
+mysql dev package).</p>
+</div>
 <div class="section" id="preparing-the-source">
 <h2>Preparing the source<a class="headerlink" href="#preparing-the-source" title="Permalink to this headline">¶</a></h2>
 <p>Clone the git repository</p>
@@ -235,17 +255,24 @@ For example:</p>
 <p>By default, this starts the server at localhost, port 8000. You can specify a different location by supplying it
 as an argument.</p>
 <p>Example: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">localhost:8080</span></code> or <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">runserver</span> <span class="pre">8080</span></code></p>
-<p>Add additional users in the admin interface</p>
+<div class="section" id="add-additional-users-in-the-admin-interface">
+<h3>Add additional users in the admin interface<a class="headerlink" href="#add-additional-users-in-the-admin-interface" title="Permalink to this headline">¶</a></h3>
+<p>The application requires one user to be part of the ‘secretary’ group, otherwise the application will throw errors because it can’t find one.
+You can set this is the admin interface.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">You can find the admin interface at <code class="docutils literal notranslate"><span class="pre">server:port/admin</span></code>. If you are using the default settings, this would be
 <a class="reference external" href="http://localhost:8000/admin">http://localhost:8000/admin</a>.</p>
 </div>
-<p>The application requires one user to be part of the ‘secretary’ group. You can set this is the admin interface.
-That same user should also be member of the ‘committee’ group.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">You should create at least 2 user accounts, as you require a seperate account to act as a supervisor.</p>
+<p>IT is advisable to create at least 3 user accounts:</p>
+<ul class="last simple">
+<li>A regular user, which you should use to create new studies</li>
+<li>A user to use as a supervisor (some researchers need a supervisor)</li>
+<li>A user to use as secretary</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="you-are-ready-to-roll">

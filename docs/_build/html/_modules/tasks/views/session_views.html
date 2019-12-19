@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -156,7 +155,7 @@
 
 <span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
 <span class="kn">from</span> <span class="nn">django.http</span> <span class="k">import</span> <span class="n">HttpResponseRedirect</span>
-<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
 
 <span class="kn">from</span> <span class="nn">core.views</span> <span class="k">import</span> <span class="n">AllowErrorsOnBackbuttonMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">,</span> <span class="n">DeleteView</span>
 <span class="kn">from</span> <span class="nn">..forms</span> <span class="k">import</span> <span class="n">TaskStartForm</span><span class="p">,</span> <span class="n">TaskEndForm</span>
@@ -288,6 +287,15 @@
         <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaskEnd</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">context</span><span class="p">[</span><span class="s1">&#39;progress&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_session_progress</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="TaskEnd.get_form_kwargs"><a class="viewcode-back" href="../../../reference/tasks.views.session_views.html#tasks.views.session_views.TaskEnd.get_form_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">get_form_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span>
+
+        <span class="n">referrer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_REFERRER&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">referrer</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span></div>
 
 <div class="viewcode-block" id="TaskEnd.get_next_url"><a class="viewcode-back" href="../../../reference/tasks.views.session_views.html#tasks.views.session_views.TaskEnd.get_next_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>

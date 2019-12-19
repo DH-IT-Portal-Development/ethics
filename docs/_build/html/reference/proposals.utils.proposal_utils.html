@@ -86,11 +86,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ethics</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
@@ -158,7 +157,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">fetc</a> &raquo;</li>
+          <li><a href="index.html">ethics</a> &raquo;</li>
         
           <li><a href="proposals.html">proposals package</a> &raquo;</li>
         
@@ -196,11 +195,39 @@
 <dl class="function">
 <dt id="proposals.utils.proposal_utils.generate_ref_number">
 <code class="descclassname">proposals.utils.proposal_utils.</code><code class="descname">generate_ref_number</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/utils/proposal_utils.html#generate_ref_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.utils.proposal_utils.generate_ref_number" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a reference number for a Proposal.
-:param user: the creator of this Proposal, the currently logged-in User
-:return: a reference number in the format {username}-{nr}-{current_year},
-where nr is the number of Proposals created by the current User in the
-current year.</p>
+<dd><p>Generates a reference number for a new(!) Proposal.
+NOTE: Use generate_revision_ref_number to create reference numbers for
+revisions! This function will always create a new ref.num. with version = 1</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user</strong> – the creator of this Proposal, the currently logged-in User</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a reference number in the format {username}-{nr}-{vr}-{</td>
+</tr>
+</tbody>
+</table>
+<p>current_year}, where nr is the number of Proposals created by the current
+User in the current year excluding revisions. Vr is the version of this
+proposal, this function will always return vr = 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="proposals.utils.proposal_utils.generate_revision_ref_number">
+<code class="descclassname">proposals.utils.proposal_utils.</code><code class="descname">generate_revision_ref_number</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/proposals/utils/proposal_utils.html#generate_revision_ref_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#proposals.utils.proposal_utils.generate_revision_ref_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a new reference number for revisions of a proposal.
+This is done by looking up the last revision of the specified proposal,
+not by incrementing the version of the specified proposal.
+(The latter will fail spectacularly when a user makes 2 revisions from the
+same proposal)
+:param parent: The proposal that will be revised
+:return: a reference number in the format {username}-{nr}-{vr}-{
+current_year}, where nr is the number of Proposals created by the current
+User in the current year excluding revisions. This method will use the
+same nr as the parent. Vr is the version of this proposal, this function
+will use the next available version number (this might not be the same as
+parent.vr + 1, as that one might already exist).</p>
 </dd></dl>
 
 <dl class="function">

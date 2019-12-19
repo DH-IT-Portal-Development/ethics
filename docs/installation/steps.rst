@@ -13,7 +13,7 @@ This guide assumes you are running on a Debian OS with Apache and MySQL.
 The following packages needs to be installed:
 
 - Webserver with WSGI support. See ':doc:`webserver`'.
-- Database. See ':doc:`database`'.
+- Database.
 - Python 3:
 
     + python3
@@ -155,7 +155,6 @@ Please refer to the ':doc:`configuration`' page for detailed information on how 
 
 5. Database
 ===========
-*See* ':doc:`database`' *for more information.*
 
 Create the database and database user as specified in the config file you just created.
 

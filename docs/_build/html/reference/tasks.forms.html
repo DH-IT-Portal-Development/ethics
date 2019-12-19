@@ -86,11 +86,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ethics</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
@@ -162,7 +161,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">fetc</a> &raquo;</li>
+          <li><a href="index.html">ethics</a> &raquo;</li>
         
           <li><a href="tasks.html">tasks package</a> &raquo;</li>
         
@@ -213,6 +212,15 @@ association with the field named ‘__all__’.</p>
 <dt id="tasks.forms.TaskEndForm.clean_tasks_duration">
 <code class="descname">clean_tasks_duration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tasks/forms.html#TaskEndForm.clean_tasks_duration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.forms.TaskEndForm.clean_tasks_duration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check that the net duration is at least equal to the gross duration</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="tasks.forms.TaskEndForm.is_initial_visit">
+<code class="descname">is_initial_visit</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; bool<a class="reference internal" href="../_modules/tasks/forms.html#TaskEndForm.is_initial_visit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#tasks.forms.TaskEndForm.is_initial_visit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if this is the first time we visit the page. Defaults to
+checking if the current instance has a primary key. Can be overridden to
+do this check in a different way.
+:return:</p>
 </dd></dl>
 
 <dl class="attribute">

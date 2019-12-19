@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -171,8 +170,17 @@
 
         <span class="c1"># If we have an existing instance and we&#39;re not POSTing,</span>
         <span class="c1"># run a initial clean</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">pk</span> <span class="ow">and</span> <span class="s1">&#39;data&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_initial_visit</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;data&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">initial_clean</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SoftValidationMixin.is_initial_visit"><a class="viewcode-back" href="../../../reference/core.forms.mixins.html#core.forms.mixins.SoftValidationMixin.is_initial_visit">[docs]</a>    <span class="k">def</span> <span class="nf">is_initial_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns true if this is the first time we visit the page. Defaults to</span>
+<span class="sd">        checking if the current instance has a primary key. Can be overridden to</span>
+<span class="sd">        do this check in a different way.</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">pk</span></div>
 
 <div class="viewcode-block" id="SoftValidationMixin.initial_clean"><a class="viewcode-back" href="../../../reference/core.forms.mixins.html#core.forms.mixins.SoftValidationMixin.initial_clean">[docs]</a>    <span class="k">def</span> <span class="nf">initial_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

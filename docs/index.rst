@@ -15,7 +15,6 @@ For reference, a code reference is also included. This reference is auto-generat
    :caption: Index
    :maxdepth: 2
 
-   general/index
    maintenance/index
    developing/index
    installation/index

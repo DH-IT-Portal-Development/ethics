@@ -86,11 +86,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ethics</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
@@ -107,6 +106,7 @@
 <li class="toctree-l4"><a class="reference internal" href="proposals.tests.html">proposals.tests module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="proposals.translation.html">proposals.translation module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="proposals.urls.html">proposals.urls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="proposals.validators.html">proposals.validators module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="proposals.widgets.html">proposals.widgets module</a></li>
 </ul>
 </li>
@@ -162,7 +162,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">fetc</a> &raquo;</li>
+          <li><a href="index.html">ethics</a> &raquo;</li>
         
           <li><a href="proposals.html">proposals package</a> &raquo;</li>
         
@@ -423,13 +423,13 @@
 <li><strong>reviewing_committee</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code>) – Door welke comissie dient deze studie te worden beoordeeld?</li>
 <li><strong>institution</strong> (ForeignKey to <a class="reference internal" href="#proposals.models.Institution" title="proposals.models.Institution"><code class="xref py py-class docutils literal notranslate"><span class="pre">Institution</span></code></a>) – Aan welk onderzoeksinstituut bent u verbonden?</li>
 <li><strong>date_start</strong> (<em>DateField</em>) – Wat is, indien bekend, de beoogde startdatum van uw studie?</li>
-<li><strong>title</strong> (<em>CharField</em>) – De titel die u hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een studie die u heeft ingediend.</li>
+<li><strong>title</strong> (<em>CharField</em>) – Wat is de titel van uw studie? deze titel zal worden gebruikt in alle formele correspondentie. De titel die u hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een studie die u heeft ingediend.</li>
 <li><strong>summary</strong> (<em>TextField</em>) – Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. gebruik maximaal 200 woorden.</li>
 <li><strong>other_applicants</strong> (<em>BooleanField</em>) – Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten icon, ofr, ogk of uil ots?</li>
 <li><strong>other_stakeholders</strong> (<em>BooleanField</em>) – Zijn er nog andere onderzoekers bij deze studie betrokken die &lt;strong&gt;niet&lt;/strong&gt; geaffilieerd zijn aan een van de onderzoeksinstituten van de faculteit geestwetenschappen van de uu?</li>
 <li><strong>stakeholders</strong> (<em>TextField</em>) – Andere betrokkenen</li>
 <li><strong>funding_details</strong> (<em>CharField</em>) – Namelijk</li>
-<li><strong>funding_name</strong> (<em>CharField</em>) – De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.</li>
+<li><strong>funding_name</strong> (<em>CharField</em>) – Wat is de naam van het gefinancierde project?. De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.</li>
 <li><strong>comments</strong> (<em>TextField</em>) – Ruimte voor eventuele opmerkingen</li>
 <li><strong>inform_local_staff</strong> (<em>NullBooleanField</em>) – &lt;p&gt;u hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het uil ots, namelijk de database, zep software en/of het uil ots lab. het lab supportteam van het uil ots zou graag op de hoogte willen worden gesteld van aankomende studies. daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - uw naam en de namen van de andere betrokkenen &lt;br/&gt; - de eindverantwoordelijke van de studie &lt;br/&gt; - de titel van de studie &lt;br/&gt; - de beoogde startdatum &lt;br/&gt; - van welke faciliteiten u gebruik wilt maken (database, lab, zep software)</li>
 <li><strong>in_archive</strong> (<em>BooleanField</em>) – In archive</li>
@@ -442,7 +442,7 @@
 <li><strong>in_course</strong> (<em>BooleanField</em>) – Ik vul de portal in in het kader van een cursus</li>
 <li><strong>is_exploration</strong> (<em>BooleanField</em>) – Ik vul de portal in om de portal te exploreren</li>
 <li><strong>pdf</strong> (<em>FileField</em>) – Pdf</li>
-<li><strong>studies_similar</strong> (<em>NullBooleanField</em>) – Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde moment een verschillende interventie-variant krijgen (specificeer dan wel bij de beschrijving van de interventie welke varianten precies gebruikt worden).</li>
+<li><strong>studies_similar</strong> (<em>NullBooleanField</em>) – Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?. Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde moment een verschillende interventie-variant krijgen (specificeer dan wel bij de beschrijving van de interventie welke varianten precies gebruikt worden).</li>
 <li><strong>studies_number</strong> (<em>PositiveIntegerField</em>) – Hoeveel verschillende trajecten zijn er?</li>
 <li><strong>status</strong> (<em>PositiveIntegerField</em>) – Status</li>
 <li><strong>status_review</strong> (<em>NullBooleanField</em>) – Status review</li>
@@ -458,8 +458,8 @@
 <li><strong>minor_revision_description</strong> (<em>TextField</em>) – Leg uit</li>
 <li><strong>relation</strong> (ForeignKey to <a class="reference internal" href="#proposals.models.Relation" title="proposals.models.Relation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relation</span></code></a>) – In welke hoedanigheid bent u betrokken bij deze studie?</li>
 <li><strong>created_by</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Created by</li>
-<li><strong>supervisor</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de FETC-GW.</li>
-<li><strong>parent</strong> (ForeignKey to <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.</li>
+<li><strong>supervisor</strong> (ForeignKey to <code class="xref py py-class docutils literal notranslate"><span class="pre">User</span></code>) – Eindverantwoordelijke onderzoeker. Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de FETC-GW.</li>
+<li><strong>parent</strong> (ForeignKey to <a class="reference internal" href="#proposals.models.Proposal" title="proposals.models.Proposal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Proposal</span></code></a>) – Te kopiëren studie. Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.</li>
 <li><strong>is_revision</strong> (<em>BooleanField</em>) – Is deze studie een revisie van of amendement op een ingediende studie?</li>
 <li><strong>funding</strong> (<em>ManyToManyField</em>) – Hoe wordt dit onderzoek gefinancierd?</li>
 <li><strong>applicants</strong> (<em>ManyToManyField</em>) – Uitvoerende(n) (inclusief uzelf)</li>
@@ -1090,8 +1090,8 @@
 <li><strong>metc</strong> (<em>CharField</em>) – Vindt de dataverzameling plaats binnen het umc utrecht of andere instelling waar toetsing door een metc verplicht is gesteld?</li>
 <li><strong>metc_details</strong> (<em>TextField</em>) – Licht toe</li>
 <li><strong>metc_institution</strong> (<em>CharField</em>) – Welke instelling?</li>
-<li><strong>is_medical</strong> (<em>CharField</em>) – De definitie van medisch-wetenschappelijk onderzoek is: Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid (etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)</li>
-<li><strong>is_behavioristic</strong> (<em>CharField</em>) – Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, slechts dan kan “nee” ingevuld worden.</li>
+<li><strong>is_medical</strong> (<em>CharField</em>) – Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de wmo)?. De definitie van medisch-wetenschappelijk onderzoek is: Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid (etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)</li>
+<li><strong>is_behavioristic</strong> (<em>CharField</em>) – Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de wmo)?. Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, slechts dan kan “nee” ingevuld worden.</li>
 <li><strong>metc_application</strong> (<em>BooleanField</em>) – Uw studie moet beoordeeld worden door de metc, maar dient nog wel bij de fetc-gw te worden geregistreerd. is deze studie al aangemeld bij een metc?</li>
 <li><strong>metc_decision</strong> (<em>BooleanField</em>) – Is de metc al tot een beslissing gekomen?</li>
 <li><strong>metc_decision_pdf</strong> (<em>FileField</em>) – Upload hier de beslissing van het metc (in .pdf of .doc(x)-formaat)</li>
