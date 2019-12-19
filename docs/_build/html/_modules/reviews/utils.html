@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -153,7 +152,6 @@
             
   <h1>Source code for reviews.utils</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
-
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
 <span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="k">import</span> <span class="n">send_mail</span>
 <span class="kn">from</span> <span class="nn">django.urls</span> <span class="k">import</span> <span class="n">reverse</span>
@@ -163,6 +161,7 @@
 
 <span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES</span><span class="p">,</span> <span class="n">DOUBT</span>
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">get_secretary</span>
+<span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
 <span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Task</span>
 <span class="kn">from</span> <span class="nn">proposals.utils</span> <span class="k">import</span> <span class="n">notify_local_staff</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Review</span><span class="p">,</span> <span class="n">Decision</span>
@@ -397,13 +396,26 @@
     <span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">msg_plain</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_FROM</span><span class="p">,</span> <span class="p">[</span><span class="n">secretary</span><span class="o">.</span><span class="n">email</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="auto_review"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review">[docs]</a><span class="k">def</span> <span class="nf">auto_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">):</span>
+<div class="viewcode-block" id="auto_review"><a class="viewcode-back" href="../../reference/reviews.utils.html#reviews.utils.auto_review">[docs]</a><span class="k">def</span> <span class="nf">auto_review</span><span class="p">(</span><span class="n">proposal</span><span class="p">:</span> <span class="n">Proposal</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reviews a Proposal machine-wise.</span>
 <span class="sd">    Based on the regulations on</span>
 <span class="sd">    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">reasons</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Use the provided date_submitted if available, otherwise pretend it is</span>
+    <span class="c1"># today</span>
+    <span class="c1"># (It almost certainly is now, as it&#39;s only not set when called in the</span>
+    <span class="c1"># submit method)</span>
+    <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">date_submitted</span><span class="p">:</span>
+        <span class="n">date_submitted</span> <span class="o">=</span> <span class="n">proposal</span><span class="o">.</span><span class="n">date_submitted</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">date_submitted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">proposal</span><span class="o">.</span><span class="n">date_start</span> <span class="ow">and</span> <span class="n">proposal</span><span class="o">.</span><span class="n">date_start</span> <span class="o">&lt;</span> <span class="n">date_submitted</span><span class="p">:</span>
+        <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;De beoogde startdatum ligt voor de datum van &quot;</span>
+                         <span class="s2">&quot;indiening&quot;</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">study</span> <span class="ow">in</span> <span class="n">proposal</span><span class="o">.</span><span class="n">study_set</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
 
@@ -479,6 +491,14 @@
             <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf.&#39;</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">observation</span><span class="o">.</span><span class="n">is_anonymous</span><span class="p">:</span>
             <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s1">&#39;De onderzoeker begeeft zich &quot;under cover&quot; in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.&#39;</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">registration</span> <span class="ow">in</span> <span class="n">observation</span><span class="o">.</span><span class="n">registrations</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">registration</span><span class="o">.</span><span class="n">requires_review</span><span class="p">:</span>
+            <span class="n">reasons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">_</span><span class="p">(</span><span class="s1">&#39;De studie maakt gebruik van </span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">registration</span><span class="o">.</span><span class="n">description</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">reasons</span></div>
 

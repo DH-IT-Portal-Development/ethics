@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Database" href="database.html" />
+    <link rel="next" title="Application configuration" href="configuration.html" />
     <link rel="prev" title="Deployment steps" href="steps.html" /> 
 </head>
 
@@ -86,7 +86,6 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Server Deployment</a><ul class="current">
@@ -100,11 +99,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l2"><a class="reference internal" href="configuration.html">Application configuration</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -173,6 +171,11 @@
             
   <div class="section" id="webserver">
 <h1>Webserver<a class="headerlink" href="#webserver" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This only applies on the Debian 8 machines. In the future, we will probably switch to CentOS 7 and running through
+uwsgi.</p>
+</div>
 <p>As with most Python webapps, communication with the webserver is done through the Web Server Gateway Interface. For more
 information on the WSGI spec, see <a class="reference external" href="https://www.python.org/dev/peps/pep-333/">PEP333</a> and <a class="reference external" href="https://www.python.org/dev/peps/pep-3333/">PEP3333</a>.</p>
 <p>A WSGI application is supplied in the <a class="reference internal" href="../reference/fetc.wsgi.html#module-fetc.wsgi" title="fetc.wsgi"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fetc.wsgi</span></code></a> module. You can point your webserver to this file, providing that
@@ -260,7 +263,7 @@ to the vHost file needs to be done in the main Puppet config for the VM.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="database.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Application configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="steps.html" class="btn btn-neutral float-left" title="Deployment steps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

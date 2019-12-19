@@ -86,11 +86,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ethics</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="core.html">core package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faqs.html">faqs package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="feedback.html">feedback package</a></li>
@@ -162,7 +161,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">fetc</a> &raquo;</li>
+          <li><a href="index.html">ethics</a> &raquo;</li>
         
           <li><a href="reviews.html">reviews package</a> &raquo;</li>
         
@@ -187,6 +186,33 @@
             
   <div class="section" id="module-reviews.views">
 <span id="reviews-views-module"></span><h1>reviews.views module<a class="headerlink" href="#module-reviews.views" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="reviews.views.AllProposalReviewsView">
+<em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">AllProposalReviewsView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#AllProposalReviewsView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.AllProposalReviewsView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <a class="reference internal" href="reviews.mixins.html#reviews.mixins.CommitteeMixin" title="reviews.mixins.CommitteeMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">reviews.mixins.CommitteeMixin</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.list.ListView</span></code></p>
+<dl class="attribute">
+<dt id="reviews.views.AllProposalReviewsView.context_object_name">
+<code class="descname">context_object_name</code><em class="property"> = 'reviews'</em><a class="headerlink" href="#reviews.views.AllProposalReviewsView.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reviews.views.AllProposalReviewsView.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#AllProposalReviewsView.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.AllProposalReviewsView.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all open Committee Decisions of all Users</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.AllProposalReviewsView.group_required">
+<code class="descname">group_required</code><em class="property"> = 'Secretaris'</em><a class="headerlink" href="#reviews.views.AllProposalReviewsView.group_required" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reviews.views.AllProposalReviewsView.template_name">
+<code class="descname">template_name</code><em class="property"> = 'reviews/review_all_list.html'</em><a class="headerlink" href="#reviews.views.AllProposalReviewsView.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="reviews.views.ChangeChamberView">
 <em class="property">class </em><code class="descclassname">reviews.views.</code><code class="descname">ChangeChamberView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reviews/views.html#ChangeChamberView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reviews.views.ChangeChamberView" title="Permalink to this definition">¶</a></dt>

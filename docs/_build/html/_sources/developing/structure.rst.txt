@@ -48,9 +48,10 @@ Proposals Flow
 Creating
 --------
 
-When a researcher wants to submit a new proposal, (s)he starts in the :mod:`proposals` app. The forms in this app ask
-for basic information about the study (title, researchers involved, funding, etc.). This information is stored in a
-:class:`~proposals.models.Proposal` object, which also serves as the main object for the other objects.
+When a researcher wants to submit a new proposal (also called a 'study'), (s)he starts in the :mod:`proposals` app. The
+forms in this app ask for basic information about the study (title, researchers involved, funding, etc.). This
+information is stored in a :class:`~proposals.models.Proposal` object, which also serves as the main object for the
+other objects.
 
 While staying in the ``proposals`` app, the researcher has to specify the amount of studies that are part of this
 proposal. (Please note that studies are called 'trajectories' in the interface).
@@ -80,3 +81,54 @@ A warning about datamanagement is next, after which the researcher can submit it
 Reviewing
 ---------
 
+When a proposal is submitted, one of the following can happen:
+
+Supervisor phase
+++++++++++++++++
+
+If the proposal has a supervisor, the proposal enters the 'supervisor review phase'. A :class:`~reviews.models.Review`
+object is created for the proposal, and an empty :class:`~reviews.models.Decision` is created for the supervisor.
+
+The supervisor is sent an e-mail, asking them to review their student's proposal. If the supervisor think's it's fine,
+the review is closed with approval, and the Committee review phase starts. (See below).
+
+If the proposal needs some additional work, the supervisor selects 'needs revision' and the review is closed with that
+status. The supervisor can also say it's not approved, but which is handled in the same manner. However, this almost
+never happens.
+
+It is worth noting that a 'needs revision' or a 'not approved' conclusion actually closes the entire proposal! To
+continue, the researcher needs to create a **new** proposal by **copying** the old one. (There is a special page to
+create revision copies).
+
+.. warning::
+    One must create a revision by making a copy! Do not let them start from scratch! Otherwise the FEtC-H cannot
+    reliably identify it as a revision.
+
+Committee review phase
+++++++++++++++++++++++
+
+If the supervisor has approved the proposal or the proposal doesn't have a supervisor, the committee review phase begins.
+
+A :class:`~reviews.models.Review` object is created for the proposal, and a :class:`~reviews.models.Decision` object
+is created for the secretary. The review has it's own phases, namely: assignment, review and conclusion.
+
+At the assignment phase, the secretary decides if the proposal should follow the short route or the long route. The
+application gives the secretary an 'auto-review', which boils down to a series of checks like 'performs long experiments
+on children', etc.
+The auto-review code can be found in :py:mod:`~reviews.utils`. If any check returns true, the application recommends the
+long route.
+
+At the same time, the secretary selects committee members to review the proposal. Once the committee members are
+assigned, the review phase begins.
+
+In the review phase, all selected committee members give their own decision:
+
+- Accepted
+- Needs revision
+- Rejection
+
+Once all committee members have given their decision, the secretary can conclude the proposal. At conclusion, the
+secretary fills in the final decision. In all cases, the proposal is closed and we reach the end of the proposal lifetime.
+
+A researcher can make a review or an amendment later, but that is treated as a new proposal. (Revisions and amendments
+do include a reference to the original study and have the `is_revision` boolean set to true).

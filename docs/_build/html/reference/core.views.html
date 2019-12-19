@@ -86,11 +86,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">fetc</a><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ethics</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="core.html">core package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="core.html#subpackages">Subpackages</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="core.html#submodules">Submodules</a><ul class="current">
@@ -162,7 +161,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">fetc</a> &raquo;</li>
+          <li><a href="index.html">ethics</a> &raquo;</li>
         
           <li><a href="core.html">core package</a> &raquo;</li>
         
@@ -350,6 +349,40 @@ and the position of the User. He can be:
 - a supervisor of this Proposal
 If the status of the Proposal is not in line with the status of the User,
 a PermissionDenied is raised.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.views.UserDetailView">
+<em class="property">class </em><code class="descclassname">core.views.</code><code class="descname">UserDetailView</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#UserDetailView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.UserDetailView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">braces.views._access.GroupRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.DetailView</span></code></p>
+<dl class="attribute">
+<dt id="core.views.UserDetailView.context_object_name">
+<code class="descname">context_object_name</code><em class="property"> = 'user_object'</em><a class="headerlink" href="#core.views.UserDetailView.context_object_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="core.views.UserDetailView.get_context_data">
+<code class="descname">get_context_data</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#UserDetailView.get_context_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.UserDetailView.get_context_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert the single object into the context dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.views.UserDetailView.get_user_reviews">
+<code class="descname">get_user_reviews</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/core/views.html#UserDetailView.get_user_reviews"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.views.UserDetailView.get_user_reviews" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all Committee Reviews of this user</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.UserDetailView.group_required">
+<code class="descname">group_required</code><em class="property"> = ['Secretaris', 'LK', 'AK']</em><a class="headerlink" href="#core.views.UserDetailView.group_required" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="core.views.UserDetailView.model">
+<code class="descname">model</code><a class="headerlink" href="#core.views.UserDetailView.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">django.contrib.auth.models.User</span></code></p>
 </dd></dl>
 
 </dd></dl>

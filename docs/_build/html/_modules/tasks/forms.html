@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -304,6 +303,9 @@
         <span class="n">tasks_duration</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">mark_safe</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></div>
 
     <span class="n">_soft_validation_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tasks_duration&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TaskEndForm.is_initial_visit"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskEndForm.is_initial_visit">[docs]</a>    <span class="k">def</span> <span class="nf">is_initial_visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="TaskEndForm.clean"><a class="viewcode-back" href="../../reference/tasks.forms.html#tasks.forms.TaskEndForm.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">cleaned_data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaskEndForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clean</span><span class="p">()</span>

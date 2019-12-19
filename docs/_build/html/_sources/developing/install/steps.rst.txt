@@ -4,6 +4,28 @@ Installation Steps
 
 Installation of this Django project is quite straightforward:
 
+OS Dependencies
+---------------
+
+Your host OS needs some packages, below is a list of debian packages:
+
++ libtiff5-dev
++ libjpeg62-turbo-dev
++ zlib1g-dev
++ libfreetype6-dev
++ liblcms2-dev
++ libwebp-dev
++ tcl8.6-dev
++ tk8.6-dev
++ libldap2-dev
++ libsasl2-dev
++ libssl-dev
++ gettext
+
+Pip might throw errors while installing `mysqlclient` if you do not have a mysql-dev package. That package is not needed
+for development, so you can (temporarily) comment out that dependency if you run into problems. (Or just install the
+mysql dev package).
+
 Preparing the source
 --------------------
 
@@ -76,16 +98,22 @@ as an argument.
 Example: ``python manage.py runserver localhost:8080`` or ``python manage.py runserver 8080``
 
 Add additional users in the admin interface
+===========================================
+
+The application requires one user to be part of the 'secretary' group, otherwise the application will throw errors because it can't find one.
+You can set this is the admin interface.
 
 .. tip::
   You can find the admin interface at ``server:port/admin``. If you are using the default settings, this would be
   `http://localhost:8000/admin <http://localhost:8000/admin>`_.
 
-The application requires one user to be part of the 'secretary' group. You can set this is the admin interface.
-That same user should also be member of the 'committee' group.
 
 .. tip::
-   You should create at least 2 user accounts, as you require a seperate account to act as a supervisor.
+   IT is advisable to create at least 3 user accounts:
+
+   * A regular user, which you should use to create new studies
+   * A user to use as a supervisor (some researchers need a supervisor)
+   * A user to use as secretary
 
 You are ready to roll!
 ----------------------

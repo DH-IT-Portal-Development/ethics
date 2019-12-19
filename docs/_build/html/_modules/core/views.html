@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -154,7 +153,7 @@
   <h1>Source code for core.views</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- encoding: utf-8 -*-</span>
 <span class="kn">import</span> <span class="nn">ldap</span>
-<span class="kn">from</span> <span class="nn">braces.views</span> <span class="k">import</span> <span class="n">LoginRequiredMixin</span>
+<span class="kn">from</span> <span class="nn">braces.views</span> <span class="k">import</span> <span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">GroupRequiredMixin</span>
 <span class="kn">from</span> <span class="nn">django.apps</span> <span class="k">import</span> <span class="n">apps</span>
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
 <span class="kn">from</span> <span class="nn">django.contrib</span> <span class="k">import</span> <span class="n">messages</span>
@@ -174,6 +173,7 @@
 <span class="kn">from</span> <span class="nn">interventions.models</span> <span class="k">import</span> <span class="n">Intervention</span>
 <span class="kn">from</span> <span class="nn">observations.models</span> <span class="k">import</span> <span class="n">Observation</span>
 <span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
+<span class="kn">from</span> <span class="nn">reviews.models</span> <span class="k">import</span> <span class="n">Review</span>
 <span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Task</span>
 
 <span class="c1"># We set up a custom LDAP connection here, separate from the Django auth one</span>
@@ -197,6 +197,42 @@
 <span class="c1">################</span>
 <div class="viewcode-block" id="HomeView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.HomeView">[docs]</a><span class="k">class</span> <span class="nc">HomeView</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">TemplateView</span><span class="p">):</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;core/index.html&#39;</span></div>
+
+
+<div class="viewcode-block" id="UserDetailView"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UserDetailView">[docs]</a><span class="k">class</span> <span class="nc">UserDetailView</span><span class="p">(</span><span class="n">GroupRequiredMixin</span><span class="p">,</span> <span class="n">generic</span><span class="o">.</span><span class="n">DetailView</span><span class="p">):</span>
+    <span class="n">group_required</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_SECRETARY</span><span class="p">,</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_LINGUISTICS_CHAMBER</span><span class="p">,</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">GROUP_GENERAL_CHAMBER</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">get_user_model</span><span class="p">()</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;user_object&#39;</span>
+
+<div class="viewcode-block" id="UserDetailView.get_context_data"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UserDetailView.get_context_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;reviews&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_user_reviews</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">context</span></div>
+
+<div class="viewcode-block" id="UserDetailView.get_user_reviews"><a class="viewcode-back" href="../../reference/core.views.html#core.views.UserDetailView.get_user_reviews">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_reviews</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns all Committee Reviews of this user&quot;&quot;&quot;</span>
+        <span class="n">reviews</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">objects</span> <span class="o">=</span> <span class="n">Review</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">stage__gte</span><span class="o">=</span><span class="n">Review</span><span class="o">.</span><span class="n">ASSIGNMENT</span><span class="p">,</span>
+            <span class="n">proposal__status__gte</span><span class="o">=</span><span class="n">Proposal</span><span class="o">.</span><span class="n">SUBMITTED</span><span class="p">,</span>
+            <span class="n">proposal__created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_object</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+            <span class="n">proposal</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">proposal</span>
+            <span class="k">if</span> <span class="n">proposal</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">reviews</span><span class="p">:</span>
+                <span class="n">reviews</span><span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">reviews</span><span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">]</span><span class="o">.</span><span class="n">pk</span> <span class="o">&lt;</span> <span class="n">obj</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+                    <span class="n">reviews</span><span class="p">[</span><span class="n">proposal</span><span class="o">.</span><span class="n">pk</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">reviews</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span></div></div>
 
 
 <span class="c1">################</span>

@@ -2,6 +2,10 @@
 Webserver
 *********
 
+.. warning::
+    This only applies on the Debian 8 machines. In the future, we will probably switch to CentOS 7 and running through
+    uwsgi.
+
 As with most Python webapps, communication with the webserver is done through the Web Server Gateway Interface. For more
 information on the WSGI spec, see `PEP333`_ and `PEP3333`_.
 

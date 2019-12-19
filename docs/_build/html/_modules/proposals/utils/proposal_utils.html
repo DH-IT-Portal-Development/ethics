@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -169,7 +168,8 @@
 <span class="kn">from</span> <span class="nn">core.utils</span> <span class="k">import</span> <span class="n">AvailableURL</span><span class="p">,</span> <span class="n">get_secretary</span>
 <span class="kn">from</span> <span class="nn">studies.utils</span> <span class="k">import</span> <span class="n">study_urls</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;available_urls&#39;</span><span class="p">,</span> <span class="s1">&#39;generate_ref_number&#39;</span><span class="p">,</span> <span class="s1">&#39;generate_pdf&#39;</span><span class="p">,</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;available_urls&#39;</span><span class="p">,</span> <span class="s1">&#39;generate_ref_number&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;generate_revision_ref_number&#39;</span><span class="p">,</span> <span class="s1">&#39;generate_pdf&#39;</span><span class="p">,</span>
            <span class="s1">&#39;check_local_facilities&#39;</span><span class="p">,</span> <span class="s1">&#39;notify_local_staff&#39;</span><span class="p">]</span>
 
 
@@ -249,22 +249,93 @@
 
 <div class="viewcode-block" id="generate_ref_number"><a class="viewcode-back" href="../../../reference/proposals.utils.proposal_utils.html#proposals.utils.proposal_utils.generate_ref_number">[docs]</a><span class="k">def</span> <span class="nf">generate_ref_number</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates a reference number for a Proposal.</span>
+<span class="sd">    Generates a reference number for a new(!) Proposal.</span>
+<span class="sd">    NOTE: Use generate_revision_ref_number to create reference numbers for</span>
+<span class="sd">    revisions! This function will always create a new ref.num. with version = 1</span>
+
 <span class="sd">    :param user: the creator of this Proposal, the currently logged-in User</span>
-<span class="sd">    :return: a reference number in the format {username}-{nr}-{current_year},</span>
-<span class="sd">    where nr is the number of Proposals created by the current User in the</span>
-<span class="sd">    current year.</span>
+<span class="sd">    :return: a reference number in the format {username}-{nr}-{vr}-{</span>
+<span class="sd">    current_year}, where nr is the number of Proposals created by the current</span>
+<span class="sd">    User in the current year excluding revisions. Vr is the version of this</span>
+<span class="sd">    proposal, this function will always return vr = 1.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">..models</span> <span class="k">import</span> <span class="n">Proposal</span>
 
+    <span class="c1"># Set default values</span>
     <span class="n">current_year</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">last_proposal</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">date_created__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span><span class="o">.</span><span class="n">latest</span><span class="p">(</span><span class="s1">&#39;date_created&#39;</span><span class="p">)</span>
-        <span class="n">proposal_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">last_proposal</span><span class="o">.</span><span class="n">reference_number</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">except</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
-        <span class="n">proposal_number</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">proposal_number</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">version_number</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{:02}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">proposal_number</span><span class="p">,</span> <span class="n">current_year</span><span class="p">)</span></div>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># We get the last proposal for this year by selecting all proposals</span>
+        <span class="c1"># for this user, with a reference number ending with the current year.</span>
+        <span class="c1"># Lastly, we sort it by the reference number and take last item from the</span>
+        <span class="c1"># QS.</span>
+        <span class="c1"># Note that it&#39;s ordered alphabetical, so it&#39;s important that the</span>
+        <span class="c1"># numbers are padded with a zero for proper ordering!</span>
+        <span class="n">last_proposal</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="n">created_by</span><span class="o">=</span><span class="n">user</span><span class="p">,</span>
+            <span class="n">reference_number__endswith</span><span class="o">=</span><span class="n">current_year</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;reference_number&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">last</span><span class="p">()</span>
+        <span class="c1"># last() returns None when the QS is empty</span>
+        <span class="k">if</span> <span class="n">last_proposal</span><span class="p">:</span>
+            <span class="n">proposal_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">last_proposal</span><span class="o">.</span><span class="n">reference_number</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{:02}</span><span class="s1">-</span><span class="si">{:02}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+        <span class="n">proposal_number</span><span class="p">,</span>
+        <span class="n">version_number</span><span class="p">,</span>
+        <span class="n">current_year</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="generate_revision_ref_number"><a class="viewcode-back" href="../../../reference/proposals.utils.proposal_utils.html#proposals.utils.proposal_utils.generate_revision_ref_number">[docs]</a><span class="k">def</span> <span class="nf">generate_revision_ref_number</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates a new reference number for revisions of a proposal.</span>
+<span class="sd">    This is done by looking up the last revision of the specified proposal,</span>
+<span class="sd">    not by incrementing the version of the specified proposal.</span>
+<span class="sd">    (The latter will fail spectacularly when a user makes 2 revisions from the</span>
+<span class="sd">    same proposal)</span>
+<span class="sd">    :param parent: The proposal that will be revised</span>
+<span class="sd">    :return: a reference number in the format {username}-{nr}-{vr}-{</span>
+<span class="sd">    current_year}, where nr is the number of Proposals created by the current</span>
+<span class="sd">    User in the current year excluding revisions. This method will use the</span>
+<span class="sd">    same nr as the parent. Vr is the version of this proposal, this function</span>
+<span class="sd">    will use the next available version number (this might not be the same as</span>
+<span class="sd">    parent.vr + 1, as that one might already exist).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..models</span> <span class="k">import</span> <span class="n">Proposal</span>
+
+    <span class="n">parent_parts</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">reference_number</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">parent_parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">proposal_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parent_parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># If we have 4 parts, the ref.number is in the new user-nr-vr-year format</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent_parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">year</span> <span class="o">=</span> <span class="n">parent_parts</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Otherwise, we assume it&#39;s in the old user-nr-year format</span>
+        <span class="n">year</span> <span class="o">=</span> <span class="n">parent_parts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="c1"># Count all proposals by matching all proposals with the same user-nr</span>
+    <span class="c1"># part and the same year. (This way we find both old and new style ref.nums)</span>
+    <span class="n">num_versions</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+        <span class="n">reference_number__istartswith</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{:02}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">username</span><span class="p">,</span>
+                                                        <span class="n">proposal_number</span><span class="p">),</span>
+        <span class="n">reference_number__endswith</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+    <span class="c1"># The new revision is number of current versions + 1</span>
+    <span class="n">version_number</span> <span class="o">=</span> <span class="n">num_versions</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{:02}</span><span class="s1">-</span><span class="si">{:02}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">username</span><span class="p">,</span>
+        <span class="n">proposal_number</span><span class="p">,</span>
+        <span class="n">version_number</span><span class="p">,</span>
+        <span class="n">year</span>
+    <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="generate_pdf"><a class="viewcode-back" href="../../../reference/proposals.utils.proposal_utils.html#proposals.utils.proposal_utils.generate_pdf">[docs]</a><span class="k">def</span> <span class="nf">generate_pdf</span><span class="p">(</span><span class="n">proposal</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>

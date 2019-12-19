@@ -10,5 +10,4 @@ Development
    structure
    tests
    i18n
-   documentation
    toolset

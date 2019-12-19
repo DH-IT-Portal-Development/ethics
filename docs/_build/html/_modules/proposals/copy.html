@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -155,7 +154,7 @@
 <span></span><span class="kn">from</span> <span class="nn">django.utils</span> <span class="k">import</span> <span class="n">timezone</span>
 
 <span class="kn">from</span> <span class="nn">studies.utils</span> <span class="k">import</span> <span class="n">copy_study_to_proposal</span><span class="p">,</span> <span class="n">copy_documents_to_proposal</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">generate_ref_number</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">generate_ref_number</span><span class="p">,</span> <span class="n">generate_revision_ref_number</span>
 
 
 <div class="viewcode-block" id="copy_proposal"><a class="viewcode-back" href="../../reference/proposals.copy.html#proposals.copy.copy_proposal">[docs]</a><span class="k">def</span> <span class="nf">copy_proposal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
@@ -175,7 +174,13 @@
     <span class="c1"># Create copy and save the this new model, set it to not-submitted</span>
     <span class="n">copy_proposal</span> <span class="o">=</span> <span class="n">parent</span>
     <span class="n">copy_proposal</span><span class="o">.</span><span class="n">pk</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">copy_proposal</span><span class="o">.</span><span class="n">reference_number</span> <span class="o">=</span> <span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;is_revision&#39;</span><span class="p">]:</span>
+        <span class="n">copy_proposal</span><span class="o">.</span><span class="n">reference_number</span> <span class="o">=</span> <span class="n">generate_revision_ref_number</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">copy_proposal</span><span class="o">.</span><span class="n">reference_number</span> <span class="o">=</span> <span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+
+
     <span class="n">copy_proposal</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
     <span class="n">copy_proposal</span><span class="o">.</span><span class="n">created_by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span>
     <span class="n">copy_proposal</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">DRAFT</span>

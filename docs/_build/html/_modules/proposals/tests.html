@@ -84,11 +84,10 @@
             
               <p class="caption"><span class="caption-text">Index</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../maintenance/index.html">Maintenance &amp; administration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../developing/index.html">Development</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation/index.html">Server Deployment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">fetc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference/index.html">ethics</a></li>
 </ul>
 
             
@@ -165,7 +164,7 @@
 <span class="kn">from</span> <span class="nn">tasks.models</span> <span class="k">import</span> <span class="n">Session</span><span class="p">,</span> <span class="n">Task</span><span class="p">,</span> <span class="n">Registration</span>
 <span class="kn">from</span> <span class="nn">studies.models</span> <span class="k">import</span> <span class="n">Study</span><span class="p">,</span> <span class="n">Recruitment</span>
 <span class="kn">from</span> <span class="nn">.models</span> <span class="k">import</span> <span class="n">Proposal</span><span class="p">,</span> <span class="n">Relation</span><span class="p">,</span> <span class="n">Wmo</span><span class="p">,</span> <span class="n">Institution</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">generate_ref_number</span><span class="p">,</span> <span class="n">check_local_facilities</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">generate_ref_number</span><span class="p">,</span> <span class="n">check_local_facilities</span><span class="p">,</span> <span class="n">generate_revision_ref_number</span>
 <span class="kn">from</span> <span class="nn">.views.proposal_views</span> <span class="k">import</span> <span class="n">MyProposalsView</span>
 
 
@@ -206,12 +205,12 @@
                                      <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
                                      <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
                                      <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number</span><span class="p">,</span> <span class="s1">&#39;test0101-02-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number</span><span class="p">,</span> <span class="s1">&#39;test0101-02-01-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span>
 
         <span class="c1"># Delete a proposal, check new reference number</span>
         <span class="n">p2</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
         <span class="n">ref_number2</span> <span class="o">=</span> <span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number2</span><span class="p">,</span> <span class="s1">&#39;test0101-02-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number2</span><span class="p">,</span> <span class="s1">&#39;test0101-02-01-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span>
 
         <span class="c1"># Add a proposal for another user</span>
         <span class="n">user2</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;test0102&#39;</span><span class="p">,</span> <span class="n">email</span><span class="o">=</span><span class="s1">&#39;test@test.com&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;secret&#39;</span><span class="p">)</span>
@@ -221,7 +220,66 @@
                                      <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
                                      <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
                                      <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">reference_number</span><span class="p">,</span> <span class="s1">&#39;test0102-01-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">reference_number</span><span class="p">,</span> <span class="s1">&#39;test0102-01-01-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProposalTestCase.test_revision_reference_number"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalTestCase.test_revision_reference_number">[docs]</a>    <span class="k">def</span> <span class="nf">test_revision_reference_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">current_year</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">)</span>
+
+        <span class="c1"># Add a revision proposal for p1, check new reference number</span>
+        <span class="c1"># Should be 01-02 (first proposal, second version)</span>
+        <span class="n">ref_number</span> <span class="o">=</span> <span class="n">generate_revision_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p2&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">ref_number</span><span class="p">,</span>
+                                     <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                                     <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                     <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                     <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                     <span class="n">is_revision</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                     <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p1</span><span class="p">,</span>
+                                     <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number</span><span class="p">,</span> <span class="s1">&#39;test0101-01-02-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span>
+
+        <span class="c1"># Add a proposal for the same user, check new reference number</span>
+        <span class="c1"># Should be 02-01 (second proposal, first version)</span>
+        <span class="n">ref_number</span> <span class="o">=</span> <span class="n">generate_ref_number</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">p3</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p3&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">ref_number</span><span class="p">,</span>
+                                     <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                                     <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                     <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                     <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                     <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number</span><span class="p">,</span> <span class="s1">&#39;test0101-02-01-&#39;</span> <span class="o">+</span> <span class="n">current_year</span><span class="p">)</span>
+
+        <span class="c1"># Add new proposal using an old 3-part ref.number and make a revision</span>
+        <span class="c1"># number using the proposal.</span>
+        <span class="c1"># Should be 01-02-1997 (First proposal in 1997, second version)</span>
+        <span class="c1"># (The year in the ref.num. and the creation_date won&#39;t line up,</span>
+        <span class="c1"># but in this case it doesn&#39;t matter as generate_revision_ref_number</span>
+        <span class="c1"># only looks at the ref.num. of the parent).</span>
+        <span class="n">p4</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p4&#39;</span><span class="p">,</span>
+                                     <span class="n">reference_number</span><span class="o">=</span><span class="s1">&#39;test0101-01-1997&#39;</span><span class="p">,</span>
+                                     <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                                     <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                     <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                     <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                     <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
+        <span class="n">ref_number</span> <span class="o">=</span> <span class="n">generate_revision_ref_number</span><span class="p">(</span><span class="n">p4</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">Proposal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;p5&#39;</span><span class="p">,</span> <span class="n">reference_number</span><span class="o">=</span><span class="n">ref_number</span><span class="p">,</span>
+                                     <span class="n">date_start</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                                     <span class="n">created_by</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                                     <span class="n">relation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">relation</span><span class="p">,</span>
+                                     <span class="n">reviewing_committee</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chamber</span><span class="p">,</span>
+                                     <span class="n">is_revision</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                     <span class="n">parent</span><span class="o">=</span><span class="n">p4</span><span class="p">,</span>
+                                     <span class="n">institution</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number</span><span class="p">,</span> <span class="s1">&#39;test0101-01-02-1997&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Generate a new revision ref.number using the original proposal</span>
+        <span class="c1"># This tests whether the right version number is created even if the</span>
+        <span class="c1"># parent isn&#39;t the latest version</span>
+        <span class="c1"># Should be 01-03-1997 (First proposal in 1997, third version)</span>
+        <span class="n">ref_number</span> <span class="o">=</span> <span class="n">generate_revision_ref_number</span><span class="p">(</span><span class="n">p4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ref_number</span><span class="p">,</span> <span class="s1">&#39;test0101-01-03-1997&#39;</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="ProposalTestCase.test_status"><a class="viewcode-back" href="../../reference/proposals.tests.html#proposals.tests.ProposalTestCase.test_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">proposal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p1</span>
