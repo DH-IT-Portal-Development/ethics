@@ -93,6 +93,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#sporadic-tasks-frequently-encountered-problems">Sporadic tasks / Frequently encountered problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reverting-the-status-of-a-concluded-review">Reverting the status of a concluded review</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-new-users">Adding new users</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#adding-local-accounts">Adding local accounts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#automatic-ldap-solis-account-creation">Automatic LDAP (Solis) account creation</a></li>
@@ -220,6 +221,35 @@ a lot of time later).</li>
 </div>
 <div class="section" id="sporadic-tasks-frequently-encountered-problems">
 <h2>Sporadic tasks / Frequently encountered problems<a class="headerlink" href="#sporadic-tasks-frequently-encountered-problems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reverting-the-status-of-a-concluded-review">
+<h3>Reverting the status of a concluded review<a class="headerlink" href="#reverting-the-status-of-a-concluded-review" title="Permalink to this headline">¶</a></h3>
+<p>Once all reviewers have made their decision, the review is automatically closed and send along for the next step.
+However, some reviewers change their minds after a night’s sleep, necessitating a rollback to the review step.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">A supervisor review <strong>should not</strong> be rolled back, doing so will have no effect. The portal automatically creates a
+new committee review once the supervisor review has ended, which will make the portal ignore the supervisor review.</p>
+</div>
+<p>To do this, you need to change 2 models, in the listed order: (This can be done with both Django Admin and Django Shell)</p>
+<p><strong>Decision:</strong></p>
+<ol class="arabic simple">
+<li>Find the decision model object for the reviewer that want’s a rollback</li>
+<li>Change ‘Decision’ to ‘———’ (Or ‘None’ when doing it from the shell).</li>
+<li>Empty the ‘Date decision’ field</li>
+<li>Save</li>
+<li>Repeat for other decisions if necessary</li>
+</ol>
+<p><strong>Review:</strong></p>
+<ol class="arabic simple">
+<li>Find the review model you need (tip: if you are in the Django Admin, you can press ‘edit’ next to the review field
+of the decision.)</li>
+<li>Set ‘Stage’ to ‘Assessment by committee’</li>
+<li>Set ‘Decision’ to ‘Unknown’</li>
+<li>Empty the ‘Date end’ field</li>
+<li>Save</li>
+</ol>
+<p>Congrats, you’re done!</p>
+</div>
 <div class="section" id="adding-new-users">
 <h3>Adding new users<a class="headerlink" href="#adding-new-users" title="Permalink to this headline">¶</a></h3>
 <p>There are two kinds of users in the portal: local accounts, which only exist in the application and LDAP (Solis)

@@ -55,6 +55,39 @@ you can use the following global steps as a guide.
 Sporadic tasks / Frequently encountered problems
 ================================================
 
+Reverting the status of a concluded review
+------------------------------------------
+
+Once all reviewers have made their decision, the review is automatically closed and send along for the next step.
+However, some reviewers change their minds after a night's sleep, necessitating a rollback to the review step.
+
+.. warning::
+
+    A supervisor review **should not** be rolled back, doing so will have no effect. The portal automatically creates a
+    new committee review once the supervisor review has ended, which will make the portal ignore the supervisor review.
+
+To do this, you need to change 2 models, in the listed order: (This can be done with both Django Admin and Django Shell)
+
+**Decision:**
+
+1. Find the decision model object for the reviewer that want's a rollback
+2. Change 'Decision' to '---------' (Or 'None' when doing it from the shell).
+3. Empty the 'Date decision' field
+4. Save
+5. Repeat for other decisions if necessary
+
+**Review:**
+
+1. Find the review model you need (tip: if you are in the Django Admin, you can press 'edit' next to the review field
+   of the decision.)
+2. Set 'Stage' to 'Assessment by committee'
+3. Set 'Decision' to 'Unknown'
+4. Empty the 'Date end' field
+5. Save
+
+Congrats, you're done!
+
+
 Adding new users
 ----------------
 
