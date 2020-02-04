@@ -440,7 +440,13 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
                                                 review__stage=Review.SUPERVISOR).order_by(
                 '-pk')
 
-            return decisions[0]
+            if decisions:
+                return decisions[0]
+
+            from reviews.utils import start_supervisor_phase
+            start_supervisor_phase(self)
+
+            return self.supervisor_decision()
 
     def __str__(self):
         if self.is_practice():
