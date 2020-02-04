@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from core.forms import ConditionalModelForm, SoftValidationMixin
 from core.models import DOUBT, NO, YES, YES_NO_DOUBT
 from core.utils import YES_NO, get_users_as_list
+from .field import ParentChoiceModelField
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
@@ -214,13 +215,21 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         model = Proposal
         fields = ['parent', 'is_revision', 'title']
         widgets = {
-            'is_revision': forms.HiddenInput()
+            'is_revision': forms.HiddenInput(),
         }
         error_messages = {
             'title': {
                 'unique': _('Er bestaat al een studie met deze titel.'),
             },
         }
+
+    parent = ParentChoiceModelField(
+        queryset=Proposal.objects.all(),
+        label=_('Te kopiëren studie'),
+        help_text=_(
+            'Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'
+        ),
+    )
 
     def __init__(self, *args, **kwargs):
         super(BaseProposalCopyForm, self).__init__(*args, **kwargs)
