@@ -327,7 +327,8 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         initial = super(ReviewCloseView, self).get_initial()
         initial['continuation'] = Review.GO if review.go else Review.NO_GO
 
-        if review.proposal.date_start < date.today():
+        if review.proposal.date_start and \
+           review.proposal.date_start < date.today():
             initial['continuation'] = \
                 Review.GO_POST_HOC if initial['continuation'] == Review.GO \
                     else Review.NO_GO_POST_HOC
