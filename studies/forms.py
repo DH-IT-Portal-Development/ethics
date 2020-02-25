@@ -60,6 +60,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
     def clean(self):
         """
         Check for conditional requirements:
+        - Check that a compensation was selected
         - Check whether necessity was required
         - Check all passive_consent fields are filled in correctly when needed
         - Check that legally_incapable has a value
@@ -71,6 +72,8 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         - If a recruitment which needs details has been checked, make sure the details are filled
         """
         cleaned_data = super(StudyForm, self).clean()
+
+        self.mark_soft_required(cleaned_data, 'compensation', 'recruitment')
 
         self.necessity_required(cleaned_data)
         self.passive_consent(cleaned_data)
