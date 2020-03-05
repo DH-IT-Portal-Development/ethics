@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-17 13:38+0100\n"
+"POT-Creation-Date: 2020-03-05 15:09+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -20,8 +20,8 @@ msgstr ""
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
 #: core/forms/conditional_form.py:48 core/forms/mixins.py:92
-#: proposals/forms.py:459 proposals/forms.py:539 studies/forms.py:100
-#: studies/forms.py:111 studies/forms.py:117 tasks/forms.py:84
+#: proposals/forms.py:468 proposals/forms.py:548 studies/forms.py:103
+#: studies/forms.py:114 studies/forms.py:120 tasks/forms.py:84
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -621,6 +621,109 @@ msgstr ""
 "FEtC-H website.\n"
 "    "
 
+#: core/templates/error/400.html:6 core/templates/error/500.html:6
+msgid "Server error"
+msgstr "Server error"
+
+#: core/templates/error/400.html:13 core/templates/error/500.html:13
+msgid ""
+"\n"
+"    Er is een fout opgetreden tijdens het opvragen van deze pagina.\n"
+msgstr ""
+"\n"
+"    We encountered an error while processing your request.\n"
+
+#: core/templates/error/400.html:18 core/templates/error/500.html:18
+msgid ""
+"\n"
+"    Blijft dit probleem aanhouden? Neem dan contact op met <a href=\"https://"
+"fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">de FETC-GW secretaris</"
+"a>.\n"
+msgstr ""
+"\n"
+"    Does this problem persist? Please contact <a href=\"https://fetc-gw.wp."
+"hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
+
+#: core/templates/error/403.html:6
+msgid "Geen toegang"
+msgstr "Access denied"
+
+#: core/templates/error/403.html:13
+msgid ""
+"\n"
+"U heeft geen toegang tot de opgevraagde pagina.\n"
+msgstr ""
+"\n"
+"You are not allowed to view this page.\n"
+
+#: core/templates/error/403.html:19
+msgid "Dit kan meerdere oorzaken hebben:"
+msgstr "This may be caused by the following:"
+
+#: core/templates/error/403.html:23
+msgid "U heeft niet de benodigde rechten om deze pagina te bekijken;"
+msgstr "You don't have the required permissions to view this page;"
+
+#: core/templates/error/403.html:26
+msgid "U bent niet als mede-onderzoeker opgegeven voor deze studie;"
+msgstr "You have not been added as a researcher to this study;"
+
+#: core/templates/error/403.html:29
+msgid ""
+"U probeert een door u eerder genomen beslissing aan te passen, maar de "
+"beoordelingsperiode is verstreken."
+msgstr ""
+"You are trying to change one of your decision, but the assessment period has "
+"expired. "
+
+#: core/templates/error/403.html:35
+#, python-format
+msgid ""
+"\n"
+"            U bent niet ingelogd, probeer <a href=\"%(login_url)s\"> in te "
+"loggen</a>.\n"
+"        "
+msgstr ""
+"\n"
+"            You are not logged in, please <a href=\"%(login_url)s\"> try to "
+"log in</a>.\n"
+"        "
+
+#: core/templates/error/403.html:41
+msgid ""
+"\n"
+"    Denkt u dat dit niet klopt? Neem dan contact op met <a href=\"https://"
+"fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">de FETC-GW secretaris</"
+"a>.\n"
+msgstr ""
+"\n"
+"    Is this in error? Please contact <a href=\"https://fetc-gw.wp.hum.uu.nl/"
+"en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
+
+#: core/templates/error/404.html:6
+msgid "Pagina niet gevonden"
+msgstr "Page not found"
+
+#: core/templates/error/404.html:13
+msgid "Sorry, deze pagina is helaas niet (meer) beschikbaar."
+msgstr ""
+"We are sorry but the page (or document) you have requested is currently not "
+"available."
+
+#: core/templates/error/404.html:16
+msgid ""
+"\n"
+"Mogelijk bent u hier terechtgekomen via een verouderde of foutieve link. "
+"Graag vernemen wij welke link niet werkt. U kunt ons dat laten weten door <a "
+"href=\"https://fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">contact op "
+"te nemen</a>. Wij proberen dan de fout te herstellen.\n"
+msgstr ""
+"\n"
+"You may have been referred to this page by an outdated or incorrect link. "
+"Please let us know at which page you found the problem by <a href=\"https://"
+"fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">contacting our secretary</"
+"a>. We will try to solve the problem as soon as possible.\n"
+
 #: core/templates/registration/logged_out.html:13
 msgid "U bent succesvol uitgelogd."
 msgstr "You have successfully logged out."
@@ -929,7 +1032,7 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:68 observations/models.py:78
-#: observations/models.py:91 proposals/models.py:472 studies/models.py:141
+#: observations/models.py:91 proposals/models.py:478 studies/models.py:141
 #: studies/models.py:171 studies/models.py:300
 msgid "Licht toe"
 msgstr "Explain"
@@ -1042,19 +1145,19 @@ msgstr ""
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/forms.py:49 proposals/forms.py:221 proposals/validators.py:20
+#: proposals/forms.py:50 proposals/forms.py:222 proposals/validators.py:20
 msgid "Er bestaat al een studie met deze titel."
 msgstr "There is already an existing study with this title."
 
-#: proposals/forms.py:106
+#: proposals/forms.py:107
 msgid "Selecteer..."
 msgstr "Select..."
 
-#: proposals/forms.py:112
+#: proposals/forms.py:113
 msgid "Docent"
 msgstr "Professor"
 
-#: proposals/forms.py:113
+#: proposals/forms.py:114
 msgid ""
 "Vul hier de docent van de cursus in waarbinnen u deze portal moet doorlopen. "
 "De docent kan na afloop de studie inkijken in de portal. De studie zal niet "
@@ -1064,19 +1167,19 @@ msgstr ""
 "taking. The professor is able to look at your study in the portal. This "
 "study will not be published in the semipublic archive of the FEtC-H."
 
-#: proposals/forms.py:162
+#: proposals/forms.py:163
 msgid "U dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the researcher with final responsibility."
 
-#: proposals/forms.py:173
+#: proposals/forms.py:174
 msgid "U heeft uzelf niet als onderzoekers geselecteerd."
 msgstr "You have not selected yourself!"
 
-#: proposals/forms.py:178
+#: proposals/forms.py:179
 msgid "U heeft geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:186
+#: proposals/forms.py:187
 msgid ""
 "Indien u geen toestemming heeft van een andere ethische commissie, dient u "
 "het normale formulier in te vullen. Ga terug naar de startpagina, en "
@@ -1089,15 +1192,23 @@ msgstr ""
 "\"Register a new study (from scratch in an empty form)\" or \"Register a new "
 "study (from a copy of an old study)\"."
 
-#: proposals/forms.py:207
+#: proposals/forms.py:208
 msgid "Ik vul de portal in"
 msgstr "I am using this portal"
 
-#: proposals/forms.py:252 proposals/forms.py:278
+#: proposals/forms.py:228 proposals/models.py:342
+msgid "Te kopiëren studie"
+msgstr "Application to be copied"
+
+#: proposals/forms.py:230 proposals/models.py:344
+msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
+msgstr "This field shows only applications in which you are involved."
+
+#: proposals/forms.py:261 proposals/forms.py:287
 msgid "U kunt de titel van uw studie nu, indien nodig, wijzigen."
 msgstr "You can, if necessary, change the title of your study here."
 
-#: proposals/forms.py:254 proposals/forms.py:280
+#: proposals/forms.py:263 proposals/forms.py:289
 msgid ""
 "De titel die u hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer "
 "de studie is goedgekeurd, ook voor alle medewerkers die in het archief van "
@@ -1106,11 +1217,11 @@ msgstr ""
 "The title you submit here will be visible to the FEtC-H members and, if the "
 "study is approved, also to employees viewing the archive of this portal."
 
-#: proposals/forms.py:261
+#: proposals/forms.py:270
 msgid "Te reviseren studie"
 msgstr "Application to be revised"
 
-#: proposals/forms.py:262
+#: proposals/forms.py:271
 msgid ""
 "Dit veld toont enkel ingediende, (nog) niet goedgekeurde studies waar u zelf "
 "een medeuitvoerende bent."
@@ -1118,45 +1229,45 @@ msgstr ""
 "This field only shows submitted applications that have not been approved "
 "(yet) in which you are involved."
 
-#: proposals/forms.py:287
+#: proposals/forms.py:296
 msgid "Te amenderen studie"
 msgstr "Application to be amended"
 
-#: proposals/forms.py:288
+#: proposals/forms.py:297
 msgid ""
 "Dit veld toont enkel goedgekeurde studies waar u zelf een medeuitvoerende "
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:341 proposals/forms.py:447
+#: proposals/forms.py:350 proposals/forms.py:456
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:349
+#: proposals/forms.py:358
 msgid "U dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:402
+#: proposals/forms.py:411
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:404
+#: proposals/forms.py:413
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:406
+#: proposals/forms.py:415
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:408
+#: proposals/forms.py:417
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:410
+#: proposals/forms.py:419
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:453
+#: proposals/forms.py:462
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1164,12 +1275,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:507 proposals/forms.py:520 proposals/forms.py:530
+#: proposals/forms.py:516 proposals/forms.py:529 proposals/forms.py:539
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:511 proposals/forms.py:515 proposals/forms.py:524
-#: proposals/forms.py:534
+#: proposals/forms.py:520 proposals/forms.py:524 proposals/forms.py:533
+#: proposals/forms.py:543
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -1394,14 +1505,6 @@ msgstr ""
 "final responsibility can then make adjustments and submit the study to the "
 "FEtC-H."
 
-#: proposals/models.py:342
-msgid "Te kopiëren studie"
-msgstr "Application to be copied"
-
-#: proposals/models.py:344
-msgid "Dit veld toont enkel studies waar u zelf een medeuitvoerende bent."
-msgstr "This field shows only applications in which you are involved."
-
 #: proposals/models.py:350
 msgid "Is deze studie een revisie van of amendement op een ingediende studie?"
 msgstr ""
@@ -1431,19 +1534,19 @@ msgstr "Practice"
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:457
+#: proposals/models.py:463
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:458
+#: proposals/models.py:464
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:459
+#: proposals/models.py:465
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:463
+#: proposals/models.py:469
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1451,11 +1554,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:477
+#: proposals/models.py:483
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:483
+#: proposals/models.py:489
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1463,7 +1566,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:485
+#: proposals/models.py:491
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1484,7 +1587,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:500
+#: proposals/models.py:506
 msgid ""
 "Worden de deelnemers aan een handeling onderworpen of worden hen "
 "gedragsregels opgelegd (zoals gedefinieerd door de WMO)?"
@@ -1492,7 +1595,7 @@ msgstr ""
 "Will the participants undergo treatment or will rules of conduct be imposed "
 "on them (as defined by the WMO)?"
 
-#: proposals/models.py:502
+#: proposals/models.py:508
 msgid ""
 "Een handeling of opgelegde gedragsregel varieert tussen het afnemen van "
 "weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. "
@@ -1506,7 +1609,7 @@ msgstr ""
 "given to the participants, and they are observed exclusively in their lives "
 "as they would normally have acted without observation."
 
-#: proposals/models.py:514
+#: proposals/models.py:520
 msgid ""
 "Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is deze studie al aangemeld bij een METC?"
@@ -1515,15 +1618,15 @@ msgstr ""
 "with the FEtC-H. Has an application for this study already been submitted to "
 "a METC?"
 
-#: proposals/models.py:521
+#: proposals/models.py:527
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:526
+#: proposals/models.py:532
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:563
+#: proposals/models.py:569
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -2333,6 +2436,23 @@ msgid "Taak"
 msgstr "Task"
 
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:41
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "    FETC-GW - Aanvraag voor voortoetsing <em>%(title)s</em> "
+#| "(referentienummer %(reference_number)s, ingediend door %(submitter)s)\n"
+#| "    "
+msgid ""
+"\n"
+"    FETC-GW - Aanvraag elders al goedgekeurde studie <em>%(title)s</em> "
+"(referentienummer %(reference_number)s, ingediend door %(submitter)s)\n"
+"    "
+msgstr ""
+"\n"
+"    FEtC-H - Application for preliminary assessment <em>%(title)s</em> "
+"(reference number %(reference_number)s, submitted by %(submitter)s)\n"
+"    "
+
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:41
 #, python-format
 msgid ""
@@ -3692,11 +3812,11 @@ msgstr ""
 "Does your study make use of (adult) participants <u>incapable</u> of "
 "informed consent?"
 
-#: studies/forms.py:81
+#: studies/forms.py:84
 msgid "U dient minimaal een bijzonder kenmerk te selecteren."
 msgstr "You are required to select at least one special characteristic."
 
-#: studies/forms.py:135
+#: studies/forms.py:138
 msgid "U dient minstens één van de opties te selecteren"
 msgstr "You must select at least one of the options"
 

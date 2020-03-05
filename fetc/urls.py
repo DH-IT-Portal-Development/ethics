@@ -10,6 +10,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
+handler404 = 'core.error_views.error_404'
+handler500 = 'core.error_views.error_500'
+handler403 = 'core.error_views.error_403'
+handler400 = 'core.error_views.error_400'
+
+
 urlpatterns = [
     url(r'^accounts/login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^accounts/logout/$', auth_views.LogoutView.as_view(), name='logout'),
