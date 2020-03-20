@@ -43,8 +43,14 @@ class ReviewAssignForm(ConditionalModelForm):
         """
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
 
+        # reviewers = get_reviewers_from_group(
+        #     self.instance.proposal.reviewing_committee
+        # )
         reviewers = get_reviewers_from_group(
-            self.instance.proposal.reviewing_committee
+            [
+                settings.GROUP_GENERAL_CHAMBER,
+                settings.GROUP_LINGUISTICS_CHAMBER
+            ]
         )
 
         self.fields['reviewers'] = forms.ModelMultipleChoiceField(
