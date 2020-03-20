@@ -35,6 +35,12 @@ def get_reviewers_from_group(group):
     )
 
 
+def get_reviewers_from_groups(groups):
+    return get_user_model().objects.filter(
+        groups__name_in=groups
+    )
+
+
 def string_to_bool(s):
     if s == 'None' or s is None:
         return False
