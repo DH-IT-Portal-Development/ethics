@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from core.forms import ConditionalModelForm
-from core.utils import YES_NO, get_reviewers_from_group
+from core.utils import YES_NO, get_reviewers_from_groups
 from proposals.models import Proposal
 from .models import Review, Decision
 
@@ -46,7 +46,7 @@ class ReviewAssignForm(ConditionalModelForm):
         # reviewers = get_reviewers_from_group(
         #     self.instance.proposal.reviewing_committee
         # )
-        reviewers = get_reviewers_from_group(
+        reviewers = get_reviewers_from_groups(
             [
                 settings.GROUP_GENERAL_CHAMBER,
                 settings.GROUP_LINGUISTICS_CHAMBER
