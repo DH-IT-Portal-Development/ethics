@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from datetime import datetime
 
 from django.test import TestCase, RequestFactory
@@ -278,7 +277,7 @@ class WmoTestCase(BaseProposalTestCase):
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)
 
-        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', b'contents')
+        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', 'contents')
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.JUDGED)

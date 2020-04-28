@@ -1,19 +1,19 @@
-Django>=1.11,<2.0
-django-auth-ldap<2 # Py 3.4 compat
+Django>=2.2,<3.0
+django-auth-ldap
 django-braces
 django-easy-pdf
 django-modeltranslation
 django-impersonate
-mysqlclient<1.4.0 # Py 3.4 compat
+mysqlclient
 xhtml2pdf
-sphinx<2.0.0 # Py 3.4 compat
+sphinx
 sphinx_rtd_theme
 sphinxcontrib-apidoc
 sphinxcontrib-django
 html5lib
 django-user-agents
-pillow<6
-pygments<2.4
-requests<2.22
+pillow
+pygments
+requests
 
-reportlab==3.5.23
+reportlab

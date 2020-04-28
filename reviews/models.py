@@ -1,16 +1,12 @@
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
 
 from proposals.models import Proposal
 
 
-@python_2_unicode_compatible
 class Review(models.Model):
     SUPERVISOR = 0
     ASSIGNMENT = 1
@@ -43,8 +39,18 @@ class Review(models.Model):
     )
 
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
-    short_route = models.NullBooleanField(_('Route'), default=None)
-    go = models.NullBooleanField(_('Beslissing'), default=None)
+    short_route = models.BooleanField(
+        _('Route'),
+        default=None,
+        null=True,
+        blank=True
+    )
+    go = models.BooleanField(
+        _('Beslissing'),
+        default=None,
+        null=True,
+        blank=True
+    )
     continuation = models.PositiveIntegerField(_('Afhandeling'), choices=CONTINUATIONS, default=GO)
 
     date_start = models.DateTimeField()
@@ -100,7 +106,6 @@ class Review(models.Model):
         return 'Review of %s' % self.proposal
 
 
-@python_2_unicode_compatible
 class Decision(models.Model):
     APPROVED = 'Y'
     NOT_APPROVED = 'N'

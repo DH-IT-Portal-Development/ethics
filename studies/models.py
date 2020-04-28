@@ -5,14 +5,12 @@ from django.db import models
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
 
 from core.models import YES_NO_DOUBT
 from core.validators import validate_pdf_or_doc
 from proposals.models import Proposal
 
 
-@python_2_unicode_compatible
 class AgeGroup(models.Model):
     """
     A model to store participant age groups.
@@ -40,7 +38,6 @@ class AgeGroup(models.Model):
             return _('{} jaar en ouder').format(self.age_min)
 
 
-@python_2_unicode_compatible
 class Trait(models.Model):
     """
     A model to store participant traits.
@@ -58,7 +55,6 @@ class Trait(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class Compensation(models.Model):
     """
     A model to store forms of participant compensation.
@@ -78,7 +74,6 @@ class Compensation(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class Recruitment(models.Model):
     """
     A model to store forms of participant recruitment.
@@ -100,7 +95,7 @@ class Recruitment(models.Model):
     def __str__(self):
         return self.description
 
-@python_2_unicode_compatible
+
 class Study(models.Model):
     """
     A model to store a study within a Proposal.
@@ -140,9 +135,12 @@ vertegenwoordiger te worden verkregen.'),
     legally_incapable_details = models.TextField(
         _('Licht toe'),
         blank=True)
-    has_traits = models.NullBooleanField(
+    has_traits = models.BooleanField(
         _('Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
-Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
+Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
+        null=True,
+        blank=True
+    )
     traits = models.ManyToManyField(
         Trait,
         blank=True,
@@ -196,14 +194,17 @@ cadeautje.'),
         default=False)
 
     # Fields with respect to informed consent
-    passive_consent = models.NullBooleanField(
+    passive_consent = models.BooleanField(
         _('Maakt u gebruik van passieve informed consent?'),
         help_text=_(mark_safe('Wanneer u kinderen via een instelling \
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
 passieve informed consent. U kunt de templates vinden op \
 <a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" \
-target="_blank">de FETC-GW-website</a>.')))
+target="_blank">de FETC-GW-website</a>.')),
+        null=True,
+        blank=True,
+    )
     passive_consent_details = models.TextField(
         _('Licht uw antwoord toe. Wij willen u wijzen op het reglement, \
 sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
@@ -393,7 +394,6 @@ geschoolde specialisten).')),
         return _('Study details for proposal %s') % self.proposal.title
 
 
-@python_2_unicode_compatible
 class Documents(models.Model):
     """
     A model to store consent forms for a study and/or a proposal

@@ -1,11 +1,8 @@
 # -*- encoding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from core.models import YES, YES_NO_DOUBT
@@ -15,7 +12,6 @@ from .utils import available_urls
 SUMMARY_MAX_WORDS = 200
 
 
-@python_2_unicode_compatible
 class Relation(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -30,7 +26,6 @@ class Relation(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -45,7 +40,6 @@ class Funding(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class Institution(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -61,7 +55,6 @@ class Institution(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class Proposal(models.Model):
     DRAFT = 1
     SUBMITTED_TO_SUPERVISOR = 40
@@ -180,7 +173,7 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
         blank=True,
     )
 
-    inform_local_staff = models.NullBooleanField(
+    inform_local_staff = models.BooleanField(
         _('<p>U hebt aangegeven dat u gebruik wilt gaan maken van één \
 van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
 en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op \
@@ -196,6 +189,8 @@ worden doorgestuurd:</p> \
 - Van welke faciliteiten u gebruik wilt maken (database, lab, \
 Zep software)'),
         default=None,
+        blank=True,
+        null=True
     )
 
     in_archive = models.BooleanField(default=False)
@@ -210,7 +205,7 @@ Zep software)'),
         validators=[validate_pdf_or_doc],
     )
 
-    is_pre_approved = models.NullBooleanField(
+    is_pre_approved = models.BooleanField(
         _(
             'Heeft u formele toestemming van een ethische toetsingcommissie, '
             'uitgezonderd deze FETC-GW commissie?'),
@@ -246,7 +241,7 @@ Zep software)'),
     pdf = models.FileField(blank=True)
 
     # Fields with respect to Studies
-    studies_similar = models.NullBooleanField(
+    studies_similar = models.BooleanField(
         _('Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
         help_text=_('Daar waar de verschillen klein en qua belasting of \
 risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk \
@@ -256,6 +251,8 @@ helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
 hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
 dan wel bij de beschrijving van de interventie welke varianten precies \
 gebruikt worden).'),
+        blank=True,
+        null=True,
     )
 
     studies_number = models.PositiveIntegerField(
@@ -270,8 +267,10 @@ gebruikt worden).'),
         default=DRAFT,
     )
 
-    status_review = models.NullBooleanField(
+    status_review = models.BooleanField(
         default=None,
+        null=True,
+        blank=True,
     )
 
     # Confirmation
@@ -454,7 +453,6 @@ sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en in
         return '{} ({})'.format(self.title, self.created_by)
 
 
-@python_2_unicode_compatible
 class Wmo(models.Model):
     NO_WMO = 0
     WAITING = 1

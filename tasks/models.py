@@ -1,14 +1,11 @@
-from __future__ import unicode_literals
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
 
 from core.models import SettingModel
 from studies.models import Study
 
 
-@python_2_unicode_compatible
 class Session(SettingModel):
     order = models.PositiveIntegerField()
 
@@ -80,7 +77,6 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         return _('Sessie {}').format(self.order)
 
 
-@python_2_unicode_compatible
 class Registration(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -98,7 +94,6 @@ class Registration(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class RegistrationKind(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -165,8 +160,11 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
         blank=True,
     )
 
-    feedback = models.NullBooleanField(
-        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?')
+    feedback = models.BooleanField(
+        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar '
+          'gedrag of toestand?'),
+        null=True,
+        blank=True,
     )
 
     feedback_details = models.TextField(
