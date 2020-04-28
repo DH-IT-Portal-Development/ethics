@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
+from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
@@ -33,7 +34,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             'compensation':      forms.RadioSelect(),
         }
         labels = {
-            'legally_incapable': mark_safe(_('Maakt uw studie gebruik van '
+            'legally_incapable': _(mark_safe('Maakt uw studie gebruik van '
                                              'wils<u>on</u>bekwame ('
                                              'volwassen) deelnemers?'))
         }
@@ -49,7 +50,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.proposal = kwargs.pop('proposal', None)
 
         super(StudyForm, self).__init__(*args, **kwargs)
-        self.fields['legally_incapable'].label = "Geert"
         self.fields['compensation'].empty_label = None
         self.fields['necessity'].empty_label = None
         self.fields['necessity'].choices = YES_NO_DOUBT
