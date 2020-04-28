@@ -25,9 +25,9 @@ def copy_intervention_to_study(study, intervention):
 
     i = intervention
     i.pk = None
-    i.version = 2 # Auto upgrade old versions
+    i.version = 2  # Auto upgrade old versions
     i.study = study
     i.save()
 
-    i.setting = setting
+    i.setting.set(setting)
     i.save()

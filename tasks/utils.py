@@ -80,8 +80,8 @@ def copy_task_to_session(session, task):
     t.session = session
     t.save()
 
-    t.registrations = r
-    t.registration_kinds = rk
+    t.registrations.set(r)
+    t.registration_kinds.set(rk)
     t.save()
 
 
@@ -94,7 +94,7 @@ def copy_session_to_study(study, session):
     s.study = study
     s.save()
 
-    s.setting = setting
+    s.setting.set(setting)
     s.save()
 
     for task in tasks:
