@@ -76,8 +76,19 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         - Set pre_assessment_pdf required for preliminary assessment Proposals, otherwise remove
         """
         in_course = kwargs.pop('in_course', False)
-        is_pre_assessment = kwargs.pop('is_pre_assessment', False)
         is_pre_approved = kwargs.pop('is_pre_approved', False)
+
+        # First, try to determine this value from the kwargs. Otherwise, try
+        # to get it from the instance. If that fails, assume False
+        self.is_pre_assessment = kwargs.pop(
+            'is_pre_assessment',
+            getattr(
+                kwargs.get('instance'),
+                'is_pre_assessment',
+                False
+            )
+        )
+
 
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
@@ -116,7 +127,7 @@ de cursus in waarbinnen u deze portal moet doorlopen. De docent kan na afloop \
 de studie inkijken in de portal. De studie zal niet in het semipublieke archief \
 van het FETC-GW worden opgenomen.')
 
-        if is_pre_assessment:
+        if self.is_pre_assessment:
             self.fields['relation'].queryset = Relation.objects.filter(
                 check_pre_assessment=True)
             self.fields['pre_assessment_pdf'].required = True
@@ -148,17 +159,15 @@ van het FETC-GW worden opgenomen.')
         """
         cleaned_data = super(ProposalForm, self).clean()
 
-        if 'funding' in self.fields:
+        if not self.is_pre_assessment:
             self.mark_soft_required(cleaned_data, 'funding')
+            self.mark_soft_required(cleaned_data, 'summary')
 
         self.mark_soft_required(cleaned_data, 'relation')
 
-        if 'summary' in self.fields:
-            self.mark_soft_required(cleaned_data, 'summary')
-
         relation = cleaned_data.get('relation')
-        if relation and relation.needs_supervisor and not cleaned_data.get(
-                'supervisor'):
+        if relation and relation.needs_supervisor and \
+           not cleaned_data.get('supervisor'):
             error = forms.ValidationError(
                 _('U dient een eindverantwoordelijke op te geven.'),
                 code='required')
