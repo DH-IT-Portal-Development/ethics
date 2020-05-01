@@ -257,7 +257,7 @@ gebruikt worden).'),
         null=True,
     )
 
-    studies_number=models.PositiveIntegerField(
+    studies_number = models.PositiveIntegerField(
         _('Hoeveel verschillende trajecten zijn er?'),
         default=1,
         validators=[MinValueValidator(1), MaxValueValidator(5)],
