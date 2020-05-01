@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -255,7 +257,7 @@ gebruikt worden).'),
         null=True,
     )
 
-    studies_number = models.PositiveIntegerField(
+    studies_number=models.PositiveIntegerField(
         _('Hoeveel verschillende trajecten zijn er?'),
         default=1,
         validators=[MinValueValidator(1), MaxValueValidator(5)],
@@ -329,8 +331,10 @@ bij deze studie?'),
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
         blank=True,
         null=True,
-        help_text=_('Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke \
-sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de FETC-GW.'),
+        help_text=_('''Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke
+            sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de FETC-GW.
+            <br><br><strong>Tip</strong>: Type een aantal letters van de voornaam, achternaam, of Solis ID van
+            de persoon die u toe wilt voegen in de zoekbalk hiernaast. Merk op dat het laden even kan duren.'''),
         on_delete=models.CASCADE,
     )
 
