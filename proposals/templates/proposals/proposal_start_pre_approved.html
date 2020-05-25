@@ -17,21 +17,23 @@
     Het is daarvoor <em>noodzakelijk</em> dat u goed bekend bent met het FETC-GW
     reglement. <br />Deze kunt u vinden op de UU-webpagina van de FETC-GW:
     <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">reglement Algemene Kamer (AK)</a> en
-    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">reglement Linguïstiek Kamer (LK)</a>.
+    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">reglement Linguïstiek Kamer
+        (LK)</a>.
     U kunt uzelf en de commissieleden veel tijd besparen door uzelf eerst
     goed te informeren.
     {% endblocktrans %}
 </p>
 <p>
-    {% blocktrans with secretary_name=secretary.get_full_name secretary_mail=secretary.email %}
+    {% blocktrans with secretary_name=secretary.get_full_name %}
     Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht
     niet mee bekend is.
     Raadpleeg bij vragen eerst het
-    reglement van de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank"> Algemene Kamer (AK)</a> of
+    reglement van de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank"> Algemene Kamer
+        (AK)</a> of
     de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">Linguïstiek Kamer (LK)</a>,
     en neem eventueel daarna contact op met de secretaris
     ({{ secretary_name }},
-    <a href="mailto:{{ secretary_mail }}">{{ secretary_mail }}</a>).
+    <a href="mailto:fetc-gw@uu.nl">fetc-gw@uu.nl</a>).
     {% endblocktrans %}
 </p>
 <a class="pure-button pure-button-primary" href="{% url 'proposals:create_pre_approved' %}">
