@@ -16,7 +16,8 @@
     Het is daarvoor <em>noodzakelijk</em> dat u goed bekend bent met het FETC-GW
     reglement. <br />Deze kunt u vinden op de UU-webpagina van de FETC-GW:
     <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">reglement Algemene Kamer (AK)</a> en
-    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">reglement Linguïstiek Kamer (LK)</a>.
+    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">reglement Linguïstiek Kamer
+        (LK)</a>.
     U kunt uzelf en de commissieleden veel tijd besparen door uzelf eerst
     goed te informeren.
     {% endblocktrans %}
@@ -33,7 +34,7 @@
     is vormgegeven. Na dit alles zult u gevraagd worden een inschatting te geven
     van de belasting van, en risico's voor, de deelnemers, en dient u vervolgens
     alle voor uw studie aangepaste formulieren ten bate van <em>informed
-    consent</em> te uploaden.
+        consent</em> te uploaden.
     {% endblocktrans %}
 </p>
 <p>
@@ -45,7 +46,7 @@
     werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante
     leeftijdsgroepen naar
     <a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">de
-    verschillende soort toestemmingsverklaringen</a> die de FETC aanbiedt op de
+        verschillende soort toestemmingsverklaringen</a> die de FETC aanbiedt op de
     website
     {% endblocktrans %}
 </p>
@@ -57,15 +58,16 @@
     {% endblocktrans %}
 </p>
 <p>
-    {% blocktrans with secretary_name=secretary.get_full_name secretary_mail=secretary.email %}
+    {% blocktrans with secretary_name=secretary.get_full_name %}
     Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht
     niet mee bekend is.
     Raadpleeg bij vragen eerst het
-    reglement van de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank"> Algemene Kamer (AK)</a> of
+    reglement van de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank"> Algemene Kamer
+        (AK)</a> of
     de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">Linguïstiek Kamer (LK)</a>,
     en neem eventueel daarna contact op met de secretaris
     ({{ secretary_name }},
-    <a href="mailto:{{ secretary_mail }}">{{ secretary_mail }}</a>).
+    <a href="mailto:fetc-gw@uu.nl">fetc-gw@uu.nl</a>).
     {% endblocktrans %}
 </p>
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
