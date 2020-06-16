@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 import django.utils.six as six
@@ -21,6 +22,12 @@ def get_secretary():
     """
     return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)[0]
 
+
+def is_secretary(user):
+    """
+    Check whether the current user is in the 'Secretary' group
+    """
+    return Group.objects.get(name=settings.GROUP_SECRETARY) in user.groups.all()
 
 def get_reviewers():
     return get_user_model().objects.filter(
