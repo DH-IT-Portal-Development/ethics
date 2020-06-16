@@ -23,20 +23,12 @@ from proposals.models import Proposal
 from reviews.models import Review
 from tasks.models import Session, Task
 
-# We set up a custom LDAP connection here, separate from the Django auth one
 try:
     # This will trigger an exception if LDAP is not configured
     from fetc.ldap_settings import *
-
-    # If it is configured, we open a connection and bind our credentials to it.
-    ldap_connection = ldap.initialize(AUTH_LDAP_SERVER_URI)
-    ldap_connection.bind(AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
-
-    # If all went well, we mark our connection as available
-    ldap_available = True
-except (ImportError, ldap.LDAPError):
-    # If there was a problem importing or connecting to the LDAP, we mark our connection as not available
-    ldap_available = False
+    LDAP_CONFIGURED = True
+except (ImportError):
+    LDAP_CONFIGURED = False
 
 
 ################
@@ -100,6 +92,18 @@ def check_requires(request):
                             'result': result
                         })
 
+def establish_ldap_connection():
+    # We set up a custom LDAP connection here, separate from the Django auth one
+    if not LDAP_CONFIGURED:
+        return None
+    try:
+        # If LDAP is configured, we open a connection and bind our credentials to it.
+        ldap_connection = ldap.initialize(AUTH_LDAP_SERVER_URI)
+        ldap_connection.bind(AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
+        return ldap_connection
+    except ldap.LDAPError:
+        # Raised if there was a problem connecting to LDAP
+        return None
 
 def user_search(query, page):
     """
@@ -127,8 +131,11 @@ def user_search(query, page):
     # We put this in a variable because we're going to reuse this later on
     ldap_results_needed = (page == u'2' or len(users) == 0)
 
+    # Attempt to establish LDAP connection
+    ldap_connection = establish_ldap_connection()
+
     # If we can use the LDAP and we need LDAP results
-    if ldap_available and ldap_results_needed:
+    if ldap_connection and ldap_results_needed:
         # Start the LDAP search
         ldap_query = escape_ldap_input(query)
         msgid = ldap_connection.search(
@@ -151,13 +158,19 @@ def user_search(query, page):
                                             "utf-8"))
             })
 
+    # Paging-more should be true if there are no LDAP results included in this page, the LDAP is available and
+    # the query is not a wildcard
+    paging_more = not ldap_results_needed and ldap_connection and query != '*'
+    
+    # Unbind the ldap connection after we are done with it
+    if ldap_connection:
+        ldap_connection.unbind()
+    
     # Return a formatted dict with the results
     return {
         'results':    users,
-        # Paging-more should be true if there are no LDAP results included in this page, the LDAP is available and
-        # the query is not a wildcard
         'pagination': {
-            'more': not ldap_results_needed and ldap_available and query != '*'
+            'more': paging_more
         }
     }
 
