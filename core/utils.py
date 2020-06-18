@@ -18,16 +18,21 @@ class AvailableURL(object):
 
 def get_secretary():
     """
-    Returns the Secretary. We limit this to one user.
+    Returns the Head secretary. We limit this to one user.
     """
-    obj = get_user_model().objects.filter(groups__name=settings.GROUP_HEAD_SECRETARY).first()
+    obj = get_all_secretaries().first()
     obj.email = settings.EMAIL_FROM
     return obj
 
+def get_all_secretaries():
+    """
+    Return all users in the 'Secretary' group.
+    """
+    return get_user_model().objects.filter(groups__name=settings.GROUP_HEAD_SECRETARY).all()
 
 def is_secretary(user):
     """
-    Check whether the current user is in the 'Secretary' group
+    Check whether the current user is in the 'Secretary' group.
     """
     return Group.objects.get(name=settings.GROUP_SECRETARY) in user.groups.all()
 
