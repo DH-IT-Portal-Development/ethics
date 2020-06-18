@@ -20,7 +20,9 @@ def get_secretary():
     """
     Returns the Secretary. We limit this to one user.
     """
-    return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)[0]
+    obj = get_user_model().objects.filter(groups__name=settings.GROUP_HEAD_SECRETARY).first()
+    obj.email = settings.EMAIL_FROM
+    return obj
 
 
 def is_secretary(user):

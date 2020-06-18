@@ -138,6 +138,7 @@ EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
 
 # Group names
 GROUP_SECRETARY = 'Secretaris'
+GROUP_HEAD_SECRETARY = 'Eerste secretaris'
 GROUP_LINGUISTICS_CHAMBER = 'LK'
 GROUP_GENERAL_CHAMBER = 'AK'
 
