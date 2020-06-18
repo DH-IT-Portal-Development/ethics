@@ -28,7 +28,7 @@ def get_all_secretaries():
     """
     Return all users in the 'Secretary' group.
     """
-    return get_user_model().objects.filter(groups__name=settings.GROUP_HEAD_SECRETARY).all()
+    return get_user_model().objects.filter(groups__name=settings.GROUP_PRIMARY_SECRETARY).all()
 
 def is_secretary(user):
     """
