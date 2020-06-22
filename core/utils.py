@@ -20,7 +20,7 @@ def get_secretary():
     """
     Returns the Head secretary. We limit this to one user.
     """
-    obj = get_all_secretaries().first()
+    obj = get_user_model().objects.filter(groups__name=settings.GROUP_PRIMARY_SECRETARY).first()
     obj.email = settings.EMAIL_FROM
     return obj
 
@@ -28,7 +28,7 @@ def get_all_secretaries():
     """
     Return all users in the 'Secretary' group.
     """
-    return get_user_model().objects.filter(groups__name=settings.GROUP_PRIMARY_SECRETARY).all()
+    return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY).all()
 
 def is_secretary(user):
     """
