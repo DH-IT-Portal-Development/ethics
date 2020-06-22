@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from core.utils import get_reviewers, get_secretary
+from core.utils import get_reviewers, get_secretary, is_secretary
 from proposals.models import Proposal
 from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm, \
     ChangeChamberForm
@@ -28,10 +28,17 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     def get_queryset(self):
         """Returns all Decisions of the current User"""
         decisions = {}
-        objects = Decision.objects.filter(
-            reviewer=self.request.user,
-            review__proposal__reviewing_committee=self.committee
-        )
+
+        if is_secretary(self.request.user):
+            objects = Decision.objects.filter(
+                reviewer__groups__name=settings.GROUP_SECRETARY,
+                review__proposal__reviewing_committee=self.committee
+            )
+        else:
+            objects = Decision.objects.filter(
+                reviewer=self.request.user,
+                review__proposal__reviewing_committee=self.committee
+            )
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -56,11 +63,19 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
         decisions = {}
-        objects = Decision.objects.filter(
-            reviewer=self.request.user,
-            go='',
-            review__proposal__reviewing_committee=self.committee
-        )
+
+        if is_secretary(self.request.user):
+            objects = Decision.objects.filter(
+                reviewer__groups__name=settings.GROUP_SECRETARY,
+                go='',
+                review__proposal__reviewing_committee=self.committee
+            )
+        else:
+            objects = Decision.objects.filter(
+                reviewer=self.request.user,
+                go='',
+                review__proposal__reviewing_committee=self.committee
+            )
 
         for obj in objects:
             proposal = obj.review.proposal
