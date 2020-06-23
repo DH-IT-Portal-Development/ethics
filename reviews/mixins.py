@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.utils.functional import cached_property
+from django.utils.translation import ugettext as _
 from django.views.generic.base import ContextMixin
 from django.views.generic.detail import SingleObjectMixin
-from django.utils.translation import ugettext as _
+
+from core.utils import is_secretary
 
 from .models import Decision, Review
 from .utils import auto_review
@@ -16,18 +19,25 @@ class UserAllowedMixin(SingleObjectMixin):
         as well as whether the Review is still open.
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
+        current_user = self.request.user
 
         if isinstance(obj, Review):
-            if not obj.decision_set.filter(reviewer=self.request.user):
+            secretary_reviewers = obj.decision_set.filter(reviewer__groups__name=settings.GROUP_SECRETARY)
+            if secretary_reviewers and is_secretary(current_user):
+                return obj
+            if not obj.decision_set.filter(reviewer=current_user):
                 raise PermissionDenied
 
         if isinstance(obj, Decision):
             reviewer = obj.reviewer
             date_end = obj.review.date_end
 
-            if self.request.user != reviewer or date_end:
+            if date_end:
                 raise PermissionDenied
-
+            if ( self.request.user != reviewer ) and \
+                not ( is_secretary(reviewer) and is_secretary(current_user) ):
+                    raise PermissionDenied
+                
         return obj
 
 
