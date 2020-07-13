@@ -3,11 +3,14 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from core.forms import ConditionalModelForm
-from core.utils import YES_NO, get_reviewers_from_groups
+from core.utils import YES_NO, get_reviewers_from_groups, is_secretary
 from proposals.models import Proposal
 from .models import Review, Decision
 
-SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route')), (None, _('direct naar revisie'))]
+from django.core.exceptions import ValidationError
+
+SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')), (False,
+                                                          _('lange (4-weken) route')), (None, _('direct naar revisie'))]
 
 
 class ChangeChamberForm(forms.ModelForm):
@@ -18,7 +21,8 @@ class ChangeChamberForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ChangeChamberForm, self).__init__(*args, **kwargs)
 
-        general_chamber = Group.objects.get(name=settings.GROUP_GENERAL_CHAMBER)
+        general_chamber = Group.objects.get(
+            name=settings.GROUP_GENERAL_CHAMBER)
         linguistics_chamber = Group.objects.get(
             name=settings.GROUP_LINGUISTICS_CHAMBER
         )
@@ -49,16 +53,32 @@ class ReviewAssignForm(ConditionalModelForm):
         reviewers = get_reviewers_from_groups(
             [
                 settings.GROUP_GENERAL_CHAMBER,
-                settings.GROUP_LINGUISTICS_CHAMBER
+                settings.GROUP_LINGUISTICS_CHAMBER,
+                settings.GROUP_SECRETARY
             ]
         )
 
         self.fields['reviewers'] = forms.ModelMultipleChoiceField(
             initial=self.instance.current_reviewers(),
             queryset=reviewers,
-            widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}),
+            widget=forms.SelectMultiple(
+                attrs={'data-placeholder': _('Selecteer de commissieleden')}),
             required=False
         )
+
+    def clean_reviewers(self):
+        reviewers = self.cleaned_data['reviewers']
+
+        # Make sure at least one secretary is assigned
+        for user in reviewers:
+            if is_secretary(user):
+                break
+        else:
+            raise ValidationError(
+                _('Er moet tenminste één secretaris geselecteerd worden.'),
+                code='no_secretary')
+
+        return self.cleaned_data['reviewers']
 
 
 class ReviewCloseForm(forms.ModelForm):
@@ -83,18 +103,24 @@ class ReviewCloseForm(forms.ModelForm):
         - Remove long route option if this was already the long route.
         - Set the label for in_archive
         """
-        allow_long_route_continuation = kwargs.pop('allow_long_route_continuation', False)
+        allow_long_route_continuation = kwargs.pop(
+            'allow_long_route_continuation', False)
         super(ReviewCloseForm, self).__init__(*args, **kwargs)
         if not allow_long_route_continuation:
-            self.fields['continuation'].choices = [x for x in Review.CONTINUATIONS if x[0] != Review.LONG_ROUTE]
+            self.fields['continuation'].choices = [
+                x for x in Review.CONTINUATIONS if x[0] != Review.LONG_ROUTE]
 
-        self.fields['in_archive'].label = _('Voeg deze studie toe aan het archief')
+        self.fields['in_archive'].label = _(
+            'Voeg deze studie toe aan het archief')
         self.fields['in_archive'].widget = forms.RadioSelect(choices=YES_NO)
 
-        self.fields['has_minor_revision'].label = _('Is er een revisie geweest na het indienen van deze studie?')
-        self.fields['has_minor_revision'].widget = forms.RadioSelect(choices=YES_NO)
+        self.fields['has_minor_revision'].label = _(
+            'Is er een revisie geweest na het indienen van deze studie?')
+        self.fields['has_minor_revision'].widget = forms.RadioSelect(
+            choices=YES_NO)
 
-        self.fields['minor_revision_description'].label = _('Opmerkingen over revisie')
+        self.fields['minor_revision_description'].label = _(
+            'Opmerkingen over revisie')
         self.fields['minor_revision_description'].widget = forms.Textarea()
 
 
