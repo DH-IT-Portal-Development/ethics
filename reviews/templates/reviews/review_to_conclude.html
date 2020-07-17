@@ -66,7 +66,7 @@
                 <a href="{% url 'reviews:detail' review.pk %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
                 {% if user|is_secretary and review.stage == review.ASSIGNMENT %}
                     <a href="{% url 'reviews:assign' review.pk %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
-                {% elif not review.date_end %}
+                {% elif not review.date_end and user in review.current_reviewers %}
                     <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
                 {% elif user|is_secretary and review.stage == review.CLOSING %}
                     <a href="{% url 'reviews:close' review.pk %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
