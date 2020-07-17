@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 16:45+0200\n"
-"PO-Revision-Date: 2020-05-25 16:58+0200\n"
+"POT-Creation-Date: 2020-07-17 14:38+0200\n"
+"PO-Revision-Date: 2020-07-17 14:40+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
-#: core/models.py:9 core/utils.py:7
+#: core/models.py:9 core/utils.py:8
 msgid "ja"
 msgstr "yes"
 
-#: core/models.py:10 core/utils.py:7
+#: core/models.py:10 core/utils.py:8
 msgid "nee"
 msgstr "no"
 
@@ -371,7 +371,7 @@ msgstr "View all applications of the Linguistics Chamber"
 msgid "Site-export"
 msgstr "Site-export"
 
-#: core/templates/base/menu.html:69 reviews/forms.py:27 reviews/mixins.py:44
+#: core/templates/base/menu.html:69 reviews/forms.py:29 reviews/mixins.py:77
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
@@ -401,7 +401,7 @@ msgstr "To conclude studies"
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
-#: core/templates/base/menu.html:96 reviews/forms.py:28 reviews/mixins.py:47
+#: core/templates/base/menu.html:96 reviews/forms.py:30 reviews/mixins.py:80
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
 
@@ -409,19 +409,19 @@ msgstr "Linguistics Chamber"
 msgid "Help"
 msgstr "Help"
 
-#: core/templates/base/menu.html:125 core/templates/core/index.html:105
+#: core/templates/base/menu.html:125 core/templates/core/index.html:137
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: core/templates/base/menu.html:128 core/templates/core/index.html:108
+#: core/templates/base/menu.html:128 core/templates/core/index.html:141
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
 #: core/templates/base/menu.html:131
 msgid " Reglement Linguïstiek Kamer (LK) "
-msgstr "Regulations Linguistics Chamber (LC)"
+msgstr " Regulations Linguistics Chamber (LC) "
 
-#: core/templates/base/menu.html:134 core/templates/core/index.html:114
+#: core/templates/base/menu.html:134 core/templates/core/index.html:149
 #: proposals/templates/proposals/proposal_pdf.html:393
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:81
@@ -464,43 +464,86 @@ msgid "Voortgang"
 msgstr "Progress"
 
 #: core/templates/core/index.html:19
+msgid ""
+"\n"
+"        <strong>Belangrijk</strong>: bij het indienen van een aanvraag\n"
+"        moeten de <strong>juiste (meest recente) voorbeelddocumenten</"
+"strong>\n"
+"        voor de informed consent worden gebruikt. Deze zijn te vinden op\n"
+"        <a href=\"https://intranet.uu.nl/documenten-ethische-"
+"toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
+"        "
+msgstr ""
+"\n"
+"<strong>Important:</strong> for new applications, <strong>the right (latest) "
+"model documents</strong> for informed consent need to be used. You may find "
+"these on the \n"
+"<a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
+"humanities\" target=\"_blank\">intranet</a>."
+
+#: core/templates/core/index.html:27
+msgid ""
+"\n"
+"        In dit webportaal van de Facultaire Ethische Toetsingscommissie\n"
+"        Geesteswetenschappen (FETC-GW) kunt u alle <strong>praktische zaken\n"
+"        </strong> rondom de ethische toetsing van uw onderzoek regelen.\n"
+"        "
+msgstr ""
+"\n"
+"This web portal of the Faculty Ethics assessment Committee Humanities (FEtC-"
+"H) enables you to organize all <strong>practical matters</strong> relating "
+"to the ethics assessment of your research."
+
+#: core/templates/core/index.html:34
+msgid ""
+"\n"
+"        U kunt eennieuwe studie bij de commissie aanmelden, maar ook "
+"bekijken wat er allemaal\n"
+"        eerder door uzelf is aangemeld.\n"
+"        "
+msgstr ""
+"\n"
+"You can register a new study with the committee as well as viewing all your "
+"previous applications."
+
+#: core/templates/core/index.html:41
 #, python-format
 msgid ""
 "\n"
-"    In dit webportaal van de Facultaire Ethische Toetsingscommissie\n"
-"    Geesteswetenschappen (FETC-GW) kunt u  alle <strong>praktische zaken\n"
-"    </strong> rondom de ethische toetsing van uw onderzoek regelen. U kunt "
-"een\n"
-"    nieuwe studie bij de commissie aanmelden, maar ook bekijken wat er "
-"allemaal\n"
-"    eerder door uzelf is aangemeld. Verder kunt u alle afgehandelde en "
-"goedgekeurde\n"
-"    studies zien in het <a href=\"%(archive_url)s\">archief van dit portaal</"
-"a>.\n"
-"    Voor noodzakelijke achtergrondinformatie verwijzen we naar de\n"
-"    <a href=\"http://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU-webpagina "
-"van de FETC-GW</a>,\n"
-"    alsmede naar het reglement van\n"
-"    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" target="
-"\"_blank\">de Algemene Kamer (AK)</a> en\n"
-"    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
-"target=\"_blank\">de Linguïstiek Kamer (LK)</a>.\n"
-"    "
+"        Verder kunt u alle afgehandelde en goedgekeurde\n"
+"        studies zien in het <a href=\"%(archive_url)s\">archief van dit "
+"portaal</a>.\n"
+"        "
 msgstr ""
 "\n"
-" This web portal of the Faculty Ethics assessment Committee Humanities (FEtC-"
-"H) enables you to organize all <strong>practical matters</strong> relating "
-"to the ethics assessment of your research. You can register a new study with "
-"the committee as well as viewing all your previous applications. You can "
-"also view all processed and approved studies in <a href=\"%(archive_url)s"
-"\">the portal’s archive</a>. For necessary background information please "
-"refer to the <a href=\"http://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU "
-"FEtC-H webpage</a>, or to the regulations of the <a href=\"https://fetc-gw."
-"wp.hum.uu.nl/en/regulations-general-chamber-2/\" target=\"_blank\"> General "
-"Chamber</a> or <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"linguistics-chamber/\" target=\"_blank\">the Linguistics Chamber </a>    "
+"You can also view all processed and approved studies in the <a href="
+"\"%(archive_url)s\">portal's archive</a>."
 
-#: core/templates/core/index.html:34
+#: core/templates/core/index.html:47
+msgid ""
+"\n"
+"        Voor noodzakelijke achtergrondinformatie verwijzen we naar de\n"
+"        <a href=\"http://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU-"
+"webpagina van de FETC-GW</a>,\n"
+"        alsmede naar het reglement van\n"
+"        <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" "
+"target=\"_blank\">de Algemene Kamer (AK)</a> en\n"
+"        <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
+"target=\"_blank\">de Linguïstiek Kamer\n"
+"            (LK)</a>.\n"
+"        "
+msgstr ""
+"\n"
+"For necessary background information please refer to the \n"
+"<a href=\"http://fetc-gw.wp.hum.uu.nl/en/\" target=\"_blank\">UU FEtC-H "
+"webpage</a>,\n"
+" or to the regulations of the \n"
+"<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" "
+"target=\"_blank\"> General Chamber</a> or \n"
+"<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
+"target=\"_blank\">the Linguistics Chamber </a>    "
+
+#: core/templates/core/index.html:59
 msgid ""
 "\n"
 "    In deze portal kunt u het volgende doen:\n"
@@ -510,93 +553,103 @@ msgstr ""
 "    In this portal you can do the following:\n"
 "    "
 
-#: core/templates/core/index.html:39
+#: core/templates/core/index.html:64
 msgid "Dien een nieuwe studie in"
 msgstr "Submit a new study"
 
-#: core/templates/core/index.html:43
+#: core/templates/core/index.html:66 core/templates/core/index.html:85
+msgid ""
+"(check de meest recente voorbeelddocumenten op <a href=\"https://intranet.uu."
+"nl/documenten-ethische-toetsingscommissie-gw\" target=\"_blank\">intranet</"
+"a>)"
+msgstr ""
+"(check the latest version of the model documents on the <a href=\"https://"
+"intranet.uu.nl/en/documents-ethics-assessment-committee-humanities\" target="
+"\"_blank\">intranet</a>)"
+
+#: core/templates/core/index.html:69
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: core/templates/core/index.html:46
+#: core/templates/core/index.html:72
 msgid "op basis van een kopie van een oude studie;"
 msgstr "from a copy of an old study;"
 
-#: core/templates/core/index.html:49
+#: core/templates/core/index.html:75
 msgid "voor voortoetsing t.b.v. subsidieaanvraag;"
 msgstr "for preliminary assessment regarding subsidy applications;"
 
-#: core/templates/core/index.html:52
+#: core/templates/core/index.html:79
 msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: core/templates/core/index.html:56
+#: core/templates/core/index.html:83
 msgid "Een gereviseerde studie aanmelden"
 msgstr "Submit a revised version of your study"
 
-#: core/templates/core/index.html:60
+#: core/templates/core/index.html:89
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
-#: core/templates/core/index.html:63
+#: core/templates/core/index.html:93
 msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW."
 msgstr "as an amendment, after your study has been approved by the FEtC-H."
 
-#: core/templates/core/index.html:67
+#: core/templates/core/index.html:97
 msgid "Bekijk"
 msgstr "View"
 
-#: core/templates/core/index.html:71
+#: core/templates/core/index.html:101
 msgid "mijn conceptstudies;"
 msgstr "my draft applications;"
 
-#: core/templates/core/index.html:74
+#: core/templates/core/index.html:104
 msgid "mijn oefenstudies;"
 msgstr "my practice applications;"
 
-#: core/templates/core/index.html:77
+#: core/templates/core/index.html:107
 msgid "mijn ingediende studies;"
 msgstr "my submitted applications;"
 
-#: core/templates/core/index.html:80
+#: core/templates/core/index.html:110
 msgid "mijn afgehandelde studies;"
 msgstr "my processed applications;"
 
-#: core/templates/core/index.html:83
+#: core/templates/core/index.html:113
 msgid "mijn studies als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: core/templates/core/index.html:86
+#: core/templates/core/index.html:116
 msgid "al mijn studies."
 msgstr "all my applications."
 
-#: core/templates/core/index.html:90
+#: core/templates/core/index.html:120
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: core/templates/core/index.html:94
+#: core/templates/core/index.html:125
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Algemene Kamer"
 msgstr "View all processed and approved studies of the General Chamber"
 
-#: core/templates/core/index.html:97
+#: core/templates/core/index.html:129
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Linguïstiek Kamer"
 msgstr "View all processed and approved studies of the Linguistics Chamber"
 
-#: core/templates/core/index.html:111
+#: core/templates/core/index.html:145
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/core/index.html:117
+#: core/templates/core/index.html:152
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: core/templates/core/index.html:120
+#: core/templates/core/index.html:155
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: core/templates/core/index.html:126
+#: core/templates/core/index.html:161
 #, python-format
 msgid ""
 "\n"
@@ -609,7 +662,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: core/templates/core/index.html:131
+#: core/templates/core/index.html:166
 msgid ""
 "\n"
 "    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren "
@@ -617,8 +670,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    Click <a href=\"http://fetc-gw.wp.hum.uu.nl\">here</a> to return to the "
-"FEtC-H website.\n"
+"    Click <a href=\"http://fetc-gw.wp.hum.uu.nl/en/\">here</a> to return to "
+"the FEtC-H website.\n"
 "    "
 
 #: core/templates/error/400.html:6 core/templates/error/500.html:6
@@ -674,7 +727,7 @@ msgid ""
 "beoordelingsperiode is verstreken."
 msgstr ""
 "You are trying to change one of your decision, but the assessment period has "
-"expired. "
+"expired."
 
 #: core/templates/error/403.html:35
 #, python-format
@@ -1009,7 +1062,7 @@ msgstr ""
 "What is the goal of the observation? For example: The goal of the "
 "observation is to get insight in how the teachers deal with the new teaching "
 "method. One question to be answered will be whether the teachers explain the "
-"new method well in understandable language. "
+"new method well in understandable language."
 
 #: observations/models.py:54
 msgid "Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd."
@@ -1020,7 +1073,7 @@ msgstr ""
 msgid ""
 "Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd."
 msgstr ""
-"For example: Each teacher will be observed during 5 lessons of 45 minutes. "
+"For example: Each teacher will be observed during 5 lessons of 45 minutes."
 
 #: observations/models.py:61
 msgid "Wordt er anoniem geobserveerd?"
@@ -1315,7 +1368,7 @@ msgstr "Which chamber should be reviewing this study?"
 
 #: proposals/models.py:107
 msgid "Aan welk onderzoeksinstituut bent u verbonden?"
-msgstr "To which research institute are you affiliated? "
+msgstr "To which research institute are you affiliated?"
 
 #: proposals/models.py:113
 msgid "Wat is, indien bekend, de beoogde startdatum van uw studie?"
@@ -1354,7 +1407,7 @@ msgid ""
 "zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?"
 msgstr ""
 "Are there any other researchers involved affiliated to ICON, OFR, OGK or UiL "
-"OTS? "
+"OTS?"
 
 #: proposals/models.py:145
 msgid ""
@@ -1472,7 +1525,7 @@ msgstr "How many different trajectories are there?"
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:296 reviews/forms.py:94
+#: proposals/models.py:296 reviews/forms.py:111
 msgid "Is er een revisie geweest na het indienen van deze studie?"
 msgstr "Has this study been amended after it was submitted?"
 
@@ -1885,7 +1938,7 @@ msgid ""
 "indienen."
 msgstr ""
 "You can submit an amendment here based on the study that has already been "
-"approved"
+"approved."
 
 #: proposals/templates/proposals/proposal_copy.html:25
 msgid ""
@@ -2523,7 +2576,6 @@ msgstr ""
 "upload all forms of <em>informed consent</em> adapted to your study.      "
 
 #: proposals/templates/proposals/proposal_start.html:41
-#: proposals/templates/proposals/proposal_start_practice.html:41
 msgid ""
 "\n"
 "    Als u met verschillende deelnemersgroepen werkt die een verschillend\n"
@@ -2537,8 +2589,9 @@ msgid ""
 "\"_blank\">de\n"
 "        verschillende soorten informatiebrieven en toestemmingsverklaringen</"
 "a> die de FETC aanbiedt op de\n"
-"    website. Let op: informed consent formulieren die bij een officiële "
-"aanvraag gebruikt moeten worden zijn te vinden\n"
+"    website. <strong>Let op:</strong> informed consent formulieren die bij "
+"een <strong>officiële aanvraag</strong> gebruikt moeten worden zijn te "
+"vinden\n"
 "    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
 "toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
 "    "
@@ -2551,9 +2604,10 @@ msgstr ""
 "required to create different trajectories. See for relevant age groups <a "
 "href=\"https://fetc-gw.wp.hum.uu.nl/en/document_templates/\" target=\"_blank"
 "\">the different types of information letters and consent forms</a> we offer "
-"at the website. Please note that consent forms to be used in an official "
-"application are to be found on <a href=\"https://intranet.uu.nl/en/faculty-"
-"ethics-assessment-committee-humanities\" target=\"_blank\">intranet</a>."
+"at the website. <strong>Please note</strong> that consent forms to be used "
+"in an <strong>official application</strong> are to be found on <a href="
+"\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">intranet</a>."
 
 #: proposals/templates/proposals/proposal_start.html:55
 #: proposals/templates/proposals/proposal_start_practice.html:55
@@ -2612,6 +2666,40 @@ msgstr "Next step >>"
 #: proposals/templates/proposals/proposal_start_practice.html:7
 msgid "Een nieuwe studie aanmelden (oefenportaal)"
 msgstr "Register a new study (practice portal)"
+
+#: proposals/templates/proposals/proposal_start_practice.html:41
+msgid ""
+"\n"
+"    Als u met verschillende deelnemersgroepen werkt die een verschillend\n"
+"    onderzoekstraject doorlopen (de ene groep krijgt bijvoorbeeld twee\n"
+"    taken, de andere drie) zult u elk traject apart op bovengenoemde wijze\n"
+"    moeten beschrijven. NB: Ook wanneer u met verschillende "
+"leeftijdsgroepen\n"
+"    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante\n"
+"    leeftijdsgroepen naar\n"
+"    <a href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\" target="
+"\"_blank\">de\n"
+"    verschillende soorten informatiebrieven en toestemmingsverklaringen</a> "
+"die de FETC aanbiedt op de\n"
+"    website. <strong>Let op</strong>: informed consent formulieren die bij "
+"een <strong>officiële aanvraag</strong> gebruikt moeten worden zijn te "
+"vinden\n"
+"    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
+"toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
+"    "
+msgstr ""
+"\n"
+"    If you work with different participant groups undergoing different "
+"research trajectories (one group, for example, is given two tasks, the other "
+"three) you will need to describe each group separately in the manner "
+"mentioned above. NB: Also, when you work with different age groups, you are "
+"required to create different trajectories. See for relevant age groups <a "
+"href=\"https://fetc-gw.wp.hum.uu.nl/en/document_templates/\" target=\"_blank"
+"\">the different types of information letters and consent forms</a> we offer "
+"at the website. <strong>Please note</strong> that consent forms to be used "
+"in an <strong>official application</strong> are to be found on <a href="
+"\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">intranet</a>."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 msgid ""
@@ -3222,27 +3310,31 @@ msgstr "Contact {secretary} to make sure."
 msgid "Uw studie zal moeten worden beoordeeld door de METC."
 msgstr "Your study will require assessment by a METC."
 
-#: reviews/forms.py:10
+#: reviews/forms.py:12
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:10
+#: reviews/forms.py:13
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
-#: reviews/forms.py:10
+#: reviews/forms.py:14
 msgid "direct naar revisie"
 msgstr "straight to revision"
 
-#: reviews/forms.py:59
+#: reviews/forms.py:62
 msgid "Selecteer de commissieleden"
 msgstr "Select committee members"
 
-#: reviews/forms.py:91
+#: reviews/forms.py:75
+msgid "Er moet tenminste één secretaris geselecteerd worden."
+msgstr "You must select at least one of the options."
+
+#: reviews/forms.py:108
 msgid "Voeg deze studie toe aan het archief"
 msgstr "Add this study to the archive"
 
-#: reviews/forms.py:97
+#: reviews/forms.py:114
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
@@ -4769,6 +4861,39 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "\n"
+#~ "    Als u met verschillende deelnemersgroepen werkt die een verschillend\n"
+#~ "    onderzoekstraject doorlopen (de ene groep krijgt bijvoorbeeld twee\n"
+#~ "    taken, de andere drie) zult u elk traject apart op bovengenoemde "
+#~ "wijze\n"
+#~ "    moeten beschrijven. NB: Ook wanneer u met verschillende "
+#~ "leeftijdsgroepen\n"
+#~ "    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante\n"
+#~ "    leeftijdsgroepen naar\n"
+#~ "    <a href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\" target="
+#~ "\"_blank\">de\n"
+#~ "        verschillende soorten informatiebrieven en "
+#~ "toestemmingsverklaringen</a> die de FETC aanbiedt op de\n"
+#~ "    website. Let op: informed consent formulieren die bij een officiële "
+#~ "aanvraag gebruikt moeten worden zijn te vinden\n"
+#~ "    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
+#~ "toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "    If you work with different participant groups undergoing different "
+#~ "research trajectories (one group, for example, is given two tasks, the "
+#~ "other three) you will need to describe each group separately in the "
+#~ "manner mentioned above. NB: Also, when you work with different age "
+#~ "groups, you are required to create different trajectories. See for "
+#~ "relevant age groups <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "document_templates/\" target=\"_blank\">the different types of "
+#~ "information letters and consent forms</a> we offer at the website. Please "
+#~ "note that consent forms to be used in an official application are to be "
+#~ "found on <a href=\"https://intranet.uu.nl/en/faculty-ethics-assessment-"
+#~ "committee-humanities\" target=\"_blank\">intranet</a>."
 
 #~ msgid "Afwijzing door FETC-GW, post-hoc"
 #~ msgstr "Post hoc rejection by FEtC-H"

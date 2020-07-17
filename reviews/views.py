@@ -9,9 +9,10 @@ from django.views import generic
 
 from core.utils import get_reviewers, get_secretary, is_secretary
 from proposals.models import Proposal
-from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm, \
-    ChangeChamberForm
-from .mixins import AutoReviewMixin, UserAllowedMixin, CommitteeMixin
+from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
+                    ChangeChamberForm)
+from .mixins import (AutoReviewMixin, UserAllowedMixin,
+                     CommitteeMixin, UserOrSecretaryAllowedMixin)
 from .models import Decision, Review
 from .utils import notify_secretary, start_review_route
 
@@ -230,7 +231,7 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
         return [value for key, value in decisions.items()]
 
 
-class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin,
+class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserOrSecretaryAllowedMixin,
                        generic.DetailView):
     """
     Shows the Decisions for a Review
@@ -274,16 +275,15 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             current_reviewers = set(review.current_reviewers())
             selected_reviewers = set(form.cleaned_data['reviewers'])
             new_reviewers = selected_reviewers - current_reviewers
-            obsolete_reviewers = current_reviewers - selected_reviewers - {
-                get_secretary()}
+            obsolete_reviewers = current_reviewers - selected_reviewers
 
             # Set the proper end date
             # It should be 2 weeks for short_routes
             if route and form.instance.date_should_end is None:
                 form.instance.date_should_end = timezone.now() + \
-                                                timezone.timedelta(
-                                                    weeks=settings.SHORT_ROUTE_WEEKS
-                                                )
+                    timezone.timedelta(
+                    weeks=settings.SHORT_ROUTE_WEEKS
+                )
             elif form.instance.date_should_end is not None:
                 # We have no desired end date for long track reviews
                 form.instance.date_should_end = None
@@ -346,7 +346,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
            review.proposal.date_start < date.today():
             initial['continuation'] = \
                 Review.GO_POST_HOC if initial['continuation'] == Review.GO \
-                    else Review.NO_GO_POST_HOC
+                else Review.NO_GO_POST_HOC
 
         initial['in_archive'] = not review.proposal.is_pre_assessment
         return initial

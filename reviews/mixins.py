@@ -19,6 +19,29 @@ class UserAllowedMixin(SingleObjectMixin):
         as well as whether the Review is still open.
         """
         obj = super(UserAllowedMixin, self).get_object(queryset)
+
+        if isinstance(obj, Review):
+            if not obj.decision_set.filter(reviewer=self.request.user):
+                raise PermissionDenied
+
+        if isinstance(obj, Decision):
+            reviewer = obj.reviewer
+            date_end = obj.review.date_end
+
+            if self.request.user != reviewer or date_end:
+                raise PermissionDenied
+
+        return obj
+
+
+class UserOrSecretaryAllowedMixin(SingleObjectMixin):
+    def get_object(self, queryset=None):
+        """
+        Checks whether the current User is a reviewer in this Review,
+        as well as whether the Review is still open.
+        Secretaries can make decision for each other.
+        """
+        obj = super(UserOrSecretaryAllowedMixin, self).get_object(queryset)
         current_user = self.request.user
 
         if isinstance(obj, Review):
@@ -34,10 +57,10 @@ class UserAllowedMixin(SingleObjectMixin):
 
             if date_end:
                 raise PermissionDenied
-            if ( self.request.user != reviewer ) and \
-                not ( is_secretary(reviewer) and is_secretary(current_user) ):
-                    raise PermissionDenied
-                
+            if (self.request.user != reviewer) and \
+                    not (is_secretary(reviewer) and is_secretary(current_user)):
+                raise PermissionDenied
+
         return obj
 
 
