@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-14 09:10+0200\n"
-"PO-Revision-Date: 2020-07-14 09:29+0200\n"
+"POT-Creation-Date: 2020-07-17 14:38+0200\n"
+"PO-Revision-Date: 2020-07-17 14:40+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -371,7 +371,7 @@ msgstr "View all applications of the Linguistics Chamber"
 msgid "Site-export"
 msgstr "Site-export"
 
-#: core/templates/base/menu.html:69 reviews/forms.py:27 reviews/mixins.py:54
+#: core/templates/base/menu.html:69 reviews/forms.py:29 reviews/mixins.py:77
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
@@ -401,7 +401,7 @@ msgstr "To conclude studies"
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
-#: core/templates/base/menu.html:96 reviews/forms.py:28 reviews/mixins.py:57
+#: core/templates/base/menu.html:96 reviews/forms.py:30 reviews/mixins.py:80
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
 
@@ -1525,7 +1525,7 @@ msgstr "How many different trajectories are there?"
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:296 reviews/forms.py:94
+#: proposals/models.py:296 reviews/forms.py:111
 msgid "Is er een revisie geweest na het indienen van deze studie?"
 msgstr "Has this study been amended after it was submitted?"
 
@@ -2576,7 +2576,6 @@ msgstr ""
 "upload all forms of <em>informed consent</em> adapted to your study.      "
 
 #: proposals/templates/proposals/proposal_start.html:41
-#: proposals/templates/proposals/proposal_start_practice.html:41
 msgid ""
 "\n"
 "    Als u met verschillende deelnemersgroepen werkt die een verschillend\n"
@@ -2590,8 +2589,9 @@ msgid ""
 "\"_blank\">de\n"
 "        verschillende soorten informatiebrieven en toestemmingsverklaringen</"
 "a> die de FETC aanbiedt op de\n"
-"    website. Let op: informed consent formulieren die bij een officiële "
-"aanvraag gebruikt moeten worden zijn te vinden\n"
+"    website. <strong>Let op:</strong> informed consent formulieren die bij "
+"een <strong>officiële aanvraag</strong> gebruikt moeten worden zijn te "
+"vinden\n"
 "    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
 "toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
 "    "
@@ -2604,9 +2604,10 @@ msgstr ""
 "required to create different trajectories. See for relevant age groups <a "
 "href=\"https://fetc-gw.wp.hum.uu.nl/en/document_templates/\" target=\"_blank"
 "\">the different types of information letters and consent forms</a> we offer "
-"at the website. Please note that consent forms to be used in an official "
-"application are to be found on <a href=\"https://intranet.uu.nl/en/faculty-"
-"ethics-assessment-committee-humanities\" target=\"_blank\">intranet</a>."
+"at the website. <strong>Please note</strong> that consent forms to be used "
+"in an <strong>official application</strong> are to be found on <a href="
+"\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">intranet</a>."
 
 #: proposals/templates/proposals/proposal_start.html:55
 #: proposals/templates/proposals/proposal_start_practice.html:55
@@ -2665,6 +2666,40 @@ msgstr "Next step >>"
 #: proposals/templates/proposals/proposal_start_practice.html:7
 msgid "Een nieuwe studie aanmelden (oefenportaal)"
 msgstr "Register a new study (practice portal)"
+
+#: proposals/templates/proposals/proposal_start_practice.html:41
+msgid ""
+"\n"
+"    Als u met verschillende deelnemersgroepen werkt die een verschillend\n"
+"    onderzoekstraject doorlopen (de ene groep krijgt bijvoorbeeld twee\n"
+"    taken, de andere drie) zult u elk traject apart op bovengenoemde wijze\n"
+"    moeten beschrijven. NB: Ook wanneer u met verschillende "
+"leeftijdsgroepen\n"
+"    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante\n"
+"    leeftijdsgroepen naar\n"
+"    <a href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\" target="
+"\"_blank\">de\n"
+"    verschillende soorten informatiebrieven en toestemmingsverklaringen</a> "
+"die de FETC aanbiedt op de\n"
+"    website. <strong>Let op</strong>: informed consent formulieren die bij "
+"een <strong>officiële aanvraag</strong> gebruikt moeten worden zijn te "
+"vinden\n"
+"    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
+"toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
+"    "
+msgstr ""
+"\n"
+"    If you work with different participant groups undergoing different "
+"research trajectories (one group, for example, is given two tasks, the other "
+"three) you will need to describe each group separately in the manner "
+"mentioned above. NB: Also, when you work with different age groups, you are "
+"required to create different trajectories. See for relevant age groups <a "
+"href=\"https://fetc-gw.wp.hum.uu.nl/en/document_templates/\" target=\"_blank"
+"\">the different types of information letters and consent forms</a> we offer "
+"at the website. <strong>Please note</strong> that consent forms to be used "
+"in an <strong>official application</strong> are to be found on <a href="
+"\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">intranet</a>."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 msgid ""
@@ -3275,27 +3310,31 @@ msgstr "Contact {secretary} to make sure."
 msgid "Uw studie zal moeten worden beoordeeld door de METC."
 msgstr "Your study will require assessment by a METC."
 
-#: reviews/forms.py:10
+#: reviews/forms.py:12
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:10
+#: reviews/forms.py:13
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
-#: reviews/forms.py:10
+#: reviews/forms.py:14
 msgid "direct naar revisie"
 msgstr "straight to revision"
 
-#: reviews/forms.py:59
+#: reviews/forms.py:62
 msgid "Selecteer de commissieleden"
 msgstr "Select committee members"
 
-#: reviews/forms.py:91
+#: reviews/forms.py:75
+msgid "Er moet tenminste één secretaris geselecteerd worden."
+msgstr "You must select at least one of the options."
+
+#: reviews/forms.py:108
 msgid "Voeg deze studie toe aan het archief"
 msgstr "Add this study to the archive"
 
-#: reviews/forms.py:97
+#: reviews/forms.py:114
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
@@ -4822,6 +4861,39 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "\n"
+#~ "    Als u met verschillende deelnemersgroepen werkt die een verschillend\n"
+#~ "    onderzoekstraject doorlopen (de ene groep krijgt bijvoorbeeld twee\n"
+#~ "    taken, de andere drie) zult u elk traject apart op bovengenoemde "
+#~ "wijze\n"
+#~ "    moeten beschrijven. NB: Ook wanneer u met verschillende "
+#~ "leeftijdsgroepen\n"
+#~ "    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante\n"
+#~ "    leeftijdsgroepen naar\n"
+#~ "    <a href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\" target="
+#~ "\"_blank\">de\n"
+#~ "        verschillende soorten informatiebrieven en "
+#~ "toestemmingsverklaringen</a> die de FETC aanbiedt op de\n"
+#~ "    website. Let op: informed consent formulieren die bij een officiële "
+#~ "aanvraag gebruikt moeten worden zijn te vinden\n"
+#~ "    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
+#~ "toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "    If you work with different participant groups undergoing different "
+#~ "research trajectories (one group, for example, is given two tasks, the "
+#~ "other three) you will need to describe each group separately in the "
+#~ "manner mentioned above. NB: Also, when you work with different age "
+#~ "groups, you are required to create different trajectories. See for "
+#~ "relevant age groups <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "document_templates/\" target=\"_blank\">the different types of "
+#~ "information letters and consent forms</a> we offer at the website. Please "
+#~ "note that consent forms to be used in an official application are to be "
+#~ "found on <a href=\"https://intranet.uu.nl/en/faculty-ethics-assessment-"
+#~ "committee-humanities\" target=\"_blank\">intranet</a>."
 
 #~ msgid "Afwijzing door FETC-GW, post-hoc"
 #~ msgstr "Post hoc rejection by FEtC-H"
