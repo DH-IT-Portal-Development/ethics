@@ -45,8 +45,7 @@ class UserOrSecretaryAllowedMixin(SingleObjectMixin):
         current_user = self.request.user
 
         if isinstance(obj, Review):
-            secretary_reviewers = obj.decision_set.filter(
-                reviewer__groups__name=settings.GROUP_SECRETARY)
+            secretary_reviewers = obj.decision_set.filter(reviewer__groups__name=settings.GROUP_SECRETARY)
             if secretary_reviewers and is_secretary(current_user):
                 return obj
             if not obj.decision_set.filter(reviewer=current_user):
