@@ -43,7 +43,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -80,7 +80,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -104,7 +104,7 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -195,7 +195,7 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin,
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -222,7 +222,7 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
