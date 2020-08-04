@@ -2,6 +2,7 @@ from datetime import date
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
@@ -27,22 +28,61 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     ]
 
     def get_queryset(self):
-        """Returns all Decisions of the current User"""
-        decisions = {}
+        """Returns all open Decisions of the current User"""
 
         if is_secretary(self.request.user):
-            objects = Decision.objects.filter(
-                reviewer__groups__name=settings.GROUP_SECRETARY,
-                review__proposal__reviewing_committee=self.committee
-            )
-        else:
-            objects = Decision.objects.filter(
-                reviewer=self.request.user,
-                review__proposal__reviewing_committee=self.committee
-            )
+            return self.get_queryset_for_secretary()
+
+        return self.get_queryset_for_committee()
+
+
+    def get_queryset_for_committee(self):
+        """Returns all open Decisions of the current User"""
+        decisions = {}
+
+        objects = Decision.objects.filter(
+            reviewer=self.request.user,
+            review__proposal__reviewing_committee=self.committee
+        )
 
         for obj in objects:
             proposal = obj.review.proposal
+
+            if proposal.pk not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
+
+    def get_queryset_for_secretary(self):
+        """Returns all open Decisions of the current User"""
+        decisions = {}
+        # Decision-for-secretary-exists cache.
+        dfse_cache = {}
+
+        objects = Decision.objects.filter(
+            reviewer__groups__name=settings.GROUP_SECRETARY,
+            review__proposal__reviewing_committee=self.committee
+        )
+
+        for obj in objects:
+            proposal = obj.review.proposal
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal,
+                    reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
+                continue
+
             if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
@@ -63,23 +103,62 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
-        decisions = {}
 
         if is_secretary(self.request.user):
-            objects = Decision.objects.filter(
-                reviewer__groups__name=settings.GROUP_SECRETARY,
-                go='',
-                review__proposal__reviewing_committee=self.committee
-            )
-        else:
-            objects = Decision.objects.filter(
-                reviewer=self.request.user,
-                go='',
-                review__proposal__reviewing_committee=self.committee
-            )
+            return self.get_queryset_for_secretary()
+
+        return self.get_queryset_for_committee()
+
+
+    def get_queryset_for_committee(self):
+        """Returns all open Decisions of the current User"""
+        decisions = {}
+
+        objects = Decision.objects.filter(
+            reviewer=self.request.user,
+            go='',
+            review__proposal__reviewing_committee=self.committee
+        )
 
         for obj in objects:
             proposal = obj.review.proposal
+
+            if proposal.pk not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
+
+    def get_queryset_for_secretary(self):
+        """Returns all open Decisions of the current User"""
+        decisions = {}
+        # Decision-for-secretary-exists cache.
+        dfse_cache = {}
+
+        objects = Decision.objects.filter(
+            reviewer__groups__name=settings.GROUP_SECRETARY,
+            go='',
+            review__proposal__reviewing_committee=self.committee
+        )
+
+        for obj in objects:
+            proposal = obj.review.proposal
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal,
+                    reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
+                continue
+
             if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
@@ -97,6 +176,9 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
         decisions = {}
+        # Decision-for-secretary-exists cache.
+        dfse_cache = {}
+
         objects = Decision.objects.filter(
             go='',
             review__proposal__reviewing_committee=self.committee
@@ -104,6 +186,20 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal,
+                    reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
+                continue
+
             if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
@@ -135,7 +231,7 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
 
         for obj in objects:
             proposal = obj.proposal
-            if proposal not in reviews:
+            if proposal.pk not in reviews:
                 reviews[proposal.pk] = obj
             else:
                 if reviews[proposal.pk].pk < obj.pk:
@@ -161,7 +257,7 @@ class AllProposalReviewsView(GroupRequiredMixin, CommitteeMixin,
 
         for obj in objects:
             proposal = obj.proposal
-            if proposal not in reviews:
+            if proposal.pk not in reviews:
                 reviews[proposal.pk] = obj
             else:
                 if reviews[proposal.pk].pk < obj.pk:
@@ -390,6 +486,40 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
 
         return super(ReviewCloseView, self).form_valid(form)
 
+
+class CreateDecisionRedirectView(LoginRequiredMixin,
+                                 GroupRequiredMixin,
+                                 generic.RedirectView):
+    """
+    This redirect first creates a new decision for a secretary that does not
+    have one yet, and redirects to the DecisionUpdateView
+    """
+    group_required = settings.GROUP_SECRETARY
+
+    def get_redirect_url(self, *args, **kwargs):
+        review_pk = kwargs.get('review', None)
+        decision_pk = None
+
+        if not review_pk:
+            raise PermissionDenied
+
+        existing_decision_qs = Decision.objects.filter(
+            reviewer=self.request.user,
+            review_id=review_pk
+        )
+
+        # Re-use an existing one if present
+        if existing_decision_qs.exists():
+            decision_pk = existing_decision_qs.last()
+        else:
+            decision = Decision.objects.create(
+                reviewer=self.request.user,
+                review_id=review_pk,
+            )
+            decision_pk = decision.pk
+
+
+        return reverse('reviews:decide', args=[decision_pk])
 
 class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
                          generic.UpdateView):
