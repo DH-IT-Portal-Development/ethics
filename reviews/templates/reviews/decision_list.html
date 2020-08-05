@@ -69,8 +69,12 @@
                 {% if user|is_secretary and review.stage == review.ASSIGNMENT %}
                     <a href="{% url 'reviews:assign' review.pk %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
                     <a href="{% url 'reviews:change_chamber' review.proposal.pk %}"><img src="{% static 'reviews/images/folder_edit.png' %}" title="{% trans 'Verplaats naar andere kamer' %}"></a>
-                {% elif not review.date_end and user in review.current_reviewers %}
-                    <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                {% elif not review.date_end %}
+                    {% if user in review.current_reviewers %}
+                        <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                    {% elif user|is_secretary %}
+                        <a href="{% url 'reviews:decide_new' review.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                    {% endif %}
                 {% elif user|is_secretary and review.stage == review.CLOSING %}
                     <a href="{% url 'reviews:close' review.pk %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
                 {% elif user|is_secretary and review.stage == review.CLOSED %}

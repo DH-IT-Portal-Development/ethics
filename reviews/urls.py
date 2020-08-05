@@ -6,7 +6,8 @@ from .views import \
     DecisionOpenView, \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, \
-    DecisionUpdateView, ToConcludeProposalView, ChangeChamberView
+    DecisionUpdateView, ToConcludeProposalView, ChangeChamberView, \
+    CreateDecisionRedirectView
 
 app_name = 'reviews'
 
@@ -29,4 +30,5 @@ urlpatterns = [
     url(r'^close/(?P<pk>\d+)/$', ReviewCloseView.as_view(), name='close'),
 
     url(r'^decide/(?P<pk>\d+)/$', DecisionUpdateView.as_view(), name='decide'),
+    url(r'^decide/new/(?P<review>\d+)/$', CreateDecisionRedirectView.as_view(), name='decide_new')
 ]
