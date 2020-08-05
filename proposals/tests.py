@@ -25,7 +25,7 @@ class BaseProposalTestCase(TestCase):
             username='secretarytest010101',
             email='test@test.nl',
             password='more_secret')
-        Group.objects.get(name='Secretaris').user_set.add(self.secretary)
+        Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY).user_set.add(self.secretary)
         self.chamber = Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
         self.institution = Institution.objects.get(pk=1)
         self.chamber.user_set.add(self.secretary)
