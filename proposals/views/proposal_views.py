@@ -228,7 +228,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""
         form.instance.created_by = self.request.user
-        form.instance.reference_number = generate_ref_number(self.request.user)
+        form.instance.reference_number = generate_ref_number()
         form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
         return super(ProposalCreate, self).form_valid(form)
 
