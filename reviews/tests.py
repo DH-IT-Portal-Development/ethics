@@ -34,7 +34,7 @@ class BaseReviewTestCase(TestCase):
         self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
         self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
 
-        self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
+        self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(),
                                                 date_start=date.today(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4),
