@@ -6,6 +6,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail
+from django.db.models import Q
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.translation import activate, get_language, ugettext as _
@@ -94,47 +95,25 @@ def available_urls(proposal):
     return urls
 
 
-def generate_ref_number(user):
+def generate_ref_number():
     """
     Generates a reference number for a new(!) Proposal.
     NOTE: Use generate_revision_ref_number to create reference numbers for
     revisions! This function will always create a new ref.num. with version = 1
-
-    :param user: the creator of this Proposal, the currently logged-in User
-    :return: a reference number in the format {username}-{nr}-{vr}-{
-    current_year}, where nr is the number of Proposals created by the current
-    User in the current year excluding revisions. Vr is the version of this
-    proposal, this function will always return vr = 1.
+    :return: a reference number in the format {nr}-{vr}-{current_year},
+    where nr is the number of Proposals created  in the current year excluding
+    revisions. Vr is the version of this proposal, this function will always return vr = 1.
     """
-    from ..models import Proposal
-
     # Set default values
     current_year = datetime.now().year
-    proposal_number = 1
+    current_year_formatted = str(current_year)[2:]
+    proposal_number = _get_next_proposal_number(current_year)
     version_number = 1
 
-    try:
-        # We get the last proposal for this year by selecting all proposals
-        # for this user, with a reference number ending with the current year.
-        # Lastly, we sort it by the reference number and take last item from the
-        # QS.
-        # Note that it's ordered alphabetical, so it's important that the
-        # numbers are padded with a zero for proper ordering!
-        last_proposal = Proposal.objects.filter(
-            created_by=user,
-            reference_number__endswith=current_year,
-        ).order_by('reference_number').last()
-        # last() returns None when the QS is empty
-        if last_proposal:
-            proposal_number = int(last_proposal.reference_number.split('-')[1]) + 1
-    except Proposal.DoesNotExist:
-        pass
-
-    return '{}-{:02}-{:02}-{}'.format(
-        user.username,
+    return '{}-{:03}-{:02}'.format(
+        current_year_formatted,
         proposal_number,
         version_number,
-        current_year
     )
 
 
@@ -145,44 +124,119 @@ def generate_revision_ref_number(parent):
     not by incrementing the version of the specified proposal.
     (The latter will fail spectacularly when a user makes 2 revisions from the
     same proposal)
+    Note: this function uses two helper functions
     :param parent: The proposal that will be revised
-    :return: a reference number in the format {username}-{nr}-{vr}-{
-    current_year}, where nr is the number of Proposals created by the current
-    User in the current year excluding revisions. This method will use the
-    same nr as the parent. Vr is the version of this proposal, this function
+    :return: a reference number in the format {year}-{nr}-{vr}, where nr is the
+    number of Proposals created by the current User in the current year
+    excluding revisions. This method will use the same nr as the parent. Vr
+    is the version of this proposal, this function
     will use the next available version number (this might not be the same as
     parent.vr + 1, as that one might already exist).
+    """
+    parent_parts = parent.reference_number.split('-')
+
+    # If we have 4 parts, the ref.number is in the user-nr-vr-year format
+    if len(parent_parts) == 4:
+        return _generate_revision_ref_number_oldformat(parent, 2)
+    # If the first part is longer than 2 characters, it's the usr-nr-year format
+    elif len(parent_parts[0]) > 2:
+        # Otherwise, we assume it's in the old user-nr-year format
+        return _generate_revision_ref_number_oldformat(parent, 1)
+
+    return _generate_revision_ref_number_newformat(parent)
+
+
+def _generate_revision_ref_number_oldformat(parent, version):
+    """This method generates a new reference number from proposals using
+    an older version of the ref.num.
     """
     from ..models import Proposal
 
     parent_parts = parent.reference_number.split('-')
-    username = parent_parts[0]
-    proposal_number = int(parent_parts[1])
 
-    # If we have 4 parts, the ref.number is in the new user-nr-vr-year format
-    if len(parent_parts) == 4:
+    old_proposal_number = int(parent_parts[1])
+    proposal_number = -1
+    year = -1
+
+    # Version 2 is the user-nr-vr-year format
+    if version == 2:
         year = parent_parts[3]
-    else:
+        proposal_number = _get_next_proposal_number(int(year))
+    # Version 1 is the usr-nr-year format
+    elif version == 1:
         # Otherwise, we assume it's in the old user-nr-year format
         year = parent_parts[2]
+        proposal_number = _get_next_proposal_number(int(year))
+
+    username = parent.created_by.username
 
     # Count all proposals by matching all proposals with the same user-nr
     # part and the same year. (This way we find both old and new style ref.nums)
     num_versions = Proposal.objects.filter(
-        reference_number__istartswith="{}-{:02}".format(username,
-                                                        proposal_number),
-        reference_number__endswith=str(year)
+        Q(
+            reference_number__istartswith="{}-{:02}".format(username,
+                                                            old_proposal_number),
+            reference_number__endswith=str(year)
+        ) | Q(reference_number__istartswith="{}-{:03}".format(year,
+                                                              proposal_number))
+
     ).count()
 
     # The new revision is number of current versions + 1
     version_number = num_versions + 1
 
-    return '{}-{:02}-{:02}-{}'.format(
-        username,
+    return '{}-{:03}-{:02}'.format(
+        year[2:],
         proposal_number,
         version_number,
-        year
     )
+
+
+def _generate_revision_ref_number_newformat(parent):
+    """This method generates a new reference number from proposals using
+    the current version of the ref.num.
+    """
+    from ..models import Proposal
+
+    parent_parts = parent.reference_number.split('-')
+    year = int(parent_parts[0])
+    proposal_number = int(parent_parts[1])
+
+    # Get all proposals with this reference number (excluding version number)
+    parent_proposals = Proposal.objects.filter(
+        reference_number__istartswith="{}-{:03}".format(year, proposal_number)
+    )
+
+    # Loop through all them, and note the newest version seen
+    newest = None
+    for parent_proposal in parent_proposals:
+        version = parent_proposal.reference_number.split('-')[2]
+        version = int(version)
+        if not newest or version > newest:
+            newest = version
+
+    version_number = newest + 1
+
+    return '{}-{:03}-{:02}'.format(
+        year,
+        proposal_number,
+        version_number,
+    )
+
+
+def _get_next_proposal_number(current_year) -> int:
+    from ..models import Proposal
+
+    try:
+        # We count all proposals for this year by selecting all proposals
+        # with a reference number ending with the current year.
+        num_proposals = Proposal.objects.filter(
+            date_created__year=current_year,
+            is_revision=False
+        ).count()
+        return num_proposals + 1
+    except Proposal.DoesNotExist:
+        return 1
 
 
 def generate_pdf(proposal, template):
