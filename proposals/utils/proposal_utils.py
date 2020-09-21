@@ -231,8 +231,7 @@ def _get_next_proposal_number(current_year) -> int:
         # We count all proposals for this year by selecting all proposals
         # with a reference number ending with the current year.
         num_proposals = Proposal.objects.filter(
-            date_created__year=current_year,
-            is_revision=False
+            date_created__year=current_year
         ).count()
         return num_proposals + 1
     except Proposal.DoesNotExist:
