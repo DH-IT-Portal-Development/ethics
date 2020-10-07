@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-17 14:38+0200\n"
-"PO-Revision-Date: 2020-07-17 14:40+0200\n"
+"POT-Creation-Date: 2020-10-07 11:05+0200\n"
+"PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: core/forms/conditional_form.py:11 core/forms/conditional_form.py:20
 #: core/forms/conditional_form.py:29 core/forms/conditional_form.py:38
@@ -216,14 +216,14 @@ msgid "Aanstellen"
 msgstr "Appoint"
 
 #: core/templates/auth/user_detail.html:83
-#: reviews/templates/reviews/decision_list.html:75
+#: reviews/templates/reviews/decision_list.html:79
 #: reviews/templates/reviews/review_all_list.html:70
 #: reviews/templates/reviews/review_to_conclude.html:72
 msgid "Afsluiten"
 msgstr "Conclude"
 
 #: core/templates/auth/user_detail.html:87
-#: reviews/templates/reviews/decision_list.html:79
+#: reviews/templates/reviews/decision_list.html:83
 #: reviews/templates/reviews/review_all_list.html:74
 #: reviews/templates/reviews/review_to_conclude.html:76
 msgid "Website export tekst"
@@ -231,7 +231,7 @@ msgstr "Website export text"
 
 #: core/templates/auth/user_detail.html:91
 #: proposals/templates/proposals/proposal_confirmation.html:7
-#: reviews/templates/reviews/decision_list.html:83
+#: reviews/templates/reviews/decision_list.html:87
 #: reviews/templates/reviews/review_all_list.html:78
 #: reviews/templates/reviews/review_to_conclude.html:80
 msgid "Bevestigingsbrief versturen"
@@ -239,7 +239,7 @@ msgstr "Send confirmation letter"
 
 #: core/templates/auth/user_detail.html:93
 #: proposals/templates/proposals/proposal_confirmation.html:29
-#: reviews/templates/reviews/decision_list.html:85
+#: reviews/templates/reviews/decision_list.html:89
 #: reviews/templates/reviews/review_all_list.html:80
 #: reviews/templates/reviews/review_to_conclude.html:82
 msgid "Bevestigingsbrief verstuurd"
@@ -424,7 +424,7 @@ msgstr " Regulations Linguistics Chamber (LC) "
 #: core/templates/base/menu.html:134 core/templates/core/index.html:149
 #: proposals/templates/proposals/proposal_pdf.html:393
 #: proposals/templates/proposals/study_consent.html:8
-#: proposals/utils/proposal_utils.py:81
+#: proposals/utils/proposal_utils.py:82
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
@@ -1226,7 +1226,7 @@ msgstr "You are required to specify the researcher with final responsibility."
 
 #: proposals/forms.py:183
 msgid "U heeft uzelf niet als onderzoekers geselecteerd."
-msgstr "You have not selected yourself!"
+msgstr "You have not selected yourself."
 
 #: proposals/forms.py:188
 msgid "U heeft geen andere onderzoekers geselecteerd."
@@ -1951,7 +1951,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils/proposal_utils.py:82
+#: proposals/utils/proposal_utils.py:83
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -2096,8 +2096,8 @@ msgstr ""
 #: proposals/templates/proposals/proposal_pdf_empty.html:59
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:59
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:59
-#: proposals/utils/proposal_utils.py:33 proposals/utils/proposal_utils.py:48
-#: proposals/utils/proposal_utils.py:59 proposals/utils/validate_proposal.py:33
+#: proposals/utils/proposal_utils.py:34 proposals/utils/proposal_utils.py:49
+#: proposals/utils/proposal_utils.py:60 proposals/utils/validate_proposal.py:33
 #: proposals/utils/validate_proposal.py:43
 #: proposals/utils/validate_proposal.py:50
 #: proposals/utils/validate_proposal.py:57
@@ -2133,7 +2133,7 @@ msgstr "Registration with the METC"
 #: proposals/templates/proposals/proposal_pdf.html:176
 #: proposals/templates/proposals/proposal_pdf_empty.html:133
 #: proposals/templates/proposals/study_start.html:7
-#: proposals/utils/proposal_utils.py:68 proposals/utils/validate_proposal.py:87
+#: proposals/utils/proposal_utils.py:69 proposals/utils/validate_proposal.py:87
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -2373,7 +2373,8 @@ msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
 #: proposals/templates/proposals/proposal_list.html:96
-#: reviews/templates/reviews/decision_list.html:73
+#: reviews/templates/reviews/decision_list.html:74
+#: reviews/templates/reviews/decision_list.html:76
 #: reviews/templates/reviews/review_to_conclude.html:70
 msgid "Beslissen"
 msgstr "Decide"
@@ -2833,12 +2834,12 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:8
-#: proposals/utils/proposal_utils.py:42 proposals/utils/proposal_utils.py:51
+#: proposals/utils/proposal_utils.py:43 proposals/utils/proposal_utils.py:52
 msgid "Aanvraag voor voortoetsing klaar voor versturen"
 msgstr "Application for preliminary assessment ready to submit"
 
 #: proposals/templates/proposals/proposal_submit.html:10
-#: proposals/utils/proposal_utils.py:83
+#: proposals/utils/proposal_utils.py:84
 msgid "Concept-aanmelding klaar voor versturen"
 msgstr "Draft application ready to submit"
 
@@ -3188,13 +3189,13 @@ msgstr "WMO check"
 msgid "Opnieuw beginnen"
 msgstr "Start again"
 
-#: proposals/utils/proposal_utils.py:35 proposals/utils/proposal_utils.py:61
+#: proposals/utils/proposal_utils.py:36 proposals/utils/proposal_utils.py:62
 #: proposals/utils/validate_proposal.py:69
 #: proposals/utils/validate_proposal.py:76
 msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
-#: proposals/utils/proposal_utils.py:275 reviews/utils.py:223
+#: proposals/utils/proposal_utils.py:329 reviews/utils.py:223
 msgid "FETC-GW: nieuwe studie ingediend"
 msgstr "FEtC-H: new application submitted"
 
