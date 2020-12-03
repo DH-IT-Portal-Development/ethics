@@ -100,9 +100,6 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th>
                 <td>{{ proposal.title }}</td>
             </tr>
-        <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "summary" %}</th><td>{{ proposal.summary }}</td>
-            </tr>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>
             </tr>
@@ -125,12 +122,14 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             </tr>
         </table>
 
+        <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
+        <p>{{ proposal.summary|linebreaks }}</p>
+
         <h2>{% trans "Aanmelding versturen" %}</h2>
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th><td>{{ proposal.comments }}</td>
-            </tr>
-        </table>
+        <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
+        <p>
+            {{ proposal.comments }}
+        </p>
     </div>
 </div>
 {% endblock %}

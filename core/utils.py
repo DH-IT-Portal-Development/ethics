@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 import django.utils.six as six
@@ -17,10 +18,23 @@ class AvailableURL(object):
 
 def get_secretary():
     """
-    Returns the Secretary. We limit this to one user.
+    Returns the Head secretary. We limit this to one user.
     """
-    return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY)[0]
+    obj = get_user_model().objects.filter(groups__name=settings.GROUP_PRIMARY_SECRETARY).first()
+    obj.email = settings.EMAIL_FROM
+    return obj
 
+def get_all_secretaries():
+    """
+    Return all users in the 'Secretary' group.
+    """
+    return get_user_model().objects.filter(groups__name=settings.GROUP_SECRETARY).all()
+
+def is_secretary(user):
+    """
+    Check whether the current user is in the 'Secretary' group.
+    """
+    return Group.objects.get(name=settings.GROUP_SECRETARY) in user.groups.all()
 
 def get_reviewers():
     return get_user_model().objects.filter(
@@ -38,7 +52,7 @@ def get_reviewers_from_group(group):
 def get_reviewers_from_groups(groups):
     return get_user_model().objects.filter(
         groups__name__in=groups
-    )
+    ).distinct()
 
 
 def string_to_bool(s):

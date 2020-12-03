@@ -3,11 +3,15 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from core.forms import ConditionalModelForm
-from core.utils import YES_NO, get_reviewers_from_groups
+from core.utils import YES_NO, get_reviewers_from_groups, is_secretary
 from proposals.models import Proposal
 from .models import Review, Decision
 
-SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')), (False, _('lange (4-weken) route')), (None, _('direct naar revisie'))]
+from django.core.exceptions import ValidationError
+
+SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')),
+                     (False, _('lange (4-weken) route')),
+                     (None, _('direct naar revisie'))]
 
 
 class ChangeChamberForm(forms.ModelForm):
@@ -19,9 +23,7 @@ class ChangeChamberForm(forms.ModelForm):
         super(ChangeChamberForm, self).__init__(*args, **kwargs)
 
         general_chamber = Group.objects.get(name=settings.GROUP_GENERAL_CHAMBER)
-        linguistics_chamber = Group.objects.get(
-            name=settings.GROUP_LINGUISTICS_CHAMBER
-        )
+        linguistics_chamber = Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
 
         self.fields['reviewing_committee'].choices = (
             (general_chamber.pk, _('Algemene Kamer')),
@@ -49,7 +51,8 @@ class ReviewAssignForm(ConditionalModelForm):
         reviewers = get_reviewers_from_groups(
             [
                 settings.GROUP_GENERAL_CHAMBER,
-                settings.GROUP_LINGUISTICS_CHAMBER
+                settings.GROUP_LINGUISTICS_CHAMBER,
+                settings.GROUP_SECRETARY
             ]
         )
 
@@ -59,6 +62,20 @@ class ReviewAssignForm(ConditionalModelForm):
             widget=forms.SelectMultiple(attrs={'data-placeholder': _('Selecteer de commissieleden')}),
             required=False
         )
+
+    def clean_reviewers(self):
+        reviewers = self.cleaned_data['reviewers']
+
+        # Make sure at least one secretary is assigned
+        for user in reviewers:
+            if is_secretary(user):
+                break
+        else:
+            raise ValidationError(
+                _('Er moet tenminste één secretaris geselecteerd worden.'),
+                code='no_secretary')
+
+        return self.cleaned_data['reviewers']
 
 
 class ReviewCloseForm(forms.ModelForm):

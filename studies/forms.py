@@ -33,8 +33,9 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             'recruitment':       forms.CheckboxSelectMultiple(),
             'compensation':      forms.RadioSelect(),
         }
+        mark_safe_lazy = lazy(mark_safe, str)
         labels = {
-            'legally_incapable': _(mark_safe('Maakt uw studie gebruik van '
+            'legally_incapable': mark_safe_lazy(_('Maakt uw studie gebruik van '
                                              'wils<u>on</u>bekwame ('
                                              'volwassen) deelnemers?'))
         }

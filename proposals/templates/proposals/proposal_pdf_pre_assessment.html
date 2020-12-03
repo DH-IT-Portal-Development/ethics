@@ -118,11 +118,10 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         {% endwith %}
 
         <h2>{% trans "Aanvraag voor voortoetsing versturen" %}</h2>
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th><td>{{ proposal.comments }}</td>
-            </tr>
-        </table>
+        <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
+        <p>
+            {{ proposal.comments }}
+        </p>
     </div>
 </div>
 {% endblock %}

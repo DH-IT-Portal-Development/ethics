@@ -30,11 +30,11 @@ class BaseReviewTestCase(TestCase):
         self.user = User.objects.create_user('user', 'test@test.com', 'secret', first_name='John', last_name='Doe')
         self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret', first_name='Jane', last_name='Roe')
 
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
+        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY))
         self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
         self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
 
-        self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(self.user),
+        self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(),
                                                 date_start=date.today(),
                                                 created_by=self.user, supervisor=self.supervisor,
                                                 relation=Relation.objects.get(pk=4),

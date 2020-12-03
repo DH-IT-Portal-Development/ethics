@@ -2,16 +2,18 @@ from datetime import date
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from core.utils import get_reviewers, get_secretary
+from core.utils import get_reviewers, get_secretary, is_secretary
 from proposals.models import Proposal
-from .forms import DecisionForm, ReviewAssignForm, ReviewCloseForm, \
-    ChangeChamberForm
-from .mixins import AutoReviewMixin, UserAllowedMixin, CommitteeMixin
+from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
+                    ChangeChamberForm)
+from .mixins import (AutoReviewMixin, UserAllowedMixin,
+                     CommitteeMixin, UserOrSecretaryAllowedMixin)
 from .models import Decision, Review
 from .utils import notify_secretary, start_review_route
 
@@ -26,8 +28,18 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     ]
 
     def get_queryset(self):
-        """Returns all Decisions of the current User"""
+        """Returns all open Decisions of the current User"""
+
+        if is_secretary(self.request.user):
+            return self.get_queryset_for_secretary()
+
+        return self.get_queryset_for_committee()
+
+
+    def get_queryset_for_committee(self):
+        """Returns all open Decisions of the current User"""
         decisions = {}
+
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             review__proposal__reviewing_committee=self.committee
@@ -35,7 +47,43 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+
+            if proposal.pk not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
+
+    def get_queryset_for_secretary(self):
+        """Returns all open Decisions of the current User"""
+        decisions = {}
+        # Decision-for-secretary-exists cache.
+        dfse_cache = {}
+
+        objects = Decision.objects.filter(
+            reviewer__groups__name=settings.GROUP_SECRETARY,
+            review__proposal__reviewing_committee=self.committee
+        )
+
+        for obj in objects:
+            proposal = obj.review.proposal
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal,
+                    reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
+                continue
+
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -55,7 +103,17 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
+
+        if is_secretary(self.request.user):
+            return self.get_queryset_for_secretary()
+
+        return self.get_queryset_for_committee()
+
+
+    def get_queryset_for_committee(self):
+        """Returns all open Decisions of the current User"""
         decisions = {}
+
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             go='',
@@ -64,7 +122,44 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+
+            if proposal.pk not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
+
+    def get_queryset_for_secretary(self):
+        """Returns all open Decisions of the current User"""
+        decisions = {}
+        # Decision-for-secretary-exists cache.
+        dfse_cache = {}
+
+        objects = Decision.objects.filter(
+            reviewer__groups__name=settings.GROUP_SECRETARY,
+            go='',
+            review__proposal__reviewing_committee=self.committee
+        )
+
+        for obj in objects:
+            proposal = obj.review.proposal
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal,
+                    reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
+                continue
+
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -81,6 +176,9 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
         decisions = {}
+        # Decision-for-secretary-exists cache.
+        dfse_cache = {}
+
         objects = Decision.objects.filter(
             go='',
             review__proposal__reviewing_committee=self.committee
@@ -88,7 +186,21 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal,
+                    reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
+                continue
+
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -119,7 +231,7 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
 
         for obj in objects:
             proposal = obj.proposal
-            if proposal not in reviews:
+            if proposal.pk not in reviews:
                 reviews[proposal.pk] = obj
             else:
                 if reviews[proposal.pk].pk < obj.pk:
@@ -145,7 +257,7 @@ class AllProposalReviewsView(GroupRequiredMixin, CommitteeMixin,
 
         for obj in objects:
             proposal = obj.proposal
-            if proposal not in reviews:
+            if proposal.pk not in reviews:
                 reviews[proposal.pk] = obj
             else:
                 if reviews[proposal.pk].pk < obj.pk:
@@ -179,7 +291,7 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin,
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -206,7 +318,7 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
 
         for obj in objects:
             proposal = obj.review.proposal
-            if proposal not in decisions:
+            if proposal.pk not in decisions:
                 decisions[proposal.pk] = obj
             else:
                 if decisions[proposal.pk].pk < obj.pk:
@@ -215,7 +327,7 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
         return [value for key, value in decisions.items()]
 
 
-class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin,
+class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserOrSecretaryAllowedMixin,
                        generic.DetailView):
     """
     Shows the Decisions for a Review
@@ -259,16 +371,15 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             current_reviewers = set(review.current_reviewers())
             selected_reviewers = set(form.cleaned_data['reviewers'])
             new_reviewers = selected_reviewers - current_reviewers
-            obsolete_reviewers = current_reviewers - selected_reviewers - {
-                get_secretary()}
+            obsolete_reviewers = current_reviewers - selected_reviewers
 
             # Set the proper end date
             # It should be 2 weeks for short_routes
             if route and form.instance.date_should_end is None:
                 form.instance.date_should_end = timezone.now() + \
-                                                timezone.timedelta(
-                                                    weeks=settings.SHORT_ROUTE_WEEKS
-                                                )
+                    timezone.timedelta(
+                    weeks=settings.SHORT_ROUTE_WEEKS
+                )
             elif form.instance.date_should_end is not None:
                 # We have no desired end date for long track reviews
                 form.instance.date_should_end = None
@@ -331,7 +442,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
            review.proposal.date_start < date.today():
             initial['continuation'] = \
                 Review.GO_POST_HOC if initial['continuation'] == Review.GO \
-                    else Review.NO_GO_POST_HOC
+                else Review.NO_GO_POST_HOC
 
         initial['in_archive'] = not review.proposal.is_pre_assessment
         return initial
@@ -375,6 +486,40 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
 
         return super(ReviewCloseView, self).form_valid(form)
 
+
+class CreateDecisionRedirectView(LoginRequiredMixin,
+                                 GroupRequiredMixin,
+                                 generic.RedirectView):
+    """
+    This redirect first creates a new decision for a secretary that does not
+    have one yet, and redirects to the DecisionUpdateView
+    """
+    group_required = settings.GROUP_SECRETARY
+
+    def get_redirect_url(self, *args, **kwargs):
+        review_pk = kwargs.get('review', None)
+        decision_pk = None
+
+        if not review_pk:
+            raise PermissionDenied
+
+        existing_decision_qs = Decision.objects.filter(
+            reviewer=self.request.user,
+            review_id=review_pk
+        )
+
+        # Re-use an existing one if present
+        if existing_decision_qs.exists():
+            decision_pk = existing_decision_qs.last()
+        else:
+            decision = Decision.objects.create(
+                reviewer=self.request.user,
+                review_id=review_pk,
+            )
+            decision_pk = decision.pk
+
+
+        return reverse('reviews:decide', args=[decision_pk])
 
 class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
                          generic.UpdateView):

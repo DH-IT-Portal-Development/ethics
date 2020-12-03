@@ -25,7 +25,7 @@ def copy_proposal(self, form):
     if form.cleaned_data['is_revision']:
         copy_proposal.reference_number = generate_revision_ref_number(parent)
     else:
-        copy_proposal.reference_number = generate_ref_number(self.request.user)
+        copy_proposal.reference_number = generate_ref_number()
 
 
     copy_proposal.title = form.cleaned_data['title']

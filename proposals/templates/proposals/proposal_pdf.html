@@ -115,9 +115,6 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th><td>{{ proposal.title }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "summary" %}</th><td>{{ proposal.summary }}</td>
-            </tr>
-            <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>
             </tr>
             {% if proposal.funding.all|needs_details %}
@@ -131,9 +128,11 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             </tr>
             {% endif %}
         </table>
+        <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
+        <p>{{ proposal.summary|linebreaks }}</p>
 
         {% with wmo=proposal.wmo %}
-        <h2>{% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}</h2>
+        <h2 style="page-break-before: always">{% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{{ wmo.get_metc_display }}</td>
@@ -156,7 +155,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         </table>
 
         {% if wmo.status != wmo.NO_WMO %}
-        <h2>{% trans "Aanmelding bij de METC" %}</h2>
+        <h2 style="page-break-before: always">{% trans "Aanmelding bij de METC" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th><td>{{ wmo.metc_application|yesno:_("ja,nee") }}</td>
@@ -173,7 +172,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         {% endif %}
         {% endwith %}
 
-        <h2>{% trans "Eén of meerdere trajecten?" %}</h2>
+        <h2 style="page-break-before: always">{% trans "Eén of meerdere trajecten?" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "studies_similar" %}</th><td>{{ proposal.studies_similar|yesno:_("ja,nee") }}</td>
@@ -307,9 +306,6 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "tasks" "task" "name" %}</th><td>{{ task.name }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "tasks" "task" "description" %}</th><td>{{ task.description }}</td>
-            </tr>
-            <tr>
                 <th>{% get_verbose_field_name "tasks" "task" "duration" %}</th><td>{{ task.duration }}</td>
             </tr>
             <tr>
@@ -339,6 +335,8 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             </tr>
             {% endif %}
         </table>
+        <h3>{% get_verbose_field_name "tasks" "task" "description" %}</h3>
+        <p>{{ task.description|linebreaks }}</p>
         {% endfor %}
 
         <h3>{% trans "Overzicht van het takenonderzoek" %}</h3>
@@ -457,11 +455,10 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         {% endif %}
 
         <h2>{% trans "Aanmelding versturen" %}</h2>
-        <table>
-            <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th><td>{{ proposal.comments }}</td>
-            </tr>
-        </table>
+        <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
+        <p>
+            {{ proposal.comments }}
+        </p>
         {% endif %}
     </div>
 </div>
