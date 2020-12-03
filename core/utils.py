@@ -52,7 +52,7 @@ def get_reviewers_from_group(group):
 def get_reviewers_from_groups(groups):
     return get_user_model().objects.filter(
         groups__name__in=groups
-    )
+    ).distinct()
 
 
 def string_to_bool(s):
