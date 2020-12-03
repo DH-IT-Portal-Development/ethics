@@ -14,7 +14,7 @@ django-easy-pdf==0.1.1    # via -r requirements.in
 django-impersonate==1.4.1  # via -r requirements.in
 django-modeltranslation==0.14.4  # via -r requirements.in
 django-user-agents==0.4.0  # via -r requirements.in
-django==1.11.28           # via -r requirements.in, django-auth-ldap, django-braces, django-easy-pdf, django-modeltranslation, django-user-agents
+django==1.11.29           # via -r requirements.in, django-auth-ldap, django-braces, django-easy-pdf, django-modeltranslation, django-user-agents
 docutils==0.15.2          # via sphinx
 html5lib==1.0.1           # via -r requirements.in, xhtml2pdf
 idna==2.8                 # via requests
