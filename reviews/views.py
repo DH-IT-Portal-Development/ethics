@@ -13,7 +13,8 @@ from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
                     ChangeChamberForm)
 from .mixins import (AutoReviewMixin, UserAllowedMixin,
-                     CommitteeMixin, UserOrSecretaryAllowedMixin)
+                     CommitteeMixin, UserOrSecretaryAllowedMixin,
+                     UsersOrGroupsAllowedMixin)
 from .models import Decision, Review
 from .utils import notify_secretary, start_review_route
 
@@ -240,12 +241,23 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
         return [value for key, value in reviews.items()]
 
 
-class AllProposalReviewsView(GroupRequiredMixin, CommitteeMixin,
-                             generic.ListView):
+class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
+                             CommitteeMixin, generic.ListView):
     context_object_name = 'reviews'
     template_name = 'reviews/review_all_list.html'
-    group_required = settings.GROUP_SECRETARY
-
+    
+    def get_group_required(self):
+        # Depending on committee kwarg we test for the correct group
+        
+        group_required = [settings.GROUP_SECRETARY]
+        
+        if self.committee.name == 'AK':
+            group_required += [ settings.GROUP_GENERAL_CHAMBER ]
+        if self.committee.name == 'LK':
+            group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
+        
+        return group_required
+    
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
         reviews = {}
@@ -327,12 +339,16 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
         return [value for key, value in decisions.items()]
 
 
-class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserOrSecretaryAllowedMixin,
+class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowedMixin,
                        generic.DetailView):
     """
     Shows the Decisions for a Review
     """
     model = Review
+    
+    def get_group_required(self):
+        
+        return ['LK']
 
 
 class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
