@@ -445,3 +445,44 @@ def success_url(self):
         return self.get_back_url()
     else:
         return reverse('proposals:my_concepts')
+
+class DevSandboxView(generic.TemplateView):
+    
+    template_name = 'dev.html'
+    
+    def get_userlist(self):
+        userlist = []
+        
+        # Get the user model used in the project
+        model = get_user_model()
+        all_users = model.objects.all()
+        
+        
+        return [user.username for user in all_users]
+    
+    def inspect_model(self, model):
+        
+        all_objects = model.objects.all()
+        first = list(all_objects)[0]
+        
+        return {attr: first.__dict__ for attr in dir(first) if attr[0] != '_'}
+    
+    def get_user_proposals(self, u):
+        
+        props = Proposal.objects.all()
+        by_user = props.filter()
+        
+        
+    def get_context_data(self, **kwargs):
+        url_var = self.kwargs.get('query')
+        
+        context = {'view_var':      'cvar123',
+                   'quereper':      url_var.__repr__(),
+                   'userlist':      self.get_userlist(),
+                   'inspect':       self.inspect_model(Proposal),
+                   'user_p':        {}}
+        
+        if url_var: context['user_p'] = self.get_user_proposals(url_var)
+        
+        context.update(kwargs)
+        return context
