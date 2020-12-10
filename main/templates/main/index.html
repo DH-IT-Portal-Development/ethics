@@ -177,17 +177,21 @@
             </div>
         </div>
     {% else %}
-        <p>
-            {% url 'login' as the_url %}
-            {% blocktrans %}
-                Welkom bij het portal van de FETC-GW. U kunt <a href="{{ the_url }}">hier</a> inloggen met uw
-                Solis-ID.
-            {% endblocktrans %}
-        </p>
-        <p>
-            {% blocktrans %}
-                Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
-            {% endblocktrans %}
-        </p>
+        <div class="uu-inner-container">
+            <div class="col-12">
+                <p>
+                    {% url 'login' as the_url %}
+                    {% blocktrans %}
+                        Welkom bij het portal van de FETC-GW. U kunt <a href="{{ the_url }}">hier</a> inloggen met uw
+                        Solis-ID.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans %}
+                        Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
+                    {% endblocktrans %}
+                </p>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}
