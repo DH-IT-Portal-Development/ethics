@@ -339,8 +339,8 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
         return [value for key, value in decisions.items()]
 
 
-class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowedMixin,
-                       generic.DetailView):
+class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
+                       UsersOrGroupsAllowedMixin, generic.DetailView):
     """
     Shows the Decisions for a Review
     """
@@ -348,7 +348,11 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowed
     
     def get_group_required(self):
         
-        return ['LK']
+        obj = self.get_object()
+        allowed_groups = [ settings.GROUP_SECRETARY ]
+        allowed_groups += [ obj.proposal.reviewing_committee.name ]
+        
+        return allowed_groups
 
 
 class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
