@@ -76,6 +76,9 @@
             <th>{% trans "Datum ingediend" %}</th>
             <th>{% trans "Indiener" %}</th>
             <th>{% trans "Eindverantwoordelijke onderzoeker" %}</th>
+            {% if wants_route_info %}
+                <th>{% trans "Route" %}</th>
+            {% endif %}
             <th>{% trans "Laatst bijgewerkt" %}</th>
             <th>{% trans "Acties" %}</th>
         </tr>
@@ -89,6 +92,9 @@
                 <td data-order="{{ proposal.date_submitted|date:'c' }}">{{ proposal.date_submitted|date:"j M Y, G:i" }}</td>
                 <td>{{ proposal.created_by.get_full_name }}</td>
                 <td>{{ proposal.supervisor.get_full_name }}</td>
+                {% if wants_route_info %}
+                    <td>{{ proposal.route }}</td>
+                {% endif %}
                 <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
                 <td>
                     {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
@@ -117,6 +123,8 @@
                         <a href="{% url 'proposals:archive_hide' proposal.pk %}">
                             <img src="{{ img_hide }}" title="{% trans 'Verberg' %}">
                         </a>
+                    {% endif %}
+                    {% if proposal.ALLOW_DETAIL_VIEW %}
                     {% endif %}
                 </td>
             </tr>
