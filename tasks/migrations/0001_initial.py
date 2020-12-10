@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('studies', '0001_initial'),
-        ('core', '0001_initial'),
+        ('main', '0001_initial'),
     ]
 
     operations = [
@@ -51,7 +51,8 @@ class Migration(migrations.Migration):
                 ('order', models.PositiveIntegerField()),
                 ('tasks_number', models.PositiveIntegerField(help_text='Wanneer u bijvoorbeeld eerst de deelnemer observeert en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.', null=True, verbose_name='Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?', validators=[django.core.validators.MinValueValidator(1)])),
                 ('tasks_duration', models.PositiveIntegerField(null=True, verbose_name='De totale geschatte netto taakduur van uw sessie komt op basis van uw opgave per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot vertrek)')),
-                ('setting', models.ManyToManyField(to='core.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt')),
+                ('setting', models.ManyToManyField(to='main.Setting',
+                                                   verbose_name='Geef aan waar de dataverzameling plaatsvindt')),
                 ('study', models.ForeignKey(to='studies.Study', on_delete=models.CASCADE)),
             ],
             options={

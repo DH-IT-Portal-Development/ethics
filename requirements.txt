@@ -4,17 +4,20 @@
 #
 #    pip-compile
 #
+-e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0-beta-6#egg=uil-django-core  # via -r requirements.in
 alabaster==0.7.12         # via sphinx
 babel==2.8.0              # via sphinx
 certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
 django-auth-ldap==1.7.0   # via -r requirements.in
 django-braces==1.14.0     # via -r requirements.in
+django-debug-toolbar==3.2  # via -r requirements.in
 django-easy-pdf==0.1.1    # via -r requirements.in
 django-impersonate==1.4.1  # via -r requirements.in
 django-modeltranslation==0.14.4  # via -r requirements.in
+django-simple-menu==1.2.1  # via -r requirements.in
 django-user-agents==0.4.0  # via -r requirements.in
-django==2.2.12            # via -r requirements.in, django-auth-ldap, django-braces, django-easy-pdf, django-modeltranslation, django-user-agents
+django==2.2.12            # via -r requirements.in, django-auth-ldap, django-braces, django-debug-toolbar, django-easy-pdf, django-modeltranslation, django-simple-menu, django-user-agents
 docutils==0.15.2          # via sphinx
 html5lib==1.0.1           # via -r requirements.in, xhtml2pdf
 idna==2.8                 # via requests
@@ -41,7 +44,7 @@ sphinx==1.8.5             # via -r requirements.in, sphinx-rtd-theme, sphinxcont
 sphinxcontrib-apidoc==0.3.0  # via -r requirements.in
 sphinxcontrib-django==0.5.1  # via -r requirements.in
 sphinxcontrib-websupport==1.1.2  # via sphinx
-sqlparse==0.3.1           # via django
+sqlparse==0.3.1           # via django, django-debug-toolbar
 ua-parser==0.10.0         # via user-agents
 urllib3==1.24.3           # via requests
 user-agents==2.1          # via django-user-agents

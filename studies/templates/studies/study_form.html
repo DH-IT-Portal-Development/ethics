@@ -3,19 +3,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "De deelnemers" %}
-{% endblock %}
-
-{% block progress %}{{ progress }}{% endblock %}
-
-{% block sidebar %}
-{% with proposal=study.proposal %}
-{% include "base/sidebar.html" %}
-{% endwith %}
-{% endblock %}
-
-{% block content %}
+{% block html_head %}
 <script>
 $(function() {
     depends_on_value('passive_consent', 'True', 'passive_consent_details');
@@ -97,19 +85,35 @@ $(function() {
     $('input[name=age_groups], input[name=legally_incapable], input[name=has_traits]').change();
 });
 </script>
-{% include "studies/study_title.html" %}
-    {% if not study.proposal.relation %}
-        <div class="warning">
-            {% url 'proposals:update' study.proposal.pk as url %}
-            {% blocktrans %}
-                Let op! U heeft de vraag <a href="{{ url }}">'In welke hoedanigheid bent u betrokken bij deze studie?'</a> nog niet ingevuld, waardoor deze pagina nog kan veranderen op basis van uw antwoord.
-            {% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=study.proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+
+            <h2>
+                {% trans "De deelnemers" %}
+            </h2>
+
+            {% include "studies/study_title.html" %}
+
+            {% if not study.proposal.relation %}
+                <div class="warning">
+                    {% url 'proposals:update' study.proposal.pk as url %}
+                    {% blocktrans %}
+                        Let op! U heeft de vraag <a href="{{ url }}">'In welke hoedanigheid bent u betrokken bij deze studie?'</a> nog niet ingevuld, waardoor deze pagina nog kan veranderen op basis van uw antwoord.
+                    {% endblocktrans %}
+                </div>
+            {% endif %}
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                {% with proposal=study.proposal %}
+                {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
         </div>
-    {% endif %}
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    {% with proposal=study.proposal %}
-    {% include "base/form_buttons.html" %}
-    {% endwith %}
-</form>
+    </div>
 {% endblock %}

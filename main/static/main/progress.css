@@ -1,0 +1,86 @@
+
+
+.progress .item {
+    background-color: lightgrey;
+    height: .75em;
+    width: .75em;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.progress li:not(:last-child) .divider {
+    background-color: lightgrey;
+    height: .75em;
+    width: .15em;
+    margin-left: .3em;
+}
+
+.progress .current {
+    background-color: #ffcd00;
+}
+
+.progress li a, .progress li span {
+    display: inline-block;
+    margin-left: .5em;
+}
+
+.progress li {
+    list-style: none;
+    line-height: .75em;
+    color: #999;
+}
+
+.progress li a, .progress li a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+.progress .title {
+    color: #000;
+    font-weight: bold;
+}
+
+.progress ul {
+    padding: .5em;
+}
+
+.progress {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    display: none;
+    font-size: 16px;
+    border-radius: 0px;
+}
+
+.progress {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.64);
+    position: fixed;
+    padding: .5em;
+    background: white;
+}
+
+.open-progress {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.close-progress {
+    float: right;
+}
+
+.margin-1 {
+    margin-left: 1.5em !important;
+}
+
+.margin-2 {
+    margin-left: 3em !important;
+}
+
+.margin-3 {
+    margin-left: 4.5em !important;
+}

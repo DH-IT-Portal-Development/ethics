@@ -1,0 +1,284 @@
+#header-img {
+    float: right;
+}
+
+#content {
+    margin: .5em;
+    padding: 1em;
+    background: none repeat scroll 0% 0% rgb(255, 255, 255);
+}
+
+.pure-menu-custom {
+    box-shadow: 0 .25em .5em rgba(0, 0, 0, 0.4);
+    margin-bottom: 2.5em;
+}
+
+#title {
+    color: gray;
+}
+
+.task_list {
+    background: rgb(250, 250, 250);
+    border: 1px solid #eee;
+    padding: 0em 1em 1em 1em;
+}
+
+#form_buttons {
+    margin-bottom: 1em;
+}
+
+/* Displaying the differences between Proposals */
+.proposals-diff {
+    table-layout: fixed;
+    width: 100%;
+    text-align: left;
+}
+
+.proposals-diff-question {
+    width: 50%;
+}
+
+.proposals-diff-answer {
+    width: 25%;
+}
+
+.proposals-diff td.diff {
+    background-color: orange;
+}
+
+/* Form specifics */
+input[name=title] {
+    width: 20em;
+}
+
+.form-errors {
+    color: red;
+}
+
+form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+form th {
+    font-weight: normal;
+    width: 45%;
+    text-align: left;
+}
+
+form tr {
+    background: transparent !important;
+    border-bottom: 2px #eee solid;
+}
+
+form tr:last-child {
+    border-bottom: none;
+}
+
+form tr th, form tr td {
+    padding: 10px 0;
+}
+
+
+form tr td {
+    padding-left: 20px;
+}
+
+@media (max-width: 870px) {
+    form tr td {
+        padding-left: 0;
+    }
+}
+
+/** Select all titles added by add_title, except if it's in the first row of the table **/
+form table tr:not(:first-child) > th > strong {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.errorlist {
+    color: red;
+}
+
+form table {
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+/* Datatables */
+.dataTable td, .dt td {
+    text-align: center;
+}
+
+/* No bullet for list items in tables */
+td li {
+    list-style-type: none;
+}
+
+/* Bootstrap-like contextual boxes */
+div.success {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #DFF0D8;
+    border: 1px solid #00C008;
+    list-style-type: none;
+}
+
+div.failed {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #F2DEDE;
+    border: 1px solid red;
+    list-style-type: none;
+}
+
+div.warning {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #FCF8E3;
+    border: 1px solid yellow;
+    list-style-type: none;
+}
+
+div.info {
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #D9EDF7;
+    border: 1px solid blue;
+    list-style-type: none;
+}
+
+.exportTable td, .exportTable th {
+    padding: 2px
+}
+
+/** Navigation bar **/
+
+.navigation-bar > ul {
+    list-style: none;
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.navigation-bar > ul > li {
+    flex: 1;
+    width: auto;
+    text-align: center;
+    margin-top: -33px;
+}
+
+.navigation-bar a {
+    text-decoration: none;
+}
+
+.navigation-content {
+    border-top: 2px solid #666;
+}
+
+.navigation-content.inactive {
+    border-color: #999;
+    color: #999;
+}
+
+.navigation-content.active {
+    border-color: #ffcd00;
+    color: #000;
+}
+
+.navigation-bubble {
+    border: 2px solid #666;
+    border-radius: 50%;
+    color: #666;
+    width: 40px;
+    height: 40px;
+    padding-top: 5px;
+    background: #fff;
+    margin-top: -21px;
+    margin-left: calc(50% - 21px);
+    z-index: 10;
+    text-align: center;
+}
+
+.inactive .navigation-bubble {
+    border-color: #999;
+    color: #999
+}
+
+.active .navigation-bubble {
+    border-color: #ffcd00;
+}
+
+.navigation-text {
+    text-decoration: none;
+    margin-bottom: -15px;
+}
+
+.navigation-text .dropdown-toggle {
+    cursor: pointer;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu > a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu .dropdown-toggle::after {
+    border-left: .3em solid;
+    border-top: .3em solid transparent;
+    border-right: 0;
+    border-bottom: .3em solid transparent;
+    vertical-align: inherit;
+    float: right;
+    margin-top: 0.5em;
+}
+
+.dropdown-submenu:hover > a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}

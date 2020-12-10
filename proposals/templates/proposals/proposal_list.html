@@ -3,17 +3,27 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-    {{ title }}
+{% block html_head %}
+    <script>
+        $(document).ready(function () {
+            var table = $('.dataTable').dataTable({
+                "retrieve": true {# Used to retrieve the existing object #}
+            }).api();
+
+            table.order([{{ sort_column }}, "{{ sort_direction }}"]);
+            table.draw();
+        });
+    </script>
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
+    <div class="uu-inner-container">
+    <div class="col-12">
+    <h2>{{ title }}</h2>
     {% static "proposals/images/page_white_go.png" as img_next %}
     {% static "proposals/images/arrow_divide.png" as img_diff %}
     {% static "proposals/images/delete.png" as img_delete %}
-    {% static "core/images/page_white_acrobat.png" as img_pdf %}
+    {% static "main/images/page_white_acrobat.png" as img_pdf %}
     {% static "proposals/images/folder_delete.png" as img_hide %}
     <p>
         {{ body }}
@@ -55,17 +65,6 @@
             </li>
         {% endif %}
     </ul>
-
-    <script>
-        $(document).ready(function () {
-            var table = $('.dataTable').dataTable({
-                "retrieve": true {# Used to retrieve the existing object #}
-            }).api();
-
-            table.order([{{ sort_column }}, "{{ sort_direction }}"]);
-            table.draw();
-        });
-    </script>
 
     <table class="dataTable display">
         <thead>
@@ -123,4 +122,6 @@
         {% endfor %}
         </tbody>
     </table>
+        </div>
+    </div>
 {% endblock %}

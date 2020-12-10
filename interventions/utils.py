@@ -1,14 +1,14 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from core.utils import AvailableURL
+from main.utils import AvailableURL
 
 
 def intervention_url(study):
     """
     Returns the available URLs for an Intervention
     """
-    result = AvailableURL(title=_('Het interventieonderzoek'), margin=2)
+    result = AvailableURL(title=_('Interventieonderzoek'), margin=2)
     if study.has_intervention:
         if hasattr(study, 'intervention'):
             result.url = reverse('interventions:update', args=(study.intervention.pk,))

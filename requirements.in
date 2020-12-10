@@ -4,6 +4,8 @@ django-braces
 django-easy-pdf
 django-modeltranslation
 django-impersonate
+django-simple-menu
+django-debug-toolbar
 mysqlclient
 xhtml2pdf
 sphinx
@@ -15,5 +17,5 @@ django-user-agents
 pillow>=6.0
 pygments
 requests
-
+-e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0-beta-6#egg=uil-django-core
 reportlab

@@ -3,62 +3,62 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Datamanagement" %}
-{% endblock %}
-
-{% block progress %}99{% endblock %}
-
-{% block sidebar %}
-{% include "base/sidebar.html" %}
-{% endblock %}
-
 {% block content %}
-<p>
-    {% blocktrans %}
-    Een zeer belangrijk ingrediënt van ethisch verantwoord onderzoek met deelnemers,
-    is dat er op adequate wijze met de verzamelde onderzoeks- en persoonsgegevens wordt omgegaan.
-    In het algemeen geldt dat onderzoekers zich wat betreft de opslag van data
-    en het beschikbaar maken van data voor andere onderzoekers gepast behoren te gedragen,
-    en zich dienen houden aan geldende wet- en regelgeving.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Wanneer u persoonsgegevens verzamelt moet  zich aan de AVG (Algemene Verordening Gegevensbescherming) houden. Deze verordening is in lijn met de Europese privacywetgeving GDPR (<a href="https://eugdpr.org">https://eugdpr.org</a>).
-    {% endblocktrans %}
-    <br>
-    {% blocktrans %}
-    Voor meer informatie over hoe om te gaan met persoonsgegevens, zie
-    <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/avg-europese-privacywetgeving/algemene-informatie-avg" target="_blank">Autoriteit Persoonsgegevens (AP)</a>.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Hoe er moet worden omgegaan met (onderzoeks)data volgens de richtlijnen van de VSNU kunt u
-    <a href="http://www.vsnu.nl/code-pers-gegevens.html" target="_blank">hier</a> vinden.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Steeds vaker zullen subsidieverstrekkers eisen dat u een (zeer) gedetailleerd datamanagement plan (DMP) schrijft.
-    Ook vanuit de UU gaat dit de regel worden.
-    Een DMP houdt in dat u heeft nagedacht over wat voor soort type data u gaat verzamelen en over hoe gevoelig die data is.
-    De opslag van die data wordt medebepaald door de sensitiviteit van die data.
-    Het DMP gaat ook over hoe ziet de infrastructuur van mijn mappen/bestanden eruit;
-    hoe zorg ik ervoor dat ik alles makkelijk kan vinden
-    en dat ook anderen makkelijk hun weg erin kunnen vinden (denk aan hergebruik/ delen van data).
-    Meer informatie over wat een DMP precies inhoudt en hoe er een te schrijven vind u
-    <a href="https://www.uu.nl/en/research/research-data-management/what-we-do/data-management-plan" target="_blank">hier</a>.
-    {% endblocktrans %}
-    <br>
-    {% blocktrans %}
-    Voor meer informatie over de UU-richtlijnen en wetten voor onderzoeksdata, zie ook:
-    <a href="http://libguides.library.uu.nl/onderzoeksdata" target="_blank">http://libguides.library.uu.nl/onderzoeksdata</a>.
-    {% endblocktrans %}
-</p>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=proposal.available_urls active=5 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>
+                {% trans "Datamanagement" %}
+            </h2>
+            <p>
+                {% blocktrans %}
+                Een zeer belangrijk ingrediënt van ethisch verantwoord onderzoek met deelnemers,
+                is dat er op adequate wijze met de verzamelde onderzoeks- en persoonsgegevens wordt omgegaan.
+                In het algemeen geldt dat onderzoekers zich wat betreft de opslag van data
+                en het beschikbaar maken van data voor andere onderzoekers gepast behoren te gedragen,
+                en zich dienen houden aan geldende wet- en regelgeving.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                Wanneer u persoonsgegevens verzamelt moet  zich aan de AVG (Algemene Verordening Gegevensbescherming) houden. Deze verordening is in lijn met de Europese privacywetgeving GDPR (<a href="https://eugdpr.org">https://eugdpr.org</a>).
+                {% endblocktrans %}
+                <br>
+                {% blocktrans %}
+                Voor meer informatie over hoe om te gaan met persoonsgegevens, zie
+                <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/avg-europese-privacywetgeving/algemene-informatie-avg" target="_blank">Autoriteit Persoonsgegevens (AP)</a>.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                Hoe er moet worden omgegaan met (onderzoeks)data volgens de richtlijnen van de VSNU kunt u
+                <a href="http://www.vsnu.nl/code-pers-gegevens.html" target="_blank">hier</a> vinden.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                Steeds vaker zullen subsidieverstrekkers eisen dat u een (zeer) gedetailleerd datamanagement plan (DMP) schrijft.
+                Ook vanuit de UU gaat dit de regel worden.
+                Een DMP houdt in dat u heeft nagedacht over wat voor soort type data u gaat verzamelen en over hoe gevoelig die data is.
+                De opslag van die data wordt medebepaald door de sensitiviteit van die data.
+                Het DMP gaat ook over hoe ziet de infrastructuur van mijn mappen/bestanden eruit;
+                hoe zorg ik ervoor dat ik alles makkelijk kan vinden
+                en dat ook anderen makkelijk hun weg erin kunnen vinden (denk aan hergebruik/ delen van data).
+                Meer informatie over wat een DMP precies inhoudt en hoe er een te schrijven vind u
+                <a href="https://www.uu.nl/en/research/research-data-management/what-we-do/data-management-plan" target="_blank">hier</a>.
+                {% endblocktrans %}
+                <br>
+                {% blocktrans %}
+                Voor meer informatie over de UU-richtlijnen en wetten voor onderzoeksdata, zie ook:
+                <a href="http://libguides.library.uu.nl/onderzoeksdata" target="_blank">http://libguides.library.uu.nl/onderzoeksdata</a>.
+                {% endblocktrans %}
+            </p>
 
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    {% include "base/form_buttons.html" %}
-</form>
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                {% include "base/form_buttons.html" %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

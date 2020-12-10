@@ -3,14 +3,17 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Bedankt voor uw feedback!" %}
-{% endblock %}
-
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-{% blocktrans with url=feedback.url %}
-Klik <a href="{{ url }}">hier</a> om terug te keren naar pagina waar u gebleven was.
-{% endblocktrans %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Bedankt voor uw feedback!" %}
+            </h2>
+            <p>
+                {% blocktrans with url=feedback.url %}
+                Klik <a href="{{ url }}">hier</a> om terug te keren naar pagina waar u gebleven was.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
 {% endblock %}

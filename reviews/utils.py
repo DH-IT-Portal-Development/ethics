@@ -6,8 +6,8 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.utils import timezone
 
-from core.models import YES, DOUBT
-from core.utils import get_secretary
+from main.models import YES, DOUBT
+from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
 from proposals.utils import notify_local_staff

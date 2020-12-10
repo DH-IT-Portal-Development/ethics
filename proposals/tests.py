@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 
-from core.models import Setting, YES, NO
+from main.models import Setting, YES, NO
 from interventions.models import Intervention
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment

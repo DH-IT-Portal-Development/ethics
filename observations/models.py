@@ -2,8 +2,8 @@ from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import SettingModel
-from core.validators import validate_pdf_or_doc
+from main.models import SettingModel
+from main.validators import validate_pdf_or_doc
 from studies.models import Study
 
 

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 from django.conf import settings
-import core.validators
+import main.validators
 import django.core.validators
 
 
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('reference_number', models.CharField(unique=True, max_length=16)),
                 ('date_start', models.DateField(null=True, verbose_name='Wat is, indien bekend, de beoogde startdatum van uw studie?', blank=True)),
                 ('title', models.CharField(help_text='De titel die u hier opgeeft is zichtbaar voor de ETCL-leden en, wanneer de studie is goedgekeurd, ook voor alle UiL-OTS medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een studie die u heeft ingediend.', unique=True, max_length=200, verbose_name='Wat is de titel van uw studie?')),
-                ('summary', models.TextField(verbose_name='Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.', validators=[core.validators.MaxWordsValidator(200)])),
+                ('summary', models.TextField(verbose_name='Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.', validators=[main.validators.MaxWordsValidator(200)])),
                 ('other_applicants', models.BooleanField(default=False, verbose_name='Zijn er nog andere UiL OTS-onderzoekers of -studenten bij deze studie betrokken?')),
                 ('other_stakeholders', models.BooleanField(default=False, verbose_name='Zijn er onderzoekers van buiten UiL OTS bij deze studie betrokken?')),
                 ('stakeholders', models.TextField(verbose_name='Andere betrokkenen', blank=True)),
@@ -75,7 +75,7 @@ class Migration(migrations.Migration):
                 ('is_behavioristic', models.CharField(blank=True, help_text='Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, slechts dan kan "nee" ingevuld worden.', max_length=1, verbose_name='Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?', choices=[(b'Y', 'ja'), (b'N', 'nee'), (b'?', 'twijfel')])),
                 ('metc_application', models.BooleanField(default=False, verbose_name='Uw studie moet beoordeeld worden door de METC, maar dient nog wel bij de ETCL te worden geregistreerd. Is deze studie al aangemeld bij een METC?')),
                 ('metc_decision', models.BooleanField(default=False, verbose_name='Is de METC al tot een beslissing gekomen?')),
-                ('metc_decision_pdf', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc])),
+                ('metc_decision_pdf', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)', validators=[main.validators.validate_pdf_or_doc])),
                 ('status', models.PositiveIntegerField(default=0, choices=[(0, 'Geen beoordeling door METC noodzakelijk'), (1, 'In afwachting beslissing METC'), (2, 'Beslissing METC ge\xfcpload')])),
                 ('enforced_by_commission', models.BooleanField(default=False)),
                 ('proposal', models.OneToOneField(primary_key=True, serialize=False, to='proposals.Proposal', on_delete=models.CASCADE)),

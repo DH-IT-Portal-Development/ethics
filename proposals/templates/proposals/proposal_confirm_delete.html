@@ -2,20 +2,20 @@
 
 {% load i18n %}
 
-{% block title %}
-{% trans "Studie verwijderen" %}
-{% endblock %}
-
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-<p>
-    {% blocktrans with title=proposal.title %}
-    Weet u zeker dat u de studie <em>{{ title }}</em> wilt verwijderen?
-    {% endblocktrans %}
-</p>
-<form action="" method="post">{% csrf_token %}
-    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Verwijderen' %}" />
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
-</form>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>{% trans "Studie verwijderen" %}</h2>
+            <p>
+                {% blocktrans with title=proposal.title %}
+                    Weet u zeker dat u de studie <em>{{ title }}</em> wilt verwijderen?
+                {% endblocktrans %}
+            </p>
+            <form action="" method="post">{% csrf_token %}
+                <input class="button" type="submit" value="{% trans 'Verwijderen' %}"/>
+                <a class="button"
+                   href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
+            </form>
+        </div>
+    </div>x
 {% endblock %}

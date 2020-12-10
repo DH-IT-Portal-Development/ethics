@@ -3,34 +3,44 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "Commissieleden aanstellen" %}
+{% block html_head %}
+    <script>
+        $(function () {
+            depends_on_list_value('short_route', ['True', 'False'], 'reviewers');
+
+            {% if review.proposal.is_pre_assessment %}
+                // Hide short_route input for preliminary assessment Proposals
+                $('input[name="short_route"]').parents('tr').hide();
+            {% endif %}
+        });
+    </script>
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-<script>
-$(function() {
-    depends_on_list_value('short_route', ['True', 'False'], 'reviewers');
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Commissieleden aanstellen" %}
+            </h2>
 
-    {% if review.proposal.is_pre_assessment %}
-    // Hide short_route input for preliminary assessment Proposals
-    $('input[name="short_route"]').parents('tr').hide();
-    {% endif %}
-});
-</script>
-<p>
-    {% blocktrans with title=review.proposal.title %}
-    Kies hier de geschikte route en commissieleden voor de studie <em>{{ title }}</em>.
-    {% endblocktrans %}
-</p>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}" />
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-</form>
-{% if not review.proposal.is_pre_assessment %}
-{% include "reviews/auto_review.html" %}
-{% endif %}
+            <p>
+                {% blocktrans with title=review.proposal.title %}
+                    Kies hier de geschikte route en commissieleden voor de studie <em>{{ title }}</em>.
+                {% endblocktrans %}
+            </p>
+            <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                <div class="float-right">
+                    <a class="button" href="javascript:history.go(-1);">
+                        {% trans "Terug naar de vorige pagina" %}
+                    </a>
+                    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}"/>
+                </div>
+
+            </form>
+            {% if not review.proposal.is_pre_assessment %}
+                {% include "reviews/auto_review.html" %}
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

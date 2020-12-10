@@ -3,7 +3,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from core.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
+from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
 from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
 from studies.utils import create_documents_for_study

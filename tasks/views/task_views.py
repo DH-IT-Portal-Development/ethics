@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
-from core.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
+from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import TaskForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Task

@@ -3,27 +3,15 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Het observatieonderzoek" %}
-{% endblock %}
-
-{% block progress %}{{ progress }}{% endblock %}
-
-{% block sidebar %}
-{% with proposal=study.proposal %}
-{% include "base/sidebar.html" %}
-{% endwith %}
-{% endblock %}
-
-{% block content %}
-<script>
+{% block html_head %}
+    <script>
 $(function() {
     depends_on_value('is_nonpublic_space', 'True', 'has_advanced_consent');
     depends_on_value('needs_approval', 'True', 'approval_institution');
     depends_on_value('needs_approval', 'True', 'approval_document');
     check_field_required('registrations', 'needs_details', 'registrations_details', 'observations', 'Registration');
 
-    check_field_required('setting', 'is_school', 'needs_approval', 'core', 'Setting', true);
+    check_field_required('setting', 'is_school', 'needs_approval', 'main', 'Setting', true);
 
     depends_on_value('is_anonymous', 'True', 'is_anonymous_details');
     depends_on_value('is_in_target_group', 'True', 'is_in_target_group_details');
@@ -38,12 +26,25 @@ $(function() {
     add_title('registrations', "{% trans 'Registratie gedrag' %}");
 });
 </script>
-{% include "core/setting_checks.html" %}
-{% include "studies/study_title.html" %}
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    {% with proposal=observation.study.proposal %}
-    {% include "base/form_buttons.html" %}
-    {% endwith %}
-</form>
+{% include "main/setting_checks.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=study.proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>
+                {% trans "Het observatieonderzoek" %}
+            </h2>
+            {% include "studies/study_title.html" %}
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                {% with proposal=observation.study.proposal %}
+                {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

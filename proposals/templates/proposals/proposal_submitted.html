@@ -3,32 +3,33 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% if proposal.is_pre_assessment %}
-{% trans "Aanvraag voor voortoetsing verstuurd" %}
-{% elif proposal.relation.needs_supervisor %}
-{% trans "Concept-aanmelding verstuurd" %}
-{% else %}
-{% trans "Aanmelding verstuurd" %}
-{% endif %}
-{% endblock %}
-
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-<p>
-    {% if proposal.is_pre_assessment %}
-	{% trans "Uw aanvraag voor voortoetsing is verstuurd." %}
-    {% elif proposal.relation.needs_supervisor %}
-	{% trans "Uw concept-aanmelding is verstuurd." %}
-    {% else %}
-	{% trans "Uw aanmelding is verstuurd." %}
-    {% endif %}
-    {% trans "U ontvangt een e-mail ter bevestiging." %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% if proposal.is_pre_assessment %}
+                    {% trans "Aanvraag voor voortoetsing verstuurd" %}
+                {% elif proposal.relation.needs_supervisor %}
+                    {% trans "Concept-aanmelding verstuurd" %}
+                {% else %}
+                    {% trans "Aanmelding verstuurd" %}
+                {% endif %}
+            </h2>
+            <p>
+                {% if proposal.is_pre_assessment %}
+                    {% trans "Uw aanvraag voor voortoetsing is verstuurd." %}
+                {% elif proposal.relation.needs_supervisor %}
+                    {% trans "Uw concept-aanmelding is verstuurd." %}
+                {% else %}
+                    {% trans "Uw aanmelding is verstuurd." %}
+                {% endif %}
+                {% trans "U ontvangt een e-mail ter bevestiging." %}
 
-    {% url 'proposals:my_submitted' as submitted_url %}
-    {% blocktrans %}
-    Klik <a href="{{ submitted_url }}">hier</a> om uw ingediende studies in te zien.
-    {% endblocktrans %}
-</p>
+                {% url 'proposals:my_submitted' as submitted_url %}
+                {% blocktrans %}
+                    Klik <a href="{{ submitted_url }}">hier</a> om uw ingediende studies in te zien.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
 {% endblock %}

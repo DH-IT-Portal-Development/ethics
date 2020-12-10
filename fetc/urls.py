@@ -10,17 +10,17 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
-handler404 = 'core.error_views.error_404'
-handler500 = 'core.error_views.error_500'
-handler403 = 'core.error_views.error_403'
-handler400 = 'core.error_views.error_400'
+handler404 = 'main.error_views.error_404'
+handler500 = 'main.error_views.error_500'
+handler403 = 'main.error_views.error_403'
+handler400 = 'main.error_views.error_400'
 
 
 urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 
-    path('', include('core.urls')),
+    path('', include('main.urls')),
     path('proposals/', include('proposals.urls')),
     path('studies/', include('studies.urls')),
     path('tasks/', include('tasks.urls')),
@@ -35,6 +35,13 @@ urlpatterns = [
 
     path('i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if 'debug_toolbar' in settings.INSTALLED_APPS and settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns.append(
+        path('__debug__/', include(debug_toolbar.urls)),
+    )
 
 admin.site.site_header = 'FETC-GW'
 admin.site.site_title = 'FETC-GW administratie'

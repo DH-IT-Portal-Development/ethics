@@ -9,8 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 
-from core.utils import get_secretary
-from core.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
+from main.utils import get_secretary
+from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     UpdateView
 from proposals.utils.validate_proposal import get_form_errors
 from reviews.mixins import CommitteeMixin
@@ -309,6 +309,7 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
         context['errors'] = get_form_errors(self.get_object())
+        context['pagenr'] = self._get_page_number()
 
         return context
 
@@ -332,6 +333,15 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_back_url(self):
         """Return to the data management view"""
         return reverse('proposals:data_management', args=(self.object.pk,))
+
+    def _get_page_number(self):
+        if self.object.is_pre_assessment:
+            return 3
+
+        if self.object.is_pre_approved:
+            return 2
+
+        return 6
 
 
 class ProposalSubmitted(generic.DetailView):

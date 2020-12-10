@@ -1,0 +1,18 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" charset="utf8" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+
+<script type="text/javascript" charset="utf8" src="{% static 'main/js/datepicker-nl.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        var language = "nl" === "{{ LANGUAGE_CODE }}" ? "Dutch" : "English";
+        $('.dataTable').DataTable({
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.11/i18n/" + language + ".json"
+            }
+        });
+    });
+</script>
+{% include "base/form_styling.html" %}
