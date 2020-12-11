@@ -1,7 +1,6 @@
 from django.conf.urls import url
 
-from .views import HomeView, check_requires, UserSearchView, UserDetailView, \
-    DevSandboxView
+from .views import HomeView, check_requires, UserSearchView, UserDetailView
 
 app_name = 'core'
 
@@ -16,8 +15,5 @@ urlpatterns = [
     url(r'^user_search/$', UserSearchView.as_view(), name='user_search'),
 
     # Checks on conditional fields
-    url(r'^check_requires/$', check_requires, name='check_requires'),
-    
-    url(r'^dev/(?P<query>\w+)/$', DevSandboxView.as_view(), name='dev'),
-    url(r'^dev/$', DevSandboxView.as_view(), name='dev')
+    url(r'^check_requires/$', check_requires, name='check_requires')
 ]
