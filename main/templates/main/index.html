@@ -1,17 +1,21 @@
 {% extends "base/base.html" %}
 
 {% load i18n %}
+{% load static %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="coverimage">
+        <img src="{% static 'main/images/coverimage.jpg' %}" />
+    </div>
+    <div class="uu-inner-container mt-1">
         <div class="col-12">
-            <h2>
+            <h3>
                 {% if user.is_authenticated %}
                     {% trans "Startpagina" %} - {{ user.get_full_name }}
                 {% else %}
                     {% trans "Startpagina" %}
                 {% endif %}
-            </h2>
+            </h3>
         </div>
     </div>
     {% if user.is_authenticated %}
@@ -25,26 +29,6 @@
                             voor de informed consent worden gebruikt. Deze zijn te vinden op
                             <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>
                             .
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans %}
-                            In dit webportaal van de Facultaire Ethische Toetsingscommissie
-                            Geesteswetenschappen (FETC-GW) kunt u alle <strong>praktische zaken
-                        </strong> rondom de ethische toetsing van uw onderzoek regelen.
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans %}
-                            U kunt eennieuwe studie bij de commissie aanmelden, maar ook bekijken wat er allemaal
-                            eerder door uzelf is aangemeld.
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% url 'proposals:archive' as archive_url %}
-                        {% blocktrans %}
-                            Verder kunt u alle afgehandelde en goedgekeurde
-                            studies zien in het <a href="{{ archive_url }}">archief van dit portaal</a>.
                         {% endblocktrans %}
                     </li>
                     <li>
@@ -70,11 +54,11 @@
         </div>
         <div class="uu-inner-container">
             <div class="col-md-6 col-12">
-                <h4 style="margin-bottom: 0">
+                <h5>
                     {% trans "Dien een nieuwe studie in" %}
-                </h4>
-                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}
-                <ul style="margin-top: 5px">
+                </h5>
+{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
+                <ul class="startpage-ul">
                     <li>
                         <a href="{% url 'proposals:start' %}">{% trans "die volledig nieuw is in deze portal;" %}</a>
                     </li>
@@ -85,34 +69,31 @@
                         <a href="{% url 'proposals:start_pre' %}">{% trans "voor voortoetsing t.b.v. subsidieaanvraag;" %}</a>
                     </li>
                     <li>
-                        <a
-                                href="{% url 'proposals:start_pre_approved' %}">{% trans "die al goedgekeurd is door een andere ethische toetsingscomissie." %}</a>
+                        <a href="{% url 'proposals:start_pre_approved' %}">{% trans "die al goedgekeurd is door een andere ethische toetsingscomissie." %}</a>
                     </li>
                 </ul>
             </div>
             <div class="col-md-6 col-12">
-                <h4 style="margin-bottom: 0">
+                <h5>
                     {% trans "Een gereviseerde studie aanmelden" %}
-                </h4>
-                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}
-                <ul style="margin-top: 5px">
+                </h5>
+{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
+                <ul class="startpage-ul">
                     <li>
-                        <a
-                                href="{% url 'proposals:copy_revision' %}">{% trans "als een revisie, gebaseerd op opmerkingen van de FETC-GW;" %}</a>
+                        <a href="{% url 'proposals:copy_revision' %}">{% trans "als een revisie, gebaseerd op opmerkingen van de FETC-GW;" %}</a>
                     </li>
                     <li>
-                        <a
-                                href="{% url 'proposals:copy_amendment' %}">{% trans "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW." %}</a>
+                        <a href="{% url 'proposals:copy_amendment' %}">{% trans "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW." %}</a>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="uu-inner-container">
+        <div class="uu-inner-container mt-2 mb-2">
             <div class="col-md-6 col-12">
-                <h4 style="margin-bottom: 0">
+                <h6>
                     {% trans "Bekijk" %}
-                </h4>
-                <ul style="margin-top: 5px">
+                </h6>
+                <ul class="startpage-ul">
                     <li>
                         <a href="{% url 'proposals:my_concepts' %}">{% trans "mijn conceptstudies;" %}</a>
                     </li>
@@ -132,26 +113,24 @@
                         <a href="{% url 'proposals:my_archive' %}">{% trans "al mijn studies." %}</a>
                     </li>
                 </ul>
-                <strong style="margin-bottom: 0">
+                <h6 class="mt-2 d-inline-block">
                     {% trans 'FETC-GW archief' %}
-                </strong>
-                <ul style="margin-top: 5px">
+                </h6>
+                <ul class="startpage-ul">
                     <li>
-                        <a
-                                href="{% url 'proposals:archive' 'AK' %}">{% trans "Alle afgehandelde en goedgekeurde studies bekijken van de Algemene Kamer" %}</a>
+                        <a href="{% url 'proposals:archive' 'AK' %}">{% trans "Alle goedgekeurde studies bekijken van de Algemene Kamer" %}</a>
                     </li>
                     <li>
-                        <a
-                                href="{% url 'proposals:archive' 'LK' %}">{% trans "Alle afgehandelde en goedgekeurde studies bekijken van de Linguïstiek Kamer" %}</a>
+                        <a href="{% url 'proposals:archive' 'LK' %}">{% trans "Alle goedgekeurde studies bekijken van de Linguïstiek Kamer" %}</a>
                     </li>
                 </ul>
             </div>
 
             <div class="col-md-6 col-12">
-                <h4 style="margin-bottom: 0">
+                <h6>
                     Help
-                </h4>
-                <ul style="margin-top: 5px">
+                </h6>
+                <ul class="startpage-ul">
                     <li>
                         <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">{% trans "FETC-GW website" %}</a>
                     </li>
@@ -177,7 +156,7 @@
             </div>
         </div>
     {% else %}
-        <div class="uu-inner-container">
+        <div class="uu-inner-container mt-2 mb-2">
             <div class="col-12">
                 <p>
                     {% url 'login' as the_url %}

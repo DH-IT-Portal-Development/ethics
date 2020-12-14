@@ -4,7 +4,7 @@
 #
 #    pip-compile
 #
--e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0-beta-7#egg=uil-django-core  # via -r requirements.in
+-e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0-beta-8#egg=uil-django-core  # via -r requirements.in
 alabaster==0.7.12         # via sphinx
 babel==2.8.0              # via sphinx
 certifi==2019.11.28       # via requests

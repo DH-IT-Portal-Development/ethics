@@ -27,6 +27,18 @@
     margin-bottom: 1em;
 }
 
+.startpage-ul {
+    list-style: circle;
+}
+
+.startpage-ul li {
+    margin-top: 3px;
+}
+
+.startpage-ul a {
+    text-underline-offset: .1em;
+}
+
 /* Displaying the differences between Proposals */
 .proposals-diff {
     table-layout: fixed;
