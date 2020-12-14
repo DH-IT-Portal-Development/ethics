@@ -324,16 +324,13 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         model = Wmo
         fields = [
             'metc', 'metc_details', 'metc_institution',
-            'is_medical', 'is_behavioristic',
-        ]
+            'is_medical']
         widgets = {
             'metc':             forms.RadioSelect(),
-            'is_medical':       forms.RadioSelect(),
-            'is_behavioristic': forms.RadioSelect(),
-        }
+            'is_medical':       forms.RadioSelect()}
 
     _soft_validation_fields = ['metc_details', 'metc_institution',
-                               'is_medical', 'is_behavioristic']
+                               'is_medical']
 
     def __init__(self, *args, **kwargs):
         """
@@ -344,8 +341,6 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         self.fields['metc'].choices = YES_NO_DOUBT
         self.fields['is_medical'].empty_label = None
         self.fields['is_medical'].choices = YES_NO_DOUBT
-        self.fields['is_behavioristic'].empty_label = None
-        self.fields['is_behavioristic'].choices = YES_NO_DOUBT
 
     def clean(self):
         """
@@ -367,20 +362,17 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
                                   'U dient een instelling op te geven.'))
         self.check_dependency_list(cleaned_data, 'metc', 'is_medical',
                                    f1_value_list=[NO, DOUBT])
-        self.check_dependency_list(cleaned_data, 'metc', 'is_behavioristic',
-                                   f1_value_list=[NO, DOUBT])
 
 
 class WmoCheckForm(forms.ModelForm):
     class Meta:
         model = Wmo
         fields = [
-            'metc', 'is_medical', 'is_behavioristic',
+            'metc', 'is_medical',
         ]
         widgets = {
             'metc':             forms.RadioSelect(),
             'is_medical':       forms.RadioSelect(),
-            'is_behavioristic': forms.RadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -390,8 +382,6 @@ class WmoCheckForm(forms.ModelForm):
         super(WmoCheckForm, self).__init__(*args, **kwargs)
         self.fields['is_medical'].empty_label = None
         self.fields['is_medical'].choices = YES_NO_DOUBT
-        self.fields['is_behavioristic'].empty_label = None
-        self.fields['is_behavioristic'].choices = YES_NO_DOUBT
 
 
 class WmoApplicationForm(ConditionalModelForm):

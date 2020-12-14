@@ -506,19 +506,6 @@ onderzoek, 2005, ccmo.nl)'),
         blank=True,
     )
 
-    is_behavioristic = models.CharField(
-        _('Worden de deelnemers aan een handeling onderworpen of worden \
-hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
-        help_text=_('Een handeling of opgelegde gedragsregel varieert \
-tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een \
-knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets \
-van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd \
-worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, \
-slechts dan kan "nee" ingevuld worden.'),
-        max_length=1,
-        choices=YES_NO_DOUBT,
-        blank=True,
-    )
 
     metc_application = models.BooleanField(
         _('Uw studie moet beoordeeld worden door de METC, maar dient nog \
@@ -560,8 +547,7 @@ bij een METC?'),
         super(Wmo, self).save(*args, **kwargs)
 
     def update_status(self):
-        if self.metc == YES or (
-                self.is_medical == YES and self.is_behavioristic == YES) or self.enforced_by_commission:
+        if self.metc == YES or self.is_medical == YES or self.enforced_by_commission:
             if self.metc_decision and self.metc_decision_pdf:
                 self.status = self.JUDGED
             else:
