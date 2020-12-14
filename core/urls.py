@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^user_search/$', UserSearchView.as_view(), name='user_search'),
 
     # Checks on conditional fields
-    url(r'^check_requires/$', check_requires, name='check_requires')
+    url(r'^check_requires/$', check_requires, name='check_requires'),
 ]

@@ -47,11 +47,16 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
                                        public=True)
     
     def add_route_info(self, p):
-        "Adds human-readable route info to the given proposal"
+        """Adds human-readable route info to the given proposal.
+        This function may find a better home somewhere in the Review
+        class in the future"""
+        
         last_review = p.review_set.last()
         
-        try: route = last_review.short_route
-        except AttributeError: route = None
+        try: 
+            route = last_review.short_route
+        except AttributeError:
+            route = None
         
         route_options= {False: _('lange (4-weken) route'),
                         True: _('korte (2-weken) route'),
