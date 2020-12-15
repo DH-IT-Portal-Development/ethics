@@ -349,10 +349,9 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
     def get_group_required(self):
         
         obj = self.get_object()
-        allowed_groups = [ settings.GROUP_SECRETARY ]
-        allowed_groups += [ obj.proposal.reviewing_committee.name ]
+        group_required = [ settings.GROUP_SECRETARY, obj.proposal.reviewing_committee.name ]
         
-        return allowed_groups
+        return group_required
 
 
 class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
