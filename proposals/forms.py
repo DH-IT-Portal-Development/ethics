@@ -500,6 +500,8 @@ class ProposalSubmitForm(forms.ModelForm):
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
+        self.fields['inform_local_staff'].label_suffix = ''
+
         self.fields['inform_local_staff'].label = mark_safe(
             self.fields['inform_local_staff'].label)
 
