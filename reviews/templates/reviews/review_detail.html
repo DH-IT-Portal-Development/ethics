@@ -194,10 +194,11 @@
                     {% endif %}
                 </ul>
             {% endfor %}
-            {% counter extra_form_counter 1 %}
+            {% counter extra_form_counter create 1 %}
             {% get_extra_documents extra_documents review.proposal %}
             {% for documents in extra_documents %}
-                <h3>{% trans 'Extra formulieren' %} {{ extra_form_counter }}</h3>
+                <h3>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h3>
+                {% counter extra_form_counter increment 1 %}
                 <ul>
                     {% if documents.informed_consent %}
                         <li>

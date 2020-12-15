@@ -54,6 +54,41 @@ def set_var(parser, token):
 
     return SetVarNode(parts[1], parts[3])
 
+
+class CounterNode(template.Node):
+
+    def __init__(self, name, action, **kwargs):
+        self.name = name
+        self.action = action
+        self.kwargs = kwargs
+
+    def _get_counter_key(self):
+        """Returns the key for this counter object in the render_context"""
+        return "counter_{}".format(self.name)
+
+    def render(self, context):
+        key = self._get_counter_key()
+
+        # Storing it in render_context makes sure we are thread-safe
+        # The documentation uses 'self' as a key, but that only refers
+        # to that occurrence of the tag. We want a tag to reference to a
+        # thread-global counter, so we use a custom made key
+        if key not in context.render_context or self.action == 'create':
+            context.render_context[key] = Counter(self.kwargs.get('value', 0))
+
+        if self.action == 'store':
+            context[self.name] = context.render_context[key].value
+
+        if self.action == 'increment':
+            for i in range(self.kwargs.get('value', 1)):
+                context.render_context[key].increment()
+
+        if self.action == 'value':
+            return str(context.render_context[key])
+
+        return ""
+
+
 class Counter:
     """
     Very simple counter used in the counter tag
@@ -80,51 +115,56 @@ class Counter:
         return other == self.value
 
     def increment(self):
-        """
-        Use this to increment the counter. Please note that you should use {{ c.incement }}, not {% c.increment %},
-        as this is not a tag method
-        :return: Empty string
-        """
+        """Do not use in templates! (If you even can...)"""
         self.value = self.value + 1
-        return u""
 
 @register.tag
 def counter(parser, token):
     """
-    Creates a counter object under a specified variable name, optionally with a starting number. By default it starts
+    Creates a counter, optionally with a starting number. By default it starts
     counting at 0.
 
     Usage:
-    {% counter VAR_NAME %}
+
+    To create:
+    {% counter NAME create %}
     or
-    {% counter VAR_NAME STARTING_VALUE %} (to specify the starting value, must be an int or int in a string)
+    {% counter NAME create STARTING_VALUE %} (to specify the starting value,
+    must be an int or int in a string)
 
     To increment:
-    {{ VAR_NAME.increment }}
+    {% counter NAME increment (VALUE) %}
+    (VALUE is optional, and can be used to increment the counter by the given
+    value).
 
     To display the value:
-    {{ VAR_NAME }}
+    {% counter NAME value %}
+
+    Alternatively, you can store the current value in a template variable:
+    {% counter NAME store %}
+    It's value will be stored into a variable called NAME.
+    Note: this might not be thread-safe!
     """
     parts = token.split_contents()
 
-    # We default to a starting value
-    start_value = 0
+    # We expect two or three arguments
+    if 1 <= len(parts) <= 2 or len(parts) > 4:
+        raise template.TemplateSyntaxError("'counter' tag must be of the "
+                                           "form: {% counter <name> <action> ("
+                                           "value>) %}")
 
-    # If we have 3 parts, the third part should be interpreted as the desired starting value
-    if len(parts) == 3:
+    kwargs = {
+        'name': parts[1],
+        'action': parts[2],
+    }
+
+    # If we have 4 parts, the third part should be interpreted as 'value'
+    if len(parts) == 4:
         # Try to parse it to an int, throw a syntax error if we can't
         try:
-            start_value = int(parts[2])
+            kwargs['value'] = int(parts[3])
         except ValueError:
-            raise template.TemplateSyntaxError("Counter start value is not an integer! ")
+            raise template.TemplateSyntaxError("Counter value is not an integer! ")
 
-    # We need 2 or 3 parts to count as a valid usage
-    if 1 < len(parts) <= 3:
-        var_name = parts[1]
-
-        # Under the hood we actually just use the same node as assign uses, we just need to assign a var with a counter
-        return SetVarNode(var_name, Counter(start_value))
-    else:
-        raise template.TemplateSyntaxError("'counter' tag must be of the form: {% counter <var_name> (<start_value>) %}")
-
+    return CounterNode(**kwargs)
 

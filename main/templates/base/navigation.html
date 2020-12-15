@@ -4,11 +4,12 @@
 
 <div class="navigation-bar hide-xs">
     <ul>
-        {% counter main_counter 1 %}
+        {% counter main_counter create 1 %}
         {% for item in nav_items %}
             {% if not item.is_title %}
                 {# First layer, the bar itself #}
                 <li>
+                    {% counter main_counter store %}
                     <div
                             class="navigation-content
                             {% if not item.url %}inactive{% endif %}
@@ -19,7 +20,7 @@
                             <a href="{{ item.url }}">
                         {% endif %}
                         <div class="navigation-bubble">
-                            {{ main_counter }}
+                            {% counter main_counter value %}
                         </div>
                         {% if item.url %}
                             </a>
@@ -78,7 +79,7 @@
 
                     </div>
                 </li>
-                {{ main_counter.increment }}
+                {% counter main_counter increment %}
             {% endif %}
         {% endfor %}
     </ul>
