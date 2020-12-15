@@ -23,10 +23,6 @@
     padding: 0em 1em 1em 1em;
 }
 
-#form_buttons {
-    margin-bottom: 1em;
-}
-
 .startpage-ul {
     list-style: circle;
 }
@@ -41,6 +37,17 @@
 
 form label {
     display: inline-block;
+}
+
+.form-buttons a, .form-buttons input {
+    margin-top: 5px;
+}
+
+@media (min-width: 768px)
+{
+    .form-buttons .continue-button {
+        float: right;
+    }
 }
 
 /* Displaying the differences between Proposals */

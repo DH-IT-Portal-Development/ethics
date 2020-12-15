@@ -1,21 +1,9 @@
 {% load i18n %}
 
-<div class="mt-3 mb-3">
-    <span id="form_buttons" class="float-right">
+<div class="mt-3 mb-3 form-buttons">
+    <div>
         {% if not no_back %}
             <input class="button" type="submit" name="save_back" value="{% trans '<< Opslaan en vorige stap' %}"/>
-        {% endif %}
-        {% if not no_forward %}
-            <input class="button button-colored" type="submit" name="save_continue"
-                   value="{{ next_text|default:_('Opslaan en volgende stap >>') }}"/>
-        {% endif %}
-    </span>
-
-    {% if not no_back %}
-        <span id="form_buttons_extra">
-            <a class="button" href="{% url 'main:home' %}">
-                {% trans "Terug naar startpagina" %}
-            </a>
             {% if proposal %}
                 {% if proposal.is_pre_assessment %}
                     <a class="button" href="{% url 'proposals:update_pre' proposal.pk %}">
@@ -41,7 +29,11 @@
                     {% trans "Terug naar begin sessie" %}
                 </a>
             {% endif %}
-        </span>
-    {% endif %}
+        {% endif %}
+        {% if not no_forward %}
+            <input class="button button-colored continue-button" type="submit" name="save_continue"
+                   value="{{ next_text|default:_('Opslaan en volgende stap >>') }}"/>
+        {% endif %}
+    </div>
 
 </div>
