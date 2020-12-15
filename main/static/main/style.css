@@ -39,6 +39,10 @@
     text-underline-offset: .1em;
 }
 
+form label {
+    display: inline-block;
+}
+
 /* Displaying the differences between Proposals */
 .proposals-diff {
     table-layout: fixed;
