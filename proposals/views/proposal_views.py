@@ -45,6 +45,26 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
                                        status_review=True,
                                        in_archive=True,
                                        public=True)
+    
+    def add_route_info(self, p):
+        """Adds human-readable route info to the given proposal.
+        This function may find a better home somewhere in the Review
+        class in the future"""
+        
+        last_review = p.review_set.last()
+        
+        try: 
+            route = last_review.short_route
+        except AttributeError:
+            route = None
+        
+        route_options= {False: _('lange (4-weken) route'),
+                        True: _('korte (2-weken) route'),
+                        None: _('nog geen route')}
+        
+        p.route = route_options[route]
+        p.has_route_info = True
+        return p
 
     def get_context_data(self, **kwargs):
         context = super(BaseProposalsView, self).get_context_data(**kwargs)
@@ -164,10 +184,18 @@ class MySupervisedView(BaseProposalsView):
         'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
     is_modifiable = True
     is_submitted = True
+    template_name = 'proposals/proposal_list.html'
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super(MySupervisedView, self).get_context_data(**kwargs)
+        context['wants_route_info'] = True
+        return context
 
     def get_queryset(self):
         """Returns all Proposals supervised by the current User"""
-        return Proposal.objects.filter(supervisor=self.request.user)
+        plist = [self.add_route_info(p) for p in Proposal.objects.filter(supervisor=self.request.user)]
+        return plist
 
 
 class MyProposalsView(BaseProposalsView):
