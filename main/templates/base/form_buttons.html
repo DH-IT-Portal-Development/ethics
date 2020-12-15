@@ -6,26 +6,26 @@
             <input class="button" type="submit" name="save_back" value="{% trans '<< Opslaan en vorige stap' %}"/>
             {% if proposal %}
                 {% if proposal.is_pre_assessment %}
-                    <a class="button" href="{% url 'proposals:update_pre' proposal.pk %}">
+                    <a class="button js-submit-redirect" href="{% url 'proposals:update_pre' proposal.pk %}">
                         {% trans "Terug naar begin studie" %}
                     </a>
                 {% elif proposal.is_practice %}
-                    <a class="button" href="{% url 'proposals:update_practice' proposal.pk %}">
+                    <a class="button js-submit-redirect" href="{% url 'proposals:update_practice' proposal.pk %}">
                         {% trans "Terug naar begin studie" %}
                     </a>
                 {% else %}
-                    <a class="button" href="{% url 'proposals:update' proposal.pk %}">
+                    <a class="button js-submit-redirect" href="{% url 'proposals:update' proposal.pk %}">
                         {% trans "Terug naar begin studie" %}
                     </a>
                 {% endif %}
             {% endif %}
             {% if study %}
-                <a class="button" href="{% url 'studies:update' study.pk %}">
+                <a class="button js-submit-redirect" href="{% url 'studies:update' study.pk %}">
                     {% trans "Terug naar begin traject" %}
                 </a>
             {% endif %}
             {% if session %}
-                <a class="button" href="{% url 'tasks:start' session.pk %}">
+                <a class="button js-submit-redirect" href="{% url 'tasks:start' session.pk %}">
                     {% trans "Terug naar begin sessie" %}
                 </a>
             {% endif %}

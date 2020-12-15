@@ -34,7 +34,7 @@ $(function() {
         {% if not item.is_title %}
         <li>
             {% if item.url %}
-            <a class="sideBarLink {% if item.is_title %}title{% endif %}" href="{{ item.url }}">{{ item.title }}</a>
+            <a class="sideBarLink js-submit-redirect {% if item.is_title %}title{% endif %}" href="{{ item.url }}">{{ item.title }}</a>
             {% else %}
             <span class="{% if item.is_title %}title{% endif %}">{{ item.title }}</span>
             {% endif %}
@@ -43,7 +43,7 @@ $(function() {
         {% for child in item.children %}
             <li>
                 {% if child.url %}
-                <a class="ml-3 sideBarLink {% if child.is_title %}title{% endif %}" href="{{ child.url }}">{{ child.title }}</a>
+                <a class="ml-3 js-submit-redirect sideBarLink {% if child.is_title %}title{% endif %}" href="{{ child.url }}">{{ child.title }}</a>
                 {% else %}
                 <span class="ml-3 {% if child.is_title %}title{% endif %}">{{ child.title }}</span>
                 {% endif %}
@@ -52,7 +52,7 @@ $(function() {
             {% for subchild in child.children %}
                 <li>
                     {% if subchild.url %}
-                    <a class="ml-5 sideBarLink" href="{{ subchild.url }}">{{ subchild.title }}</a>
+                    <a class="ml-5 js-submit-redirect sideBarLink" href="{{ subchild.url }}">{{ subchild.title }}</a>
                     {% else %}
                     <span class="ml-5">{{ subchild.title }}</span>
                     {% endif %}

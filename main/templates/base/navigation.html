@@ -17,7 +17,7 @@
                         "
                     >
                         {% if item.url %}
-                            <a href="{{ item.url }}">
+                            <a class="js-submit-redirect" href="{{ item.url }}">
                         {% endif %}
                         <div class="navigation-bubble">
                             {% counter main_counter value %}
@@ -45,7 +45,7 @@
                                         {# Second layer (first dropdown) #}
                                         {% for child in item.children %}
                                             {% if not child.children %}
-                                                <a href="{{ child.url|default_if_none:"#" }}" class="dropdown-item {% if not child.url %}disabled{% endif %}">
+                                                <a href="{{ child.url|default_if_none:"#" }}" class="dropdown-item js-submit-redirect {% if not child.url %}disabled{% endif %}">
                                                     {{ child.title }}
                                                 </a>
                                             {% else %}
@@ -64,7 +64,7 @@
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         {#  Don't support more than 3 layers. This should be enough #}
                                                         {% for subchild in child.children %}
-                                                            <a href="{{ subchild.url|default_if_none:"#" }}" class="dropdown-item {% if not subchild.url %}disabled{% endif %}">
+                                                            <a href="{{ subchild.url|default_if_none:"#" }}" class="dropdown-item js-submit-redirect {% if not subchild.url %}disabled{% endif %}">
                                                                 {{ subchild.title }}
                                                             </a>
                                                         {% endfor %}

@@ -439,6 +439,8 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
 
 
 def success_url(self):
+    if 'next' in self.request.GET:
+        return self.request.GET['next']
     if 'save_continue' in self.request.POST:
         return self.get_next_url()
     if 'save_back' in self.request.POST:
