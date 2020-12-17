@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load i18n %}
+{% load datatables %}
 
 {% block content %}
     <div class="uu-inner-container">
@@ -9,7 +10,7 @@
             <h2>
                 {% trans "Feedbackoverzicht" %}
             </h2>
-            <table class="dataTable w-100">
+            <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
                     <tr>
                         <th>{% trans "Toegevoegd op" %}</th>

@@ -6,14 +6,4 @@
 
 <script type="text/javascript" charset="utf8" src="{% static 'main/js/datepicker-nl.js' %}"></script>
 <script type="text/javascript" charset="utf8" src="{% static 'main/js/redirect-submit.js' %}"></script>
-<script>
-    $(document).ready(function() {
-        var language = "nl" === "{{ LANGUAGE_CODE }}" ? "Dutch" : "English";
-        $('.dataTable').DataTable({
-            language: {
-                url: "//cdn.datatables.net/plug-ins/1.10.11/i18n/" + language + ".json"
-            }
-        });
-    });
-</script>
 {% include "base/form_styling.html" %}

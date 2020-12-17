@@ -2,11 +2,12 @@
 
 {% load static %}
 {% load i18n %}
+{% load datatables %}
 
 {% block html_head %}
     <script>
         $(document).ready(function () {
-            var table = $('.dataTable').dataTable({
+            var table = $('.dt').dataTable({
                 "retrieve": true {# Used to retrieve the existing object #}
             }).api();
 
@@ -23,7 +24,7 @@
                 {% trans "Te beoordelen studies" %}
             </h2>
 
-            <table class="dataTable w-100">
+            <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
                     <th>{% trans "Referentienummer" %}</th>

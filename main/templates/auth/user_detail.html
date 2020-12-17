@@ -4,6 +4,7 @@
 {% load proposal_filters %}
 {% load static %}
 {% load i18n %}
+{% load datatables %}
 
 {% block content %}
     <div class="uu-inner-container">
@@ -40,7 +41,7 @@
             </table>
             <h3>{% trans 'Ingediende studies' %}</h3>
 
-            <table class="dataTable">
+            <table class="dt" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
                     <th>{% trans "Referentienummer" %}</th>

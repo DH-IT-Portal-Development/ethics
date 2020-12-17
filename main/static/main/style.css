@@ -129,11 +129,6 @@ form table {
     margin-bottom: 2em;
 }
 
-/* Datatables */
-.dataTable td, .dt td {
-    text-align: center;
-}
-
 /* No bullet for list items in tables */
 td li {
     list-style-type: none;

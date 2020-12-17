@@ -3,11 +3,12 @@
 {% load static %}
 {% load i18n %}
 {% load fetc_filters %}
+{% load datatables %}
 
 {% block html_head %}
     <script>
         $(document).ready(function () {
-            var table = $('.dataTable').dataTable({
+            var table = $('.dt').dataTable({
                 "retrieve": true {# Used to retrieve the existing object #}
             }).api();
 
@@ -24,7 +25,7 @@
                 {{ committee_name }} - {% trans "Alle ingezonden studies" %}
             </h2>
 
-            <table class="dataTable display">
+            <table class="dt display" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
                     <th>{% trans "Referentienummer" %}</th>
