@@ -401,15 +401,41 @@ class Documents(models.Model):
 
     study = models.OneToOneField(Study, on_delete=models.CASCADE, blank=True, null=True)
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
+    
+    def _filename_factory(document_type):
+        'Returns a filename generator for a given document_type'
+        
+        def mkfn(instance, original_fn):
+            '''Returns a custom filename preserving the original extension,
+            something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf'''
+            
+            lastname = instance.proposal.created_by.last_name
+            refnum = instance.proposal.reference_number
+            trajectory = 'T' + str(instance.study.id)
+            extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
+            
+            return '-'.join(['FETC',
+                             refnum,
+                             lastname,
+                             trajectory,
+                             document_type
+                             ]) + extension 
+        
+        return mkfn
 
     informed_consent = models.FileField(
         _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=_filename_factory('Informed_Consent')
+    )
+        
     briefing = models.FileField(
         _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=_filename_factory('Briefing')
+    )
 
     director_consent_declaration = models.FileField(
         _(
@@ -418,19 +444,22 @@ class Documents(models.Model):
         validators=[validate_pdf_or_doc],
         help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
                    'you can upload the unsigned document and send the document when it is signed to the'
-                   ' secretary of the FEtC-H')
+                   ' secretary of the FEtC-H'),
+        upload_to=_filename_factory('Department_Consent')
     )
 
     director_consent_information = models.FileField(
         _('Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=_filename_factory('Department_Info')
     )
 
     parents_information = models.FileField(
         _('Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=_filename_factory('Parental_Info')
     )
 
     def save(self, *args, **kwargs):
