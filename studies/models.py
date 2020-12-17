@@ -393,6 +393,12 @@ geschoolde specialisten).')),
         return _('Study details for proposal %s') % self.proposal.title
 
 
+#from django.core.files.storage import FileSystemStorage
+
+#class DocumentStorage(FileSystemStorage):
+    
+    
+
 @python_2_unicode_compatible
 class Documents(models.Model):
     """
