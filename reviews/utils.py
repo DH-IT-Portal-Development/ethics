@@ -203,7 +203,7 @@ def start_review_route(review, commission_users, use_short_route):
       
     template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
     
-    new_or_revised = 'gereviseerde' if review.proposal.is_revision else 'nieuwe'  
+    new_or_revised = _('gereviseerde') if review.proposal.is_revision else _('nieuwe')
     subject = _('FETC-GW: {} studie ter beoordeling'.format(new_or_revised))
     
     for user in commission_users:
