@@ -120,7 +120,7 @@ class CompareLinkNode(template.Node):
         if url is None:
             return ""
 
-        return '<a href="{url}">' \
+        return '<a href="{url}" target="_blank" class="icon-link">' \
                '<img src="{img}" title="{title}">' \
                '</a>'.format(
             url=url,

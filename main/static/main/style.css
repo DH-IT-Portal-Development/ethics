@@ -167,6 +167,10 @@ div.info {
     list-style-type: none;
 }
 
+a.icon-link {
+    text-decoration: none;
+}
+
 .exportTable td, .exportTable th {
     padding: 2px
 }
