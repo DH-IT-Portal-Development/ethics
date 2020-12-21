@@ -360,16 +360,16 @@ def filename_factory(document_type):
         if isinstance(instance, Proposal):
             proposal = instance
         else:
+            # In case of Documents or Study objects
             proposal = instance.proposal
+            try:
+                trajectory = 'T' + str(instance.study.id)
+            except AttributeError:
+                trajectory = None
         
         lastname = proposal.created_by.last_name
         refnum = proposal.reference_number
         extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
-        
-        try:
-            trajectory = 'T' + str(instance.study.id)
-        except AttributeError:
-            trajectory = None
         
         fn_parts = [ p for p in ['FETC',
                                  refnum,
