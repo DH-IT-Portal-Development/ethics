@@ -2,16 +2,24 @@
 
 {% load i18n %}
 {% load proposal_filters %}
+{% load static %}
 
 {% block html_head %}
+<script src="{% static 'main/js/htmldiff.js' %}"></script>
 <script>
 $(function() {
-    // Color changes between proposals as red
+    // Color changes between proposals
     $('td:nth-child(2)').each(function() {
-        if ($(this).text() !== $(this).next().text()) {
-            $(this).next().addClass('diff');
-        }
+        let old_el = $(this);
+        let new_el = old_el.next();
+        let before = html_to_tokens(old_el.html());
+        let after = html_to_tokens(new_el.html());
+        let ops = calculate_operations(before, after);
+
+        old_el.html(render_before_operations(before, after, ops));
+        new_el.html(render_after_operations(before, after, ops));
     });
+    $("#loading-icon").hide();
 });
 </script>
 {% endblock %}
@@ -23,6 +31,13 @@ $(function() {
             <p>
                 {% trans "Dit overzicht toont de gemaakte wijzigingen in de revisie/het amendement ten opzichte van de originele studie." %}
             </p>
+        </div>
+    </div>
+    <div class="uu-inner-container">
+        <div class="col-12 compare document-compare">
+            <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
+                <img src="{% static 'main/images/loading.gif' %}"/>
+            </div>
             {% with p_proposal=proposal.parent %}
             <h2 class="mt-3 mb-1">{% trans "Algemene informatie over de studie" %}</h2>
             <table class="proposals-diff ">

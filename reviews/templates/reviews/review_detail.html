@@ -4,6 +4,7 @@
 {% load proposal_filters %}
 {% load fetc_filters %}
 {% load i18n %}
+{% load compare_tags %}
 
 {% block content %}
     <div class="uu-inner-container">
@@ -22,7 +23,7 @@
                 {% trans "Details" %}
             </h3>
             <ul>
-                {% if review.proposal.parent %}
+                {% if review.proposal.parent and review.proposal.parent.latest_review %}
                     <li>
                         <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
                             {% blocktrans with parent=review.proposal.parent.reference_number %}
@@ -95,6 +96,7 @@
                         <a href="{{ review.proposal.pre_assessment_pdf.url }}" target="_blank">
                             {% trans "Aanvraag bij voortoetsing" %}
                         </a>
+                        {% get_compare_link proposal review.proposal pre_assessment_pdf %}
                     </li>
                 {% endif %}
                 {% if review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
@@ -102,6 +104,7 @@
                         <a href="{{ review.proposal.wmo.metc_decision_pdf.url }}" target="_blank">
                             {% trans "Beslissing METC" %}
                         </a>
+                        {% get_compare_link wmo review.proposal.wmo %}
                     </li>
                 {% endif %}
                 {% if review.proposal.pre_approval_pdf %}
@@ -109,6 +112,7 @@
                         <a href="{{ review.proposal.pre_approval_pdf.url }}" target="_blank">
                             {% trans "Toestemmingsbrief andere ethische commissie" %}
                         </a>
+                        {% get_compare_link proposal review.proposal pre_approval_pdf %}
                     </li>
                 {% endif %}
             </ul>
@@ -125,6 +129,7 @@
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
+                            {% get_compare_link documents study_documents director_consent_declaration %}
                         </li>
                         <li>
                             <a href="{{ study_documents.director_consent_information.url }}"
@@ -133,6 +138,7 @@
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
+                            {% get_compare_link documents study_documents director_consent_information %}
                         </li>
                         <li>
                             <a href="{{ study_documents.parents_information.url }}"
@@ -142,6 +148,7 @@
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
                         </li>
+                        {% get_compare_link documents study_documents parents_information %}
                     {% else %}
                         <li>
                             <a href="{{ study_documents.informed_consent.url }}"
@@ -150,6 +157,7 @@
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
+                            {% get_compare_link documents study_documents informed_consent %}
                         </li>
                         <li>
                             <a href="{{ study_documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
@@ -157,6 +165,7 @@
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
+                            {% get_compare_link documents study_documents briefing %}
                         </li>
                     {% endif %}
                     {% if study.needs_additional_external_forms %}
@@ -168,6 +177,7 @@
                                     <img src="{% static 'proposals/images/pencil.png' %}"
                                          title="{% trans 'Formulier wijzigen' %}">
                                 </a>
+                                {% get_compare_link documents study_documents director_consent_information %}
                             </li>
                         {% endif %}
                         {% if study_documents.parents_information %}
@@ -178,6 +188,7 @@
                                     <img src="{% static 'proposals/images/pencil.png' %}"
                                          title="{% trans 'Formulier wijzigen' %}">
                                 </a>
+                                {% get_compare_link documents study_documents parents_information %}
                             </li>
                         {% endif %}
                     {% endif %}
@@ -190,6 +201,7 @@
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
+                            {% get_compare_link observation study_documents approval_document %}
                         </li>
                     {% endif %}
                 </ul>
@@ -208,6 +220,7 @@
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
+                            {% get_compare_link documents documents informed_consent %}
                         </li>
                     {% endif %}
                     {% if documents.briefing %}
@@ -217,6 +230,7 @@
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Formulier wijzigen' %}">
                             </a>
+                            {% get_compare_link documents documents briefing %}
                         </li>
                     {% endif %}
                 </ul>

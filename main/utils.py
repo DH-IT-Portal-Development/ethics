@@ -1,9 +1,15 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db.models import Q
+from django.db.models.fields.files import FieldFile
 from django.utils.translation import ugettext_lazy as _
 import django.utils.six as six
+
+import magic  # whoooooo
+import pdftotext
+from docx2txt import docx2txt
 
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 
@@ -85,3 +91,61 @@ def is_empty(value):
     if isinstance(value, six.text_type) and not value.strip():
         result = True
     return result
+
+
+def get_static_file(file):
+    return staticfiles_storage.url(file)
+
+
+def get_document_contents(file: FieldFile) -> str:
+    if file is None:
+        return ""
+
+    mime = magic.from_buffer(file.open(mode='rb').read(2048), mime=True)
+
+    if mime == 'application/pdf':
+        with file.open(mode="rb") as f:
+            pdf = pdftotext.PDF(f)
+            return "\n\n".join(pdf)
+
+    if mime == 'application/octet-stream':
+        # This _might_ not be a DocX, but as we only allow PDF and DocX we
+        # know it should be fine
+        with file.open(mode="rb") as f:
+            return docx2txt.process(f)
+
+    if mime == 'application/vnd.openxmlformats-officedocument' \
+               '.wordprocessingml.document':
+        with file.open(mode="rb") as f:
+            return docx2txt.process(f)
+
+    return "No text found"
+
+
+def get_static_file(file):
+    return staticfiles_storage.url(file)
+
+
+def get_document_contents(file: FieldFile) -> str:
+    if file is None:
+        return ""
+
+    mime = magic.from_buffer(file.open(mode='rb').read(2048), mime=True)
+
+    if mime == 'application/pdf':
+        with file.open(mode="rb") as f:
+            pdf = pdftotext.PDF(f)
+            return "\n\n".join(pdf)
+
+    if mime == 'application/octet-stream':
+        # This _might_ not be a DocX, but as we only allow PDF and DocX we
+        # know it should be fine
+        with file.open(mode="rb") as f:
+            return docx2txt.process(f)
+
+    if mime == 'application/vnd.openxmlformats-officedocument' \
+               '.wordprocessingml.document':
+        with file.open(mode="rb") as f:
+            return docx2txt.process(f)
+
+    return "No text found"

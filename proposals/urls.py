@@ -1,6 +1,7 @@
 from django.urls import path, include
 
-from .views.proposal_views import MyConceptsView, MyPracticeView, \
+from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
+    MyPracticeView, \
     MySubmittedView, MyCompletedView, MySupervisedView, MyProposalsView, \
     ProposalCreate, ProposalUpdate, ProposalDelete, ProposalStart, \
     ProposalDataManagement, ProposalSubmit, ProposalSubmitted, \
@@ -126,4 +127,43 @@ urlpatterns = [
          name='wmo_application'),
     path('wmo/check/', WmoCheck.as_view(), name='wmo_check'),
     path('wmo/check_js/', check_wmo, name='check_wmo'),
+
+    path(
+        'compare/', include([
+            path(
+                'consent/<int:old>/<int:new>/<str:attribute>/',
+                CompareDocumentsView.as_view(),
+                {
+                    'type': 'documents'
+                },
+                name='compare_documents',
+            ),
+            path(
+                'observation/<int:old>/<int:new>/approval_document/',
+                CompareDocumentsView.as_view(),
+                {
+                    'type':      'observation',
+                    'attribute': 'approval_document',
+                },
+                name='compare_observation_approval',
+            ),
+            path(
+                'wmo/<int:old>/<int:new>/decision/',
+                CompareDocumentsView.as_view(),
+                {
+                    'type':      'wmo',
+                    'attribute': 'metc_decision_pdf',
+                },
+                name='compare_wmo_decision',
+            ),
+            path(
+                'study/<int:old>/<int:new>/<str:attribute>/',
+                CompareDocumentsView.as_view(),
+                {
+                    'type': 'proposal'
+                },
+                name='compare_proposal_docs',
+            ),
+        ])
+    ),
 ]

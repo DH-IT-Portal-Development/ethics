@@ -4,14 +4,17 @@ from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
     UserFormKwargsMixin
 from django.conf import settings
 from django.db.models import Q
+from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
+from typing import Tuple, Union
 
-from main.utils import get_secretary
+from main.utils import get_document_contents, get_secretary
 from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
-    UpdateView
+    UpdateView, UserAllowedMixin
+from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
 from reviews.mixins import CommitteeMixin
 from reviews.utils import start_review, start_review_pre_assessment
@@ -20,7 +23,7 @@ from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
-from ..models import Proposal
+from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 
 
@@ -264,6 +267,51 @@ class ProposalDelete(DeleteView):
     def get_success_url(self):
         """After deletion, return to the concepts overview"""
         return reverse('proposals:my_concepts')
+
+
+class CompareDocumentsView(GroupRequiredMixin, generic.TemplateView):
+    template_name = 'proposals/compare_documents.html'
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        old_file, new_file = self._get_files()
+
+        context['old_name'] = old_file.name
+        context['old_text'] = get_document_contents(old_file)
+        context['new_name'] = new_file.name
+        context['new_text'] = get_document_contents(new_file)
+
+        return context
+
+    def _get_files(self) -> Tuple[
+        Union[None, FieldFile],
+        Union[None, FieldFile]
+    ]:
+        compare_type = self.kwargs.get('type')
+        old_pk = self.kwargs.get('old')
+        new_pk = self.kwargs.get('new')
+        attribute = self.kwargs.get('attribute')
+
+        model = {
+            'documents': Documents,
+            'wmo': Wmo,
+            'observation': Observation,
+            'proposal': Proposal,
+        }.get(compare_type, None)
+
+        if model is None:
+            return None, None
+
+        old = model.objects.get(pk=old_pk)
+        new = model.objects.get(pk=new_pk)
+
+        return getattr(old, attribute, None), getattr(new, attribute, None)
 
 
 ###########################
