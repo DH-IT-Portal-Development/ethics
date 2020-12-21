@@ -3,6 +3,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
     <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
     <script>

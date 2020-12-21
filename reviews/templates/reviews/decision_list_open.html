@@ -5,6 +5,10 @@
 {% load fetc_filters %}
 {% load datatables %}
 
+{% block header_title %}
+    {{ committee_name }} - {% trans "Openstaande besluiten commissieleden" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
     <script>
         $(document).ready(function () {
@@ -24,8 +28,11 @@
             <h2>
                 {{ committee_name }} - {% trans "Openstaande besluiten commissieleden" %}
             </h2>
-
-            <table class="dt display" data-language="{% datatables_lang %}">
+        </div>
+    </div>
+    <div class="container-fluid mt-3 mb-3">
+        <div class="col-12">
+            <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
                     <th>{% trans "Referentienummer" %}</th>
@@ -36,7 +43,7 @@
                     <th>{% trans "Fase" %}</th>
                     <th>{% trans "Datum ingediend" %}</th>
                     <th>{% trans "Gewenste einddatum" %}</th>
-                    <th>{% trans "Acties" %}</th>
+                    <th data-priority="1">{% trans "Acties" %}</th>
                 </tr>
                 </thead>
                 <tbody>

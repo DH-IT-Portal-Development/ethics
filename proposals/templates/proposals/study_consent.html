@@ -4,6 +4,10 @@
 {% load i18n %}
 {% load fetc_filters %}
 
+{% block header_title %}
+    {% trans "Informed consent formulieren" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
     <script>
         $(function() {

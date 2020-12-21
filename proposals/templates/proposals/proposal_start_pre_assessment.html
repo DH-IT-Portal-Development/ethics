@@ -3,6 +3,9 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "Voortoetsing (t.b.v. subsidieaanvraag)" %} - {{ block.super }}
+{% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">

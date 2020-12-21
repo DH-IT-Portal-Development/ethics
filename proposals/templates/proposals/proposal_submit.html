@@ -3,6 +3,17 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% if proposal.is_pre_assessment %}
+        {% trans "Aanvraag voor voortoetsing klaar voor versturen" %}
+    {% elif proposal.relation.needs_supervisor %}
+        {% trans "Concept-aanmelding klaar voor versturen" %}
+    {% else %}
+        {% trans "Aanmelding klaar voor versturen" %}
+    {% endif %}
+    - {{ block.super }}
+{% endblock %}
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">

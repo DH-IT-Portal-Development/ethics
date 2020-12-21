@@ -3,6 +3,11 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "Het observatieonderzoek" %} - {{ block.super }}
+{% endblock %}
+
+
 {% block html_head %}
     <script>
 $(function() {

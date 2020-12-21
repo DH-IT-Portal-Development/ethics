@@ -5,6 +5,10 @@
 {% load fetc_filters %}
 {% load datatables %}
 
+{% block header_title %}
+    {{ committee_name }} - {% trans "Openstaande besluiten eindverantwoordelijken" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
     <script>
         $(document).ready(function () {

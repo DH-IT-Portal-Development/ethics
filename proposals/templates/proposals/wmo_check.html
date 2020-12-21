@@ -3,6 +3,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "WMO-check" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
 <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
 <script>

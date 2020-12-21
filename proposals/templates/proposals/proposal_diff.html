@@ -4,6 +4,10 @@
 {% load proposal_filters %}
 {% load static %}
 
+{% block header_title %}
+    {% trans "Overzicht van wijzigingen" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
 <script src="{% static 'main/js/htmldiff.js' %}"></script>
 <script>

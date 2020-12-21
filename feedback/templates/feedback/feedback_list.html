@@ -4,6 +4,10 @@
 {% load i18n %}
 {% load datatables %}
 
+{% block header_title %}
+    {% trans "Feedbackoverzicht" %} - {{ block.super }}
+{% endblock %}
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">

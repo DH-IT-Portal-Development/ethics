@@ -4,6 +4,10 @@
 {% load i18n %}
 {% load datatables %}
 
+{% block header_title %}
+    {{ title }} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
     <script>
         $(document).ready(function () {

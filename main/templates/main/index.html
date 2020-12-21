@@ -3,6 +3,10 @@
 {% load i18n %}
 {% load static %}
 
+{% block header_title %}
+    {% trans "Startpagina" %} - {{ block.super }}
+{% endblock %}
+
 {% block content %}
     <div class="coverimage">
         <img src="{% static 'main/images/coverimage.jpg' %}" />

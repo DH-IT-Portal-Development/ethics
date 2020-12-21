@@ -2,6 +2,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "Vergelijk documenten" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
     <script defer>

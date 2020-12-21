@@ -3,6 +3,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "De onderzoekstype(n)" %} - {{ block.super }}
+{% endblock %}
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -10,7 +14,7 @@
                 {% include 'base/navigation.html' %}
             {% endwith %}
             <h2>
-                    {% trans "De onderzoekstype(n)" %}
+                {% trans "De onderzoekstype(n)" %}
             </h2>
             {% include "studies/study_title.html" %}
             <p>

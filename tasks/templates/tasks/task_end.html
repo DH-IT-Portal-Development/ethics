@@ -3,6 +3,11 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "Overzicht van het takenonderzoek" %} - {{ block.super }}
+{% endblock %}
+
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">

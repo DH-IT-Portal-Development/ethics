@@ -3,6 +3,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "Datamanagement" %} - {{ block.super }}
+{% endblock %}
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">

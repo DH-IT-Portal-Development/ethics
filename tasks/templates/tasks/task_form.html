@@ -3,6 +3,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block header_title %}
+    {% trans "Het takenonderzoek en interviews" %} - {{ block.super }}
+{% endblock %}
+
 {% block html_head %}
 <script>
 $(function() {
