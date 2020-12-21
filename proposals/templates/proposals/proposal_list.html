@@ -70,14 +70,15 @@
     <table class="dt display" data-language="{% datatables_lang %}">
         <thead>
         <tr>
-            <th>{% trans "Referentienummer" %}</th>
-            <th>{% trans "Titel studie" %}</th>
-            <th>{% trans "Soort studie" %}</th>
-            <th>{% trans "Datum ingediend" %}</th>
-            <th>{% trans "Indiener" %}</th>
-            <th>{% trans "Eindverantwoordelijke onderzoeker" %}</th>
-            <th>{% trans "Laatst bijgewerkt" %}</th>
-            <th>{% trans "Acties" %}</th>
+            {# 1 = highest priority. Controls which columns gets removed first when the width of the page is reduced. Those with the highest priority gets hidden last. #}
+            <th data-priority="2">{% trans "Referentienummer" %}</th>
+            <th data-priority="1">{% trans "Titel studie" %}</th>
+            <th data-priority="3">{% trans "Soort studie" %}</th>
+            <th data-priority="3">{% trans "Datum ingediend" %}</th>
+            <th data-priority="4">{% trans "Indiener" %}</th>
+            <th data-priority="4">{% trans "Eindverantwoordelijke onderzoeker" %}</th>
+            <th data-priority="3">{% trans "Laatst bijgewerkt" %}</th>
+            <th data-priority="1">{% trans "Acties" %}</th>
         </tr>
         </thead>
         <tbody>
@@ -103,10 +104,6 @@
                         {% if user in proposal.applicants.all or user == proposal.supervisor %}
                             <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}"
                                                                        title="{% trans 'Naar volgende stap' %}"></a>
-                        {% endif %}
-                        {% if proposal.is_revision %}
-                            <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}"
-                                                                                  title="{% trans 'Toon verschillen' %}"></a>
                         {% endif %}
                         <a href="{% url 'proposals:delete' proposal.pk %}"><img src="{{ img_delete }}"
                                                                                 title="{% trans 'Verwijderen' %}"></a>
