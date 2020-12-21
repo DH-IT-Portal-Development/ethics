@@ -10,6 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from core.models import YES_NO_DOUBT
 from core.validators import validate_pdf_or_doc
 from proposals.models import Proposal
+from proposals.utils import proposal_utils
 
 
 @python_2_unicode_compatible
@@ -407,7 +408,9 @@ class Documents(models.Model):
         
         def mkfn(instance, original_fn):
             '''Returns a custom filename preserving the original extension,
-            something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf'''
+            something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"
+            
+            Note: this function absolutely expects an instance.proposal'''
             
             lastname = instance.proposal.created_by.last_name
             refnum = instance.proposal.reference_number

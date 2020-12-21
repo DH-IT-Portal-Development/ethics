@@ -18,7 +18,8 @@ from studies.utils import study_urls
 
 __all__ = ['available_urls', 'generate_ref_number',
            'generate_revision_ref_number', 'generate_pdf',
-           'check_local_facilities', 'notify_local_staff']
+           'check_local_facilities', 'notify_local_staff',
+           'filename_factory',]
 
 
 def available_urls(proposal):
@@ -343,3 +344,40 @@ def notify_local_staff(proposal):
 
     # Reset the current language
     activate(current_language)
+
+def filename_factory(document_type):
+    'Returns a filename generator for a given document_type'
+    
+    def mkfn(instance, original_fn):
+        '''Returns a custom filename preserving the original extension,
+        something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"
+        
+        Note: this function absolutely expects an instance.proposal'''
+        
+        # Importing here to prevent circular import
+        from proposals.models import Proposal
+        
+        if isinstance(instance, Proposal):
+            proposal = instance
+        else:
+            proposal = instance.proposal
+        
+        lastname = proposal.created_by.last_name
+        refnum = proposal.reference_number
+        extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
+        
+        try:
+            trajectory = 'T' + str(instance.study.id)
+        except AttributeError:
+            trajectory = None
+        
+        fn_parts = [ p for p in ['FETC',
+                                 refnum,
+                                 lastname,
+                                 trajectory,
+                                 document_type,
+                                 ] if p != None or '' ]
+        
+        return '-'.join(fn_parts) + extension 
+    
+    return mkfn
