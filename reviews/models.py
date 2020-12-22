@@ -96,6 +96,15 @@ class Review(models.Model):
                 self.stage = self.CLOSING
                 self.save()
 
+    def get_route_display(self):
+        route_options = {
+            False: _('lange (4-weken) route'),
+            True:  _('korte (2-weken) route'),
+            None:  _('nog geen route')
+        }
+
+        return route_options[self.short_route]
+
     def accountable_user(self):
         return self.proposal.accountable_user()
 
