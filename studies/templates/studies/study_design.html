@@ -3,101 +3,125 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "De onderzoekstype(n)" %}
-{% endblock %}
-
-{% block progress %}{{ progress }}{% endblock %}
-
-{% block sidebar %}
-{% with proposal=study.proposal %}
-{% include "base/sidebar.html" %}
-{% endwith %}
+{% block header_title %}
+    {% trans "De onderzoekstype(n)" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
-{% include "studies/study_title.html" %}
-<p>
-    {% blocktrans %}
-    De FETC-GW onderscheidt 3 typen onderzoek (die evt. ook samen in één studie voor kunnen komen):
-    {% endblocktrans %}
-</p>
-<ul>
-<li>
-    <p>
-        {% blocktrans %}
-        <strong>Interventieonderzoek</strong>:
-        Onderzoek waarin mensen <em>in hun normale leven in bepaalde contexten doen wat ze daar normaliter ook doen, maar waar de onderzoeker d.m.v. een interventie iets in de context manipuleert</em> (bijv. een ander lesboek, een andere behandeling, of een anders vormgegeven website, etc.).
-        De effecten van die interventie kunnen gelijktijdig worden geobserveerd, maar kunnen bijv. ook achteraf worden vastgesteld d.m.v. reguliere toetsen aan het einde van een lesjaar.
-        {% endblocktrans %}
-    </p>
-</li>
-<li>
-    <p>
-        {% blocktrans %}
-        <strong>Observatieonderzoek</strong>:
-        Onderzoek waarin mensen <em>in hun normale leven in bepaalde contexten worden geobserveerd</em>, bijvoorbeeld op scholen of in andere institutionele settings, in de digitale publieke ruimte, of bij de deelnemer thuis, <em>zonder dat de onderzoeker daar op enige wijze op ingrijpt</em>.
-        Het gedrag wordt zichtbaar of onzichtbaar via video/audio-opnames, notities, of <em>logging</em> van digitale handelingen geregistreerd, maar ook de producten van dat gedrag kunnen bestudeerd worden.
-        {% endblocktrans %}
-    </p>
-</li>
-<li>
-    <p>
-        {% blocktrans %}
-        <strong>Taakonderzoek en Interviews</strong>:
-        Onderzoek waarbij aan mensen <em>van onderzoekswege (extra) taken worden opgelegd</em> (via bepaalde taakinstructies), zoals zoals “vul deze internetsurvey in”, “lees deze verhaaltjes aandachtig door”, “geef aan in hoeverre de volgende uitspraken op u van toepassing zijn”, “houd 1 week een dagboek bij van uw media-gebruik”, “wilt u uw gender identiteit beschrijven”, “maak foto’s van plekken in uw leefomgeving die u bedreigend en inspirerend vindt”, “zoek en deel met ons 10 foto’s uit uw prive-archief om uw levensverhaal te kunnen vertellen” “vertel eens iets over uw vakantie”,  “speel 10 minuten met uw kind zoals u dat thuis ook zou doen”, etc.
-        Er wordt dus iets van mensen gevraagd wat ze in hun normale leven niet (of niet dáár, dán, op déze wijze) zouden doen.<br/>
-        Ook onderzoek waarin mensen worden geïnterviewd, deelnemen aan een focus-groep discussie of gevraagd worden thuis of op straat een vragenlijst in te vullen is taakonderzoek. <br/>
-        Onderzoek in het Uil OTS-lab is vanwege de locatie per definitie altijd taakonderzoek (óók als de deelnemers na ontvangst alleen maar worden geobserveerd), maar ook onderzoek waarin mensen worden geïnterviewed, of gevraagd worden thuis of op straat een vragenlijst in te vullen is taakonderzoek.
-        Bij interventieonderzoek gelden eventuele extra taken ook als taakonderzoek.
-        {% endblocktrans %}
-    </p>
-</li>
-</ul>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>
-        <tr>
-            <th>
-                <label for="id_study_design">
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=study.proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>
+                {% trans "De onderzoekstype(n)" %}
+            </h2>
+            {% include "studies/study_title.html" %}
+            <p>
                 {% blocktrans %}
-                Om welk type onderzoek gaat het hier?
-                U kunt meerdere opties aankruisen.
+                    De FETC-GW onderscheidt 3 typen onderzoek (die evt. ook samen in één studie voor kunnen komen):
                 {% endblocktrans %}
-                </label>
-            </th>
-            <td>
-                {{ form.has_sessions.errors }}
-                <ul id="id_study_design">
-                    {% for field in form %}
-                    <li>
-                        <label for="{{ field.auto_id }}">{{ field }} {{ field.label }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-                <span class="helptext">
+            </p>
+            <ul>
+                <li>
+                    <p>
+                        {% blocktrans %}
+                            <strong>Interventieonderzoek</strong>:
+                            Onderzoek waarin mensen
+                            <em>in hun normale leven in bepaalde contexten doen wat ze daar normaliter ook doen, maar
+                                waar de onderzoeker d.m.v. een interventie iets in de context manipuleert</em> (bijv.
+                            een ander lesboek, een andere behandeling, of een anders vormgegeven website, etc.).
+                            De effecten van die interventie kunnen gelijktijdig worden geobserveerd, maar kunnen bijv.
+                            ook achteraf worden vastgesteld d.m.v. reguliere toetsen aan het einde van een lesjaar.
+                        {% endblocktrans %}
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        {% blocktrans %}
+                            <strong>Observatieonderzoek</strong>:
+                            Onderzoek waarin mensen
+                            <em>in hun normale leven in bepaalde contexten worden geobserveerd</em>, bijvoorbeeld op
+                            scholen of in andere institutionele settings, in de digitale publieke ruimte, of bij de
+                            deelnemer thuis, <em>zonder dat de onderzoeker daar op enige wijze op ingrijpt</em>.
+                            Het gedrag wordt zichtbaar of onzichtbaar via video/audio-opnames, notities, of
+                            <em>logging</em> van digitale handelingen geregistreerd, maar ook de producten van dat
+                            gedrag kunnen bestudeerd worden.
+                        {% endblocktrans %}
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        {% blocktrans %}
+                            <strong>Taakonderzoek en Interviews</strong>:
+                            Onderzoek waarbij aan mensen <em>van onderzoekswege (extra) taken worden opgelegd</em> (via
+                            bepaalde taakinstructies), zoals zoals “vul deze internetsurvey in”, “lees deze verhaaltjes
+                            aandachtig door”, “geef aan in hoeverre de volgende uitspraken op u van toepassing zijn”,
+                            “houd 1 week een dagboek bij van uw media-gebruik”, “wilt u uw gender identiteit
+                            beschrijven”, “maak foto’s van plekken in uw leefomgeving die u bedreigend en inspirerend
+                            vindt”, “zoek en deel met ons 10 foto’s uit uw prive-archief om uw levensverhaal te kunnen
+                            vertellen” “vertel eens iets over uw vakantie”,  “speel 10 minuten met uw kind zoals u dat
+                            thuis ook zou doen”, etc.
+                            Er wordt dus iets van mensen gevraagd wat ze in hun normale leven niet (of niet dáár, dán,
+                            op déze wijze) zouden doen.<br/>
+                            Ook onderzoek waarin mensen worden geïnterviewd, deelnemen aan een focus-groep discussie of
+                            gevraagd worden thuis of op straat een vragenlijst in te vullen is taakonderzoek. <br/>
+                            Onderzoek in het Uil OTS-lab is vanwege de locatie per definitie altijd taakonderzoek (óók
+                            als de deelnemers na ontvangst alleen maar worden geobserveerd), maar ook onderzoek waarin
+                            mensen worden geïnterviewed, of gevraagd worden thuis of op straat een vragenlijst in te
+                            vullen is taakonderzoek.
+                            Bij interventieonderzoek gelden eventuele extra taken ook als taakonderzoek.
+                        {% endblocktrans %}
+                    </p>
+                </li>
+            </ul>
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>
+                    <tr>
+                        <th>
+                            <label for="id_study_design">
+                                {% blocktrans %}
+                                    Om welk type onderzoek gaat het hier?
+                                    U kunt meerdere opties aankruisen.
+                                {% endblocktrans %}
+                            </label>
+                        </th>
+                        <td>
+                            {{ form.has_sessions.errors }}
+                            <ul id="id_study_design">
+                                {% for field in form %}
+                                    <li>
+                                        <label for="{{ field.auto_id }}">{{ field }} {{ field.label }}</label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <span class="helptext">
                     {% blocktrans %}
-                    Dit is bijvoorbeeld het geval wanneer u een
-                    observatiedeel combineert met een taakonderzoeksdeel,
-                    of met een interventiedeel (in dezelfde sessie, of 
-                    verspreid over dagen).
-                    Wanneer u in interventieonderzoek <em>extra</em> taken
-                    inzet om de effecten van de interventie te bemeten
-                    (bijvoorbeeld een speciale voor- en nameting met een
-                    vragenlijst die anders niet zou worden afgenomen)
-                    dient u die apart als taakonderzoek te specificeren.
+                        Dit is bijvoorbeeld het geval wanneer u een
+                        observatiedeel combineert met een taakonderzoeksdeel,
+                        of met een interventiedeel (in dezelfde sessie, of
+                        verspreid over dagen).
+                        Wanneer u in interventieonderzoek <em>extra</em> taken
+                        inzet om de effecten van de interventie te bemeten
+                        (bijvoorbeeld een speciale voor- en nameting met een
+                        vragenlijst die anders niet zou worden afgenomen)
+                        dient u die apart als taakonderzoek te specificeren.
                     {% endblocktrans %}
                 </span>
-            </td>
-        </tr>
-    </table>
-    <p>
-        {% blocktrans %}
-        Voor elk door u aangekruiste type onderzoek kunt u op de hiernavolgende pagina's
-        de relevante informatie verschaffen.
-        {% endblocktrans %}
-    </p>
-    {% with proposal=study.proposal %}
-    {% include "base/form_buttons.html" %}
-    {% endwith %}
-</form>
+                        </td>
+                    </tr>
+                </table>
+                <p>
+                    {% blocktrans %}
+                        Voor elk door u aangekruiste type onderzoek kunt u op de hiernavolgende pagina's
+                        de relevante informatie verschaffen.
+                    {% endblocktrans %}
+                </p>
+                {% with proposal=study.proposal %}
+                    {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

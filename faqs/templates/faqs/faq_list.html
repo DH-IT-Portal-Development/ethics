@@ -2,22 +2,27 @@
 
 {% load i18n %}
 
-{% block title %}
-{% trans "Frequently Asked Questions" %}
+{% block header_title %}
+    {% trans "Frequently Asked Questions" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-{% for faq in faqs %}
-    <ul>
-        <li><a href="#{{ faq.order }}">{{ faq.question }}</a></li>
-    </ul>
-{% endfor %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Frequently Asked Questions" %}
+            </h2>
+            {% for faq in faqs %}
+                <ul>
+                    <li><a href="#{{ faq.order }}">{{ faq.question }}</a></li>
+                </ul>
+            {% endfor %}
 
-{% for faq in faqs %}
-    <a name="{{ faq.order }}"></a>
-    <h3>{{ faq.question }}</h3>
-    <p>{{ faq.answer }}</p>
-{% endfor %}
+            {% for faq in faqs %}
+                <a name="{{ faq.order }}"></a>
+                <h4>{{ faq.question }}</h4>
+                <p>{{ faq.answer }}</p>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

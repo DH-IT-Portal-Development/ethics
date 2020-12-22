@@ -1,0 +1,180 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block header_title %}
+    {% trans "Startpagina" %} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="coverimage">
+        <img src="{% static 'main/images/coverimage.jpg' %}" />
+    </div>
+    <div class="uu-inner-container mt-1">
+        <div class="col-12">
+            <h3>
+                {% if user.is_authenticated %}
+                    {% trans "Startpagina" %} - {{ user.get_full_name }}
+                {% else %}
+                    {% trans "Startpagina" %}
+                {% endif %}
+            </h3>
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+        <div class="uu-inner-container">
+            <div class="col-12">
+                <ul>
+                    <li>
+                        {% blocktrans %}
+                            <strong>Belangrijk</strong>: bij het indienen van een aanvraag
+                            moeten de <strong>juiste (meest recente) voorbeelddocumenten</strong>
+                            voor de informed consent worden gebruikt. Deze zijn te vinden op
+                            <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>
+                            .
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans %}
+                            Voor noodzakelijke achtergrondinformatie verwijzen we naar de
+                            <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">UU-webpagina van de FETC-GW</a>,
+                            alsmede naar het reglement van
+                            <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">de Algemene
+                                Kamer (AK)</a> en
+                            <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">de
+                                Linguïstiek Kamer
+                                (LK)</a>.
+                        {% endblocktrans %}
+                    </li>
+                </ul>
+
+                <p>
+                    {% blocktrans %}
+                        In deze portal kunt u het volgende doen:
+                    {% endblocktrans %}
+                </p>
+            </div>
+        </div>
+        <div class="uu-inner-container">
+            <div class="col-md-6 col-12">
+                <h5>
+                    {% trans "Dien een nieuwe studie in" %}
+                </h5>
+{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
+                <ul class="startpage-ul">
+                    <li>
+                        <a href="{% url 'proposals:start' %}">{% trans "die volledig nieuw is in deze portal;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:copy' %}">{% trans "op basis van een kopie van een oude studie;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:start_pre' %}">{% trans "voor voortoetsing t.b.v. subsidieaanvraag;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:start_pre_approved' %}">{% trans "die al goedgekeurd is door een andere ethische toetsingscomissie." %}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 col-12">
+                <h5>
+                    {% trans "Een gereviseerde studie aanmelden" %}
+                </h5>
+{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
+                <ul class="startpage-ul">
+                    <li>
+                        <a href="{% url 'proposals:copy_revision' %}">{% trans "als een revisie, gebaseerd op opmerkingen van de FETC-GW;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:copy_amendment' %}">{% trans "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW." %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="uu-inner-container mt-2 mb-2">
+            <div class="col-md-6 col-12">
+                <h6>
+                    {% trans "Bekijk" %}
+                </h6>
+                <ul class="startpage-ul">
+                    <li>
+                        <a href="{% url 'proposals:my_concepts' %}">{% trans "mijn conceptstudies;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:my_practice' %}">{% trans "mijn oefenstudies;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:my_submitted' %}">{% trans "mijn ingediende studies;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:my_completed' %}">{% trans "mijn afgehandelde studies;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:my_supervised' %}">{% trans "mijn studies als eindverantwoordelijke;" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:my_archive' %}">{% trans "al mijn studies." %}</a>
+                    </li>
+                </ul>
+                <h6 class="mt-2 d-inline-block">
+                    {% trans 'FETC-GW archief' %}
+                </h6>
+                <ul class="startpage-ul">
+                    <li>
+                        <a href="{% url 'proposals:archive' 'AK' %}">{% trans "Alle goedgekeurde studies bekijken van de Algemene Kamer" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'proposals:archive' 'LK' %}">{% trans "Alle goedgekeurde studies bekijken van de Linguïstiek Kamer" %}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <h6>
+                    Help
+                </h6>
+                <ul class="startpage-ul">
+                    <li>
+                        <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">{% trans "FETC-GW website" %}</a>
+                    </li>
+                    <li>
+                        <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/"
+                           target="_blank">{% trans "Reglement Algemene Kamer (AK)" %}</a>
+                    </li>
+                    <li>
+                        <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/"
+                           target="_blank">{% trans "Reglement Linguïstiek Kamer (LK)" %}</a>
+                    </li>
+                    <li>
+                        <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
+                           target="_blank">{% trans "Informed consent formulieren" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'feedback:create' %}">{% trans "Feedback op dit portal geven" %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <div class="uu-inner-container mt-2 mb-2">
+            <div class="col-12">
+                <p>
+                    {% url 'login' as the_url %}
+                    {% blocktrans %}
+                        Welkom bij het portal van de FETC-GW. U kunt <a href="{{ the_url }}">hier</a> inloggen met uw
+                        Solis-ID.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans %}
+                        Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
+                    {% endblocktrans %}
+                </p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

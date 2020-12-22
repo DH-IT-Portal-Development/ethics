@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import core.validators
+import main.validators
 import django.core.validators
 
 
@@ -68,8 +68,8 @@ class Migration(migrations.Migration):
                 ('has_intervention', models.BooleanField(default=False, verbose_name='Interventieonderzoek')),
                 ('has_observation', models.BooleanField(default=False, verbose_name='Observatieonderzoek')),
                 ('has_sessions', models.BooleanField(default=False, verbose_name='Taakonderzoek')),
-                ('informed_consent', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc])),
-                ('briefing', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc])),
+                ('informed_consent', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)', validators=[main.validators.validate_pdf_or_doc])),
+                ('briefing', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)', validators=[main.validators.validate_pdf_or_doc])),
                 ('passive_consent', models.BooleanField(default=False, help_text='Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die instelling, dan maakt u gebruik van passieve informed consent. U kunt de templates vinden op <a href="https://etcl.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">de ETCL-website</a>.', verbose_name='Maakt u gebruik van passieve informed consent?')),
                 ('sessions_number', models.PositiveIntegerField(help_text='Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als \xe9\xe9n sessie.', null=True, verbose_name='Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?', validators=[django.core.validators.MinValueValidator(1)])),
                 ('deception', models.CharField(blank=True, help_text='Misleiding is het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. Denk aan zaken als een bewust misleidende "cover story" voor het experiment; het ten onrechte suggereren dat er met andere deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat hierbij niet om fillers.', max_length=1, verbose_name='Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer?', choices=[(b'Y', 'ja'), (b'N', 'nee'), (b'?', 'twijfel')])),

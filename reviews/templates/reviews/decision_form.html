@@ -3,42 +3,54 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "Studie beoordelen" %}
+{% block header_title %}
+    {% trans "Studie beoordelen" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-{% with proposal=decision.review.proposal %}
-<p>
-    {% url 'proposals:pdf' proposal.id as pdf_url %}
-    {% url 'proposals:update' proposal.id as update_url %}
-    {% blocktrans with title=proposal.title %}
-    U kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>.
-    De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
-    {% endblocktrans %}
-    {% if user == proposal.supervisor %}
-    {% blocktrans %}
-    Als supervisor kunt u deze studie <a href="{{ update_url }}" target="_blank">hier</a> aanpassen.
-    {% endblocktrans %}
-    {% endif %}
-    {% if decision.review.stage == review.SUPERVISOR %}
-    {% trans "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
-    {% endif %}
-</p>
-{% if proposal.is_revision %}
-<p class="warning">
-    {% url 'proposals:diff' proposal.id as diff_url %}
-    {% blocktrans %}
-    Dit is een revisie van of amendement op een vorige studie. De verschillen met de vorige studie zijn <a href="{{ diff_url }}">hier</a> in te zien.
-    {% endblocktrans %}
-</p>
-{% endif %}
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Beslissing opslaan' %}" />
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-</form>
-{% endwith %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Studie beoordelen" %}
+            </h2>
+            {% with proposal=decision.review.proposal %}
+                <p>
+                    {% url 'proposals:pdf' proposal.id as pdf_url %}
+                    {% url 'proposals:update' proposal.id as update_url %}
+                    {% blocktrans with title=proposal.title %}
+                        U kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>.
+                        De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
+                    {% endblocktrans %}
+                    {% if user == proposal.supervisor %}
+                        {% blocktrans %}
+                            Als supervisor kunt u deze studie <a href="{{ update_url }}" target="_blank">hier</a>
+                            aanpassen.
+                        {% endblocktrans %}
+                    {% endif %}
+                    {% if decision.review.stage == review.SUPERVISOR %}
+                        {% trans "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
+                    {% endif %}
+                </p>
+                {% if proposal.is_revision %}
+                    <p class="warning">
+                        {% url 'proposals:diff' proposal.id as diff_url %}
+                        {% blocktrans %}
+                            Dit is een revisie van of amendement op een vorige studie. De verschillen met de vorige
+                            studie zijn <a href="{{ diff_url }}">hier</a> in te zien.
+                        {% endblocktrans %}
+                    </p>
+                {% endif %}
+                <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <table>{{ form.as_table }}</table>
+                    <div class="float-right">
+                        <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">
+                            {% trans "Terug naar de vorige pagina" %}
+                        </a>
+                        <input class="pure-button pure-button-primary" type="submit"
+                               value="{% trans 'Beslissing opslaan' %}"/>
+                    </div>
+                </form>
+            {% endwith %}
+        </div>
+    </div>
 {% endblock %}

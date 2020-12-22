@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import core.validators
+import main.validators
 import django.core.validators
 
 
@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('studies', '0001_initial'),
-        ('core', '0001_initial'),
+        ('main', '0001_initial'),
     ]
 
     operations = [
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('has_advanced_consent', models.BooleanField(default=True, verbose_name='Vindt informed consent van tevoren plaats?')),
                 ('needs_approval', models.BooleanField(default=False, verbose_name='Heeft u toestemming nodig van een (samenwerkende) instantie om deze observatie te mogen uitvoeren?')),
                 ('approval_institution', models.CharField(max_length=200, verbose_name='Welke instantie?', blank=True)),
-                ('approval_document', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc])),
+                ('approval_document', models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)', validators=[main.validators.validate_pdf_or_doc])),
                 ('registrations_details', models.CharField(max_length=200, verbose_name='Namelijk', blank=True)),
             ],
             options={
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='observation',
             name='setting',
-            field=models.ManyToManyField(to='core.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt'),
+            field=models.ManyToManyField(to='main.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt'),
         ),
         migrations.AddField(
             model_name='observation',

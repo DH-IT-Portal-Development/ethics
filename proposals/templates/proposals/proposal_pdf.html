@@ -1,7 +1,7 @@
 {% extends "easy_pdf/base.html" %}
 
 {% load i18n %}
-{% load core_filters %}
+{% load fetc_filters %}
 {% load proposal_filters %}
 
 {% block extra_style %}
@@ -435,9 +435,10 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         {% endfor %}
 
         {% if documents.extra %}
-            {% counter extra_form_counter 1 %}
+            {% counter extra_form_counter create 1 %}
             {% for extra_documents in documents.extra %}
-            <h2>{% trans 'Extra formulieren' %} {{ extra_form_counter }}</h2>
+            <h2>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h2>
+            {% counter extra_form_counter increment 1 %}
             <table>
                 {% if extra_documents.informed_consent %}
                     <tr>

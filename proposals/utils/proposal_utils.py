@@ -13,7 +13,7 @@ from django.utils.translation import activate, get_language, ugettext as _
 
 from easy_pdf.rendering import render_to_pdf
 
-from core.utils import AvailableURL, get_secretary
+from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
 __all__ = ['available_urls', 'generate_ref_number',
@@ -31,22 +31,22 @@ def available_urls(proposal):
 
     if proposal.is_pre_assessment:
         urls.append(AvailableURL(url=reverse('proposals:update_pre', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie'), margin=0))
+                                 title=_('Algemene informatie over de studie')))
 
-        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'), margin=0)
+        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'))
         if hasattr(proposal, 'wmo'):
             wmo_url.url = reverse('proposals:wmo_update_pre', args=(proposal.wmo.pk,))
         else:
             wmo_url.url = reverse('proposals:wmo_create_pre', args=(proposal.pk,))
         urls.append(wmo_url)
 
-        submit_url = AvailableURL(title=_('Aanvraag voor voortoetsing klaar voor versturen'), margin=0)
+        submit_url = AvailableURL(title=_('Aanvraag voor voortoetsing klaar voor versturen'))
         if hasattr(proposal, 'wmo'):
             submit_url.url = reverse('proposals:submit_pre', args=(proposal.pk,))
         urls.append(submit_url)
     elif proposal.is_pre_approved:
         urls.append(AvailableURL(url=reverse('proposals:update_pre_approved', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie'), margin=0))
+                                 title=_('Algemene informatie over de studie')))
 
         submit_url = AvailableURL(
             title=_('Aanvraag voor voortoetsing klaar voor versturen'),
@@ -56,32 +56,44 @@ def available_urls(proposal):
         urls.append(submit_url)
     else:
         update_url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
-        urls.append(AvailableURL(url=reverse(update_url, args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie'), margin=0))
+        urls.append(
+            AvailableURL(
+                url=reverse(update_url, args=(proposal.pk,)),
+                title=_('Algemeen'),
+            )
+        )
 
-        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'), margin=0)
+        wmo_url = AvailableURL(
+            title=_('METC')
+        )
         if hasattr(proposal, 'wmo'):
-            wmo_url.url = reverse('proposals:wmo_update', args=(proposal.wmo.pk,))
+            wmo_url.url = reverse(
+                'proposals:wmo_update',
+                args=(proposal.wmo.pk,)
+            )
         else:
-            wmo_url.url = reverse('proposals:wmo_create', args=(proposal.pk,))
+            wmo_url.url = reverse(
+                'proposals:wmo_create',
+                args=(proposal.pk,)
+            )
         urls.append(wmo_url)
 
-        studies_url = AvailableURL(title=_(u'Eén of meerdere trajecten?'), margin=0)
+        studies_url = AvailableURL(title=_('Trajecten'))
         if hasattr(proposal, 'wmo'):
-            studies_url.url = reverse('proposals:study_start', args=(proposal.pk,))
-        urls.append(studies_url)
+            studies_url.url = reverse(
+                        'proposals:study_start',
+                        args=(proposal.pk,)
+                    )
 
-        prev_study_completed = True
-        for study in proposal.study_set.all():
-            urls.extend(study_urls(study, prev_study_completed))
-            prev_study_completed = study.is_completed()
+            if proposal.study_set.count() > 0:
+                _add_study_urls(studies_url, proposal)
 
-        if proposal.studies_number > 1:
-            urls.append(AvailableURL(title='', is_title=True))
+            urls.append(studies_url)
 
-        consent_url = AvailableURL(title=_('Informed consent formulieren'), margin=0)
-        data_management_url = AvailableURL(title=_('Datamanagement'), margin=0)
-        submit_url = AvailableURL(title=_('Concept-aanmelding klaar voor versturen'), margin=0)
+
+        consent_url = AvailableURL(title=_('Documenten'))
+        data_management_url = AvailableURL(title=_('Datamanagement'))
+        submit_url = AvailableURL(title=_('Versturen'))
 
         if proposal.last_study() and proposal.last_study().is_completed():
             consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
@@ -93,6 +105,24 @@ def available_urls(proposal):
         urls.append(submit_url)
 
     return urls
+
+
+def _add_study_urls(main_element, proposal):
+    # If only one trajectory, add the children urls of that study directly.
+    # (Bypassing the study's own node)
+    if proposal.studies_number == 1:
+        main_element.children.extend(
+            study_urls(proposal.study_set.first(), True).children
+        )
+        return
+
+    # Otherwise, add them all with the parent node
+    prev_study_completed = True
+    for study in proposal.study_set.all():
+        main_element.children.append(
+            study_urls(study, prev_study_completed)
+        )
+        prev_study_completed = study.is_completed()
 
 
 def generate_ref_number():

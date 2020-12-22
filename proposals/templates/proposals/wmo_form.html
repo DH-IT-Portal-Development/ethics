@@ -3,31 +3,40 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}
+{% block header_title %}
+    {% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %} - {{ block.super }}
 {% endblock %}
 
-{% block progress %}5{% endblock %}
+{% block html_head %}
+    <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
+    <script>
+    $(function() {
+        check_metc_required("{% url 'proposals:check_wmo' %}");
 
-{% block sidebar %}
-{% include "base/sidebar.html" %}
+        depends_on_value('metc', 'Y', 'metc_details');
+        depends_on_value('metc', 'Y', 'metc_institution');
+    });
+    </script>
 {% endblock %}
+
 
 {% block content %}
-<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
-<script>
-$(function() {
-    check_metc_required("{% url 'proposals:check_wmo' %}");
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=proposal.available_urls active=2 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>
+                {% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}
+            </h2>
 
-    depends_on_value('metc', 'Y', 'metc_details');
-    depends_on_value('metc', 'Y', 'metc_institution');
-});
-</script>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <div id="metc_status"></div>
-    {% with proposal=wmo.proposal %}
-    {% include "base/form_buttons.html" %}
-    {% endwith %}
-</form>
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                <div id="metc_status"></div>
+                {% with proposal=wmo.proposal %}
+                    {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

@@ -3,31 +3,35 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Overzicht van het takenonderzoek" %}
+{% block header_title %}
+    {% trans "Overzicht van het takenonderzoek" %} - {{ block.super }}
 {% endblock %}
 
-{% block progress %}{{ progress }}{% endblock %}
-
-{% block sidebar %}
-{% with proposal=session.study.proposal %}
-{% include "base/sidebar.html" %}
-{% endwith %}
-{% endblock %}
 
 {% block content %}
-{% include "tasks/session_title.html" %}
-<div class="task_list">
-    <p>
-        <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
-    </p>
-    {% include "tasks/task_list.html" %}
-</div>
-<p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    {% with proposal=session.study.proposal study=session.study %}
-    {% include "base/form_buttons.html" %}
-    {% endwith %}
-</form>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=session.study.proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>
+                {% trans "Overzicht van het takenonderzoek" %}
+            </h2>
+            {% include "tasks/session_title.html" %}
+            <div class="task_list">
+                <p>
+                    <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
+                </p>
+                {% include "tasks/task_list.html" %}
+            </div>
+            <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                {% with proposal=session.study.proposal study=session.study %}
+                {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

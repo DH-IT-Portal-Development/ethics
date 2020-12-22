@@ -7,9 +7,9 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from core.forms import ConditionalModelForm, SoftValidationMixin
-from core.models import DOUBT, NO, YES, YES_NO_DOUBT
-from core.utils import YES_NO, get_users_as_list
+from main.forms import ConditionalModelForm, SoftValidationMixin
+from main.models import DOUBT, NO, YES, YES_NO_DOUBT
+from main.utils import YES_NO, get_users_as_list
 from .field import ParentChoiceModelField
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
@@ -499,6 +499,8 @@ class ProposalSubmitForm(forms.ModelForm):
         self.proposal = kwargs.pop('proposal', None)
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
+
+        self.fields['inform_local_staff'].label_suffix = ''
 
         self.fields['inform_local_staff'].label = mark_safe(
             self.fields['inform_local_staff'].label)

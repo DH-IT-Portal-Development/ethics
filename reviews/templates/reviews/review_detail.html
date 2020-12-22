@@ -2,195 +2,259 @@
 
 {% load static %}
 {% load proposal_filters %}
-{% load core_filters %}
+{% load fetc_filters %}
 {% load i18n %}
+{% load compare_tags %}
 
-{% block title %}
-{% blocktrans with proposal=review.proposal.title %}
-Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
-{% endblocktrans %}
- - {{ review.proposal.reference_number }}
+{% block header_title %}
+    {% blocktrans with proposal=review.proposal.title %}
+        Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
+    {% endblocktrans %}
+    - {{ review.proposal.reference_number }} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-<ul>
-    <li>
-        {% blocktrans with date_start=review.date_start|date:"j F Y, G:i" %}
-        Reviewronde gestart op {{ date_start }}.
-        {% endblocktrans %}
-    </li>
-    {% if review.date_end %}
-    <li>
-        {% blocktrans with date_end=review.date_end|date:"j F Y, G:i" %}
-        Reviewronde beëindigd op {{ date_end }}.
-        {% endblocktrans %}
-    </li>
-    {% endif %}
-    {% if review.stage == review.CLOSED %}
-    <li>
-        {% blocktrans with continuation=review.get_continuation_display %}
-        Afhandeling: {{ continuation }}.
-        {% endblocktrans %}
-    </li>
-    {% if review.proposal.date_confirmed %}
-    <li>
-        {% blocktrans with date_confirmed=review.proposal.date_confirmed|date:"j F Y" %}
-        Bevestiging verzonden op {{ date_confirmed }}.
-        {% endblocktrans %}
-        {% if review.proposal.confirmation_comments %}
-        {% blocktrans with comments=review.proposal.confirmation_comments %}
-        Opmerkingen: {{ comments }}.
-        {% endblocktrans %}
-        {% endif %}
-    </li>
-    {% endif %}
-    {% endif %}
-    {% if review.proposal.is_pre_assessment %}
-    <li>
-        <em>
-        {% blocktrans %}
-        Dit is een aanvraag voor voortoetsing.
-        {% endblocktrans %}
-        </em>
-    </li>
-    {% endif %}
-</ul>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% blocktrans with proposal=review.proposal.title %}
+                    Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
+                {% endblocktrans %}
+                - {{ review.proposal.reference_number }}
+            </h2>
+        </div>
+    </div>
+    <div class="uu-inner-container">
+        <div class="col-12 col-md-3">
+            <h4>
+                {% trans "Details" %}
+            </h4>
+            <ul>
+                {% if review.proposal.parent and review.proposal.parent.latest_review %}
+                    <li>
+                        <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
+                            {% blocktrans with parent=review.proposal.parent.reference_number %}
+                                Revisie/amendement van<br/> {{ parent }}
+                            {% endblocktrans %}
+                        </a>
+                    </li>
+                {% endif %}
+                <li>
+                    {% blocktrans with date_start=review.date_start|date:"j F Y, G:i" %}
+                        Reviewronde gestart op<br/> {{ date_start }}.
+                    {% endblocktrans %}
+                </li>
+                {% if review.date_end %}
+                    <li>
+                        {% blocktrans with date_end=review.date_end|date:"j F Y, G:i" %}
+                            Reviewronde beëindigd op<br/> {{ date_end }}.
+                        {% endblocktrans %}
+                    </li>
+                {% endif %}
+                {% if review.stage == review.CLOSED %}
+                    <li>
+                        {% blocktrans with continuation=review.get_continuation_display %}
+                            Afhandeling:<br/> {{ continuation }}.
+                        {% endblocktrans %}
+                    </li>
+                    {% if review.proposal.date_confirmed %}
+                        <li>
+                            {% blocktrans with date_confirmed=review.proposal.date_confirmed|date:"j F Y" %}
+                                Bevestiging verzonden op<br/> {{ date_confirmed }}.
+                            {% endblocktrans %}
+                            {% if review.proposal.confirmation_comments %}
+                                {% blocktrans with comments=review.proposal.confirmation_comments %}
+                                    Opmerkingen:<br/> {{ comments }}.
+                                {% endblocktrans %}
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endif %}
+                {% if review.proposal.is_pre_assessment %}
+                    <li>
+                        <em>
+                            {% blocktrans %}
+                                Dit is een aanvraag voor voortoetsing.
+                            {% endblocktrans %}
+                        </em>
+                    </li>
+                {% endif %}
 
-{% include "reviews/review_table.html" %}
 
-{% if review.proposal.has_minor_revision%}
-    <h3>{% trans 'Revisie' %}</h3>
-    {% blocktrans %}
-        Deze studie heeft een risivisie gehad tijdens het beslisproces.
-    {% endblocktrans %}
-    {% if review.proposal.minor_revision_description  %}
-        {% blocktrans %}
-            Er zijn de volgende opmerkingen bijgevoegd:<br/>
-        {% endblocktrans %}
-        {{ review.proposal.minor_revision_description }}
-    {% endif %}
-{% endif %}
+                {% if review.proposal.has_minor_revision %}
+                    <h4>{% trans 'Revisie' %}</h4>
+                    {% blocktrans %}
+                        Deze studie heeft een risivisie gehad tijdens het beslisproces.
+                    {% endblocktrans %}
+                    {% if review.proposal.minor_revision_description %}
+                        {% blocktrans %}
+                            Er zijn de volgende opmerkingen bijgevoegd:<br/>
+                        {% endblocktrans %}
+                        {{ review.proposal.minor_revision_description }}
+                    {% endif %}
+                {% endif %}
+            </ul>
 
-{% if not review.proposal.is_pre_assessment %}
-{% include "reviews/auto_review.html" %}
-{% endif %}
+            <h4>{% trans "Formulieren bij aanmelding" %}</h4>
 
-<h2>{% trans "Formulieren bij aanmelding" %}</h2>
+            <ul>
+                {% if review.proposal.is_pre_assessment %}
+                    <li>
+                        <a href="{{ review.proposal.pre_assessment_pdf.url }}" target="_blank">
+                            {% trans "Aanvraag bij voortoetsing" %}
+                        </a>
+                        {% get_compare_link proposal review.proposal pre_assessment_pdf %}
+                    </li>
+                {% endif %}
+                {% if review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
+                    <li>
+                        <a href="{{ review.proposal.wmo.metc_decision_pdf.url }}" target="_blank">
+                            {% trans "Beslissing METC" %}
+                        </a>
+                        {% get_compare_link wmo review.proposal.wmo %}
+                    </li>
+                {% endif %}
+                {% if review.proposal.pre_approval_pdf %}
+                    <li>
+                        <a href="{{ review.proposal.pre_approval_pdf.url }}" target="_blank">
+                            {% trans "Toestemmingsbrief andere ethische commissie" %}
+                        </a>
+                        {% get_compare_link proposal review.proposal pre_approval_pdf %}
+                    </li>
+                {% endif %}
+            </ul>
 
-<ul>
-    {% if review.proposal.is_pre_assessment %}
-    <li>
-        <a href="{{ review.proposal.pre_assessment_pdf.url }}" target="_blank">
-            {% trans "Aanvraag bij voortoetsing" %}
-        </a>
-    </li>
-    {% endif %}
-    {% if review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
-    <li>
-        <a href="{{ review.proposal.wmo.metc_decision_pdf.url }}" target="_blank">
-            {% trans "Beslissing METC" %}
-        </a>
-    </li>
-    {% endif %}
-    {% if review.proposal.pre_approval_pdf %}
-    <li>
-        <a href="{{ review.proposal.pre_approval_pdf.url }}" target="_blank">
-            {% trans "Toestemmingsbrief andere ethische commissie" %}
-        </a>
-    </li>
-    {% endif %}
-</ul>
+            {% for study in review.proposal.study_set.all %}
+                {% include "studies/study_title.html" %}
+                {% get_study_documents study_documents study %}
+                <ul>
+                    {% if study.passive_consent %}
+                        <li>
+                            <a href="{{ study_documents.director_consent_declaration.url }}"
+                               target="_blank">{% trans "Consent declaratie directeur/departementshoofd" %}</a>
+                            <a href="{% url 'studies:attachments' study_documents.pk %}" class="icon-link">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                            {% get_compare_link documents study_documents director_consent_declaration %}
+                        </li>
+                        <li>
+                            <a href="{{ study_documents.director_consent_information.url }}"
+                               target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
+                            <a href="{% url 'studies:attachments' study_documents.pk %}" class="icon-link">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                            {% get_compare_link documents study_documents director_consent_information %}
+                        </li>
+                        <li>
+                            <a href="{{ study_documents.parents_information.url }}"
+                               target="_blank">{% trans "Informatiebrief ouders" %}</a>
+                            <a href="{% url 'studies:attachments' study_documents.pk %}" class="icon-link">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                        </li>
+                        {% get_compare_link documents study_documents parents_information %}
+                    {% else %}
+                        <li>
+                            <a href="{{ study_documents.informed_consent.url }}"
+                               target="_blank">{% trans "Informed consent" %}</a>
+                            <a href="{% url 'studies:attachments' study_documents.pk %}" class="icon-link">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                            {% get_compare_link documents study_documents informed_consent %}
+                        </li>
+                        <li>
+                            <a href="{{ study_documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
+                            <a href="{% url 'studies:attachments' study_documents.pk %}" class="icon-link">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                            {% get_compare_link documents study_documents briefing %}
+                        </li>
+                    {% endif %}
+                    {% if study.needs_additional_external_forms %}
+                        {% if study_documents.director_consent_information %}
+                            <li>
+                                <a href="{{ study_documents.director_consent_information.url }}"
+                                   target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
+                                <a href="{% url 'studies:attachments' study_documents.pk %}" class="icon-link">
+                                    <img src="{% static 'proposals/images/pencil.png' %}"
+                                         title="{% trans 'Formulier wijzigen' %}">
+                                </a>
+                                {% get_compare_link documents study_documents director_consent_information %}
+                            </li>
+                        {% endif %}
+                        {% if study_documents.parents_information %}
+                            <li>
+                                <a href="{{ study_documents.parents_information.url }}"
+                                   target="_blank">{% trans "Informatiebrief ouders" %}</a>
+                                <a href="{% url 'studies:attachments' study_documents.pk %}" class="icon-link">
+                                    <img src="{% static 'proposals/images/pencil.png' %}"
+                                         title="{% trans 'Formulier wijzigen' %}">
+                                </a>
+                                {% get_compare_link documents study_documents parents_information %}
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                    {% if study.has_observation and study.observation.needs_approval and study.observation.approval_document %}
+                        <li>
+                            <a href="{{ study.observation.approval_document.url }}" target="_blank">
+                                {% trans "Toestemmingsdocument observatiestudie" %}
+                            </a>
+                            <a href="{% url 'observations:attachments' study_documents.pk %}" class="icon-link">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                            {% get_compare_link observation study_documents approval_document %}
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endfor %}
+            {% counter extra_form_counter create 1 %}
+            {% get_extra_documents extra_documents review.proposal %}
+            {% for documents in extra_documents %}
+                <h4>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h4>
+                {% counter extra_form_counter increment 1 %}
+                <ul>
+                    {% if documents.informed_consent %}
+                        <li>
+                            <a href="{{ documents.informed_consent.url }}"
+                               target="_blank">{% trans "Informed consent" %}</a>
+                            <a href="{% url 'studies:attachments' documents.pk %}">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                            {% get_compare_link documents documents informed_consent %}
+                        </li>
+                    {% endif %}
+                    {% if documents.briefing %}
+                        <li>
+                            <a href="{{ documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
+                            <a href="{% url 'studies:attachments' documents.pk %}">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Formulier wijzigen' %}">
+                            </a>
+                            {% get_compare_link documents documents briefing %}
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endfor %}
+        </div>
 
-{% for study in review.proposal.study_set.all %}
-{% include "studies/study_title.html" %}
-{% get_study_documents study_documents study %}
-<ul>
-    {% if study.passive_consent %}
-    <li>
-        <a href="{{ study_documents.director_consent_declaration.url }}" target="_blank">{% trans "Consent declaratie directeur/departementshoofd" %}</a>
-        <a href="{% url 'studies:attachments' study_documents.pk %}">
-            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-        </a>
-    </li>
-    <li>
-        <a href="{{ study_documents.director_consent_information.url }}" target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
-        <a href="{% url 'studies:attachments' study_documents.pk %}">
-            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-        </a>
-    </li>
-    <li>
-        <a href="{{ study_documents.parents_information.url }}" target="_blank">{% trans "Informatiebrief ouders" %}</a>
-        <a href="{% url 'studies:attachments' study_documents.pk %}">
-            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-        </a>
-    </li>
-    {% else %}
-    <li>
-        <a href="{{ study_documents.informed_consent.url }}" target="_blank">{% trans "Informed consent" %}</a>
-        <a href="{% url 'studies:attachments' study_documents.pk %}">
-            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-        </a>
-    </li>
-    <li>
-        <a href="{{ study_documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
-        <a href="{% url 'studies:attachments' study_documents.pk %}">
-            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-        </a>
-    </li>
-    {% endif %}
-    {% if study.needs_additional_external_forms %}
-        {% if study_documents.director_consent_information %}
-            <li>
-                <a href="{{ study_documents.director_consent_information.url }}" target="_blank">{% trans "Consent informatiebrief directeur/departementshoofd" %}</a>
-                <a href="{% url 'studies:attachments' study_documents.pk %}">
-                    <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-                </a>
-            </li>
-        {% endif %}
-        {% if study_documents.parents_information %}
-            <li>
-                <a href="{{ study_documents.parents_information.url }}" target="_blank">{% trans "Informatiebrief ouders" %}</a>
-                <a href="{% url 'studies:attachments' study_documents.pk %}">
-                    <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-                </a>
-            </li>
-        {% endif %}
-    {% endif %}
-    {% if study.has_observation and study.observation.needs_approval and study.observation.approval_document %}
-    <li>
-        <a href="{{ study.observation.approval_document.url }}" target="_blank">
-            {% trans "Toestemmingsdocument observatiestudie" %}
-        </a>
-        <a href="{% url 'observations:attachments' study_documents.pk %}">
-            <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-        </a>
-    </li>
-    {% endif %}
-</ul>
-{% endfor %}
-    {% counter extra_form_counter 1 %}
-    {% get_extra_documents extra_documents review.proposal %}
-    {% for documents in extra_documents %}
-        <h3>{% trans 'Extra formulieren' %} {{ extra_form_counter }}</h3>
-        <ul>
-            {% if documents.informed_consent %}
-            <li>
-                <a href="{{ documents.informed_consent.url }}" target="_blank">{% trans "Informed consent" %}</a>
-                <a href="{% url 'studies:attachments' documents.pk %}">
-                    <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-                </a>
-            </li>
+        <div class="col-12 col-md-9">
+            <h4>
+                {% trans "Reviewers" %}
+            </h4>
+            {% include "reviews/review_table.html" %}
+
+            {% if not review.proposal.is_pre_assessment %}
+                {% include "reviews/auto_review.html" %}
             {% endif %}
-            {% if documents.briefing %}
-            <li>
-                <a href="{{ documents.briefing.url }}" target="_blank">{% trans "Briefing" %}</a>
-                <a href="{% url 'studies:attachments' documents.pk %}">
-                    <img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Formulier wijzigen' %}">
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-    {% endfor %}
+        </div>
+
+    </div>
+
 {% endblock %}

@@ -2,18 +2,33 @@
 
 {% load static %}
 {% load i18n %}
+{% load datatables %}
 
-{% block title %}
-    {{ title }}
+{% block header_title %}
+    {{ title }} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
+{% block html_head %}
+    <script>
+        $(document).ready(function () {
+            var table = $('.dt').dataTable({
+                "retrieve": true {# Used to retrieve the existing object #}
+            }).api();
+
+            table.order([{{ sort_column }}, "{{ sort_direction }}"]);
+            table.draw();
+        });
+    </script>
+{% endblock %}
 
 {% block content %}
+    <div class="uu-inner-container">
+    <div class="col-12">
+    <h2>{{ title }}</h2>
     {% static "proposals/images/page_white_go.png" as img_next %}
     {% static "proposals/images/arrow_divide.png" as img_diff %}
     {% static "proposals/images/delete.png" as img_delete %}
-    {% static "core/images/page_white_acrobat.png" as img_pdf %}
+    {% static "main/images/page_white_acrobat.png" as img_pdf %}
     {% static "proposals/images/folder_delete.png" as img_hide %}
     <p>
         {{ body }}
@@ -56,28 +71,18 @@
         {% endif %}
     </ul>
 
-    <script>
-        $(document).ready(function () {
-            var table = $('.dataTable').dataTable({
-                "retrieve": true {# Used to retrieve the existing object #}
-            }).api();
-
-            table.order([{{ sort_column }}, "{{ sort_direction }}"]);
-            table.draw();
-        });
-    </script>
-
-    <table class="dataTable display">
+    <table class="dt display" data-language="{% datatables_lang %}">
         <thead>
         <tr>
-            <th>{% trans "Referentienummer" %}</th>
-            <th>{% trans "Titel studie" %}</th>
-            <th>{% trans "Soort studie" %}</th>
-            <th>{% trans "Datum ingediend" %}</th>
-            <th>{% trans "Indiener" %}</th>
-            <th>{% trans "Eindverantwoordelijke onderzoeker" %}</th>
-            <th>{% trans "Laatst bijgewerkt" %}</th>
-            <th>{% trans "Acties" %}</th>
+            {# 1 = highest priority. Controls which columns gets removed first when the width of the page is reduced. Those with the highest priority gets hidden last. #}
+            <th data-priority="2">{% trans "Referentienummer" %}</th>
+            <th data-priority="1">{% trans "Titel studie" %}</th>
+            <th data-priority="3">{% trans "Soort studie" %}</th>
+            <th data-priority="3">{% trans "Datum ingediend" %}</th>
+            <th data-priority="4">{% trans "Indiener" %}</th>
+            <th data-priority="4">{% trans "Eindverantwoordelijke onderzoeker" %}</th>
+            <th data-priority="3">{% trans "Laatst bijgewerkt" %}</th>
+            <th data-priority="1">{% trans "Acties" %}</th>
         </tr>
         </thead>
         <tbody>
@@ -95,14 +100,14 @@
                         <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}"><img
                                 src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
                     {% endif %}
+                    {% if proposal.is_revision %}
+                        <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}"
+                                                                              title="{% trans 'Toon verschillen' %}"></a>
+                    {% endif %}
                     {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
                         {% if user in proposal.applicants.all or user == proposal.supervisor %}
                             <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}"
                                                                        title="{% trans 'Naar volgende stap' %}"></a>
-                        {% endif %}
-                        {% if proposal.is_revision %}
-                            <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}"
-                                                                                  title="{% trans 'Toon verschillen' %}"></a>
                         {% endif %}
                         <a href="{% url 'proposals:delete' proposal.pk %}"><img src="{{ img_delete }}"
                                                                                 title="{% trans 'Verwijderen' %}"></a>
@@ -123,4 +128,6 @@
         {% endfor %}
         </tbody>
     </table>
+        </div>
+    </div>
 {% endblock %}

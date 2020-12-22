@@ -5,9 +5,9 @@ from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from core.forms import ConditionalModelForm, SoftValidationMixin
-from core.models import DOUBT, YES, YES_NO_DOUBT
-from core.utils import YES_NO
+from main.forms import ConditionalModelForm, SoftValidationMixin
+from main.models import DOUBT, YES, YES_NO_DOUBT
+from main.utils import YES_NO
 from .models import AgeGroup, Documents, Study
 from .utils import check_necessity_required
 

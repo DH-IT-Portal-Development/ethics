@@ -3,99 +3,104 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Algemene informatie over de studie" %}
+{% block header_title %}
+    {% trans "Algemene informatie over de studie" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
+{% block html_head %}
+    <script>
+        $(function () {
+            check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
+            depends_on_value('other_applicants', 'True', 'applicants');
+            depends_on_value('other_stakeholders', 'True', 'stakeholders');
+            check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
+            check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
 
-{% block sidebar %}
-{% if not create %}
-{% include "base/sidebar.html" %}
-{% endif %}
+            // Add datepicker for date_start, set locale to current language
+            $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
+
+            var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
+            $("#id_date_start").datepicker({
+                dateFormat: date_format,
+                minDate: 'now',
+            })
+
+            // AJAX applicants
+            $('select#id_applicants').select2({
+                ajax: {
+                    url: '{% url 'main:user_search' %}',
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: params.term || '*',
+                            page: params.page || 1
+                        }
+                    },
+                    delay: 1500,
+                    error: function (err) {
+                        console.log(err)
+                    },
+                    cache: true
+                }
+            });
+
+            // AJAX supervisors
+            $('select#id_supervisor').select2({
+                ajax: {
+                    url: '{% url 'main:user_search' %}',
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: params.term || '*',
+                            page: params.page || 1
+                        }
+                    },
+                    delay: 1500,
+                    error: function (err) {
+                        console.log(err)
+                    },
+                    cache: true
+                }
+            });
+
+            // Add a running word count to the summary
+            var summary = $("#id_summary");
+            if (summary.length) {
+                summary.after("<span id='wordcount' />");
+                summary[0].addEventListener("input", function () {
+                    var wordCount = 0;
+                    if (this.value.trim()) {
+                        wordCount = this.value.match(/\S+/g).length;
+                    }
+                    $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
+                }, false);
+            }
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
-<script>
-$(function() {
-    check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
-    depends_on_value('other_applicants', 'True', 'applicants');
-    depends_on_value('other_stakeholders', 'True', 'stakeholders');
-    check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
-    check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
-
-    // Add datepicker for date_start, set locale to current language
-    $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
-
-    var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
-    $("#id_date_start").datepicker({
-        dateFormat: date_format,
-        minDate: 'now',
-    })
-    
-    // AJAX applicants
-    $('select#id_applicants').select2({
-      ajax: {
-        url: '{% url 'core:user_search' %}',
-        dataType: 'json',
-        data: function (params) {
-          return {
-            q: params.term || '*',
-            page: params.page || 1
-          }
-        },
-        delay: 1500,
-        error: function (err) {
-            console.log(err)
-        },
-        cache: true
-      }
-    });
-
-    // AJAX supervisors
-    $('select#id_supervisor').select2({
-      ajax: {
-        url: '{% url 'core:user_search' %}',
-        dataType: 'json',
-        data: function (params) {
-          return {
-            q: params.term || '*',
-            page: params.page || 1
-          }
-        },
-        delay: 1500,
-        error: function (err) {
-            console.log(err)
-        },
-        cache: true
-      }
-    });
-
-    // Add a running word count to the summary
-    var summary = $("#id_summary");
-    if (summary.length)
-    {
-        summary.after("<span id='wordcount' />");
-        summary[0].addEventListener("input", function() {
-            var wordCount = 0;
-            if (this.value.trim()) {
-                wordCount = this.value.match(/\S+/g).length;
-            }
-            $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
-        }, false);
-    }
-});
-</script>
-{% if not create and is_supervisor  %}
-    {% blocktrans %}
-        u past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat u het formulier
-        invuld alsof u die student/PhD kandidaat bent.
-    {% endblocktrans %}
-    <br/>
-    <br/>
-{% endif %}
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    {% include "base/form_buttons.html" %}
-</form>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% if not create %}
+                {% with nav_items=proposal.available_urls active=1 %}
+                    {% include 'base/navigation.html' %}
+                {% endwith %}
+            {% endif %}
+            <h2>{% trans "Algemene informatie over de studie" %}</h2>
+            {% if not create and is_supervisor %}
+                {% blocktrans %}
+                    u past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat u het
+                    formulier
+                    invuld alsof u die student/PhD kandidaat bent.
+                {% endblocktrans %}
+                <br/>
+                <br/>
+            {% endif %}
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                {% include "base/form_buttons.html" %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

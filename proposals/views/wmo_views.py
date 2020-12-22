@@ -6,9 +6,9 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import YES, DOUBT
-from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
-from core.utils import get_secretary
+from main.models import YES, DOUBT
+from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
+from main.utils import get_secretary
 
 from ..models import Proposal, Wmo
 from ..forms import WmoForm, WmoApplicationForm, WmoCheckForm

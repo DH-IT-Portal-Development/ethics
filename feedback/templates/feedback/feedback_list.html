@@ -2,32 +2,38 @@
 
 {% load static %}
 {% load i18n %}
+{% load datatables %}
 
-{% block title %}
-{% trans "Feedbackoverzicht" %}
+{% block header_title %}
+    {% trans "Feedbackoverzicht" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-<table class="dataTable display">
-    <thead>
-        <tr>
-            <th>{% trans "Toegevoegd op" %}</th>
-            <th>{% trans "URL" %}</th>
-            <th>{% trans "Feedback" %}</th>
-            <th>{% trans "Gegeven door" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for feedback in feedback_list %}
-        <tr>
-            <td data-order="{{ feedback.date_created|date:'c' }}">{{ feedback.date_created|date:"j M Y, G:i" }}</td>
-            <td>{{ feedback.url }}</td>
-            <td>{{ feedback.comment }}</td>
-            <td>{{ feedback.submitter.get_full_name }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Feedbackoverzicht" %}
+            </h2>
+            <table class="dt w-100" data-language="{% datatables_lang %}">
+                <thead>
+                    <tr>
+                        <th>{% trans "Toegevoegd op" %}</th>
+                        <th>{% trans "URL" %}</th>
+                        <th>{% trans "Feedback" %}</th>
+                        <th>{% trans "Gegeven door" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feedback in feedback_list %}
+                    <tr>
+                        <td data-order="{{ feedback.date_created|date:'c' }}">{{ feedback.date_created|date:"j M Y, G:i" }}</td>
+                        <td>{{ feedback.url }}</td>
+                        <td>{{ feedback.comment }}</td>
+                        <td>{{ feedback.submitter.get_full_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

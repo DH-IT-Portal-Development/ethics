@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('studies', '0001_initial'),
-        ('core', '0001_initial'),
+        ('main', '0001_initial'),
     ]
 
     operations = [
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('has_controls', models.BooleanField(default=False, verbose_name='Is er sprake van een controlegroep?')),
                 ('controls_description', models.TextField(verbose_name='Geef een beschrijving van de controleinterventie', blank=True)),
                 ('measurement', models.TextField(help_text='Wanneer u de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet u op de vorige pagina ook "takenonderzoek" aanvinken.', verbose_name='Hoe wordt het effect van de interventie gemeten?')),
-                ('setting', models.ManyToManyField(to='core.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt')),
+                ('setting', models.ManyToManyField(to='main.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt')),
                 ('study', models.OneToOneField(to='studies.Study', on_delete=models.CASCADE)),
             ],
             options={

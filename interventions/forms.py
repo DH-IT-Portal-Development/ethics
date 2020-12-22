@@ -1,7 +1,7 @@
 from django import forms
 
-from core.forms import ConditionalModelForm, SoftValidationMixin
-from core.utils import YES_NO
+from main.forms import ConditionalModelForm, SoftValidationMixin
+from main.utils import YES_NO
 from .models import Intervention
 
 

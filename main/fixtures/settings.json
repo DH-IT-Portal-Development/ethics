@@ -1,0 +1,142 @@
+[
+{
+    "fields": {
+        "is_local": true,
+        "needs_details": false,
+        "description": "het UiL OTS lab",
+        "description_en": "the UiL OTS labs",
+        "description_nl": "het UiL OTS lab",
+        "needs_supervision": false,
+        "requires_review": false,
+        "order": 1
+    },
+    "model": "main.setting",
+    "pk": 1
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": false,
+        "description": "online",
+        "description_en": "online",
+        "description_nl": "online",
+        "needs_supervision": false,
+        "requires_review": false,
+        "order": 2
+    },
+    "model": "main.setting",
+    "pk": 2
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": false,
+        "description": "school/onderwijsinstelling",
+        "description_en": "school/educational institution",
+        "description_nl": "school/onderwijsinstelling",
+        "needs_supervision": true,
+        "requires_review": false,
+        "order": 3
+    },
+    "model": "main.setting",
+    "pk": 3
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": false,
+        "description": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
+        "description_en": "nursery/day care center",
+        "description_nl": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
+        "needs_supervision": true,
+        "requires_review": false,
+        "order": 4
+    },
+    "model": "main.setting",
+    "pk": 4
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": false,
+        "description": "thuis bij de deelnemer",
+        "description_en": "at the participant's home",
+        "description_nl": "thuis bij de deelnemer",
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 5
+    },
+    "model": "main.setting",
+    "pk": 5
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": false,
+        "description": "studenten worden geworven als onderdeel van de cursus",
+        "description_en": "students who are recruited as part of a course",
+        "description_nl": "studenten worden geworven als onderdeel van de cursus",
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 6
+    },
+    "model": "main.setting",
+    "pk": 6
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": false,
+        "description": "collegezaal",
+        "description_en": "lecture hall",
+        "description_nl": "collegezaal",
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 7
+    },
+    "model": "main.setting",
+    "pk": 7
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": false,
+        "description": "logopediepraktijk",
+        "description_en": "speech therapist",
+        "description_nl": "logopediepraktijk",
+        "needs_supervision": false,
+        "requires_review": false,
+        "order": 8
+    },
+    "model": "main.setting",
+    "pk": 8
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": true,
+        "description": "zorginstelling",
+        "description_en": "medical institution",
+        "description_nl": "zorginstelling",
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 9
+    },
+    "model": "main.setting",
+    "pk": 9
+},
+{
+    "fields": {
+        "is_local": false,
+        "needs_details": true,
+        "description": "anders, namelijk",
+        "description_en": "otherwise, viz.",
+        "description_nl": "anders, namelijk",
+        "needs_supervision": false,
+        "requires_review": true,
+        "order": 10
+    },
+    "model": "main.setting",
+    "pk": 10
+}
+]

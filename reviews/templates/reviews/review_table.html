@@ -1,7 +1,8 @@
 {% load i18n %}
-{% load core_filters %}
+{% load fetc_filters %}
+{% load datatables %}
 
-<table class="dataTable display">
+<table class="dt w-100" data-language="{% datatables_lang %}">
     <thead>
         <tr>
             <th>{% trans "Reviewer" %}</th>

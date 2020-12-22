@@ -7,7 +7,7 @@ from django.test import TestCase
 
 from .models import Review, Decision
 from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
-from core.models import YES, DOUBT
+from main.models import YES, DOUBT
 from proposals.models import Proposal, Relation
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup

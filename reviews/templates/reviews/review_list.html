@@ -2,47 +2,60 @@
 
 {% load static %}
 {% load i18n %}
+{% load datatables %}
 
-{% block title %} 
-{% trans "Te beoordelen studies" %}
+{% block header_title %}
+    {% trans "Te beoordelen studies" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
+{% block html_head %}
+    <script>
+        $(document).ready(function () {
+            var table = $('.dt').dataTable({
+                "retrieve": true {# Used to retrieve the existing object #}
+            }).api();
+
+            table.order([3, "desc"]);
+            table.draw();
+        });
+    </script>
+{% endblock %}
 
 {% block content %}
-<p>
-</p>
-<script>
-    $(document).ready(function () {
-        var table = $('.dataTable').dataTable({
-            "retrieve": true {# Used to retrieve the existing object #}
-        }).api();
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Te beoordelen studies" %}
+            </h2>
 
-        table.order([3, "desc"]);
-        table.draw();
-    });
-</script>
-<table class="dataTable display">
-    <thead>
-        <tr>
-            <th>{% trans "Referentienummer" %}</th>
-            <th>{% trans "Titel studie" %}</th>
-            <th>{% trans "Laatst bijgewerkt" %}</th>
-            <th>{% trans "Acties" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for review in reviews %}
-        <tr>
-            <td>{{ review.proposal.reference_number }}</td>
-            <td>{{ review.proposal.title }}</td>
-            <td data-order="{{ review.proposal.date_modified|date:'c' }}">{{ review.proposal.date_modified|date:"j M Y, G:i" }}</td>
-            <td>
-                <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
-                <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Review inzien' %}"></a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            <table class="dt w-100" data-language="{% datatables_lang %}">
+                <thead>
+                <tr>
+                    <th>{% trans "Referentienummer" %}</th>
+                    <th>{% trans "Titel studie" %}</th>
+                    <th>{% trans "Laatst bijgewerkt" %}</th>
+                    <th>{% trans "Acties" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for review in reviews %}
+                    <tr>
+                        <td>{{ review.proposal.reference_number }}</td>
+                        <td>{{ review.proposal.title }}</td>
+                        <td data-order="{{ review.proposal.date_modified|date:'c' }}">{{ review.proposal.date_modified|date:"j M Y, G:i" }}</td>
+                        <td>
+                            <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank">
+                                <img src="{% static 'main/images/page_white_acrobat.png' %}"
+                                     title="{% trans 'Studie inzien' %}">
+                            </a>
+                            <a href="{% url 'reviews:detail' review.id %}"><
+                                img src="{% static 'main/images/zoom.png' %}" title="{% trans 'Review inzien' %}">
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

@@ -3,19 +3,11 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Het takenonderzoek en interviews" %}
+{% block header_title %}
+    {% trans "Het takenonderzoek en interviews" %} - {{ block.super }}
 {% endblock %}
 
-{% block progress %}{{ progress }}{% endblock %}
-
-{% block sidebar %}
-{% with proposal=task.session.study.proposal %}
-{% include "base/sidebar.html" %}
-{% endwith %}
-{% endblock %}
-
-{% block content %}
+{% block html_head %}
 <script>
 $(function() {
     check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
@@ -24,11 +16,26 @@ $(function() {
     depends_on_value('feedback', 'True', 'feedback_details');
 });
 </script>
-{% include "tasks/task_title.html" %}
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    {% with proposal=task.session.study.proposal study=task.session.study session=task.session %}
-    {% include "base/form_buttons.html" %}
-    {% endwith %}
-</form>
+{% endblock %}
+
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=task.session.study.proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+
+            <h2>
+                {% trans "Het takenonderzoek en interviews" %}
+            </h2>
+            {% include "tasks/task_title.html" %}
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                {% with proposal=task.session.study.proposal study=task.session.study session=task.session %}
+                {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import core.validators
+import main.validators
 
 
 class Migration(migrations.Migration):
@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='proposal',
             name='pre_assessment_pdf',
-            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)', validators=[core.validators.validate_pdf_or_doc]),
+            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)', validators=[main.validators.validate_pdf_or_doc]),
         ),
     ]

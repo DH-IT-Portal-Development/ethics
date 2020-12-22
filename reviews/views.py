@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from core.utils import get_reviewers, get_secretary, is_secretary
+from main.utils import get_reviewers, get_secretary, is_secretary
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
                     ChangeChamberForm)

@@ -3,19 +3,11 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Eén of meerdere trajecten?" %}
+{% block header_title %}
+    {% trans "Eén of meerdere trajecten?" %} - {{ block.super }}
 {% endblock %}
 
-{% block progress %}8{% endblock %}
-
-{% block sidebar %}
-{% include "base/sidebar.html" %}
-{% endblock %}
-
-{% block content %}
-{% trans "U kunt de aard van de studie nu in detail op de volgende pagina's specificeren." as is_similar %}
-{% trans "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
+{% block html_head %}
 <script>
 $(function() {
     add_title('study_name_1', "{% trans 'Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters.' %}");
@@ -58,52 +50,67 @@ $(function() {
     $('input[name=studies_number]').change();
 });
 </script>
-<p>
-    {% blocktrans %}
-    In de meeste Geesteswetenschappelijke studies doorlopen alle deelnemers een,
-    in essentie, vergelijkbaar traject.
-    Bijvoorbeeld eerst een observatiefase, dan een interventiefase, en dan weer
-    een observatiefase.
-    Of: een taakonderzoek waarin eerst een open interview wordt afgenomen en
-    vervolgens wordt er een vragenlijst afgenomen
-    Kleine verschillen tussen wat de verschillende deelnemers in zo'n traject
-    ten deel valt (bijv. in een between-subjects interventiedesign met les
-    uit een nieuw lesboek of uit het oude lesboek, of between-subjects
-    RT-takendesigns met een instructie richting snelle of juist accurate
-    performance) kunnen als varianten van hetzelfde traject worden benoemd.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Soms zal het echter voorkomen dat verschillende deelnemersgroepen echt heel
-    verschillende trajecten doorlopen, met bijvoorbeeld een verschillend aantal
-    sessies, meer taken of hele andere taken. Denk aan een situatie waarin
-    oudere kinderen een takensessie met drie verschillende reactietijdtaken
-    en twee vragenlijsten doorlopen, en jongere kinderen slechts twee korte
-    reactietijd-taken en één vragenlijst doen. Of aan de situatie binnen een
-    interventiestudie waarbij niet alleen de leerlingen worden bestudeerd maar
-    óók de leraar een vragenlijst moet invullen of wordt geobserveerd gedurende
-    het geven van de interventie. Of aan een situatie waarin ook de ouder(s)
-    gevraagd wordt een (of meerdere) vragenlijst(en) in te vullen. In zulke
-    gevallen zal elk traject en de bijbehorende deelnemersgroep volledig
-    gespecificeerd moeten worden.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    NB: Ook wanneer u met verschillende leeftijdsgroepen
-    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante
-    leeftijdsgroepen naar
-    <a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">de
-    verschillende soort toestemmingsverklaringen</a> die de FETC aanbiedt op de
-    website
-    {% endblocktrans %}
-</p>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <p id="next_text"></p>
-    {% include "base/form_buttons.html" %}
-</form>
+{% endblock %}
+
+{% block content %}
+    {% trans "U kunt de aard van de studie nu in detail op de volgende pagina's specificeren." as is_similar %}
+    {% trans "U kunt de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>
+                {% trans "Eén of meerdere trajecten?" %}
+            </h2>
+            <p>
+                {% blocktrans %}
+                In de meeste Geesteswetenschappelijke studies doorlopen alle deelnemers een,
+                in essentie, vergelijkbaar traject.
+                Bijvoorbeeld eerst een observatiefase, dan een interventiefase, en dan weer
+                een observatiefase.
+                Of: een taakonderzoek waarin eerst een open interview wordt afgenomen en
+                vervolgens wordt er een vragenlijst afgenomen
+                Kleine verschillen tussen wat de verschillende deelnemers in zo'n traject
+                ten deel valt (bijv. in een between-subjects interventiedesign met les
+                uit een nieuw lesboek of uit het oude lesboek, of between-subjects
+                RT-takendesigns met een instructie richting snelle of juist accurate
+                performance) kunnen als varianten van hetzelfde traject worden benoemd.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                Soms zal het echter voorkomen dat verschillende deelnemersgroepen echt heel
+                verschillende trajecten doorlopen, met bijvoorbeeld een verschillend aantal
+                sessies, meer taken of hele andere taken. Denk aan een situatie waarin
+                oudere kinderen een takensessie met drie verschillende reactietijdtaken
+                en twee vragenlijsten doorlopen, en jongere kinderen slechts twee korte
+                reactietijd-taken en één vragenlijst doen. Of aan de situatie binnen een
+                interventiestudie waarbij niet alleen de leerlingen worden bestudeerd maar
+                óók de leraar een vragenlijst moet invullen of wordt geobserveerd gedurende
+                het geven van de interventie. Of aan een situatie waarin ook de ouder(s)
+                gevraagd wordt een (of meerdere) vragenlijst(en) in te vullen. In zulke
+                gevallen zal elk traject en de bijbehorende deelnemersgroep volledig
+                gespecificeerd moeten worden.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                NB: Ook wanneer u met verschillende leeftijdsgroepen
+                werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante
+                leeftijdsgroepen naar
+                <a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" target="_blank">de
+                verschillende soort toestemmingsverklaringen</a> die de FETC aanbiedt op de
+                website
+                {% endblocktrans %}
+            </p>
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <p id="next_text"></p>
+                {% include "base/form_buttons.html" %}
+            </form>
+        </div>
+    </div>
 {% endblock %}

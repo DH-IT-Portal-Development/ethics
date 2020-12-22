@@ -7,8 +7,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import YES, YES_NO_DOUBT
-from core.validators import MaxWordsValidator, validate_pdf_or_doc
+from main.models import YES, YES_NO_DOUBT
+from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import available_urls
 
 SUMMARY_MAX_WORDS = 200
@@ -450,6 +450,11 @@ bij deze studie?'),
             start_supervisor_phase(self)
 
             return self.supervisor_decision()
+
+    def latest_review(self):
+        from reviews.models import Review
+
+        return Review.objects.filter(proposal=self).last()
 
     def __str__(self):
         if self.is_practice():
