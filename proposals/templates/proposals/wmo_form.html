@@ -18,7 +18,6 @@
 <script>
 $(function() {
     check_metc_required("{% url 'proposals:check_wmo' %}");
-
     depends_on_value('metc', 'Y', 'metc_details');
     depends_on_value('metc', 'Y', 'metc_institution');
 });

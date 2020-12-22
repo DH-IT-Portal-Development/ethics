@@ -132,9 +132,8 @@ def check_wmo(request):
     """
     is_metc = request.POST.get('metc') == YES
     is_medical = request.POST.get('medical') == YES
-    is_behavioristic = request.POST.get('behavioristic') == YES
 
-    doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT or request.POST.get('behavioristic') == DOUBT
+    doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT
 
     # Default message: OK.
     message = _('Uw studie hoeft niet te worden beoordeeld door de METC.')
@@ -149,7 +148,7 @@ def check_wmo(request):
         needs_metc = True
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
-    elif is_metc or (is_medical and is_behavioristic):
+    elif is_metc or is_medical:
         message = _('Uw studie zal moeten worden beoordeeld door de METC.')
         message_class = 'warning'
         needs_metc = True
