@@ -73,61 +73,67 @@
 
     <table class="dt display" data-language="{% datatables_lang %}">
         <thead>
-        <tr>
-            {# 1 = highest priority. Controls which columns gets removed first when the width of the page is reduced. Those with the highest priority gets hidden last. #}
-            <th data-priority="2">{% trans "Referentienummer" %}</th>
-            <th data-priority="1">{% trans "Titel studie" %}</th>
-            <th data-priority="3">{% trans "Soort studie" %}</th>
-            <th data-priority="3">{% trans "Datum ingediend" %}</th>
-            <th data-priority="4">{% trans "Indiener" %}</th>
-            <th data-priority="4">{% trans "Eindverantwoordelijke onderzoeker" %}</th>
-            <th data-priority="3">{% trans "Laatst bijgewerkt" %}</th>
-            <th data-priority="1">{% trans "Acties" %}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for proposal in proposals %}
             <tr>
-                <td>{{ proposal.reference_number }}</td>
-                <td>{{ proposal.title }}</td>
-                <td>{{ proposal.type }}</td>
-                <td data-order="{{ proposal.date_submitted|date:'c' }}">{{ proposal.date_submitted|date:"j M Y, G:i" }}</td>
-                <td>{{ proposal.created_by.get_full_name }}</td>
-                <td>{{ proposal.supervisor.get_full_name }}</td>
-                <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
-                <td>
-                    {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
-                        <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}"><img
-                                src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
-                    {% endif %}
-                    {% if proposal.is_revision %}
-                        <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}"
-                                                                              title="{% trans 'Toon verschillen' %}"></a>
-                    {% endif %}
-                    {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-                        {% if user in proposal.applicants.all or user == proposal.supervisor %}
-                            <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}"
-                                                                       title="{% trans 'Naar volgende stap' %}"></a>
-                        {% endif %}
-                        <a href="{% url 'proposals:delete' proposal.pk %}"><img src="{{ img_delete }}"
-                                                                                title="{% trans 'Verwijderen' %}"></a>
-                    {% elif proposal.pdf %}
-                        <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{{ img_pdf }}"
-                                                                              title="{% trans 'Inzien' %}"></a>
-                    {% else %}
-                        <a href="{% url 'proposals:pdf' proposal.pk %}" target="_blank"><img src="{{ img_pdf }}"
-                                                                                             title="{% trans 'Inzien' %}"></a>
-                    {% endif %}
-                    {% if proposal.in_archive and is_secretary %}
-                        <a href="{% url 'proposals:archive_hide' proposal.pk %}">
-                            <img src="{{ img_hide }}" title="{% trans 'Verberg' %}">
-                        </a>
-                    {% endif %}
-                </td>
+                {# 1 = highest priority. Controls which columns gets removed first when the width of the page is reduced. Those with the highest priority gets hidden last. #}
+                <th data-priority="2">{% trans "Referentienummer" %}</th>
+                <th data-priority="1">{% trans "Titel studie" %}</th>
+                <th data-priority="3">{% trans "Soort studie" %}</th>
+                <th data-priority="3">{% trans "Datum ingediend" %}</th>
+                <th data-priority="4">{% trans "Indiener" %}</th>
+                <th data-priority="4">{% trans "Eindverantwoordelijke onderzoeker" %}</th>
+                {% if wants_route_info %}
+                    <th data-priority="4">{% trans "Route" %}</th>
+                {% endif %}
+                <th data-priority="3">{% trans "Laatst bijgewerkt" %}</th>
+                <th data-priority="1">{% trans "Acties" %}</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for proposal in proposals %}
+                    <tr>
+                        <td>{{ proposal.reference_number }}</td>
+                        <td>{{ proposal.title }}</td>
+                        <td>{{ proposal.type }}</td>
+                        <td data-order="{{ proposal.date_submitted|date:'c' }}">{{ proposal.date_submitted|date:"j M Y, G:i" }}</td>
+                        <td>{{ proposal.created_by.get_full_name }}</td>
+                        <td>{{ proposal.supervisor.get_full_name }}</td>
+                        {% if wants_route_info %}
+                            <td>{{ proposal.route }}</td>
+                        {% endif %}
+                        <td data-order="{{ proposal.date_modified|date:'c' }}">{{ proposal.date_modified|date:"j M Y, G:i" }}</td>
+                        <td>
+                            {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
+                                <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}"><img
+                                        src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
+                            {% endif %}
+                            {% if proposal.is_revision %}
+                                <a href="{% url 'proposals:diff' proposal.pk %}"><img src="{{ img_diff }}"
+                                                                                      title="{% trans 'Toon verschillen' %}"></a>
+                            {% endif %}
+                            {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
+                                {% if user in proposal.applicants.all or user == proposal.supervisor %}
+                                    <a href="{{ proposal.continue_url }}"><img src="{{ img_next }}"
+                                                                               title="{% trans 'Naar volgende stap' %}"></a>
+                                {% endif %}
+                                <a href="{% url 'proposals:delete' proposal.pk %}"><img src="{{ img_delete }}"
+                                                                                        title="{% trans 'Verwijderen' %}"></a>
+                            {% elif proposal.pdf %}
+                                <a href="{{ proposal.pdf.url }}" target="_blank"><img src="{{ img_pdf }}"
+                                                                                      title="{% trans 'Inzien' %}"></a>
+                            {% else %}
+                                <a href="{% url 'proposals:pdf' proposal.pk %}" target="_blank"><img src="{{ img_pdf }}"
+                                                                                                     title="{% trans 'Inzien' %}"></a>
+                            {% endif %}
+                            {% if proposal.in_archive and is_secretary %}
+                                <a href="{% url 'proposals:archive_hide' proposal.pk %}">
+                                    <img src="{{ img_hide }}" title="{% trans 'Verberg' %}">
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
