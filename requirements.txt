@@ -27,7 +27,7 @@ idna==2.10                # via requests
 imagesize==1.2.0          # via sphinx
 jinja2==2.11.2            # via sphinx
 markupsafe==1.1.1         # via jinja2
-mysqlclient==2.0.2        # via -r requirements.in
+mysqlclient==1.4.6        # via -r requirements.in
 packaging==20.8           # via sphinx
 pbr==5.5.1                # via sphinxcontrib-apidoc
 pdftotext==2.1.5          # via -r requirements.in

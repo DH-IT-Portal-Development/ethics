@@ -6,7 +6,7 @@ django-modeltranslation
 django-impersonate
 django-simple-menu
 django-debug-toolbar
-mysqlclient
+mysqlclient<2
 xhtml2pdf
 sphinx
 sphinx_rtd_theme
