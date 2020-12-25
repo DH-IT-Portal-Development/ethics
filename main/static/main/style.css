@@ -134,39 +134,6 @@ td li {
     list-style-type: none;
 }
 
-/* Bootstrap-like contextual boxes */
-div.success {
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #DFF0D8;
-    list-style-type: none;
-}
-
-div.failed {
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #F2DEDE;
-    list-style-type: none;
-}
-
-div.warning {
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #FCF8E3;
-    list-style-type: none;
-}
-
-div.info {
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #D9EDF7;
-    list-style-type: none;
-}
-
 a.icon-link {
     text-decoration: none;
 }

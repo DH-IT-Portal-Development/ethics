@@ -4,7 +4,7 @@
 #
 #    pip-compile
 #
--e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0-beta-10#egg=uil-django-core  # via -r requirements.in
+-e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0-beta-11#egg=uil-django-core  # via -r requirements.in
 alabaster==0.7.12         # via sphinx
 arabic-reshaper==2.1.1    # via xhtml2pdf
 babel==2.9.0              # via sphinx
@@ -14,7 +14,7 @@ django-auth-ldap==2.2.0   # via -r requirements.in
 django-braces==1.14.0     # via -r requirements.in
 django-debug-toolbar==3.2  # via -r requirements.in
 django-easy-pdf==0.1.1    # via -r requirements.in
-django-impersonate==1.7   # via -r requirements.in
+django-impersonate==1.7.1  # via -r requirements.in
 django-modeltranslation==0.16.1  # via -r requirements.in
 django-simple-menu==1.2.1  # via -r requirements.in
 django-user-agents==0.4.0  # via -r requirements.in
@@ -40,13 +40,13 @@ pypdf2==1.26.0            # via xhtml2pdf
 python-bidi==0.4.2        # via xhtml2pdf
 python-ldap==3.3.1        # via django-auth-ldap
 python-magic==0.4.18      # via -r requirements.in
-pytz==2020.4              # via babel, django
+pytz==2020.5              # via babel, django
 reportlab==3.5.56         # via -r requirements.in, django-easy-pdf, xhtml2pdf
 requests==2.25.1          # via -r requirements.in, sphinx
 six==1.15.0               # via django-braces, django-modeltranslation, html5lib, python-bidi, xhtml2pdf
 snowballstemmer==2.0.0    # via sphinx
 sphinx-rtd-theme==0.5.0   # via -r requirements.in
-sphinx==3.4.0             # via -r requirements.in, sphinx-rtd-theme, sphinxcontrib-apidoc
+sphinx==3.4.1             # via -r requirements.in, sphinx-rtd-theme, sphinxcontrib-apidoc
 sphinxcontrib-apidoc==0.3.0  # via -r requirements.in
 sphinxcontrib-applehelp==1.0.2  # via sphinx
 sphinxcontrib-devhelp==1.0.2  # via sphinx

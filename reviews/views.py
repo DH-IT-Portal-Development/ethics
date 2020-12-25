@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+from django.utils.translation import ugettext_lazy as _
 
 from main.utils import get_reviewers, get_secretary, is_secretary
 from proposals.models import Proposal
@@ -27,6 +28,13 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = _("Mijn besluiten")
+
+        return context
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
@@ -101,6 +109,13 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = _("Mijn openstaande besluiten")
+
+        return context
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
@@ -213,8 +228,15 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
                              generic.ListView):
     context_object_name = 'reviews'
-    template_name = 'reviews/review_to_conclude.html'
+    template_name = 'reviews/review_list.html'
     group_required = settings.GROUP_SECRETARY
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = _("Nog af te handelen studies")
+
+        return context
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
@@ -244,7 +266,14 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
 class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
                              CommitteeMixin, generic.ListView):
     context_object_name = 'reviews'
-    template_name = 'reviews/review_all_list.html'
+    template_name = 'reviews/review_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = _("Alle ingezonden studies")
+
+        return context
     
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
@@ -262,7 +291,7 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
         """Returns all open Committee Decisions of all Users"""
         reviews = {}
         objects = Review.objects.filter(
-            stage__gte=Review.COMMISSION,
+            stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
         )
