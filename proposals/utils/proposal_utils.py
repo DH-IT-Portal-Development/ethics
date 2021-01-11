@@ -265,7 +265,7 @@ def _get_next_proposal_number(current_year) -> int:
         # We count all proposals for this year by selecting all proposals
         # with a reference number ending with the current year.
         last_proposal = Proposal.objects.filter(
-            reference_number__startswith="{}-".format(str(current_year)[:2])
+            reference_number__startswith="{}-".format(str(current_year)[2:])
         ).order_by('-reference_number').first()
 
         if not last_proposal:
