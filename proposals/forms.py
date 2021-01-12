@@ -246,10 +246,13 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         self.fields['parent'].queryset = self._get_parent_queryset()
 
     def _get_parent_queryset(self):
+        # Return all non-pre-assessments, that are not currently in review
         return Proposal.objects.filter(
             is_pre_assessment=False
         ).filter(
             Q(applicants=self.user, ) | Q(supervisor=self.user)
+        ).filter(
+            Q(status=Proposal.DRAFT) | Q(status__gte=Proposal.DECISION_MADE)
         ).distinct()
 
 
@@ -283,8 +286,16 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):
-        return super()._get_parent_queryset().filter(
-            Q(status_review=False, ) | Q(status_review=None)
+        # Select non-pre-assessments that have been reviewed and rejected and
+        # haven't been parented yet.
+        # Those are eligible for revisions
+        return Proposal.objects.filter(
+            is_pre_assessment=False,
+            status=Proposal.DECISION_MADE,
+            status_review=False,
+            children__isnull=True,
+        ).filter(
+            Q(applicants=self.user, ) | Q(supervisor=self.user)
         ).distinct()
 
 
@@ -308,8 +319,15 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):
-        return super()._get_parent_queryset().filter(
+        # Select non-pre-assessments that have been reviewed and approved and
+        # haven't been parented yet.
+        # Those are eligible for amendments
+        return Proposal.objects.filter(
+            is_pre_assessment=False,
             status_review=True,
+            children__isnull=True,
+        ).filter(
+            Q(applicants=self.user, ) | Q(supervisor=self.user)
         ).distinct()
 
 

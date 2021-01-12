@@ -342,6 +342,7 @@ bij deze studie?'),
     parent = models.ForeignKey(
         'self',
         null=True,
+        related_name="children",
         verbose_name=_('Te kopiëren studie'),
         help_text=_(
             'Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'),
