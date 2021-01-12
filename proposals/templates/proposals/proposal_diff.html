@@ -210,8 +210,7 @@ $(function() {
             </table>
 
             {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
-            {% for study in proposal.study_set.all %}
-            {% for p_study in p_proposal.study_set.all %}
+            {% for study, p_study in zipped_studies %}
             <h2 class="mt-5 mb-1">{% trans "De deelnemers" %}</h2>
             {% include "studies/study_title.html" %}
             <table class="proposals-diff ">
@@ -334,9 +333,9 @@ $(function() {
             {% if observation.version == p_observation.version %}
             {% include "studies/study_title.html" %}
 
-            {% if intervention.version == 1 %}
+            {% if observation.version == 1 %}
                 {% include "proposals/diff/observation_v1.html" %}
-            {% elif intervention.version == 2 %}
+            {% elif observation.version == 2 %}
                 {% include "proposals/diff/observation_v2.html" %}
             {% endif %}
 
@@ -626,7 +625,6 @@ $(function() {
                 </tr>
                 {% endif %}
             </table>
-            {% endfor %}
             {% endfor %}
 
             <h2 class="mt-5 mb-1">{% trans "Concept-aanmelding versturen" %}</h2>

@@ -532,6 +532,18 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_diff.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        obj = self.get_object()
+
+        context['zipped_studies'] = zip(
+            obj.study_set.all(),
+            obj.parent.study_set.all()
+        )
+
+        return context
+
 
 ########################
 # Preliminary assessment
