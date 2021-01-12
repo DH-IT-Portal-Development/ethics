@@ -12,7 +12,8 @@
         $(function () {
             depends_on_value('confirmation_sent', 'True', 'confirmation_comments');
             depends_on_list_value('continuation', ['0', '5'], 'has_minor_revision');
-            depends_on_value('has_minor_revision', 'True', 'minor_revision_description')
+            depends_on_value('has_minor_revision', 'True', 'minor_revision_description');
+            depends_on_list_value('continuation', ['0', '5'], 'in_archive')
         });
     </script>
 {% endblock %}
@@ -45,5 +46,6 @@
             </form>
         </div>
     </div>
+
 
 {% endblock %}

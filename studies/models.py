@@ -9,7 +9,11 @@ from django.utils.translation import ugettext_lazy as _
 from main.models import YES_NO_DOUBT
 from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
+#<<<<<<< HEAD
 from studies.utils import study_urls
+#=======
+from proposals.utils import proposal_utils
+#>>>>>>> origin/feature/small-fixes
 
 
 class AgeGroup(models.Model):
@@ -410,39 +414,47 @@ class Documents(models.Model):
     study = models.OneToOneField(Study, on_delete=models.CASCADE, blank=True,
                                  null=True)
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
+    filename_factory = proposal_utils.filename_factory
 
     informed_consent = models.FileField(
         _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Informed_Consent')
+    )
+        
     briefing = models.FileField(
         _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Briefing')
+    )
 
     director_consent_declaration = models.FileField(
         _(
             'Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
         blank=True,
         validators=[validate_pdf_or_doc],
-        help_text=(
-            'If it is already signed, upload the signed declaration form. If it is not signed yet, '
-            'you can upload the unsigned document and send the document when it is signed to the'
-            ' secretary of the FEtC-H')
+        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
+                   'you can upload the unsigned document and send the document when it is signed to the'
+                   ' secretary of the FEtC-H'),
+        upload_to=filename_factory('Department_Consent')
     )
 
     director_consent_information = models.FileField(
         _(
             'Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Department_Info')
     )
 
     parents_information = models.FileField(
         _(
             'Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Parental_Info')
     )
 
     def save(self, *args, **kwargs):
