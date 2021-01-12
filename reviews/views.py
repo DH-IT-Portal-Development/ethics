@@ -445,6 +445,13 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
                 decision.date_decision = timezone.now()
                 decision.save()
 
+            # Mark the proposal as finished
+            proposal = form.instance.proposal
+            proposal.status = Proposal.DECISION_MADE
+            proposal.status_review = False
+            proposal.date_reviewed = timezone.now()
+            proposal.save()
+
             form.instance.continuation = Review.REVISION
             form.instance.date_end = timezone.now()
             form.instance.stage = Review.CLOSED
