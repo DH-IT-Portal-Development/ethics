@@ -38,16 +38,12 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
     is_submitted = True
     context_object_name = 'proposals'
 
-    # Used to set the default dataTable ordering
-    sort_column = 3
-    sort_direction = "desc"
-
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
                                        in_archive=True,
-                                       public=True)
+                                       public=True).order_by("date_confirmed")
     
     def add_route_info(self, p):
         """Adds human-readable route info to the given proposal."""
@@ -70,14 +66,14 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
         context['modifiable'] = self.is_modifiable
         context['submitted'] = self.is_submitted
         context['is_secretary'] = self.request.user == get_secretary()
-        context['sort_column'] = self.sort_column
-        context['sort_direction'] = self.sort_direction
 
         return context
 
     def get_my_proposals(self):
         return Proposal.objects.filter(
             Q(applicants=self.request.user) | Q(supervisor=self.request.user)
+        ).order_by(
+            "-date_modified"
         ).distinct()
 
 
@@ -96,7 +92,7 @@ class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
                                        status_review=True,
                                        in_archive=True,
                                        reviewing_committee=self.committee,
-                                       public=True)
+                                       public=True).order_by("date_confirmed")
 
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
@@ -118,7 +114,9 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
 
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
-                                       in_archive=True)
+                                       in_archive=True).order_by(
+            "date_confirmed"
+        )
 
 
 class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
@@ -141,13 +139,13 @@ class MyConceptsView(BaseProposalsView):
     is_modifiable = True
     is_submitted = False
 
-    # Last modifed
-    sort_column = 6
-
     def get_queryset(self):
         """Returns all non-submitted Proposals for the current User"""
         return self.get_my_proposals().filter(
-            status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
+            status__lt=Proposal.SUBMITTED_TO_SUPERVISOR
+        ).order_by(
+            "-date_modified"
+        )
 
 
 class MySubmittedView(BaseProposalsView):
@@ -160,7 +158,10 @@ class MySubmittedView(BaseProposalsView):
         """Returns all submitted Proposals for the current User"""
         return self.get_my_proposals().filter(
             status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
-            status__lt=Proposal.DECISION_MADE)
+            status__lt=Proposal.DECISION_MADE
+        ).order_by(
+            "-date_modified"
+        )
 
 
 class MyCompletedView(BaseProposalsView):
@@ -172,7 +173,10 @@ class MyCompletedView(BaseProposalsView):
     def get_queryset(self):
         """Returns all completed Proposals for the current User"""
         return self.get_my_proposals().filter(
-            status__gte=Proposal.DECISION_MADE)
+            status__gte=Proposal.DECISION_MADE
+        ).order_by(
+            "-date_modified"
+        )
 
 
 class MySupervisedView(BaseProposalsView):
@@ -191,7 +195,12 @@ class MySupervisedView(BaseProposalsView):
 
     def get_queryset(self):
         """Returns all Proposals supervised by the current User"""
-        plist = [self.add_route_info(p) for p in Proposal.objects.filter(supervisor=self.request.user)]
+        plist = [self.add_route_info(p) for p in Proposal.objects.filter(
+                        supervisor=self.request.user
+                    ).order_by(
+                        "-date_modified"
+                    )
+                 ]
         return plist
 
 
@@ -200,9 +209,6 @@ class MyProposalsView(BaseProposalsView):
     body = _('Dit overzicht toont al uw studies.')
     is_modifiable = True
     is_submitted = True
-
-    sort_column = 6
-
     def get_queryset(self):
         """Returns all Proposals for the current User"""
         return self.get_my_proposals()
@@ -215,15 +221,16 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
     is_modifiable = True
     is_submitted = False
 
-    sort_column = 6
-
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
         return Proposal.objects.filter(
             Q(in_course=True) | Q(is_exploration=True),
             Q(applicants=self.request.user) |
             (Q(supervisor=self.request.user) &
-             Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR)))
+             Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR))
+        ).order_by(
+            "-date_modified"
+        )
 
 
 ##########################
