@@ -43,7 +43,7 @@
                 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <table>{{ form.as_table }}</table>
                     <div class="float-right">
-                        <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">
+                        <a class="button" href="javascript:history.go(-1);">
                             {% trans "Terug naar de vorige pagina" %}
                         </a>
                         <input class="pure-button pure-button-primary" type="submit"

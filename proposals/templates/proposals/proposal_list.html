@@ -130,6 +130,14 @@
                                 <div class="ufl-undertitle-line">
                                     {% trans "Laatst bijgewerkt" %}: {{ proposal.date_modified|date:'j F Y, H:m' }}
                                 </div>
+                                <div class="ufl-undertitle-line">
+                                    {% trans 'Status' %}:
+                                    {% if proposal.status >= 55 and proposal.review_set.last %}
+                                        {{ proposal.review_set.last.get_continuation_display }}
+                                    {% else %}
+                                        {{ proposal.get_status_display }}
+                                    {% endif %}
+                                </div>
                             </div>
 
                             <div class="ufl-details">
