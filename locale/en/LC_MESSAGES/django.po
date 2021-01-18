@@ -1320,6 +1320,26 @@ msgstr "Title of trajectory 4"
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
+#: proposals/forms.py:430
+msgid "Naam traject 6"
+msgstr "Title of trajectory 6"
+
+#: proposals/forms.py:432
+msgid "Naam traject 7"
+msgstr "Title of trajectory 7"
+
+#: proposals/forms.py:434
+msgid "Naam traject 8"
+msgstr "Title of trajectory 8"
+
+#: proposals/forms.py:436
+msgid "Naam traject 9"
+msgstr "Title of trajectory 9"
+
+#: proposals/forms.py:438
+msgid "Naam traject 10"
+msgstr "Title of trajectory 10"
+
 #: proposals/forms.py:471
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "

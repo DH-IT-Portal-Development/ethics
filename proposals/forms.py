@@ -435,13 +435,24 @@ class StudyStartForm(forms.ModelForm):
                                    required=False)
     study_name_5 = forms.CharField(label=_('Naam traject 5'), max_length=15,
                                    required=False)
+    study_name_6 = forms.CharField(label=_('Naam traject 6'), max_length=15,
+                                   required=False)
+    study_name_7 = forms.CharField(label=_('Naam traject 7'), max_length=15,
+                                   required=False)
+    study_name_8 = forms.CharField(label=_('Naam traject 8'), max_length=15,
+                                   required=False)
+    study_name_9 = forms.CharField(label=_('Naam traject 9'), max_length=15,
+                                   required=False)
+    study_name_10 = forms.CharField(label=_('Naam traject 10'), max_length=15,
+                                   required=False)
 
     class Meta:
         model = Proposal
         fields = [
             'studies_similar', 'studies_number',
             'study_name_1', 'study_name_2', 'study_name_3', 'study_name_4',
-            'study_name_5'
+            'study_name_5', 'study_name_6', 'study_name_7', 'study_name_8',
+            'study_name_9', 'study_name_10',
         ]
         widgets = {
             'studies_similar': forms.RadioSelect(choices=YES_NO),
@@ -478,7 +489,7 @@ class StudyStartForm(forms.ModelForm):
                 self.add_error('studies_number', _(
                     'Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
             for n in range(nr_studies):
-                if n >= 5:
+                if n >= 10:
                     break
                 study_name = 'study_name_' + str(n + 1)
                 if not cleaned_data[study_name]:

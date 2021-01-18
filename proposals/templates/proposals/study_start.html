@@ -42,7 +42,7 @@ $(function() {
 
         if (is_dissimilar) {
             $('input[name="study_name_1"]').parents('tr').prev().show();
-            for (var i = 1; i <= 5; i++) {
+            for (var i = 1; i <= 10; i++) {
                 $('input[name="study_name_' + i + '"]').parents('tr').toggle(i <= $(this).val());
             }
         }
