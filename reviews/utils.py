@@ -206,11 +206,10 @@ def start_review_route(review, commission_users, use_short_route):
     was_revised = review.proposal.is_revision
     
     if was_revised:
-        subject = _('FETC-GW: gereviseerde studie ter beoordeling')
-        new_or_revised = _('gereviseerde')
+        subject = 'FETC-GW: gereviseerde studie ter beoordeling'
     else:
-        subject = _('FETC-GW: nieuwe studie ter beoordeling')
-        new_or_revised = _('nieuwe')
+        subject = 'FETC-GW: nieuwe studie ter beoordeling'
+        # These emails are Dutch-only, therefore intentionally untranslated
     
     for user in commission_users:
         
@@ -220,7 +219,7 @@ def start_review_route(review, commission_users, use_short_route):
             'reviewer': user.get_full_name(),
             'review_date': review.date_should_end,
             'is_pre_assessment': review.proposal.is_pre_assessment,
-            'new_or_revised': new_or_revised,
+            'was_revised': was_revised,
         }
         msg_plain = render_to_string(template, params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
