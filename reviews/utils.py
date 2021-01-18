@@ -200,16 +200,26 @@ def start_review_route(review, commission_users, use_short_route):
     """
     Creates Decisions and sends notification e-mail to the selected Reviewers
     """
+      
+    template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
+    
+    was_revised = review.proposal.is_revision
+    
+    if was_revised:
+        subject = 'FETC-GW: gereviseerde studie ter beoordeling'
+    else:
+        subject = 'FETC-GW: nieuwe studie ter beoordeling'
+        # These emails are Dutch-only, therefore intentionally untranslated
+    
     for user in commission_users:
+        
         Decision.objects.create(review=review, reviewer=user)
-
-        template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
-        subject = _('FETC-GW: nieuwe studie ter beoordeling')
         params = {
             'secretary': get_secretary().get_full_name(),
             'reviewer': user.get_full_name(),
             'review_date': review.date_should_end,
             'is_pre_assessment': review.proposal.is_pre_assessment,
+            'was_revised': was_revised,
         }
         msg_plain = render_to_string(template, params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])

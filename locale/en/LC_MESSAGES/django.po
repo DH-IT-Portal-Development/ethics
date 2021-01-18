@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-11 09:55+0100\n"
+"POT-Creation-Date: 2020-12-17 16:52+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -301,7 +301,7 @@ msgstr "Back to the beginning of the session"
 msgid "Startpagina"
 msgstr "Start page"
 
-#: core/templates/base/menu.html:11 proposals/views/proposal_views.py:197
+#: core/templates/base/menu.html:11 proposals/views/proposal_views.py:202
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -331,23 +331,23 @@ msgstr "Create a revision for an existing study"
 msgid "Maak een amendement van een al goedgekeurde studie"
 msgstr "Create an amendment to an already approved study"
 
-#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:137
+#: core/templates/base/menu.html:32 proposals/views/proposal_views.py:142
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
-#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:210
+#: core/templates/base/menu.html:35 proposals/views/proposal_views.py:215
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
-#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:152
+#: core/templates/base/menu.html:38 proposals/views/proposal_views.py:157
 msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
-#: core/templates/base/menu.html:41 proposals/views/proposal_views.py:165
+#: core/templates/base/menu.html:41 proposals/views/proposal_views.py:170
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
-#: core/templates/base/menu.html:44 proposals/views/proposal_views.py:177
+#: core/templates/base/menu.html:44 proposals/views/proposal_views.py:182
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -410,12 +410,10 @@ msgid "Help"
 msgstr "Help"
 
 #: core/templates/base/menu.html:125 core/templates/core/index.html:137
-#: core/templates/dev.html:227
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
 #: core/templates/base/menu.html:128 core/templates/core/index.html:141
-#: core/templates/dev.html:231
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -424,7 +422,6 @@ msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr " Regulations Linguistics Chamber (LC) "
 
 #: core/templates/base/menu.html:134 core/templates/core/index.html:149
-#: core/templates/dev.html:239
 #: proposals/templates/proposals/proposal_pdf.html:391
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/utils/proposal_utils.py:82
@@ -466,7 +463,7 @@ msgstr "Close navigation"
 msgid "Voortgang"
 msgstr "Progress"
 
-#: core/templates/core/index.html:19 core/templates/dev.html:109
+#: core/templates/core/index.html:19
 msgid ""
 "\n"
 "        <strong>Belangrijk</strong>: bij het indienen van een aanvraag\n"
@@ -484,7 +481,7 @@ msgstr ""
 "<a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
 "humanities\" target=\"_blank\">intranet</a>."
 
-#: core/templates/core/index.html:27 core/templates/dev.html:117
+#: core/templates/core/index.html:27
 msgid ""
 "\n"
 "        In dit webportaal van de Facultaire Ethische Toetsingscommissie\n"
@@ -497,7 +494,7 @@ msgstr ""
 "H) enables you to organize all <strong>practical matters</strong> relating "
 "to the ethics assessment of your research."
 
-#: core/templates/core/index.html:34 core/templates/dev.html:124
+#: core/templates/core/index.html:34
 msgid ""
 "\n"
 "        U kunt eennieuwe studie bij de commissie aanmelden, maar ook "
@@ -509,7 +506,7 @@ msgstr ""
 "You can register a new study with the committee as well as viewing all your "
 "previous applications."
 
-#: core/templates/core/index.html:41 core/templates/dev.html:131
+#: core/templates/core/index.html:41
 #, python-format
 msgid ""
 "\n"
@@ -522,7 +519,7 @@ msgstr ""
 "You can also view all processed and approved studies in the <a href="
 "\"%(archive_url)s\">portal's archive</a>."
 
-#: core/templates/core/index.html:47 core/templates/dev.html:137
+#: core/templates/core/index.html:47
 msgid ""
 "\n"
 "        Voor noodzakelijke achtergrondinformatie verwijzen we naar de\n"
@@ -546,7 +543,7 @@ msgstr ""
 "<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
 "target=\"_blank\">the Linguistics Chamber </a>    "
 
-#: core/templates/core/index.html:59 core/templates/dev.html:149
+#: core/templates/core/index.html:59
 msgid ""
 "\n"
 "    In deze portal kunt u het volgende doen:\n"
@@ -556,12 +553,11 @@ msgstr ""
 "    In this portal you can do the following:\n"
 "    "
 
-#: core/templates/core/index.html:64 core/templates/dev.html:154
+#: core/templates/core/index.html:64
 msgid "Dien een nieuwe studie in"
 msgstr "Submit a new study"
 
 #: core/templates/core/index.html:66 core/templates/core/index.html:85
-#: core/templates/dev.html:156 core/templates/dev.html:175
 msgid ""
 "(check de meest recente voorbeelddocumenten op <a href=\"https://intranet.uu."
 "nl/documenten-ethische-toetsingscommissie-gw\" target=\"_blank\">intranet</"
@@ -571,89 +567,89 @@ msgstr ""
 "intranet.uu.nl/en/documents-ethics-assessment-committee-humanities\" target="
 "\"_blank\">intranet</a>)"
 
-#: core/templates/core/index.html:69 core/templates/dev.html:159
+#: core/templates/core/index.html:69
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: core/templates/core/index.html:72 core/templates/dev.html:162
+#: core/templates/core/index.html:72
 msgid "op basis van een kopie van een oude studie;"
 msgstr "from a copy of an old study;"
 
-#: core/templates/core/index.html:75 core/templates/dev.html:165
+#: core/templates/core/index.html:75
 msgid "voor voortoetsing t.b.v. subsidieaanvraag;"
 msgstr "for preliminary assessment regarding subsidy applications;"
 
-#: core/templates/core/index.html:79 core/templates/dev.html:169
+#: core/templates/core/index.html:79
 msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: core/templates/core/index.html:83 core/templates/dev.html:173
+#: core/templates/core/index.html:83
 msgid "Een gereviseerde studie aanmelden"
 msgstr "Submit a revised version of your study"
 
-#: core/templates/core/index.html:89 core/templates/dev.html:179
+#: core/templates/core/index.html:89
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
-#: core/templates/core/index.html:93 core/templates/dev.html:183
+#: core/templates/core/index.html:93
 msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW."
 msgstr "as an amendment, after your study has been approved by the FEtC-H."
 
-#: core/templates/core/index.html:97 core/templates/dev.html:187
+#: core/templates/core/index.html:97
 msgid "Bekijk"
 msgstr "View"
 
-#: core/templates/core/index.html:101 core/templates/dev.html:191
+#: core/templates/core/index.html:101
 msgid "mijn conceptstudies;"
 msgstr "my draft applications;"
 
-#: core/templates/core/index.html:104 core/templates/dev.html:194
+#: core/templates/core/index.html:104
 msgid "mijn oefenstudies;"
 msgstr "my practice applications;"
 
-#: core/templates/core/index.html:107 core/templates/dev.html:197
+#: core/templates/core/index.html:107
 msgid "mijn ingediende studies;"
 msgstr "my submitted applications;"
 
-#: core/templates/core/index.html:110 core/templates/dev.html:200
+#: core/templates/core/index.html:110
 msgid "mijn afgehandelde studies;"
 msgstr "my processed applications;"
 
-#: core/templates/core/index.html:113 core/templates/dev.html:203
+#: core/templates/core/index.html:113
 msgid "mijn studies als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: core/templates/core/index.html:116 core/templates/dev.html:206
+#: core/templates/core/index.html:116
 msgid "al mijn studies."
 msgstr "all my applications."
 
-#: core/templates/core/index.html:120 core/templates/dev.html:210
+#: core/templates/core/index.html:120
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: core/templates/core/index.html:125 core/templates/dev.html:215
+#: core/templates/core/index.html:125
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Algemene Kamer"
 msgstr "View all processed and approved studies of the General Chamber"
 
-#: core/templates/core/index.html:129 core/templates/dev.html:219
+#: core/templates/core/index.html:129
 msgid ""
 "Alle afgehandelde en goedgekeurde studies bekijken van de Linguïstiek Kamer"
 msgstr "View all processed and approved studies of the Linguistics Chamber"
 
-#: core/templates/core/index.html:145 core/templates/dev.html:235
+#: core/templates/core/index.html:145
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: core/templates/core/index.html:152 core/templates/dev.html:242
+#: core/templates/core/index.html:152
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: core/templates/core/index.html:155 core/templates/dev.html:245
+#: core/templates/core/index.html:155
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: core/templates/core/index.html:161 core/templates/dev.html:251
+#: core/templates/core/index.html:161
 #, python-format
 msgid ""
 "\n"
@@ -666,7 +662,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t"
 
-#: core/templates/core/index.html:166 core/templates/dev.html:256
+#: core/templates/core/index.html:166
 msgid ""
 "\n"
 "    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren "
@@ -677,20 +673,6 @@ msgstr ""
 "    Click <a href=\"http://fetc-gw.wp.hum.uu.nl/en/\">here</a> to return to "
 "the FEtC-H website.\n"
 "    "
-
-#: core/templates/dev.html:6
-msgid ""
-"\n"
-"Dev Sandbox - Oefenen met QuerySets\n"
-msgstr ""
-
-#: core/templates/dev.html:79
-msgid "Sleutel"
-msgstr ""
-
-#: core/templates/dev.html:80
-msgid "Waarde"
-msgstr ""
 
 #: core/templates/error/400.html:6 core/templates/error/500.html:6
 msgid "Server error"
@@ -900,7 +882,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: reviews/templates/reviews/change_chamber_form.html:16
 #: reviews/templates/reviews/decision_form.html:41
 #: reviews/templates/reviews/review_assign_form.html:31
-#: reviews/templates/reviews/review_close_form.html:31
+#: reviews/templates/reviews/review_close_form.html:32
 #: studies/templates/studies/study_update_attachments.html:23
 msgid "Terug naar de vorige pagina"
 msgstr "Back to the previous page"
@@ -3217,7 +3199,7 @@ msgstr "Start again"
 msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
-#: proposals/utils/proposal_utils.py:334 reviews/utils.py:223
+#: proposals/utils/proposal_utils.py:334 reviews/utils.py:234
 msgid "FETC-GW: nieuwe studie ingediend"
 msgstr "FEtC-H: new application submitted"
 
@@ -3255,7 +3237,7 @@ msgstr "Task-based research: session {} task {} (trajectory {})"
 msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
 
-#: proposals/views/proposal_views.py:32 proposals/views/proposal_views.py:87
+#: proposals/views/proposal_views.py:32 proposals/views/proposal_views.py:92
 msgid "Publiek archief"
 msgstr "Public archive"
 
@@ -3263,39 +3245,39 @@ msgstr "Public archive"
 msgid "Dit overzicht toont alle goedgekeurde studies."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:56 reviews/forms.py:13
+#: proposals/views/proposal_views.py:61 reviews/forms.py:13
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
-#: proposals/views/proposal_views.py:57 reviews/forms.py:12
+#: proposals/views/proposal_views.py:62 reviews/forms.py:12
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: proposals/views/proposal_views.py:58
+#: proposals/views/proposal_views.py:63
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: proposals/views/proposal_views.py:138
+#: proposals/views/proposal_views.py:143
 msgid "Dit overzicht toont al uw nog niet ingediende studies."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:153
+#: proposals/views/proposal_views.py:158
 msgid "Dit overzicht toont al uw ingediende studies."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:166
+#: proposals/views/proposal_views.py:171
 msgid "Dit overzicht toont al uw beoordeelde studies."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:179
+#: proposals/views/proposal_views.py:184
 msgid "Dit overzicht toont al uw studies waar u eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:198
+#: proposals/views/proposal_views.py:203
 msgid "Dit overzicht toont al uw studies."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:211
+#: proposals/views/proposal_views.py:216
 msgid ""
 "Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3303,20 +3285,20 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:233
+#: proposals/views/proposal_views.py:238
 #, python-format
 msgid "Studie %(title)s bewerkt"
 msgstr "Application %(title)s edited"
 
-#: proposals/views/proposal_views.py:285
+#: proposals/views/proposal_views.py:290
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:323
+#: proposals/views/proposal_views.py:328
 msgid "Studie verzonden"
 msgstr "Application submitted"
 
-#: proposals/views/proposal_views.py:380
+#: proposals/views/proposal_views.py:385
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3565,7 +3547,7 @@ msgstr ""
 "    "
 
 #: reviews/templates/reviews/review_close_form.html:7
-#: reviews/templates/reviews/review_close_form.html:30
+#: reviews/templates/reviews/review_close_form.html:31
 msgid "Review afsluiten"
 msgstr "Conclude review"
 
@@ -3783,24 +3765,41 @@ msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H: confirmation of submission of application for preliminary assessment"
 
-#: reviews/utils.py:207
+#: reviews/utils.py:209
+#, fuzzy
+#| msgid "FETC-GW: nieuwe studie ter beoordeling"
+msgid "FETC-GW: gereviseerde studie ter beoordeling"
+msgstr "FEtC-H: new study for assessment"
+
+#: reviews/utils.py:210
+#| msgid "Te reviseren studie"
+msgid "gereviseerde"
+msgstr "revised"
+
+#: reviews/utils.py:212
+#, fuzzy
+#| msgid "FETC-GW: nieuwe studie ter beoordeling"
 msgid "FETC-GW: nieuwe studie ter beoordeling"
 msgstr "FEtC-H: new study for assessment"
 
-#: reviews/utils.py:237
+#: reviews/utils.py:213
+msgid "nieuwe"
+msgstr "new"
+
+#: reviews/utils.py:248
 msgid "FETC-GW: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H: new decision added"
 
-#: reviews/utils.py:264
+#: reviews/utils.py:275
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils.py:270
+#: reviews/utils.py:281
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:274
+#: reviews/utils.py:285
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -3809,25 +3808,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils.py:277
+#: reviews/utils.py:288
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:280
+#: reviews/utils.py:291
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:286
+#: reviews/utils.py:297
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:289
+#: reviews/utils.py:300
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils.py:293
+#: reviews/utils.py:304
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -3835,7 +3834,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:299
+#: reviews/utils.py:310
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -3843,7 +3842,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:302
+#: reviews/utils.py:313
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -3853,7 +3852,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:306
+#: reviews/utils.py:317
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -3863,13 +3862,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:313
+#: reviews/utils.py:324
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:317
+#: reviews/utils.py:328
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -3880,13 +3879,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:334
+#: reviews/utils.py:345
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:338
+#: reviews/utils.py:349
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -3894,7 +3893,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:340
+#: reviews/utils.py:351
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -3904,11 +3903,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:345 reviews/utils.py:371
+#: reviews/utils.py:356 reviews/utils.py:382
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils.py:366
+#: reviews/utils.py:377
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -4163,16 +4162,16 @@ msgstr ""
 msgid "Study details for proposal %s"
 msgstr "Study details for proposal %s"
 
-#: studies/models.py:406
+#: studies/models.py:427
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:410
+#: studies/models.py:434
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:416
+#: studies/models.py:442
 msgid ""
 "Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het "
 "departement (in .pdf of .doc(x)-format)"
@@ -4180,7 +4179,7 @@ msgstr ""
 "Please upload the declaration of consent for the school director/head of the "
 "department (in .pdf of .doc(x)-format)"
 
-#: studies/models.py:425
+#: studies/models.py:452
 msgid ""
 "Upload hier de informatiebrief voor de schoolleider/hoofd van het "
 "departement (in .pdf of .doc(x)-formaat)"
@@ -4188,7 +4187,7 @@ msgstr ""
 "Please upload the the information letter for the school director/head of the "
 "department (in .pdf of .doc(x)-format)"
 
-#: studies/models.py:431
+#: studies/models.py:459
 msgid ""
 "Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)"
 msgstr ""
