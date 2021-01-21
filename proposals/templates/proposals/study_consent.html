@@ -74,6 +74,18 @@
                     kunt u weer weg halen door alle formulieren te wissen.
                 {% endblocktrans %}
             </p>
+
+            <h3>
+                {% trans "Wijzigingen bijhouden" %}
+            </h3>
+            <p>
+                {% blocktrans %}
+                    
+
+    Indien je een document moet wijzigen voor een revisie vragen wij je om 'Track changes' aan te zetten, of een apart bestand bij te voegen met de wijzigingen onder 'Extra documenten'. Op deze manier zijn wijzigingen duidelijker voor beoordelaars, en kan uw voorstel sneller beoordeeld worden.<br><b>Tip:</b> Zet 'Track changes' aan voordat u de eerste versie uploadt, zo kunt u dit later niet vergeten. 
+
+                {% endblocktrans %}
+            </p>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 {{ formset.management_form }}
 
