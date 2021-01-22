@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
-from .utils import available_urls, filename_factory
+from .utils import available_urls, filename_factory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
 
@@ -242,6 +242,7 @@ Zep software)'),
 
     pdf = models.FileField(blank = True,
         upload_to=filename_factory('Proposal'),
+        storage=OverwriteStorage(),
     )
 
     # Fields with respect to Studies
@@ -530,6 +531,7 @@ bij een METC?'),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=filename_factory('METC_Decision'),
+        storage=OverwriteStorage(),
     )
 
     # Status
