@@ -395,15 +395,35 @@ class FilenameFactory:
         from proposals.models import Proposal
         
         if isinstance(instance, Proposal):
+            # This is a proposal PDF or METC decision file
             proposal = instance
             trajectory = None
         else:
-            # In case of Documents or Study objects
+            # In case of Documents objects
             proposal = instance.proposal
             try:
                 trajectory = 'T' + str(instance.study.order)
             except AttributeError:
-                trajectory = None
+                # No associated study, so this is an extra Documents instance
+                # We need to give it an index so they don't overwrite each other
+                extra_index = 1
+                
+                # Again, to prevent circular imports
+                from studies.models import Documents
+                qs = Documents.objects.filter(
+                    proposal=proposal).filter(
+                        study=None)
+                
+                for docs in qs:
+                    # The current Documents instance might not yet be saved and
+                    # therefore not exist in the QS. Hence the for loop instead of
+                    # the more traditional while
+                    if docs == instance:
+                        break # i.e. this may never happen
+                    extra_index += 1
+                
+                # Unknown
+                trajectory = 'Extra' + str(extra_index)
         
         lastname = proposal.created_by.last_name
         refnum = proposal.reference_number
