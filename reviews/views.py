@@ -438,6 +438,11 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             # Remove the Decision for obsolete reviewers
             Decision.objects.filter(review=review,
                                     reviewer__in=obsolete_reviewers).delete()
+            
+            # Finally, update the review process
+            # This prevents it waiting for removed reviewers
+            review.update_go()
+            
         else:
             # Directly mark this Proposal as closed: applicants should start a revision Proposal
             for decision in Decision.objects.filter(review=review):
