@@ -395,8 +395,9 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
         - Save the PDF on the Proposal
         - Start the review process on submission (though not for practice Proposals)
         """
+        
         success_url = super(ProposalSubmit, self).form_valid(form)
-        if 'save_back' not in self.request.POST:
+        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf.html')
             if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
