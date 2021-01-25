@@ -401,7 +401,7 @@ class FilenameFactory:
             # In case of Documents or Study objects
             proposal = instance.proposal
             try:
-                trajectory = 'T' + str(instance.study.id)
+                trajectory = 'T' + str(instance.study.order)
             except AttributeError:
                 trajectory = None
         
@@ -410,12 +410,21 @@ class FilenameFactory:
         
         extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
         
-        fn_parts = [ p for p in ['FETC',
-                                 refnum,
-                                 lastname,
-                                 trajectory,
-                                 self.document_type,
-                                 ] if p != None or '' ]
+        fn_parts = ['FETC',
+                    refnum,
+                    lastname,
+                    trajectory,
+                    self.document_type,
+                    ]
+        
+        def not_empty(item):
+            if item == None:
+                return False
+            if str(item) == '':
+                return False
+            return True
+        
+        fn_parts = filter(not_empty, fn_parts)
         
         return '-'.join(fn_parts) + extension 
 
