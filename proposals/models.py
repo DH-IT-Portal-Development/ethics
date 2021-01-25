@@ -9,9 +9,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
-from .utils import available_urls, filename_factory, OverwriteStorage
+from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
+PROPOSAL_FILENAME = FilenameFactory('Proposal')
+METC_DECISION_FILENAME = FilenameFactory('METC_Decision')
 
 
 class Relation(models.Model):
@@ -241,7 +243,7 @@ Zep software)'),
     )
 
     pdf = models.FileField(blank = True,
-        upload_to=filename_factory('Proposal'),
+        upload_to=PROPOSAL_FILENAME,
         storage=OverwriteStorage(),
     )
 
@@ -530,7 +532,7 @@ bij een METC?'),
 (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc],
-        upload_to=filename_factory('METC_Decision'),
+        upload_to=METC_DECISION_FILENAME,
         storage=OverwriteStorage(),
     )
 

@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.translation import activate, get_language, ugettext as _
+from django.utils.deconstruct import deconstructible
 
 from easy_pdf.rendering import render_to_pdf
 
@@ -20,7 +21,7 @@ from studies.utils import study_urls
 __all__ = ['available_urls', 'generate_ref_number',
            'generate_revision_ref_number', 'generate_pdf',
            'check_local_facilities', 'notify_local_staff',
-           'filename_factory', 'OverwriteStorage',
+           'FilenameFactory', 'OverwriteStorage',
            ]
 
 
@@ -377,14 +378,18 @@ def notify_local_staff(proposal):
     # Reset the current language
     activate(current_language)
 
-def filename_factory(document_type):
-    'Returns a filename generator for a given document_type'
+
+@deconstructible
+class FilenameFactory:
+    '''A callable class which can be passed to upload_to() in FileFields
+    and can be deconstructed for migrations'''
     
-    def mkfn(instance, original_fn):
+    def __init__(self, document_type):
+        self.document_type = document_type
+    
+    def __call__(self, instance, original_fn):
         '''Returns a custom filename preserving the original extension,
-        something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"
-        
-        Note: this function absolutely expects an instance.proposal'''
+        something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"'''
         
         # Importing here to prevent circular import
         from proposals.models import Proposal
@@ -409,12 +414,10 @@ def filename_factory(document_type):
                                  refnum,
                                  lastname,
                                  trajectory,
-                                 document_type,
+                                 self.document_type,
                                  ] if p != None or '' ]
         
         return '-'.join(fn_parts) + extension 
-    
-    return mkfn
 
 
 class OverwriteStorage(FileSystemStorage):
@@ -424,18 +427,6 @@ class OverwriteStorage(FileSystemStorage):
         available for new content to be written to.
 
         Modified from http://djangosnippets.org/snippets/976/
-
-        This file storage solves overwrite on upload problem. Another
-        proposed solution was to override the save method on the model
-        like so (from https://code.djangoproject.com/ticket/11663):
-
-        def save(self, *args, **kwargs):
-            try:
-                this = MyModelName.objects.get(id=self.id)
-                if this.MyImageFieldName != self.MyImageFieldName:
-                    this.MyImageFieldName.delete()
-            except: pass
-            super(MyModelName, self).save(*args, **kwargs)
         """
         import os
         
