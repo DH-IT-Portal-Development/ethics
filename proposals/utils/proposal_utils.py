@@ -391,6 +391,7 @@ def filename_factory(document_type):
         
         if isinstance(instance, Proposal):
             proposal = instance
+            trajectory = None
         else:
             # In case of Documents or Study objects
             proposal = instance.proposal
