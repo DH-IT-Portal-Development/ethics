@@ -12,7 +12,7 @@ from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
 from studies.forms import StudyForm, StudyDesignForm, SessionStartForm
 from tasks.forms import TaskStartForm, TaskEndForm, TaskForm
-from ..forms import ProposalForm, WmoForm, StudyStartForm
+from ..forms import ProposalForm, WmoForm, StudyStartForm, WmoApplicationForm
 from ..models import Proposal
 
 from django.utils.translation import ugettext_lazy as _
@@ -22,8 +22,8 @@ from django.urls import reverse_lazy as reverse
 def _build_forms(proposal: Proposal) -> OrderedDict:
     forms = OrderedDict()
 
-    wmo_create_url = 'proposals:wmo_create'
     wmo_update_url = 'proposals:wmo_update'
+    wmo_application_url = 'proposals:wmo_application'
 
     # Get the correct URL for the
     if proposal.is_pre_assessment:
@@ -63,19 +63,19 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
         return forms
 
     if hasattr(proposal, 'wmo'):
-        forms['wmo'] = (
+        forms['wmo_form'] = (
             WmoForm,
             reverse(wmo_update_url, args=[proposal.wmo.pk]),
             _('Ethische toetsing nodig door een METC?'),
-            proposal.wmo
+            proposal.wmo,
         )
-    else:
-        forms['wmo'] = (
-            WmoForm,
-            reverse(wmo_create_url, args=[proposal.pk]),
-            _('Ethische toetsing nodig door een METC?'),
-            None,
-        )
+        if proposal.wmo.status != proposal.wmo.NO_WMO:
+            forms['wmo_application'] = (
+                WmoApplicationForm,
+                reverse(wmo_application_url, args=[proposal.pk]),
+                _('Ethische toetsing nodig door een METC?'),
+                proposal.wmo,
+            )
 
     # Now we're done for pre assessment proposals
     if proposal.is_pre_assessment:
@@ -226,7 +226,7 @@ def get_form_errors(proposal: Proposal) -> list:
     troublesome_pages = []
 
     for key, form in forms.items():
-        form_class, url, page_name, obj = form
+        form_class, url, page_name, obj = form        
         try:
             kwargs = {
                 'instance': obj,
@@ -245,7 +245,9 @@ def get_form_errors(proposal: Proposal) -> list:
                 kwargs['study'] = obj.study
 
             instance = form_class(**kwargs)
+            
             for field, error in instance.errors.items():
+                
                 if field in instance.fields:
                     troublesome_pages.append({
                         'url':  url,
