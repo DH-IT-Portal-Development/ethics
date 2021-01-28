@@ -402,26 +402,44 @@ class WmoCheckForm(forms.ModelForm):
         self.fields['is_medical'].choices = YES_NO_DOUBT
 
 
-class WmoApplicationForm(ConditionalModelForm):
+class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Wmo
         fields = [
-            'metc_application', 'metc_decision', 'metc_decision_pdf',
+            'metc_application',
+            'metc_decision',
+            'metc_decision_pdf',
         ]
         widgets = {
             'metc_application': forms.RadioSelect(choices=YES_NO),
             'metc_decision':    forms.RadioSelect(choices=YES_NO),
         }
+        
+    _soft_validation_fields = [
+        'metc_application',
+        'metc_decision',
+        'metc_decision_pdf',
+        ]
 
     def clean(self):
         """
         Check for conditional requirements:
-        - If metc_decision has been checked, make sure the file is added
+        - An metc_decision is always required
         """
         cleaned_data = super(WmoApplicationForm, self).clean()
-
-        self.check_dependency(cleaned_data, 'metc_decision',
-                              'metc_decision_pdf')
+        
+        # A PDF is always required for this form, but it's in ProposalSubmit
+        # validation that this is actually rejected. Otherwise this is soft
+        # validation
+        if cleaned_data['metc_decision_pdf'] == None:
+            from django.forms import ValidationError
+            self.add_error('metc_decision_pdf',
+                           ValidationError(
+                               _('In dit geval is een beslissing van een METC vereist'),
+                               )
+                           )
+        
+        return cleaned_data # Sticking to Django conventions
 
 
 class StudyStartForm(forms.ModelForm):
