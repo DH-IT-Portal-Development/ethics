@@ -5,11 +5,13 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.translation import activate, get_language, ugettext as _
+from django.utils.deconstruct import deconstructible
 
 from easy_pdf.rendering import render_to_pdf
 
@@ -18,7 +20,9 @@ from studies.utils import study_urls
 
 __all__ = ['available_urls', 'generate_ref_number',
            'generate_revision_ref_number', 'generate_pdf',
-           'check_local_facilities', 'notify_local_staff']
+           'check_local_facilities', 'notify_local_staff',
+           'FilenameFactory', 'OverwriteStorage',
+           ]
 
 
 def available_urls(proposal):
@@ -261,7 +265,7 @@ def _get_next_proposal_number(current_year) -> int:
         # We count all proposals for this year by selecting all proposals
         # with a reference number ending with the current year.
         last_proposal = Proposal.objects.filter(
-            reference_number__startswith="{}-".format(str(current_year)[:2])
+            reference_number__startswith="{}-".format(str(current_year)[2:])
         ).order_by('-reference_number').first()
 
         if not last_proposal:
@@ -373,3 +377,89 @@ def notify_local_staff(proposal):
 
     # Reset the current language
     activate(current_language)
+
+
+@deconstructible
+class FilenameFactory:
+    '''A callable class which can be passed to upload_to() in FileFields
+    and can be deconstructed for migrations'''
+    
+    def __init__(self, document_type):
+        self.document_type = document_type
+    
+    def __call__(self, instance, original_fn):
+        '''Returns a custom filename preserving the original extension,
+        something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"'''
+        
+        # Importing here to prevent circular import
+        from proposals.models import Proposal
+        
+        if isinstance(instance, Proposal):
+            # This is a proposal PDF or METC decision file
+            proposal = instance
+            trajectory = None
+        else:
+            # In case of Documents objects
+            proposal = instance.proposal
+            try:
+                trajectory = 'T' + str(instance.study.order)
+            except AttributeError:
+                # No associated study, so this is an extra Documents instance
+                # We need to give it an index so they don't overwrite each other
+                extra_index = 1
+                
+                # Again, to prevent circular imports
+                from studies.models import Documents
+                qs = Documents.objects.filter(
+                    proposal=proposal).filter(
+                        study=None)
+                
+                for docs in qs:
+                    # The current Documents instance might not yet be saved and
+                    # therefore not exist in the QS. Hence the for loop instead of
+                    # the more traditional while
+                    if docs == instance:
+                        break # i.e. this may never happen
+                    extra_index += 1
+                
+                # Unknown
+                trajectory = 'Extra' + str(extra_index)
+        
+        lastname = proposal.created_by.last_name
+        refnum = proposal.reference_number
+        
+        extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
+        
+        fn_parts = ['FETC',
+                    refnum,
+                    lastname,
+                    trajectory,
+                    self.document_type,
+                    ]
+        
+        def not_empty(item):
+            if item == None:
+                return False
+            if str(item) == '':
+                return False
+            return True
+        
+        fn_parts = filter(not_empty, fn_parts)
+        
+        return '-'.join(fn_parts) + extension 
+
+
+class OverwriteStorage(FileSystemStorage):
+
+    def get_available_name(self, name, **kwargs):
+        """Returns a filename that's free on the target storage system, and
+        available for new content to be written to.
+
+        Modified from http://djangosnippets.org/snippets/976/
+        """
+        import os
+        
+        # If the filename already exists, remove it
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        return super(OverwriteStorage, self).get_available_name(name, **kwargs)
