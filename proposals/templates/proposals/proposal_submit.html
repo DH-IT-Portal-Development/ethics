@@ -119,7 +119,7 @@
                         aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
                     {% endblocktrans %}
                 </div>
-            {% endif %}{{troublesome_pages}}{% csrf_token %}
+            {% endif %}{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 {% if troublesome_pages %}
                     {% include "base/form_buttons.html" with no_forward=1 %}
