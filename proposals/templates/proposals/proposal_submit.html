@@ -98,16 +98,18 @@
                 {% endfor %}
             {% endif %}
 
-            {% if errors %}
+            <form action="" method="post" enctype="multipart/form-data">
+
+            {% if troublesome_pages %}
                 <div class="warning">
                     {% blocktrans %}
                         Er zijn nog errors gevonden op de volgende pagina's:
                     {% endblocktrans %}
                     <ul>
-                        {% for error in errors %}
+                        {% for error_page in troublesome_pages %}
                             <li>
-                                <a href="{{ error.url }}">
-                                    {{ error.page_name }}
+                                <a href="{{ error_page.url }}">
+                                    {{ error_page.page_name }}
                                 </a>
                             </li>
                         {% endfor %}
@@ -117,11 +119,9 @@
                         aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
                     {% endblocktrans %}
                 </div>
-            {% endif %}
-
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            {% endif %}{{troublesome_pages}}{% csrf_token %}
                 <table>{{ form.as_table }}</table>
-                {% if errors %}
+                {% if troublesome_pages %}
                     {% include "base/form_buttons.html" with no_forward=1 %}
                 {% else %}
                     {% if proposal.is_pre_assessment %}
