@@ -15,6 +15,7 @@ SUMMARY_MAX_WORDS = 200
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 METC_DECISION_FILENAME = FilenameFactory('METC_Decision')
+PRE_APPROVAL_FILENAME = FilenameFactory('Pre_Approval')
 
 
 class Relation(models.Model):
@@ -231,6 +232,7 @@ Zep software)'),
         _(
             'Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
         blank=True,
+        upload_to=PRE_APPROVAL_FILENAME,
         validators=[validate_pdf_or_doc],
     )
 
