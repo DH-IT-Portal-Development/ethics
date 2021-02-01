@@ -18,7 +18,7 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
     WmoApplication, WmoCheck, check_wmo, \
-    WmoCreatePreAssessment, WmoUpdatePreAssessment
+    WmoCreatePreAssessment, WmoUpdatePreAssessment, WmoApplicationPreAssessment
 
 app_name = 'proposals'
 
@@ -123,8 +123,10 @@ urlpatterns = [
         path('', WmoUpdate.as_view(), name='wmo_update'),
         path('pre/', WmoUpdatePreAssessment.as_view(), name='wmo_update_pre'),
     ])),
-    path('wmo/application/<int:pk>/', WmoApplication.as_view(),
-         name='wmo_application'),
+    path('wmo/application/<int:pk>/', include([
+        path('', WmoApplication.as_view(), name='wmo_application'),
+        path('pre/', WmoApplicationPreAssessment.as_view(), name='wmo_application_pre'),
+    ])),
     path('wmo/check/', WmoCheck.as_view(), name='wmo_check'),
     path('wmo/check_js/', check_wmo, name='check_wmo'),
 

@@ -534,6 +534,9 @@ class ProposalSubmitForm(forms.ModelForm):
         - Check if the inform_local_staff question should be asked
         """
         self.proposal = kwargs.pop('proposal', None)
+        
+        # Needed for POST data
+        self.request = kwargs.pop('request', None)
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
@@ -555,9 +558,17 @@ class ProposalSubmitForm(forms.ModelForm):
 
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
-        if not self.instance.is_pre_assessment and not self.instance.is_practice():
+        if not self.instance.is_pre_assessment and \
+           not self.instance.is_practice() and \
+           not 'js-redirect-submit' in self.request.POST:
+            
+            if check_local_facilities(self.proposal) and cleaned_data[
+                'inform_local_staff'] is None:
+                self.add_error('inform_local_staff', _('Dit veld is verplicht.'))
+            
             for study in self.instance.study_set.all():
                 documents = Documents.objects.get(study=study)
+                
                 if study.passive_consent:
                     if not documents.director_consent_declaration:
                         self.add_error('comments', _(
@@ -590,7 +601,3 @@ class ProposalSubmitForm(forms.ModelForm):
                         self.add_error('comments', _(
                             'Informatiebrief voor traject {} nog niet toegevoegd.').format(
                             study.order))
-
-        if check_local_facilities(self.proposal) and cleaned_data[
-            'inform_local_staff'] is None:
-            self.add_error('inform_local_staff', _('Dit veld is verplicht.'))

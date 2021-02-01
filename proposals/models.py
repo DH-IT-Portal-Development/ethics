@@ -13,6 +13,7 @@ from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
+PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 METC_DECISION_FILENAME = FilenameFactory('METC_Decision')
 
 
@@ -206,6 +207,7 @@ Zep software)'),
     pre_assessment_pdf = models.FileField(
         _('Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)'),
         blank=True,
+        upload_to=PREASSESSMENT_FILENAME,
         validators=[validate_pdf_or_doc],
     )
 

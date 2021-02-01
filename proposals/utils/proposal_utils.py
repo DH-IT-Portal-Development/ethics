@@ -392,11 +392,15 @@ class FilenameFactory:
         something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"'''
         
         # Importing here to prevent circular import
-        from proposals.models import Proposal
+        from proposals.models import Proposal, Wmo
         
         if isinstance(instance, Proposal):
-            # This is a proposal PDF or METC decision file
+            # This is a proposal PDF
             proposal = instance
+            trajectory = None
+        elif isinstance(instance, Wmo):
+            # This is an METC decision file
+            proposal = instance.proposal
             trajectory = None
         else:
             # In case of Documents objects

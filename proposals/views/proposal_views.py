@@ -374,18 +374,23 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
-    success_message = _('Studie verzonden')
+    success_message = _('Wijzigingen opgeslagen')
 
     def get_form_kwargs(self):
         """Sets the Proposal as a form kwarg"""
         kwargs = super(ProposalSubmit, self).get_form_kwargs()
         kwargs['proposal'] = self.get_object()
+        
+        # Required for examining POST data
+        # to check for js-redirect-submit
+        kwargs['request'] = self.request
+        
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
-        context['errors'] = get_form_errors(self.get_object())
+        context['troublesome_pages'] = get_form_errors(self.get_object())
         context['pagenr'] = self._get_page_number()
 
         return context
@@ -596,7 +601,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         """
         # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
         success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
-        if 'save_back' not in self.request.POST:
+        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')
             start_review_pre_assessment(proposal)
