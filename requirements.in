@@ -17,7 +17,7 @@ django-user-agents
 pillow>=6.0
 pygments
 requests
--e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0-beta-11#egg=uil-django-core
+-e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.0#egg=uil-django-core
 reportlab
 docx2txt
 python-magic
