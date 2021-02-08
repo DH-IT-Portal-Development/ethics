@@ -25,28 +25,41 @@
     {% if user.is_authenticated %}
         <div class="uu-inner-container">
             <div class="col-12">
+            <p>
+            {% blocktrans %}
+                De FETC-GW Portal is vernieuwd! We hebben ons best gedaan om gebruikers een mooiere en meer bruikbare portal voor te schotelen. Er kunnen echter een paar dingen tijdens de vernieuwing over het hoofd gezien zijn. Ontdek je een foutje, missende functionaliteit, of verkeerde vertaling? Help ons dan de portal te verbeteren door een mailtje te sturen naar <a href="mailto:labbeheer.gw@uu.nl">labbeheer.gw@uu.nl</a>.
+            {% endblocktrans %}
+            </p>
                 <ul>
+                <li>{% trans "Check voor het indienen:" %}
+                    <ul>
                     <li>
-                        {% blocktrans %}
-                            <strong>Belangrijk</strong>: bij het indienen van een aanvraag
-                            moeten de <strong>juiste (meest recente) voorbeelddocumenten</strong>
-                            voor de informed consent worden gebruikt. Deze zijn te vinden op
-                            <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>
-                            .
+                        {% blocktrans trimmed %}
+                            De 
+                            <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">
+                            UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
                         {% endblocktrans %}
                     </li>
                     <li>
-                        {% blocktrans %}
-                            Voor noodzakelijke achtergrondinformatie verwijzen we naar de
-                            <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">UU-webpagina van de FETC-GW</a>,
-                            alsmede naar het reglement van
-                            <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">de Algemene
-                                Kamer (AK)</a> en
-                            <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">de
-                                Linguïstiek Kamer
-                                (LK)</a>.
+                        {% blocktrans trimmed %}
+                            Het reglement van de 
+                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/">Algemene Kamer (AK)</a> 
+                            of dat van de 
+                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/">Linguïstiek Kamer (LK)</a>. 
                         {% endblocktrans %}
                     </li>
+                    </ul>
+                <li>
+                {% blocktrans trimmed %}
+                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>
+                {% endblocktrans %}
+                </li>
+                {% blocktrans trimmed %}
+                    <li>Voor advies over data management (plannen): <a href="mailto:f.bohl@uu.nl">Frans de Liagre Böhl</a>.</li>
+                    <li>Voor advies over privacy zaken: <a href="mailto:j.w.a.degraaf@uu.nl">Joris de Graaf</a>.</li>
+                    <li>Voor vragen over de procedure: <a href="mailto:fetc-gw@uu.nl">Desiree Capel</a>.</li>
+                    <li>Voor vragen over de portal zelf: <a href="mailto:labbeheer.gw@uu.nl">labbeheer.gw@uu.nl</a>.</li>
+                {% endblocktrans %}
                 </ul>
 
                 <p>
