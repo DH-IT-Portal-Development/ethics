@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-04 16:45+0100\n"
+"POT-Creation-Date: 2021-02-08 11:38+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -18,12 +18,12 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 
 #: faqs/menus.py:7 main/templates/base/menu.html:125
-#: main/templates/main/index.html:139
+#: main/templates/main/index.html:152
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
 #: faqs/menus.py:12 main/templates/base/menu.html:128
-#: main/templates/main/index.html:143
+#: main/templates/main/index.html:156
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -32,7 +32,7 @@ msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr " Regulations Linguistics Chamber (LC) "
 
 #: faqs/menus.py:22 main/templates/base/menu.html:134
-#: main/templates/main/index.html:151
+#: main/templates/main/index.html:164
 #: proposals/templates/proposals/proposal_pdf.html:393
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/study_consent.html:68
@@ -803,55 +803,79 @@ msgstr ""
 "hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
 "     "
 
-#: main/templates/main/index.html:30
+#: main/templates/main/index.html:29
 msgid ""
 "\n"
-"                            <strong>Belangrijk</strong>: bij het indienen "
-"van een aanvraag\n"
-"                            moeten de <strong>juiste (meest recente) "
-"voorbeelddocumenten</strong>\n"
-"                            voor de informed consent worden gebruikt. Deze "
-"zijn te vinden op\n"
-"                            <a href=\"https://intranet.uu.nl/documenten-"
-"ethische-toetsingscommissie-gw\" target=\"_blank\">intranet</a>\n"
-"                            .\n"
-"                        "
+"                De FETC-GW Portal is vernieuwd! We hebben ons best gedaan om "
+"gebruikers een mooiere en meer bruikbare portal voor te schotelen. Er kunnen "
+"echter een paar dingen tijdens de vernieuwing over het hoofd gezien zijn. "
+"Ontdek je een foutje, missende functionaliteit, of verkeerde vertaling? Help "
+"ons dan de portal te verbeteren door een mailtje te sturen naar <a href="
+"\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.\n"
+"            "
 msgstr ""
 "\n"
-"<strong>Attention:</strong> for new applications, <strong>the right (latest) "
-"model documents</strong> for informed consent must be used. You may find "
-"these on the \n"
-"<a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
-"humanities\" target=\"_blank\">intranet</a>."
+"The FEtC-H portal has been upgraded! We've tried our hardest to "
+"deliver all users a nicer and more usable portal. As a result of this,"
+"there may be a couple of bugs and ommissions here and there."
+"We kindly ask that you report any issues, such as a bad translation, bug, or "
+"missing functionality to <a href=\"mailto:labbeheer.gw@uu.nl\"> "
+"the development team</a> so we can fix them ASAP!"
 
-#: main/templates/main/index.html:39
+#: main/templates/main/index.html:34
+#: proposals/templates/proposals/proposal_start.html:16
+msgid "Check voor het indienen:"
+msgstr "Before submitting a proposal, consult:"
+
+#: main/templates/main/index.html:37
 msgid ""
-"\n"
-"                            Voor noodzakelijke achtergrondinformatie "
-"verwijzen we naar de\n"
-"                            <a href=\"http://fetc-gw.wp.hum.uu.nl/\" target="
-"\"_blank\">UU-webpagina van de FETC-GW</a>,\n"
-"                            alsmede naar het reglement van\n"
-"                            <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
-"algemene-kamer/\" target=\"_blank\">de Algemene\n"
-"                                Kamer (AK)</a> en\n"
-"                            <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
-"linguistiek-kamer/\" target=\"_blank\">de\n"
-"                                Linguïstiek Kamer\n"
-"                                (LK)</a>.\n"
-"                        "
+"De <a href=\"https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
+"\" target=\"_blank\"> UU-webpagina van de FETC-GW</a> voor nieuws en de "
+"agenda."
 msgstr ""
-"\n"
-"For necessary background information please refer to the \n"
-"<a href=\"http://fetc-gw.wp.hum.uu.nl/en/\" target=\"_blank\">UU FEtC-H "
-"webpage</a>,\n"
-" or to the regulations of the \n"
-"<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" "
-"target=\"_blank\"> General Chamber</a> or \n"
-"<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
-"target=\"_blank\">the Linguistics Chamber </a>    "
+"The <a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-"
+"committee-humanities\" target=\"_blank\">UU webpage of the FEtC-H</a> for "
+"news and upcoming dates."
+
+#: main/templates/main/index.html:44
+#: proposals/templates/proposals/proposal_start.html:26
+msgid ""
+"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
+"algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
+"fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer (LK)</"
+"a>."
+msgstr ""
+"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+"general-chamber-2/>General chamber</a> or those of the <a href=\"https://"
+"fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguistics Chamber</a>."
 
 #: main/templates/main/index.html:53
+msgid ""
+"Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
+"documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor de "
+"<em>informed consent</em>. </li>"
+msgstr ""
+"Be sure to use the latest <a href=\"https://intranet.uu.nl/en/documents-"
+"ethics-assessment-committee-humanities\" target=\"_blank\">model documents</"
+"a> for dealing with <em>informed consent</em>."
+
+#: main/templates/main/index.html:57
+msgid ""
+"<li>Voor advies over data management (plannen): <a href=\"mailto:f.bohl@uu.nl"
+"\">Frans de Liagre Böhl</a>.</li> <li>Voor advies over privacy zaken: <a "
+"href=\"mailto:j.w.a.degraaf@uu.nl\">Joris de Graaf</a>.</li> <li>Voor vragen "
+"over de procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree Capel</a>.</li> "
+"<li>Voor vragen over de portal zelf: <a href=\"mailto:labbeheer.gw@uu.nl"
+"\">labbeheer.gw@uu.nl</a>.</li>"
+msgstr ""
+"<li>For advice on data management: <a href=\"mailto:f.bohl@uu.nl\">Frans de "
+"Liagre Böhl</a>.</li><li>For issues concerning privacy: <a href=\"mailto:j.w."
+"a.degraaf@uu.nl\">Joris de Graaf</a>.</li><li>For questions on FEtC-H "
+"procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree Capel</a>.</li> <li>For "
+"anything concerning the functioning of the portal itself: <a href=\"mailto:"
+"labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
+
+#: main/templates/main/index.html:66
 msgid ""
 "\n"
 "                        In deze portal kunt u het volgende doen:\n"
@@ -861,91 +885,91 @@ msgstr ""
 "    In this portal you can do the following:\n"
 "    "
 
-#: main/templates/main/index.html:62
+#: main/templates/main/index.html:75
 msgid "Dien een nieuwe studie in"
 msgstr "Submit a new study"
 
-#: main/templates/main/index.html:67
+#: main/templates/main/index.html:80
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: main/templates/main/index.html:70
+#: main/templates/main/index.html:83
 msgid "op basis van een kopie van een oude studie;"
 msgstr "from a copy of an old study;"
 
-#: main/templates/main/index.html:73
+#: main/templates/main/index.html:86
 msgid "voor voortoetsing t.b.v. subsidieaanvraag;"
 msgstr "for preliminary assessment regarding subsidy applications;"
 
-#: main/templates/main/index.html:76
+#: main/templates/main/index.html:89
 msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: main/templates/main/index.html:82
+#: main/templates/main/index.html:95
 msgid "Een gereviseerde studie aanmelden"
 msgstr "Submit a revised version of your study"
 
-#: main/templates/main/index.html:87
+#: main/templates/main/index.html:100
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
-#: main/templates/main/index.html:90
+#: main/templates/main/index.html:103
 msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW."
 msgstr "as an amendment, after your study has been approved by the FEtC-H."
 
-#: main/templates/main/index.html:98
+#: main/templates/main/index.html:111
 msgid "Bekijk"
 msgstr "View"
 
-#: main/templates/main/index.html:102
+#: main/templates/main/index.html:115
 msgid "mijn conceptstudies;"
 msgstr "my draft applications;"
 
-#: main/templates/main/index.html:105
+#: main/templates/main/index.html:118
 msgid "mijn oefenstudies;"
 msgstr "my practice applications;"
 
-#: main/templates/main/index.html:108
+#: main/templates/main/index.html:121
 msgid "mijn ingediende studies;"
 msgstr "my submitted applications;"
 
-#: main/templates/main/index.html:111
+#: main/templates/main/index.html:124
 msgid "mijn afgehandelde studies;"
 msgstr "my processed applications;"
 
-#: main/templates/main/index.html:114
+#: main/templates/main/index.html:127
 msgid "mijn studies als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: main/templates/main/index.html:117
+#: main/templates/main/index.html:130
 msgid "al mijn studies."
 msgstr "all my applications."
 
-#: main/templates/main/index.html:121
+#: main/templates/main/index.html:134
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: main/templates/main/index.html:125
+#: main/templates/main/index.html:138
 msgid "Alle goedgekeurde studies bekijken van de Algemene Kamer"
 msgstr "View all processed and approved studies of the General Chamber"
 
-#: main/templates/main/index.html:128
+#: main/templates/main/index.html:141
 msgid "Alle goedgekeurde studies bekijken van de Linguïstiek Kamer"
 msgstr "View all processed and approved studies of the Linguistics Chamber"
 
-#: main/templates/main/index.html:147
+#: main/templates/main/index.html:160
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: main/templates/main/index.html:154
+#: main/templates/main/index.html:167
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:157
+#: main/templates/main/index.html:170
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: main/templates/main/index.html:167
+#: main/templates/main/index.html:180
 #, python-format
 msgid ""
 "\n"
@@ -959,7 +983,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t     "
 
-#: main/templates/main/index.html:173
+#: main/templates/main/index.html:186
 msgid ""
 "\n"
 "                        Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</"
@@ -2477,7 +2501,7 @@ msgstr "Last edited"
 
 #: proposals/templates/proposals/proposal_list.html:134
 msgid "Status"
-msgstr ""
+msgstr "State"
 
 #: proposals/templates/proposals/proposal_list.html:150
 #: reviews/templates/reviews/decision_list.html:142
@@ -2588,10 +2612,12 @@ msgstr ""
 "            "
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:282
+#: proposals/templates/proposals/proposal_start.html:54
 msgid "Sessie"
 msgstr "Session"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:300
+#: proposals/templates/proposals/proposal_start.html:61
 msgid "Taak"
 msgstr "Task"
 
@@ -2631,7 +2657,78 @@ msgstr "Submit application for preliminary assessment"
 msgid "Een nieuwe studie aanmelden"
 msgstr "Register a new study"
 
-#: proposals/templates/proposals/proposal_start.html:15
+#: proposals/templates/proposals/proposal_start.html:19
+msgid ""
+"De <a href=\"https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
+"\" target=\"_blank\"> UU-webpagina van de FETC-GW</a>voor nieuws en de "
+"agenda."
+msgstr ""
+"The <a href=\"https://intranet.uu.nl/documenten-ethische-toetsingscommissie-"
+"gw\" target=\"_blank\">UU webpage of the FEtC-H</a> for news and upcoming "
+"dates."
+
+#: proposals/templates/proposals/proposal_start.html:35
+msgid ""
+"Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
+"documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor de "
+"<em>informed consent</em>.</li>"
+msgstr ""
+"Be sure to use the latest <a href=\"https://intranet.uu.nl/en/documents-"
+"ethics-assessment-committee-humanities\" target=\"_blank\">model documents</"
+"a> for dealing with <em>informed consent</em>."
+
+#: proposals/templates/proposals/proposal_start.html:41
+msgid ""
+"\n"
+"                    Een aanvraag is opgebouwd uit (van groot naar klein) (i) "
+"trajecten, (ii) sessies, (iii) taken.\n"
+"                "
+msgstr ""
+"\n"
+"    A proposal consists of (i) trajectories, (ii) sessions, and (iii) tasks, "
+"in descending order of subdivision.     "
+
+#: proposals/templates/proposals/proposal_start.html:47
+msgid "Traject"
+msgstr "Trajectory"
+
+#: proposals/templates/proposals/proposal_start.html:48
+msgid ""
+"Als je met verschillende deelnemersgroepen werkt die een verschillend "
+"onderzoekstraject doorlopen waarvoor verschillende informed consent "
+"documenten nodig zijn. <p><u>Bijvoorbeeld</u>: schoolleiding, ouders van "
+"leerlingen 15 jaar en jonger, docenten.</p>"
+msgstr ""
+"When different groups of participants do not complete the same tasks or "
+"do not follow the same instructions during your research, they traverse "
+"different trajectories, and require separate informed consent "
+"documents."
+"<p><u>For example</u>: school management, parents of children "
+"up to 15 years of age, or teachers.</p>"
+
+#: proposals/templates/proposals/proposal_start.html:55
+msgid "Alle taken/onderdelen die iemand op één dag uitvoert."
+msgstr "All tasks that a participant completes in a day combined."
+
+#: proposals/templates/proposals/proposal_start.html:62
+msgid ""
+"Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
+"invullen van een vragenlijst, een interview, een taaltest </p>"
+msgstr ""
+"A task or procedure within your research proposal. <p> <u>For example</u>: "
+"completing an interview, questionnaire, or language test.</p>"
+
+#: proposals/templates/proposals/proposal_start.html:72
+#: proposals/templates/proposals/proposal_start_pre_approved.html:43
+#: proposals/templates/proposals/proposal_start_pre_assessment.html:53
+msgid "Volgende stap >>"
+msgstr "Next step >>"
+
+#: proposals/templates/proposals/proposal_start_practice.html:7
+#: proposals/templates/proposals/proposal_start_practice.html:14
+msgid "Een nieuwe studie aanmelden (oefenportaal)"
+msgstr "Register a new study (practice portal)"
+
 #: proposals/templates/proposals/proposal_start_practice.html:17
 msgid ""
 "\n"
@@ -2663,7 +2760,6 @@ msgstr ""
 "can save yourself and the committee members a great deal of time by making "
 "sure you are properly informed.     "
 
-#: proposals/templates/proposals/proposal_start.html:29
 #: proposals/templates/proposals/proposal_start_practice.html:31
 msgid ""
 "\n"
@@ -2701,107 +2797,6 @@ msgstr ""
 "to estimate the burden and risks involved for the participants, and to "
 "upload all forms of <em>informed consent</em> adapted to your "
 "study.           "
-
-#: proposals/templates/proposals/proposal_start.html:44
-msgid ""
-"\n"
-"                    Als u met verschillende deelnemersgroepen werkt die een "
-"verschillend\n"
-"                    onderzoekstraject doorlopen (de ene groep krijgt "
-"bijvoorbeeld twee\n"
-"                    taken, de andere drie) zult u elk traject apart op "
-"bovengenoemde wijze\n"
-"                    moeten beschrijven. NB: Ook wanneer u met verschillende "
-"leeftijdsgroepen\n"
-"                    werkt, moet u meerdere trajecten aanmaken: kijk voor de "
-"relevante\n"
-"                    leeftijdsgroepen naar\n"
-"                    <a href=\"https://fetc-gw.wp.hum.uu.nl/"
-"voorbeelddocumenten/\" target=\"_blank\">de\n"
-"                        verschillende soorten informatiebrieven en "
-"toestemmingsverklaringen</a> die de FETC aanbiedt op\n"
-"                    de\n"
-"                    website. <strong>Let op:</strong> informed consent "
-"formulieren die bij een\n"
-"                    <strong>officiële aanvraag</strong> gebruikt moeten "
-"worden zijn te vinden\n"
-"                    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
-"toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
-"                "
-msgstr ""
-"\n"
-"    If you work with different participant groups undergoing different "
-"research trajectories (one group, for example, is given two tasks, the other "
-"three) you will need to describe each group separately in the manner "
-"mentioned above. NB: Also, when you work with different age groups, you are "
-"required to create different trajectories. See for relevant age groups <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/document_templates/\" target=\"_blank"
-"\">the different types of information letters and consent forms</a> we offer "
-"at the website. <strong>Please note</strong> that consent forms to be used "
-"in an <strong>official application</strong> are to be found on <a href="
-"\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities\" "
-"target=\"_blank\">intranet</a>."
-
-#: proposals/templates/proposals/proposal_start.html:60
-#: proposals/templates/proposals/proposal_start_practice.html:63
-msgid ""
-"\n"
-"                    Afhankelijk van de complexiteit van uw onderzoek kan de "
-"specificatie zeker\n"
-"                    enige tijd in beslag nemen. U kunt de aanmelding echter "
-"altijd onderbreken,\n"
-"                    bewaren, en op een later moment afmaken.\n"
-"                "
-msgstr ""
-"\n"
-"Depending on the complexity of your research the specification may take "
-"considerable time. However, you can always interrupt the registration, save "
-"it, and finish it later.     "
-
-#: proposals/templates/proposals/proposal_start.html:67
-#: proposals/templates/proposals/proposal_start_practice.html:70
-#, python-format
-msgid ""
-"\n"
-"                    Gebruik bij het invullen s.v.p. geen afkortingen waar de "
-"FETC-GW wellicht\n"
-"                    niet mee bekend is.\n"
-"                    Raadpleeg bij vragen eerst het\n"
-"                    reglement van de\n"
-"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-"
-"kamer/\" target=\"_blank\"> Algemene Kamer\n"
-"                        (AK)</a> of\n"
-"                    de\n"
-"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
-"linguistiek-kamer/\" target=\"_blank\">Linguïstiek Kamer\n"
-"                        (LK)</a>,\n"
-"                    en neem eventueel daarna contact op met de secretaris\n"
-"                    (%(secretary_name)s,\n"
-"                    <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
-"                "
-msgstr ""
-"\n"
-"    When filling in the forms please avoid using abbreviations the FEtC-H\n"
-"    might not be familiar with.\n"
-"    If you have questions, first consult the regulations of the <a href="
-"\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" target="
-"\"_blank\">General Chamber</a> or the <a href=\"https://fetc-gw.wp.hum.uu.nl/"
-"en/regulations-linguistics-chamber/\" target=\"_blank\">Linguistics Chamber</"
-"a>,\n"
-"    and if necessary contact the secretary (%(secretary_name)s,\n"
-"   <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
-"    "
-
-#: proposals/templates/proposals/proposal_start.html:83
-#: proposals/templates/proposals/proposal_start_pre_approved.html:43
-#: proposals/templates/proposals/proposal_start_pre_assessment.html:53
-msgid "Volgende stap >>"
-msgstr "Next step >>"
-
-#: proposals/templates/proposals/proposal_start_practice.html:7
-#: proposals/templates/proposals/proposal_start_practice.html:14
-msgid "Een nieuwe studie aanmelden (oefenportaal)"
-msgstr "Register a new study (practice portal)"
 
 #: proposals/templates/proposals/proposal_start_practice.html:46
 msgid ""
@@ -2843,6 +2838,54 @@ msgstr ""
 "in an <strong>official application</strong> are to be found on <a href="
 "\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities\" "
 "target=\"_blank\">intranet</a>."
+
+#: proposals/templates/proposals/proposal_start_practice.html:63
+msgid ""
+"\n"
+"                    Afhankelijk van de complexiteit van uw onderzoek kan de "
+"specificatie zeker\n"
+"                    enige tijd in beslag nemen. U kunt de aanmelding echter "
+"altijd onderbreken,\n"
+"                    bewaren, en op een later moment afmaken.\n"
+"                "
+msgstr ""
+"\n"
+"Depending on the complexity of your research the specification may take "
+"considerable time. However, you can always interrupt the registration, save "
+"it, and finish it later.     "
+
+#: proposals/templates/proposals/proposal_start_practice.html:70
+#, python-format
+msgid ""
+"\n"
+"                    Gebruik bij het invullen s.v.p. geen afkortingen waar de "
+"FETC-GW wellicht\n"
+"                    niet mee bekend is.\n"
+"                    Raadpleeg bij vragen eerst het\n"
+"                    reglement van de\n"
+"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-"
+"kamer/\" target=\"_blank\"> Algemene Kamer\n"
+"                        (AK)</a> of\n"
+"                    de\n"
+"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
+"linguistiek-kamer/\" target=\"_blank\">Linguïstiek Kamer\n"
+"                        (LK)</a>,\n"
+"                    en neem eventueel daarna contact op met de secretaris\n"
+"                    (%(secretary_name)s,\n"
+"                    <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
+"                "
+msgstr ""
+"\n"
+"    When filling in the forms please avoid using abbreviations the FEtC-H\n"
+"    might not be familiar with.\n"
+"    If you have questions, first consult the regulations of the <a href="
+"\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" target="
+"\"_blank\">General Chamber</a> or the <a href=\"https://fetc-gw.wp.hum.uu.nl/"
+"en/regulations-linguistics-chamber/\" target=\"_blank\">Linguistics Chamber</"
+"a>,\n"
+"    and if necessary contact the secretary (%(secretary_name)s,\n"
+"   <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
+"    "
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
@@ -3434,7 +3477,7 @@ msgstr "General"
 
 #: proposals/utils/proposal_utils.py:71
 msgid "METC"
-msgstr ""
+msgstr "METC"
 
 #: proposals/utils/proposal_utils.py:85
 msgid "Trajecten"
@@ -5282,6 +5325,95 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
+#~ msgid "Een taak of onderdeel van je onderzoek."
+#~ msgstr "A task or procedure in your research."
+
+#~ msgid ""
+#~ "\n"
+#~ "                            <strong>Belangrijk</strong>: bij het indienen "
+#~ "van een aanvraag\n"
+#~ "                            moeten de <strong>juiste (meest recente) "
+#~ "voorbeelddocumenten</strong>\n"
+#~ "                            voor de informed consent worden gebruikt. "
+#~ "Deze zijn te vinden op\n"
+#~ "                            <a href=\"https://intranet.uu.nl/documenten-"
+#~ "ethische-toetsingscommissie-gw\" target=\"_blank\">intranet</a>\n"
+#~ "                            .\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "<strong>Attention:</strong> for new applications, <strong>the right "
+#~ "(latest) model documents</strong> for informed consent must be used. You "
+#~ "may find these on the \n"
+#~ "<a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
+#~ "humanities\" target=\"_blank\">intranet</a>."
+
+#~ msgid ""
+#~ "\n"
+#~ "                            Voor noodzakelijke achtergrondinformatie "
+#~ "verwijzen we naar de\n"
+#~ "                            <a href=\"http://fetc-gw.wp.hum.uu.nl/\" "
+#~ "target=\"_blank\">UU-webpagina van de FETC-GW</a>,\n"
+#~ "                            alsmede naar het reglement van\n"
+#~ "                            <a href=\"http://fetc-gw.wp.hum.uu.nl/"
+#~ "reglement-algemene-kamer/\" target=\"_blank\">de Algemene\n"
+#~ "                                Kamer (AK)</a> en\n"
+#~ "                            <a href=\"http://fetc-gw.wp.hum.uu.nl/"
+#~ "reglement-linguistiek-kamer/\" target=\"_blank\">de\n"
+#~ "                                Linguïstiek Kamer\n"
+#~ "                                (LK)</a>.\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "For necessary background information please refer to the \n"
+#~ "<a href=\"http://fetc-gw.wp.hum.uu.nl/en/\" target=\"_blank\">UU FEtC-H "
+#~ "webpage</a>,\n"
+#~ " or to the regulations of the \n"
+#~ "<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/"
+#~ "\" target=\"_blank\"> General Chamber</a> or \n"
+#~ "<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/"
+#~ "\" target=\"_blank\">the Linguistics Chamber </a>    "
+
+#~ msgid ""
+#~ "\n"
+#~ "                    Als u met verschillende deelnemersgroepen werkt die "
+#~ "een verschillend\n"
+#~ "                    onderzoekstraject doorlopen (de ene groep krijgt "
+#~ "bijvoorbeeld twee\n"
+#~ "                    taken, de andere drie) zult u elk traject apart op "
+#~ "bovengenoemde wijze\n"
+#~ "                    moeten beschrijven. NB: Ook wanneer u met "
+#~ "verschillende leeftijdsgroepen\n"
+#~ "                    werkt, moet u meerdere trajecten aanmaken: kijk voor "
+#~ "de relevante\n"
+#~ "                    leeftijdsgroepen naar\n"
+#~ "                    <a href=\"https://fetc-gw.wp.hum.uu.nl/"
+#~ "voorbeelddocumenten/\" target=\"_blank\">de\n"
+#~ "                        verschillende soorten informatiebrieven en "
+#~ "toestemmingsverklaringen</a> die de FETC aanbiedt op\n"
+#~ "                    de\n"
+#~ "                    website. <strong>Let op:</strong> informed consent "
+#~ "formulieren die bij een\n"
+#~ "                    <strong>officiële aanvraag</strong> gebruikt moeten "
+#~ "worden zijn te vinden\n"
+#~ "                    op <a href=\"https://intranet.uu.nl/facultaire-"
+#~ "ethische-toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "    If you work with different participant groups undergoing different "
+#~ "research trajectories (one group, for example, is given two tasks, the "
+#~ "other three) you will need to describe each group separately in the "
+#~ "manner mentioned above. NB: Also, when you work with different age "
+#~ "groups, you are required to create different trajectories. See for "
+#~ "relevant age groups <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "document_templates/\" target=\"_blank\">the different types of "
+#~ "information letters and consent forms</a> we offer at the website. "
+#~ "<strong>Please note</strong> that consent forms to be used in an "
+#~ "<strong>official application</strong> are to be found on <a href="
+#~ "\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities"
+#~ "\" target=\"_blank\">intranet</a>."
+
 #~ msgid ""
 #~ "\n"
 #~ "                    Het lijkt er op dat u Internet Explorer gebruikt, "
@@ -5345,15 +5477,6 @@ msgstr "Task deleted"
 #~ "\n"
 #~ "You can also view all processed and approved studies in the <a href="
 #~ "\"%(archive_url)s\">portal's archive</a>."
-
-#~ msgid ""
-#~ "(check de meest recente voorbeelddocumenten op <a href=\"https://intranet."
-#~ "uu.nl/documenten-ethische-toetsingscommissie-gw\" target=\"_blank"
-#~ "\">intranet</a>)"
-#~ msgstr ""
-#~ "(check the latest version of the model documents on the <a href=\"https://"
-#~ "intranet.uu.nl/en/documents-ethics-assessment-committee-humanities\" "
-#~ "target=\"_blank\">intranet</a>)"
 
 #~ msgid ""
 #~ "\n"
