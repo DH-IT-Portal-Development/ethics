@@ -97,8 +97,9 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             else:
                 if decisions[proposal.pk].pk < obj.pk:
                     decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
+        
+        
+        return [decisions[k] for k in sorted(decisions.keys())[::-1]]
 
 
 class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
