@@ -99,7 +99,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
                     decisions[proposal.pk] = obj
         
         
-        return [decisions[k] for k in sorted(decisions.keys())[::-1]]
+        return [reversed(decisions[k] for k in sorted(decisions.keys()))]
 
 
 class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
