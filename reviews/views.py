@@ -1,4 +1,5 @@
 from datetime import date
+from collections import OrderedDict
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
@@ -74,7 +75,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee
-        )
+        ).order_by('-review__proposal__date_created')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -99,7 +100,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
                     decisions[proposal.pk] = obj
         
         
-        return [reversed(decisions[k] for k in sorted(decisions.keys()))]
+        return [decisions[k] for k in sorted(decisions.keys())[::-1]]
 
 
 class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
@@ -135,7 +136,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             reviewer=self.request.user,
             go='',
             review__proposal__reviewing_committee=self.committee
-        )
+        ).order_by('-review__proposal__date_created')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -150,7 +151,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
     def get_queryset_for_secretary(self):
         """Returns all open Decisions of the current User"""
-        decisions = {}
+        decisions = OrderedDict()
         # Decision-for-secretary-exists cache.
         dfse_cache = {}
 
@@ -158,7 +159,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go='',
             review__proposal__reviewing_committee=self.committee
-        )
+        ).order_by('-review__proposal__date_created')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -199,7 +200,8 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).exclude(review__stage=Review.SUPERVISOR)
+        ).order_by('-review__proposal__date_created'
+            ).exclude(review__stage=Review.SUPERVISOR)
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -251,7 +253,7 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
             Q(continuation=Review.GO) |
             Q(continuation=Review.GO_POST_HOC) |
             Q(continuation=None)
-        )
+        ).order_by('-proposal__date_created')
 
         for obj in objects:
             proposal = obj.proposal
@@ -295,7 +297,7 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
-        )
+        ).order_by('-proposal__date_created')
 
         for obj in objects:
             proposal = obj.proposal
