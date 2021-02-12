@@ -48,7 +48,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
     def get_queryset_for_committee(self):
         """Returns all open Decisions of the current User"""
-        decisions = {}
+        decisions = OrderedDict()
 
         objects = Decision.objects.filter(
             reviewer=self.request.user,
@@ -68,7 +68,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
     def get_queryset_for_secretary(self):
         """Returns all open Decisions of the current User"""
-        decisions = {}
+        decisions = OrderedDict()
         # Decision-for-secretary-exists cache.
         dfse_cache = {}
 
@@ -100,7 +100,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
                     decisions[proposal.pk] = obj
         
         
-        return [decisions[k] for k in sorted(decisions.keys())[::-1]]
+        return [decisions[k] for k in decisions.keys()]
 
 
 class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
@@ -130,13 +130,13 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
     def get_queryset_for_committee(self):
         """Returns all open Decisions of the current User"""
-        decisions = {}
+        decisions = OrderedDict()
 
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_created')
+        ).order_by('review__proposal__date_created')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -193,7 +193,7 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        decisions = {}
+        decisions = OrderedDict()
         # Decision-for-secretary-exists cache.
         dfse_cache = {}
 
@@ -292,7 +292,7 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
     
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        reviews = {}
+        reviews = OrderedDict()
         objects = Review.objects.filter(
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
@@ -306,6 +306,7 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
             else:
                 if reviews[proposal.pk].pk < obj.pk:
                     reviews[proposal.pk] = obj
+        
 
         return [value for key, value in reviews.items()]
 
@@ -330,8 +331,9 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin,
             review__stage=Review.SUPERVISOR,
             review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR,
             review__proposal__reviewing_committee=self.committee
-        )
-        decisions = {}
+        ).order_by('-review__proposal__date_created')
+        
+        decisions = OrderedDict()
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -357,8 +359,9 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
         objects = Decision.objects.filter(
             review__date_end=None,
             review__stage=Review.SUPERVISOR,
-            reviewer=self.request.user)
-        decisions = {}
+            reviewer=self.request.user
+            ).order_by('-review__proposal__date_created')
+        decisions = OrderedDict
 
         for obj in objects:
             proposal = obj.review.proposal
