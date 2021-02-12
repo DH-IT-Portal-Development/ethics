@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 14:45+0100\n"
+"POT-Creation-Date: 2021-02-12 10:28+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -138,8 +138,8 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"Click <a href=\"%(url)s\">here</a> to return to the page you were on.\n"
-"     "
+"Click <a href=\"%(url)s\">here</a> to return to where you left off.\n"
+"   "
 
 #: feedback/views.py:15
 msgid "Feedback verstuurd"
@@ -291,10 +291,8 @@ msgid "Log in"
 msgstr ""
 
 #: main/menus.py:15 main/templates/base/login_header.html:7
-#, fuzzy
-#| msgid "Leg uit"
 msgid "Log uit"
-msgstr "Explain why"
+msgstr "Log out"
 
 #: main/models.py:8 main/utils.py:14
 msgid "ja"
@@ -512,7 +510,7 @@ msgstr "Save and go to next step >>"
 
 #: main/templates/base/login_header.html:6
 msgid "Welkom {}"
-msgstr ""
+msgstr "Welcome, {}"
 
 #: main/templates/base/menu.html:11 proposals/menus.py:76
 #: proposals/views/proposal_views.py:208
@@ -646,26 +644,20 @@ msgid "Inloggen"
 msgstr "Log in"
 
 #: main/templates/base/sidebar.html:27
-#, fuzzy
-#| msgid "Voortgang"
 msgid "Toon voortgang"
-msgstr "Progress"
+msgstr "Show progress"
 
 #: main/templates/base/sidebar.html:30
-#, fuzzy
-#| msgid "Afsluiten"
 msgid "Sluiten"
-msgstr "Conclude"
+msgstr "Close"
 
 #: main/templates/base/sidebar.html:31
 msgid "Voortgang"
 msgstr "Progress"
 
 #: main/templates/base/site_header.html:2
-#, fuzzy
-#| msgid "FETC-GW"
 msgid "FETC-GW Portal"
-msgstr "FEtC-H"
+msgstr "FEtC-H Portal"
 
 #: main/templates/base/site_title.html:2
 msgid "FETC-GW"
@@ -676,10 +668,6 @@ msgid "Server error"
 msgstr "Server error"
 
 #: main/templates/error/400.html:12
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Er is een fout opgetreden tijdens het opvragen van deze pagina.\n"
 msgid ""
 "\n"
 "                Er is een fout opgetreden tijdens het opvragen van deze "
@@ -688,14 +676,9 @@ msgid ""
 msgstr ""
 "\n"
 "    We encountered an error while processing your request.\n"
+"     "
 
 #: main/templates/error/400.html:17
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Blijft dit probleem aanhouden? Neem dan contact op met <a href="
-#| "\"https://fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">de FETC-GW "
-#| "secretaris</a>.\n"
 msgid ""
 "\n"
 "                Blijft dit probleem aanhouden? Neem dan contact op met <a "
@@ -706,16 +689,13 @@ msgstr ""
 "\n"
 "    Does this problem persist? Please contact <a href=\"https://fetc-gw.wp."
 "hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
+"       "
 
 #: main/templates/error/403.html:9
 msgid "Geen toegang"
 msgstr "Access denied"
 
 #: main/templates/error/403.html:12
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "U heeft geen toegang tot de opgevraagde pagina.\n"
 msgid ""
 "\n"
 "                    U heeft geen toegang tot de opgevraagde pagina.\n"
@@ -723,6 +703,7 @@ msgid ""
 msgstr ""
 "\n"
 "You are not allowed to view this page.\n"
+" "
 
 #: main/templates/error/403.html:18
 msgid "Dit kan meerdere oorzaken hebben:"
@@ -745,12 +726,7 @@ msgstr ""
 "expired."
 
 #: main/templates/error/403.html:34
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "            U bent niet ingelogd, probeer <a href=\"%(login_url)s\"> in "
-#| "te loggen</a>.\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "                        U bent niet ingelogd, probeer <a href=\"%(login_url)s"
@@ -763,12 +739,6 @@ msgstr ""
 "        "
 
 #: main/templates/error/403.html:40
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Denkt u dat dit niet klopt? Neem dan contact op met <a href=\"https://"
-#| "fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">de FETC-GW secretaris</"
-#| "a>.\n"
 msgid ""
 "\n"
 "                    Denkt u dat dit niet klopt? Neem dan contact op met\n"
@@ -779,6 +749,7 @@ msgstr ""
 "\n"
 "    Is this in error? Please contact <a href=\"https://fetc-gw.wp.hum.uu.nl/"
 "en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
+"    "
 
 #: main/templates/error/404.html:9
 msgid "Pagina niet gevonden"
@@ -791,13 +762,6 @@ msgstr ""
 "available."
 
 #: main/templates/error/404.html:15
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Mogelijk bent u hier terechtgekomen via een verouderde of foutieve link. "
-#| "Graag vernemen wij welke link niet werkt. U kunt ons dat laten weten door "
-#| "<a href=\"https://fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank"
-#| "\">contact op te nemen</a>. Wij proberen dan de fout te herstellen.\n"
 msgid ""
 "\n"
 "                    Mogelijk bent u hier terechtgekomen via een verouderde "
@@ -813,12 +777,9 @@ msgstr ""
 "Please let us know at which page you found the problem by <a href=\"https://"
 "fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">contacting our secretary</"
 "a>. We will try to solve the problem as soon as possible.\n"
+"     "
 
 #: main/templates/error/500.html:12
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Er is een fout opgetreden tijdens het opvragen van deze pagina.\n"
 msgid ""
 "\n"
 "                    Er is een fout opgetreden tijdens het opvragen van deze "
@@ -827,14 +788,9 @@ msgid ""
 msgstr ""
 "\n"
 "    We encountered an error while processing your request.\n"
+"     "
 
 #: main/templates/error/500.html:17
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Blijft dit probleem aanhouden? Neem dan contact op met <a href="
-#| "\"https://fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">de FETC-GW "
-#| "secretaris</a>.\n"
 msgid ""
 "\n"
 "                    Blijft dit probleem aanhouden? Neem dan contact op met\n"
@@ -845,6 +801,7 @@ msgstr ""
 "\n"
 "    Does this problem persist? Please contact <a href=\"https://fetc-gw.wp."
 "hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
+"     "
 
 #: main/templates/main/index.html:29
 msgid ""
@@ -856,15 +813,12 @@ msgid ""
 "ons dan de portal te verbeteren door een mailtje te sturen naar <a href="
 "\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.\n"
 "            "
-msgstr "\n"
-"The FEtC-H portal has been upgraded! We've tried our hardest to deliver all users a nicer and more usable portal. As a result of this,there may be a couple of bugs and ommissions here and there. We kindly ask that you report any issues, such as a bad translation, bug, or missing functionality to "
-"<a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a> so we can fix them quickly."
-"     "
+msgstr ""
 
 #: main/templates/main/index.html:34
 #: proposals/templates/proposals/proposal_start.html:16
 msgid "Check voor het indienen:"
-msgstr "Before submitting a proposal, please consult:"
+msgstr "Before submitting an application, please consult:"
 
 #: main/templates/main/index.html:37
 msgid ""
@@ -882,10 +836,6 @@ msgid ""
 "href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" target="
 "\"blank\">Linguïstiek Kamer (LK)</a>."
 msgstr ""
-"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
-"target=\"blank\">Linguistics Chamber</a>."
 
 #: main/templates/main/index.html:53
 msgid ""
@@ -906,12 +856,6 @@ msgid ""
 "<li>Voor vragen over de portal zelf: <a href=\"mailto:labbeheer.gw@uu.nl"
 "\">labbeheer.gw@uu.nl</a>.</li>"
 msgstr ""
-"<li>For advice on data management: <a href=\"mailto:f.bohl@uu.nl"
-"\">Frans de Liagre Böhl</a>.</li> <li>For issues concerning privacy: <a "
-"href=\"mailto:j.w.a.degraaf@uu.nl\">Joris de Graaf</a>.</li> <li>For questions "
-"on FEtC-H procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree Capel</a>.</li> "
-"<li>For questions about the functioning of the portal itself: <a href=\"mailto:labbeheer.gw@uu.nl"
-"\">labbeheer.gw@uu.nl</a>.</li>"
 
 #: main/templates/main/index.html:66
 msgid ""
@@ -1008,12 +952,7 @@ msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
 #: main/templates/main/index.html:180
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Welkom bij het portal van de FETC-GW. U kunt <a href=\"%(the_url)s"
-#| "\">hier</a> inloggen met uw Solis-ID.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                        Welkom bij het portal van de FETC-GW. U kunt <a href="
@@ -1024,15 +963,9 @@ msgstr ""
 "\n"
 "\t Welcome to the FEtC-H web portal. You can sign in <a href=\"%(the_url)s"
 "\">here</a> with your Solis-ID.\n"
-"\t"
+"\t     "
 
 #: main/templates/main/index.html:186
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te "
-#| "keren naar de FETC-GW-website.\n"
-#| "    "
 msgid ""
 "\n"
 "                        Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</"
@@ -1049,12 +982,7 @@ msgid "U bent succesvol uitgelogd."
 msgstr "You have successfully logged out."
 
 #: main/templates/registration/logged_out.html:17
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "\tKlik  <a href=\"%(login_url)s\">hier</a> om opnieuw in te loggen met uw "
-#| "Solis-ID.\n"
-#| "\t"
+#, python-format
 msgid ""
 "\n"
 "                    Klik  <a href=\"%(login_url)s\">hier</a> om opnieuw in "
@@ -1067,12 +995,6 @@ msgstr ""
 "\t"
 
 #: main/templates/registration/logged_out.html:22
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te "
-#| "keren naar de FETC-GW-website.\n"
-#| "    "
 msgid ""
 "\n"
 "                    Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om "
@@ -1270,13 +1192,7 @@ msgstr "Change forms"
 
 #: observations/templates/observations/observation_update_attachments.html:30
 #: studies/templates/studies/study_update_attachments.html:17
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Op deze pagina kunt u de formulieren aanpassen behorende bij de "
-#| "studie %(title)s\n"
-#| "    (referentienummer <em>%(ref_number)s</em>), traject %(order)s.\n"
-#| "\t"
+#, python-format
 msgid ""
 "\n"
 "                Op deze pagina kunt u de formulieren aanpassen behorende bij "
@@ -1403,7 +1319,7 @@ msgstr "You are required to specify an institution."
 
 #: proposals/forms.py:438
 msgid "In dit geval is een beslissing van een METC vereist"
-msgstr ""
+msgstr "In this case, a decision by a METC is required"
 
 #: proposals/forms.py:446
 msgid "Naam traject 1"
@@ -1464,9 +1380,8 @@ msgstr "Information letter for trajectory {} not yet added."
 
 #: proposals/menus.py:38
 #, fuzzy
-#| msgid "Nieuwe studie starten"
 msgid "Nieuwe studie"
-msgstr "Start a new study"
+msgstr "New study"
 
 #: proposals/models.py:71
 msgid "Concept"
@@ -1803,7 +1718,7 @@ msgstr "WMO {title}, status {status}"
 #: proposals/templates/proposals/compare_documents.html:6
 #: proposals/templates/proposals/compare_documents.html:47
 msgid "Vergelijk documenten"
-msgstr ""
+msgstr "Compare documents"
 
 #: proposals/templates/proposals/compare_documents.html:49
 msgid ""
@@ -1816,16 +1731,20 @@ msgid ""
 "                in het groen is gemarkeerd.\n"
 "                "
 msgstr ""
+"\n"
+"                This tool allows you to compare two documents. By default,\n"
+"                you are presented with a <i>combined</i> view in "
+"whichremoved\n"
+"                text is marked in red and added text is marked in green.\n"
+"                "
 
 #: proposals/templates/proposals/compare_documents.html:57
-#, fuzzy
-#| msgid "Bekijk"
 msgid "Bekijk apart"
-msgstr "View"
+msgstr "View separately"
 
 #: proposals/templates/proposals/compare_documents.html:60
 msgid "Bekijk gecombineerd"
-msgstr ""
+msgstr "View combined"
 
 #: proposals/templates/proposals/compare_documents.html:63
 msgid ""
@@ -1834,10 +1753,14 @@ msgid ""
 "                markeringen. Klik hiervoor op 'Bekijk apart'.\n"
 "                "
 msgstr ""
+"\n"
+"Documents can also be viewed side by side, with markings. To do so, click "
+"'View separately'.\n"
+"    "
 
 #: proposals/templates/proposals/compare_documents.html:69
 msgid "Er zijn geen wijzigingen gevonden in dit document!"
-msgstr ""
+msgstr "No changes were found in this document!"
 
 #: proposals/templates/proposals/diff/intervention_v1.html:7
 #: proposals/templates/proposals/diff/intervention_v2.html:7
@@ -2015,11 +1938,7 @@ msgid "Studie verwijderen"
 msgstr "Delete study"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:14
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Weet u zeker dat u de studie <em>%(title)s</em> wilt verwijderen?\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                    Weet u zeker dat u de studie <em>%(title)s</em> wilt "
@@ -2045,12 +1964,7 @@ msgid "Annuleren"
 msgstr "Cancel"
 
 #: proposals/templates/proposals/proposal_confirmation.html:27
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Geef hieronder aan wanneer de bevestigingsbrief voor de studie <em>"
-#| "%(title)s</em> is verstuurd.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                    Geef hieronder aan wanneer de bevestigingsbrief voor de "
@@ -2108,19 +2022,6 @@ msgid "Datamanagement"
 msgstr "Data management"
 
 #: proposals/templates/proposals/proposal_data_management.html:20
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Een zeer belangrijk ingrediënt van ethisch verantwoord onderzoek met "
-#| "deelnemers,\n"
-#| "    is dat er op adequate wijze met de verzamelde onderzoeks- en "
-#| "persoonsgegevens wordt omgegaan.\n"
-#| "    In het algemeen geldt dat onderzoekers zich wat betreft de opslag van "
-#| "data\n"
-#| "    en het beschikbaar maken van data voor andere onderzoekers gepast "
-#| "behoren te gedragen,\n"
-#| "    en zich dienen houden aan geldende wet- en regelgeving.\n"
-#| "    "
 msgid ""
 "\n"
 "                Een zeer belangrijk ingrediënt van ethisch verantwoord "
@@ -2146,14 +2047,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_data_management.html:29
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Wanneer u persoonsgegevens verzamelt moet  zich aan de AVG (Algemene "
-#| "Verordening Gegevensbescherming) houden. Deze verordening is in lijn met "
-#| "de Europese privacywetgeving GDPR (<a href=\"https://eugdpr.org\">https://"
-#| "eugdpr.org</a>).\n"
-#| "    "
 msgid ""
 "\n"
 "                Wanneer u persoonsgegevens verzamelt moet  zich aan de AVG "
@@ -2169,14 +2062,6 @@ msgstr ""
 "a>).    "
 
 #: proposals/templates/proposals/proposal_data_management.html:33
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Voor meer informatie over hoe om te gaan met persoonsgegevens, zie\n"
-#| "    <a href=\"https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/"
-#| "avg-europese-privacywetgeving/algemene-informatie-avg\" target=\"_blank"
-#| "\">Autoriteit Persoonsgegevens (AP)</a>.\n"
-#| "    "
 msgid ""
 "\n"
 "                Voor meer informatie over hoe om te gaan met "
@@ -2195,14 +2080,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_data_management.html:39
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Hoe er moet worden omgegaan met (onderzoeks)data volgens de "
-#| "richtlijnen van de VSNU kunt u\n"
-#| "    <a href=\"http://www.vsnu.nl/code-pers-gegevens.html\" target=\"_blank"
-#| "\">hier</a> vinden.\n"
-#| "    "
 msgid ""
 "\n"
 "                Hoe er moet worden omgegaan met (onderzoeks)data volgens de "
@@ -2218,26 +2095,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_data_management.html:45
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Steeds vaker zullen subsidieverstrekkers eisen dat u een (zeer) "
-#| "gedetailleerd datamanagement plan (DMP) schrijft.\n"
-#| "    Ook vanuit de UU gaat dit de regel worden.\n"
-#| "    Een DMP houdt in dat u heeft nagedacht over wat voor soort type data "
-#| "u gaat verzamelen en over hoe gevoelig die data is.\n"
-#| "    De opslag van die data wordt medebepaald door de sensitiviteit van "
-#| "die data.\n"
-#| "    Het DMP gaat ook over hoe ziet de infrastructuur van mijn mappen/"
-#| "bestanden eruit;\n"
-#| "    hoe zorg ik ervoor dat ik alles makkelijk kan vinden\n"
-#| "    en dat ook anderen makkelijk hun weg erin kunnen vinden (denk aan "
-#| "hergebruik/ delen van data).\n"
-#| "    Meer informatie over wat een DMP precies inhoudt en hoe er een te "
-#| "schrijven vind u\n"
-#| "    <a href=\"https://www.uu.nl/en/research/research-data-management/what-"
-#| "we-do/data-management-plan\" target=\"_blank\">hier</a>.\n"
-#| "    "
 msgid ""
 "\n"
 "                Steeds vaker zullen subsidieverstrekkers eisen dat u een "
@@ -2272,14 +2129,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_data_management.html:57
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Voor meer informatie over de UU-richtlijnen en wetten voor "
-#| "onderzoeksdata, zie ook:\n"
-#| "    <a href=\"http://libguides.library.uu.nl/onderzoeksdata\" target="
-#| "\"_blank\">http://libguides.library.uu.nl/onderzoeksdata</a>.\n"
-#| "    "
 msgid ""
 "\n"
 "                Voor meer informatie over de UU-richtlijnen en wetten voor "
@@ -2484,13 +2333,6 @@ msgid "Aantal woorden:"
 msgstr "Number of words:"
 
 #: proposals/templates/proposals/proposal_form.html:92
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        u past nu een studie aan van een student/PhD kandidaat onder uw "
-#| "supervisie. Let er op dat u het formulier\n"
-#| "        invuld alsof u die student/PhD kandidaat bent.\n"
-#| "    "
 msgid ""
 "\n"
 "                    u past nu een studie aan van een student/PhD kandidaat "
@@ -2505,13 +2347,6 @@ msgstr ""
 "were that student/PhD candidate.    "
 
 #: proposals/templates/proposals/proposal_form_pre_approved.html:85
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        u past nu een studie aan van een student/PhD kandidaat onder uw "
-#| "supervisie. Let er op dat u het formulier\n"
-#| "        invuld alsof u die student/PhD kandidaat bent.\n"
-#| "    "
 msgid ""
 "\n"
 "                    u past nu een studie aan van een student/PhD kandidaat "
@@ -2525,14 +2360,7 @@ msgstr ""
 "were that student/PhD candidate.    "
 
 #: proposals/templates/proposals/proposal_form_pre_approved.html:99
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "            Dit formulier is bedoeld voor studies die al goedgekeurd zijn "
-#| "door een andere commissie. Indien dit\n"
-#| "            niet het geval is, dient u het <a href=\"%(proposal_url)s"
-#| "\">normale formulier</a> in te vullen.\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "                        Dit formulier is bedoeld voor studies die al "
@@ -2553,13 +2381,7 @@ msgid "Uitleg"
 msgstr "Explanation"
 
 #: proposals/templates/proposals/proposal_list.html:40
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_next)s\" title=\"Naar "
-#| "volgende stap\"> om naar de volgende stap in het proces\n"
-#| "                    te gaan.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                            Klik op <img src=\"%(img_next)s\" title=\"Naar "
@@ -2569,19 +2391,12 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_next)s\" title=\"To next step\"> to move to "
-"the next step in the progress.\n"
+"        Click <img src=\"%(img_next)s\" title=\"To next step\"> to move on "
+"to the next step in the progress.\n"
 "        "
 
 #: proposals/templates/proposals/proposal_list.html:47
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_diff)s\" title=\"Toon "
-#| "verschillen\"> om de verschillen met de voorgaande\n"
-#| "                    versie te zien (alleen beschikbaar voor revisies/"
-#| "amendementen).\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                            Klik op <img src=\"%(img_diff)s\" title=\"Toon "
@@ -2598,12 +2413,7 @@ msgstr ""
 "        "
 
 #: proposals/templates/proposals/proposal_list.html:54
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_delete)s\" title="
-#| "\"Verwijderen\"> om uw studie te verwijderen.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                            Klik op <img src=\"%(img_delete)s\" title="
@@ -2616,12 +2426,7 @@ msgstr ""
 "        "
 
 #: proposals/templates/proposals/proposal_list.html:61
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om "
-#| "een ingediende studie in te zien.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                            Klik op <img src=\"%(img_pdf)s\" title=\"Inzien"
@@ -2634,13 +2439,7 @@ msgstr ""
 "        "
 
 #: proposals/templates/proposals/proposal_list.html:68
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_hide)s\" title=\"Verbergen"
-#| "\"> om een ingediende studie te verbergen uit het\n"
-#| "                    archief.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                            Klik op <img src=\"%(img_hide)s\" title="
@@ -2684,7 +2483,7 @@ msgstr "Last edited"
 
 #: proposals/templates/proposals/proposal_list.html:134
 msgid "Status"
-msgstr "State"
+msgstr ""
 
 #: proposals/templates/proposals/proposal_list.html:150
 #: reviews/templates/reviews/decision_list.html:142
@@ -2695,6 +2494,7 @@ msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/proposal_list.html:171
+#, fuzzy
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
@@ -2754,6 +2554,7 @@ msgid "Naam"
 msgstr "Name"
 
 #: proposals/templates/proposals/proposal_pdf.html:170
+#, fuzzy
 msgid "Niet aangeleverd"
 msgstr "Not provided"
 
@@ -2845,8 +2646,6 @@ msgid ""
 "De <a href=\"https://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\"> UU-webpagina "
 "van de FETC-GW</a> voor nieuws en de agenda."
 msgstr ""
-"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-"
-"webpage of the FEtC-H</a> for news and upcoming dates."
 
 #: proposals/templates/proposals/proposal_start.html:26
 msgid ""
@@ -2855,10 +2654,6 @@ msgid ""
 "fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer (LK)</"
 "a>."
 msgstr ""
-"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
-"target=\"blank\">Linguistics Chamber</a>."
 
 #: proposals/templates/proposals/proposal_start.html:35
 msgid ""
@@ -2876,10 +2671,6 @@ msgid ""
 "voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a "
 "href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">deze pagina</a>."
 msgstr ""
-"Students who cannot access intranet should receive these documents from "
-"their supervisor. The same example texts can be found on <a href=\"https://"
-"fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">this page</a>, though on non-"
-"official documents."
 
 #: proposals/templates/proposals/proposal_start.html:47
 #: proposals/templates/proposals/study_start.html:67
@@ -2888,10 +2679,10 @@ msgid ""
 "                    Een voorstel is opgebouwd uit (van groot naar klein) (i) "
 "trajecten, (ii) sessies, (iii) taken.\n"
 "                "
-msgstr "\n"
+msgstr ""
+"\n"
 "A proposal consists of (i) trajectories, (ii) sessions, and (iii) tasks, in "
-"descending order of subdivision.    "
-"      "
+"descending order of subdivision.          "
 
 #: proposals/templates/proposals/proposal_start.html:53
 #: proposals/templates/proposals/study_start.html:73
@@ -2906,22 +2697,18 @@ msgid ""
 "documenten nodig zijn. <p><u>Bijvoorbeeld</u>: schoolleiding, ouders van "
 "leerlingen 15 jaar en jonger, docenten.</p>"
 msgstr ""
-"When different groups of participants do not complete the same tasks or do not follow the same instructions during your research, they traverse different trajectories, and require separate informed consent documents."
-" <p><u>For example</u>: school management, parents of children up to 15 years of age, or teachers.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:61
 #: proposals/templates/proposals/study_start.html:81
 msgid "Alle taken/onderdelen die iemand op één dag uitvoert."
-msgstr "All tasks or procedures that a participant completes in a day combined. "
+msgstr ""
 
 #: proposals/templates/proposals/proposal_start.html:68
 #: proposals/templates/proposals/study_start.html:88
 msgid ""
 "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
 "invullen van een vragenlijst, een interview, of een taaltest. </p>"
-msgstr " A task or procedure within your research proposal. "
-"<p> <u>For example</u>: completing an interview, questionnaire, or language test.</p>"
-
+msgstr ""
 
 #: proposals/templates/proposals/proposal_start.html:78
 #: proposals/templates/proposals/proposal_start_pre_approved.html:43
@@ -3000,7 +2787,8 @@ msgstr ""
 "research and/or task-based or interview research. For each type of research "
 "you are then required to explain details about the design. You will be asked "
 "to estimate the burden and risks involved for the participants, and to "
-"upload all forms of <em>informed consent</em> adapted to your study.      "
+"upload all forms of <em>informed consent</em> adapted to your "
+"study.           "
 
 #: proposals/templates/proposals/proposal_start_practice.html:46
 msgid ""
@@ -3059,6 +2847,7 @@ msgstr ""
 "it, and finish it later.     "
 
 #: proposals/templates/proposals/proposal_start_practice.html:70
+#, python-format
 msgid ""
 "\n"
 "                    Gebruik bij het invullen s.v.p. geen afkortingen waar de "
@@ -3133,6 +2922,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:30
+#, python-format
 msgid ""
 "\n"
 "                Gebruik bij het invullen s.v.p. geen afkortingen waar de "
@@ -3220,16 +3010,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:36
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Deze marginale subsidieaanvraag-toetsing vervangt overigens niet de\n"
-#| "    reguliere toetsing van specifieke studies; de dankzij financiering "
-#| "later\n"
-#| "    in detail uitgewerkte studies zullen alsnog afzonderlijk ter "
-#| "zorgvuldige\n"
-#| "    toetsing bij de FETC-GW moeten worden aangemeld.\n"
-#| "    "
 msgid ""
 "\n"
 "                Deze marginale subsidieaanvraag-toetsing vervangt overigens "
@@ -3251,17 +3031,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:44
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Het invullen van de portalvragen kost hooguit 5 minuten.\n"
-#| "    Er wordt u gevraagd een document te uploaden.\n"
-#| "    Dit document moet uit de subsidieaanvraag alle voor de FETC-GW "
-#| "relevante\n"
-#| "    informatie bevatten om het project te kunnen beoordelen, dus in "
-#| "ieder\n"
-#| "    geval een duidelijke samenvatting van het project.\n"
-#| "    "
 msgid ""
 "\n"
 "                Het invullen van de portalvragen kost hooguit 5 minuten.\n"
@@ -3300,11 +3069,6 @@ msgid "Aanmelding klaar voor versturen"
 msgstr "Application ready to submit"
 
 #: proposals/templates/proposals/proposal_submit.html:34
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Uw aanvraag voor voortoetsing is compleet.\n"
-#| "    "
 msgid ""
 "\n"
 "                        Uw aanvraag voor voortoetsing is compleet.\n"
@@ -3316,13 +3080,6 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_submit.html:37
 #: proposals/templates/proposals/proposal_submit.html:54
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Als u er zeker van bent dat uw studie op adequate wijze is "
-#| "gespecifieerd kunt u de aanmelding\n"
-#| "    nu ter beoordeling naar de FETC-GW versturen.\n"
-#| "    "
 msgid ""
 "\n"
 "                        Als u er zeker van bent dat uw studie op adequate "
@@ -3337,11 +3094,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:43
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Uw concept-aanmelding is compleet.\n"
-#| "    "
 msgid ""
 "\n"
 "                        Uw concept-aanmelding is compleet.\n"
@@ -3352,12 +3104,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:46
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor "
-#| "versturen.\n"
-#| "    "
 msgid ""
 "\n"
 "                        U kunt nu uw concept-aanmelding ter beoordeling naar "
@@ -3370,11 +3116,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:51
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Uw aanmelding is compleet.\n"
-#| "    "
 msgid ""
 "\n"
 "                        Uw aanmelding is compleet.\n"
@@ -3385,15 +3126,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:61
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Als u de aanmelding eerst nog even wilt nakijken kan dat door via "
-#| "\"Terug naar begin\n"
-#| "    van de studie\" alle pagina's nog even door te lopen, of gebruik te "
-#| "maken van de knop \n"
-#| "    \"Toon navigatie\" in de rechterbovenhoek.\n"
-#| "    "
 msgid ""
 "\n"
 "                    Als u de aanmelding eerst nog even wilt nakijken kan dat "
@@ -3412,14 +3144,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:68
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Als u de aanmelding nu nog niet wilt versturen kunt u gewoon "
-#| "teruggaan naar de startpagina;\n"
-#| "    de concept-aanvraag wordt dan bewaard voor evt. latere wijziging en "
-#| "indiening.\n"
-#| "    "
 msgid ""
 "\n"
 "                    Als u de aanmelding nu nog niet wilt versturen kunt u "
@@ -3436,18 +3160,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:79
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "            U heeft nog geen toestemmingsverklaring of informatiebrief "
-#| "toegevoegd voor traject %(study_order)s.\n"
-#| "            Die kunt u op <a href=\"%(consent_link)s\">deze pagina</a> "
-#| "alsnog toevoegen.\n"
-#| "            Als u deze formulieren nog niet klaar hebt, kunt u ook op een "
-#| "later moment terugkeren;\n"
-#| "            uw studie is reeds opgeslagen en terug te vinden onder \"Mijn "
-#| "concepten\".\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "                                U heeft nog geen toestemmingsverklaring of "
@@ -3470,14 +3183,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:91
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "            U heeft aangeven dat uw interventie een extra taak heeft, "
-#| "maar nog geen taakonderzoek toegevoegd voor traject %(study_order)s.\n"
-#| "            Die kunt u op <a href=\"%(study_link)s\">deze pagina</a> "
-#| "alsnog aanmaken.\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "                                U heeft aangeven dat uw interventie een "
@@ -3494,11 +3200,6 @@ msgstr ""
 "        "
 
 #: proposals/templates/proposals/proposal_submit.html:105
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        Er zijn nog errors gevonden op de volgende pagina's:\n"
-#| "    "
 msgid ""
 "\n"
 "                        Er zijn nog errors gevonden op de volgende "
@@ -3510,13 +3211,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:117
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        Dit komt waarschijnlijk doordat u nog niet alle verplichte velden "
-#| "heeft ingevuld. U kunt uw aanmelding pas versturen wanneer deze fouten "
-#| "gecorrigeerd zijn.\n"
-#| "    "
 msgid ""
 "\n"
 "                        Dit komt waarschijnlijk doordat u nog niet alle "
@@ -3562,12 +3256,7 @@ msgid "U ontvangt een e-mail ter bevestiging."
 msgstr "You will receive a confirmation email."
 
 #: proposals/templates/proposals/proposal_submitted.html:40
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Klik <a href=\"%(submitted_url)s\">hier</a> om uw ingediende studies "
-#| "in te zien.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                    Klik <a href=\"%(submitted_url)s\">hier</a> om uw "
@@ -3584,15 +3273,6 @@ msgid "Toestemmingsverklaring van de schoolleider/hoofd van het departement"
 msgstr "Informed consent school director/ head of the institution"
 
 #: proposals/templates/proposals/study_consent.html:71
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        Hier kunt u Informed consent formulieren uploaden voor uw "
-#| "traject(en). Optioneel kunt u indien nodig maximaal 2\n"
-#| "        paar extra formulieren uploaden. <br/> Klik hiervoor op 'Voeg "
-#| "extra formulieren' onderaan de pagina. Deze velden\n"
-#| "        kunt u weer weg halen door alle formulieren te wissen.\n"
-#| "    "
 msgid ""
 "\n"
 "                    Hier kunt u Informed consent formulieren uploaden voor "
@@ -3612,7 +3292,7 @@ msgstr ""
 
 #: proposals/templates/proposals/study_consent.html:80
 msgid "Wijzigingen bijhouden"
-msgstr ""
+msgstr "Track changes"
 
 #: proposals/templates/proposals/study_consent.html:83
 msgid ""
@@ -3628,6 +3308,15 @@ msgid ""
 "\n"
 "                "
 msgstr ""
+"\n"
+"When editing a document to submit with a revision, we kindly ask you to "
+"enable the 'Track changes' option, or to submit an additional document "
+"noting the changes under 'Extra documents'. This allows reviewers to work "
+"more efficiently, and assess your submission in a timely fashion.<br /"
+"><b>Tip:</b> Enable 'Track changes' before submitting your first version, so "
+"you don't have to remember to do so afterwards.\n"
+"\n"
+"   "
 
 #: proposals/templates/proposals/study_consent.html:113
 msgid "Voeg extra formulieren toe"
@@ -3678,7 +3367,6 @@ msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
 #: proposals/utils/proposal_utils.py:66
-#, fuzzy
 msgid "Algemeen"
 msgstr "General"
 
@@ -3782,10 +3470,8 @@ msgid "Studie verwijderd"
 msgstr "Application deleted"
 
 #: proposals/views/proposal_views.py:377
-#, fuzzy
-#| msgid "WMO-gegevens opgeslagen"
 msgid "Wijzigingen opgeslagen"
-msgstr "WMO information saved"
+msgstr "Changes saved"
 
 #: proposals/views/proposal_views.py:450
 msgid "Studie gekopieerd"
@@ -3914,12 +3600,7 @@ msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
 #: reviews/templates/reviews/action_explaination.html:8
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om "
-#| "een ingediende studie in te zien.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om een "
@@ -3948,12 +3629,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:19
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om "
-#| "een ingediende studie in te zien.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                Klik op <img src=\"%(img_details)s\" title=\"Toon details\"> "
@@ -3962,17 +3638,12 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
-"study.\n"
+"        Click <img src=\"%(img_details)s\" title=\"Show details\"> to view "
+"details of a submitted study.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:25
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_delete)s\" title="
-#| "\"Verwijderen\"> om uw studie te verwijderen.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                Klik op <img src=\"%(img_decide)s\" title=\"Beslissen\"> om "
@@ -3980,15 +3651,13 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_delete)s\" title=\"Delete\"> to delete your "
-"study.\n"
+"        Click <img src=\"%(img_decide)s\" title=\"Decide\"> to make your "
+"decision.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:32
-#, fuzzy
-#| msgid "Afsluiting door secretaris"
 msgid "Uitleg secretaris"
-msgstr "Conclusion by secretary"
+msgstr "Explanation by secretary"
 
 #: reviews/templates/reviews/action_explaination.html:36
 #, python-format
@@ -4005,12 +3674,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:42
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om "
-#| "een ingediende studie in te zien.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_add_reviewers)s\" title="
@@ -4018,18 +3682,12 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
-"study.\n"
-"        "
+"        Click <img src=\"%(img_add_reviewers)s\" title=\"Assign\"> to assign "
+"reviewers.\n"
+"  "
 
 #: reviews/templates/reviews/action_explaination.html:47
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_next)s\" title=\"Naar "
-#| "volgende stap\"> om naar de volgende stap in het proces\n"
-#| "                    te gaan.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_change_chamber)s\" title="
@@ -4038,17 +3696,13 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_next)s\" title=\"To next step\"> to move to "
-"the next step in the progress.\n"
-"        "
+"                    Click on <img src=\"%(img_change_chamber)s\" title="
+"\"Move to other chamber\"> to move a study \n"
+"                    to a different chamber.\n"
+"                "
 
 #: reviews/templates/reviews/action_explaination.html:53
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om "
-#| "een ingediende studie in te zien.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_close)s\" title=\"Afsluiten\"> "
@@ -4056,18 +3710,12 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
-"study.\n"
-"        "
+"                    Click on <img src=\"%(img_close)s\" title=\"Conclude\"> "
+"to conclude a study.\n"
+"                "
 
 #: reviews/templates/reviews/action_explaination.html:58
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_hide)s\" title=\"Verbergen"
-#| "\"> om een ingediende studie te verbergen uit het\n"
-#| "                    archief.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_confirm)s\" title="
@@ -4076,18 +3724,13 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted "
-"study from the archive.\n"
-"        "
+"                    Click on <img src=\"%(img_confirm)s\" title="
+"\"Confirmation letter\"> to note that the\n"
+"                    confirmation letter has been sent.\n"
+"                "
 
 #: reviews/templates/reviews/action_explaination.html:64
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_next)s\" title=\"Naar "
-#| "volgende stap\"> om naar de volgende stap in het proces\n"
-#| "                    te gaan.\n"
-#| "                "
+#, python-format
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_confirmed)s\" title="
@@ -4096,9 +3739,10 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"        Click <img src=\"%(img_next)s\" title=\"To next step\"> to move to "
-"the next step in the progress.\n"
-"        "
+"                    Click on <img src=\"%(img_confirmed)s\" title="
+"\"Confirmation letter\"> to change the date of \n"
+"                    the confirmation letter.\n"
+"                "
 
 #: reviews/templates/reviews/auto_review.html:3
 msgid "Uitkomst automatische review"
@@ -4137,13 +3781,7 @@ msgid "Studie beoordelen"
 msgstr "Assess study"
 
 #: reviews/templates/reviews/decision_form.html:20
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    U kunt nu een go of no-go geven voor de studie <em>%(title)s</em>.\n"
-#| "    De studie is <a href=\"%(pdf_url)s\" target=\"_blank\">hier</a> in te "
-#| "zien (downloadt als PDF).\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                        U kunt nu een go of no-go geven voor de studie <em>"
@@ -4159,12 +3797,7 @@ msgstr ""
 "    "
 
 #: reviews/templates/reviews/decision_form.html:25
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Als supervisor kunt u deze studie <a href=\"%(update_url)s\" target="
-#| "\"_blank\">hier</a> aanpassen.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                            Als supervisor kunt u deze studie <a href="
@@ -4186,13 +3819,7 @@ msgstr ""
 "committee."
 
 #: reviews/templates/reviews/decision_form.html:37
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Dit is een revisie van of amendement op een vorige studie. De "
-#| "verschillen met de vorige studie zijn <a href=\"%(diff_url)s\">hier</a> "
-#| "in te zien.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                            Dit is een revisie van of amendement op een "
@@ -4244,12 +3871,7 @@ msgid "Commissieleden aanstellen"
 msgstr "Appoint committee members"
 
 #: reviews/templates/reviews/review_assign_form.html:31
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Kies hier de geschikte route en commissieleden voor de studie <em>"
-#| "%(title)s</em>.\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                    Kies hier de geschikte route en commissieleden voor de "
@@ -4268,12 +3890,7 @@ msgid "Review afsluiten"
 msgstr "Conclude review"
 
 #: reviews/templates/reviews/review_close_form.html:28
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "\tSluit hier de review voor de studie <em>%(title)s</em> af. Hieronder "
-#| "volgen de individuele beslissingen.\n"
-#| "\t"
+#, python-format
 msgid ""
 "\n"
 "                    Sluit hier de review voor de studie <em>%(title)s</em> "
@@ -4295,10 +3912,7 @@ msgid "Uiteindelijk besluit"
 msgstr "Final decision"
 
 #: reviews/templates/reviews/review_detail.html:10
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "Details van besluitvorming bij aanmelding <em>%(proposal)s</em>\n"
+#, python-format
 msgid ""
 "\n"
 "        Details van besluitvorming bij aanmelding <em>%(proposal)s</em>\n"
@@ -4306,12 +3920,10 @@ msgid ""
 msgstr ""
 "\n"
 "Details on the review process of study <em>%(proposal)s</em>\n"
+"     "
 
 #: reviews/templates/reviews/review_detail.html:20
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "Details van besluitvorming bij aanmelding <em>%(proposal)s</em>\n"
+#, python-format
 msgid ""
 "\n"
 "                    Details van besluitvorming bij aanmelding <em>"
@@ -4320,6 +3932,7 @@ msgid ""
 msgstr ""
 "\n"
 "Details on the review process of study <em>%(proposal)s</em>\n"
+"     "
 
 #: reviews/templates/reviews/review_detail.html:36
 #, python-format
@@ -4328,13 +3941,12 @@ msgid ""
 "                                Revisie/amendement van<br/> %(parent)s\n"
 "                            "
 msgstr ""
+"\n"
+"Revision or amendment of<br/> %(parent)s\n"
+"   "
 
 #: reviews/templates/reviews/review_detail.html:43
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        Reviewronde gestart op %(date_start)s.\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "                        Reviewronde gestart op<br/> %(date_start)s.\n"
@@ -4345,11 +3957,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail.html:49
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        Reviewronde beëindigd op %(date_end)s.\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "                            Reviewronde beëindigd op<br/> %(date_end)s.\n"
@@ -4360,11 +3968,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail.html:56
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        Afhandeling: %(continuation)s.\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "                            Afhandeling:<br/> %(continuation)s.\n"
@@ -4375,11 +3979,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail.html:62
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        Bevestiging verzonden op %(date_confirmed)s.\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "                                Bevestiging verzonden op<br/> "
@@ -4391,11 +3991,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail.html:66
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "        Opmerkingen: %(comments)s.\n"
-#| "        "
+#, python-format
 msgid ""
 "\n"
 "                                    Opmerkingen:<br/> %(comments)s.\n"
@@ -4406,11 +4002,6 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail.html:76
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        Dit is een aanvraag voor voortoetsing.\n"
-#| "        "
 msgid ""
 "\n"
 "                                Dit is een aanvraag voor voortoetsing.\n"
@@ -4421,11 +4012,6 @@ msgstr ""
 "    "
 
 #: reviews/templates/reviews/review_detail.html:86
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        Deze studie heeft een risivisie gehad tijdens het beslisproces.\n"
-#| "    "
 msgid ""
 "\n"
 "                        Deze studie heeft een risivisie gehad tijdens het "
@@ -4438,11 +4024,6 @@ msgstr ""
 "    "
 
 #: reviews/templates/reviews/review_detail.html:90
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "            Er zijn de volgende opmerkingen bijgevoegd:<br/>\n"
-#| "        "
 msgid ""
 "\n"
 "                            Er zijn de volgende opmerkingen bijgevoegd:<br/"
@@ -4511,10 +4092,8 @@ msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
 #: reviews/templates/reviews/review_detail.html:249
-#, fuzzy
-#| msgid "Reviewer"
 msgid "Reviewers"
-msgstr "Reviewer"
+msgstr "Reviewers"
 
 #: reviews/templates/reviews/review_table.html:10
 msgid "Genomen op"
@@ -4952,12 +4531,6 @@ msgstr ""
 "doc(x)-format)"
 
 #: studies/templates/studies/session_start.html:21
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    In de volgende vragen gaan we nader in op wat u in uw onderzoek van "
-#| "uw deelnemers zal verlangen. Daarbij gelden de volgende definities:\n"
-#| "    "
 msgid ""
 "\n"
 "                In de volgende vragen gaan we nader in op wat u in uw "
@@ -4967,23 +4540,10 @@ msgid ""
 msgstr ""
 "\n"
 "    The following questions probe further into the demands of your task-"
-"based study on your participants. The following definitions apply:\n"
+"based study on your participants. The following definitions will apply:\n"
 "    "
 
 #: studies/templates/studies/session_start.html:26
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    <strong>Sessie:</strong> Het geheel van de voor uw studie benodigde "
-#| "betrokkenheid die u op één dag van een deelnemer vraagt. Bij een "
-#| "labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt "
-#| "vanaf het moment dat u de deelnemer ontvangt tot het moment dat u "
-#| "afscheid neemt, inclusief de benodigde pauzes. En bij een internet-"
-#| "vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het "
-#| "welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom "
-#| "inclusief benodigde pauzes. Bij veldwerk is dat de tijd dat u met de "
-#| "deelnemer in interactie bent op één dag.\n"
-#| "    "
 msgid ""
 "\n"
 "                <strong>Sessie:</strong> Het geheel van de voor uw studie "
@@ -5010,23 +4570,6 @@ msgstr ""
 "    "
 
 #: studies/templates/studies/session_start.html:31
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    <strong>Taak:</strong> Een coherente verzameling handelingen die u "
-#| "via een gesproken of geschreven taak-instructie aan de deelnemer oplegt, "
-#| "en ook als zodanig als 'taak' in een artikel zou beschrijven "
-#| "(bijvoorbeeld: \"Beluister de volgende 200 zinnetjes en druk op een knop "
-#| "als u een fout ontdekt\", \"Vul persoonlijkheidsvragenlijst X in\", "
-#| "\"Speel 10 minuten met uw kind zoals u dat thuis doet\", “houd 1 week een "
-#| "dagboek bij van uw media-gebruik”, “wilt u uw gender identiteit "
-#| "beschrijven”, “maak foto’s van plekken in uw leefomgeving die u "
-#| "bedreigend en inspirerend vindt”, “zoek en deel met ons 10 foto’s uit uw "
-#| "prive-archief om uw levensverhaal te kunnen vertellen”). Indien de "
-#| "specifieke opdracht aan de deelnemer per item varieert (bijvoorbeeld: "
-#| "\"bij een Nederlandse zin beoordeelt u de betekenis, bij een Engelse zin "
-#| "de grammatica\"), beschouw dit dan gewoon als één taak.\n"
-#| "    "
 msgid ""
 "\n"
 "                <strong>Taak:</strong> Een coherente verzameling handelingen "
@@ -5067,12 +4610,6 @@ msgid "De onderzoekstype(n)"
 msgstr "Type(s) of research"
 
 #: studies/templates/studies/study_design.html:21
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    De FETC-GW onderscheidt 3 typen onderzoek (die evt. ook samen in één "
-#| "studie voor kunnen komen):\n"
-#| "    "
 msgid ""
 "\n"
 "                    De FETC-GW onderscheidt 3 typen onderzoek (die evt. ook "
@@ -5095,14 +4632,15 @@ msgid ""
 "worden geobserveerd.\n"
 "                        "
 msgstr ""
+"\n"
+"                            <strong>Interventional research</strong>:</br >\n"
+"                            The researcher uses an <em>intervention</em> to "
+"manipulate the context in which participants do what they would otherwise "
+"also do in their daily lives.<br />Effects may be measured immediately or "
+"after the fact.\n"
+"         "
 
 #: studies/templates/studies/study_design.html:37
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                Om welk type onderzoek gaat het hier?\n"
-#| "                U kunt meerdere opties aankruisen.\n"
-#| "                "
 msgid ""
 "\n"
 "                            <strong>Observatieonderzoek</strong>:</br >\n"
@@ -5111,9 +4649,10 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"        What type of research will be used here?\n"
-"        You can select multiple options.\n"
-"        "
+"                            <strong>Observational research</strong>:</br >\n"
+"The researcher observes participants in their daily lives, but does not "
+"interfere.\n"
+"       "
 
 #: studies/templates/studies/study_design.html:45
 msgid ""
@@ -5133,14 +4672,23 @@ msgid ""
 "ontvangst alleen maar worden geobserveerd).\n"
 "                        "
 msgstr ""
+"\n"
+"                            <strong>Task-based research and interviews</"
+"strong>:</br >\n"
+"                            De researcher\n"
+"                            <ul>\n"
+"                                <li>gives participants a task to fulfil "
+"(such as a questionnaire or experiment), or </li>\n"
+"                                <li>interviews participants, or </li>\n"
+"                                <li>asks participants to partake in a focus "
+"group.</li>\n"
+"                            </ul><br />\n"
+"                            Research that takes place at the UiL OTS-labs is "
+"alwayscategorized as task-based research due to the location (even if "
+"participantsare only observed after their arrival).\n"
+"                        "
 
 #: studies/templates/studies/study_design.html:63
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                Om welk type onderzoek gaat het hier?\n"
-#| "                U kunt meerdere opties aankruisen.\n"
-#| "                "
 msgid ""
 "\n"
 "                                    Om welk type onderzoek gaat het hier?\n"
@@ -5153,21 +4701,6 @@ msgstr ""
 "        "
 
 #: studies/templates/studies/study_design.html:79
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                    Dit is bijvoorbeeld het geval wanneer u een\n"
-#| "                    observatiedeel combineert met een "
-#| "taakonderzoeksdeel,\n"
-#| "                    of met een interventiedeel (in dezelfde sessie, of \n"
-#| "                    verspreid over dagen).\n"
-#| "                    Wanneer u in interventieonderzoek <em>extra</em> "
-#| "taken\n"
-#| "                    inzet om de effecten van de interventie te bemeten\n"
-#| "                    (bijvoorbeeld een speciale voor- en nameting met een\n"
-#| "                    vragenlijst die anders niet zou worden afgenomen)\n"
-#| "                    dient u die apart als taakonderzoek te specificeren.\n"
-#| "                    "
 msgid ""
 "\n"
 "                        Dit is bijvoorbeeld het geval wanneer u een\n"
@@ -5199,13 +4732,6 @@ msgstr ""
 "                "
 
 #: studies/templates/studies/study_design.html:95
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "        Voor elk door u aangekruiste type onderzoek kunt u op de "
-#| "hiernavolgende pagina's\n"
-#| "        de relevante informatie verschaffen.\n"
-#| "        "
 msgid ""
 "\n"
 "                        Voor elk door u aangekruiste type onderzoek kunt u "
@@ -5220,11 +4746,7 @@ msgstr ""
 "        "
 
 #: studies/templates/studies/study_end.html:32
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    Deelnemers uit de leeftijdscategorieën <em>%(age_groups)s</em>\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                    Deelnemers uit de leeftijdscategorieën <em>"
@@ -5236,11 +4758,7 @@ msgstr ""
 "    "
 
 #: studies/templates/studies/study_end.html:36
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "    en met de bijzondere kenmerken <em>%(traits)s</em>\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
 "                        en met de bijzondere kenmerken <em>%(traits)s</em>\n"
@@ -5251,11 +4769,6 @@ msgstr ""
 "    "
 
 #: studies/templates/studies/study_end.html:40
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    zonder bijzondere kenmerken\n"
-#| "    "
 msgid ""
 "\n"
 "                        zonder bijzondere kenmerken\n"
@@ -5266,11 +4779,6 @@ msgstr ""
 "    "
 
 #: studies/templates/studies/study_end.html:45
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    en zijnde <em>wilsonbekwaam</em>\n"
-#| "    "
 msgid ""
 "\n"
 "                        en zijnde <em>wilsonbekwaam</em>\n"
@@ -5281,11 +4789,6 @@ msgstr ""
 "    "
 
 #: studies/templates/studies/study_end.html:49
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    zullen aan de volgende onderdelen meedoen:\n"
-#| "    "
 msgid ""
 "\n"
 "                    zullen aan de volgende onderdelen meedoen:\n"
@@ -5372,14 +4875,6 @@ msgid "Deze sessie bestaat uit de volgende taken:"
 msgstr "This session consists of the following tasks:"
 
 #: studies/templates/studies/study_end.html:156
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Beantwoord op basis van dit overzicht de volgende vragen, \n"
-#| "    en ga daarbij uit van het naar verwachting meest kwetsbare c.q. \n"
-#| "    minst belastbare (bijv. jongste) geselecteerde deelnemerstype \n"
-#| "    dat dit traject doorloopt.\n"
-#| "    "
 msgid ""
 "\n"
 "                    Beantwoord op basis van dit overzicht de volgende "
@@ -5419,13 +4914,7 @@ msgid "Vergoeding"
 msgstr "Compensation"
 
 #: studies/templates/studies/study_form.html:110
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Let op! U heeft de vraag <a href=\"%(url)s\">'In welke "
-#| "hoedanigheid bent u betrokken bij deze studie?'</a> nog niet ingevuld, "
-#| "waardoor deze pagina nog kan veranderen op basis van uw antwoord.\n"
-#| "            "
+#, python-format
 msgid ""
 "\n"
 "                        Let op! U heeft de vraag <a href=\"%(url)s\">'In "
@@ -5436,7 +4925,7 @@ msgstr ""
 "\n"
 "                Warning! The question <a href=\"%(url)s\">'In welke "
 "hoedanigheid bent u betrokken bij deze studie?'</a> has not been answered "
-"yet. This page might change depending on the answer..\n"
+"yet. This page might change depending on your answer.\n"
 "            "
 
 #: studies/templates/studies/study_title.html:6
@@ -5462,28 +4951,21 @@ msgstr ""
 "    "
 
 #: studies/utils.py:65
-#, fuzzy
-#| msgid "De deelnemers"
 msgid "Deelnemers"
 msgstr "Participants"
 
 #: studies/utils.py:71
-#, fuzzy
-#| msgid "De onderzoekstype(n)"
 msgid "Onderzoekstype(n)"
 msgstr "Type(s) of research"
 
 #: studies/utils.py:86
-#, fuzzy
-#| msgid "Feedbackoverzicht"
 msgid "Overzicht"
-msgstr "Feedback overview"
+msgstr "Overview"
 
 #: studies/utils.py:94
 #, fuzzy
-#| msgid "Traject {} ({})"
 msgid "Traject {}"
-msgstr "Trajectory {} ({})"
+msgstr "Trajectory {}"
 
 #: studies/views/session_views.py:22
 #, python-format
@@ -5702,10 +5184,8 @@ msgstr ""
 "    "
 
 #: tasks/utils.py:32
-#, fuzzy
-#| msgid "Observatieonderzoek"
 msgid "Takenonderzoek"
-msgstr "Observational research"
+msgstr "Task-based research"
 
 #: tasks/utils.py:40
 msgid "Het takenonderzoek: sessie {}"
@@ -5740,42 +5220,6 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
-#, fuzzy
-#~| msgid ""
-#~| "(check de meest recente voorbeelddocumenten op <a href=\"https://"
-#~| "intranet.uu.nl/documenten-ethische-toetsingscommissie-gw\" target="
-#~| "\"_blank\">intranet</a>)"
-#~ msgid ""
-#~ "De <a href=\"https://intranet.uu.nl/documenten-ethische-"
-#~ "toetsingscommissie-gw\" target=\"_blank\"> UU-webpagina van de FETC-GW</"
-#~ "a>voor nieuws en de agenda."
-#~ msgstr ""
-#~ "(check the latest version of the model documents on the <a href=\"https://"
-#~ "intranet.uu.nl/en/documents-ethics-assessment-committee-humanities\" "
-#~ "target=\"_blank\">intranet</a>)"
-
-#~ msgid ""
-#~ "<p>Kijk voor de relevante (leeftijds)groepen naar de verschillende <a "
-#~ "href=\"https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
-#~ "\"> voorbeelden van informatiebrieven en toestemmingsverklaringen</a> die "
-#~ "de FETC aanbiedt op intranet.</p>"
-#~ msgstr ""
-#~ "<p>To determine which groupings, age or otherwise, are relevant to your "
-#~ "proposal, consult the <a href=\"https://intranet.uu.nl/documenten-"
-#~ "ethische-toetsingscommissie-gw\">example documents for informed consent</"
-#~ "a> provided by the FEtC-H on the UU intranet.</p>"
-
-#, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "        <strong>Belangrijk</strong>: bij het indienen van een aanvraag\n"
-#~| "        moeten de <strong>juiste (meest recente) voorbeelddocumenten</"
-#~| "strong>\n"
-#~| "        voor de informed consent worden gebruikt. Deze zijn te vinden "
-#~| "op\n"
-#~| "        <a href=\"https://intranet.uu.nl/documenten-ethische-"
-#~| "toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
-#~| "        "
 #~ msgid ""
 #~ "\n"
 #~ "                            <strong>Belangrijk</strong>: bij het indienen "
@@ -5790,25 +5234,12 @@ msgstr "Task deleted"
 #~ "                        "
 #~ msgstr ""
 #~ "\n"
-#~ "<strong>Important:</strong> for new applications, <strong>the right "
-#~ "(latest) model documents</strong> for informed consent need to be used. "
-#~ "You may find these on the \n"
+#~ "<strong>Attention:</strong> for new applications, <strong>the right "
+#~ "(latest) model documents</strong> for informed consent must be used. You "
+#~ "may find these on the \n"
 #~ "<a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
 #~ "humanities\" target=\"_blank\">intranet</a>."
 
-#, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "        Voor noodzakelijke achtergrondinformatie verwijzen we naar de\n"
-#~| "        <a href=\"http://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU-"
-#~| "webpagina van de FETC-GW</a>,\n"
-#~| "        alsmede naar het reglement van\n"
-#~| "        <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/"
-#~| "\" target=\"_blank\">de Algemene Kamer (AK)</a> en\n"
-#~| "        <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-"
-#~| "kamer/\" target=\"_blank\">de Linguïstiek Kamer\n"
-#~| "            (LK)</a>.\n"
-#~| "        "
 #~ msgid ""
 #~ "\n"
 #~ "                            Voor noodzakelijke achtergrondinformatie "
@@ -5835,28 +5266,6 @@ msgstr "Task deleted"
 #~ "<a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/"
 #~ "\" target=\"_blank\">the Linguistics Chamber </a>    "
 
-#, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "    Als u met verschillende deelnemersgroepen werkt die een "
-#~| "verschillend\n"
-#~| "    onderzoekstraject doorlopen (de ene groep krijgt bijvoorbeeld twee\n"
-#~| "    taken, de andere drie) zult u elk traject apart op bovengenoemde "
-#~| "wijze\n"
-#~| "    moeten beschrijven. NB: Ook wanneer u met verschillende "
-#~| "leeftijdsgroepen\n"
-#~| "    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante\n"
-#~| "    leeftijdsgroepen naar\n"
-#~| "    <a href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\" target="
-#~| "\"_blank\">de\n"
-#~| "        verschillende soorten informatiebrieven en "
-#~| "toestemmingsverklaringen</a> die de FETC aanbiedt op de\n"
-#~| "    website. <strong>Let op:</strong> informed consent formulieren die "
-#~| "bij een <strong>officiële aanvraag</strong> gebruikt moeten worden zijn "
-#~| "te vinden\n"
-#~| "    op <a href=\"https://intranet.uu.nl/facultaire-ethische-"
-#~| "toetsingscommissie-gw\" target=\"_blank\">intranet</a>.\n"
-#~| "    "
 #~ msgid ""
 #~ "\n"
 #~ "                    Als u met verschillende deelnemersgroepen werkt die "
@@ -5897,174 +5306,101 @@ msgstr "Task deleted"
 #~ "\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities"
 #~ "\" target=\"_blank\">intranet</a>."
 
-#, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "        <strong>Interventieonderzoek</strong>:\n"
-#~| "        Onderzoek waarin mensen <em>in hun normale leven in bepaalde "
-#~| "contexten doen wat ze daar normaliter ook doen, maar waar de onderzoeker "
-#~| "d.m.v. een interventie iets in de context manipuleert</em> (bijv. een "
-#~| "ander lesboek, een andere behandeling, of een anders vormgegeven "
-#~| "website, etc.).\n"
-#~| "        De effecten van die interventie kunnen gelijktijdig worden "
-#~| "geobserveerd, maar kunnen bijv. ook achteraf worden vastgesteld d.m.v. "
-#~| "reguliere toetsen aan het einde van een lesjaar.\n"
-#~| "        "
 #~ msgid ""
 #~ "\n"
-#~ "                            <strong>Interventieonderzoek</strong>:\n"
-#~ "                            Onderzoek waarin mensen\n"
-#~ "                            <em>in hun normale leven in bepaalde "
-#~ "contexten doen wat ze daar normaliter ook doen, maar\n"
-#~ "                                waar de onderzoeker d.m.v. een "
-#~ "interventie iets in de context manipuleert</em> (bijv.\n"
-#~ "                            een ander lesboek, een andere behandeling, of "
-#~ "een anders vormgegeven website, etc.).\n"
-#~ "                            De effecten van die interventie kunnen "
-#~ "gelijktijdig worden geobserveerd, maar kunnen bijv.\n"
-#~ "                            ook achteraf worden vastgesteld d.m.v. "
-#~ "reguliere toetsen aan het einde van een lesjaar.\n"
-#~ "                        "
+#~ "                In de meeste Geesteswetenschappelijke studies doorlopen "
+#~ "alle deelnemers een,\n"
+#~ "                in essentie, vergelijkbaar traject.\n"
+#~ "                Bijvoorbeeld eerst een observatiefase, dan een "
+#~ "interventiefase, en dan weer\n"
+#~ "                een observatiefase.\n"
+#~ "                Of: een taakonderzoek waarin eerst een open interview "
+#~ "wordt afgenomen en\n"
+#~ "                vervolgens wordt er een vragenlijst afgenomen\n"
+#~ "                Kleine verschillen tussen wat de verschillende deelnemers "
+#~ "in zo'n traject\n"
+#~ "                ten deel valt (bijv. in een between-subjects "
+#~ "interventiedesign met les\n"
+#~ "                uit een nieuw lesboek of uit het oude lesboek, of between-"
+#~ "subjects\n"
+#~ "                RT-takendesigns met een instructie richting snelle of "
+#~ "juist accurate\n"
+#~ "                performance) kunnen als varianten van hetzelfde traject "
+#~ "worden benoemd.\n"
+#~ "                "
 #~ msgstr ""
 #~ "\n"
-#~ "        <strong>Interventional research</strong>:\n"
-#~ "        Research in which people <em>act as they normally would in "
-#~ "specific contexts in their everyday lives, but in which the researcher "
-#~ "intervenes to manipulate something in the context</em> (e.g. a different "
-#~ "textbook, a different treatment, or a differently designed website, "
-#~ "etc.).\n"
-#~ "        The effects of that intervention can be observed at the time, but "
-#~ "can also be established in retrospect, for example, through regular "
-#~ "testing at the end of the academic year.\n"
+#~ "    In most Humanities studies all participants essentially follow "
+#~ "comparable trajectories. For example, they might begin with an "
+#~ "observation phase, followed by an intervention phase followed by another "
+#~ "observation phase. Or there might be a task-based research in which an "
+#~ "open interview takes place, followed by a questionnaire. Small "
+#~ "differences between what participants are allocated in such a trajectory "
+#~ "(e.g. a between-subjects intervention design with a lesson from a new "
+#~ "textbook or from the old textbook, or between-subject RT-task designs "
+#~ "with instructions for fast or accurate performance) can be referred to as "
+#~ "variants of the same trajectory.     "
+
+#~ msgid ""
+#~ "\n"
+#~ "                Soms zal het echter voorkomen dat verschillende "
+#~ "deelnemersgroepen echt heel\n"
+#~ "                verschillende trajecten doorlopen, met bijvoorbeeld een "
+#~ "verschillend aantal\n"
+#~ "                sessies, meer taken of hele andere taken. Denk aan een "
+#~ "situatie waarin\n"
+#~ "                oudere kinderen een takensessie met drie verschillende "
+#~ "reactietijdtaken\n"
+#~ "                en twee vragenlijsten doorlopen, en jongere kinderen "
+#~ "slechts twee korte\n"
+#~ "                reactietijd-taken en één vragenlijst doen. Of aan de "
+#~ "situatie binnen een\n"
+#~ "                interventiestudie waarbij niet alleen de leerlingen "
+#~ "worden bestudeerd maar\n"
+#~ "                óók de leraar een vragenlijst moet invullen of wordt "
+#~ "geobserveerd gedurende\n"
+#~ "                het geven van de interventie. Of aan een situatie waarin "
+#~ "ook de ouder(s)\n"
+#~ "                gevraagd wordt een (of meerdere) vragenlijst(en) in te "
+#~ "vullen. In zulke\n"
+#~ "                gevallen zal elk traject en de bijbehorende "
+#~ "deelnemersgroep volledig\n"
+#~ "                gespecificeerd moeten worden.\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "    Sometimes, however, different participant groups will really follow "
+#~ "very different trajectories, for example with different numbers of "
+#~ "sessions or tasks, or completely different tasks. For example, older "
+#~ "children might be assigned a task session with three different reaction-"
+#~ "time tasks and two questionnaires, and younger children might only do one "
+#~ "reaction-time task and one questionnaire. Or in an intervention study the "
+#~ "pupils might be observed but the teacher might also be required to fill "
+#~ "in a questionnaire or be observed while applying the intervention. "
+#~ "Alternatively, parents might be asked to fill in one or more "
+#~ "questionnaires. In such cases each trajectory and the associated "
+#~ "participant group must be fully specified.     "
+
+#~ msgid ""
+#~ "\n"
+#~ "                NB: Ook wanneer u met verschillende leeftijdsgroepen\n"
+#~ "                werkt, moet u meerdere trajecten aanmaken: kijk voor de "
+#~ "relevante\n"
+#~ "                leeftijdsgroepen naar\n"
+#~ "                <a href=\"https://fetc-gw.wp.hum.uu.nl/"
+#~ "toestemmingsverklaringen/\" target=\"_blank\">de\n"
+#~ "                verschillende soort toestemmingsverklaringen</a> die de "
+#~ "FETC aanbiedt op de\n"
+#~ "                website\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ " NB: Also, when you work with different age groups, you are required to "
+#~ "create different trajectories. See for relevant age groups <a href="
+#~ "\"https://fetc-gw.wp.hum.uu.nl/en/declaration-of-consent/\" target="
+#~ "\"_blank\">the different type of consent forms</a> we offer at the "
+#~ "website.\n"
 #~ "    "
-
-#, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "        <strong>Observatieonderzoek</strong>:\n"
-#~| "        Onderzoek waarin mensen <em>in hun normale leven in bepaalde "
-#~| "contexten worden geobserveerd</em>, bijvoorbeeld op scholen of in andere "
-#~| "institutionele settings, in de digitale publieke ruimte, of bij de "
-#~| "deelnemer thuis, <em>zonder dat de onderzoeker daar op enige wijze op "
-#~| "ingrijpt</em>.\n"
-#~| "        Het gedrag wordt zichtbaar of onzichtbaar via video/audio-"
-#~| "opnames, notities, of <em>logging</em> van digitale handelingen "
-#~| "geregistreerd, maar ook de producten van dat gedrag kunnen bestudeerd "
-#~| "worden.\n"
-#~| "        "
-#~ msgid ""
-#~ "\n"
-#~ "                            <strong>Observatieonderzoek</strong>:\n"
-#~ "                            Onderzoek waarin mensen\n"
-#~ "                            <em>in hun normale leven in bepaalde "
-#~ "contexten worden geobserveerd</em>, bijvoorbeeld op\n"
-#~ "                            scholen of in andere institutionele settings, "
-#~ "in de digitale publieke ruimte, of bij de\n"
-#~ "                            deelnemer thuis, <em>zonder dat de "
-#~ "onderzoeker daar op enige wijze op ingrijpt</em>.\n"
-#~ "                            Het gedrag wordt zichtbaar of onzichtbaar via "
-#~ "video/audio-opnames, notities, of\n"
-#~ "                            <em>logging</em> van digitale handelingen "
-#~ "geregistreerd, maar ook de producten van dat\n"
-#~ "                            gedrag kunnen bestudeerd worden.\n"
-#~ "                        "
-#~ msgstr ""
-#~ "\n"
-#~ "        <strong>Observational research</strong>:\n"
-#~ "        Research in which people <em>are observed in specific contexts in "
-#~ "their normal lives</em>, such as in schools or in other institutional "
-#~ "settings, in a digital public space, or in the participant’s home, "
-#~ "<em>without the researcher intervening in any way</em>.\n"
-#~ "        The behaviour is visibly or invisibly registered through video/"
-#~ "audio recordings, notes, or logging of digital actions, but the products "
-#~ "of that behaviour may also be studied.\n"
-#~ "        "
-
-#, fuzzy
-#~| msgid ""
-#~| "\n"
-#~| "        <strong>Taakonderzoek en Interviews</strong>:\n"
-#~| "        Onderzoek waarbij aan mensen <em>van onderzoekswege (extra) "
-#~| "taken worden opgelegd</em> (via bepaalde taakinstructies), zoals zoals "
-#~| "“vul deze internetsurvey in”, “lees deze verhaaltjes aandachtig door”, "
-#~| "“geef aan in hoeverre de volgende uitspraken op u van toepassing zijn”, "
-#~| "“houd 1 week een dagboek bij van uw media-gebruik”, “wilt u uw gender "
-#~| "identiteit beschrijven”, “maak foto’s van plekken in uw leefomgeving die "
-#~| "u bedreigend en inspirerend vindt”, “zoek en deel met ons 10 foto’s uit "
-#~| "uw prive-archief om uw levensverhaal te kunnen vertellen” “vertel eens "
-#~| "iets over uw vakantie”,  “speel 10 minuten met uw kind zoals u dat thuis "
-#~| "ook zou doen”, etc.\n"
-#~| "        Er wordt dus iets van mensen gevraagd wat ze in hun normale "
-#~| "leven niet (of niet dáár, dán, op déze wijze) zouden doen.<br/>\n"
-#~| "        Ook onderzoek waarin mensen worden geïnterviewd, deelnemen aan "
-#~| "een focus-groep discussie of gevraagd worden thuis of op straat een "
-#~| "vragenlijst in te vullen is taakonderzoek. <br/>\n"
-#~| "        Onderzoek in het Uil OTS-lab is vanwege de locatie per definitie "
-#~| "altijd taakonderzoek (óók als de deelnemers na ontvangst alleen maar "
-#~| "worden geobserveerd), maar ook onderzoek waarin mensen worden "
-#~| "geïnterviewed, of gevraagd worden thuis of op straat een vragenlijst in "
-#~| "te vullen is taakonderzoek.\n"
-#~| "        Bij interventieonderzoek gelden eventuele extra taken ook als "
-#~| "taakonderzoek.\n"
-#~| "        "
-#~ msgid ""
-#~ "\n"
-#~ "                            <strong>Taakonderzoek en Interviews</"
-#~ "strong>:\n"
-#~ "                            Onderzoek waarbij aan mensen <em>van "
-#~ "onderzoekswege (extra) taken worden opgelegd</em> (via\n"
-#~ "                            bepaalde taakinstructies), zoals zoals “vul "
-#~ "deze internetsurvey in”, “lees deze verhaaltjes\n"
-#~ "                            aandachtig door”, “geef aan in hoeverre de "
-#~ "volgende uitspraken op u van toepassing zijn”,\n"
-#~ "                            “houd 1 week een dagboek bij van uw media-"
-#~ "gebruik”, “wilt u uw gender identiteit\n"
-#~ "                            beschrijven”, “maak foto’s van plekken in uw "
-#~ "leefomgeving die u bedreigend en inspirerend\n"
-#~ "                            vindt”, “zoek en deel met ons 10 foto’s uit "
-#~ "uw prive-archief om uw levensverhaal te kunnen\n"
-#~ "                            vertellen” “vertel eens iets over uw "
-#~ "vakantie”,  “speel 10 minuten met uw kind zoals u dat\n"
-#~ "                            thuis ook zou doen”, etc.\n"
-#~ "                            Er wordt dus iets van mensen gevraagd wat ze "
-#~ "in hun normale leven niet (of niet dáár, dán,\n"
-#~ "                            op déze wijze) zouden doen.<br/>\n"
-#~ "                            Ook onderzoek waarin mensen worden "
-#~ "geïnterviewd, deelnemen aan een focus-groep discussie of\n"
-#~ "                            gevraagd worden thuis of op straat een "
-#~ "vragenlijst in te vullen is taakonderzoek. <br/>\n"
-#~ "                            Onderzoek in het Uil OTS-lab is vanwege de "
-#~ "locatie per definitie altijd taakonderzoek (óók\n"
-#~ "                            als de deelnemers na ontvangst alleen maar "
-#~ "worden geobserveerd), maar ook onderzoek waarin\n"
-#~ "                            mensen worden geïnterviewed, of gevraagd "
-#~ "worden thuis of op straat een vragenlijst in te\n"
-#~ "                            vullen is taakonderzoek.\n"
-#~ "                            Bij interventieonderzoek gelden eventuele "
-#~ "extra taken ook als taakonderzoek.\n"
-#~ "                        "
-#~ msgstr ""
-#~ "\n"
-#~ "        <strong>Task-based research and Interviews</strong>:\n"
-#~ "        Research in which people are <em>assigned extra tasks   for the "
-#~ "study</em> (through particular instructions, such as \"fill in this "
-#~ "internet survey\", \"read these stories carefully\", \"indicate to what "
-#~ "extent the following statements apply to you\", \"keep a diary of your "
-#~ "media use for 1 week\", \"do you want to describe your gender identity\", "
-#~ "\"take photos of places in your environment that you find threatening and "
-#~ "inspiring\", \" search and share with us 10 photos from your private "
-#~ "archive for your to be able to tell a life story\", \"tell something "
-#~ "about your holiday\", \"play with your child for 10 minutes as you would "
-#~ "at home\", etc).\n"
-#~ "        People are thus asked to do something they would not do in their "
-#~ "normal lives (or would not do in that way).<br/>\n"
-#~ "        Research at the UiL OTS lab is always task-based by definition, "
-#~ "due to the location (even if after arrival the participants are only "
-#~ "observed). Research in which people are interviewed, or asked to fill in "
-#~ "a questionnaire at home or in the street, is also task-based research.\n"
-#~ "        In interventional research any extra tasks also count as task-"
-#~ "based research.\n"
-#~ "        "
 
 #~ msgid ""
 #~ "\n"
@@ -6208,98 +5544,6 @@ msgstr "Task deleted"
 #~ "\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities"
 #~ "\" target=\"_blank\">intranet</a>."
 
-#~ msgid ""
-#~ "\n"
-#~ "    In de meeste Geesteswetenschappelijke studies doorlopen alle "
-#~ "deelnemers een,\n"
-#~ "    in essentie, vergelijkbaar traject.\n"
-#~ "    Bijvoorbeeld eerst een observatiefase, dan een interventiefase, en "
-#~ "dan weer\n"
-#~ "    een observatiefase.\n"
-#~ "    Of: een taakonderzoek waarin eerst een open interview wordt afgenomen "
-#~ "en\n"
-#~ "    vervolgens wordt er een vragenlijst afgenomen\n"
-#~ "    Kleine verschillen tussen wat de verschillende deelnemers in zo'n "
-#~ "traject\n"
-#~ "    ten deel valt (bijv. in een between-subjects interventiedesign met "
-#~ "les\n"
-#~ "    uit een nieuw lesboek of uit het oude lesboek, of between-subjects\n"
-#~ "    RT-takendesigns met een instructie richting snelle of juist accurate\n"
-#~ "    performance) kunnen als varianten van hetzelfde traject worden "
-#~ "benoemd.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "    In most Humanities studies all participants essentially follow "
-#~ "comparable trajectories. For example, they might begin with an "
-#~ "observation phase, followed by an intervention phase followed by another "
-#~ "observation phase. Or there might be a task-based research in which an "
-#~ "open interview takes place, followed by a questionnaire. Small "
-#~ "differences between what participants are allocated in such a trajectory "
-#~ "(e.g. a between-subjects intervention design with a lesson from a new "
-#~ "textbook or from the old textbook, or between-subject RT-task designs "
-#~ "with instructions for fast or accurate performance) can be referred to as "
-#~ "variants of the same trajectory.     "
-
-#~ msgid ""
-#~ "\n"
-#~ "    Soms zal het echter voorkomen dat verschillende deelnemersgroepen "
-#~ "echt heel\n"
-#~ "    verschillende trajecten doorlopen, met bijvoorbeeld een verschillend "
-#~ "aantal\n"
-#~ "    sessies, meer taken of hele andere taken. Denk aan een situatie "
-#~ "waarin\n"
-#~ "    oudere kinderen een takensessie met drie verschillende "
-#~ "reactietijdtaken\n"
-#~ "    en twee vragenlijsten doorlopen, en jongere kinderen slechts twee "
-#~ "korte\n"
-#~ "    reactietijd-taken en één vragenlijst doen. Of aan de situatie binnen "
-#~ "een\n"
-#~ "    interventiestudie waarbij niet alleen de leerlingen worden bestudeerd "
-#~ "maar\n"
-#~ "    óók de leraar een vragenlijst moet invullen of wordt geobserveerd "
-#~ "gedurende\n"
-#~ "    het geven van de interventie. Of aan een situatie waarin ook de "
-#~ "ouder(s)\n"
-#~ "    gevraagd wordt een (of meerdere) vragenlijst(en) in te vullen. In "
-#~ "zulke\n"
-#~ "    gevallen zal elk traject en de bijbehorende deelnemersgroep volledig\n"
-#~ "    gespecificeerd moeten worden.\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "    Sometimes, however, different participant groups will really follow "
-#~ "very different trajectories, for example with different numbers of "
-#~ "sessions or tasks, or completely different tasks. For example, older "
-#~ "children might be assigned a task session with three different reaction-"
-#~ "time tasks and two questionnaires, and younger children might only do one "
-#~ "reaction-time task and one questionnaire. Or in an intervention study the "
-#~ "pupils might be observed but the teacher might also be required to fill "
-#~ "in a questionnaire or be observed while applying the intervention. "
-#~ "Alternatively, parents might be asked to fill in one or more "
-#~ "questionnaires. In such cases each trajectory and the associated "
-#~ "participant group must be fully specified.     "
-
-#~ msgid ""
-#~ "\n"
-#~ "    NB: Ook wanneer u met verschillende leeftijdsgroepen\n"
-#~ "    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante\n"
-#~ "    leeftijdsgroepen naar\n"
-#~ "    <a href=\"https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/\" "
-#~ "target=\"_blank\">de\n"
-#~ "    verschillende soort toestemmingsverklaringen</a> die de FETC aanbiedt "
-#~ "op de\n"
-#~ "    website\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ " NB: Also, when you work with different age groups, you are required to "
-#~ "create different trajectories. See for relevant age groups <a href="
-#~ "\"https://fetc-gw.wp.hum.uu.nl/en/declaration-of-consent/\" target="
-#~ "\"_blank\">the different type of consent forms</a> we offer at the "
-#~ "website.\n"
-#~ "    "
-
 #~ msgid "Studie verzonden"
 #~ msgstr "Application submitted"
 
@@ -6325,6 +5569,105 @@ msgstr "Task deleted"
 
 #~ msgid "nieuwe"
 #~ msgstr "new"
+
+#~ msgid ""
+#~ "\n"
+#~ "        <strong>Interventieonderzoek</strong>:\n"
+#~ "        Onderzoek waarin mensen <em>in hun normale leven in bepaalde "
+#~ "contexten doen wat ze daar normaliter ook doen, maar waar de onderzoeker "
+#~ "d.m.v. een interventie iets in de context manipuleert</em> (bijv. een "
+#~ "ander lesboek, een andere behandeling, of een anders vormgegeven website, "
+#~ "etc.).\n"
+#~ "        De effecten van die interventie kunnen gelijktijdig worden "
+#~ "geobserveerd, maar kunnen bijv. ook achteraf worden vastgesteld d.m.v. "
+#~ "reguliere toetsen aan het einde van een lesjaar.\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "        <strong>Interventional research</strong>:\n"
+#~ "        Research in which people <em>act as they normally would in "
+#~ "specific contexts in their everyday lives, but in which the researcher "
+#~ "intervenes to manipulate something in the context</em> (e.g. a different "
+#~ "textbook, a different treatment, or a differently designed website, "
+#~ "etc.).\n"
+#~ "        The effects of that intervention can be observed at the time, but "
+#~ "can also be established in retrospect, for example, through regular "
+#~ "testing at the end of the academic year.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "\n"
+#~ "        <strong>Observatieonderzoek</strong>:\n"
+#~ "        Onderzoek waarin mensen <em>in hun normale leven in bepaalde "
+#~ "contexten worden geobserveerd</em>, bijvoorbeeld op scholen of in andere "
+#~ "institutionele settings, in de digitale publieke ruimte, of bij de "
+#~ "deelnemer thuis, <em>zonder dat de onderzoeker daar op enige wijze op "
+#~ "ingrijpt</em>.\n"
+#~ "        Het gedrag wordt zichtbaar of onzichtbaar via video/audio-"
+#~ "opnames, notities, of <em>logging</em> van digitale handelingen "
+#~ "geregistreerd, maar ook de producten van dat gedrag kunnen bestudeerd "
+#~ "worden.\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "        <strong>Observational research</strong>:\n"
+#~ "        Research in which people <em>are observed in specific contexts in "
+#~ "their normal lives</em>, such as in schools or in other institutional "
+#~ "settings, in a digital public space, or in the participant’s home, "
+#~ "<em>without the researcher intervening in any way</em>.\n"
+#~ "        The behaviour is visibly or invisibly registered through video/"
+#~ "audio recordings, notes, or logging of digital actions, but the products "
+#~ "of that behaviour may also be studied.\n"
+#~ "        "
+
+#~ msgid ""
+#~ "\n"
+#~ "        <strong>Taakonderzoek en Interviews</strong>:\n"
+#~ "        Onderzoek waarbij aan mensen <em>van onderzoekswege (extra) taken "
+#~ "worden opgelegd</em> (via bepaalde taakinstructies), zoals zoals “vul "
+#~ "deze internetsurvey in”, “lees deze verhaaltjes aandachtig door”, “geef "
+#~ "aan in hoeverre de volgende uitspraken op u van toepassing zijn”, “houd 1 "
+#~ "week een dagboek bij van uw media-gebruik”, “wilt u uw gender identiteit "
+#~ "beschrijven”, “maak foto’s van plekken in uw leefomgeving die u "
+#~ "bedreigend en inspirerend vindt”, “zoek en deel met ons 10 foto’s uit uw "
+#~ "prive-archief om uw levensverhaal te kunnen vertellen” “vertel eens iets "
+#~ "over uw vakantie”,  “speel 10 minuten met uw kind zoals u dat thuis ook "
+#~ "zou doen”, etc.\n"
+#~ "        Er wordt dus iets van mensen gevraagd wat ze in hun normale leven "
+#~ "niet (of niet dáár, dán, op déze wijze) zouden doen.<br/>\n"
+#~ "        Ook onderzoek waarin mensen worden geïnterviewd, deelnemen aan "
+#~ "een focus-groep discussie of gevraagd worden thuis of op straat een "
+#~ "vragenlijst in te vullen is taakonderzoek. <br/>\n"
+#~ "        Onderzoek in het Uil OTS-lab is vanwege de locatie per definitie "
+#~ "altijd taakonderzoek (óók als de deelnemers na ontvangst alleen maar "
+#~ "worden geobserveerd), maar ook onderzoek waarin mensen worden "
+#~ "geïnterviewed, of gevraagd worden thuis of op straat een vragenlijst in "
+#~ "te vullen is taakonderzoek.\n"
+#~ "        Bij interventieonderzoek gelden eventuele extra taken ook als "
+#~ "taakonderzoek.\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "        <strong>Task-based research and Interviews</strong>:\n"
+#~ "        Research in which people are <em>assigned extra tasks   for the "
+#~ "study</em> (through particular instructions, such as \"fill in this "
+#~ "internet survey\", \"read these stories carefully\", \"indicate to what "
+#~ "extent the following statements apply to you\", \"keep a diary of your "
+#~ "media use for 1 week\", \"do you want to describe your gender identity\", "
+#~ "\"take photos of places in your environment that you find threatening and "
+#~ "inspiring\", \" search and share with us 10 photos from your private "
+#~ "archive for your to be able to tell a life story\", \"tell something "
+#~ "about your holiday\", \"play with your child for 10 minutes as you would "
+#~ "at home\", etc).\n"
+#~ "        People are thus asked to do something they would not do in their "
+#~ "normal lives (or would not do in that way).<br/>\n"
+#~ "        Research at the UiL OTS lab is always task-based by definition, "
+#~ "due to the location (even if after arrival the participants are only "
+#~ "observed). Research in which people are interviewed, or asked to fill in "
+#~ "a questionnaire at home or in the street, is also task-based research.\n"
+#~ "        In interventional research any extra tasks also count as task-"
+#~ "based research.\n"
+#~ "        "
 
 #~ msgid ""
 #~ "\n"
