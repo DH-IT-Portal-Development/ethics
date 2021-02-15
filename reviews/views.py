@@ -53,7 +53,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_created')
+        ).order_by('-review__proposal__date_submitted')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -75,7 +75,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_created')
+        ).order_by('-review__proposal__date_submitted')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -136,7 +136,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             reviewer=self.request.user,
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_created')
+        ).order_by('-review__proposal__date_submitted')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -159,7 +159,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_created')
+        ).order_by('-review__proposal__date_submitted')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -200,7 +200,7 @@ class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_created'
+        ).order_by('-review__proposal__date_submitted'
             ).exclude(review__stage=Review.SUPERVISOR)
 
         for obj in objects:
@@ -253,7 +253,7 @@ class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
             Q(continuation=Review.GO) |
             Q(continuation=Review.GO_POST_HOC) |
             Q(continuation=None)
-        ).order_by('-proposal__date_created')
+        ).order_by('-proposal__date_submitted')
 
         for obj in objects:
             proposal = obj.proposal
@@ -297,7 +297,7 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
-        ).order_by('-proposal__date_created')
+        ).order_by('-proposal__date_submitted')
 
         for obj in objects:
             proposal = obj.proposal
@@ -331,7 +331,7 @@ class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin,
             review__stage=Review.SUPERVISOR,
             review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR,
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_created')
+        ).order_by('-review__proposal__date_submitted')
         
         decisions = OrderedDict()
 
@@ -360,7 +360,7 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
             review__date_end=None,
             review__stage=Review.SUPERVISOR,
             reviewer=self.request.user
-            ).order_by('-review__proposal__date_created')
+            ).order_by('-review__proposal__date_submitted')
         decisions = OrderedDict
 
         for obj in objects:
