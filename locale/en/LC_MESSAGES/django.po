@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-15 11:30+0100\n"
+"POT-Creation-Date: 2021-02-15 15:03+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -388,7 +388,7 @@ msgid "Fase"
 msgstr "Phase"
 
 #: main/templates/auth/user_detail.html:55
-#: proposals/templates/proposals/proposal_list.html:165
+#: proposals/templates/proposals/proposal_list.html:169
 #: reviews/templates/reviews/decision_list.html:153
 #: reviews/templates/reviews/decision_list_open.html:81
 #: reviews/templates/reviews/decision_supervisor_list_open.html:74
@@ -1610,7 +1610,7 @@ msgstr "Researcher(s) carrying out the study (including yourself)"
 
 #: proposals/models.py:340
 #: proposals/templates/proposals/proposal_export_list.html:19
-#: proposals/templates/proposals/proposal_list.html:178
+#: proposals/templates/proposals/proposal_list.html:182
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -2498,15 +2498,19 @@ msgstr "Hide"
 msgid "Soort studie"
 msgstr "Study type"
 
-#: proposals/templates/proposals/proposal_list.html:131
+#: proposals/templates/proposals/proposal_list.html:132
+msgid "Besloten op"
+msgstr "Concluded on"
+
+#: proposals/templates/proposals/proposal_list.html:134
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
-#: proposals/templates/proposals/proposal_list.html:134
+#: proposals/templates/proposals/proposal_list.html:138
 msgid "Status"
 msgstr "State"
 
-#: proposals/templates/proposals/proposal_list.html:150
+#: proposals/templates/proposals/proposal_list.html:154
 #: reviews/templates/reviews/decision_list.html:142
 #: reviews/templates/reviews/decision_list_open.html:70
 #: reviews/templates/reviews/decision_supervisor_list_open.html:63
@@ -2514,17 +2518,17 @@ msgstr "State"
 msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
-#: proposals/templates/proposals/proposal_list.html:171
+#: proposals/templates/proposals/proposal_list.html:175
 #, fuzzy
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
-#: proposals/templates/proposals/proposal_list.html:192 reviews/models.py:43
+#: proposals/templates/proposals/proposal_list.html:196 reviews/models.py:43
 #: reviews/templates/reviews/decision_list.html:174
 msgid "Route"
 msgstr "Route"
 
-#: proposals/templates/proposals/proposal_list.html:201
+#: proposals/templates/proposals/proposal_list.html:205
 #: reviews/templates/reviews/decision_list.html:183
 #: reviews/templates/reviews/decision_list_open.html:101
 #: reviews/templates/reviews/decision_supervisor_list_open.html:94
