@@ -53,7 +53,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             review__proposal__reviewing_committee=self.committee
-        )
+        ).order_by('-review__proposal__date_created')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -100,8 +100,8 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
                     decisions[proposal.pk] = obj
         
         
-        return [decisions[k] for k in decisions.keys()]
-
+        return [value for key, value in decisions.items()]
+    
 
 class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
     context_object_name = 'decisions'
@@ -136,7 +136,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             reviewer=self.request.user,
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).order_by('review__proposal__date_created')
+        ).order_by('-review__proposal__date_created')
 
         for obj in objects:
             proposal = obj.review.proposal
