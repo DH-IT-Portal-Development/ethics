@@ -43,7 +43,7 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
                                        in_archive=True,
-                                       public=True).order_by("date_confirmed")
+                                       public=True).order_by("-date_modified")
     
     def add_route_info(self, p):
         """Adds human-readable route info to the given proposal."""
@@ -92,7 +92,7 @@ class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
                                        status_review=True,
                                        in_archive=True,
                                        reviewing_committee=self.committee,
-                                       public=True).order_by("date_confirmed")
+                                       public=True).order_by("-date_reviewed")
 
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
@@ -115,7 +115,7 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
                                        in_archive=True).order_by(
-            "date_confirmed"
+            "-date_reviewed"
         )
 
 
@@ -160,7 +160,8 @@ class MySubmittedView(BaseProposalsView):
             status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
             status__lt=Proposal.DECISION_MADE
         ).order_by(
-            "-date_modified"
+            "-date_submitted",
+            "-date_submitted_supervisor",
         )
 
 
@@ -198,7 +199,7 @@ class MySupervisedView(BaseProposalsView):
         plist = [self.add_route_info(p) for p in Proposal.objects.filter(
                         supervisor=self.request.user
                     ).order_by(
-                        "-date_modified"
+                        "-date_submitted_supervisor"
                     )
                  ]
         return plist

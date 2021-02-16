@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-12 10:28+0100\n"
+"POT-Creation-Date: 2021-02-15 11:30+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -288,7 +288,7 @@ msgstr "Start page"
 
 #: main/menus.py:10
 msgid "Log in"
-msgstr ""
+msgstr "Log in"
 
 #: main/menus.py:15 main/templates/base/login_header.html:7
 msgid "Log uit"
@@ -594,7 +594,7 @@ msgid "Algemene Kamer"
 msgstr "General Chamber"
 
 #: main/templates/base/menu.html:72 main/templates/base/menu.html:99
-#: reviews/menus.py:14 reviews/views.py:116
+#: reviews/menus.py:14 reviews/views.py:118
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
@@ -615,12 +615,12 @@ msgstr "All pending decisions supervisors"
 
 #: main/templates/base/menu.html:85 main/templates/base/menu.html:112
 #: reviews/menus.py:32 reviews/templates/reviews/review_to_conclude.html:9
-#: reviews/templates/reviews/review_to_conclude.html:29 reviews/views.py:237
+#: reviews/templates/reviews/review_to_conclude.html:29 reviews/views.py:240
 msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
 #: main/templates/base/menu.html:88 main/templates/base/menu.html:115
-#: reviews/menus.py:37 reviews/views.py:274
+#: reviews/menus.py:37 reviews/views.py:277
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
@@ -814,6 +814,13 @@ msgid ""
 "\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.\n"
 "            "
 msgstr ""
+"\n"
+"The FEtC-H portal has been upgraded! We've tried our hardest to deliver all "
+"users a nicer and more usable portal. As a result of this,there may be a "
+"couple of bugs and ommissions here and there. We kindly ask that you report "
+"any issues, such as a bad translation, bug, or missing functionality to <a "
+"href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a> so we can fix them "
+"quickly.     "
 
 #: main/templates/main/index.html:34
 #: proposals/templates/proposals/proposal_start.html:16
@@ -836,6 +843,10 @@ msgid ""
 "href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" target="
 "\"blank\">Linguïstiek Kamer (LK)</a>."
 msgstr ""
+"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+"general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
+"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
+"target=\"blank\">Linguistics Chamber</a>."
 
 #: main/templates/main/index.html:53
 msgid ""
@@ -856,6 +867,12 @@ msgid ""
 "<li>Voor vragen over de portal zelf: <a href=\"mailto:labbeheer.gw@uu.nl"
 "\">labbeheer.gw@uu.nl</a>.</li>"
 msgstr ""
+"<li>For advice on data management: <a href=\"mailto:f.bohl@uu.nl\">Frans de "
+"Liagre Böhl</a>.</li> <li>For issues concerning privacy: <a href=\"mailto:j."
+"w.a.degraaf@uu.nl\">Joris de Graaf</a>.</li> <li>For questions on FEtC-H "
+"procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree Capel</a>.</li> <li>For "
+"questions about the functioning of the portal itself: <a href=\"mailto:"
+"labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
 
 #: main/templates/main/index.html:66
 msgid ""
@@ -951,7 +968,11 @@ msgstr "Frequently asked questions relating to this portal"
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: main/templates/main/index.html:180
+#: main/templates/main/index.html:174
+msgid "Bannerfoto door Simona Evsatieva"
+msgstr "Cover image by Simona Evsatieva"
+
+#: main/templates/main/index.html:181
 #, python-format
 msgid ""
 "\n"
@@ -965,7 +986,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t     "
 
-#: main/templates/main/index.html:186
+#: main/templates/main/index.html:187
 msgid ""
 "\n"
 "                        Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</"
@@ -2483,7 +2504,7 @@ msgstr "Last edited"
 
 #: proposals/templates/proposals/proposal_list.html:134
 msgid "Status"
-msgstr ""
+msgstr "State"
 
 #: proposals/templates/proposals/proposal_list.html:150
 #: reviews/templates/reviews/decision_list.html:142
@@ -2646,6 +2667,8 @@ msgid ""
 "De <a href=\"https://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\"> UU-webpagina "
 "van de FETC-GW</a> voor nieuws en de agenda."
 msgstr ""
+"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-"
+"webpage of the FEtC-H</a> for news and upcoming dates."
 
 #: proposals/templates/proposals/proposal_start.html:26
 msgid ""
@@ -2654,6 +2677,10 @@ msgid ""
 "fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer (LK)</"
 "a>."
 msgstr ""
+"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+"general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
+"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
+"target=\"blank\">Linguistics Chamber</a>."
 
 #: proposals/templates/proposals/proposal_start.html:35
 msgid ""
@@ -2671,6 +2698,10 @@ msgid ""
 "voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a "
 "href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">deze pagina</a>."
 msgstr ""
+"Students who cannot access intranet should receive these documents from "
+"their supervisor. The same example texts can be found on <a href=\"https://"
+"fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">this page</a>, though on non-"
+"official documents."
 
 #: proposals/templates/proposals/proposal_start.html:47
 #: proposals/templates/proposals/study_start.html:67
@@ -2697,11 +2728,17 @@ msgid ""
 "documenten nodig zijn. <p><u>Bijvoorbeeld</u>: schoolleiding, ouders van "
 "leerlingen 15 jaar en jonger, docenten.</p>"
 msgstr ""
+"When different groups of participants do not complete the same tasks or do "
+"not follow the same instructions during your research, they traverse "
+"different trajectories, and require separate informed consent documents. "
+"<p><u>For example</u>: school management, parents of children up to 15 years "
+"of age, or teachers.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:61
 #: proposals/templates/proposals/study_start.html:81
 msgid "Alle taken/onderdelen die iemand op één dag uitvoert."
 msgstr ""
+"All tasks or procedures that a participant completes in a day combined. "
 
 #: proposals/templates/proposals/proposal_start.html:68
 #: proposals/templates/proposals/study_start.html:88
@@ -2709,6 +2746,8 @@ msgid ""
 "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
 "invullen van een vragenlijst, een interview, of een taaltest. </p>"
 msgstr ""
+" A task or procedure within your research proposal. <p> <u>For example</u>: "
+"completing an interview, questionnaire, or language test.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:78
 #: proposals/templates/proposals/proposal_start_pre_approved.html:43
@@ -3372,7 +3411,7 @@ msgstr "General"
 
 #: proposals/utils/proposal_utils.py:71
 msgid "METC"
-msgstr ""
+msgstr "METC"
 
 #: proposals/utils/proposal_utils.py:85
 msgid "Trajecten"
@@ -3657,7 +3696,7 @@ msgstr ""
 
 #: reviews/templates/reviews/action_explaination.html:32
 msgid "Uitleg secretaris"
-msgstr "Explanation by secretary"
+msgstr "Explanation for secretary"
 
 #: reviews/templates/reviews/action_explaination.html:36
 #, python-format
@@ -4257,7 +4296,7 @@ msgstr ""
 "The study uses psychophysiological measurements on children under {} year(s) "
 "old."
 
-#: reviews/views.py:35
+#: reviews/views.py:36
 msgid "Mijn besluiten"
 msgstr "My results"
 
