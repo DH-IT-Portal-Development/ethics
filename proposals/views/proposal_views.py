@@ -160,7 +160,8 @@ class MySubmittedView(BaseProposalsView):
             status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
             status__lt=Proposal.DECISION_MADE
         ).order_by(
-            "-date_modified"
+            "-date_submitted",
+            "-date_submitted_supervisor",
         )
 
 
