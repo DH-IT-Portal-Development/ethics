@@ -1,21 +1,13 @@
 {% extends "base/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Algemene informatie over de studie" %}
+{% block header_title %}
+    {% trans "Algemene informatie over de studie" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
-{% block sidebar %}
-{% if not create %}
-{% include "base/sidebar.html" %}
-{% endif %}
-{% endblock %}
-
-{% block content %}
+{% block html_head %}
 <script>
 $(function() {
 
@@ -52,7 +44,7 @@ $(function() {
     // AJAX applicants
     $('select#id_applicants').select2({
       ajax: {
-        url: '{% url 'core:user_search' %}',
+        url: '{% url 'main:user_search' %}',
         dataType: 'json',
         data: function (params) {
           return {
@@ -83,26 +75,34 @@ $(function() {
     }
 });
 </script>
-{% if not create and is_supervisor  %}
-    {% blocktrans %}
-        u past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat u het formulier
-        invuld alsof u die student/PhD kandidaat bent.
-    {% endblocktrans %}
-    <br/>
-    <br/>
-{% endif %}
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
-    <div class="warning" id="pre_approval_warning">
-        {% url 'proposals:start' as proposal_url %}
-        {% blocktrans %}
-            Dit formulier is bedoeld voor studies die al goedgekeurd zijn door een andere commissie. Indien dit
-            niet het geval is, dient u het <a href="{{ proposal_url }}">normale formulier</a> in te vullen.
-        {% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>{% trans "Algemene informatie over de studie" %}</h2>
+            {% if not create and is_supervisor  %}
+                {% blocktrans %}
+                    u past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat u het formulier
+                    invuld alsof u die student/PhD kandidaat bent.
+                {% endblocktrans %}
+                <br/>
+                <br/>
+            {% endif %}
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <div class="warning" id="pre_approval_warning">
+                    {% url 'proposals:start' as proposal_url %}
+                    {% blocktrans %}
+                        Dit formulier is bedoeld voor studies die al goedgekeurd zijn door een andere commissie. Indien dit
+                        niet het geval is, dient u het <a href="{{ proposal_url }}">normale formulier</a> in te vullen.
+                    {% endblocktrans %}
+                </div>
+                {% include "base/form_buttons.html" %}
+            </form>
+        </div>
     </div>
-    {% include "base/form_buttons.html" %}
-</form>
 {% endblock %}

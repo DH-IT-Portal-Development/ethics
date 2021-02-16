@@ -1,11 +1,11 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from core.utils import AvailableURL
+from main.utils import AvailableURL
 
 
 def observation_url(study):
-    result = AvailableURL(title=_('Het observatieonderzoek'), margin=2)
+    result = AvailableURL(title=_('Observatieonderzoek'), margin=2)
     if study.has_observation:
         if hasattr(study, 'observation'):
             result.url = reverse('observations:update', args=(study.observation.pk,))

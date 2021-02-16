@@ -14,7 +14,7 @@ except ImportError:
 class SelectUser(forms.Select):
     """
     Custom widget to allow a LDAP user to be entered through Select2.
-    Used in combination with an ajax call to core:user_search
+    Used in combination with an ajax call to main:user_search
     """
     allow_multiple_selected = False
     ldap = LDAPBackend()
@@ -44,7 +44,7 @@ class SelectUser(forms.Select):
 class SelectMultipleUser(forms.Select):
     """
     Custom widget to allow multiple LDAP users to be entered through Select2.
-    Used in combination with an ajax call to core:user_search
+    Used in combination with an ajax call to main:user_search
     """
     allow_multiple_selected = True
     ldap = LDAPBackend()

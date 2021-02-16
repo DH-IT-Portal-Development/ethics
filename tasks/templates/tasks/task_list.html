@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
 
 <table class="pure-table" width="100%">
@@ -41,7 +41,7 @@ $(function() {
         let label = $(this).find('.label');
         let help = $(this).find('.help');
         if (help.length > 0) {
-            label.after(' <img src="{% static 'core/images/information.png' %}">');
+            label.after(' <img src="{% static 'main/images/information.png' %}">');
             label.next().qtip({
                 content: {
                     text: help.html(),

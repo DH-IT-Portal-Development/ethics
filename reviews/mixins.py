@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic.base import ContextMixin
 from django.views.generic.detail import SingleObjectMixin
 
-from core.utils import is_secretary
+from main.utils import is_secretary
 
 from .models import Decision, Review
 from .utils import auto_review

@@ -1,77 +1,82 @@
 {% extends "base/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Een nieuwe studie aanmelden" %}
+{% block header_title %}
+    {% trans "Een nieuwe studie aanmelden" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-<p>
-    {% blocktrans %}
-    U wilt een nieuwe studie ter toetsing bij de FETC-GW aanmelden.
-    Het is daarvoor <em>noodzakelijk</em> dat u goed bekend bent met het FETC-GW
-    reglement. <br />Deze kunt u vinden op de UU-webpagina van de FETC-GW:
-    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">reglement Algemene Kamer (AK)</a> en
-    <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">reglement Linguïstiek Kamer
-        (LK)</a>.
-    U kunt uzelf en de commissieleden veel tijd besparen door uzelf eerst
-    goed te informeren.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Om een studie t.a.v. <em>informed consent</em>, belasting en risico's voor
-    de deelnemers, en data-management procedures goed te kunnen beoordelen
-    heeft de FETC-GW een gedetailleerde specificatie van de studie nodig.
-    Na enkele inleidende vragen dient u o.a. op te geven wie er aan deelnemen,
-    en welk(e) soort(en) onderzoek de studie omvat: observatieonderzoek,
-    interventieonderzoek en/of takenonderzoek of interviews.
-    Voor elk type onderzoek dient u vervolgens op te geven hoe uw studie precies
-    is vormgegeven. Na dit alles zult u gevraagd worden een inschatting te geven
-    van de belasting van, en risico's voor, de deelnemers, en dient u vervolgens
-    alle voor uw studie aangepaste formulieren ten bate van <em>informed
-        consent</em> te uploaden.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Als u met verschillende deelnemersgroepen werkt die een verschillend
-    onderzoekstraject doorlopen (de ene groep krijgt bijvoorbeeld twee
-    taken, de andere drie) zult u elk traject apart op bovengenoemde wijze
-    moeten beschrijven. NB: Ook wanneer u met verschillende leeftijdsgroepen
-    werkt, moet u meerdere trajecten aanmaken: kijk voor de relevante
-    leeftijdsgroepen naar
-    <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/" target="_blank">de
-        verschillende soorten informatiebrieven en toestemmingsverklaringen</a> die de FETC aanbiedt op de
-    website. <strong>Let op:</strong> informed consent formulieren die bij een <strong>officiële aanvraag</strong> gebruikt moeten worden zijn te vinden
-    op <a href="https://intranet.uu.nl/facultaire-ethische-toetsingscommissie-gw" target="_blank">intranet</a>.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Afhankelijk van de complexiteit van uw onderzoek kan de specificatie zeker
-    enige tijd in beslag nemen. U kunt de aanmelding echter altijd onderbreken,
-    bewaren, en op een later moment afmaken.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans with secretary_name=secretary.get_full_name  %}
-    Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht
-    niet mee bekend is.
-    Raadpleeg bij vragen eerst het
-    reglement van de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank"> Algemene Kamer
-        (AK)</a> of
-    de <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">Linguïstiek Kamer (LK)</a>,
-    en neem eventueel daarna contact op met de secretaris
-    ({{ secretary_name }},
-    <a href="mailto:fetc-gw@uu.nl">fetc-gw@uu.nl</a>).
-    {% endblocktrans %}
-</p>
-<a class="pure-button pure-button-primary" href="{% url 'proposals:create' %}">
-    {% trans "Volgende stap >>" %}
-</a>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>{% trans "Een nieuwe studie aanmelden" %}</h2>
+            
+                <ul>
+                <li>{% trans "Check voor het indienen:" %}
+                    <ul>
+                    <li>
+                        {% blocktrans trimmed %}
+                            De 
+                            <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">
+                            UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans trimmed %}
+                            Het reglement van de 
+                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/">Algemene Kamer (AK)</a> 
+                            of dat van de 
+                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/">Linguïstiek Kamer (LK)</a>. 
+                        {% endblocktrans %}
+                    </li>
+                    </ul>
+                <li>
+                {% blocktrans trimmed %}
+                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw">voorbeelddocumenten</a> voor de <em>informed consent</em>.
+                {% endblocktrans %}
+                </li>
+                <p>
+                {% blocktrans trimmed %}
+                Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+                {% endblocktrans %}
+                </p>
+                </li>
+                </ul>
+            <p>
+                {% blocktrans %}
+                    Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
+                {% endblocktrans %}
+            </p>
+            <ul>
+            <p>
+            <li><strong>{% trans "Traject" %}</strong>: 
+                {% blocktrans trimmed %}
+                    Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.
+                <p><u>Bijvoorbeeld</u>: schoolleiding, ouders van leerlingen 15 jaar en jonger, docenten.</p>
+                {% endblocktrans %}
+            </p>
+            <p>
+            <li><strong>{% trans "Sessie" %}</strong>:
+                {% blocktrans trimmed %}
+                    Alle taken/onderdelen die iemand op één dag uitvoert.
+                {% endblocktrans %}
+            </li>
+            </p>
+            <p>
+            <li><strong>{% trans "Taak" %}</strong>: 
+                {% blocktrans trimmed %}
+                    Een taak of onderdeel van je onderzoek.
+                <p>
+                    <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
+                </p> 
+                {% endblocktrans %}
+            </li>
+            </p>
+            </ul>
+            <a class="button button-colored float-right mb-4" href="{% url 'proposals:create' %}">
+                {% trans "Volgende stap >>" %}
+            </a>
+        </div>
+    </div>
 {% endblock %}

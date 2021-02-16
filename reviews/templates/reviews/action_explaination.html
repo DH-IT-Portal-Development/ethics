@@ -1,0 +1,71 @@
+{% load i18n %}
+{% load fetc_filters %}
+
+<div class="col-12 {% if request.user|is_secretary %}col-md-6{% endif %}">
+    <h3>{% trans "Uitleg" %}</h3>
+    <ul>
+        <li>
+            {% blocktrans %}
+                Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
+            {% endblocktrans %}
+        </li>
+        <li>
+            {% blocktrans %}
+                Klik op <img src="{{ img_diff }}" title="Toon verschillen"> om de verschillen met de voorgaande
+                versie te zien (alleen beschikbaar voor revisies/amendementen).
+            {% endblocktrans %}
+        </li>
+        <li>
+            {% blocktrans %}
+                Klik op <img src="{{ img_details }}" title="Toon details"> om alle details en beoordelingen van
+                een ingediende studie te zien.
+            {% endblocktrans %}
+        </li>
+        <li>
+            {% blocktrans %}
+                Klik op <img src="{{ img_decide }}" title="Beslissen"> om je beslissing door te geven.
+            {% endblocktrans %}
+        </li>
+    </ul>
+</div>
+<div class="col-12 {% if request.user|is_secretary %}col-md-6{% endif %}">
+    <h3>{% trans "Uitleg secretaris" %}</h3>
+    <ul>
+        {% if request.user|is_secretary %}
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende studie te verbergen uit het
+                    archief.
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_add_reviewers }}" title="Aanstellen"> om beoordelaars aan te stellen.
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_change_chamber }}" title="Verplaats naar andere kamer"> om een studie
+                    te verplaatsen naar een andere kamer.
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_close }}" title="Afsluiten"> om een studie af te sluiten.
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_confirm }}" title="Bevestigingsbrief"> om aan te geven dat de
+                    bevestigingsbrief is verstuurd.
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans %}
+                    Klik op <img src="{{ img_confirmed }}" title="Bevestigingsbrief"> om de opgegeven datum
+                    van de bevestigingsbrief te veranderen.
+                {% endblocktrans %}
+            </li>
+        {% endif %}
+    </ul>
+</div>

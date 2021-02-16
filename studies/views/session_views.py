@@ -3,7 +3,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from core.views import AllowErrorsOnBackbuttonMixin, UpdateView
+from main.views import AllowErrorsOnBackbuttonMixin, UpdateView
 from tasks.models import Session
 
 from ..forms import SessionStartForm

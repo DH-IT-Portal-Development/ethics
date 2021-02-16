@@ -40,6 +40,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='intervention',
             name='setting',
-            field=models.ManyToManyField(blank=True, to='core.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt'),
+            field=models.ManyToManyField(blank=True, to='main.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt'),
         ),
     ]

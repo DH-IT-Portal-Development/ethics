@@ -4,14 +4,17 @@ from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
     UserFormKwargsMixin
 from django.conf import settings
 from django.db.models import Q
+from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
+from typing import Tuple, Union
 
-from core.utils import get_secretary
-from core.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
-    UpdateView
+from main.utils import get_document_contents, get_secretary
+from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
+    UpdateView, UserAllowedMixin
+from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
 from reviews.mixins import CommitteeMixin
 from reviews.utils import start_review, start_review_pre_assessment
@@ -20,7 +23,7 @@ from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
-from ..models import Proposal
+from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 
 
@@ -35,34 +38,24 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
     is_submitted = True
     context_object_name = 'proposals'
 
-    # Used to set the default dataTable ordering
-    sort_column = 3
-    sort_direction = "desc"
-
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
                                        in_archive=True,
-                                       public=True)
+                                       public=True).order_by("-date_modified")
     
     def add_route_info(self, p):
-        """Adds human-readable route info to the given proposal.
-        This function may find a better home somewhere in the Review
-        class in the future"""
+        """Adds human-readable route info to the given proposal."""
         
         last_review = p.review_set.last()
         
         try: 
-            route = last_review.short_route
+            route = last_review.get_route_display
         except AttributeError:
             route = None
-        
-        route_options= {False: _('lange (4-weken) route'),
-                        True: _('korte (2-weken) route'),
-                        None: _('nog geen route')}
-        
-        p.route = route_options[route]
+
+        p.route = route
         p.has_route_info = True
         return p
 
@@ -73,14 +66,14 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
         context['modifiable'] = self.is_modifiable
         context['submitted'] = self.is_submitted
         context['is_secretary'] = self.request.user == get_secretary()
-        context['sort_column'] = self.sort_column
-        context['sort_direction'] = self.sort_direction
 
         return context
 
     def get_my_proposals(self):
         return Proposal.objects.filter(
             Q(applicants=self.request.user) | Q(supervisor=self.request.user)
+        ).order_by(
+            "-date_modified"
         ).distinct()
 
 
@@ -99,7 +92,7 @@ class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
                                        status_review=True,
                                        in_archive=True,
                                        reviewing_committee=self.committee,
-                                       public=True)
+                                       public=True).order_by("-date_reviewed")
 
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
@@ -121,7 +114,9 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
 
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
-                                       in_archive=True)
+                                       in_archive=True).order_by(
+            "-date_reviewed"
+        )
 
 
 class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
@@ -144,13 +139,13 @@ class MyConceptsView(BaseProposalsView):
     is_modifiable = True
     is_submitted = False
 
-    # Last modifed
-    sort_column = 6
-
     def get_queryset(self):
         """Returns all non-submitted Proposals for the current User"""
         return self.get_my_proposals().filter(
-            status__lt=Proposal.SUBMITTED_TO_SUPERVISOR)
+            status__lt=Proposal.SUBMITTED_TO_SUPERVISOR
+        ).order_by(
+            "-date_modified"
+        )
 
 
 class MySubmittedView(BaseProposalsView):
@@ -163,7 +158,11 @@ class MySubmittedView(BaseProposalsView):
         """Returns all submitted Proposals for the current User"""
         return self.get_my_proposals().filter(
             status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
-            status__lt=Proposal.DECISION_MADE)
+            status__lt=Proposal.DECISION_MADE
+        ).order_by(
+            "-date_submitted",
+            "-date_submitted_supervisor",
+        )
 
 
 class MyCompletedView(BaseProposalsView):
@@ -175,7 +174,10 @@ class MyCompletedView(BaseProposalsView):
     def get_queryset(self):
         """Returns all completed Proposals for the current User"""
         return self.get_my_proposals().filter(
-            status__gte=Proposal.DECISION_MADE)
+            status__gte=Proposal.DECISION_MADE
+        ).order_by(
+            "-date_modified"
+        )
 
 
 class MySupervisedView(BaseProposalsView):
@@ -194,7 +196,12 @@ class MySupervisedView(BaseProposalsView):
 
     def get_queryset(self):
         """Returns all Proposals supervised by the current User"""
-        plist = [self.add_route_info(p) for p in Proposal.objects.filter(supervisor=self.request.user)]
+        plist = [self.add_route_info(p) for p in Proposal.objects.filter(
+                        supervisor=self.request.user
+                    ).order_by(
+                        "-date_submitted_supervisor"
+                    )
+                 ]
         return plist
 
 
@@ -203,9 +210,6 @@ class MyProposalsView(BaseProposalsView):
     body = _('Dit overzicht toont al uw studies.')
     is_modifiable = True
     is_submitted = True
-
-    sort_column = 6
-
     def get_queryset(self):
         """Returns all Proposals for the current User"""
         return self.get_my_proposals()
@@ -218,15 +222,16 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
     is_modifiable = True
     is_submitted = False
 
-    sort_column = 6
-
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
         return Proposal.objects.filter(
             Q(in_course=True) | Q(is_exploration=True),
             Q(applicants=self.request.user) |
             (Q(supervisor=self.request.user) &
-             Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR)))
+             Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR))
+        ).order_by(
+            "-date_modified"
+        )
 
 
 ##########################
@@ -294,6 +299,51 @@ class ProposalDelete(DeleteView):
         return reverse('proposals:my_concepts')
 
 
+class CompareDocumentsView(GroupRequiredMixin, generic.TemplateView):
+    template_name = 'proposals/compare_documents.html'
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        old_file, new_file = self._get_files()
+
+        context['old_name'] = old_file.name
+        context['old_text'] = get_document_contents(old_file)
+        context['new_name'] = new_file.name
+        context['new_text'] = get_document_contents(new_file)
+
+        return context
+
+    def _get_files(self) -> Tuple[
+        Union[None, FieldFile],
+        Union[None, FieldFile]
+    ]:
+        compare_type = self.kwargs.get('type')
+        old_pk = self.kwargs.get('old')
+        new_pk = self.kwargs.get('new')
+        attribute = self.kwargs.get('attribute')
+
+        model = {
+            'documents': Documents,
+            'wmo': Wmo,
+            'observation': Observation,
+            'proposal': Proposal,
+        }.get(compare_type, None)
+
+        if model is None:
+            return None, None
+
+        old = model.objects.get(pk=old_pk)
+        new = model.objects.get(pk=new_pk)
+
+        return getattr(old, attribute, None), getattr(new, attribute, None)
+
+
 ###########################
 # Other actions on Proposal
 ###########################
@@ -325,18 +375,24 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
-    success_message = _('Studie verzonden')
+    success_message = _('Wijzigingen opgeslagen')
 
     def get_form_kwargs(self):
         """Sets the Proposal as a form kwarg"""
         kwargs = super(ProposalSubmit, self).get_form_kwargs()
         kwargs['proposal'] = self.get_object()
+        
+        # Required for examining POST data
+        # to check for js-redirect-submit
+        kwargs['request'] = self.request
+        
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
-        context['errors'] = get_form_errors(self.get_object())
+        context['troublesome_pages'] = get_form_errors(self.get_object())
+        context['pagenr'] = self._get_page_number()
 
         return context
 
@@ -345,8 +401,9 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
         - Save the PDF on the Proposal
         - Start the review process on submission (though not for practice Proposals)
         """
+        
         success_url = super(ProposalSubmit, self).form_valid(form)
-        if 'save_back' not in self.request.POST:
+        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf.html')
             if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
@@ -360,6 +417,15 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_back_url(self):
         """Return to the data management view"""
         return reverse('proposals:data_management', args=(self.object.pk,))
+
+    def _get_page_number(self):
+        if self.object.is_pre_assessment:
+            return 3
+
+        if self.object.is_pre_approved:
+            return 2
+
+        return 6
 
 
 class ProposalSubmitted(generic.DetailView):
@@ -480,6 +546,18 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_diff.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        obj = self.get_object()
+
+        context['zipped_studies'] = zip(
+            obj.study_set.all(),
+            obj.parent.study_set.all()
+        )
+
+        return context
+
 
 ########################
 # Preliminary assessment
@@ -524,7 +602,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         """
         # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
         success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
-        if 'save_back' not in self.request.POST:
+        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
             generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')
             start_review_pre_assessment(proposal)

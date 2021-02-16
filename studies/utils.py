@@ -3,7 +3,7 @@ from __future__ import division
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from core.utils import AvailableURL
+from main.utils import AvailableURL
 from interventions.utils import intervention_url, copy_intervention_to_study
 from observations.utils import observation_url, copy_observation_to_study
 from tasks.utils import session_urls, copy_session_to_study
@@ -62,29 +62,40 @@ def study_urls(study, prev_study_completed):
     """
     urls = list()
 
-    if study.proposal.studies_number > 1:
-        urls.append(AvailableURL(title=_('Traject {} ({})').format(study.order, study.name), is_title=True))
+    study_url = AvailableURL(title=_('Deelnemers'))
+    if study:
+        study_url.url = reverse('studies:update', args=(study.pk,))
 
-    study_url = AvailableURL(title=_('De deelnemers'), margin=1)
-    study_url.url = reverse('studies:update', args=(study.pk,))
-    if prev_study_completed:
-        urls.append(study_url)
+    urls.append(study_url)
 
-    design_url = AvailableURL(title=_('De onderzoekstype(n)'), margin=1)
+    design_url = AvailableURL(title=_('Onderzoekstype(n)'))
     if study.compensation:
         design_url.url = reverse('studies:design', args=(study.pk,))
     urls.append(design_url)
 
-    urls.append(intervention_url(study))
-    urls.append(observation_url(study))
-    urls.extend(session_urls(study))
+    if study.has_intervention:
+        urls.append(intervention_url(study))
 
-    end_url = AvailableURL(title=_('Overzicht en eigen beoordeling van het gehele onderzoek'), margin=1)
-    if study.design_completed():
+    if study.has_observation:
+        urls.append(observation_url(study))
+
+    if study.has_sessions:
+        urls.append(session_urls(study))
+
+    end_url = AvailableURL(
+        title=_('Overzicht'),
+    )
+
+    if prev_study_completed:
         end_url.url = reverse('studies:design_end', args=(study.pk,))
     urls.append(end_url)
 
-    return urls
+    return AvailableURL(
+        title=_('Traject {}').format(study.order),
+        is_title=True,
+        children=urls,
+    )
+
 
 def create_documents_for_study(study):
     from .models import Documents

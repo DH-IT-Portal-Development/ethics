@@ -6,9 +6,9 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import YES, DOUBT
-from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
-from core.utils import get_secretary
+from main.models import YES, DOUBT
+from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
+from main.utils import get_secretary
 
 from ..models import Proposal, Wmo
 from ..forms import WmoForm, WmoApplicationForm, WmoCheckForm
@@ -90,7 +90,7 @@ class WmoApplication(UpdateView):
             return reverse('proposals:wmo_application', args=(wmo.pk,))
         else:
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
-
+        
     def get_back_url(self):
         """Return to the Wmo overview"""
         return reverse('proposals:wmo_update', args=(self.object.pk,))
@@ -107,7 +107,11 @@ class WmoCheck(generic.FormView):
 class PreAssessmentMixin(object):
     def get_next_url(self):
         """Different continue URL for pre-assessment Proposals"""
-        return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
+        wmo = self.object
+        if wmo.status == Wmo.NO_WMO:
+            return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
+        else:
+            return reverse('proposals:wmo_application_pre', args=(wmo.pk,))
 
     def get_back_url(self):
         """Different return URL for pre-assessment Proposals"""
@@ -117,9 +121,14 @@ class PreAssessmentMixin(object):
 class WmoCreatePreAssessment(PreAssessmentMixin, WmoCreate):
     pass
 
-
 class WmoUpdatePreAssessment(PreAssessmentMixin, WmoUpdate):
     pass
+
+class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
+    
+    def get_next_url(self):
+        """Different continue URL for pre-assessment Proposals"""
+        return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
 
 
 ################

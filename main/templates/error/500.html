@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans 'Server error' %}
+            </h2>
+            <p>
+                {% blocktrans %}
+                    Er is een fout opgetreden tijdens het opvragen van deze pagina.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                    Blijft dit probleem aanhouden? Neem dan contact op met
+                    <a href="https://fetc-gw.wp.hum.uu.nl/contact/" target="_blank">de FETC-GW secretaris</a>.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
+{% endblock %}

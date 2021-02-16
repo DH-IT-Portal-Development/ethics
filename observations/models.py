@@ -1,16 +1,12 @@
-from __future__ import unicode_literals
-
 from django.core.validators import MaxValueValidator
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import SettingModel
-from core.validators import validate_pdf_or_doc
+from main.models import SettingModel
+from main.validators import validate_pdf_or_doc
 from studies.models import Study
 
 
-@python_2_unicode_compatible
 class Registration(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -25,8 +21,8 @@ class Registration(models.Model):
 
 
 class Observation(SettingModel):
-    # This is used internally to provide backwards compatibility with the old version of this model. All old fields are
-    # still used if this is 1.
+    # This is used internally to provide backwards compatibility with the old
+    # version of this model. All old fields are still used if this is 1.
     version = models.PositiveIntegerField(
         'INTERNAL - Describes which version of the observation model is used',
         default=2)

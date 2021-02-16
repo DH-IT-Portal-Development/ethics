@@ -1,4 +1,3 @@
-from __future__ import unicode_literals
 from datetime import datetime
 
 from django.test import TestCase, RequestFactory
@@ -6,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 
-from core.models import Setting, YES, NO
+from main.models import Setting, YES, NO
 from interventions.models import Intervention
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment
@@ -284,7 +283,7 @@ class WmoTestCase(BaseProposalTestCase):
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)
 
-        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', b'contents')
+        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', 'contents')
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.JUDGED)

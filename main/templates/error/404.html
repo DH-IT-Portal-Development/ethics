@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans 'Pagina niet gevonden' %}
+            </h2>
+            <p>
+                {% trans 'Sorry, deze pagina is helaas niet (meer) beschikbaar.' %}
+            </p>
+            <p>
+                {% blocktrans %}
+                    Mogelijk bent u hier terechtgekomen via een verouderde of foutieve link. Graag vernemen wij welke
+                    link niet werkt. U kunt ons dat laten weten door
+                    <a href="https://fetc-gw.wp.hum.uu.nl/contact/" target="_blank">contact op te nemen</a>. Wij
+                    proberen dan de fout te herstellen.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
+{% endblock %}
