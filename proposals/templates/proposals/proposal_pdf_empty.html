@@ -182,7 +182,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         <h2>{% trans "Het interventieonderzoek" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{% show_all "main" "setting" %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td></td>
@@ -225,7 +225,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         <h2>{% trans "Het observatieonderzoek" %}</h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
+                <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th><td>{% show_all "main" "setting" %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th><td></td>
@@ -282,7 +282,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         <h2>{% trans "Sessie" %} <em>n</em></h2>
         <table>
             <tr>
-                <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th><td>{% show_all "core" "setting" %}</td>
+                <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th><td>{% show_all "main" "setting" %}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "tasks" "session" "setting_details" %}</th><td></td>

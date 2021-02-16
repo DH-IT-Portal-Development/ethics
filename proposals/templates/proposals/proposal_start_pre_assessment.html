@@ -1,54 +1,57 @@
 {% extends "base/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
 
-{% block title %}
-{% trans "Voortoetsing (t.b.v. subsidieaanvraag)" %}
+{% block header_title %}
+    {% trans "Voortoetsing (t.b.v. subsidieaanvraag)" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
 {% block content %}
-<p>
-    {% blocktrans %}
-    Subsidieverstrekkers vereisen steeds vaker ethische toetsing van een
-    beursaanvraag.
-    Omdat het hier gaat om slechts op hoofdlijnen uitgewerkt onderzoek met
-    nog ongewisse financiering is gedetailleerde aanmelding voor reguliere
-    FETC-GW toetsing van losse studies niet aan de orde.
-    In dit geval kunnen onderzoekers de FETC-GW verzoeken om deze
-    subsidieaanvraag te laten toetsen.
-    Dit kan via deze route van de portal.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Omdat de toetsing marginaal en de aanvraagdeadline waarschijnlijk
-    dichtbij is zal de FETC-GW in dit geval per email-overleg naar een snelle
-    beslissing streven (<strong>binnen 1-2 weken</strong>).
-    Let op: Beursaanvragers dienen deze tijdsspanne mee te nemen in hun
-    tijdsplanning!
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Deze marginale subsidieaanvraag-toetsing vervangt overigens niet de
-    reguliere toetsing van specifieke studies; de dankzij financiering later
-    in detail uitgewerkte studies zullen alsnog afzonderlijk ter zorgvuldige
-    toetsing bij de FETC-GW moeten worden aangemeld.
-    {% endblocktrans %}
-</p>
-<p>
-    {% blocktrans %}
-    Het invullen van de portalvragen kost hooguit 5 minuten.
-    Er wordt u gevraagd een document te uploaden.
-    Dit document moet uit de subsidieaanvraag alle voor de FETC-GW relevante
-    informatie bevatten om het project te kunnen beoordelen, dus in ieder
-    geval een duidelijke samenvatting van het project.
-    {% endblocktrans %}
-</p>
-<a class="pure-button pure-button-primary" href="{% url 'proposals:create_pre' %}">
-    {% trans "Volgende stap >>" %}
-</a>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>{% trans "Voortoetsing (t.b.v. subsidieaanvraag)" %}</h2>
+            <p>
+                {% blocktrans %}
+                Subsidieverstrekkers vereisen steeds vaker ethische toetsing van een
+                beursaanvraag.
+                Omdat het hier gaat om slechts op hoofdlijnen uitgewerkt onderzoek met
+                nog ongewisse financiering is gedetailleerde aanmelding voor reguliere
+                FETC-GW toetsing van losse studies niet aan de orde.
+                In dit geval kunnen onderzoekers de FETC-GW verzoeken om deze
+                subsidieaanvraag te laten toetsen.
+                Dit kan via deze route van de portal.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                Omdat de toetsing marginaal en de aanvraagdeadline waarschijnlijk
+                dichtbij is zal de FETC-GW in dit geval per email-overleg naar een snelle
+                beslissing streven (<strong>binnen 1-2 weken</strong>).
+                Let op: Beursaanvragers dienen deze tijdsspanne mee te nemen in hun
+                tijdsplanning!
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                Deze marginale subsidieaanvraag-toetsing vervangt overigens niet de
+                reguliere toetsing van specifieke studies; de dankzij financiering later
+                in detail uitgewerkte studies zullen alsnog afzonderlijk ter zorgvuldige
+                toetsing bij de FETC-GW moeten worden aangemeld.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                Het invullen van de portalvragen kost hooguit 5 minuten.
+                Er wordt u gevraagd een document te uploaden.
+                Dit document moet uit de subsidieaanvraag alle voor de FETC-GW relevante
+                informatie bevatten om het project te kunnen beoordelen, dus in ieder
+                geval een duidelijke samenvatting van het project.
+                {% endblocktrans %}
+            </p>
+            <a class="button button-colored float-right mb-3" href="{% url 'proposals:create_pre' %}">
+                {% trans "Volgende stap >>" %}
+            </a>
+        </div>
+    </div>
 {% endblock %}

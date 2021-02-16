@@ -5,20 +5,24 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
 from django.template.loader import render_to_string
 from django.utils.translation import activate, get_language, ugettext as _
+from django.utils.deconstruct import deconstructible
 
 from easy_pdf.rendering import render_to_pdf
 
-from core.utils import AvailableURL, get_secretary
+from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
 __all__ = ['available_urls', 'generate_ref_number',
            'generate_revision_ref_number', 'generate_pdf',
-           'check_local_facilities', 'notify_local_staff']
+           'check_local_facilities', 'notify_local_staff',
+           'FilenameFactory', 'OverwriteStorage',
+           ]
 
 
 def available_urls(proposal):
@@ -31,22 +35,22 @@ def available_urls(proposal):
 
     if proposal.is_pre_assessment:
         urls.append(AvailableURL(url=reverse('proposals:update_pre', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie'), margin=0))
+                                 title=_('Algemene informatie over de studie')))
 
-        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'), margin=0)
+        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'))
         if hasattr(proposal, 'wmo'):
             wmo_url.url = reverse('proposals:wmo_update_pre', args=(proposal.wmo.pk,))
         else:
             wmo_url.url = reverse('proposals:wmo_create_pre', args=(proposal.pk,))
         urls.append(wmo_url)
 
-        submit_url = AvailableURL(title=_('Aanvraag voor voortoetsing klaar voor versturen'), margin=0)
+        submit_url = AvailableURL(title=_('Aanvraag voor voortoetsing klaar voor versturen'))
         if hasattr(proposal, 'wmo'):
             submit_url.url = reverse('proposals:submit_pre', args=(proposal.pk,))
         urls.append(submit_url)
     elif proposal.is_pre_approved:
         urls.append(AvailableURL(url=reverse('proposals:update_pre_approved', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie'), margin=0))
+                                 title=_('Algemene informatie over de studie')))
 
         submit_url = AvailableURL(
             title=_('Aanvraag voor voortoetsing klaar voor versturen'),
@@ -56,32 +60,44 @@ def available_urls(proposal):
         urls.append(submit_url)
     else:
         update_url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
-        urls.append(AvailableURL(url=reverse(update_url, args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie'), margin=0))
+        urls.append(
+            AvailableURL(
+                url=reverse(update_url, args=(proposal.pk,)),
+                title=_('Algemeen'),
+            )
+        )
 
-        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'), margin=0)
+        wmo_url = AvailableURL(
+            title=_('METC')
+        )
         if hasattr(proposal, 'wmo'):
-            wmo_url.url = reverse('proposals:wmo_update', args=(proposal.wmo.pk,))
+            wmo_url.url = reverse(
+                'proposals:wmo_update',
+                args=(proposal.wmo.pk,)
+            )
         else:
-            wmo_url.url = reverse('proposals:wmo_create', args=(proposal.pk,))
+            wmo_url.url = reverse(
+                'proposals:wmo_create',
+                args=(proposal.pk,)
+            )
         urls.append(wmo_url)
 
-        studies_url = AvailableURL(title=_(u'Eén of meerdere trajecten?'), margin=0)
+        studies_url = AvailableURL(title=_('Trajecten'))
         if hasattr(proposal, 'wmo'):
-            studies_url.url = reverse('proposals:study_start', args=(proposal.pk,))
-        urls.append(studies_url)
+            studies_url.url = reverse(
+                        'proposals:study_start',
+                        args=(proposal.pk,)
+                    )
 
-        prev_study_completed = True
-        for study in proposal.study_set.all():
-            urls.extend(study_urls(study, prev_study_completed))
-            prev_study_completed = study.is_completed()
+            if proposal.study_set.count() > 0:
+                _add_study_urls(studies_url, proposal)
 
-        if proposal.studies_number > 1:
-            urls.append(AvailableURL(title='', is_title=True))
+            urls.append(studies_url)
 
-        consent_url = AvailableURL(title=_('Informed consent formulieren'), margin=0)
-        data_management_url = AvailableURL(title=_('Datamanagement'), margin=0)
-        submit_url = AvailableURL(title=_('Concept-aanmelding klaar voor versturen'), margin=0)
+
+        consent_url = AvailableURL(title=_('Documenten'))
+        data_management_url = AvailableURL(title=_('Datamanagement'))
+        submit_url = AvailableURL(title=_('Versturen'))
 
         if proposal.last_study() and proposal.last_study().is_completed():
             consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
@@ -93,6 +109,24 @@ def available_urls(proposal):
         urls.append(submit_url)
 
     return urls
+
+
+def _add_study_urls(main_element, proposal):
+    # If only one trajectory, add the children urls of that study directly.
+    # (Bypassing the study's own node)
+    if proposal.studies_number == 1:
+        main_element.children.extend(
+            study_urls(proposal.study_set.first(), True).children
+        )
+        return
+
+    # Otherwise, add them all with the parent node
+    prev_study_completed = True
+    for study in proposal.study_set.all():
+        main_element.children.append(
+            study_urls(study, prev_study_completed)
+        )
+        prev_study_completed = study.is_completed()
 
 
 def generate_ref_number():
@@ -343,3 +377,93 @@ def notify_local_staff(proposal):
 
     # Reset the current language
     activate(current_language)
+
+
+@deconstructible
+class FilenameFactory:
+    '''A callable class which can be passed to upload_to() in FileFields
+    and can be deconstructed for migrations'''
+    
+    def __init__(self, document_type):
+        self.document_type = document_type
+    
+    def __call__(self, instance, original_fn):
+        '''Returns a custom filename preserving the original extension,
+        something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"'''
+        
+        # Importing here to prevent circular import
+        from proposals.models import Proposal, Wmo
+        
+        if isinstance(instance, Proposal):
+            # This is a proposal PDF
+            proposal = instance
+            trajectory = None
+        elif isinstance(instance, Wmo):
+            # This is an METC decision file
+            proposal = instance.proposal
+            trajectory = None
+        else:
+            # In case of Documents objects
+            proposal = instance.proposal
+            try:
+                trajectory = 'T' + str(instance.study.order)
+            except AttributeError:
+                # No associated study, so this is an extra Documents instance
+                # We need to give it an index so they don't overwrite each other
+                extra_index = 1
+                
+                # Again, to prevent circular imports
+                from studies.models import Documents
+                qs = Documents.objects.filter(
+                    proposal=proposal).filter(
+                        study=None)
+                
+                for docs in qs:
+                    # The current Documents instance might not yet be saved and
+                    # therefore not exist in the QS. Hence the for loop instead of
+                    # the more traditional while
+                    if docs == instance:
+                        break # i.e. this may never happen
+                    extra_index += 1
+                
+                # Unknown
+                trajectory = 'Extra' + str(extra_index)
+        
+        lastname = proposal.created_by.last_name
+        refnum = proposal.reference_number
+        
+        extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
+        
+        fn_parts = ['FETC',
+                    refnum,
+                    lastname,
+                    trajectory,
+                    self.document_type,
+                    ]
+        
+        def not_empty(item):
+            if item == None:
+                return False
+            if str(item) == '':
+                return False
+            return True
+        
+        fn_parts = filter(not_empty, fn_parts)
+        
+        return '-'.join(fn_parts) + extension 
+
+
+class OverwriteStorage(FileSystemStorage):
+
+    def get_available_name(self, name, **kwargs):
+        """Returns a filename that's free on the target storage system, and
+        available for new content to be written to.
+
+        Modified from http://djangosnippets.org/snippets/976/
+        """
+        import os
+        
+        # If the filename already exists, remove it
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        return super(OverwriteStorage, self).get_available_name(name, **kwargs)

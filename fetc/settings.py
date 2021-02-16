@@ -34,8 +34,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'menu',
+    'debug_toolbar',
 
-    'core',
+    'main',
+    'uil.core',
     'proposals',
     'studies',
     'tasks',
@@ -54,6 +57,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -135,6 +139,11 @@ EMAIL_PORT = 2525
 EMAIL_FROM = 'T.D.Mees@uu.nl'
 EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
 
+# Django Simple Menu
+# https://django-simple-menu.readthedocs.io/en/latest/index.html
+
+MENU_SELECT_PARENTS = True
+MENU_HIDE_EMPTY = False
 
 # Group names
 GROUP_SECRETARY = 'Secretaris'

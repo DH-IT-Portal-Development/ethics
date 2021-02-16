@@ -1,100 +1,199 @@
 {% extends "base/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
-{% load core_filters %}
+{% load fetc_filters %}
 
-{% block title %}
-{{ committee_name }} - {% trans "Mijn besluiten" %}
+{% get_current_language as LANGUAGE_CODE %}
+
+{% block header_title %}
+    {{ committee_name }} - {{ title }} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
+{% block html_head %}
+    <script src="{% static 'uil.core/js/uu-fancy-list.js' %}"></script>
+
+    <script>
+    $(function () {
+       $('.uu-fancy-list-container').fancyList({
+           language: '{{ LANGUAGE_CODE }}',
+       });
+    });
+    </script>
+{% endblock %}
 
 {% block content %}
-<p>
-</p>
-<script>
-    $(document).ready(function () {
-        var table = $('.dataTable').dataTable({
-            "retrieve": true {# Used to retrieve the existing object #}
-        }).api();
+    {% static "proposals/images/arrow_divide.png" as img_diff %}
+    {% static "main/images/page_white_acrobat.png" as img_pdf %}
+    {% static "proposals/images/folder_delete.png" as img_hide %}
+    {% static 'main/images/zoom.png' as img_details %}
+    {% static 'reviews/images/user_add.png' as img_add_reviewers %}
+    {% static 'reviews/images/folder_edit.png' as img_change_chamber %}
+    {% static 'reviews/images/scale.png' as img_decide %}
+    {% static 'reviews/images/accept.png' as img_close %}
+    {% static 'reviews/images/website.png' as img_export %}
+    {% static 'reviews/images/report_go.png' as img_confirm %}
+    {% static 'reviews/images/tick.png' as img_confirmed %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {{ committee_name }} - {{ title }}
+            </h2>
+        </div>
+        {% include 'reviews/action_explaination.html' %}
+        <div class="col-12 uu-fancy-list-container">
+            <div class="uu-fancy-list">
+                {% for decision in decisions %}
+                    {% with review=decision.review proposal=decision.review.proposal %}
+                        <div class="ufl-item clearfix" data-show="true">
+                            <h4>{{ proposal.reference_number }} - {{ proposal.title }} </h4>
 
-        table.order([5, "desc"]);
-        table.draw();
-    });
-</script>
-<table class="dataTable display">
-    <thead>
-        <tr>
-            <th>{% trans "Referentienummer" %}</th>
-            <th>{% trans "Indiener" %}</th>
-            <th>{% trans "Eindverantwoordelijke" %}</th>
-            <th>{% trans "Titel studie" %}</th>
-            <th>{% trans "Fase" %}</th>
-            <th>{% trans "Datum ingediend" %}</th>
-            <th>{% trans "Gewenste einddatum" %}</th>
-            <th>{% trans "Mijn besluit" %}</th>
-            <th>{% trans "Afhandeling" %}</th>
-            <th>{% trans "Acties" %}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for decision in decisions %}
-        {% with review=decision.review %}
-        <tr>
-            <td>{{ review.proposal.reference_number }}</td>
-            <td>
-                <a href="{% url 'core:user_detail' review.proposal.created_by.pk %}">
-                    {{ review.proposal.created_by.get_full_name }}
-                </a>
-            </td>
-            <td>{{ review.accountable_user.get_full_name }}</td>
-            <td>{{ review.proposal.title }}</td>
-            <td>{{ review.get_stage_display }}</td>
-            <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_start|date:"j M Y" }}</td>
-            <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_should_end|date:"j M Y" }}</td>
-            <td>{{ decision.get_go_display|default:_("open") }}</td>
-            <td>
-                {% if review.stage == review.CLOSED %}
-                    {% if review.proposal.has_minor_revision %}
-                        {{ review.get_continuation_display }}{% trans ', met revisie' %}
-                    {% else %}
-                        {{ review.get_continuation_display }}
-                    {% endif %}
-                {% endif %}
-            </td>
-            <td>
-                <a href="{% url 'proposals:pdf' review.proposal.pk %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
-                <a href="{% url 'reviews:detail' review.pk %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Details' %}"></a>
-                {% if user|is_secretary and review.stage == review.ASSIGNMENT %}
-                    <a href="{% url 'reviews:assign' review.pk %}"><img src="{% static 'reviews/images/user_add.png' %}" title="{% trans 'Aanstellen' %}"></a>
-                    <a href="{% url 'reviews:change_chamber' review.proposal.pk %}"><img src="{% static 'reviews/images/folder_edit.png' %}" title="{% trans 'Verplaats naar andere kamer' %}"></a>
-                {% elif not review.date_end %}
-                    {% if user in review.current_reviewers %}
-                        <a href="{% url 'reviews:decide' decision.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
-                    {% elif user|is_secretary %}
-                        <a href="{% url 'reviews:decide_new' review.pk %}"><img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}"></a>
-                    {% endif %}
-                {% elif user|is_secretary and review.stage == review.CLOSING %}
-                    <a href="{% url 'reviews:close' review.pk %}"><img src="{% static 'reviews/images/accept.png' %}" title="{% trans 'Afsluiten' %}"></a>
-                {% elif user|is_secretary and review.stage == review.CLOSED %}
-                    {% if review.continuation == review.GO or review.continuation == review.GO_POST_HOC %}
-                    <a href="{% url 'proposals:archive_export' review.proposal.pk %}">
-                        <img src="{% static 'reviews/images/website.png' %}" title="{% trans 'Website export tekst' %}">
-                    </a>
-                    <a href="{% url 'proposals:confirmation' review.proposal.pk %}">
-                        {% if not review.proposal.date_confirmed %}
-                        <img src="{% static 'reviews/images/report_go.png' %}" title="{% trans 'Bevestigingsbrief versturen' %}">
-                        {% else %}
-                        <img src="{% static 'reviews/images/tick.png' %}" title="{% trans 'Bevestigingsbrief verstuurd' %}">
-                        {% endif %}
-                    </a>
-                    {% endif %}
-                {% endif %}
-            </td>
-        </tr>
-        {% endwith %}
-        {% endfor %}
-    </tbody>
-</table>
+                            <div class="ufl-actions">
+                                 <a href="{% url 'proposals:pdf' review.proposal.pk %}" target="_blank">
+                                    <img src="{{ img_pdf }}"
+                                         title="{% trans 'Studie inzien' %}">
+                                </a>
+                                <a href="{% url 'reviews:detail' review.pk %}">
+                                    <img src="{{ img_details }}" title="{% trans 'Details' %}">
+                                </a>
+                                {% if review.proposal.is_revision %}
+                                    <a href="{% url 'proposals:diff' review.proposal.pk %}">
+                                        <img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}">
+                                    </a>
+                                {% endif %}
+                                {% if user|is_secretary and review.stage == review.ASSIGNMENT %}
+                                    <a href="{% url 'reviews:assign' review.pk %}">
+                                        <img src="{{ img_add_reviewers }}"
+                                             title="{% trans 'Aanstellen' %}">
+                                    </a>
+                                    <a href="{% url 'reviews:change_chamber' review.proposal.pk %}">
+                                        <img src="{{ img_change_chamber }}"
+                                             title="{% trans 'Verplaats naar andere kamer' %}">
+                                    </a>
+                                {% elif not review.date_end %}
+                                    {% if user in review.current_reviewers %}
+                                        <a href="{% url 'reviews:decide' decision.pk %}">
+                                            <img src="{{ img_decide }}"
+                                                 title="{% trans 'Beslissen' %}">
+                                        </a>
+                                    {% elif user|is_secretary %}
+                                        <a href="{% url 'reviews:decide_new' review.pk %}">
+                                            <img src="{{ img_decide }}"
+                                                 title="{% trans 'Beslissen' %}">
+                                        </a>
+                                    {% endif %}
+                                {% elif user|is_secretary and review.stage == review.CLOSING %}
+                                    <a href="{% url 'reviews:close' review.pk %}">
+                                        <img src="{{ img_close }}"
+                                             title="{% trans 'Afsluiten' %}">
+                                    </a>
+                                {% elif user|is_secretary and review.stage == review.CLOSED %}
+                                    {% if review.continuation == review.GO or review.continuation == review.GO_POST_HOC %}
+                                        <a href="{% url 'proposals:archive_export' review.proposal.pk %}">
+                                            <img src="{{ img_export }}"
+                                                 title="{% trans 'Website export tekst' %}">
+                                        </a>
+                                        <a href="{% url 'proposals:confirmation' review.proposal.pk %}">
+                                            {% if not review.proposal.date_confirmed %}
+                                                <img src="{{ img_confirm }}"
+                                                     title="{% trans 'Bevestigingsbrief versturen' %}">
+                                            {% else %}
+                                                <img src="{{ img_confirmed }}"
+                                                     title="{% trans 'Bevestigingsbrief verstuurd' %}">
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <div class="ufl-undertitle">
+                                <div class="ufl-undertitle-line">
+                                    {% trans 'Eindverantwoordelijke' %}: {{ proposal.accountable_user.get_full_name }}
+                                </div>
+                                <div class="ufl-undertitle-line">
+                                    {% trans "Fase" %}: {{ review.get_stage_display }}
+                                </div>
+                                <div class="ufl-undertitle-line">
+                                    {% trans "Mijn besluit" %}: {{ decision.get_go_display|default:_("open") }}
+                                </div>
+                            </div>
+
+                            <div class="ufl-details">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <table>
+                                            {% if review.stage == review.CLOSED %}
+                                                <tr>
+                                                    <td>
+                                                        {% trans "Afhandeling" %}:
+                                                    </td>
+                                                    <td>
+                                                        {% if review.proposal.has_minor_revision %}
+                                                            {{ review.get_continuation_display }}{% trans ', met revisie' %}
+                                                        {% else %}
+                                                            {{ review.get_continuation_display }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                            {% if proposal.parent and proposal.parent.latest_review %}
+                                                <tr>
+                                                    <td>
+                                                        {% trans "Revisie/amendement van" %}:
+                                                    </td>
+                                                    <td>
+                                                        <a href="{% url 'reviews:detail' proposal.parent.latest_review.pk %}">
+                                                            {{ proposal.parent.reference_number }}
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                            <tr>
+                                                <td>
+                                                    {% trans "Datum ingediend" %}:
+                                                </td>
+                                                <td>
+                                                    {{ review.date_start|date:"j F Y" }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    {% trans "Gewenste einddatum" %}:
+                                                </td>
+                                                <td>
+                                                    {{ review.date_should_end|date:"j F Y" }}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <table>
+                                            {% if review.stage >= review.COMMISSION %}
+                                                <tr>
+                                                    <td>
+                                                        {% trans "Route" %}:
+                                                    </td>
+                                                    <td>
+                                                        {{ review.get_route_display }}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                            <tr>
+                                                <td colspan="2">
+                                                    {% trans "Indieners" %}:<br/>
+                                                    {% for applicant in proposal.applicants.all %}
+                                                        <a href="{% url 'main:user_detail' applicant.pk %}">{{ applicant.get_full_name }}</a>{% if not forloop.last %},{% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -1,33 +1,51 @@
 {% extends "base/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "Review afsluiten" %}
+{% block header_title %}
+    {% trans "Review afsluiten" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
+{% block html_head %}
+    <script>
+        $(function () {
+            depends_on_value('confirmation_sent', 'True', 'confirmation_comments');
+            depends_on_list_value('continuation', ['0', '5'], 'has_minor_revision');
+            depends_on_value('has_minor_revision', 'True', 'minor_revision_description');
+            depends_on_list_value('continuation', ['0', '5'], 'in_archive')
+        });
+    </script>
+{% endblock %}
 
 {% block content %}
-<p>
-    {% blocktrans with title=review.proposal.title %}
-	Sluit hier de review voor de studie <em>{{ title }}</em> af. Hieronder volgen de individuele beslissingen.
-	{% endblocktrans %}
-</p>
-<h2>{% trans "Individuele beslissingen" %}</h2>
-{% include "reviews/review_table.html" %}
-<h2>{% trans "Uiteindelijk besluit" %}</h2>
-<script>
-$(function() {
-    depends_on_value('confirmation_sent', 'True', 'confirmation_comments');
-    depends_on_list_value('continuation', ['0', '5'], 'has_minor_revision');
-    depends_on_value('has_minor_revision', 'True', 'minor_revision_description')
-});
-</script>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Review afsluiten' %}" />
-    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-</form>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Review afsluiten" %}
+            </h2>
+            <p>
+                {% blocktrans with title=review.proposal.title %}
+                    Sluit hier de review voor de studie <em>{{ title }}</em> af. Hieronder volgen de individuele
+                    beslissingen.
+                {% endblocktrans %}
+            </p>
+            <h3>{% trans "Individuele beslissingen" %}</h3>
+            {% include "reviews/review_table.html" %}
+            <h3>{% trans "Uiteindelijk besluit" %}</h3>
+
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                <div class="float-right">
+                    <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">
+                        {% trans "Terug naar de vorige pagina" %}
+                    </a>
+                    <input type="submit" value="{% trans 'Review afsluiten' %}"/>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
 {% endblock %}

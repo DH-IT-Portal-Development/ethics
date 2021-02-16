@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Vergelijk documenten" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+    <script src="{% static 'main/js/htmldiff.js' %}"></script>
+    <script defer>
+        $(function () {
+
+            $("#button-combined").click(function () {
+                $(".split_view").hide();
+                $(this).hide();
+                $("#combined_text").show();
+                $("#button-split").show();
+            });
+            $("#button-split").click(function () {
+                $("#combined_text").hide();
+                $(this).hide();
+                $(".split_view").show();
+                $("#button-combined").show();
+            });
+
+            let old_el = $('#old_text');
+            let new_el = $('#new_text');
+            let before = html_to_tokens(old_el.html());
+            let after = html_to_tokens(new_el.html());
+            let ops = calculate_operations(before, after);
+
+            if (ops.length == 1)
+                $('.warning').show();
+
+            $("#loading-icon").hide();
+            $('#combined_text').html(render_operations(before, after, ops));
+            old_el.html(render_before_operations(before, after, ops));
+            new_el.html(render_after_operations(before, after, ops));
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>{% trans 'Vergelijk documenten' %}</h2>
+            <p>
+                {% blocktrans %}
+                Hier kan je twee versies van een document vergelijken. Standaard
+                geeft hij een <i>gecombineerde</i> versie weer, waarbij tekst
+                die verwijderd is in het rood is gemarkeerd en nieuwe tekst
+                in het groen is gemarkeerd.
+                {% endblocktrans %}
+            </p>
+            <button id="button-split" class="float-right">
+                {% trans 'Bekijk apart' %}
+            </button>
+            <button id="button-combined" style="display: none" class="float-right">
+                {% trans 'Bekijk gecombineerd' %}
+            </button>
+            <p>
+                {% blocktrans %}
+                Je kan ook de bestanden naast elkaar bekijken, met dezelfde
+                markeringen. Klik hiervoor op 'Bekijk apart'.
+                {% endblocktrans %}
+            </p>
+            <div class="warning" style="display: none">
+                {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
+            </div>
+        </div>
+    </div>
+    <div class="uu-inner-container compare document-compare">
+        <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
+            <img src="{% static 'main/images/loading.gif' %}"/>
+        </div>
+        <div style="display: none" class="col-6 split_view" id="old_text">
+            {{ old_text|linebreaks }}
+        </div>
+        <div style="display: none" class="col-6 split_view"  id="new_text">
+            {{ new_text|linebreaks }}
+        </div>
+        <div class="col-12" id="combined_text">
+
+        </div>
+    </div>
+{% endblock %}

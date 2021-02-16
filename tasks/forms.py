@@ -4,8 +4,8 @@ from django import forms
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from core.forms import ConditionalModelForm, SoftValidationMixin
-from core.utils import YES_NO
+from main.forms import ConditionalModelForm, SoftValidationMixin
+from main.utils import YES_NO
 from .models import Session, Task
 
 

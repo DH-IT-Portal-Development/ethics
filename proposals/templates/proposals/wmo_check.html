@@ -1,24 +1,35 @@
 {% extends "base/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 {% load i18n %}
 
-{% block title %} 
-{% trans "WMO-check" %}
+{% block header_title %}
+    {% trans "WMO-check" %} - {{ block.super }}
 {% endblock %}
 
-{% block noprogressbar %}{% endblock %}
-
-{% block content %}
+{% block html_head %}
 <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
 <script>
 $(function() {
     check_metc_required("{% url 'proposals:check_wmo' %}");
 });
 </script>
-<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>{{ form.as_table }}</table>
-    <div id="metc_status"></div>
-    <input class="pure-button pure-button-primary" type="button" onclick="javascript:location.reload();" value="{% trans 'Opnieuw beginnen' %}" />
-</form>
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=wmo.proposal.available_urls active=2 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>
+                {% trans "WMO-check" %}
+            </h2>
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                <div id="metc_status"></div>
+                <input class="pure-button pure-button-primary" type="button" onclick="javascript:location.reload();" value="{% trans 'Opnieuw beginnen' %}" />
+            </form>
+        </div>
+    </div>
 {% endblock %}

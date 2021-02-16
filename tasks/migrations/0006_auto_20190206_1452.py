@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='session',
             name='setting',
-            field=models.ManyToManyField(blank=True, to='core.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt'),
+            field=models.ManyToManyField(blank=True, to='main.Setting', verbose_name='Geef aan waar de dataverzameling plaatsvindt'),
         ),
         migrations.AlterField(
             model_name='session',

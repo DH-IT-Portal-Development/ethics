@@ -1,0 +1,15 @@
+{% load static %}
+
+<script>
+$(function() {
+    check_field_required('setting', 'needs_details', 'setting_details', 'main');
+    check_field_required('setting', 'needs_supervision', 'supervision', 'main');
+    depends_on_value('supervision', 'False', 'leader_has_coc');
+
+    $('input[name="leader_has_coc"]').change(function() {
+        if ($(this).val() === 'False') {
+            $(this).parents('tr').find('img').qtip('show');
+        }
+    });
+});
+</script>

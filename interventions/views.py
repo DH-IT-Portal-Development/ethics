@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from core.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
+from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from studies.models import Study
 from studies.utils import get_study_progress
 

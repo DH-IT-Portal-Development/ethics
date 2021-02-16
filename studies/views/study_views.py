@@ -7,8 +7,8 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 
-from core.views import AllowErrorsOnBackbuttonMixin, UpdateView
-from core.utils import string_to_bool
+from main.views import AllowErrorsOnBackbuttonMixin, UpdateView
+from main.utils import string_to_bool
 from proposals.models import Proposal
 from interventions.models import Intervention
 from observations.models import Observation

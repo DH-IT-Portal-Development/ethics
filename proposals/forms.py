@@ -7,9 +7,9 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from core.forms import ConditionalModelForm, SoftValidationMixin
-from core.models import DOUBT, NO, YES, YES_NO_DOUBT
-from core.utils import YES_NO, get_users_as_list
+from main.forms import ConditionalModelForm, SoftValidationMixin
+from main.models import DOUBT, NO, YES, YES_NO_DOUBT
+from main.utils import YES_NO, get_users_as_list
 from .field import ParentChoiceModelField
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
@@ -246,10 +246,13 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         self.fields['parent'].queryset = self._get_parent_queryset()
 
     def _get_parent_queryset(self):
+        # Return all non-pre-assessments, that are not currently in review
         return Proposal.objects.filter(
             is_pre_assessment=False
         ).filter(
             Q(applicants=self.user, ) | Q(supervisor=self.user)
+        ).filter(
+            Q(status=Proposal.DRAFT) | Q(status__gte=Proposal.DECISION_MADE)
         ).distinct()
 
 
@@ -283,8 +286,16 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):
-        return super()._get_parent_queryset().filter(
-            Q(status_review=False, ) | Q(status_review=None)
+        # Select non-pre-assessments that have been reviewed and rejected and
+        # haven't been parented yet.
+        # Those are eligible for revisions
+        return Proposal.objects.filter(
+            is_pre_assessment=False,
+            status=Proposal.DECISION_MADE,
+            status_review=False,
+            children__isnull=True,
+        ).filter(
+            Q(applicants=self.user, ) | Q(supervisor=self.user)
         ).distinct()
 
 
@@ -308,8 +319,15 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):
-        return super()._get_parent_queryset().filter(
+        # Select non-pre-assessments that have been reviewed and approved and
+        # haven't been parented yet.
+        # Those are eligible for amendments
+        return Proposal.objects.filter(
+            is_pre_assessment=False,
             status_review=True,
+            children__isnull=True,
+        ).filter(
+            Q(applicants=self.user, ) | Q(supervisor=self.user)
         ).distinct()
 
 
@@ -384,26 +402,44 @@ class WmoCheckForm(forms.ModelForm):
         self.fields['is_medical'].choices = YES_NO_DOUBT
 
 
-class WmoApplicationForm(ConditionalModelForm):
+class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Wmo
         fields = [
-            'metc_application', 'metc_decision', 'metc_decision_pdf',
+            'metc_application',
+            'metc_decision',
+            'metc_decision_pdf',
         ]
         widgets = {
             'metc_application': forms.RadioSelect(choices=YES_NO),
             'metc_decision':    forms.RadioSelect(choices=YES_NO),
         }
+        
+    _soft_validation_fields = [
+        'metc_application',
+        'metc_decision',
+        'metc_decision_pdf',
+        ]
 
     def clean(self):
         """
         Check for conditional requirements:
-        - If metc_decision has been checked, make sure the file is added
+        - An metc_decision is always required
         """
         cleaned_data = super(WmoApplicationForm, self).clean()
-
-        self.check_dependency(cleaned_data, 'metc_decision',
-                              'metc_decision_pdf')
+        
+        # A PDF is always required for this form, but it's in ProposalSubmit
+        # validation that this is actually rejected. Otherwise this is soft
+        # validation
+        if cleaned_data['metc_decision_pdf'] == None:
+            from django.forms import ValidationError
+            self.add_error('metc_decision_pdf',
+                           ValidationError(
+                               _('In dit geval is een beslissing van een METC vereist'),
+                               )
+                           )
+        
+        return cleaned_data # Sticking to Django conventions
 
 
 class StudyStartForm(forms.ModelForm):
@@ -417,13 +453,24 @@ class StudyStartForm(forms.ModelForm):
                                    required=False)
     study_name_5 = forms.CharField(label=_('Naam traject 5'), max_length=15,
                                    required=False)
+    study_name_6 = forms.CharField(label=_('Naam traject 6'), max_length=15,
+                                   required=False)
+    study_name_7 = forms.CharField(label=_('Naam traject 7'), max_length=15,
+                                   required=False)
+    study_name_8 = forms.CharField(label=_('Naam traject 8'), max_length=15,
+                                   required=False)
+    study_name_9 = forms.CharField(label=_('Naam traject 9'), max_length=15,
+                                   required=False)
+    study_name_10 = forms.CharField(label=_('Naam traject 10'), max_length=15,
+                                   required=False)
 
     class Meta:
         model = Proposal
         fields = [
             'studies_similar', 'studies_number',
             'study_name_1', 'study_name_2', 'study_name_3', 'study_name_4',
-            'study_name_5'
+            'study_name_5', 'study_name_6', 'study_name_7', 'study_name_8',
+            'study_name_9', 'study_name_10',
         ]
         widgets = {
             'studies_similar': forms.RadioSelect(choices=YES_NO),
@@ -460,7 +507,7 @@ class StudyStartForm(forms.ModelForm):
                 self.add_error('studies_number', _(
                     'Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee verschillende trajecten zijn.'))
             for n in range(nr_studies):
-                if n >= 5:
+                if n >= 10:
                     break
                 study_name = 'study_name_' + str(n + 1)
                 if not cleaned_data[study_name]:
@@ -487,8 +534,13 @@ class ProposalSubmitForm(forms.ModelForm):
         - Check if the inform_local_staff question should be asked
         """
         self.proposal = kwargs.pop('proposal', None)
+        
+        # Needed for POST data
+        self.request = kwargs.pop('request', None)
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
+
+        self.fields['inform_local_staff'].label_suffix = ''
 
         self.fields['inform_local_staff'].label = mark_safe(
             self.fields['inform_local_staff'].label)
@@ -506,9 +558,17 @@ class ProposalSubmitForm(forms.ModelForm):
 
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
-        if not self.instance.is_pre_assessment and not self.instance.is_practice():
+        if not self.instance.is_pre_assessment and \
+           not self.instance.is_practice() and \
+           not 'js-redirect-submit' in self.request.POST:
+            
+            if check_local_facilities(self.proposal) and cleaned_data[
+                'inform_local_staff'] is None:
+                self.add_error('inform_local_staff', _('Dit veld is verplicht.'))
+            
             for study in self.instance.study_set.all():
                 documents = Documents.objects.get(study=study)
+                
                 if study.passive_consent:
                     if not documents.director_consent_declaration:
                         self.add_error('comments', _(
@@ -541,7 +601,3 @@ class ProposalSubmitForm(forms.ModelForm):
                         self.add_error('comments', _(
                             'Informatiebrief voor traject {} nog niet toegevoegd.').format(
                             study.order))
-
-        if check_local_facilities(self.proposal) and cleaned_data[
-            'inform_local_staff'] is None:
-            self.add_error('inform_local_staff', _('Dit veld is verplicht.'))

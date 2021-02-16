@@ -5,14 +5,23 @@ from django.db import models
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import python_2_unicode_compatible
 
-from core.models import YES_NO_DOUBT
-from core.validators import validate_pdf_or_doc
+from main.models import YES_NO_DOUBT
+from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
+from studies.utils import study_urls
+from proposals.utils.proposal_utils import FilenameFactory, OverwriteStorage
 
 
-@python_2_unicode_compatible
+INFORMED_CONSENT_FILENAME = FilenameFactory('Informed_Consent')
+METC_DECISION_FILENAME = FilenameFactory('METC_Decision')
+BRIEFING_FILENAME = FilenameFactory('Briefing')
+DEPARTMENT_CONSENT_FILENAME = FilenameFactory('Department_Consent')
+DEPARTMENT_INFO_FILENAME = FilenameFactory('Department_Info')
+PARENTAL_INFO_FILENAME = FilenameFactory('Parental_Info')
+
+
+
 class AgeGroup(models.Model):
     """
     A model to store participant age groups.
@@ -22,6 +31,7 @@ class AgeGroup(models.Model):
     The 'is_active' field is used for when the age groups need to be redefined. Create new ones for the groups that need
     to be redefined, and set the old ones to inactive. This is needed to preserve old proposals for the archive.
     """
+
     class Meta:
         ordering = ('age_min',)
 
@@ -40,7 +50,6 @@ class AgeGroup(models.Model):
             return _('{} jaar en ouder').format(self.age_min)
 
 
-@python_2_unicode_compatible
 class Trait(models.Model):
     """
     A model to store participant traits.
@@ -58,7 +67,6 @@ class Trait(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class Compensation(models.Model):
     """
     A model to store forms of participant compensation.
@@ -78,7 +86,6 @@ class Compensation(models.Model):
         return self.description
 
 
-@python_2_unicode_compatible
 class Recruitment(models.Model):
     """
     A model to store forms of participant recruitment.
@@ -100,7 +107,7 @@ class Recruitment(models.Model):
     def __str__(self):
         return self.description
 
-@python_2_unicode_compatible
+
 class Study(models.Model):
     """
     A model to store a study within a Proposal.
@@ -123,7 +130,8 @@ class Study(models.Model):
 
     age_groups = models.ManyToManyField(
         AgeGroup,
-        verbose_name=_('Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
+        verbose_name=_(
+            'Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
         help_text=_('De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
 Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
@@ -140,13 +148,17 @@ vertegenwoordiger te worden verkregen.'),
     legally_incapable_details = models.TextField(
         _('Licht toe'),
         blank=True)
-    has_traits = models.NullBooleanField(
+    has_traits = models.BooleanField(
         _('Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
-Is dit in uw studie bij (een deel van) de deelnemers het geval?'))
+Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
+        null=True,
+        blank=True
+    )
     traits = models.ManyToManyField(
         Trait,
         blank=True,
-        verbose_name=_('Selecteer de bijzondere kenmerken van uw proefpersonen'))
+        verbose_name=_(
+            'Selecteer de bijzondere kenmerken van uw proefpersonen'))
     traits_details = models.CharField(
         _('Namelijk'),
         max_length=200,
@@ -172,7 +184,8 @@ te testen?'),
         blank=True)
     compensation = models.ForeignKey(
         Compensation,
-        verbose_name=_('Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
+        verbose_name=_(
+            'Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
         help_text=_('Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
 cadeautje.'),
@@ -196,14 +209,17 @@ cadeautje.'),
         default=False)
 
     # Fields with respect to informed consent
-    passive_consent = models.NullBooleanField(
+    passive_consent = models.BooleanField(
         _('Maakt u gebruik van passieve informed consent?'),
         help_text=_(mark_safe('Wanneer u kinderen via een instelling \
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
 passieve informed consent. U kunt de templates vinden op \
 <a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" \
-target="_blank">de FETC-GW-website</a>.')))
+target="_blank">de FETC-GW-website</a>.')),
+        null=True,
+        blank=True,
+    )
     passive_consent_details = models.TextField(
         _('Licht uw antwoord toe. Wij willen u wijzen op het reglement, \
 sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
@@ -322,11 +338,13 @@ geschoolde specialisten).')),
 
     def has_participants_below_age(self, age):
         """Returns whether the Study contains AgeGroups with ages below the specified age"""
-        return self.age_groups.filter(Q(age_min__lt=age) & Q(age_max__lt=age)).exists()
+        return self.age_groups.filter(
+            Q(age_min__lt=age) & Q(age_max__lt=age)).exists()
 
     def design_started(self):
         """Checks if the design phase has started"""
-        return any([self.has_intervention, self.has_observation, self.has_sessions])
+        return any(
+            [self.has_intervention, self.has_observation, self.has_sessions])
 
     def design_completed(self):
         """Checks if the design phase has been completed"""
@@ -368,7 +386,8 @@ geschoolde specialisten).')),
         if self.has_intervention and self.intervention.settings_contains_schools():
             return True
 
-        if self.has_sessions and self.session_set.filter(setting__is_school=True).exists():
+        if self.has_sessions and self.session_set.filter(
+                setting__is_school=True).exists():
             return True
 
         if self.has_observation and self.observation.settings_contains_schools():
@@ -381,8 +400,8 @@ geschoolde specialisten).')),
         if self.passive_consent:
             return False
 
-        return self.research_settings_contains_schools() and not self.has_participants_below_age(16)
-
+        return self.research_settings_contains_schools() and not self.has_participants_below_age(
+            16)
 
     def get_documents_object(self):
         """Gets the document object for this study"""
@@ -393,23 +412,30 @@ geschoolde specialisten).')),
         return _('Study details for proposal %s') % self.proposal.title
 
 
-@python_2_unicode_compatible
 class Documents(models.Model):
     """
     A model to store consent forms for a study and/or a proposal
     """
 
-    study = models.OneToOneField(Study, on_delete=models.CASCADE, blank=True, null=True)
+    study = models.OneToOneField(Study, on_delete=models.CASCADE, blank=True,
+                                 null=True)
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
     informed_consent = models.FileField(
         _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=INFORMED_CONSENT_FILENAME,
+        storage=OverwriteStorage(),
+    )
+        
     briefing = models.FileField(
         _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=BRIEFING_FILENAME,
+        storage=OverwriteStorage(),
+    )
 
     director_consent_declaration = models.FileField(
         _(
@@ -418,19 +444,27 @@ class Documents(models.Model):
         validators=[validate_pdf_or_doc],
         help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
                    'you can upload the unsigned document and send the document when it is signed to the'
-                   ' secretary of the FEtC-H')
+                   ' secretary of the FEtC-H'),
+        upload_to=DEPARTMENT_CONSENT_FILENAME,
+        storage=OverwriteStorage(),
     )
 
     director_consent_information = models.FileField(
-        _('Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
+        _(
+            'Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=DEPARTMENT_INFO_FILENAME,
+        storage=OverwriteStorage(),
     )
 
     parents_information = models.FileField(
-        _('Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
+        _(
+            'Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=PARENTAL_INFO_FILENAME,
+        storage=OverwriteStorage(),
     )
 
     def save(self, *args, **kwargs):
@@ -447,8 +481,9 @@ class Documents(models.Model):
 
         super(Documents, self).save(*args, **kwargs)
 
-
     def __str__(self):
         if self.study:
-            return "Documents object for study '{}', proposal '{}'".format(self.study, self.proposal)
-        return "(Extra) Documents object for proposal '{}'".format(self.proposal)
+            return "Documents object for study '{}', proposal '{}'".format(
+                self.study, self.proposal)
+        return "(Extra) Documents object for proposal '{}'".format(
+            self.proposal)
