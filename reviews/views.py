@@ -517,7 +517,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         proposal = form.instance.proposal
 
         if form.instance.continuation in [
-            Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC
+            Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
         ]:
             proposal.status = Proposal.DECISION_MADE
             proposal.status_review = form.instance.continuation in [
