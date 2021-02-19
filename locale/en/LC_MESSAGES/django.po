@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-19 11:25+0100\n"
+"POT-Creation-Date: 2021-02-19 12:00+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -849,6 +849,7 @@ msgstr ""
 "target=\"blank\">Linguistics Chamber</a>."
 
 #: main/templates/main/index.html:53
+#: proposals/templates/proposals/study_consent.html:79
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" target=\"blank"
@@ -2581,7 +2582,7 @@ msgid "Niet aangeleverd"
 msgstr "Not provided"
 
 #: proposals/templates/proposals/proposal_pdf.html:442
-#: proposals/templates/proposals/study_consent.html:119
+#: proposals/templates/proposals/study_consent.html:134
 #: reviews/templates/reviews/review_detail.html:219
 msgid "Extra formulieren"
 msgstr "Additional forms"
@@ -2694,6 +2695,7 @@ msgstr ""
 "\">model documents</a> for <em>informed consent</em>."
 
 #: proposals/templates/proposals/proposal_start.html:40
+#: proposals/templates/proposals/study_consent.html:83
 msgid ""
 "Studenten moeten hun begeleider vragen om deze formulieren; dezelfde "
 "voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a "
@@ -3320,8 +3322,6 @@ msgid ""
 "                    paar extra formulieren uploaden. <br/> Klik hiervoor op "
 "'Voeg extra formulieren' onderaan de pagina. Deze velden\n"
 "                    kunt u weer weg halen door alle formulieren te wissen.\n"
-"                    <p>Bij ontvangst worden alle bestandsnamen gewijzigd, "
-"zet hier dus geen belangrijke informatie in.</p>\n"
 "                "
 msgstr ""
 "\n"
@@ -3330,11 +3330,17 @@ msgstr ""
 ">         These extra fields can be removed by clearing all forms in one "
 "section.     "
 
-#: proposals/templates/proposals/study_consent.html:80
+#: proposals/templates/proposals/study_consent.html:89
+msgid ""
+"Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen "
+"belangrijke informatie in."
+msgstr "Files are renamed upon arrival, so please do not put information in the filename that you later rely on."
+
+#: proposals/templates/proposals/study_consent.html:95
 msgid "Wijzigingen bijhouden"
 msgstr "Track changes"
 
-#: proposals/templates/proposals/study_consent.html:83
+#: proposals/templates/proposals/study_consent.html:98
 msgid ""
 "\n"
 "                    \n"
@@ -3358,7 +3364,7 @@ msgstr ""
 "\n"
 "   "
 
-#: proposals/templates/proposals/study_consent.html:113
+#: proposals/templates/proposals/study_consent.html:128
 msgid "Voeg extra formulieren toe"
 msgstr "Add additional forms"
 
