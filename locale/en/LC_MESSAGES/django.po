@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-15 15:03+0100\n"
+"POT-Creation-Date: 2021-02-19 11:25+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1400,7 +1400,6 @@ msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
 #: proposals/menus.py:38
-#, fuzzy
 msgid "Nieuwe studie"
 msgstr "New study"
 
@@ -2519,7 +2518,6 @@ msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/proposal_list.html:175
-#, fuzzy
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
@@ -2579,7 +2577,6 @@ msgid "Naam"
 msgstr "Name"
 
 #: proposals/templates/proposals/proposal_pdf.html:170
-#, fuzzy
 msgid "Niet aangeleverd"
 msgstr "Not provided"
 
@@ -5006,7 +5003,6 @@ msgid "Overzicht"
 msgstr "Overview"
 
 #: studies/utils.py:94
-#, fuzzy
 msgid "Traject {}"
 msgstr "Trajectory {}"
 
