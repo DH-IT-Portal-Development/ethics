@@ -128,7 +128,11 @@
                                     {% trans 'Soort studie' %}: {{ proposal.type }}
                                 </div>
                                 <div class="ufl-undertitle-line">
-                                    {% trans "Laatst bijgewerkt" %}: {{ proposal.date_modified|date:'j F Y, H:m' }}
+                                    {% if proposal.status >= proposal.DECISION_MADE %}
+                                        {% trans "Besloten op" %}: {{ proposal.date_reviewed|date:'j F Y, H:m' }}
+                                    {% else %}
+                                        {% trans "Laatst bijgewerkt" %}: {{ proposal.date_modified|date:'j F Y, H:m' }}
+                                    {% endif %}
                                 </div>
                                 <div class="ufl-undertitle-line">
                                     {% trans 'Status' %}:
