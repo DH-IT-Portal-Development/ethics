@@ -3703,7 +3703,7 @@ msgstr ""
 
 #: reviews/templates/reviews/action_explaination.html:32
 msgid "Uitleg secretaris"
-msgstr "Explanation by secretary"
+msgstr "Explanation for secretary"
 
 #: reviews/templates/reviews/action_explaination.html:36
 #, python-format
