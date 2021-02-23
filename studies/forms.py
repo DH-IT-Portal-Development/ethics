@@ -287,8 +287,8 @@ class SessionStartForm(forms.ModelForm):
         sessions_field_name = 'sessions_number'
         nr_sessions = cleaned_data.get(sessions_field_name)
         
-        max_sessions = 100 # Max in FETC history is 23
-        max_sessions_error = _('Er geldt een maximum van {} sessies.'.format(max_sessions))
+        max_sessions = 100 # Max sessions in FETC history is 23
+        max_sessions_error = _('Er geldt een maximum van {} sessies.').format(max_sessions)
         
         if nr_sessions > max_sessions:
             self.add_error(sessions_field_name,
