@@ -82,6 +82,17 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
             # Prevent double required errors
             if 'tasks_number' not in self.errors:
                 self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht.'), code='required'))
+        
+        tasks_field_name = 'tasks_number'
+        nr_tasks = cleaned_data.get(tasks_field_name)
+        
+        max_tasks = 100 # Max Tasks per session in FETC history is 9
+        max_tasks_error = _('Er geldt een maximum van {} taken.'.format(max_tasks))
+        
+        if nr_tasks > max_tasks:
+            self.add_error(tasks_field_name,
+                           forms.ValidationError(max_tasks_error, code='invalid'),
+                           )
 
 
 class TaskForm(SoftValidationMixin, ConditionalModelForm):
