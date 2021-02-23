@@ -10,23 +10,42 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            Goedgekeurde studies
-        </div>
-        <table class="display exportTable">
-            <tr>
-                <th>{% trans "Referentienummer" %}</th>
-                <th>{% trans "Indiener" %}</th>
-                <th>{% trans "Eindverantwoordelijke onderzoeker" %}</th>
-            </tr>
-            {% for proposal in proposals %}
+            <h2>Approved studies</h2>
+            <table class="display exportTable w-100">
                 <tr>
-                    <td>{{ proposal.reference_number }}</td>
-                    <td>{{ proposal.created_by.get_full_name }}</td>
-                    {% if proposal.supervisor %}
-                        <td>{{ proposal.supervisor.get_full_name }}</td>
-                    {% endif %}
+                    {# No translations here, as the table should be in English #}
+                    <th>Reference Number</th>
+                    <th>Title</th>
+                    <th>Applicant</th>
+                    <th>Researcher with final responsibility</th>
+                    <th>Approval Date</th>
+                    <th>FEtC-H chamber</th>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for proposal in proposals %}
+                    <tr>
+                        <td>{{ proposal.reference_number }}</td>
+                        <td>{{ proposal.title }}</td>
+                        <td>{{ proposal.created_by.get_full_name }}</td>
+                        <td>
+                            {% if proposal.supervisor %}
+                                {{ proposal.supervisor.get_full_name }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ proposal.date_reviewed|date:"d M Y" }}
+                        </td>
+                        <td>
+                            {# Bad translation hack #}
+                            {% if proposal.reviewing_committee.name == "AK" %}
+                            GC
+                            {% else %}
+                            LC
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br/>
+        </div>
     </div>
 {% endblock %}
