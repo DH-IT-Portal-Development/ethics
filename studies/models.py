@@ -137,7 +137,7 @@ Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
         _('Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) \
 deelnemers?'),
-        help_text=_('Wilsonbekwame volwassenen zijn volwassenen die waarvan \
+        help_text=_('Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
 worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
