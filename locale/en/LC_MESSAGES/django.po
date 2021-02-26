@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-19 12:00+0100\n"
+"POT-Creation-Date: 2021-02-23 17:27+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -513,7 +513,7 @@ msgid "Welkom {}"
 msgstr "Welcome, {}"
 
 #: main/templates/base/menu.html:11 proposals/menus.py:76
-#: proposals/views/proposal_views.py:208
+#: proposals/views/proposal_views.py:209
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -549,7 +549,7 @@ msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
 #: main/templates/base/menu.html:35 proposals/menus.py:56
-#: proposals/views/proposal_views.py:218
+#: proposals/views/proposal_views.py:219
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
@@ -559,12 +559,12 @@ msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
 #: main/templates/base/menu.html:41 proposals/menus.py:64
-#: proposals/views/proposal_views.py:168
+#: proposals/views/proposal_views.py:169
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
 #: main/templates/base/menu.html:44 proposals/menus.py:68
-#: proposals/views/proposal_views.py:183
+#: proposals/views/proposal_views.py:184
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -3334,7 +3334,9 @@ msgstr ""
 msgid ""
 "Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen "
 "belangrijke informatie in."
-msgstr "Files are renamed upon arrival, so please do not put information in the filename that you later rely on."
+msgstr ""
+"Files are renamed upon arrival, so please do not put information in the "
+"filename that you later rely on."
 
 #: proposals/templates/proposals/study_consent.html:95
 msgid "Wijzigingen bijhouden"
@@ -3486,19 +3488,19 @@ msgstr "This overview shows all the applications you have not yet submitted."
 msgid "Dit overzicht toont al uw ingediende studies."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:169
+#: proposals/views/proposal_views.py:170
 msgid "Dit overzicht toont al uw beoordeelde studies."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:185
+#: proposals/views/proposal_views.py:186
 msgid "Dit overzicht toont al uw studies waar u eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:209
+#: proposals/views/proposal_views.py:210
 msgid "Dit overzicht toont al uw studies."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:219
+#: proposals/views/proposal_views.py:220
 msgid ""
 "Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3506,20 +3508,20 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:242
+#: proposals/views/proposal_views.py:243
 #, python-format
 msgid "Studie %(title)s bewerkt"
 msgstr "Application %(title)s edited"
 
-#: proposals/views/proposal_views.py:294
+#: proposals/views/proposal_views.py:295
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:377
+#: proposals/views/proposal_views.py:378
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:450
+#: proposals/views/proposal_views.py:451
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -4322,6 +4324,10 @@ msgstr "You are required to select at least one special characteristic."
 msgid "U dient minstens één van de opties te selecteren"
 msgstr "You must select at least one of the options"
 
+#: studies/forms.py:291
+msgid "Er geldt een maximum van {} sessies."
+msgstr "There is a maximum of {} sessions."
+
 #: studies/models.py:48
 msgid "{}-{} jaar"
 msgstr "{}-{} years old"
@@ -5037,7 +5043,11 @@ msgstr "All fields can be edited after copying."
 msgid "Te kopiëren sessie"
 msgstr "Session to be copied"
 
-#: tasks/forms.py:171
+#: tasks/forms.py:90
+msgid "Er geldt een maximum van {} taken."
+msgstr "There is a maximum of {} tasks."
+
+#: tasks/forms.py:182
 msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
 msgstr ""
 "The total duration of the session must be at least as long as the net "
@@ -5499,7 +5509,6 @@ msgstr "Task deleted"
 #~ "You can register a new study with the committee as well as viewing all "
 #~ "your previous applications."
 
-#, python-format
 #~ msgid ""
 #~ "\n"
 #~ "        Verder kunt u alle afgehandelde en goedgekeurde\n"
