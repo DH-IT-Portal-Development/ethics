@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 
 from main.models import SettingModel
@@ -13,7 +13,7 @@ class Session(SettingModel):
     tasks_number = models.PositiveIntegerField(
         _('Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?'),
         null=True,
-        validators=[MinValueValidator(1)],
+        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is a technical safeguard
         help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer observeert \
 en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
 Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
