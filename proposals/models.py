@@ -7,6 +7,10 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from django.utils.functional import lazy
+from django.utils.safestring import mark_safe
+mark_safe_lazy = lazy(mark_safe, str)
+
 from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import available_urls, FilenameFactory, OverwriteStorage
@@ -141,10 +145,10 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
     )
 
     other_stakeholders = models.BooleanField(
-        _('Zijn er nog andere onderzoekers bij deze studie betrokken '
+        mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze studie betrokken '
           'die <strong>niet</strong> geaffilieerd zijn aan een van de '
           'onderzoeksinstituten van de Faculteit Geestwetenschappen van de '
-          'UU? '),
+          'UU? ')), # Note: form labels with HTML are hard-coded in form Meta classes
         default=False,
     )
 

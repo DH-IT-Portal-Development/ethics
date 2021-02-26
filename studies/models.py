@@ -136,7 +136,7 @@ class Study(models.Model):
 Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
         _('Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) \
-deelnemers?'),
+deelnemers?'), # Note: Form labels with HTML are hard-coded in the Form meta class
         help_text=_('Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \

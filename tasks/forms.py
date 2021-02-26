@@ -1,13 +1,16 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
-from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
 from .models import Session, Task
 
+
+from django.utils.safestring import mark_safe
+from django.utils.functional import lazy
+mark_safe_lazy = lazy(mark_safe, str)
 
 class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
     is_copy = forms.BooleanField(
@@ -94,6 +97,7 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
                            forms.ValidationError(max_tasks_error, code='invalid'),
                            )
 
+            
 
 class TaskForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
@@ -104,6 +108,13 @@ class TaskForm(SoftValidationMixin, ConditionalModelForm):
             'registration_kinds', 'registration_kinds_details',
             'feedback', 'feedback_details',
         ]
+        labels = {
+            'duration': mark_safe_lazy(_('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, \
+dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak \
+(exclusief instructie maar inclusief oefensessie)? \
+Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), \
+geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.')),
+            }
         widgets = {
             'registrations': forms.CheckboxSelectMultiple(),
             'registration_kinds': forms.CheckboxSelectMultiple(),
@@ -112,7 +123,6 @@ class TaskForm(SoftValidationMixin, ConditionalModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
-        self.fields['duration'].label = mark_safe(self.fields['duration'].label)
 
     def get_soft_validation_fields(self):
         # All fields should be validated softly
