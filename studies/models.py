@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q
 from django.utils.safestring import mark_safe
@@ -136,8 +136,8 @@ class Study(models.Model):
 Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
         _('Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) \
-deelnemers?'),
-        help_text=_('Wilsonbekwame volwassenen zijn volwassenen die waarvan \
+deelnemers?'), # Note: Form labels with HTML are hard-coded in the Form meta class
+        help_text=_('Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
 worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
@@ -230,7 +230,7 @@ toegestaan en draagt niet de voorkeur van de commissie.'),
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
         null=True,
-        validators=[MinValueValidator(1)],
+        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is just a technical safeguard
         help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer een \
 taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en \
 u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \

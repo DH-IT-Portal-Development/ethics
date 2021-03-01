@@ -8,7 +8,7 @@
 
 {% block header_title %}
     {% blocktrans with proposal=review.proposal.title %}
-        Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
+        Details van besluitvorming bij aanmelding {{ proposal }}
     {% endblocktrans %}
     - {{ review.proposal.reference_number }} - {{ block.super }}
 {% endblock %}
