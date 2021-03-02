@@ -4731,8 +4731,8 @@ msgstr ""
 "group.</li>\n"
 "                            </ul><br />\n"
 "                            Research that takes place at the UiL OTS-labs is "
-"alwayscategorized as task-based research due to the location (even if "
-"participantsare only observed after their arrival).\n"
+"always categorized as task-based research due to the location (even if "
+"participants are only observed after their arrival).\n"
 "                        "
 
 #: studies/templates/studies/study_design.html:63
