@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-26 11:48+0100\n"
+"POT-Creation-Date: 2021-03-02 14:53+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -263,7 +263,7 @@ msgstr ""
 "based research’ and fill out the new questions in the portal. \n"
 "                "
 
-#: interventions/utils.py:11 studies/models.py:121 studies/models.py:202
+#: interventions/utils.py:11 studies/models.py:126 studies/models.py:207
 #: studies/templates/studies/study_end.html:58
 msgid "Interventieonderzoek"
 msgstr "Interventional research"
@@ -311,7 +311,7 @@ msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
 #: main/models.py:39 observations/models.py:126 proposals/models.py:167
-#: studies/models.py:163 studies/models.py:196 tasks/models.py:146
+#: studies/models.py:168 studies/models.py:201 tasks/models.py:146
 #: tasks/models.py:158
 msgid "Namelijk"
 msgstr "Please specify"
@@ -1115,8 +1115,8 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:64 observations/models.py:74
-#: observations/models.py:87 proposals/models.py:499 studies/models.py:149
-#: studies/models.py:183 studies/models.py:316
+#: observations/models.py:87 proposals/models.py:499 studies/models.py:154
+#: studies/models.py:188 studies/models.py:321
 msgid "Licht toe"
 msgstr "Explain"
 
@@ -1228,7 +1228,7 @@ msgstr ""
 "    (reference number <em>%(ref_number)s</em>), traject %(order)s.\n"
 "\t"
 
-#: observations/utils.py:8 studies/models.py:120 studies/models.py:205
+#: observations/utils.py:8 studies/models.py:125 studies/models.py:210
 #: studies/templates/studies/study_end.html:89
 msgid "Observatieonderzoek"
 msgstr "Observational research"
@@ -4305,7 +4305,7 @@ msgstr ""
 msgid "Mijn besluiten"
 msgstr "My results"
 
-#: studies/forms.py:38 studies/models.py:138
+#: studies/forms.py:38 studies/models.py:143
 msgid ""
 "Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
 msgstr ""
@@ -4320,35 +4320,31 @@ msgstr "You are required to select at least one special characteristic."
 msgid "U dient minstens één van de opties te selecteren"
 msgstr "You must select at least one of the options"
 
-#: studies/forms.py:291
-msgid "Er geldt een maximum van {} sessies."
-msgstr "There is a maximum of {} sessions."
-
-#: studies/models.py:48
+#: studies/models.py:53
 msgid "{}-{} jaar"
 msgstr "{}-{} years old"
 
-#: studies/models.py:50
+#: studies/models.py:55
 msgid "{} jaar en ouder"
 msgstr "{} years old and above"
 
-#: studies/models.py:105 studies/templates/studies/study_form.html:46
+#: studies/models.py:110 studies/templates/studies/study_form.html:46
 msgid "Werving"
 msgstr "Recruitment"
 
-#: studies/models.py:122 studies/models.py:208
+#: studies/models.py:127 studies/models.py:213
 msgid "Taakonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
-#: studies/models.py:127
+#: studies/models.py:132
 msgid "Naam traject"
 msgstr "Trajectory title"
 
-#: studies/models.py:134
+#: studies/models.py:139
 msgid "Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?"
 msgstr "What is/are the age category/ies of your participants?"
 
-#: studies/models.py:135
+#: studies/models.py:140
 msgid ""
 "De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én "
 "6-11 invullen."
@@ -4356,7 +4352,7 @@ msgstr ""
 "If the intended age group is 5-7 year-olds, for example, then you should "
 "fill in 4-5 and 6-11."
 
-#: studies/models.py:140
+#: studies/models.py:145
 msgid ""
 "Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag worden "
 "aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname "
@@ -4372,7 +4368,7 @@ msgstr ""
 "express their own opinion). Here informed consent should always be obtained "
 "from a relevant representative."
 
-#: studies/models.py:152
+#: studies/models.py:157
 msgid ""
 "Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is "
 "dit in uw studie bij (een deel van) de deelnemers het geval?"
@@ -4380,11 +4376,11 @@ msgstr ""
 "Participants can be included based on particular characteristics. Is this "
 "the case with (some of) the participants in your study?"
 
-#: studies/models.py:161
+#: studies/models.py:166
 msgid "Selecteer de bijzondere kenmerken van uw proefpersonen"
 msgstr "Select the special characteristics of your participants"
 
-#: studies/models.py:167
+#: studies/models.py:172
 msgid ""
 "Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het "
 "geselecteerde type deelnemer aan de studie te laten meedoen?"
@@ -4392,7 +4388,7 @@ msgstr ""
 "In order to answer the research question, is it necessary for the selected "
 "type of participants to participate in the study?"
 
-#: studies/models.py:170
+#: studies/models.py:175
 msgid ""
 "Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou u de vraag "
 "ook kunnen beantwoorden door volwassen deelnemers te testen?"
@@ -4400,20 +4396,20 @@ msgstr ""
 "For example, is it necessary to test children, or would it be possible to "
 "answer the research question by testing adults?"
 
-#: studies/models.py:177
+#: studies/models.py:182
 msgid "Leg uit waarom"
 msgstr "Explain why"
 
-#: studies/models.py:181
+#: studies/models.py:186
 msgid "Hoe worden de deelnemers geworven?"
 msgstr "How will the participants be recruited?"
 
-#: studies/models.py:188
+#: studies/models.py:193
 msgid "Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?"
 msgstr ""
 "What compensation will participants receive for taking part in this study?"
 
-#: studies/models.py:189
+#: studies/models.py:194
 msgid ""
 "Het standaardbedrag voor vergoeding aan de deelnemers is €10,- per uur. "
 "Minderjarigen mogen geen geld ontvangen, maar wel een cadeautje."
@@ -4421,11 +4417,20 @@ msgstr ""
 "The standard sum for compensation of participants is €10 per hour. Minors "
 "are not permitted to receive money, but can be given a gift."
 
-#: studies/models.py:213
+#: studies/models.py:218
 msgid "Maakt u gebruik van passieve informed consent?"
 msgstr "Will you use passive informed consent?"
 
-#: studies/models.py:224
+#: studies/models.py:219
+msgid ""
+"Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders "
+"niet laat ondertekenen, maar in plaats daarvan de leiding van die "
+"instelling, dan maakt u gebruik van passieve informed consent. U kunt de "
+"templates vinden op <a href=\"https://fetc-gw.wp.hum.uu.nl/"
+"toestemmingsverklaringen/\" target=\"_blank\">de FETC-GW-website</a>."
+msgstr ""
+
+#: studies/models.py:229
 msgid ""
 "Licht uw antwoord toe. Wij willen u wijzen op het reglement, sectie 3.1 'd' "
 "en 'e'. Passive consent is slechts in enkele gevallen toegestaan en draagt "
@@ -4435,11 +4440,11 @@ msgstr ""
 "'d' and 'e'. Passive consent is allowed under certain situations but is not "
 "preferred by the committee."
 
-#: studies/models.py:231
+#: studies/models.py:236
 msgid "Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?"
 msgstr "How many sessions of tasks will the participants take part in?"
 
-#: studies/models.py:234
+#: studies/models.py:239
 msgid ""
 "Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen "
 "tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer "
@@ -4453,7 +4458,7 @@ msgstr ""
 "experiment to consist of two sessions. If multiple tasks are executed on the "
 "same day, with breaks in between, this is still considered to be one session."
 
-#: studies/models.py:241
+#: studies/models.py:246
 msgid ""
 "Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de "
 "deelnemer?"
@@ -4461,7 +4466,7 @@ msgstr ""
 "Does the above research trajectory involve misrepresentation to the "
 "participant?"
 
-#: studies/models.py:243
+#: studies/models.py:248
 msgid ""
 "Misleiding is het doelbewust verschaffen van inaccurate informatie over het "
 "doel en/of belangrijke aspecten van de gang van zaken tijdens de studie. "
@@ -4478,7 +4483,7 @@ msgstr ""
 "crucial memory task without announcing it, or giving false feedback. Fillers "
 "do not count as misrepresentation."
 
-#: studies/models.py:254
+#: studies/models.py:259
 msgid ""
 "Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden "
 "gedebrieft."
@@ -4486,7 +4491,7 @@ msgstr ""
 "Give an explanation and describe how and when the participant will be "
 "debriefed."
 
-#: studies/models.py:258
+#: studies/models.py:263
 msgid ""
 "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens</em> de "
 "deelname niet-triviale negatieve emoties kunnen opwekken? Denk hierbij "
@@ -4499,11 +4504,11 @@ msgstr ""
 "consider emotionally probing questions, insulting utterances, negative "
 "feedback, and frustrating, difficult, (very) long and/or (very) boring tasks."
 
-#: studies/models.py:267
+#: studies/models.py:272
 msgid "Licht uw antwoord toe."
 msgstr "Explain your answer."
 
-#: studies/models.py:270
+#: studies/models.py:275
 msgid ""
 "Bevat bovenstaand onderzoekstraject elementen die tijdens de deelname "
 "zodanig belastend zijn dat deze <em>ondanks de verkregen informed consent</"
@@ -4516,7 +4521,17 @@ msgstr ""
 "questions (or even cause outrage), for example from colleagues, the "
 "participants themselves, or parents or other representatives?"
 
-#: studies/models.py:286
+#: studies/models.py:280
+msgid ""
+"Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en "
+"uitputtende taak, een zeer confronterende vragenlijst, of voortdurend "
+"vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of "
+"een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de "
+"door de deelnemer ervaren belasting tijdens het onderzoek, niet om de "
+"opgelopen psychische of fysieke schade door het onderzoek."
+msgstr "This could be the case with an inhumanely long or exhausting task, an extremely provocative questionnaire, or excessive destructive feedback on participant performance. Also consider a significant breach of privacy or lack of respect towards the participant as examples for this question. Please note that this question refers to distress during experimental sessions, not distress at a later date which was caused by the research project."
+
+#: studies/models.py:291
 msgid ""
 "Licht uw antwoord toe. Geef concrete voorbeelden van de relevante aspecten "
 "van uw studie (bijv. representatieve voorbeelden van mogelijk zeer kwetsende "
@@ -4528,7 +4543,7 @@ msgstr ""
 "utterances in the task, or of very confrontational questions in a "
 "questionnaire), so that the committee can form a proper picture."
 
-#: studies/models.py:293
+#: studies/models.py:298
 msgid ""
 "Zijn de risico's op psychische, fysieke, of andere (bijv. economische, "
 "juridische) schade door deelname aan bovenstaand onderzoekstraject <em>meer "
@@ -4540,21 +4555,38 @@ msgstr ""
 "em> minimal? I.e. is the chance of and/or magnitude of potential damage to "
 "participants clearly <em>above</em> that of the \"background risk\"?"
 
-#: studies/models.py:412
+#: studies/models.py:303
+msgid ""
+"Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante "
+"leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. "
+"Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen "
+"beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van "
+"zelfbeeld, stigmatisering door anderen, economische schade door data-"
+"koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke "
+"schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -"
+"onderzoeken of -procedures die in alledaagse didactische, psychologische of "
+"medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een "
+"stressbestendigheids-<em>assessment</em>, een intelligentie- of "
+"persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
+"alles, waar relevant, onder begeleiding van adequaat geschoolde "
+"specialisten)."
+msgstr ""
+
+#: studies/models.py:417
 #, python-format
 msgid "Study details for proposal %s"
 msgstr "Study details for proposal %s"
 
-#: studies/models.py:425
+#: studies/models.py:430
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:433
+#: studies/models.py:438
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:442
+#: studies/models.py:447
 msgid ""
 "Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het "
 "departement (in .pdf of .doc(x)-format)"
@@ -4562,7 +4594,7 @@ msgstr ""
 "Please upload the declaration of consent for the school director/head of the "
 "department (in .pdf of .doc(x)-format)"
 
-#: studies/models.py:454
+#: studies/models.py:459
 msgid ""
 "Upload hier de informatiebrief voor de schoolleider/hoofd van het "
 "departement (in .pdf of .doc(x)-formaat)"
@@ -4570,7 +4602,7 @@ msgstr ""
 "Please upload the the information letter for the school director/head of the "
 "department (in .pdf of .doc(x)-format)"
 
-#: studies/models.py:463
+#: studies/models.py:468
 msgid ""
 "Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)"
 msgstr ""
@@ -5038,11 +5070,7 @@ msgstr "All fields can be edited after copying."
 msgid "Te kopiëren sessie"
 msgstr "Session to be copied"
 
-#: tasks/forms.py:93
-msgid "Er geldt een maximum van {} taken."
-msgstr "There is a maximum of {} tasks."
-
-#: tasks/forms.py:112 tasks/models.py:130
+#: tasks/forms.py:101 tasks/models.py:130
 msgid ""
 "Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, "
 "dus vanaf het moment dat de taak van start gaat tot en met het einde van de "
@@ -5056,7 +5084,7 @@ msgstr ""
 "criterion), <strong>indicate the maximum duration that can reasonably be "
 "expected</strong>."
 
-#: tasks/forms.py:192
+#: tasks/forms.py:181
 msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
 msgstr ""
 "The total duration of the session must be at least as long as the net "
@@ -5269,6 +5297,12 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Er geldt een maximum van {} sessies."
+#~ msgstr "There is a maximum of {} sessions."
+
+#~ msgid "Er geldt een maximum van {} taken."
+#~ msgstr "There is a maximum of {} tasks."
 
 #~ msgid ""
 #~ "\n"
