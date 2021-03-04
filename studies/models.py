@@ -1,10 +1,15 @@
 # -*- encoding: utf-8 -*-
 
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q
-from django.utils.safestring import mark_safe
+
+
+
 from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import lazy
+from django.utils.safestring import mark_safe
+mark_safe_lazy = lazy(mark_safe, str)
 
 from main.models import YES_NO_DOUBT
 from main.validators import validate_pdf_or_doc
@@ -136,8 +141,8 @@ class Study(models.Model):
 Dan moet u hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
         _('Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) \
-deelnemers?'),
-        help_text=_('Wilsonbekwame volwassenen zijn volwassenen die waarvan \
+deelnemers?'), # Note: Form labels with HTML are hard-coded in the Form meta class
+        help_text=_('Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
 worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
@@ -211,7 +216,7 @@ cadeautje.'),
     # Fields with respect to informed consent
     passive_consent = models.BooleanField(
         _('Maakt u gebruik van passieve informed consent?'),
-        help_text=_(mark_safe('Wanneer u kinderen via een instelling \
+        help_text=mark_safe_lazy(_('Wanneer u kinderen via een instelling \
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
 passieve informed consent. U kunt de templates vinden op \
@@ -230,7 +235,7 @@ toegestaan en draagt niet de voorkeur van de commissie.'),
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
         null=True,
-        validators=[MinValueValidator(1)],
+        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is just a technical safeguard
         help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer een \
 taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en \
 u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
@@ -272,7 +277,7 @@ deelname zodanig belastend zijn dat deze <em>ondanks de verkregen \
 informed consent</em> vragen zou kunnen oproepen (of zelfs \
 verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
 zelf, of bij ouders of andere vertegenwoordigers?'),
-        help_text=_(mark_safe('Dit zou bijvoorbeeld het geval kunnen zijn \
+        help_text=mark_safe_lazy(_('Dit zou bijvoorbeeld het geval kunnen zijn \
 bij een \'onmenselijk\' lange en uitputtende taak, een zeer confronterende \
 vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren \
 inbreuk op de privacy, of een ander ervaren gebrek aan respect. \
@@ -295,7 +300,7 @@ economische, juridische) schade door deelname aan bovenstaand \
 onderzoekstraject <em>meer dan</em> minimaal? \
 D.w.z. ligt de kans op en/of omvang van mogelijke schade \
 bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"?'),
-        help_text=_(mark_safe('Achtergrondrisico is datgene dat gezonde, \
+        help_text=mark_safe_lazy(_('Achtergrondrisico is datgene dat gezonde, \
 gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken \
 in het dagelijks leven ten deel valt. \
 Denk bij schade ook aan de gevolgen die het voor de deelnemer of \

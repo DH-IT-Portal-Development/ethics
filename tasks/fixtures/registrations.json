@@ -50,7 +50,7 @@
         "needs_details": false,
         "description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
         "needs_kind": false,
-        "description_en": "behavioral- and/or reaction time registration using Zep, Presentation, E-prime, etc.",
+        "description_en": "behavioral and/or reaction time registration using Zep, Presentation, E-prime, etc.",
         "description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
         "age_min": null,
         "requires_review": false,

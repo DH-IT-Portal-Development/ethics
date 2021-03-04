@@ -4,8 +4,11 @@ from braces.forms import UserKwargModelFormMixin
 from django import forms
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from django.utils.safestring import mark_safe
+
 from django.utils.translation import ugettext_lazy as _
+from django.utils.functional import lazy
+from django.utils.safestring import mark_safe
+mark_safe_lazy = lazy(mark_safe, str)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.models import DOUBT, NO, YES, YES_NO_DOUBT
@@ -32,6 +35,12 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'funding', 'funding_details', 'funding_name',
             'pre_approval_institute', 'pre_approval_pdf'
         ]
+        labels = {
+            'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze studie betrokken ' \
+          'die <strong>niet</strong> geaffilieerd zijn aan een van de ' \
+          'onderzoeksinstituten van de Faculteit Geestwetenschappen van de ' \
+          'UU? ')),
+            }
         widgets = {
             'is_pre_approved':    forms.RadioSelect(choices=YES_NO),
             'institution':        forms.RadioSelect(),
