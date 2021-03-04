@@ -727,5 +727,4 @@ class ProposalUpdatePractice(ProposalUpdate):
         """Sets in_course as a form kwarg"""
         kwargs = super(ProposalUpdatePractice, self).get_form_kwargs()
         kwargs['in_course'] = self.object.in_course
-        kwargs['is_exploration'] = self.object.is_exploration
         return kwargs
