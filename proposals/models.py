@@ -82,8 +82,8 @@ class Proposal(models.Model):
         (WMO_DECISION_MADE, _('Studie is beoordeeld door FETC-GW')),
     )
 
-    COURSE = '1'
-    EXPLORATION = '2'
+    COURSE = 1
+    EXPLORATION = 2
     PRACTICE_REASONS = (
         (COURSE, _('in het kader van een cursus')),
         (EXPLORATION, _('om de portal te exploreren')),
