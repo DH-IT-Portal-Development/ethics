@@ -92,7 +92,7 @@ def available_urls(proposal):
             if proposal.study_set.count() > 0:
                 _add_study_urls(studies_url, proposal)
 
-            urls.append(studies_url)
+        urls.append(studies_url)
 
 
         consent_url = AvailableURL(title=_('Documenten'))

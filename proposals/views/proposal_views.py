@@ -227,8 +227,7 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return Proposal.objects.filter(
             Q(in_course=True) | Q(is_exploration=True),
             Q(applicants=self.request.user) |
-            (Q(supervisor=self.request.user) &
-             Q(status__gte=Proposal.SUBMITTED_TO_SUPERVISOR))
+            Q(supervisor=self.request.user)
         ).order_by(
             "-date_modified"
         )
