@@ -59,7 +59,7 @@ class Review(models.Model):
 
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
-    def update_go(self):
+    def update_go(self, last_decision=None):
         """
         Check all decisions: if all are finished, set the final decision and date_end.
         """
@@ -88,6 +88,8 @@ class Review(models.Model):
                 # On NO-GO, reset the Proposal status
                 # TODO: also send e-mail?
                 else:
+                    from .utils import notify_supervisor_nogo
+                    notify_supervisor_nogo(self.proposal, last_decision)
                     self.proposal.status = Proposal.DRAFT
                     self.proposal.save()
             # For a review by commission:
@@ -146,7 +148,7 @@ class Decision(models.Model):
         Sets the correct status of the Review on save of a Decision.
         """
         super(Decision, self).save(*args, **kwargs)
-        self.review.update_go()
+        self.review.update_go(last_decision=self)
 
     def __str__(self):
         return 'Decision #%d by %s on %s: %s' % (self.pk, self.reviewer.username, self.review.proposal, self.go)
