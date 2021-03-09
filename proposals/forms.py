@@ -223,7 +223,7 @@ van het FETC-GW worden opgenomen.')
 
 class ProposalStartPracticeForm(forms.Form):
     practice_reason = forms.ChoiceField(
-        label=_('Ik vul de portal in'),
+        label=_('Ik maak een oefenstudie aan'),
         choices=Proposal.PRACTICE_REASONS,
         widget=forms.RadioSelect())
 
