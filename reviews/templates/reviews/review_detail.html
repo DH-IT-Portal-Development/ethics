@@ -106,7 +106,7 @@
                         {% get_compare_link proposal review.proposal pre_assessment_pdf %}
                     </li>
                 {% endif %}
-                {% if review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
+                {% if review.proposal.wmo and review.proposal.wmo.status == review.proposal.wmo.JUDGED %}
                     <li>
                         <a href="{{ review.proposal.wmo.metc_decision_pdf.url }}" target="_blank">
                             {% trans "Beslissing METC" %}
