@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-02 14:53+0100\n"
+"POT-Creation-Date: 2021-03-11 16:54+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -360,7 +360,6 @@ msgid "Ingediende studies"
 msgstr "Submitted applications"
 
 #: main/templates/auth/user_detail.html:51
-#: proposals/templates/proposals/proposal_export_list.html:17
 #: reviews/templates/reviews/review_to_conclude.html:35
 msgid "Referentienummer"
 msgstr "Reference number"
@@ -793,15 +792,18 @@ msgstr ""
 #: main/templates/error/500.html:17
 msgid ""
 "\n"
-"                    Blijft dit probleem aanhouden? Neem dan contact op met\n"
-"                    <a href=\"https://fetc-gw.wp.hum.uu.nl/contact/\" target="
-"\"_blank\">de FETC-GW secretaris</a>.\n"
+"                    Blijft dit probleem aanhouden? Neem dan contact op met "
+"het technisch beheer van de portal via \n"
+"                    <a href=\"mailto:labbeheer.gw@uu.nl\" target=\"_blank"
+"\">labbeheer.gw@uu.nl</a>. Maak hierbij zo veel mogelijk duidelijk wat je "
+"aan het doen was, en op welke pagina.\n"
 "                "
 msgstr ""
 "\n"
-"    Does this problem persist? Please contact <a href=\"https://fetc-gw.wp."
-"hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
-"     "
+"If this problem persists, please contact the technical support staff of the "
+"portal by email through <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer."
+"gw@uu.nl</a>. Try to explain what you were doing and note the page that you "
+"were on, if you can.     "
 
 #: main/templates/main/index.html:29
 msgid ""
@@ -1503,7 +1505,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:135
+#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:137
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1608,9 +1610,7 @@ msgstr "In what capacity are you involved in this study?"
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: proposals/models.py:344
-#: proposals/templates/proposals/proposal_export_list.html:19
-#: proposals/templates/proposals/proposal_list.html:182
+#: proposals/models.py:344 proposals/templates/proposals/proposal_list.html:182
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -2342,12 +2342,6 @@ msgstr "Informed consent forms for the study"
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
-#: proposals/templates/proposals/proposal_export_list.html:18
-#: proposals/templates/proposals/proposal_pdf.html:68
-#: reviews/templates/reviews/review_to_conclude.html:36
-msgid "Indiener"
-msgstr "Applicant"
-
 #: proposals/templates/proposals/proposal_form.html:75
 #: proposals/templates/proposals/proposal_form_pre_approved.html:73
 msgid "Aantal woorden:"
@@ -2571,6 +2565,11 @@ msgstr ""
 "\n"
 "            Reference number %(reference_number)s\n"
 "            "
+
+#: proposals/templates/proposals/proposal_pdf.html:68
+#: reviews/templates/reviews/review_to_conclude.html:36
+msgid "Indiener"
+msgstr "Applicant"
 
 #: proposals/templates/proposals/proposal_pdf.html:71
 #: tasks/templates/tasks/task_list.html:7
@@ -3504,20 +3503,20 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:243
+#: proposals/views/proposal_views.py:242
 #, python-format
 msgid "Studie %(title)s bewerkt"
 msgstr "Application %(title)s edited"
 
-#: proposals/views/proposal_views.py:295
+#: proposals/views/proposal_views.py:294
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:378
+#: proposals/views/proposal_views.py:377
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:451
+#: proposals/views/proposal_views.py:450
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3546,11 +3545,11 @@ msgstr "Contact {secretary} to make sure."
 msgid "Uw studie zal moeten worden beoordeeld door de METC."
 msgstr "Your study will require assessment by a METC."
 
-#: reviews/forms.py:12 reviews/models.py:102
+#: reviews/forms.py:12 reviews/models.py:104
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:13 reviews/models.py:101
+#: reviews/forms.py:13 reviews/models.py:103
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3622,24 +3621,24 @@ msgstr "Post hoc positive advice by FEtC-H"
 msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
-#: reviews/models.py:49 reviews/models.py:129
+#: reviews/models.py:49 reviews/models.py:131
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:103
+#: reviews/models.py:105
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:123
+#: reviews/models.py:125
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:124
+#: reviews/models.py:126
 msgid "niet goegekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:125
+#: reviews/models.py:127
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -4176,16 +4175,20 @@ msgstr ""
 msgid "FETC-GW: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H: new decision added"
 
-#: reviews/utils.py:274
+#: reviews/utils.py:260
+msgid "FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld"
+msgstr "FEtC-H: supervisor has assessed your proposal"
+
+#: reviews/utils.py:295
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils.py:280
+#: reviews/utils.py:301
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:284
+#: reviews/utils.py:305
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -4194,25 +4197,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils.py:287
+#: reviews/utils.py:308
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:290
+#: reviews/utils.py:311
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:296
+#: reviews/utils.py:317
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:299
+#: reviews/utils.py:320
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils.py:303
+#: reviews/utils.py:324
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4220,7 +4223,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:309
+#: reviews/utils.py:330
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4228,7 +4231,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:312
+#: reviews/utils.py:333
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -4238,7 +4241,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:316
+#: reviews/utils.py:337
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -4248,13 +4251,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:323
+#: reviews/utils.py:344
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:327
+#: reviews/utils.py:348
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4265,13 +4268,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:344
+#: reviews/utils.py:365
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:348
+#: reviews/utils.py:369
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4279,7 +4282,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:350
+#: reviews/utils.py:371
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4289,11 +4292,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:355 reviews/utils.py:381
+#: reviews/utils.py:376 reviews/utils.py:402
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils.py:376
+#: reviews/utils.py:397
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -4426,9 +4429,14 @@ msgid ""
 "Wanneer u kinderen via een instelling (dus ook school) werft en u de ouders "
 "niet laat ondertekenen, maar in plaats daarvan de leiding van die "
 "instelling, dan maakt u gebruik van passieve informed consent. U kunt de "
-"templates vinden op <a href=\"https://fetc-gw.wp.hum.uu.nl/"
-"toestemmingsverklaringen/\" target=\"_blank\">de FETC-GW-website</a>."
+"templates vinden op <a href=\"https://intranet.uu.nl/documenten-ethische-"
+"toetsingscommissie-gw\" target=\"_blank\">de FETC-GW-website</a>."
 msgstr ""
+"Whenever you ask an institution, such as a school and its management, to "
+"sign off and approve a child's participation rather than their legal "
+"guardians, you are employing passive informed consent. For such cases, you "
+"can find the correct model documents <a href=\"https://intranet.uu.nl/en/"
+"documents-ethics-assessment-committee-humanities\" target=\"_blank\">here</a>."
 
 #: studies/models.py:229
 msgid ""
@@ -4529,7 +4537,14 @@ msgid ""
 "een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de "
 "door de deelnemer ervaren belasting tijdens het onderzoek, niet om de "
 "opgelopen psychische of fysieke schade door het onderzoek."
-msgstr "This could be the case with an inhumanely long or exhausting task, an extremely provocative questionnaire, or excessive destructive feedback on participant performance. Also consider a significant breach of privacy or lack of respect towards the participant as examples for this question. Please note that this question refers to distress during experimental sessions, not distress at a later date which was caused by the research project."
+msgstr ""
+"This could be the case with an inhumanely long or exhausting task, an "
+"extremely provocative questionnaire, or excessive destructive feedback on "
+"participant performance. Also consider a significant breach of privacy or "
+"lack of respect towards the participant as examples for this question. "
+"Please note that this question refers to distress during experimental "
+"sessions, not distress at a later date which was caused by the research "
+"project."
 
 #: studies/models.py:291
 msgid ""
@@ -4570,7 +4585,17 @@ msgid ""
 "persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
 "alles, waar relevant, onder begeleiding van adequaat geschoolde "
 "specialisten)."
-msgstr "Background risk is the risk experienced by average, healthy people in the relevant age group during daily life. Damage to be considered includes, but is not limited to: physical or psychological harm, damage by means of gathered information which might affect self-image or cause stigmatisation by others, economic damage through linked data, and so forth. To determine potential physical and psychological harm in relation to the background risk, you may compare your study to \"routine\" tests which take place during daily life, such as a driving test, job interview or performance evaluation, intelligence test, or heart rate measurement after physical exercise, all of which performed under professional supervision."
+msgstr ""
+"Background risk is the risk experienced by average, healthy people in the "
+"relevant age group during daily life. Damage to be considered includes, but "
+"is not limited to: physical or psychological harm, damage by means of "
+"gathered information which might affect self-image or cause stigmatisation "
+"by others, economic damage through linked data, and so forth. To determine "
+"potential physical and psychological harm in relation to the background "
+"risk, you may compare your study to \"routine\" tests which take place "
+"during daily life, such as a driving test, job interview or performance "
+"evaluation, intelligence test, or heart rate measurement after physical "
+"exercise, all of which performed under professional supervision."
 
 #: studies/models.py:417
 #, python-format
@@ -5635,11 +5660,6 @@ msgstr "Task deleted"
 
 #~ msgid "Review inzien"
 #~ msgstr "Show review"
-
-#, fuzzy
-#~| msgid "FETC-GW: nieuwe studie ter beoordeling"
-#~ msgid "FETC-GW: gereviseerde studie ter beoordeling"
-#~ msgstr "FEtC-H: new study for assessment"
 
 #~| msgid "Te reviseren studie"
 #~ msgid "gereviseerde"
