@@ -613,5 +613,11 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
     def form_valid(self, form):
         """Save the decision date and send e-mail to secretary"""
         form.instance.date_decision = timezone.now()
-        notify_secretary(form.instance)
+        review = form.instance.review
+    
+        # Don't notify the secretary if this is a supervisor decision.
+        # If it was a GO they the secretary will be notified anyway
+        if not review.stage == review.SUPERVISOR:
+            notify_secretary(form.instance)
+        
         return super(DecisionUpdateView, self).form_valid(form)
