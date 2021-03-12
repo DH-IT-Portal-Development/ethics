@@ -97,6 +97,11 @@
                 <br/>
                 <br/>
             {% endif %}
+            {% if is_practice %}
+            <p>
+                {% trans "U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+            </p>
+            {% endif %}
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 {% include "base/form_buttons.html" %}

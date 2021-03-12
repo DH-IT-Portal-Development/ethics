@@ -25,6 +25,7 @@ from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
+from proposals.mixins import ProposalMixin, ProposalContextMixin
 
 
 ############
@@ -236,19 +237,6 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
 ##########################
 # CRUD actions on Proposal
 ##########################
-class ProposalMixin(UserFormKwargsMixin):
-    model = Proposal
-    form_class = ProposalForm
-    success_message = _('Studie %(title)s bewerkt')
-
-    def get_next_url(self):
-        """If the Proposal has a Wmo model attached, go to update, else, go to create"""
-        proposal = self.object
-        if hasattr(proposal, 'wmo'):
-            return reverse('proposals:wmo_update', args=(proposal.pk,))
-        else:
-            return reverse('proposals:wmo_create', args=(proposal.pk,))
-
 
 class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     def get_initial(self):
@@ -272,7 +260,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
         return context
 
 
-class ProposalUpdate(ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+class ProposalUpdate(ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""
@@ -284,7 +272,6 @@ class ProposalUpdate(ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
         context = super(ProposalUpdate, self).get_context_data(**kwargs)
         context['create'] = False
         context['no_back'] = True
-        context['is_supervisor'] = self.object.supervisor == self.request.user
 
         return context
 
@@ -370,7 +357,7 @@ class ProposalDataManagement(UpdateView):
         return reverse('proposals:consent', args=(self.object.pk,))
 
 
-class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
+class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView, ):
     model = Proposal
     form_class = ProposalSubmitForm
     template_name = 'proposals/proposal_submit.html'
