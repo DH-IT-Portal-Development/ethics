@@ -122,9 +122,9 @@
             {% endif %}{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 {% if is_practice %}
-                <p>
+                <div class="info">
                     {% trans "U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
-                </p>
+                </div>
                 {% endif %}
                 {% if troublesome_pages or is_practice %}
                     {% include "base/form_buttons.html" with no_forward=1 %}
