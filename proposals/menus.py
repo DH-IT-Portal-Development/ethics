@@ -30,6 +30,10 @@ new_proposal_menu = (
         _("Maak een amendement van een al goedgekeurde studie"),
         reverse("proposals:copy_amendment"),
     ),
+    MenuItem(
+        _("Nieuwe oefenstudie starten"),
+        reverse("proposals:start_practice"),
+    ),
 )
 
 Menu.add_item(
