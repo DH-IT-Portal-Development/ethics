@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-02 14:53+0100\n"
+"POT-Creation-Date: 2021-03-09 16:52+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -360,7 +360,6 @@ msgid "Ingediende studies"
 msgstr "Submitted applications"
 
 #: main/templates/auth/user_detail.html:51
-#: proposals/templates/proposals/proposal_export_list.html:17
 #: reviews/templates/reviews/review_to_conclude.html:35
 msgid "Referentienummer"
 msgstr "Reference number"
@@ -824,6 +823,7 @@ msgstr ""
 
 #: main/templates/main/index.html:34
 #: proposals/templates/proposals/proposal_start.html:16
+#: proposals/templates/proposals/proposal_start_practice.html:18
 msgid "Check voor het indienen:"
 msgstr "Before submitting an application, please consult:"
 
@@ -1294,8 +1294,8 @@ msgstr ""
 "study (from a copy of an old study)\"."
 
 #: proposals/forms.py:226
-msgid "Ik vul de portal in"
-msgstr "I am using this portal"
+msgid "Ik maak een oefenstudie aan"
+msgstr "I am creating a practice proposal"
 
 #: proposals/forms.py:246 proposals/models.py:359
 msgid "Te kopiëren studie"
@@ -1503,7 +1503,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:135
+#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:137
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1608,9 +1608,7 @@ msgstr "In what capacity are you involved in this study?"
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: proposals/models.py:344
-#: proposals/templates/proposals/proposal_export_list.html:19
-#: proposals/templates/proposals/proposal_list.html:182
+#: proposals/models.py:344 proposals/templates/proposals/proposal_list.html:182
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -2338,15 +2336,9 @@ msgid "Informed consent formulieren voor het onderzoek"
 msgstr "Informed consent forms for the study"
 
 #: proposals/templates/proposals/proposal_diff.html:630
-#: proposals/templates/proposals/proposal_submit.html:130
+#: proposals/templates/proposals/proposal_submit.html:135
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
-
-#: proposals/templates/proposals/proposal_export_list.html:18
-#: proposals/templates/proposals/proposal_pdf.html:68
-#: reviews/templates/reviews/review_to_conclude.html:36
-msgid "Indiener"
-msgstr "Applicant"
 
 #: proposals/templates/proposals/proposal_form.html:75
 #: proposals/templates/proposals/proposal_form_pre_approved.html:73
@@ -2366,6 +2358,14 @@ msgstr ""
 "        You are editing a study for a student/PhD candidate under your "
 "supervision. Please note that this form should        be filled out as if "
 "you were that student/PhD candidate.    "
+
+#: proposals/templates/proposals/proposal_form.html:102
+#: proposals/templates/proposals/proposal_submit.html:126
+msgid ""
+"U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door "
+"de FETC-GW worden ingediend."
+msgstr ""
+"You are currently editing a practice proposal. These can not be submitted to the FETC-H for review."
 
 #: proposals/templates/proposals/proposal_form_pre_approved.html:85
 msgid ""
@@ -2572,6 +2572,11 @@ msgstr ""
 "            Reference number %(reference_number)s\n"
 "            "
 
+#: proposals/templates/proposals/proposal_pdf.html:68
+#: reviews/templates/reviews/review_to_conclude.html:36
+msgid "Indiener"
+msgstr "Applicant"
+
 #: proposals/templates/proposals/proposal_pdf.html:71
 #: tasks/templates/tasks/task_list.html:7
 msgid "Naam"
@@ -2590,7 +2595,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/proposal_pdf.html:460
 #: proposals/templates/proposals/proposal_pdf_empty.html:385
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:128
-#: proposals/templates/proposals/proposal_submit.html:132
+#: proposals/templates/proposals/proposal_submit.html:137
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2618,12 +2623,14 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:282
 #: proposals/templates/proposals/proposal_start.html:60
+#: proposals/templates/proposals/proposal_start_practice.html:62
 #: proposals/templates/proposals/study_start.html:80
 msgid "Sessie"
 msgstr "Session"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:300
 #: proposals/templates/proposals/proposal_start.html:67
+#: proposals/templates/proposals/proposal_start_practice.html:69
 #: proposals/templates/proposals/study_start.html:87
 msgid "Taak"
 msgstr "Task"
@@ -2655,7 +2662,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:117
-#: proposals/templates/proposals/proposal_submit.html:128
+#: proposals/templates/proposals/proposal_submit.html:133
 msgid "Aanvraag voor voortoetsing versturen"
 msgstr "Submit application for preliminary assessment"
 
@@ -2665,6 +2672,7 @@ msgid "Een nieuwe studie aanmelden"
 msgstr "Register a new study"
 
 #: proposals/templates/proposals/proposal_start.html:19
+#: proposals/templates/proposals/proposal_start_practice.html:21
 msgid ""
 "De <a href=\"https://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\"> UU-webpagina "
 "van de FETC-GW</a> voor nieuws en de agenda."
@@ -2673,6 +2681,7 @@ msgstr ""
 "webpage of the FEtC-H</a> for news and upcoming dates."
 
 #: proposals/templates/proposals/proposal_start.html:26
+#: proposals/templates/proposals/proposal_start_practice.html:28
 msgid ""
 "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
 "algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
@@ -2685,6 +2694,7 @@ msgstr ""
 "target=\"blank\">Linguistics Chamber</a>."
 
 #: proposals/templates/proposals/proposal_start.html:35
+#: proposals/templates/proposals/proposal_start_practice.html:37
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor de "
@@ -2695,6 +2705,7 @@ msgstr ""
 "\">model documents</a> for <em>informed consent</em>."
 
 #: proposals/templates/proposals/proposal_start.html:40
+#: proposals/templates/proposals/proposal_start_practice.html:42
 #: proposals/templates/proposals/study_consent.html:83
 msgid ""
 "Studenten moeten hun begeleider vragen om deze formulieren; dezelfde "
@@ -2707,6 +2718,7 @@ msgstr ""
 "official documents."
 
 #: proposals/templates/proposals/proposal_start.html:47
+#: proposals/templates/proposals/proposal_start_practice.html:49
 #: proposals/templates/proposals/study_start.html:67
 msgid ""
 "\n"
@@ -2719,11 +2731,13 @@ msgstr ""
 "descending order of subdivision.          "
 
 #: proposals/templates/proposals/proposal_start.html:53
+#: proposals/templates/proposals/proposal_start_practice.html:55
 #: proposals/templates/proposals/study_start.html:73
 msgid "Traject"
 msgstr "Trajectory"
 
 #: proposals/templates/proposals/proposal_start.html:54
+#: proposals/templates/proposals/proposal_start_practice.html:56
 #: proposals/templates/proposals/study_start.html:74
 msgid ""
 "Als je met verschillende deelnemersgroepen werkt die een verschillend "
@@ -2738,12 +2752,14 @@ msgstr ""
 "of age, or teachers.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:61
+#: proposals/templates/proposals/proposal_start_practice.html:63
 #: proposals/templates/proposals/study_start.html:81
 msgid "Alle taken/onderdelen die iemand op één dag uitvoert."
 msgstr ""
 "All tasks or procedures that a participant completes in a day combined. "
 
 #: proposals/templates/proposals/proposal_start.html:68
+#: proposals/templates/proposals/proposal_start_practice.html:70
 #: proposals/templates/proposals/study_start.html:88
 msgid ""
 "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
@@ -2763,163 +2779,9 @@ msgstr "Next step >>"
 msgid "Een nieuwe studie aanmelden (oefenportaal)"
 msgstr "Register a new study (practice portal)"
 
-#: proposals/templates/proposals/proposal_start_practice.html:17
-msgid ""
-"\n"
-"                    U wilt een nieuwe studie ter toetsing bij de FETC-GW "
-"aanmelden.\n"
-"                    Het is daarvoor <em>noodzakelijk</em> dat u goed bekend "
-"bent met het FETC-GW\n"
-"                    reglement. <br/>Deze kunt u vinden op de UU-webpagina "
-"van de FETC-GW:\n"
-"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-"
-"kamer/\" target=\"_blank\">reglement Algemene\n"
-"                        Kamer (AK)</a> en\n"
-"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
-"linguistiek-kamer/\" target=\"_blank\">reglement\n"
-"                        Linguïstiek Kamer\n"
-"                        (LK)</a>.\n"
-"                    U kunt uzelf en de commissieleden veel tijd besparen "
-"door uzelf eerst\n"
-"                    goed te informeren.\n"
-"                "
-msgstr ""
-"\n"
-" You are about to register a new study to be assessed by the FEtC-H. It is a "
-"prerequisite to be familiarized with the FEtC-H regulations. Please refer to "
-"the FEtC-H website for the regulations of <a href=\"https://fetc-gw.wp.hum."
-"uu.nl/en/regulations-general-chamber-2/\" target=\"_blank\">the  General "
-"Chamber</a> and <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"linguistics-chamber/\" target=\"_blank\">the Linguistics Chamber</a>. You "
-"can save yourself and the committee members a great deal of time by making "
-"sure you are properly informed.     "
-
-#: proposals/templates/proposals/proposal_start_practice.html:31
-msgid ""
-"\n"
-"                    Om een studie t.a.v. <em>informed consent</em>, "
-"belasting en risico's voor\n"
-"                    de deelnemers, en data-management procedures goed te "
-"kunnen beoordelen\n"
-"                    heeft de FETC-GW een gedetailleerde specificatie van de "
-"studie nodig.\n"
-"                    Na enkele inleidende vragen dient u o.a. op te geven wie "
-"er aan deelnemen,\n"
-"                    en welk(e) soort(en) onderzoek de studie omvat: "
-"observatieonderzoek,\n"
-"                    interventieonderzoek en/of takenonderzoek of "
-"interviews.\n"
-"                    Voor elk type onderzoek dient u vervolgens op te geven "
-"hoe uw studie precies\n"
-"                    is vormgegeven. Na dit alles zult u gevraagd worden een "
-"inschatting te geven\n"
-"                    van de belasting van, en risico's voor, de deelnemers, "
-"en dient u vervolgens\n"
-"                    alle voor uw studie aangepaste formulieren ten bate van "
-"<em>informed\n"
-"                    consent</em> te uploaden.\n"
-"                "
-msgstr ""
-"\n"
-"   In order to properly assess a study with respect to <em>informed consent</"
-"em>, burden and risks to participants, and data-management procedures the "
-"FEtC-H needs a detailed description of the study. After a few introductory "
-"questions you are asked to give details about participants, and what type(s) "
-"of research the study includes: observational research, intervention "
-"research and/or task-based or interview research. For each type of research "
-"you are then required to explain details about the design. You will be asked "
-"to estimate the burden and risks involved for the participants, and to "
-"upload all forms of <em>informed consent</em> adapted to your "
-"study.           "
-
-#: proposals/templates/proposals/proposal_start_practice.html:46
-msgid ""
-"\n"
-"                    Als u met verschillende deelnemersgroepen werkt die een "
-"verschillend\n"
-"                    onderzoekstraject doorlopen (de ene groep krijgt "
-"bijvoorbeeld twee\n"
-"                    taken, de andere drie) zult u elk traject apart op "
-"bovengenoemde wijze\n"
-"                    moeten beschrijven. NB: Ook wanneer u met verschillende "
-"leeftijdsgroepen\n"
-"                    werkt, moet u meerdere trajecten aanmaken: kijk voor de "
-"relevante\n"
-"                    leeftijdsgroepen naar\n"
-"                    <a href=\"https://fetc-gw.wp.hum.uu.nl/"
-"voorbeelddocumenten/\" target=\"_blank\">de\n"
-"                        verschillende soorten informatiebrieven en "
-"toestemmingsverklaringen</a> die de FETC aanbiedt op\n"
-"                    de\n"
-"                    website. <strong>Let op</strong>: informed consent "
-"formulieren die bij een\n"
-"                    <strong>officiële aanvraag</strong> gebruikt moeten "
-"worden zijn te vinden\n"
-"                    op<a href=\"https://intranet.uu.nl/facultaire-ethische-"
-"toetsingscommissie-gw\" target=\"_blank\">intranet</a>\n"
-"                    .\n"
-"                "
-msgstr ""
-"\n"
-"    If you work with different participant groups undergoing different "
-"research trajectories (one group, for example, is given two tasks, the other "
-"three) you will need to describe each group separately in the manner "
-"mentioned above. NB: Also, when you work with different age groups, you are "
-"required to create different trajectories. See for relevant age groups <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/document_templates/\" target=\"_blank"
-"\">the different types of information letters and consent forms</a> we offer "
-"at the website. <strong>Please note</strong> that consent forms to be used "
-"in an <strong>official application</strong> are to be found on <a href="
-"\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities\" "
-"target=\"_blank\">intranet</a>."
-
-#: proposals/templates/proposals/proposal_start_practice.html:63
-msgid ""
-"\n"
-"                    Afhankelijk van de complexiteit van uw onderzoek kan de "
-"specificatie zeker\n"
-"                    enige tijd in beslag nemen. U kunt de aanmelding echter "
-"altijd onderbreken,\n"
-"                    bewaren, en op een later moment afmaken.\n"
-"                "
-msgstr ""
-"\n"
-"Depending on the complexity of your research the specification may take "
-"considerable time. However, you can always interrupt the registration, save "
-"it, and finish it later.     "
-
-#: proposals/templates/proposals/proposal_start_practice.html:70
-#, python-format
-msgid ""
-"\n"
-"                    Gebruik bij het invullen s.v.p. geen afkortingen waar de "
-"FETC-GW wellicht\n"
-"                    niet mee bekend is.\n"
-"                    Raadpleeg bij vragen eerst het\n"
-"                    reglement van de\n"
-"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-"
-"kamer/\" target=\"_blank\"> Algemene Kamer\n"
-"                        (AK)</a> of\n"
-"                    de\n"
-"                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
-"linguistiek-kamer/\" target=\"_blank\">Linguïstiek Kamer\n"
-"                        (LK)</a>,\n"
-"                    en neem eventueel daarna contact op met de secretaris\n"
-"                    (%(secretary_name)s,\n"
-"                    <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
-"                "
-msgstr ""
-"\n"
-"    When filling in the forms please avoid using abbreviations the FEtC-H\n"
-"    might not be familiar with.\n"
-"    If you have questions, first consult the regulations of the <a href="
-"\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" target="
-"\"_blank\">General Chamber</a> or the <a href=\"https://fetc-gw.wp.hum.uu.nl/"
-"en/regulations-linguistics-chamber/\" target=\"_blank\">Linguistics Chamber</"
-"a>,\n"
-"    and if necessary contact the secretary (%(secretary_name)s,\n"
-"   <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
-"    "
+#: proposals/templates/proposals/proposal_start_practice.html:79
+msgid "Houd er rekening mee dat een oefenstudie niet ingediend kan worden."
+msgstr "Please be advised that a practice proposal cannot be submitted to the FETC-H."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
@@ -3504,20 +3366,20 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:243
+#: proposals/views/proposal_views.py:242
 #, python-format
 msgid "Studie %(title)s bewerkt"
 msgstr "Application %(title)s edited"
 
-#: proposals/views/proposal_views.py:295
+#: proposals/views/proposal_views.py:300
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:378
+#: proposals/views/proposal_views.py:383
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:451
+#: proposals/views/proposal_views.py:456
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3546,11 +3408,11 @@ msgstr "Contact {secretary} to make sure."
 msgid "Uw studie zal moeten worden beoordeeld door de METC."
 msgstr "Your study will require assessment by a METC."
 
-#: reviews/forms.py:12 reviews/models.py:102
+#: reviews/forms.py:12 reviews/models.py:104
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:13 reviews/models.py:101
+#: reviews/forms.py:13 reviews/models.py:103
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3622,24 +3484,24 @@ msgstr "Post hoc positive advice by FEtC-H"
 msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
-#: reviews/models.py:49 reviews/models.py:129
+#: reviews/models.py:49 reviews/models.py:131
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:103
+#: reviews/models.py:105
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:123
+#: reviews/models.py:125
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:124
+#: reviews/models.py:126
 msgid "niet goegekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:125
+#: reviews/models.py:127
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -4176,16 +4038,20 @@ msgstr ""
 msgid "FETC-GW: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H: new decision added"
 
-#: reviews/utils.py:274
+#: reviews/utils.py:260
+msgid "FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld"
+msgstr "FEtC-H: a supervisor has reviewed your proposal"
+
+#: reviews/utils.py:295
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils.py:280
+#: reviews/utils.py:301
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:284
+#: reviews/utils.py:305
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -4194,25 +4060,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils.py:287
+#: reviews/utils.py:308
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:290
+#: reviews/utils.py:311
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:296
+#: reviews/utils.py:317
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:299
+#: reviews/utils.py:320
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils.py:303
+#: reviews/utils.py:324
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4220,7 +4086,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:309
+#: reviews/utils.py:330
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4228,7 +4094,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:312
+#: reviews/utils.py:333
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -4238,7 +4104,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:316
+#: reviews/utils.py:337
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -4248,13 +4114,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:323
+#: reviews/utils.py:344
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:327
+#: reviews/utils.py:348
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4265,13 +4131,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:344
+#: reviews/utils.py:365
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:348
+#: reviews/utils.py:369
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4279,7 +4145,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:350
+#: reviews/utils.py:371
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4289,11 +4155,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:355 reviews/utils.py:381
+#: reviews/utils.py:376 reviews/utils.py:402
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils.py:376
+#: reviews/utils.py:397
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -4529,7 +4395,14 @@ msgid ""
 "een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de "
 "door de deelnemer ervaren belasting tijdens het onderzoek, niet om de "
 "opgelopen psychische of fysieke schade door het onderzoek."
-msgstr "This could be the case with an inhumanely long or exhausting task, an extremely provocative questionnaire, or excessive destructive feedback on participant performance. Also consider a significant breach of privacy or lack of respect towards the participant as examples for this question. Please note that this question refers to distress during experimental sessions, not distress at a later date which was caused by the research project."
+msgstr ""
+"This could be the case with an inhumanely long or exhausting task, an "
+"extremely provocative questionnaire, or excessive destructive feedback on "
+"participant performance. Also consider a significant breach of privacy or "
+"lack of respect towards the participant as examples for this question. "
+"Please note that this question refers to distress during experimental "
+"sessions, not distress at a later date which was caused by the research "
+"project."
 
 #: studies/models.py:291
 msgid ""
@@ -4570,7 +4443,17 @@ msgid ""
 "persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
 "alles, waar relevant, onder begeleiding van adequaat geschoolde "
 "specialisten)."
-msgstr "Background risk is the risk experienced by average, healthy people in the relevant age group during daily life. Damage to be considered includes, but is not limited to: physical or psychological harm, damage by means of gathered information which might affect self-image or cause stigmatisation by others, economic damage through linked data, and so forth. To determine potential physical and psychological harm in relation to the background risk, you may compare your study to \"routine\" tests which take place during daily life, such as a driving test, job interview or performance evaluation, intelligence test, or heart rate measurement after physical exercise, all of which performed under professional supervision."
+msgstr ""
+"Background risk is the risk experienced by average, healthy people in the "
+"relevant age group during daily life. Damage to be considered includes, but "
+"is not limited to: physical or psychological harm, damage by means of "
+"gathered information which might affect self-image or cause stigmatisation "
+"by others, economic damage through linked data, and so forth. To determine "
+"potential physical and psychological harm in relation to the background "
+"risk, you may compare your study to \"routine\" tests which take place "
+"during daily life, such as a driving test, job interview or performance "
+"evaluation, intelligence test, or heart rate measurement after physical "
+"exercise, all of which performed under professional supervision."
 
 #: studies/models.py:417
 #, python-format
@@ -5298,6 +5181,164 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
+#~ msgid "Ik vul de portal in"
+#~ msgstr "I am using this portal"
+
+#~ msgid ""
+#~ "\n"
+#~ "                    U wilt een nieuwe studie ter toetsing bij de FETC-GW "
+#~ "aanmelden.\n"
+#~ "                    Het is daarvoor <em>noodzakelijk</em> dat u goed "
+#~ "bekend bent met het FETC-GW\n"
+#~ "                    reglement. <br/>Deze kunt u vinden op de UU-webpagina "
+#~ "van de FETC-GW:\n"
+#~ "                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "algemene-kamer/\" target=\"_blank\">reglement Algemene\n"
+#~ "                        Kamer (AK)</a> en\n"
+#~ "                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "linguistiek-kamer/\" target=\"_blank\">reglement\n"
+#~ "                        Linguïstiek Kamer\n"
+#~ "                        (LK)</a>.\n"
+#~ "                    U kunt uzelf en de commissieleden veel tijd besparen "
+#~ "door uzelf eerst\n"
+#~ "                    goed te informeren.\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ " You are about to register a new study to be assessed by the FEtC-H. It "
+#~ "is a prerequisite to be familiarized with the FEtC-H regulations. Please "
+#~ "refer to the FEtC-H website for the regulations of <a href=\"https://fetc-"
+#~ "gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" target=\"_blank"
+#~ "\">the  General Chamber</a> and <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "regulations-linguistics-chamber/\" target=\"_blank\">the Linguistics "
+#~ "Chamber</a>. You can save yourself and the committee members a great deal "
+#~ "of time by making sure you are properly informed.     "
+
+#~ msgid ""
+#~ "\n"
+#~ "                    Om een studie t.a.v. <em>informed consent</em>, "
+#~ "belasting en risico's voor\n"
+#~ "                    de deelnemers, en data-management procedures goed te "
+#~ "kunnen beoordelen\n"
+#~ "                    heeft de FETC-GW een gedetailleerde specificatie van "
+#~ "de studie nodig.\n"
+#~ "                    Na enkele inleidende vragen dient u o.a. op te geven "
+#~ "wie er aan deelnemen,\n"
+#~ "                    en welk(e) soort(en) onderzoek de studie omvat: "
+#~ "observatieonderzoek,\n"
+#~ "                    interventieonderzoek en/of takenonderzoek of "
+#~ "interviews.\n"
+#~ "                    Voor elk type onderzoek dient u vervolgens op te "
+#~ "geven hoe uw studie precies\n"
+#~ "                    is vormgegeven. Na dit alles zult u gevraagd worden "
+#~ "een inschatting te geven\n"
+#~ "                    van de belasting van, en risico's voor, de "
+#~ "deelnemers, en dient u vervolgens\n"
+#~ "                    alle voor uw studie aangepaste formulieren ten bate "
+#~ "van <em>informed\n"
+#~ "                    consent</em> te uploaden.\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "   In order to properly assess a study with respect to <em>informed "
+#~ "consent</em>, burden and risks to participants, and data-management "
+#~ "procedures the FEtC-H needs a detailed description of the study. After a "
+#~ "few introductory questions you are asked to give details about "
+#~ "participants, and what type(s) of research the study includes: "
+#~ "observational research, intervention research and/or task-based or "
+#~ "interview research. For each type of research you are then required to "
+#~ "explain details about the design. You will be asked to estimate the "
+#~ "burden and risks involved for the participants, and to upload all forms "
+#~ "of <em>informed consent</em> adapted to your study.           "
+
+#~ msgid ""
+#~ "\n"
+#~ "                    Als u met verschillende deelnemersgroepen werkt die "
+#~ "een verschillend\n"
+#~ "                    onderzoekstraject doorlopen (de ene groep krijgt "
+#~ "bijvoorbeeld twee\n"
+#~ "                    taken, de andere drie) zult u elk traject apart op "
+#~ "bovengenoemde wijze\n"
+#~ "                    moeten beschrijven. NB: Ook wanneer u met "
+#~ "verschillende leeftijdsgroepen\n"
+#~ "                    werkt, moet u meerdere trajecten aanmaken: kijk voor "
+#~ "de relevante\n"
+#~ "                    leeftijdsgroepen naar\n"
+#~ "                    <a href=\"https://fetc-gw.wp.hum.uu.nl/"
+#~ "voorbeelddocumenten/\" target=\"_blank\">de\n"
+#~ "                        verschillende soorten informatiebrieven en "
+#~ "toestemmingsverklaringen</a> die de FETC aanbiedt op\n"
+#~ "                    de\n"
+#~ "                    website. <strong>Let op</strong>: informed consent "
+#~ "formulieren die bij een\n"
+#~ "                    <strong>officiële aanvraag</strong> gebruikt moeten "
+#~ "worden zijn te vinden\n"
+#~ "                    op<a href=\"https://intranet.uu.nl/facultaire-"
+#~ "ethische-toetsingscommissie-gw\" target=\"_blank\">intranet</a>\n"
+#~ "                    .\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "    If you work with different participant groups undergoing different "
+#~ "research trajectories (one group, for example, is given two tasks, the "
+#~ "other three) you will need to describe each group separately in the "
+#~ "manner mentioned above. NB: Also, when you work with different age "
+#~ "groups, you are required to create different trajectories. See for "
+#~ "relevant age groups <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "document_templates/\" target=\"_blank\">the different types of "
+#~ "information letters and consent forms</a> we offer at the website. "
+#~ "<strong>Please note</strong> that consent forms to be used in an "
+#~ "<strong>official application</strong> are to be found on <a href="
+#~ "\"https://intranet.uu.nl/en/faculty-ethics-assessment-committee-humanities"
+#~ "\" target=\"_blank\">intranet</a>."
+
+#~ msgid ""
+#~ "\n"
+#~ "                    Afhankelijk van de complexiteit van uw onderzoek kan "
+#~ "de specificatie zeker\n"
+#~ "                    enige tijd in beslag nemen. U kunt de aanmelding "
+#~ "echter altijd onderbreken,\n"
+#~ "                    bewaren, en op een later moment afmaken.\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "Depending on the complexity of your research the specification may take "
+#~ "considerable time. However, you can always interrupt the registration, "
+#~ "save it, and finish it later.     "
+
+#~ msgid ""
+#~ "\n"
+#~ "                    Gebruik bij het invullen s.v.p. geen afkortingen waar "
+#~ "de FETC-GW wellicht\n"
+#~ "                    niet mee bekend is.\n"
+#~ "                    Raadpleeg bij vragen eerst het\n"
+#~ "                    reglement van de\n"
+#~ "                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "algemene-kamer/\" target=\"_blank\"> Algemene Kamer\n"
+#~ "                        (AK)</a> of\n"
+#~ "                    de\n"
+#~ "                    <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "linguistiek-kamer/\" target=\"_blank\">Linguïstiek Kamer\n"
+#~ "                        (LK)</a>,\n"
+#~ "                    en neem eventueel daarna contact op met de "
+#~ "secretaris\n"
+#~ "                    (%(secretary_name)s,\n"
+#~ "                    <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "    When filling in the forms please avoid using abbreviations the FEtC-"
+#~ "H\n"
+#~ "    might not be familiar with.\n"
+#~ "    If you have questions, first consult the regulations of the <a href="
+#~ "\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" target="
+#~ "\"_blank\">General Chamber</a> or the <a href=\"https://fetc-gw.wp.hum.uu."
+#~ "nl/en/regulations-linguistics-chamber/\" target=\"_blank\">Linguistics "
+#~ "Chamber</a>,\n"
+#~ "    and if necessary contact the secretary (%(secretary_name)s,\n"
+#~ "   <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>).\n"
+#~ "    "
+
 #~ msgid "Er geldt een maximum van {} sessies."
 #~ msgstr "There is a maximum of {} sessions."
 
@@ -5635,11 +5676,6 @@ msgstr "Task deleted"
 
 #~ msgid "Review inzien"
 #~ msgstr "Show review"
-
-#, fuzzy
-#~| msgid "FETC-GW: nieuwe studie ter beoordeling"
-#~ msgid "FETC-GW: gereviseerde studie ter beoordeling"
-#~ msgstr "FEtC-H: new study for assessment"
 
 #~| msgid "Te reviseren studie"
 #~ msgid "gereviseerde"
