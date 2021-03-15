@@ -253,8 +253,9 @@ def notify_secretary(decision):
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
 
-def notify_supervisor_nogo(proposal, decision):
+def notify_supervisor_nogo(decision):
     secretary = get_secretary()
+    proposal = decision.review.proposal
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
     subject = _('FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld')
@@ -269,8 +270,6 @@ def notify_supervisor_nogo(proposal, decision):
         params['applicant'] = applicant
         msg_plain = render_to_string('mail/supervisor_decision.txt', params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [applicant.email])
-    
-    print('\n\n',receivers, decision,'\n\n')
     
     
 
