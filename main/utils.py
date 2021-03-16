@@ -144,7 +144,8 @@ def get_document_contents(file: FieldFile) -> str:
             return docx2txt.process(f)
 
     if mime == 'application/vnd.openxmlformats-officedocument' \
-               '.wordprocessingml.document':
+               '.wordprocessingml.document' or \
+       mime == 'application/msword':
         with file.open(mode="rb") as f:
             return docx2txt.process(f)
 
