@@ -211,7 +211,7 @@ $(function() {
             </table>
 
             {% if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED %}
-            {% for study, p_study in zipped_studies %}
+            {% for study, p_study in proposal.study_set.all|zip:p_proposal.study_set.all %}
             <h2 class="mt-5 mb-1">{% trans "De deelnemers" %}</h2>
             {% include "studies/study_title.html" %}
             <table class="proposals-diff ">
