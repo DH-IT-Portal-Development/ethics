@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-09 16:52+0100\n"
+"POT-Creation-Date: 2021-03-15 16:24+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -275,7 +275,7 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:11 main/forms/conditional_form.py:20
 #: main/forms/conditional_form.py:29 main/forms/conditional_form.py:38
 #: main/forms/conditional_form.py:48 main/forms/mixins.py:83
-#: proposals/forms.py:523 proposals/forms.py:576 studies/forms.py:104
+#: proposals/forms.py:523 proposals/forms.py:578 studies/forms.py:104
 #: studies/forms.py:115 studies/forms.py:121 tasks/forms.py:87
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -511,8 +511,8 @@ msgstr "Save and go to next step >>"
 msgid "Welkom {}"
 msgstr "Welcome, {}"
 
-#: main/templates/base/menu.html:11 proposals/menus.py:76
-#: proposals/views/proposal_views.py:209
+#: main/templates/base/menu.html:11 proposals/menus.py:80
+#: proposals/views/proposal_views.py:210
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -542,48 +542,48 @@ msgstr "Create a revision for an existing study"
 msgid "Maak een amendement van een al goedgekeurde studie"
 msgstr "Create an amendment to an already approved study"
 
-#: main/templates/base/menu.html:32 proposals/menus.py:52
-#: proposals/views/proposal_views.py:137
+#: main/templates/base/menu.html:32 proposals/menus.py:56
+#: proposals/views/proposal_views.py:138
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
-#: main/templates/base/menu.html:35 proposals/menus.py:56
-#: proposals/views/proposal_views.py:219
+#: main/templates/base/menu.html:35 proposals/menus.py:60
+#: proposals/views/proposal_views.py:220
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
-#: main/templates/base/menu.html:38 proposals/menus.py:60
-#: proposals/views/proposal_views.py:152
+#: main/templates/base/menu.html:38 proposals/menus.py:64
+#: proposals/views/proposal_views.py:153
 msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
-#: main/templates/base/menu.html:41 proposals/menus.py:64
-#: proposals/views/proposal_views.py:169
+#: main/templates/base/menu.html:41 proposals/menus.py:68
+#: proposals/views/proposal_views.py:170
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
-#: main/templates/base/menu.html:44 proposals/menus.py:68
-#: proposals/views/proposal_views.py:184
+#: main/templates/base/menu.html:44 proposals/menus.py:72
+#: proposals/views/proposal_views.py:185
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
-#: main/templates/base/menu.html:47 proposals/menus.py:48
+#: main/templates/base/menu.html:47 proposals/menus.py:52
 msgid "Al mijn studies"
 msgstr "All my applications"
 
-#: main/templates/base/menu.html:52 proposals/menus.py:104
+#: main/templates/base/menu.html:52 proposals/menus.py:108
 msgid "Archief"
 msgstr "Archive"
 
-#: main/templates/base/menu.html:55 proposals/menus.py:86
+#: main/templates/base/menu.html:55 proposals/menus.py:90
 msgid "Alle studies bekijken van de Algemene Kamer"
 msgstr "View all applications of the General Chamber"
 
-#: main/templates/base/menu.html:58 proposals/menus.py:90
+#: main/templates/base/menu.html:58 proposals/menus.py:94
 msgid "Alle studies bekijken van de Linguïstiek Kamer"
 msgstr "View all applications of the Linguistics Chamber"
 
-#: main/templates/base/menu.html:62 proposals/menus.py:94
+#: main/templates/base/menu.html:62 proposals/menus.py:98
 msgid "Site-export"
 msgstr "Site-export"
 
@@ -1400,18 +1400,27 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:584 proposals/forms.py:597 proposals/forms.py:607
+#: proposals/forms.py:586 proposals/forms.py:599 proposals/forms.py:609
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:588 proposals/forms.py:592 proposals/forms.py:601
-#: proposals/forms.py:611
+#: proposals/forms.py:590 proposals/forms.py:594 proposals/forms.py:603
+#: proposals/forms.py:613
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: proposals/menus.py:38
+#: proposals/menus.py:34
+msgid "Nieuwe oefenstudie starten"
+msgstr "Start a new practice study"
+
+#: proposals/menus.py:42
 msgid "Nieuwe studie"
 msgstr "New study"
+
+#: proposals/mixins.py:12
+#, python-format
+msgid "Studie %(title)s bewerkt"
+msgstr "Application %(title)s edited"
 
 #: proposals/models.py:75
 msgid "Concept"
@@ -1503,7 +1512,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:137
+#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:136
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -2178,7 +2187,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_diff.html:46
 #: proposals/templates/proposals/proposal_form.html:7
-#: proposals/templates/proposals/proposal_form.html:90
+#: proposals/templates/proposals/proposal_form.html:95
 #: proposals/templates/proposals/proposal_form_pre_approved.html:7
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/templates/proposals/proposal_pdf.html:77
@@ -2346,6 +2355,15 @@ msgid "Aantal woorden:"
 msgstr "Number of words:"
 
 #: proposals/templates/proposals/proposal_form.html:92
+#: proposals/templates/proposals/proposal_submit.html:126
+msgid ""
+"U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door "
+"de FETC-GW worden ingediend."
+msgstr ""
+"You are currently editing a practice proposal. These can not be submitted to "
+"the FETC-H for review."
+
+#: proposals/templates/proposals/proposal_form.html:97
 msgid ""
 "\n"
 "                    Je past nu een studie aan van een student/PhD kandidaat "
@@ -2358,14 +2376,6 @@ msgstr ""
 "        You are editing a study for a student/PhD candidate under your "
 "supervision. Please note that this form should        be filled out as if "
 "you were that student/PhD candidate.    "
-
-#: proposals/templates/proposals/proposal_form.html:102
-#: proposals/templates/proposals/proposal_submit.html:126
-msgid ""
-"U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door "
-"de FETC-GW worden ingediend."
-msgstr ""
-"You are currently editing a practice proposal. These can not be submitted to the FETC-H for review."
 
 #: proposals/templates/proposals/proposal_form_pre_approved.html:85
 msgid ""
@@ -2781,7 +2791,8 @@ msgstr "Register a new study (practice portal)"
 
 #: proposals/templates/proposals/proposal_start_practice.html:79
 msgid "Houd er rekening mee dat een oefenstudie niet ingediend kan worden."
-msgstr "Please be advised that a practice proposal cannot be submitted to the FETC-H."
+msgstr ""
+"Please be advised that a practice proposal cannot be submitted to the FETC-H."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
@@ -3330,35 +3341,35 @@ msgstr "Task-based research: session {} task {} (trajectory {})"
 msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
 
-#: proposals/views/proposal_views.py:35 proposals/views/proposal_views.py:85
+#: proposals/views/proposal_views.py:36 proposals/views/proposal_views.py:86
 msgid "Publiek archief"
 msgstr "Public archive"
 
-#: proposals/views/proposal_views.py:36
+#: proposals/views/proposal_views.py:37
 msgid "Dit overzicht toont alle goedgekeurde studies."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:138
+#: proposals/views/proposal_views.py:139
 msgid "Dit overzicht toont al uw nog niet ingediende studies."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:153
+#: proposals/views/proposal_views.py:154
 msgid "Dit overzicht toont al uw ingediende studies."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:170
+#: proposals/views/proposal_views.py:171
 msgid "Dit overzicht toont al uw beoordeelde studies."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:186
+#: proposals/views/proposal_views.py:187
 msgid "Dit overzicht toont al uw studies waar u eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:210
+#: proposals/views/proposal_views.py:211
 msgid "Dit overzicht toont al uw studies."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:220
+#: proposals/views/proposal_views.py:221
 msgid ""
 "Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3366,20 +3377,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:242
-#, python-format
-msgid "Studie %(title)s bewerkt"
-msgstr "Application %(title)s edited"
-
-#: proposals/views/proposal_views.py:300
+#: proposals/views/proposal_views.py:281
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:383
+#: proposals/views/proposal_views.py:364
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:456
+#: proposals/views/proposal_views.py:437
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3408,11 +3414,11 @@ msgstr "Contact {secretary} to make sure."
 msgid "Uw studie zal moeten worden beoordeeld door de METC."
 msgstr "Your study will require assessment by a METC."
 
-#: reviews/forms.py:12 reviews/models.py:104
+#: reviews/forms.py:12 reviews/models.py:103
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:13 reviews/models.py:103
+#: reviews/forms.py:13 reviews/models.py:102
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3484,24 +3490,24 @@ msgstr "Post hoc positive advice by FEtC-H"
 msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
-#: reviews/models.py:49 reviews/models.py:131
+#: reviews/models.py:49 reviews/models.py:130
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:105
+#: reviews/models.py:104
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:125
+#: reviews/models.py:124
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:126
+#: reviews/models.py:125
 msgid "niet goegekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:127
+#: reviews/models.py:126
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -4038,20 +4044,20 @@ msgstr ""
 msgid "FETC-GW: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H: new decision added"
 
-#: reviews/utils.py:260
+#: reviews/utils.py:261
 msgid "FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld"
 msgstr "FEtC-H: a supervisor has reviewed your proposal"
 
-#: reviews/utils.py:295
+#: reviews/utils.py:294
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils.py:301
+#: reviews/utils.py:300
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:305
+#: reviews/utils.py:304
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -4060,25 +4066,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils.py:308
+#: reviews/utils.py:307
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:311
+#: reviews/utils.py:310
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:317
+#: reviews/utils.py:316
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:320
+#: reviews/utils.py:319
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils.py:324
+#: reviews/utils.py:323
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4086,7 +4092,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:330
+#: reviews/utils.py:329
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4094,7 +4100,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:333
+#: reviews/utils.py:332
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -4104,7 +4110,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:337
+#: reviews/utils.py:336
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -4114,13 +4120,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:344
+#: reviews/utils.py:343
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:348
+#: reviews/utils.py:347
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4131,13 +4137,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:365
+#: reviews/utils.py:364
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:369
+#: reviews/utils.py:368
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4145,7 +4151,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:371
+#: reviews/utils.py:370
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4155,11 +4161,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:376 reviews/utils.py:402
+#: reviews/utils.py:375 reviews/utils.py:401
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils.py:397
+#: reviews/utils.py:396
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -4296,7 +4302,7 @@ msgid ""
 "toestemmingsverklaringen/\" target=\"_blank\">de FETC-GW-website</a>."
 msgstr ""
 
-#: studies/models.py:229
+# studies/models.py:229
 msgid ""
 "Licht uw antwoord toe. Wij willen u wijzen op het reglement, sectie 3.1 'd' "
 "en 'e'. Passive consent is slechts in enkele gevallen toegestaan en draagt "

@@ -6,6 +6,8 @@ Beste collega,
 Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze studie gecontroleerd.
 Zodra deze de concept-aanmelding, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijgt u van ons bericht.
 Indien de concept-aanmelding nog aanzienlijke wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker zelf contact met u opnemen.
+U kunt uw ingediende aanmelding hier in PDF vorm bekijken:
+{{ pdf_url }}
 {% endblock %}
 
 {% block content_en %}
@@ -14,4 +16,6 @@ Dear colleague,
 Your draft application will be checked by your supervisor {{ supervisor }}, the researcher who has the final responsibility of this study.
 You will receive a notification as soon as {{ supervisor }} has approved and formally submitted your draft application, possibly after making some minor revisions.
 In case {{ supervisor }} finds it necessary for you to make more substantial revisions in the application, he/she will notify you about this, and meanwhile formally disapprove the study in order for you to be able to revise and resubmit it.
+You can find a PDF file of your submission here:
+{{pdf_url}}
 {% endblock %}
