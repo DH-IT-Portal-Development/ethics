@@ -36,6 +36,9 @@
                             {% blocktrans with parent=review.proposal.parent.reference_number %}
                                 Revisie/amendement van<br/> {{ parent }}
                             {% endblocktrans %}
+                            <a href="{% url 'proposals:diff' review.proposal.pk %}">
+                                <img src="{% static 'proposals/images/arrow_divide.png' %}" title="{% trans 'Toon verschillen' %}">
+                            </a>
                         </a>
                     </li>
                 {% endif %}
