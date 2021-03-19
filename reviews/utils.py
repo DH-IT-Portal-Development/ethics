@@ -68,7 +68,7 @@ def start_supervisor_phase(proposal):
         'my_supervised': settings.BASE_URL + reverse('proposals:my_supervised'),
     }
     msg_plain = render_to_string('mail/concept_supervisor.txt', params)
-    msg_html = render_to_string('mail/concept_su pervisor.html', params)
+    msg_html = render_to_string('mail/concept_supervisor.html', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
 
     return review
