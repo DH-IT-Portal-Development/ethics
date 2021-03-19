@@ -86,10 +86,9 @@ class Review(models.Model):
                     from .utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
                 # On NO-GO, reset the Proposal status
-                # TODO: also send e-mail?
                 else:
                     from .utils import notify_supervisor_nogo
-                    notify_supervisor_nogo(self.proposal, last_decision)
+                    notify_supervisor_nogo(last_decision)
                     self.proposal.status = Proposal.DRAFT
                     self.proposal.save()
             # For a review by commission:

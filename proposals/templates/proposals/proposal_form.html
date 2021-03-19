@@ -87,6 +87,11 @@
                     {% include 'base/navigation.html' %}
                 {% endwith %}
             {% endif %}
+            {% if is_practice %}
+            <div class="info">
+                {% trans "U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+            </div>
+            {% endif %}
             <h2>{% trans "Algemene informatie over de studie" %}</h2>
             {% if not create and is_supervisor %}
                 {% blocktrans %}
