@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
 from main.models import YES, DOUBT
@@ -68,7 +68,7 @@ def start_supervisor_phase(proposal):
         'my_supervised': settings.BASE_URL + reverse('proposals:my_supervised'),
     }
     msg_plain = render_to_string('mail/concept_supervisor.txt', params)
-    msg_html = render_to_string('mail/concept_supervisor.html', params)
+    msg_html = render_to_string('mail/concept_su pervisor.html', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
 
     return review
@@ -209,10 +209,14 @@ def start_review_route(review, commission_users, use_short_route):
     was_revised = review.proposal.is_revision
     
     if was_revised:
-        subject = 'FETC-GW: gereviseerde studie ter beoordeling'
+        subject = 'FETC-GW {}-{}: gereviseerde studie ter beoordeling'
     else:
-        subject = 'FETC-GW: nieuwe studie ter beoordeling'
+        subject = 'FETC-GW {}-{}: nieuwe studie ter beoordeling'
         # These emails are Dutch-only, therefore intentionally untranslated
+    
+    subject = subject.format(review.proposal.reviewing_committee,
+                             review.proposal.reference_number,
+                             )
     
     for user in commission_users:
         
@@ -233,7 +237,9 @@ def notify_secretary_assignment(review):
     Notifies the secretary a Proposal is ready for assigment
     """
     secretary = get_secretary()
-    subject = _('FETC-GW: nieuwe studie ingediend')
+    proposal = review.proposal
+    committee = review.proposal.reviewing_committee
+    subject = _('FETC-GW {}: nieuwe studie ingediend').format(committee)
     params = {
         'secretary': secretary.get_full_name(),
         'review': review,
@@ -247,7 +253,11 @@ def notify_secretary(decision):
     Notifies a secretary a Decision has been made by one of the members in the Commission
     """
     secretary = get_secretary()
-    subject = _('FETC-GW: nieuwe beoordeling toegevoegd')
+    proposal = decision.review.proposal
+    subject = _('FETC-GW {}-{}:  nieuwe beoordeling toegevoegd').format(
+        proposal.reviewing_committee,
+        proposal.reference_number,
+        )
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
