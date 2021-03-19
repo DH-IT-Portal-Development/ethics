@@ -220,7 +220,7 @@ cadeautje.'),
 (dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
 passieve informed consent. U kunt de templates vinden op \
-<a href="https://fetc-gw.wp.hum.uu.nl/toestemmingsverklaringen/" \
+<a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
 target="_blank">de FETC-GW-website</a>.')),
         null=True,
         blank=True,

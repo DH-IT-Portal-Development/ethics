@@ -5,6 +5,10 @@ from django.contrib.auth.models import Group
 register = template.Library()
 
 
+@register.filter(name='zip')
+def zip_lists(a, b):
+  return zip(a, b)
+
 @register.filter
 def in_linguistics_chamber(current_user):
     """

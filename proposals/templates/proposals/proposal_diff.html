@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load proposal_filters %}
 {% load static %}
+{% load fetc_filters %}
 
 {% block header_title %}
     {% trans "Overzicht van wijzigingen" %} - {{ block.super }}
@@ -209,8 +210,8 @@ $(function() {
                 {% endif %}
             </table>
 
-            {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
-            {% for study, p_study in zipped_studies %}
+            {% if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED %}
+            {% for study, p_study in proposal.study_set.all|zip:p_proposal.study_set.all %}
             <h2 class="mt-5 mb-1">{% trans "De deelnemers" %}</h2>
             {% include "studies/study_title.html" %}
             <table class="proposals-diff ">
@@ -373,8 +374,7 @@ $(function() {
                 </tr>
             </table>
 
-            {% for session in study.session_set.all %}
-            {% for p_session in p_study.session_set.all %}
+            {% for session, p_session in study.session_set.all|zip:p_study.session_set.all %}
             <br/>
             {% include "tasks/session_title.html" %}
             <br/>
@@ -416,8 +416,8 @@ $(function() {
                     <td>{{ session.tasks_number }}</td>
                 </tr>
             </table>
-            {% for task in session.task_set.all %}
-            {% for p_task in p_session.task_set.all %}
+
+            {% for task, p_task in session.task_set.all|zip:p_session.task_set.all %}
             <br/>
             {% include "tasks/task_title.html" %}
             <br/>
@@ -482,7 +482,6 @@ $(function() {
                 {% endif %}
             </table>
             {% endfor %}
-            {% endfor %}
 
             <h3 class="mt-5 mb-1">{% trans "Overzicht van het takenonderzoek" %}</h3>
             <table class="proposals-diff ">
@@ -498,7 +497,7 @@ $(function() {
                 </tr>
             </table>
             {% endfor %}
-            {% endfor %}
+
             {% elif study.has_sessions and not p_study.has_sessions %}
             <div class="warning">
             {% trans "De revisie bevat takenonderzoek, terwijl de originele studie dat niet bevat." %}
