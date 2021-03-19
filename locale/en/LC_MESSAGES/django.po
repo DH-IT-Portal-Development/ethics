@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-19 16:44+0100\n"
+"POT-Creation-Date: 2021-03-19 16:59+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -100,7 +100,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:647
 #: reviews/templates/reviews/change_chamber_form.html:19
-#: reviews/templates/reviews/decision_form.html:47
+#: reviews/templates/reviews/decision_form.html:50
 #: reviews/templates/reviews/review_assign_form.html:39
 #: reviews/templates/reviews/review_close_form.html:41
 #: studies/templates/studies/study_update_attachments.html:26
@@ -441,7 +441,7 @@ msgstr "Show study"
 #: main/templates/auth/user_detail.html:86
 #: reviews/templates/reviews/decision_list.html:57
 #: reviews/templates/reviews/decision_list_open.html:47
-#: reviews/templates/reviews/review_detail.html:30
+#: reviews/templates/reviews/review_detail_sidebar.html:18
 #: reviews/templates/reviews/review_list.html:59
 #: reviews/templates/reviews/review_to_conclude.html:77
 msgid "Details"
@@ -801,9 +801,9 @@ msgid ""
 msgstr ""
 "\n"
 "If this problem persists, please contact the technical support staff of the "
-"portal by email at <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer."
-"gw@uu.nl</a>. Try to explain what you were doing and note the page that you "
-"were on, if you can.     "
+"portal by email at <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</"
+"a>. Try to explain what you were doing and note the page that you were on, "
+"if you can.     "
 
 #: main/templates/main/index.html:29
 msgid ""
@@ -1051,6 +1051,7 @@ msgstr "Password"
 #: main/templatetags/compare_tags.py:78
 #: proposals/templates/proposals/proposal_list.html:93
 #: reviews/templates/reviews/decision_list.html:61
+#: reviews/templates/reviews/review_detail_sidebar.html:28
 #: reviews/templates/reviews/review_list.html:63
 msgid "Toon verschillen"
 msgstr "Show differences"
@@ -1655,7 +1656,8 @@ msgstr "Normal"
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:441 reviews/templates/reviews/review_detail.html:85
+#: proposals/models.py:441
+#: reviews/templates/reviews/review_detail_sidebar.html:76
 msgid "Revisie"
 msgstr "Revision"
 
@@ -2601,7 +2603,7 @@ msgstr "Not provided"
 
 #: proposals/templates/proposals/proposal_pdf.html:442
 #: proposals/templates/proposals/study_consent.html:134
-#: reviews/templates/reviews/review_detail.html:219
+#: reviews/templates/reviews/review_detail_sidebar.html:210
 msgid "Extra formulieren"
 msgstr "Additional forms"
 
@@ -3306,7 +3308,7 @@ msgstr "Documents"
 msgid "Versturen"
 msgstr "Submit"
 
-#: proposals/utils/proposal_utils.py:368 reviews/utils.py:236
+#: proposals/utils/proposal_utils.py:368
 msgid "FETC-GW: nieuwe studie ingediend"
 msgstr "FEtC-H: new application submitted"
 
@@ -3691,11 +3693,11 @@ msgid "OK"
 msgstr "OK"
 
 #: reviews/templates/reviews/decision_form.html:7
-#: reviews/templates/reviews/decision_form.html:14
+#: reviews/templates/reviews/decision_form.html:17
 msgid "Studie beoordelen"
 msgstr "Assess study"
 
-#: reviews/templates/reviews/decision_form.html:20
+#: reviews/templates/reviews/decision_form.html:23
 #, python-format
 msgid ""
 "\n"
@@ -3711,7 +3713,7 @@ msgstr ""
 "\"_blank\">here</a> (downloads as PDF).\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:25
+#: reviews/templates/reviews/decision_form.html:28
 #, python-format
 msgid ""
 "\n"
@@ -3725,7 +3727,7 @@ msgstr ""
 "\"_blank\">here</a>.\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:31
+#: reviews/templates/reviews/decision_form.html:34
 msgid ""
 "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd "
 "naar de ethische commissie."
@@ -3733,7 +3735,7 @@ msgstr ""
 "If you approve the study, it will be sent for assessment by the ethical "
 "committee."
 
-#: reviews/templates/reviews/decision_form.html:37
+#: reviews/templates/reviews/decision_form.html:40
 #, python-format
 msgid ""
 "\n"
@@ -3749,7 +3751,7 @@ msgstr ""
 "a>.\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:50
+#: reviews/templates/reviews/decision_form.html:53
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
@@ -3849,166 +3851,158 @@ msgstr ""
 "Details on the review process of study <em>%(proposal)s</em>\n"
 "     "
 
-#: reviews/templates/reviews/review_detail.html:36
-#, python-format
+#: reviews/templates/reviews/review_detail.html:35
+msgid "Reviewers"
+msgstr "Reviewers"
+
+#: reviews/templates/reviews/review_detail_sidebar.html:24
 msgid ""
 "\n"
-"                                Revisie/amendement van<br/> %(parent)s\n"
-"                            "
+"                        Revisie/amendement van<br/> %(parent)s\n"
+"                    "
 msgstr ""
 "\n"
 "Revision or amendment of<br/> %(parent)s\n"
 "   "
 
-#: reviews/templates/reviews/review_detail.html:43
-#, python-format
+#: reviews/templates/reviews/review_detail_sidebar.html:34
 msgid ""
 "\n"
-"                        Reviewronde gestart op<br/> %(date_start)s.\n"
-"                    "
+"                Reviewronde gestart op<br/> %(date_start)s.\n"
+"            "
 msgstr ""
 "\n"
 "    Reviewing round started on %(date_start)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:49
-#, python-format
+#: reviews/templates/reviews/review_detail_sidebar.html:40
 msgid ""
 "\n"
-"                            Reviewronde beëindigd op<br/> %(date_end)s.\n"
-"                        "
+"                    Reviewronde beëindigd op<br/> %(date_end)s.\n"
+"                "
 msgstr ""
 "\n"
 "    Reviewing round ended on %(date_end)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:56
-#, python-format
+#: reviews/templates/reviews/review_detail_sidebar.html:47
 msgid ""
 "\n"
-"                            Afhandeling:<br/> %(continuation)s.\n"
-"                        "
+"                    Afhandeling:<br/> %(continuation)s.\n"
+"                "
 msgstr ""
 "\n"
 "        Continuation: %(continuation)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:62
-#, python-format
+#: reviews/templates/reviews/review_detail_sidebar.html:53
 msgid ""
 "\n"
-"                                Bevestiging verzonden op<br/> "
-"%(date_confirmed)s.\n"
-"                            "
+"                        Bevestiging verzonden op<br/> %(date_confirmed)s.\n"
+"                    "
 msgstr ""
 "\n"
 "    Confirmation sent on %(date_confirmed)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:66
-#, python-format
+#: reviews/templates/reviews/review_detail_sidebar.html:57
 msgid ""
 "\n"
-"                                    Opmerkingen:<br/> %(comments)s.\n"
-"                                "
+"                            Opmerkingen:<br/> %(comments)s.\n"
+"                        "
 msgstr ""
 "\n"
 "        Comments: %(comments)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:76
+#: reviews/templates/reviews/review_detail_sidebar.html:67
 msgid ""
 "\n"
-"                                Dit is een aanvraag voor voortoetsing.\n"
-"                            "
+"                        Dit is een aanvraag voor voortoetsing.\n"
+"                    "
 msgstr ""
 "\n"
 "    This is an application for preliminary assessment.\n"
 "    "
 
-#: reviews/templates/reviews/review_detail.html:86
+#: reviews/templates/reviews/review_detail_sidebar.html:77
 msgid ""
 "\n"
-"                        Deze studie heeft een risivisie gehad tijdens het "
+"                Deze studie heeft een risivisie gehad tijdens het "
 "beslisproces.\n"
-"                    "
+"            "
 msgstr ""
 "\n"
 "        A revision was made to this study after it was submitted to the FEtC-"
 "H .\n"
 "    "
 
-#: reviews/templates/reviews/review_detail.html:90
+#: reviews/templates/reviews/review_detail_sidebar.html:81
 msgid ""
 "\n"
-"                            Er zijn de volgende opmerkingen bijgevoegd:<br/"
-">\n"
-"                        "
+"                    Er zijn de volgende opmerkingen bijgevoegd:<br/>\n"
+"                "
 msgstr ""
 "\n"
 "            The following comments have been provided:<br/>\n"
 "        "
 
-#: reviews/templates/reviews/review_detail.html:98
+#: reviews/templates/reviews/review_detail_sidebar.html:89
 msgid "Formulieren bij aanmelding"
 msgstr "Forms for application"
 
-#: reviews/templates/reviews/review_detail.html:104
+#: reviews/templates/reviews/review_detail_sidebar.html:95
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templates/reviews/review_detail.html:112
+#: reviews/templates/reviews/review_detail_sidebar.html:103
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templates/reviews/review_detail.html:120
+#: reviews/templates/reviews/review_detail_sidebar.html:111
 msgid "Toestemmingsbrief andere ethische commissie"
 msgstr "Approvalletter other ethics committee"
 
-#: reviews/templates/reviews/review_detail.html:134
+#: reviews/templates/reviews/review_detail_sidebar.html:125
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templates/reviews/review_detail.html:137
-#: reviews/templates/reviews/review_detail.html:146
-#: reviews/templates/reviews/review_detail.html:155
-#: reviews/templates/reviews/review_detail.html:165
-#: reviews/templates/reviews/review_detail.html:173
-#: reviews/templates/reviews/review_detail.html:185
-#: reviews/templates/reviews/review_detail.html:196
-#: reviews/templates/reviews/review_detail.html:209
-#: reviews/templates/reviews/review_detail.html:228
-#: reviews/templates/reviews/review_detail.html:238
+#: reviews/templates/reviews/review_detail_sidebar.html:128
+#: reviews/templates/reviews/review_detail_sidebar.html:137
+#: reviews/templates/reviews/review_detail_sidebar.html:146
+#: reviews/templates/reviews/review_detail_sidebar.html:156
+#: reviews/templates/reviews/review_detail_sidebar.html:164
+#: reviews/templates/reviews/review_detail_sidebar.html:176
+#: reviews/templates/reviews/review_detail_sidebar.html:187
+#: reviews/templates/reviews/review_detail_sidebar.html:200
+#: reviews/templates/reviews/review_detail_sidebar.html:219
+#: reviews/templates/reviews/review_detail_sidebar.html:229
 msgid "Formulier wijzigen"
 msgstr "Change forms"
 
-#: reviews/templates/reviews/review_detail.html:143
-#: reviews/templates/reviews/review_detail.html:182
+#: reviews/templates/reviews/review_detail_sidebar.html:134
+#: reviews/templates/reviews/review_detail_sidebar.html:173
 msgid "Consent informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templates/reviews/review_detail.html:152
-#: reviews/templates/reviews/review_detail.html:193
+#: reviews/templates/reviews/review_detail_sidebar.html:143
+#: reviews/templates/reviews/review_detail_sidebar.html:184
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templates/reviews/review_detail.html:162
-#: reviews/templates/reviews/review_detail.html:225
+#: reviews/templates/reviews/review_detail_sidebar.html:153
+#: reviews/templates/reviews/review_detail_sidebar.html:216
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templates/reviews/review_detail.html:170
-#: reviews/templates/reviews/review_detail.html:235
+#: reviews/templates/reviews/review_detail_sidebar.html:161
+#: reviews/templates/reviews/review_detail_sidebar.html:226
 msgid "Briefing"
 msgstr "Briefing"
 
-#: reviews/templates/reviews/review_detail.html:205
+#: reviews/templates/reviews/review_detail_sidebar.html:196
 msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
-
-#: reviews/templates/reviews/review_detail.html:249
-msgid "Reviewers"
-msgstr "Reviewers"
 
 #: reviews/templates/reviews/review_table.html:10
 msgid "Genomen op"
@@ -4043,24 +4037,28 @@ msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H: confirmation of submission of application for preliminary assessment"
 
-#: reviews/utils.py:250
-msgid "FETC-GW: nieuwe beoordeling toegevoegd"
-msgstr "FEtC-H: new decision added"
+#: reviews/utils.py:242
+msgid "FETC-GW {}: nieuwe studie ingediend"
+msgstr "FEtC-H {}: new application submitted"
 
-#: reviews/utils.py:264
+#: reviews/utils.py:257
+msgid "FETC-GW {}-{}:  nieuwe beoordeling toegevoegd"
+msgstr "FEtC-H {}-{}: new decision added"
+
+#: reviews/utils.py:274
 msgid "FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld"
 msgstr "FEtC-H: a supervisor has reviewed your proposal"
 
-#: reviews/utils.py:297
+#: reviews/utils.py:307
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils.py:303
+#: reviews/utils.py:313
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils.py:307
+#: reviews/utils.py:317
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -4069,25 +4067,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils.py:310
+#: reviews/utils.py:320
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils.py:313
+#: reviews/utils.py:323
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils.py:319
+#: reviews/utils.py:329
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils.py:322
+#: reviews/utils.py:332
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils.py:326
+#: reviews/utils.py:336
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4095,7 +4093,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils.py:332
+#: reviews/utils.py:342
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4103,7 +4101,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils.py:335
+#: reviews/utils.py:345
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -4113,7 +4111,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils.py:339
+#: reviews/utils.py:349
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -4123,13 +4121,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils.py:346
+#: reviews/utils.py:356
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:350
+#: reviews/utils.py:360
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4140,13 +4138,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils.py:367
+#: reviews/utils.py:377
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils.py:371
+#: reviews/utils.py:381
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4154,7 +4152,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils.py:373
+#: reviews/utils.py:383
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4164,11 +4162,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils.py:378 reviews/utils.py:404
+#: reviews/utils.py:388 reviews/utils.py:414
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils.py:399
+#: reviews/utils.py:409
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -4308,7 +4306,8 @@ msgstr ""
 "sign off and approve a child's participation rather than their legal "
 "guardians, you are employing passive informed consent. For such cases, you "
 "can find the correct model documents <a href=\"https://intranet.uu.nl/en/"
-"documents-ethics-assessment-committee-humanities\" target=\"_blank\">here</a>."
+"documents-ethics-assessment-committee-humanities\" target=\"_blank\">here</"
+"a>."
 
 # studies/models.py:229
 #: studies/models.py:229
