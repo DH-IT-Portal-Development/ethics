@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
 from main.models import YES, DOUBT
@@ -52,9 +52,11 @@ def start_supervisor_phase(proposal):
     params = {
         'supervisor': proposal.supervisor.get_full_name(),
         'secretary': get_secretary().get_full_name(),
+        'pdf_url': settings.BASE_URL + proposal.pdf.url,
     }
     msg_plain = render_to_string('mail/concept_creator.txt', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
+    msg_html = render_to_string('mail/concept_creator.html', params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email], html_message=msg_html)
 
     subject = _('FETC-GW: beoordelen als eindverantwoordelijke')
     params = {
@@ -63,43 +65,13 @@ def start_supervisor_phase(proposal):
         'secretary': get_secretary().get_full_name(),
         'revision': proposal.is_revision,
         'revision_type': proposal.type(),
-        'my_supervised': settings.BASE_URL + reverse('proposals:my_supervised')
+        'my_supervised': settings.BASE_URL + reverse('proposals:my_supervised'),
     }
     msg_plain = render_to_string('mail/concept_supervisor.txt', params)
     msg_html = render_to_string('mail/concept_supervisor.html', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
 
     return review
-
-
-def remind_reviewers():
-    """
-    Sends an email to a reviewer to remind them to review a proposal.
-    The reminders are only sent for proposals that are on the short track and need to be reviewed in the next 2 days
-    """
-
-    today = datetime.date.today()
-    next_two_days = today + datetime.timedelta(days=2)
-
-    decisions = Decision.objects.filter(
-        review__stage=Review.COMMISSION,
-        review__short_route=True,
-        review__date_should_end__gte=today,
-        review__date_should_end__lte=next_two_days
-    )
-
-    for decision in decisions:
-        print(decision.review.date_should_end)
-        proposal = decision.review.proposal
-        subject = 'FETC-GW: beoordelen studie (Herrinering)'
-        params = {
-            'creator': proposal.created_by.get_full_name(),
-            'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
-            'secretary': get_secretary().get_full_name()
-        }
-        msg_plain = render_to_string('mail/reminder.txt', params)
-        msg_html = render_to_string('mail/reminder.html', params)
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, [decision.reviewer.email], html_message=msg_html)
 
 
 def start_assignment_phase(proposal):
@@ -137,6 +109,7 @@ def start_assignment_phase(proposal):
     params = {
         'secretary': secretary.get_full_name(),
         'review_date': review.date_should_end,
+        'pdf_url': settings.BASE_URL + proposal.pdf.url,
     }
     if review.short_route:
         msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
@@ -153,6 +126,36 @@ def start_assignment_phase(proposal):
         notify_local_staff(proposal)
 
     return review
+
+
+def remind_reviewers():
+    """
+    Sends an email to a reviewer to remind them to review a proposal.
+    The reminders are only sent for proposals that are on the short track and need to be reviewed in the next 2 days
+    """
+
+    today = datetime.date.today()
+    next_two_days = today + datetime.timedelta(days=2)
+
+    decisions = Decision.objects.filter(
+        review__stage=Review.COMMISSION,
+        review__short_route=True,
+        review__date_should_end__gte=today,
+        review__date_should_end__lte=next_two_days
+    )
+
+    for decision in decisions:
+        print(decision.review.date_should_end)
+        proposal = decision.review.proposal
+        subject = 'FETC-GW: beoordelen studie (Herrinering)'
+        params = {
+            'creator': proposal.created_by.get_full_name(),
+            'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
+            'secretary': get_secretary().get_full_name(),
+        }
+        msg_plain = render_to_string('mail/reminder.txt', params)
+        msg_html = render_to_string('mail/reminder.html', params)
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, [decision.reviewer.email], html_message=msg_html)
 
 
 def start_review_pre_assessment(proposal):
@@ -206,10 +209,14 @@ def start_review_route(review, commission_users, use_short_route):
     was_revised = review.proposal.is_revision
     
     if was_revised:
-        subject = 'FETC-GW: gereviseerde studie ter beoordeling'
+        subject = 'FETC-GW {} {}: gereviseerde studie ter beoordeling'
     else:
-        subject = 'FETC-GW: nieuwe studie ter beoordeling'
+        subject = 'FETC-GW {} {}: nieuwe studie ter beoordeling'
         # These emails are Dutch-only, therefore intentionally untranslated
+    
+    subject = subject.format(review.proposal.reviewing_committee,
+                             review.proposal.reference_number,
+                             )
     
     for user in commission_users:
         
@@ -230,7 +237,9 @@ def notify_secretary_assignment(review):
     Notifies the secretary a Proposal is ready for assigment
     """
     secretary = get_secretary()
-    subject = _('FETC-GW: nieuwe studie ingediend')
+    proposal = review.proposal
+    committee = review.proposal.reviewing_committee
+    subject = _('FETC-GW {} {}: nieuwe studie ingediend').format(committee, proposal.reference_number)
     params = {
         'secretary': secretary.get_full_name(),
         'review': review,
@@ -244,7 +253,11 @@ def notify_secretary(decision):
     Notifies a secretary a Decision has been made by one of the members in the Commission
     """
     secretary = get_secretary()
-    subject = _('FETC-GW: nieuwe beoordeling toegevoegd')
+    proposal = decision.review.proposal
+    subject = _('FETC-GW {} {}: nieuwe beoordeling toegevoegd').format(
+        proposal.reviewing_committee,
+        proposal.reference_number,
+        )
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
