@@ -254,7 +254,7 @@ def notify_secretary(decision):
     """
     secretary = get_secretary()
     proposal = decision.review.proposal
-    subject = _('FETC-GW {}-{}:  nieuwe beoordeling toegevoegd').format(
+    subject = _('FETC-GW {}-{}: nieuwe beoordeling toegevoegd').format(
         proposal.reviewing_committee,
         proposal.reference_number,
         )
