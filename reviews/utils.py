@@ -239,7 +239,7 @@ def notify_secretary_assignment(review):
     secretary = get_secretary()
     proposal = review.proposal
     committee = review.proposal.reviewing_committee
-    subject = _('FETC-GW {}: nieuwe studie ingediend').format(committee)
+    subject = _('FETC-GW {} {}: nieuwe studie ingediend').format(committee, proposal.reference_number)
     params = {
         'secretary': secretary.get_full_name(),
         'review': review,

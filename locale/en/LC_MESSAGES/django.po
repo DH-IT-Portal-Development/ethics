@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-19 16:59+0100\n"
+"POT-Creation-Date: 2021-03-22 12:20+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -534,11 +534,11 @@ msgid ""
 "toetsings comissie)"
 msgstr "Start a new study (that has been approved by another ethics committee)"
 
-#: main/templates/base/menu.html:26 proposals/menus.py:26
+#: main/templates/base/menu.html:26 proposals/menus.py:30
 msgid "Maak een revisie van een bestaande studie"
 msgstr "Create a revision for an existing study"
 
-#: main/templates/base/menu.html:29 proposals/menus.py:30
+#: main/templates/base/menu.html:29 proposals/menus.py:34
 msgid "Maak een amendement van een al goedgekeurde studie"
 msgstr "Create an amendment to an already approved study"
 
@@ -1413,7 +1413,7 @@ msgstr "Declaration of consent for trajectory {} not yet added."
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: proposals/menus.py:34
+#: proposals/menus.py:26
 msgid "Nieuwe oefenstudie starten"
 msgstr "Start a new practice study"
 
@@ -3856,6 +3856,7 @@ msgid "Reviewers"
 msgstr "Reviewers"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:24
+#, python-format
 msgid ""
 "\n"
 "                        Revisie/amendement van<br/> %(parent)s\n"
@@ -3866,6 +3867,7 @@ msgstr ""
 "   "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:34
+#, python-format
 msgid ""
 "\n"
 "                Reviewronde gestart op<br/> %(date_start)s.\n"
@@ -3876,6 +3878,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:40
+#, python-format
 msgid ""
 "\n"
 "                    Reviewronde beëindigd op<br/> %(date_end)s.\n"
@@ -3886,6 +3889,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:47
+#, python-format
 msgid ""
 "\n"
 "                    Afhandeling:<br/> %(continuation)s.\n"
@@ -3896,6 +3900,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:53
+#, python-format
 msgid ""
 "\n"
 "                        Bevestiging verzonden op<br/> %(date_confirmed)s.\n"
@@ -3906,6 +3911,7 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:57
+#, python-format
 msgid ""
 "\n"
 "                            Opmerkingen:<br/> %(comments)s.\n"
@@ -4038,12 +4044,12 @@ msgstr ""
 "FEtC-H: confirmation of submission of application for preliminary assessment"
 
 #: reviews/utils.py:242
-msgid "FETC-GW {}: nieuwe studie ingediend"
-msgstr "FEtC-H {}: new application submitted"
+msgid "FETC-GW {} {}: nieuwe studie ingediend"
+msgstr "FEtC-H {} {}: new application submitted"
 
 #: reviews/utils.py:257
-msgid "FETC-GW {}-{}:  nieuwe beoordeling toegevoegd"
-msgstr "FEtC-H {}-{}: new decision added"
+msgid "FETC-GW {} {}: nieuwe beoordeling toegevoegd"
+msgstr "FEtC-H {} {}: new decision added"
 
 #: reviews/utils.py:274
 msgid "FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld"
