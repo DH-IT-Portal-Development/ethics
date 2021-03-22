@@ -209,9 +209,9 @@ def start_review_route(review, commission_users, use_short_route):
     was_revised = review.proposal.is_revision
     
     if was_revised:
-        subject = 'FETC-GW {}-{}: gereviseerde studie ter beoordeling'
+        subject = 'FETC-GW {} {}: gereviseerde studie ter beoordeling'
     else:
-        subject = 'FETC-GW {}-{}: nieuwe studie ter beoordeling'
+        subject = 'FETC-GW {} {}: nieuwe studie ter beoordeling'
         # These emails are Dutch-only, therefore intentionally untranslated
     
     subject = subject.format(review.proposal.reviewing_committee,
@@ -254,7 +254,7 @@ def notify_secretary(decision):
     """
     secretary = get_secretary()
     proposal = decision.review.proposal
-    subject = _('FETC-GW {}-{}: nieuwe beoordeling toegevoegd').format(
+    subject = _('FETC-GW {} {}: nieuwe beoordeling toegevoegd').format(
         proposal.reviewing_committee,
         proposal.reference_number,
         )
