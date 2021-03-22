@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-22 12:20+0100\n"
+"POT-Creation-Date: 2021-03-22 16:53+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -100,7 +100,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:647
 #: reviews/templates/reviews/change_chamber_form.html:19
-#: reviews/templates/reviews/decision_form.html:50
+#: reviews/templates/reviews/decision_form.html:51
 #: reviews/templates/reviews/review_assign_form.html:39
 #: reviews/templates/reviews/review_close_form.html:41
 #: studies/templates/studies/study_update_attachments.html:26
@@ -3697,23 +3697,18 @@ msgstr "OK"
 msgid "Studie beoordelen"
 msgstr "Assess study"
 
-#: reviews/templates/reviews/decision_form.html:23
-#, python-format
+#: reviews/templates/reviews/decision_form.html:23                "
 msgid ""
-"\n"
-"                        U kunt nu een go of no-go geven voor de studie <em>"
-"%(title)s</em>.\n"
-"                        De studie is <a href=\"%(pdf_url)s\" target=\"_blank"
-"\">hier</a> in te zien (downloadt als PDF).\n"
-"                    "
+"U kunt nu een go of no-go geven voor de studie <em>%(title)s</em>, "
+"%(refnum)s in %(chamber)s. De studie is <a href=\"%(pdf_url)s\" target="
+"\"_blank\">hier</a> in te zien (downloadt als PDF)."
 msgstr ""
-"\n"
-"    You can now give a go or no-go for the study <em>%(title)s</em>.\n"
+"    You can now give a go or no-go for the study <em>%(title)s</em>, %(refnum)s in %(chamber)s.\n"
 "    You can see the details of this study <a href=\"%(pdf_url)s\" target="
 "\"_blank\">here</a> (downloads as PDF).\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:28
+#: reviews/templates/reviews/decision_form.html:29
 #, python-format
 msgid ""
 "\n"
@@ -3727,7 +3722,7 @@ msgstr ""
 "\"_blank\">here</a>.\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:34
+#: reviews/templates/reviews/decision_form.html:35
 msgid ""
 "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd "
 "naar de ethische commissie."
@@ -3735,7 +3730,7 @@ msgstr ""
 "If you approve the study, it will be sent for assessment by the ethical "
 "committee."
 
-#: reviews/templates/reviews/decision_form.html:40
+#: reviews/templates/reviews/decision_form.html:41
 #, python-format
 msgid ""
 "\n"
@@ -3751,7 +3746,7 @@ msgstr ""
 "a>.\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:53
+#: reviews/templates/reviews/decision_form.html:54
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
