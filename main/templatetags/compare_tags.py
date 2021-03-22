@@ -104,7 +104,6 @@ class CompareLinkNode(template.Node):
 
             url = reverse('proposals:compare_proposal_docs', args=args)
         elif self.type == 'wmo':
-            print(obj, obj.proposal)
             if not obj.proposal.parent or not obj.proposal.parent.wmo:
                 return ""
 
