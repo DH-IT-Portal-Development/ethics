@@ -23,16 +23,16 @@ new_proposal_menu = (
         reverse("proposals:start_pre_approved"),
     ),
     MenuItem(
+        _("Nieuwe oefenstudie starten"),
+        reverse("proposals:start_practice"),
+    ),
+    MenuItem(
         _("Maak een revisie van een bestaande studie"),
         reverse("proposals:copy_revision"),
     ),
     MenuItem(
         _("Maak een amendement van een al goedgekeurde studie"),
         reverse("proposals:copy_amendment"),
-    ),
-    MenuItem(
-        _("Nieuwe oefenstudie starten"),
-        reverse("proposals:start_practice"),
     ),
 )
 
