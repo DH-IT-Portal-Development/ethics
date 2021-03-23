@@ -152,3 +152,10 @@
             {% endif %}
         </ul>
     {% endfor %}
+    <p>
+        {% get_study_documents study_documents review.proposal.study_set.first %}
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
+            {% trans "Documenten wijzigen" %} <img src="{% static 'proposals/images/pencil.png' %}"
+                                title="{% trans 'Formulier wijzigen' %}">
+                    </a></p>
+                    
