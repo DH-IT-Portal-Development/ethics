@@ -1,92 +1,10 @@
-
+    
 {% load static %}
 {% load proposal_filters %}
 {% load fetc_filters %}
 {% load i18n %}
 {% load compare_tags %}
-{% load documents_list %}
-
-{% comment %}
-
-Please note that this template requires a review object.
-
-Remember to include it in a with statement if the view does not provide it.
-
-{% endcomment %}
-
-<div class="col-12 col-md-3">
-    <h4>
-        {% trans "Details" %}
-    </h4>
-    <ul>
-        {% if review.proposal.parent and review.proposal.parent.latest_review %}
-            <li>
-                <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
-                    {% blocktrans with parent=review.proposal.parent.reference_number %}
-                        Revisie/amendement van<br/> {{ parent }}
-                    {% endblocktrans %}
-                    <a href="{% url 'proposals:diff' review.proposal.pk %}">
-                        <img src="{% static 'proposals/images/arrow_divide.png' %}" title="{% trans 'Toon verschillen' %}">
-                    </a>
-                </a>
-            </li>
-        {% endif %}
-        <li>
-            {% blocktrans with date_start=review.date_start|date:"j F Y, G:i" %}
-                Reviewronde gestart op<br/> {{ date_start }}.
-            {% endblocktrans %}
-        </li>
-        {% if review.date_end %}
-            <li>
-                {% blocktrans with date_end=review.date_end|date:"j F Y, G:i" %}
-                    Reviewronde beëindigd op<br/> {{ date_end }}.
-                {% endblocktrans %}
-            </li>
-        {% endif %}
-        {% if review.stage == review.CLOSED %}
-            <li>
-                {% blocktrans with continuation=review.get_continuation_display %}
-                    Afhandeling:<br/> {{ continuation }}.
-                {% endblocktrans %}
-            </li>
-            {% if review.proposal.date_confirmed %}
-                <li>
-                    {% blocktrans with date_confirmed=review.proposal.date_confirmed|date:"j F Y" %}
-                        Bevestiging verzonden op<br/> {{ date_confirmed }}.
-                    {% endblocktrans %}
-                    {% if review.proposal.confirmation_comments %}
-                        {% blocktrans with comments=review.proposal.confirmation_comments %}
-                            Opmerkingen:<br/> {{ comments }}.
-                        {% endblocktrans %}
-                    {% endif %}
-                </li>
-            {% endif %}
-        {% endif %}
-        {% if review.proposal.is_pre_assessment %}
-            <li>
-                <em>
-                    {% blocktrans %}
-                        Dit is een aanvraag voor voortoetsing.
-                    {% endblocktrans %}
-                </em>
-            </li>
-        {% endif %}
-
-
-        {% if review.proposal.has_minor_revision %}
-            <h4>{% trans 'Revisie' %}</h4>
-            {% blocktrans %}
-                Deze studie heeft een risivisie gehad tijdens het beslisproces.
-            {% endblocktrans %}
-            {% if review.proposal.minor_revision_description %}
-                {% blocktrans %}
-                    Er zijn de volgende opmerkingen bijgevoegd:<br/>
-                {% endblocktrans %}
-                {{ review.proposal.minor_revision_description }}
-            {% endif %}
-        {% endif %}
-    </ul>
-
+    
     <h4>{% trans "Formulieren bij aanmelding" %}</h4>
 
     <ul>
@@ -234,7 +152,3 @@ Remember to include it in a with statement if the view does not provide it.
             {% endif %}
         </ul>
     {% endfor %}
-    
-    <h4>documents_list</h4>
-    {% documents_list review %}
-</div>
