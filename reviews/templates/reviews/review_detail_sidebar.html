@@ -18,6 +18,12 @@ Remember to include it in a with statement if the view does not provide it.
         {% trans "Details" %}
     </h4>
     <ul>
+        <li>
+            {% trans "Referentie" %}: {{ review.proposal.reference_number }}
+        </li>
+        <li>
+            {% trans "Commissie" %}: {{review.proposal.reviewing_committee}}        
+        </li>
         {% if review.proposal.parent and review.proposal.parent.latest_review %}
             <li>
                 <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
