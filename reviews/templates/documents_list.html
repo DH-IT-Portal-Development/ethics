@@ -4,6 +4,22 @@
 {% load fetc_filters %}
 {% load i18n %}
 {% load compare_tags %}
+
+{% for header, items in headers_items.items %}
+
+<h4>
+   {{header}}
+</h4>
+
+<ul>
+{% for item in items %}
+    <li>{{item}}</li>
+{% endfor %}
+</ul>
+
+{% endfor %}
+
+
     
     <h4>{% trans "Formulieren bij aanmelding" %}</h4>
 
@@ -156,6 +172,6 @@
         {% get_study_documents study_documents review.proposal.study_set.first %}
         <a href="{% url 'studies:attachments' study_documents.pk %}">
             {% trans "Documenten wijzigen" %} <img src="{% static 'proposals/images/pencil.png' %}"
-                                title="{% trans 'Formulier wijzigen' %}">
+                                title="{% trans 'Documenten wijzigen' %}">
                     </a></p>
                     
