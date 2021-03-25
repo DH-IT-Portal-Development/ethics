@@ -7,13 +7,21 @@
 
 {% for header, items in headers_items.items %}
 
-<h4>
+<h5>
    {{header}}
-</h4>
+</h5>
 
 <ul>
 {% for item in items %}
-    <li>{{item}}</li>
+    {% with item.0 as name %}
+    {% with item.1 as file %}
+        <li>
+            <a href="{{ file.url }}" target="_blank">
+                {{name}}
+            </a>
+        </li>
+    {% endwith %}
+    {% endwith %}
 {% endfor %}
 </ul>
 
