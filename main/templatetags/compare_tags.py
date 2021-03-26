@@ -75,16 +75,22 @@ class CompareLinkNode(template.Node):
         return None
 
     def render(self, context):
+        "This function gets called when the template gets rendered"        
+        
         title = _("Toon verschillen")
         img = get_static_file('proposals/images/arrow_divide.png')
         obj = self.obj.resolve(context)
 
+        # Documents associated with a study
+        # or extra Documents objects
         if self.type == 'documents':
             proposal = obj.proposal
             if not proposal.parent:
                 return ""
 
             url = self._get_documents_url(obj, proposal)
+            
+        # Observations, possibly unused
         elif self.type == 'observation':
             proposal = obj.study.proposal
             if not proposal.parent:
@@ -92,6 +98,7 @@ class CompareLinkNode(template.Node):
 
             url = self._get_observation_url(obj, proposal)
 
+        # General proposal docs
         elif self.type == 'proposal':
             if not obj.parent:
                 return ""
@@ -99,10 +106,13 @@ class CompareLinkNode(template.Node):
             args = [
                 obj.parent.pk,
                 obj.pk,
-                self.attribute
+                self.attribute, # If this == '' we just compare proposal PDF's
+                                # But this could be pre_assessment_pdf or something
             ]
 
             url = reverse('proposals:compare_proposal_docs', args=args)
+            
+        # METC Decision files
         elif self.type == 'wmo':
             print(obj, obj.proposal)
             if not obj.proposal.parent or not obj.proposal.parent.wmo:
@@ -131,6 +141,9 @@ class CompareLinkNode(template.Node):
 
 @register.tag
 def get_compare_link(parser, token):
+    """This function splits up the arguments given inside the tag
+    and passes them on to the CompareLinkNode class"""
+    
     parts = token.split_contents()
 
     if not (3 <= len(parts) < 5):
