@@ -19,6 +19,12 @@ Remember to include it in a with statement if the view does not provide it.
         {% trans "Details" %}
     </h3>
     <ul>
+        <li>
+            {% trans "Referentie" %}: {{ review.proposal.reference_number }}
+        </li>
+        <li>
+            {% trans "Commissie" %}: {{review.proposal.reviewing_committee}}        
+        </li>
         {% if review.proposal.parent and review.proposal.parent.latest_review %}
             <li>
                 <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
@@ -76,7 +82,7 @@ Remember to include it in a with statement if the view does not provide it.
         {% if review.proposal.has_minor_revision %}
             <h4>{% trans 'Revisie' %}</h4>
             {% blocktrans %}
-                Deze studie heeft een risivisie gehad tijdens het beslisproces.
+                Deze studie heeft een revisie gehad tijdens het beslisproces.
             {% endblocktrans %}
             {% if review.proposal.minor_revision_description %}
                 {% blocktrans %}

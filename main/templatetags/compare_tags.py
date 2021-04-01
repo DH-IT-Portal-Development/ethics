@@ -113,7 +113,6 @@ class CompareLinkNode(template.Node):
             
         # METC Decision files
         elif self.type == 'wmo':
-            print(obj, obj.proposal)
             if not obj.proposal.parent or not obj.proposal.parent.wmo:
                 return ""
 
