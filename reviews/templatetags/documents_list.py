@@ -137,10 +137,12 @@ def documents_list(review):
     
     proposal = review.proposal
     
-
-    
     # From Python 3.7 dicts should be insertion-ordered
-    # When we upgrade we can let go of OrderedDict 
+    # When we upgrade we can let go of OrderedDict
+    # 
+    # Format:
+    # headers_items['Header'] = [ ( name, filefield, owner_object ), ... ]
+    # (see template for details)
     headers_items = OrderedDict()    
     
     # Get the proposal PDF
@@ -191,9 +193,11 @@ def documents_list(review):
                  ]
         
         for (name, field, obj) in files:
+            # If it's got a file in it, add an entry
             if field:
                 entries.append((name, field, obj))
         
+        # Get a humanized name for this documents item
         headers_items[give_name(d)] = entries
     
     return {'review': review,
