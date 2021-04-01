@@ -33,6 +33,7 @@
 
 {% endfor %}
 
+{% if review.proposal.study_set.first %}
 
     <p>
         {% get_study_documents study_documents review.proposal.study_set.first %}
@@ -41,3 +42,4 @@
                                 title="{% trans 'Documenten wijzigen' %}">
                     </a></p>
                     
+{% endif %}

@@ -5,6 +5,8 @@ from collections import OrderedDict
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from django.core.exceptions import ObjectDoesNotExist
+
 register = template.Library()
 
 @register.inclusion_tag('simple_compare_link.html')
@@ -40,9 +42,12 @@ def simple_compare_link(obj, file):
     if obj_type == 'documents':
         # Study documents
         if obj.study:
-            parent_study = parent_proposal.study_set.get(
-                order=obj.study.order)
-            parent_pk = parent_study.pk
+            try:
+                parent_study = parent_proposal.study_set.get(
+                    order=obj.study.order)
+                parent_pk = parent_study.pk
+            except ObjectDoesNotExist:
+                return {}
         # "Extra" documents
         else:
             for n, d in enumerate(proposal.documents_set.filter(
@@ -64,11 +69,9 @@ def simple_compare_link(obj, file):
     # We now have pk's for the old and new object
     compare_kwargs = {'old': parent_pk,
                       'new': pk,
+                      'attribute': file.field.name,
                       }
-    
-    # Otherwise, add the attribute
-    compare_kwargs['attribute'] = file.field.name
-    
+       
     # CompareDocumentsView expects the following args:
     # - old pk
     # - new pk
@@ -86,6 +89,8 @@ def simple_compare_link(obj, file):
         url= reverse('proposals:compare_documents', kwargs=compare_kwargs)
     
     return {'compare_url': url}
+
+
     
 def give_name(doc):
     """Gets a display name for a Documents object
@@ -111,6 +116,7 @@ def give_name(doc):
             if doc == d:
                 return _("Extra documenten {}").format(n+1)
 
+
 @register.inclusion_tag('documents_list.html')
 def documents_list(review):
     """This retrieves all files associated with
@@ -126,43 +132,49 @@ def documents_list(review):
     headers_items = OrderedDict()    
     
     # Get the proposal PDF
+    # Entries take the form of (title, file object, parent object)
     entries = []
-    entries.append(('Proposal PDF', proposal.pdf, proposal, 'proposal'))
+    entries.append(
+        ('Studie in PDF-vorm', proposal.pdf, proposal)
+        )
     
     # Pre-approval
     if proposal.pre_approval_pdf:
         entries.append(
-            ('Pre-approval', proposal.pre_approval_pdf, proposal, 'proposal')
+            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal)
             )
     
     # Pre-assessment
     if proposal.pre_assessment_pdf:
         entries.append(
-            ('Pre-assessment', proposal.pre_approval_pdf, 'pre_assessment_pdf')
+            (_('Document voor voortoetsing'), proposal.pre_assessment_pdf, proposal)
             )
     
     # WMO
-    if proposal.wmo and proposal.wmo.status == proposal.wmo.JUDGED:
+    if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
         entries.append(
-            ('METC decision', proposal.wmo.metc_decision_pdf, proposal.wmo, 'wmo')
+            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo)
             )
     
-    headers_items['Proposal'] = entries
+    headers_items[_('Aanmelding')] = entries
     
     # Now get all trajectories / extra documents
-    qs = Documents.objects.filter(proposal=proposal)
+    qs = Documents.objects.filter(
+        proposal=proposal).exclude( # We want extra docs last
+            study=None) | Documents.objects.filter(
+                proposal=proposal, study=None)
     
     for d in qs:
         entries = []
-        files = [('Informed consent',
+        files = [(_('Informed consent'),
                   d.informed_consent, d),
-                 ('Briefing',
+                 (_('Informatiebrief'),
                   d.briefing, d),
-                 ('Consent declaratie directeur/departementshoofd',
+                 (_('Consent declaratie directeur/departementshoofd'),
                   d.director_consent_declaration, d),
-                 ('Informatiebrief directeur/departementshoofd',
+                 (_('Informatiebrief directeur/departementshoofd'),
                   d.director_consent_information, d),
-                 ('Informatiebrief ouders',
+                 (_('Informatiebrief ouders'),
                   d.parents_information, d),
                  ]
         

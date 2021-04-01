@@ -106,8 +106,7 @@ class CompareLinkNode(template.Node):
             args = [
                 obj.parent.pk,
                 obj.pk,
-                self.attribute, # If this == '' we just compare proposal PDF's
-                                # But this could be pre_assessment_pdf or something
+                self.attribute,
             ]
 
             url = reverse('proposals:compare_proposal_docs', args=args)
