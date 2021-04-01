@@ -1,6 +1,7 @@
 from django import template
 from studies.models import Documents, Study
 from proposals.models import Proposal, Wmo
+from observations.models import Observation
 from collections import OrderedDict
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -16,16 +17,18 @@ def simple_compare_link(obj, file):
     if type(obj) == Proposal:
         proposal = obj
         obj_type = 'proposal'
-    else:
-        proposal = obj.proposal
     
     if type(obj) == Wmo:
         obj_type = 'wmo'
+        proposal = obj.proposal
     
     if type(obj) == Documents:
         obj_type = 'documents'
+        proposal = obj.proposal
     
-    # Observations are currently unhandled
+    if type(obj) == Observation:
+        obj_type = 'observation'
+        proposal = obj.study.proposal
     
     pk = obj.pk
     if proposal.parent:
@@ -35,19 +38,28 @@ def simple_compare_link(obj, file):
         # Empty dict will result in empty template
         return {}
     
-    # Get parent documents item.
+    # Get parent documents or observation item.
     # Note that if the parent proposal has a different amount of
-    # Trajectories or extra documents this will fail.
+    # Trajectories or extra documents this will fail, or compare
+    # incorrect documents with each other.
     # Same if the order of trajectories changes.
-    if obj_type == 'documents':
-        # Study documents
+    
+    if obj_type in ['documents', 'observation']:
+        
         if obj.study:
+            
             try:
                 parent_study = parent_proposal.study_set.get(
                     order=obj.study.order)
-                parent_pk = parent_study.pk
-            except ObjectDoesNotExist:
+            
+                if obj_type == 'observation':
+                    parent_pk = parent_study.observation.pk
+                else:
+                    parent_pk = parent_study.pk
+            
+            except (ObjectDoesNotExist, AttributeError):
                 return {}
+        
         # "Extra" documents
         else:
             for n, d in enumerate(proposal.documents_set.filter(
