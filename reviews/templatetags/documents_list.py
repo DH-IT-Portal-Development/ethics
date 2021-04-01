@@ -135,7 +135,7 @@ def documents_list(review):
     # Entries take the form of (title, file object, parent object)
     entries = []
     entries.append(
-        ('Studie in PDF-vorm', proposal.pdf, proposal)
+        (_('Studie in PDF-vorm'), proposal.pdf, proposal)
         )
     
     # Pre-approval
@@ -147,7 +147,7 @@ def documents_list(review):
     # Pre-assessment
     if proposal.pre_assessment_pdf:
         entries.append(
-            (_('Document voor voortoetsing'), proposal.pre_assessment_pdf, proposal)
+            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal)
             )
     
     # WMO
