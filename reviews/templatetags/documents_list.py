@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 register = template.Library()
 
+
 @register.inclusion_tag('simple_compare_link.html')
 def simple_compare_link(obj, file):
     """Generates a compare icon"""
@@ -18,17 +19,21 @@ def simple_compare_link(obj, file):
         proposal = obj
         obj_type = 'proposal'
     
-    if type(obj) == Wmo:
+    elif type(obj) == Wmo:
         obj_type = 'wmo'
         proposal = obj.proposal
     
-    if type(obj) == Documents:
+    elif type(obj) == Documents:
         obj_type = 'documents'
         proposal = obj.proposal
     
-    if type(obj) == Observation:
+    elif type(obj) == Observation:
         obj_type = 'observation'
         proposal = obj.study.proposal
+
+    else:
+        # Unknown/unsupported type, so we'll stop here
+        return {}
     
     pk = obj.pk
     if proposal.parent:
@@ -50,7 +55,8 @@ def simple_compare_link(obj, file):
             
             try:
                 parent_study = parent_proposal.study_set.get(
-                    order=obj.study.order)
+                    order=obj.study.order
+                )
             
                 if obj_type == 'observation':
                     parent_pk = parent_study.observation.pk
@@ -62,10 +68,11 @@ def simple_compare_link(obj, file):
         
         # "Extra" documents
         else:
-            for n, d in enumerate(proposal.documents_set.filter(
-                study=None)):
-                    if obj == d:
-                        extra_index = n
+            for n, d in enumerate(
+                proposal.documents_set.filter(study=None)
+            ):
+                if obj == d:
+                    extra_index = n
             try:
                 old_set = parent_proposal.documents_set.filter(
                     study=None)
@@ -92,13 +99,13 @@ def simple_compare_link(obj, file):
     # - attribute (none for Proposal PDF)
     
     if obj_type == 'proposal':
-        url= reverse('proposals:compare_proposal_docs', kwargs=compare_kwargs)
+        url = reverse('proposals:compare_proposal_docs', kwargs=compare_kwargs)
     
     if obj_type == 'wmo':
-        url= reverse('proposals:compare_wmo_decision', kwargs=compare_kwargs)
+        url = reverse('proposals:compare_wmo_decision', kwargs=compare_kwargs)
     
     if obj_type == 'documents':
-        url= reverse('proposals:compare_documents', kwargs=compare_kwargs)
+        url = reverse('proposals:compare_documents', kwargs=compare_kwargs)
     
     return {'compare_url': url}
 
@@ -111,7 +118,7 @@ def give_name(doc):
     for identification purposes.
     """
     
-    proposal=doc.proposal
+    proposal = doc.proposal
     
     if doc.study:
         if proposal.study_set.count() == 1:
@@ -150,47 +157,54 @@ def documents_list(review):
     entries = []
     entries.append(
         (_('Studie in PDF-vorm'), proposal.pdf, proposal)
-        )
+    )
     
     # Pre-approval
     if proposal.pre_approval_pdf:
         entries.append(
             (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal)
-            )
+        )
     
     # Pre-assessment
     if proposal.pre_assessment_pdf:
         entries.append(
             (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal)
-            )
+        )
     
     # WMO
     if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
         entries.append(
             (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo)
-            )
+        )
     
     headers_items[_('Aanmelding')] = entries
     
     # Now get all trajectories / extra documents
+    # First we get all objects attached to a study, then we append those
+    # without. This way we get the ordering we want.
     qs = Documents.objects.filter(
-        proposal=proposal).exclude( # We want extra docs last
-            study=None) | Documents.objects.filter(
-                proposal=proposal, study=None)
+        proposal=proposal
+    ).exclude(study=None) | Documents.objects.filter(
+        proposal=proposal, study=None
+    )
     
     for d in qs:
         entries = []
-        files = [(_('Informed consent'),
-                  d.informed_consent, d),
-                 (_('Informatiebrief'),
-                  d.briefing, d),
-                 (_('Consent declaratie directeur/departementshoofd'),
-                  d.director_consent_declaration, d),
-                 (_('Informatiebrief directeur/departementshoofd'),
-                  d.director_consent_information, d),
-                 (_('Informatiebrief ouders'),
-                  d.parents_information, d),
-                 ]
+        files = [
+            (_('Informed consent'), d.informed_consent, d),
+            (_('Informatiebrief'), d.briefing, d),
+            (
+                _('Consent declaratie directeur/departementshoofd'),
+                d.director_consent_declaration,
+                d
+            ),
+            (
+                _('Informatiebrief directeur/departementshoofd'),
+                d.director_consent_information,
+                d
+            ),
+            (_('Informatiebrief ouders'), d.parents_information, d),
+        ]
         
         for (name, field, obj) in files:
             # If it's got a file in it, add an entry

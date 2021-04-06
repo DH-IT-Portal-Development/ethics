@@ -8,28 +8,22 @@
 
 {% for header, items in headers_items.items %}
 
-<h5>
-   {{header}}
-</h5>
+    <h5>
+       {{header}}
+    </h5>
 
-<ul>
-{% for item in items %}
-    {% with item.0 as name %}
-    {% with item.1 as file %}
-    {% with item.2 as obj %}
+    <ul>
+    {% for name, file, obj in items %}
         <li>
             <a href="{{ file.url }}" target="_blank">
                 {{name}}
-            </a> 
+            </a>
             {% if file.field.name != "pdf" %}
                 {% simple_compare_link obj file %}
             {% endif %}
         </li>
-    {% endwith %}
-    {% endwith %}
-    {% endwith %}
-{% endfor %}
-</ul>
+    {% endfor %}
+    </ul>
 
 {% endfor %}
 
@@ -38,8 +32,10 @@
     <p>
         {% get_study_documents study_documents review.proposal.study_set.first %}
         <a href="{% url 'studies:attachments' study_documents.pk %}">
-            {% trans "Documenten wijzigen" %} <img src="{% static 'proposals/images/pencil.png' %}"
-                                title="{% trans 'Documenten wijzigen' %}">
-                    </a></p>
+            {% trans "Documenten wijzigen" %}
+            <img src="{% static 'proposals/images/pencil.png' %}"
+                 title="{% trans 'Documenten wijzigen' %}" />
+        </a>
+    </p>
                     
 {% endif %}
