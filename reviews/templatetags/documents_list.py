@@ -11,7 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 register = template.Library()
 
 
-@register.inclusion_tag('simple_compare_link.html')
+@register.inclusion_tag('reviews/simple_compare_link.html')
 def simple_compare_link(obj, file):
     """Generates a compare icon"""
     
@@ -136,7 +136,7 @@ def give_name(doc):
                 return _("Extra documenten {}").format(n+1)
 
 
-@register.inclusion_tag('documents_list.html')
+@register.inclusion_tag('reviews/documents_list.html')
 def documents_list(review):
     """This retrieves all files associated with
     a certain review and its proposal and returns them as a

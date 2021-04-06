@@ -15,7 +15,7 @@
     <ul>
     {% for name, file, obj in items %}
         <li>
-            <a href="{{ file.url }}" target="_blank">
+            <a href="{{ file.url }}" target="_blank" download>
                 {{name}}
             </a>
             {% if file.field.name != "pdf" %}
