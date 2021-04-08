@@ -61,7 +61,7 @@ def simple_compare_link(obj, file):
                 if obj_type == 'observation':
                     parent_pk = parent_study.observation.pk
                 else:
-                    parent_pk = parent_study.pk
+                    parent_pk = parent_study.documents.pk
             
             except (ObjectDoesNotExist, AttributeError):
                 return {}
@@ -106,6 +106,9 @@ def simple_compare_link(obj, file):
     
     if obj_type == 'documents':
         url = reverse('proposals:compare_documents', kwargs=compare_kwargs)
+    
+    if obj_type == 'observation':
+        url = reverse('proposals:compare_observation_approval', kwargs=compare_kwargs)
     
     return {'compare_url': url}
 
