@@ -153,7 +153,6 @@ def documents_list(review):
     headers_items = OrderedDict()    
     
     # Get the proposal PDF
-    # Entries take the form of (title, file object, parent object)
     entries = []
     entries.append(
         (_('Studie in PDF-vorm'), proposal.pdf, proposal)
@@ -206,10 +205,22 @@ def documents_list(review):
             (_('Informatiebrief ouders'), d.parents_information, d),
         ]
         
+        # Search for old-style observations (deprecated)
+        if d.study and d.study.has_observation:
+            if d.study.observation.needs_approval:
+                files.append(
+                    (
+                    _('Toestemmingsdocument observatiestudie'),
+                    d.study.observation.approval_document,
+                    d.study.observation,
+                    )
+                )
+        
         for (name, field, obj) in files:
             # If it's got a file in it, add an entry
             if field:
                 entries.append((name, field, obj))
+        
         
         # Get a humanized name for this documents item
         headers_items[give_name(d)] = entries

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-01 12:47+0200\n"
+"POT-Creation-Date: 2021-04-08 13:32+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1053,7 +1053,7 @@ msgstr "Password"
 #: reviews/templates/reviews/decision_list.html:61
 #: reviews/templates/reviews/review_detail_sidebar.html:35
 #: reviews/templates/reviews/review_list.html:63
-#: reviews/templates/simple_compare_link.html:8
+#: reviews/templates/reviews/simple_compare_link.html:8
 msgid "Toon verschillen"
 msgstr "Show differences"
 
@@ -3520,11 +3520,6 @@ msgstr "not endorsed"
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
-#: reviews/templates/documents_list.html:41
-#: reviews/templates/documents_list.html:42
-msgid "Documenten wijzigen"
-msgstr "Edit documents"
-
 #: reviews/templates/reviews/action_explaination.html:8
 #, python-format
 msgid ""
@@ -3788,6 +3783,11 @@ msgstr "Reviewer"
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
+#: reviews/templates/reviews/documents_list.html:35
+#: reviews/templates/reviews/documents_list.html:37
+msgid "Documenten wijzigen"
+msgstr "Edit documents"
+
 #: reviews/templates/reviews/review_assign_form.html:7
 #: reviews/templates/reviews/review_assign_form.html:32
 msgid "Commissieleden aanstellen"
@@ -3979,57 +3979,61 @@ msgstr "Comments"
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
-#: reviews/templatetags/documents_list.py:106
+#: reviews/templatetags/documents_list.py:125
 msgid "Hoofdtraject"
 msgstr "Main trajectory"
 
-#: reviews/templatetags/documents_list.py:107
+#: reviews/templatetags/documents_list.py:126
 msgid "Traject {}: {}"
 msgstr "Trajectory {}: {}"
 
-#: reviews/templatetags/documents_list.py:117
+#: reviews/templatetags/documents_list.py:136
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:138
+#: reviews/templatetags/documents_list.py:158
 msgid "Studie in PDF-vorm"
 msgstr "Proposal in PDF format"
 
-#: reviews/templatetags/documents_list.py:144
+#: reviews/templatetags/documents_list.py:164
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:150
+#: reviews/templatetags/documents_list.py:170
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:156
+#: reviews/templatetags/documents_list.py:176
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:159
+#: reviews/templatetags/documents_list.py:179
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:169
+#: reviews/templatetags/documents_list.py:193
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:171
+#: reviews/templatetags/documents_list.py:194
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:173
+#: reviews/templatetags/documents_list.py:196
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:175
+#: reviews/templatetags/documents_list.py:201
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:177
+#: reviews/templatetags/documents_list.py:205
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
+
+#: reviews/templatetags/documents_list.py:213
+msgid "Toestemmingsdocument observatiestudie"
+msgstr "Consent document for observational study"
 
 #: reviews/utils.py:51
 msgid "FETC-GW: bevestiging indienen concept-aanmelding"
@@ -5226,9 +5230,6 @@ msgstr "Task deleted"
 
 #~ msgid "Briefing"
 #~ msgstr "Briefing"
-
-#~ msgid "Toestemmingsdocument observatiestudie"
-#~ msgstr "Consent document for observational study"
 
 #~ msgid "Ik vul de portal in"
 #~ msgstr "I am using this portal"
