@@ -429,12 +429,14 @@ class FilenameFactory:
                 # Unknown
                 trajectory = 'Extra' + str(extra_index)
         
+        chamber = proposal.reviewing_committee
         lastname = proposal.created_by.last_name
         refnum = proposal.reference_number
         
         extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
         
         fn_parts = ['FETC',
+                    chamber,
                     refnum,
                     lastname,
                     trajectory,
