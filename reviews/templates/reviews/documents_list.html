@@ -1,0 +1,41 @@
+    
+{% load static %}
+{% load proposal_filters %}
+{% load fetc_filters %}
+{% load i18n %}
+{% load compare_tags %}
+{% load documents_list %}
+
+{% for header, items in headers_items.items %}
+
+    <h5>
+       {{header}}
+    </h5>
+
+    <ul>
+    {% for name, file, obj in items %}
+        <li>
+            <a href="{{ file.url }}" target="_blank" download>
+                {{name}}
+            </a>
+            {% if file.field.name != "pdf" %}
+                {% simple_compare_link obj file %}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+
+{% endfor %}
+
+{% if review.proposal.study_set.first %}
+
+    <p>
+        {% get_study_documents study_documents review.proposal.study_set.first %}
+        <a href="{% url 'studies:attachments' study_documents.pk %}">
+            {% trans "Documenten wijzigen" %}
+            <img src="{% static 'proposals/images/pencil.png' %}"
+                 title="{% trans 'Documenten wijzigen' %}" />
+        </a>
+    </p>
+                    
+{% endif %}
