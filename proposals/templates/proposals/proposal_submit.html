@@ -71,7 +71,7 @@
                 {% endblocktrans %}
             </p>
 
-            {% if not proposal.is_pre_assessment and not proposal.is_practice %}
+            {% if not proposal.is_pre_assessment  %}
                 {% for study in proposal.study_set.all %}
                     {% if study.has_missing_forms %}
                         <div class="warning">
