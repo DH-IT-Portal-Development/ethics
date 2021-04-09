@@ -429,7 +429,7 @@ class FilenameFactory:
                 # Unknown
                 trajectory = 'Extra' + str(extra_index)
         
-        chamber = proposal.reviewing_committee
+        chamber = proposal.reviewing_committee.name
         lastname = proposal.created_by.last_name
         refnum = proposal.reference_number
         
