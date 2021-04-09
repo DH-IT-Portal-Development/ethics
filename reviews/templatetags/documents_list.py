@@ -59,9 +59,11 @@ def simple_compare_link(obj, file):
                 )
             
                 if obj_type == 'observation':
-                    parent_pk = parent_study.observation.pk
+                    parent_obj = parent_study.observation                   
+                    parent_pk = parent_obj.pk
                 else:
-                    parent_pk = parent_study.documents.pk
+                    parent_obj = parent_study.documents
+                    parent_pk = parent_obj.pk
             
             except (ObjectDoesNotExist, AttributeError):
                 return {}
@@ -77,13 +79,24 @@ def simple_compare_link(obj, file):
                 old_set = parent_proposal.documents_set.filter(
                     study=None)
                 # Same index, different proposal
-                parent_pk = old_set[extra_index].pk
+                parent_obj = old_set[extra_index]
+                parent_pk = parent_obj.pk
             except (IndexError, AttributeError):
                 return {}
     
     # Get parent wmo pk:
     if obj_type == 'wmo':
-        parent_pk = parent_proposal.wmo.pk
+        parent_obj = parent_proposal.wmo
+        parent_pk = parent_obj.pk
+        
+    # Set parent object in case of Proposal PDF
+    # (currently unused, use proposal diff instead)
+    if obj_type == 'proposal':
+        parent_obj = parent_proposal
+    
+    # Check that the parent has a comparable object
+    if not getattr(parent_obj, file.field.name):
+        return {}
     
     # We now have pk's for the old and new object
     compare_kwargs = {'old': parent_pk,
