@@ -105,7 +105,7 @@
                                              title="{% trans 'Verwijderen' %}">
                                     </a>
                                 {% elif proposal.pdf %}
-                                    <a href="{{ proposal.pdf.url }}" target="_blank">
+                                    <a href="{{ proposal.pdf.url }}" target="_blank" download="{{proposal.pdf.name}}">
                                         <img src="{{ img_pdf }}"
                                              title="{% trans 'Inzien' %}">
                                     </a>
@@ -193,7 +193,7 @@
                                             {% if wants_route_info %}
                                                 <tr>
                                                     <td>
-                                                        {% trans "Route" %}
+                                                        {% trans "Route:" %}
                                                     </td>
                                                     <td>
                                                         {{ proposal.route }}
