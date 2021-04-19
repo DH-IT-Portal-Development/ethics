@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-08 13:32+0200\n"
+"POT-Creation-Date: 2021-04-19 12:50+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -365,7 +365,7 @@ msgid "Referentienummer"
 msgstr "Reference number"
 
 #: main/templates/auth/user_detail.html:52
-#: reviews/templates/reviews/decision_list.html:111
+#: reviews/templates/reviews/decision_list.html:117
 #: reviews/templates/reviews/decision_list_open.html:53
 #: reviews/templates/reviews/decision_supervisor_list_open.html:49
 #: reviews/templates/reviews/review_list.html:101
@@ -379,7 +379,7 @@ msgid "Titel studie"
 msgstr "Study title"
 
 #: main/templates/auth/user_detail.html:54
-#: reviews/templates/reviews/decision_list.html:114
+#: reviews/templates/reviews/decision_list.html:120
 #: reviews/templates/reviews/decision_list_open.html:56
 #: reviews/templates/reviews/review_list.html:104
 #: reviews/templates/reviews/review_to_conclude.html:39
@@ -388,7 +388,7 @@ msgstr "Phase"
 
 #: main/templates/auth/user_detail.html:55
 #: proposals/templates/proposals/proposal_list.html:169
-#: reviews/templates/reviews/decision_list.html:153
+#: reviews/templates/reviews/decision_list.html:159
 #: reviews/templates/reviews/decision_list_open.html:81
 #: reviews/templates/reviews/decision_supervisor_list_open.html:74
 #: reviews/templates/reviews/review_list.html:126
@@ -397,7 +397,7 @@ msgid "Datum ingediend"
 msgstr "Date submitted"
 
 #: main/templates/auth/user_detail.html:56
-#: reviews/templates/reviews/decision_list.html:161
+#: reviews/templates/reviews/decision_list.html:167
 #: reviews/templates/reviews/decision_list_open.html:89
 #: reviews/templates/reviews/decision_supervisor_list_open.html:82
 #: reviews/templates/reviews/review_list.html:134
@@ -406,13 +406,13 @@ msgid "Gewenste einddatum"
 msgstr "Desired end date"
 
 #: main/templates/auth/user_detail.html:57
-#: reviews/templates/reviews/decision_list.html:117
+#: reviews/templates/reviews/decision_list.html:123
 #: reviews/templates/reviews/review_to_conclude.html:42
 msgid "Mijn besluit"
 msgstr "My decision"
 
 #: main/templates/auth/user_detail.html:58 reviews/models.py:54
-#: reviews/templates/reviews/decision_list.html:128
+#: reviews/templates/reviews/decision_list.html:134
 #: reviews/templates/reviews/review_to_conclude.html:43
 msgid "Afhandeling"
 msgstr "Action"
@@ -424,7 +424,7 @@ msgid "Acties"
 msgstr "Actions"
 
 #: main/templates/auth/user_detail.html:75
-#: reviews/templates/reviews/decision_list.html:132
+#: reviews/templates/reviews/decision_list.html:138
 #: reviews/templates/reviews/review_to_conclude.html:65
 msgid ", met revisie"
 msgstr ", with revision"
@@ -455,14 +455,14 @@ msgid "Aanstellen"
 msgstr "Appoint"
 
 #: main/templates/auth/user_detail.html:93
-#: reviews/templates/reviews/decision_list.html:88
+#: reviews/templates/reviews/decision_list.html:94
 #: reviews/templates/reviews/review_list.html:78
 #: reviews/templates/reviews/review_to_conclude.html:90
 msgid "Afsluiten"
 msgstr "Conclude"
 
 #: main/templates/auth/user_detail.html:98
-#: reviews/templates/reviews/decision_list.html:94
+#: reviews/templates/reviews/decision_list.html:100
 #: reviews/templates/reviews/review_list.html:84
 #: reviews/templates/reviews/review_to_conclude.html:96
 msgid "Website export tekst"
@@ -471,7 +471,7 @@ msgstr "Website export text"
 #: main/templates/auth/user_detail.html:103
 #: proposals/templates/proposals/proposal_confirmation.html:7
 #: proposals/templates/proposals/proposal_confirmation.html:25
-#: reviews/templates/reviews/decision_list.html:99
+#: reviews/templates/reviews/decision_list.html:105
 #: reviews/templates/reviews/review_list.html:89
 #: reviews/templates/reviews/review_to_conclude.html:101
 msgid "Bevestigingsbrief versturen"
@@ -479,7 +479,7 @@ msgstr "Send confirmation letter"
 
 #: main/templates/auth/user_detail.html:106
 #: proposals/templates/proposals/proposal_confirmation.html:34
-#: reviews/templates/reviews/decision_list.html:102
+#: reviews/templates/reviews/decision_list.html:108
 #: reviews/templates/reviews/review_list.html:92
 #: reviews/templates/reviews/review_to_conclude.html:104
 msgid "Bevestigingsbrief verstuurd"
@@ -1606,7 +1606,7 @@ msgstr "How many different trajectories are there?"
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:310 reviews/forms.py:111
+#: proposals/models.py:310 reviews/forms.py:119
 msgid "Is er een revisie geweest na het indienen van deze studie?"
 msgstr "Has this study been amended after it was submitted?"
 
@@ -1658,7 +1658,7 @@ msgid "Amendement"
 msgstr "Amendment"
 
 #: proposals/models.py:441
-#: reviews/templates/reviews/review_detail_sidebar.html:83
+#: reviews/templates/reviews/review_detail_sidebar.html:84
 msgid "Revisie"
 msgstr "Revision"
 
@@ -2492,7 +2492,6 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_list.html:87
 #: reviews/templates/reviews/decision_list.html:77
-#: reviews/templates/reviews/decision_list.html:82
 #: reviews/templates/reviews/review_to_conclude.html:86
 msgid "Beslissen"
 msgstr "Decide"
@@ -2527,7 +2526,7 @@ msgid "Status"
 msgstr "State"
 
 #: proposals/templates/proposals/proposal_list.html:154
-#: reviews/templates/reviews/decision_list.html:142
+#: reviews/templates/reviews/decision_list.html:148
 #: reviews/templates/reviews/decision_list_open.html:70
 #: reviews/templates/reviews/decision_supervisor_list_open.html:63
 #: reviews/templates/reviews/review_list.html:115
@@ -2543,7 +2542,7 @@ msgid "Route:"
 msgstr "Route:"
 
 #: proposals/templates/proposals/proposal_list.html:205
-#: reviews/templates/reviews/decision_list.html:183
+#: reviews/templates/reviews/decision_list.html:189
 #: reviews/templates/reviews/decision_list_open.html:101
 #: reviews/templates/reviews/decision_supervisor_list_open.html:94
 #: reviews/templates/reviews/review_list.html:146
@@ -3435,15 +3434,19 @@ msgstr "straight to revision"
 msgid "Selecteer de commissieleden"
 msgstr "Select committee members"
 
-#: reviews/forms.py:75
-msgid "Er moet tenminste één secretaris geselecteerd worden."
-msgstr "You must select at least one of the options."
+#: reviews/forms.py:71
+msgid "Er moet tenminste één beoordelaar geselecteerd worden."
+msgstr "You must select at least one reviewer."
 
-#: reviews/forms.py:108
+#: reviews/forms.py:83
+msgid "Er moet tenminste één secretaris geselecteerd worden."
+msgstr "You must select at least one secretary."
+
+#: reviews/forms.py:116
 msgid "Voeg deze studie toe aan het archief"
 msgstr "Add this study to the archive"
 
-#: reviews/forms.py:114
+#: reviews/forms.py:122
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
@@ -3495,7 +3498,7 @@ msgstr "Post hoc positive advice by FEtC-H"
 msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
-#: reviews/models.py:43 reviews/templates/reviews/decision_list.html:174
+#: reviews/models.py:43 reviews/templates/reviews/decision_list.html:180
 msgid "Route"
 msgstr "Route"
 
@@ -3761,7 +3764,7 @@ msgstr "Save decision"
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
-#: reviews/templates/reviews/decision_list.html:117
+#: reviews/templates/reviews/decision_list.html:123
 #: reviews/templates/reviews/review_table.html:18
 #: reviews/templates/reviews/review_to_conclude.html:61
 msgid "open"
@@ -3945,7 +3948,7 @@ msgstr ""
 "    This is an application for preliminary assessment.\n"
 "    "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:84
+#: reviews/templates/reviews/review_detail_sidebar.html:85
 msgid ""
 "\n"
 "                Deze studie heeft een revisie gehad tijdens het "
@@ -3957,7 +3960,7 @@ msgstr ""
 "H .\n"
 "    "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:88
+#: reviews/templates/reviews/review_detail_sidebar.html:89
 msgid ""
 "\n"
 "                    Er zijn de volgende opmerkingen bijgevoegd:<br/>\n"
@@ -3979,59 +3982,59 @@ msgstr "Comments"
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
-#: reviews/templatetags/documents_list.py:125
+#: reviews/templatetags/documents_list.py:141
 msgid "Hoofdtraject"
 msgstr "Main trajectory"
 
-#: reviews/templatetags/documents_list.py:126
+#: reviews/templatetags/documents_list.py:142
 msgid "Traject {}: {}"
 msgstr "Trajectory {}: {}"
 
-#: reviews/templatetags/documents_list.py:136
+#: reviews/templatetags/documents_list.py:152
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:158
+#: reviews/templatetags/documents_list.py:174
 msgid "Studie in PDF-vorm"
 msgstr "Proposal in PDF format"
 
-#: reviews/templatetags/documents_list.py:164
+#: reviews/templatetags/documents_list.py:180
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:170
+#: reviews/templatetags/documents_list.py:186
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:176
+#: reviews/templatetags/documents_list.py:192
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:179
+#: reviews/templatetags/documents_list.py:195
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:193
+#: reviews/templatetags/documents_list.py:209
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:194
+#: reviews/templatetags/documents_list.py:210
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:196
+#: reviews/templatetags/documents_list.py:212
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:201
+#: reviews/templatetags/documents_list.py:217
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:205
+#: reviews/templatetags/documents_list.py:221
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:213
+#: reviews/templatetags/documents_list.py:229
 msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 

@@ -76,11 +76,6 @@
                                             <img src="{{ img_decide }}"
                                                  title="{% trans 'Beslissen' %}">
                                         </a>
-                                    {% elif user|is_secretary %}
-                                        <a href="{% url 'reviews:decide_new' review.pk %}">
-                                            <img src="{{ img_decide }}"
-                                                 title="{% trans 'Beslissen' %}">
-                                        </a>
                                     {% endif %}
                                 {% elif user|is_secretary and review.stage == review.CLOSING %}
                                     <a href="{% url 'reviews:close' review.pk %}">
