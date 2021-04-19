@@ -75,7 +75,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted')
+        ).order_by('-review__date_start')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -159,7 +159,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted')
+        ).order_by('-review__date_start')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -589,7 +589,6 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
                 review_id=review_pk,
             )
             decision_pk = decision.pk
-
 
         return reverse('reviews:decide', args=[decision_pk])
 
