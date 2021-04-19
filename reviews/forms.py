@@ -65,8 +65,11 @@ class ReviewAssignForm(ConditionalModelForm):
 
     def clean_reviewers(self):
         reviewers = self.cleaned_data['reviewers']
-
-        # Make sure at least one secretary is assigned
+        
+        # To make sure at least one secretary is assigned,
+        # comment out the following return statement
+        return self.cleaned_data['reviewers']
+    
         for user in reviewers:
             if is_secretary(user):
                 break

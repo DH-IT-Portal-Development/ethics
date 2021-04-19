@@ -558,7 +558,12 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
                                  generic.RedirectView):
     """
     This redirect first creates a new decision for a secretary that does not
-    have one yet, and redirects to the DecisionUpdateView
+    have one yet, and redirects to the DecisionUpdateView.
+    
+    NOTE: this view has been removed from templates to allow for multiple 
+    secretaries to work without them unnecessarily creating decisions. It 
+    might be of use again in the future, but for now the FEtC-H has decided
+    to no longer require a secretary decision for every review.
     """
     group_required = settings.GROUP_SECRETARY
 
