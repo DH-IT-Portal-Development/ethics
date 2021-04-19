@@ -66,6 +66,11 @@ class ReviewAssignForm(ConditionalModelForm):
     def clean_reviewers(self):
         reviewers = self.cleaned_data['reviewers']
         
+        if len(reviewers) == 0:
+            raise ValidationError(
+                _('Er moet tenminste één beoordelaar geselecteerd worden.'),
+                code='no_reviewer')
+        
         # To make sure at least one secretary is assigned,
         # comment out the following return statement
         return self.cleaned_data['reviewers']
