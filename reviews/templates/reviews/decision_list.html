@@ -76,17 +76,7 @@
                                             <img src="{{ img_decide }}"
                                                  title="{% trans 'Beslissen' %}">
                                         </a>
-                                    {% comment %}
-                                    Uncomment this to allow secretaries
-                                    to auto-add a decision for themselves 
-                                    on a review they are not assigned to
-                                    {% elif user|is_secretary %}
-                                        <a href="{% url 'reviews:decide_new' review.pk %}">
-                                            <img src="{{ img_decide }}"
-                                                 title="{% trans 'Beslissen' %}">
-                                        </a>
-                                    {% endcomment %}
-                                {% endif %}
+                                    {% endif %}
                                 {% elif user|is_secretary and review.stage == review.CLOSING %}
                                     <a href="{% url 'reviews:close' review.pk %}">
                                         <img src="{{ img_close }}"
