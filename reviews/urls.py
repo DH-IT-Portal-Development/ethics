@@ -30,6 +30,6 @@ urlpatterns = [
     path('close/<int:pk>/', ReviewCloseView.as_view(), name='close'),
 
     path('decide/<int:pk>/', DecisionUpdateView.as_view(), name='decide'),
-    path('decide/new/<int:review>)/', CreateDecisionRedirectView.as_view(),
+    path('decide/new/<int:review>/', CreateDecisionRedirectView.as_view(),
       name='decide_new'),
 ]
