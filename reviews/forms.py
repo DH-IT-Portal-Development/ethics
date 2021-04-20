@@ -65,16 +65,13 @@ class ReviewAssignForm(ConditionalModelForm):
 
     def clean_reviewers(self):
         reviewers = self.cleaned_data['reviewers']
-
-        # Make sure at least one secretary is assigned
-        for user in reviewers:
-            if is_secretary(user):
-                break
-        else:
+        
+        if len(reviewers) == 0:
             raise ValidationError(
-                _('Er moet tenminste één secretaris geselecteerd worden.'),
-                code='no_secretary')
-
+                _('Er moet tenminste één beoordelaar geselecteerd worden.'),
+                code='no_reviewer')
+        
+        # See PR #188 if a secretary should be added to every review
         return self.cleaned_data['reviewers']
 
 

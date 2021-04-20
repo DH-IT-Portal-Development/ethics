@@ -75,7 +75,7 @@ class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted')
+        ).order_by('-review__date_start')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -159,7 +159,7 @@ class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go='',
             review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted')
+        ).order_by('-review__date_start')
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -558,7 +558,13 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
                                  generic.RedirectView):
     """
     This redirect first creates a new decision for a secretary that does not
-    have one yet, and redirects to the DecisionUpdateView
+    have one yet, and redirects to the DecisionUpdateView.
+    
+    NOTE: this view has been removed from templates to allow for multiple 
+    secretaries to work without them unnecessarily creating decisions. It 
+    might be of use again in the future, but for now the FEtC-H has decided
+    to no longer require a secretary decision for every review. See PR
+    #188 for details.
     """
     group_required = settings.GROUP_SECRETARY
 
@@ -583,7 +589,6 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
                 review_id=review_pk,
             )
             decision_pk = decision.pk
-
 
         return reverse('reviews:decide', args=[decision_pk])
 
