@@ -11,7 +11,7 @@ from django.views import generic
 from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
 
-from main.utils import get_document_contents, get_secretary
+from main.utils import get_document_contents, get_secretary, is_secretary
 from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     UpdateView, UserAllowedMixin
 from observations.models import Observation
@@ -37,6 +37,7 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
     body = _('Dit overzicht toont alle goedgekeurde studies.')
     is_modifiable = False
     is_submitted = True
+    contains_supervised = False
     context_object_name = 'proposals'
 
     def get_queryset(self):
@@ -66,8 +67,8 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
         context['body'] = self.body
         context['modifiable'] = self.is_modifiable
         context['submitted'] = self.is_submitted
-        context['is_secretary'] = self.request.user == get_secretary()
-
+        context['supervised'] = self.contains_supervised
+        context['is_secretary'] = is_secretary(self.request.user)
         return context
 
     def get_my_proposals(self):
@@ -187,6 +188,7 @@ class MySupervisedView(BaseProposalsView):
         'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
     is_modifiable = True
     is_submitted = True
+    contains_supervised = True
     template_name = 'proposals/proposal_list.html'
     
     
@@ -211,6 +213,8 @@ class MyProposalsView(BaseProposalsView):
     body = _('Dit overzicht toont al uw studies.')
     is_modifiable = True
     is_submitted = True
+    contains_supervised = True    
+    
     def get_queryset(self):
         """Returns all Proposals for the current User"""
         return self.get_my_proposals()

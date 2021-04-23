@@ -30,6 +30,7 @@
             {% static "proposals/images/delete.png" as img_delete %}
             {% static "main/images/page_white_acrobat.png" as img_pdf %}
             {% static "proposals/images/folder_delete.png" as img_hide %}
+            {% static 'reviews/images/scale.png' as img_decide %}
             <p>
                 {{ body }}
             </p>
@@ -61,6 +62,13 @@
                         {% blocktrans %}
                             Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
                         {% endblocktrans %}
+                    </li>
+                {% endif %}
+                {% if supervised %}
+                    <li>
+                        {% blocktrans %}
+                        Klik op <img src="{{ img_decide }}" title="Beslissen"> om je beslissing door te geven (als eindverantwoordelijke).
+                        {% endblocktrans %} 
                     </li>
                 {% endif %}
                 {% if is_secretary %}
