@@ -36,9 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'menu',
     'debug_toolbar',
+    'rest_framework',
 
     'main',
     'uil.core',
+    'uil.vue',
     'proposals',
     'studies',
     'tasks',
