@@ -97,6 +97,18 @@ class Review(models.Model):
                 self.stage = self.CLOSING
                 self.save()
 
+    def get_continuation_display(self):
+        # Get the human readable string
+        continuation = dict(self.CONTINUATIONS).get(
+            self.continuation,
+            self.continuation
+        )
+
+        if self.proposal.has_minor_revision:
+            continuation += _(', met revisie')
+
+        return continuation
+
     def get_route_display(self):
         route_options = {
             False: _('lange (4-weken) route'),

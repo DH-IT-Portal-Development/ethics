@@ -1,5 +1,18 @@
 {% load i18n %}
 {% load fetc_filters %}
+{% load static %}
+
+{% static "proposals/images/arrow_divide.png" as img_diff %}
+{% static "main/images/page_white_acrobat.png" as img_pdf %}
+{% static "proposals/images/folder_delete.png" as img_hide %}
+{% static 'main/images/zoom.png' as img_details %}
+{% static 'reviews/images/user_add.png' as img_add_reviewers %}
+{% static 'reviews/images/folder_edit.png' as img_change_chamber %}
+{% static 'reviews/images/scale.png' as img_decide %}
+{% static 'reviews/images/accept.png' as img_close %}
+{% static 'reviews/images/website.png' as img_export %}
+{% static 'reviews/images/report_go.png' as img_confirm %}
+{% static 'reviews/images/tick.png' as img_confirmed %}
 
 <div class="col-12 {% if request.user|is_secretary %}col-md-6{% endif %}">
     <h3>{% trans "Uitleg" %}</h3>
