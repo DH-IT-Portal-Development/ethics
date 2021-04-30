@@ -77,6 +77,15 @@ Remember to include it in a with statement if the view does not provide it.
                 </em>
             </li>
         {% endif %}
+        {% if review.stage == review.SUPERVISOR %}
+            <li>
+                <strong>
+                    {% blocktrans trimmed %}
+                        Dit is een review van een eindverantwoordelijke
+                    {% endblocktrans %}
+                </strong>
+            </li>
+        {% endif %}
     </ul>
 
 
