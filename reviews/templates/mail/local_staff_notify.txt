@@ -3,7 +3,7 @@
 {% block content %}
 Beste labmanagers,
 
-Er is zojuist een nieuwe studie ter beoordeling ingediend.
+{% if is_revision %}Er is zojuist een gereviseerde studie ter beoordeling ingediend.{% else %}Er is zojuist een nieuwe studie ter beoordeling ingediend.{% endif %}
 De studie maakt gebruik van enkele labfaciliteiten, en daarom volgt hieronder een korte samenvatting van deze studie.
 
 Titel studie: {{ proposal.title }}

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-19 12:50+0200\n"
+"POT-Creation-Date: 2021-04-22 11:58+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -365,7 +365,7 @@ msgid "Referentienummer"
 msgstr "Reference number"
 
 #: main/templates/auth/user_detail.html:52
-#: reviews/templates/reviews/decision_list.html:117
+#: reviews/templates/reviews/decision_list.html:106
 #: reviews/templates/reviews/decision_list_open.html:53
 #: reviews/templates/reviews/decision_supervisor_list_open.html:49
 #: reviews/templates/reviews/review_list.html:101
@@ -379,7 +379,7 @@ msgid "Titel studie"
 msgstr "Study title"
 
 #: main/templates/auth/user_detail.html:54
-#: reviews/templates/reviews/decision_list.html:120
+#: reviews/templates/reviews/decision_list.html:109
 #: reviews/templates/reviews/decision_list_open.html:56
 #: reviews/templates/reviews/review_list.html:104
 #: reviews/templates/reviews/review_to_conclude.html:39
@@ -387,8 +387,8 @@ msgid "Fase"
 msgstr "Phase"
 
 #: main/templates/auth/user_detail.html:55
-#: proposals/templates/proposals/proposal_list.html:169
-#: reviews/templates/reviews/decision_list.html:159
+#: proposals/templates/proposals/proposal_list.html:177
+#: reviews/templates/reviews/decision_list.html:148
 #: reviews/templates/reviews/decision_list_open.html:81
 #: reviews/templates/reviews/decision_supervisor_list_open.html:74
 #: reviews/templates/reviews/review_list.html:126
@@ -397,7 +397,7 @@ msgid "Datum ingediend"
 msgstr "Date submitted"
 
 #: main/templates/auth/user_detail.html:56
-#: reviews/templates/reviews/decision_list.html:167
+#: reviews/templates/reviews/decision_list.html:156
 #: reviews/templates/reviews/decision_list_open.html:89
 #: reviews/templates/reviews/decision_supervisor_list_open.html:82
 #: reviews/templates/reviews/review_list.html:134
@@ -406,13 +406,13 @@ msgid "Gewenste einddatum"
 msgstr "Desired end date"
 
 #: main/templates/auth/user_detail.html:57
-#: reviews/templates/reviews/decision_list.html:123
+#: reviews/templates/reviews/decision_list.html:112
 #: reviews/templates/reviews/review_to_conclude.html:42
 msgid "Mijn besluit"
 msgstr "My decision"
 
 #: main/templates/auth/user_detail.html:58 reviews/models.py:54
-#: reviews/templates/reviews/decision_list.html:134
+#: reviews/templates/reviews/decision_list.html:123
 #: reviews/templates/reviews/review_to_conclude.html:43
 msgid "Afhandeling"
 msgstr "Action"
@@ -424,7 +424,7 @@ msgid "Acties"
 msgstr "Actions"
 
 #: main/templates/auth/user_detail.html:75
-#: reviews/templates/reviews/decision_list.html:138
+#: reviews/templates/reviews/decision_list.html:127
 #: reviews/templates/reviews/review_to_conclude.html:65
 msgid ", met revisie"
 msgstr ", with revision"
@@ -455,14 +455,14 @@ msgid "Aanstellen"
 msgstr "Appoint"
 
 #: main/templates/auth/user_detail.html:93
-#: reviews/templates/reviews/decision_list.html:94
+#: reviews/templates/reviews/decision_list.html:83
 #: reviews/templates/reviews/review_list.html:78
 #: reviews/templates/reviews/review_to_conclude.html:90
 msgid "Afsluiten"
 msgstr "Conclude"
 
 #: main/templates/auth/user_detail.html:98
-#: reviews/templates/reviews/decision_list.html:100
+#: reviews/templates/reviews/decision_list.html:89
 #: reviews/templates/reviews/review_list.html:84
 #: reviews/templates/reviews/review_to_conclude.html:96
 msgid "Website export tekst"
@@ -471,7 +471,7 @@ msgstr "Website export text"
 #: main/templates/auth/user_detail.html:103
 #: proposals/templates/proposals/proposal_confirmation.html:7
 #: proposals/templates/proposals/proposal_confirmation.html:25
-#: reviews/templates/reviews/decision_list.html:105
+#: reviews/templates/reviews/decision_list.html:94
 #: reviews/templates/reviews/review_list.html:89
 #: reviews/templates/reviews/review_to_conclude.html:101
 msgid "Bevestigingsbrief versturen"
@@ -479,7 +479,7 @@ msgstr "Send confirmation letter"
 
 #: main/templates/auth/user_detail.html:106
 #: proposals/templates/proposals/proposal_confirmation.html:34
-#: reviews/templates/reviews/decision_list.html:108
+#: reviews/templates/reviews/decision_list.html:97
 #: reviews/templates/reviews/review_list.html:92
 #: reviews/templates/reviews/review_to_conclude.html:104
 msgid "Bevestigingsbrief verstuurd"
@@ -512,7 +512,7 @@ msgid "Welkom {}"
 msgstr "Welcome, {}"
 
 #: main/templates/base/menu.html:11 proposals/menus.py:80
-#: proposals/views/proposal_views.py:210
+#: proposals/views/proposal_views.py:212
 msgid "Mijn studies"
 msgstr "My applications"
 
@@ -543,27 +543,27 @@ msgid "Maak een amendement van een al goedgekeurde studie"
 msgstr "Create an amendment to an already approved study"
 
 #: main/templates/base/menu.html:32 proposals/menus.py:56
-#: proposals/views/proposal_views.py:138
+#: proposals/views/proposal_views.py:139
 msgid "Mijn conceptstudies"
 msgstr "My draft applications"
 
 #: main/templates/base/menu.html:35 proposals/menus.py:60
-#: proposals/views/proposal_views.py:220
+#: proposals/views/proposal_views.py:224
 msgid "Mijn oefenstudies"
 msgstr "My practice applications"
 
 #: main/templates/base/menu.html:38 proposals/menus.py:64
-#: proposals/views/proposal_views.py:153
+#: proposals/views/proposal_views.py:154
 msgid "Mijn ingediende studies"
 msgstr "My submitted applications"
 
 #: main/templates/base/menu.html:41 proposals/menus.py:68
-#: proposals/views/proposal_views.py:170
+#: proposals/views/proposal_views.py:171
 msgid "Mijn afgehandelde studies"
 msgstr "My processed applications"
 
 #: main/templates/base/menu.html:44 proposals/menus.py:72
-#: proposals/views/proposal_views.py:185
+#: proposals/views/proposal_views.py:186
 msgid "Mijn studies als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -1049,7 +1049,7 @@ msgid "Wachtwoord"
 msgstr "Password"
 
 #: main/templatetags/compare_tags.py:80
-#: proposals/templates/proposals/proposal_list.html:93
+#: proposals/templates/proposals/proposal_list.html:101
 #: reviews/templates/reviews/decision_list.html:61
 #: reviews/templates/reviews/review_detail_sidebar.html:35
 #: reviews/templates/reviews/review_list.html:63
@@ -1606,7 +1606,7 @@ msgstr "How many different trajectories are there?"
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:310 reviews/forms.py:119
+#: proposals/models.py:310 reviews/forms.py:108
 msgid "Is er een revisie geweest na het indienen van deze studie?"
 msgstr "Has this study been amended after it was submitted?"
 
@@ -1622,7 +1622,7 @@ msgstr "In what capacity are you involved in this study?"
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: proposals/models.py:344 proposals/templates/proposals/proposal_list.html:182
+#: proposals/models.py:344 proposals/templates/proposals/proposal_list.html:190
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -1984,7 +1984,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:19
-#: proposals/templates/proposals/proposal_list.html:105
+#: proposals/templates/proposals/proposal_list.html:113
 #: tasks/templates/tasks/session_confirm_delete.html:18
 #: tasks/templates/tasks/task_confirm_delete.html:17
 msgid "Verwijderen"
@@ -2412,12 +2412,12 @@ msgstr ""
 "to fill in the <a href=\"%(proposal_url)s\">full form</a>.\n"
 "                "
 
-#: proposals/templates/proposals/proposal_list.html:36
+#: proposals/templates/proposals/proposal_list.html:37
 #: reviews/templates/reviews/action_explaination.html:5
 msgid "Uitleg"
 msgstr "Explanation"
 
-#: proposals/templates/proposals/proposal_list.html:40
+#: proposals/templates/proposals/proposal_list.html:41
 #, python-format
 msgid ""
 "\n"
@@ -2432,7 +2432,7 @@ msgstr ""
 "to the next step in the progress.\n"
 "        "
 
-#: proposals/templates/proposals/proposal_list.html:47
+#: proposals/templates/proposals/proposal_list.html:48
 #, python-format
 msgid ""
 "\n"
@@ -2449,7 +2449,7 @@ msgstr ""
 "amendments).\n"
 "        "
 
-#: proposals/templates/proposals/proposal_list.html:54
+#: proposals/templates/proposals/proposal_list.html:55
 #, python-format
 msgid ""
 "\n"
@@ -2462,7 +2462,7 @@ msgstr ""
 "study.\n"
 "        "
 
-#: proposals/templates/proposals/proposal_list.html:61
+#: proposals/templates/proposals/proposal_list.html:62
 #, python-format
 msgid ""
 "\n"
@@ -2475,7 +2475,19 @@ msgstr ""
 "study.\n"
 "        "
 
-#: proposals/templates/proposals/proposal_list.html:68
+#: proposals/templates/proposals/proposal_list.html:69
+msgid ""
+"\n"
+"                        Klik op <img src=\"%(img_decide)s\" title=\"Beslissen"
+"\"> om je beslissing door te geven (als eindverantwoordelijke).\n"
+"                        "
+msgstr ""
+"\n"
+"        Click <img src=\"%(img_decide)s\" title=\"Decide\"> to make your "
+"decision (as a supervisor).\n"
+"        "
+
+#: proposals/templates/proposals/proposal_list.html:76
 #, python-format
 msgid ""
 "\n"
@@ -2490,59 +2502,59 @@ msgstr ""
 "study from the archive.\n"
 "        "
 
-#: proposals/templates/proposals/proposal_list.html:87
+#: proposals/templates/proposals/proposal_list.html:95
 #: reviews/templates/reviews/decision_list.html:77
 #: reviews/templates/reviews/review_to_conclude.html:86
 msgid "Beslissen"
 msgstr "Decide"
 
-#: proposals/templates/proposals/proposal_list.html:100
+#: proposals/templates/proposals/proposal_list.html:108
 msgid "Naar volgende stap"
 msgstr "To next step"
 
-#: proposals/templates/proposals/proposal_list.html:110
-#: proposals/templates/proposals/proposal_list.html:115
+#: proposals/templates/proposals/proposal_list.html:118
+#: proposals/templates/proposals/proposal_list.html:123
 msgid "Inzien"
 msgstr "Show"
 
-#: proposals/templates/proposals/proposal_list.html:121
+#: proposals/templates/proposals/proposal_list.html:129
 msgid "Verberg"
 msgstr "Hide"
 
-#: proposals/templates/proposals/proposal_list.html:128
+#: proposals/templates/proposals/proposal_list.html:136
 msgid "Soort studie"
 msgstr "Study type"
 
-#: proposals/templates/proposals/proposal_list.html:132
+#: proposals/templates/proposals/proposal_list.html:140
 msgid "Besloten op"
 msgstr "Concluded on"
 
-#: proposals/templates/proposals/proposal_list.html:134
+#: proposals/templates/proposals/proposal_list.html:142
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
-#: proposals/templates/proposals/proposal_list.html:138
+#: proposals/templates/proposals/proposal_list.html:146
 msgid "Status"
 msgstr "State"
 
-#: proposals/templates/proposals/proposal_list.html:154
-#: reviews/templates/reviews/decision_list.html:148
+#: proposals/templates/proposals/proposal_list.html:162
+#: reviews/templates/reviews/decision_list.html:137
 #: reviews/templates/reviews/decision_list_open.html:70
 #: reviews/templates/reviews/decision_supervisor_list_open.html:63
 #: reviews/templates/reviews/review_list.html:115
 msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
-#: proposals/templates/proposals/proposal_list.html:175
+#: proposals/templates/proposals/proposal_list.html:183
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
-#: proposals/templates/proposals/proposal_list.html:196
+#: proposals/templates/proposals/proposal_list.html:204
 msgid "Route:"
 msgstr "Route:"
 
-#: proposals/templates/proposals/proposal_list.html:205
-#: reviews/templates/reviews/decision_list.html:189
+#: proposals/templates/proposals/proposal_list.html:213
+#: reviews/templates/reviews/decision_list.html:178
 #: reviews/templates/reviews/decision_list_open.html:101
 #: reviews/templates/reviews/decision_supervisor_list_open.html:94
 #: reviews/templates/reviews/review_list.html:146
@@ -3345,7 +3357,7 @@ msgstr "Task-based research: session {} task {} (trajectory {})"
 msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
 
-#: proposals/views/proposal_views.py:36 proposals/views/proposal_views.py:86
+#: proposals/views/proposal_views.py:36 proposals/views/proposal_views.py:87
 msgid "Publiek archief"
 msgstr "Public archive"
 
@@ -3353,27 +3365,27 @@ msgstr "Public archive"
 msgid "Dit overzicht toont alle goedgekeurde studies."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:139
+#: proposals/views/proposal_views.py:140
 msgid "Dit overzicht toont al uw nog niet ingediende studies."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:154
+#: proposals/views/proposal_views.py:155
 msgid "Dit overzicht toont al uw ingediende studies."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:171
+#: proposals/views/proposal_views.py:172
 msgid "Dit overzicht toont al uw beoordeelde studies."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:187
+#: proposals/views/proposal_views.py:188
 msgid "Dit overzicht toont al uw studies waar u eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:211
+#: proposals/views/proposal_views.py:213
 msgid "Dit overzicht toont al uw studies."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:221
+#: proposals/views/proposal_views.py:225
 msgid ""
 "Dit overzicht toont alle oefenstudies waar u als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3381,15 +3393,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:281
+#: proposals/views/proposal_views.py:285
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:364
+#: proposals/views/proposal_views.py:368
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:437
+#: proposals/views/proposal_views.py:441
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3438,15 +3450,11 @@ msgstr "Select committee members"
 msgid "Er moet tenminste één beoordelaar geselecteerd worden."
 msgstr "You must select at least one reviewer."
 
-#: reviews/forms.py:83
-msgid "Er moet tenminste één secretaris geselecteerd worden."
-msgstr "You must select at least one secretary."
-
-#: reviews/forms.py:116
+#: reviews/forms.py:105
 msgid "Voeg deze studie toe aan het archief"
 msgstr "Add this study to the archive"
 
-#: reviews/forms.py:122
+#: reviews/forms.py:111
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
@@ -3498,7 +3506,7 @@ msgstr "Post hoc positive advice by FEtC-H"
 msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
-#: reviews/models.py:43 reviews/templates/reviews/decision_list.html:180
+#: reviews/models.py:43 reviews/templates/reviews/decision_list.html:169
 msgid "Route"
 msgstr "Route"
 
@@ -3764,7 +3772,7 @@ msgstr "Save decision"
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
-#: reviews/templates/reviews/decision_list.html:123
+#: reviews/templates/reviews/decision_list.html:112
 #: reviews/templates/reviews/review_table.html:18
 #: reviews/templates/reviews/review_to_conclude.html:61
 msgid "open"
@@ -5216,6 +5224,9 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Er moet tenminste één secretaris geselecteerd worden."
+#~ msgstr "You must select at least one secretary."
 
 #, fuzzy
 #~| msgid "Aanvraag bij voortoetsing"

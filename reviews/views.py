@@ -297,7 +297,7 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
-        ).order_by('-proposal__date_submitted')
+        ).order_by('-date_start')
 
         for obj in objects:
             proposal = obj.proposal
@@ -307,7 +307,6 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
                 if reviews[proposal.pk].pk < obj.pk:
                     reviews[proposal.pk] = obj
         
-
         return [value for key, value in reviews.items()]
 
 

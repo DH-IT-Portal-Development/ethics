@@ -364,13 +364,18 @@ def notify_local_staff(proposal):
     activate('nl')
 
     secretary = get_secretary()
-
-    subject = _('FETC-GW: nieuwe studie ingediend')
+    
+    if proposal.is_revision:
+        subject = _('FETC-GW: gereviseerde studie gebruikt labfaciliteiten')
+    else:
+        subject = _('FETC-GW: nieuwe studie gebruikt labfaciliteiten')
+    
     params = {
         'secretary': secretary.get_full_name(),
         'proposal': proposal,
         'applicants': [applicant.get_full_name() for applicant in proposal.applicants.all()],
         'facilities': sorted(check_local_facilities(proposal).items()),
+        'is_revision': proposal.is_revision,
     }
     msg_plain = render_to_string('mail/local_staff_notify.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [settings.EMAIL_LOCAL_STAFF])
