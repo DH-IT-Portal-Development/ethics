@@ -49,7 +49,7 @@
                             <h4>{{ proposal.reference_number }} - {{ proposal.title }} </h4>
 
                             <div class="ufl-actions">
-                                 <a href="{% url 'proposals:pdf' review.proposal.pk %}" target="_blank">
+                                 <a href="{{ proposal.pdf.url }}" target="_blank" download="{{proposal.pdf.name}}">
                                     <img src="{{ img_pdf }}"
                                          title="{% trans 'Studie inzien' %}">
                                 </a>
