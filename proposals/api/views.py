@@ -177,6 +177,7 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
         return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
                                        status_review=True,
                                        in_archive=True,
+                                       is_pre_assessment=False,
                                        reviewing_committee=self.committee,
                                        public=True).select_related(
             # this optimizes the loading a bit
