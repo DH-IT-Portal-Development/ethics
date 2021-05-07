@@ -105,7 +105,7 @@ class Review(models.Model):
         )
 
         if self.proposal.has_minor_revision:
-            continuation += _(', met revisie')
+            continuation += str(_(', met revisie'))
 
         return continuation
 
