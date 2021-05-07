@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-30 16:52+0200\n"
+"POT-Creation-Date: 2021-05-07 15:53+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -383,8 +383,8 @@ msgid "Fase"
 msgstr "Phase"
 
 #: main/templates/auth/user_detail.html:55 proposals/api/views.py:21
-#: proposals/api/views.py:79 proposals/api/views.py:109
-#: proposals/api/views.py:159
+#: proposals/api/views.py:86 proposals/api/views.py:116
+#: proposals/api/views.py:166
 #: proposals/templates/proposals/vue_templates/proposal_list.html:157
 #: reviews/api/views.py:49 reviews/api/views.py:321
 #: reviews/templates/reviews/vue_templates/decision_list.html:149
@@ -406,18 +406,18 @@ msgid "Mijn besluit"
 msgstr "My decision"
 
 #: main/templates/auth/user_detail.html:58 reviews/api/views.py:57
-#: reviews/api/views.py:329 reviews/models.py:55
+#: reviews/api/views.py:329 reviews/models.py:54
 #: reviews/templates/reviews/vue_templates/decision_list.html:129
 #: reviews/templates/reviews/vue_templates/review_list.html:114
 msgid "Afhandeling"
-msgstr "Action"
+msgstr "Conclusion"
 
 #: main/templates/auth/user_detail.html:59
 #: tasks/templates/tasks/task_list.html:11
 msgid "Acties"
 msgstr "Actions"
 
-#: main/templates/auth/user_detail.html:75 reviews/models.py:109
+#: main/templates/auth/user_detail.html:75 reviews/models.py:108
 msgid ", met revisie"
 msgstr ", with revision"
 
@@ -577,7 +577,7 @@ msgid "Algemene Kamer"
 msgstr "General Chamber"
 
 #: main/templates/base/menu.html:72 main/templates/base/menu.html:99
-#: reviews/menus.py:14 reviews/views.py:59
+#: reviews/menus.py:14 reviews/views.py:57
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
@@ -597,12 +597,12 @@ msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
 #: main/templates/base/menu.html:85 main/templates/base/menu.html:112
-#: reviews/menus.py:32 reviews/views.py:120
+#: reviews/menus.py:32 reviews/views.py:118
 msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
 #: main/templates/base/menu.html:88 main/templates/base/menu.html:115
-#: reviews/menus.py:37 reviews/views.py:134
+#: reviews/menus.py:37 reviews/views.py:132
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
@@ -1225,19 +1225,19 @@ msgstr "Observational research"
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/api/views.py:25 proposals/api/views.py:117
-#: proposals/api/views.py:163
+#: proposals/api/views.py:25 proposals/api/views.py:124
+#: proposals/api/views.py:170
 msgid "Datum afgerond"
 msgstr "Date reviewed"
 
-#: proposals/api/views.py:29 proposals/api/views.py:64
-#: proposals/api/views.py:83 proposals/api/views.py:121
-#: proposals/api/views.py:142
+#: proposals/api/views.py:29 proposals/api/views.py:71
+#: proposals/api/views.py:90 proposals/api/views.py:128
+#: proposals/api/views.py:149
 #: proposals/templates/proposals/vue_templates/proposal_list.html:113
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
-#: proposals/api/views.py:113
+#: proposals/api/views.py:120
 msgid "Datum ingediend bij eindverantwoordelijke"
 msgstr "Date sent to supervisor"
 
@@ -1516,7 +1516,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:149
+#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:148
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -3428,7 +3428,7 @@ msgstr "Your study will require assessment by a METC."
 msgid "Stadium"
 msgstr "Stage"
 
-#: reviews/api/views.py:35 reviews/api/views.py:307 reviews/models.py:44
+#: reviews/api/views.py:35 reviews/api/views.py:307 reviews/models.py:43
 #: reviews/templates/reviews/vue_templates/decision_list.html:173
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:115
 #: reviews/templates/reviews/vue_templates/review_list.html:158
@@ -3439,11 +3439,11 @@ msgstr "Route"
 msgid "Start datum"
 msgstr "Start date review"
 
-#: reviews/forms.py:12 reviews/models.py:116
+#: reviews/forms.py:12 reviews/models.py:115
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:13 reviews/models.py:115
+#: reviews/forms.py:13 reviews/models.py:114
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3467,72 +3467,72 @@ msgstr "Add this study to the archive"
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
-#: reviews/models.py:18
+#: reviews/models.py:17
 msgid "Beoordeling door eindverantwoordelijke"
 msgstr "Assessment by researcher with final responsibility"
 
-#: reviews/models.py:19
+#: reviews/models.py:18
 msgid "Aanstelling commissieleden"
 msgstr "Appointment of committee members"
 
-#: reviews/models.py:20
+#: reviews/models.py:19
 msgid "Beoordeling door commissie"
 msgstr "Assessment by committee"
 
-#: reviews/models.py:21
+#: reviews/models.py:20
 msgid "Afsluiting door secretaris"
 msgstr "Conclusion by secretary"
 
-#: reviews/models.py:22
+#: reviews/models.py:21
 msgid "Afgesloten"
 msgstr "Concluded"
 
-#: reviews/models.py:33
+#: reviews/models.py:32
 msgid "Goedkeuring door FETC-GW"
 msgstr "Approval by FEtC-H"
 
-#: reviews/models.py:34
+#: reviews/models.py:33
 msgid "Revisie noodzakelijk"
 msgstr "Revision necessary"
 
-#: reviews/models.py:35
+#: reviews/models.py:34
 msgid "Afwijzing door FETC-GW"
 msgstr "Rejection by FEtC-H"
 
-#: reviews/models.py:36
+#: reviews/models.py:35
 msgid "Open review met lange (4-weken) route"
 msgstr "Open review on long (4-week) route"
 
-#: reviews/models.py:37
+#: reviews/models.py:36
 msgid "Laat opnieuw beoordelen door METC"
 msgstr "Submit for reassessment by METC"
 
-#: reviews/models.py:38
+#: reviews/models.py:37
 msgid "Positief advies van FETC-GW, post-hoc"
 msgstr "Post hoc positive advice by FEtC-H"
 
-#: reviews/models.py:39
+#: reviews/models.py:38
 msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
-#: reviews/models.py:50 reviews/models.py:143
+#: reviews/models.py:49 reviews/models.py:142
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:117
+#: reviews/models.py:116
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:137
+#: reviews/models.py:136
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:138
+#: reviews/models.py:137
 msgid "niet goegekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:139
+#: reviews/models.py:138
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -4200,15 +4200,15 @@ msgstr ""
 "The study uses psychophysiological measurements on children under {} year(s) "
 "old."
 
-#: reviews/views.py:45
+#: reviews/views.py:43
 msgid "Mijn besluiten"
 msgstr "My results"
 
-#: reviews/views.py:74
+#: reviews/views.py:72
 msgid "Openstaande besluiten commissieleden"
 msgstr "Pending decisions committee members"
 
-#: reviews/views.py:90
+#: reviews/views.py:88
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
