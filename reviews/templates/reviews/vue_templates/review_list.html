@@ -39,7 +39,11 @@
 
         <template #actions="{ item: review, context }">
             {# The :href means that we use Vue to provide the actual link. Thus, the expression is Vue code! #}
-            <a :href="$url('proposals:pdf', [review.proposal.pk])" target="_blank">
+            <a
+               :href="review.proposal.pdf.url"
+               target="_blank"
+               :download="review.proposal.pdf.name"
+            >
                 {# Note the absence of {% verbatim %}, we actually use django here for the image! #}
                 <img src="{{ img_pdf }}" title="{% trans 'Studie inzien' %}">
             </a>

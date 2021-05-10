@@ -10,11 +10,12 @@ class ReviewProposalSerializer(serializers.ModelSerializer):
         model = Proposal
         fields = ['pk', 'reference_number', 'title', 'is_revision',
                   'date_confirmed', 'date_submitted', 'parent', 'latest_review',
-                  'applicants']
+                  'applicants', 'pdf']
 
     parent = serializers.SerializerMethodField()
     latest_review = serializers.SerializerMethodField()
     applicants = serializers.SerializerMethodField()
+    pdf = serializers.SerializerMethodField()
 
     def get_parent(self, proposal):
         if proposal.parent:
@@ -32,6 +33,15 @@ class ReviewProposalSerializer(serializers.ModelSerializer):
 
     def get_applicants(self, proposal):
         return UserSerializer(proposal.applicants.all(), many=True).data
+
+    def get_pdf(self, proposal):
+        if proposal.pdf:
+            return {
+                "name": proposal.pdf.name,
+                "url": proposal.pdf.url,
+            }
+
+        return None
 
 
 class InlineDecisionSerializer(ModelDisplaySerializer):
