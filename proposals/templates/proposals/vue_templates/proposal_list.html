@@ -138,65 +138,70 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <table>
-                        <tr v-if="proposal.parent && proposal.parent.latest_review">
-                            <td>
-                                {% trans "Revisie/amendement van" %}:
-                            </td>
-                            <td v-if="proposal.parent.pdf != undefined">
-                                <a
-                                    :href="proposal.parent.pdf.url"
-                                    v-html="proposal.parent.reference_number"
-                                ></a>
-                            </td>
-                            <td v-else v-html="proposal.parent.reference_number">
+                        <tbody>
+                            <tr v-if="proposal.parent && proposal.parent.latest_review">
+                                <td>
+                                    {% trans "Revisie/amendement van" %}:
+                                </td>
+                                <td v-if="proposal.parent.pdf != undefined">
+                                    <a
+                                        :href="proposal.parent.pdf.url"
+                                        v-html="proposal.parent.reference_number"
+                                    ></a>
+                                </td>
+                                <td v-else v-html="proposal.parent.reference_number">
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% trans "Datum ingediend" %}:
-                            </td>
-                            <td v-if="proposal.date_submitted">
-                                {% verbatim %}
-                                {{ proposal.date_submitted | date("DD-MM-YYYY, HH:mm") }}
-                                {% endverbatim %}
-                            </td>
-                            <td v-else>
-                                {% trans 'Nog niet ingediend' %}
-                            </td>
-                        </tr>
-                        <tr v-if="proposal.supervisor">
-                            <td>
-                                {% trans "Eindverantwoordelijke onderzoeker" %}:
-                            </td>
-                            <td v-html="proposal.supervisor.fullname">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Datum ingediend" %}:
+                                </td>
+                                <td v-if="proposal.date_submitted">
+                                    {% verbatim %}
+                                    {{ proposal.date_submitted | date("DD-MM-YYYY, HH:mm") }}
+                                    {% endverbatim %}
+                                </td>
+                                <td v-else>
+                                    {% trans 'Nog niet ingediend' %}
+                                </td>
+                            </tr>
+                            <tr v-if="proposal.supervisor">
+                                <td>
+                                    {% trans "Eindverantwoordelijke onderzoeker" %}:
+                                </td>
+                                <td v-html="proposal.supervisor.fullname">
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="col-12 col-md-6">
                     <table>
-                        <tr v-if="context.wants_route_info && proposal.latest_review">
-                            <td>
-                                {% trans "Route:" %}
-                            </td>
-                            <td v-html="proposal.latest_review.route">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                {% trans "Indieners" %}:<br/>
-                                <span
-                                   v-for="(applicant, index) in proposal.applicants"
-                               >
-                                    {% verbatim %}
-                                    <span v-if="index != 0">, </span>
-                                    {{ applicant.fullname }}
-                                    {% endverbatim %}
-                                </span>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr v-if="context.wants_route_info && proposal.latest_review">
+                                <td>
+                                    {% trans "Route:" %}
+                                </td>
+                                <td v-html="proposal.latest_review.route">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    {% trans "Indieners" %}:<br/>
+                                    <span
+                                       v-for="(applicant, index) in proposal.applicants"
+                                   >
+                                        {% verbatim %}
+                                        <span v-if="index != 0">, </span>
+                                        {{ applicant.fullname }}
+                                        {% endverbatim %}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+
                     </table>
                 </div>
             </div>

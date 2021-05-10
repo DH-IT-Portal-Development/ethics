@@ -128,46 +128,48 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <table>
-                        <tr v-if="decision.review.stage === context.review.CLOSED">
-                            <td>
-                                {% trans "Afhandeling" %}:
-                            </td>
-                            <td v-html="decision.review.get_continuation_display">
+                        <tbody>
+                            <tr v-if="decision.review.stage === context.review.CLOSED">
+                                <td>
+                                    {% trans "Afhandeling" %}:
+                                </td>
+                                <td v-html="decision.review.get_continuation_display">
 
-                            </td>
-                        </tr>
-                        <tr v-if="decision.proposal.parent && decision.proposal.parent.latest_review">
-                            <td>
-                                {% trans "Revisie/amendement van" %}:
-                            </td>
-                            <td>
-                                <a
-                                    :href="$url('reviews:detail', [decision.proposal.parent.latest_review.pk])"
-                                    v-html="decision.proposal.parent.reference_number"
-                                >
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% trans "Datum ingediend" %}:
-                            </td>
-                            <td>
-                                {% verbatim %}
-                                {{ decision.review.date_start | date("DD-MM-YYYY") }}
-                                {% endverbatim %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% trans "Gewenste einddatum" %}:
-                            </td>
-                            <td>
-                                {% verbatim %}
-                                {{ decision.review.date_should_end | date("DD-MM-YYYY") }}
-                                {% endverbatim %}
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                            <tr v-if="decision.proposal.parent && decision.proposal.parent.latest_review">
+                                <td>
+                                    {% trans "Revisie/amendement van" %}:
+                                </td>
+                                <td>
+                                    <a
+                                        :href="$url('reviews:detail', [decision.proposal.parent.latest_review.pk])"
+                                        v-html="decision.proposal.parent.reference_number"
+                                    >
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Datum ingediend" %}:
+                                </td>
+                                <td>
+                                    {% verbatim %}
+                                    {{ decision.review.date_start | date("DD-MM-YYYY") }}
+                                    {% endverbatim %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Gewenste einddatum" %}:
+                                </td>
+                                <td>
+                                    {% verbatim %}
+                                    {{ decision.review.date_should_end | date("DD-MM-YYYY") }}
+                                    {% endverbatim %}
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="col-12 col-md-6">

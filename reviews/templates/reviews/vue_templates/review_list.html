@@ -113,71 +113,75 @@
             <div class="row">
                 <div class="col-12 col-md-6">
                     <table>
-                        <tr v-if="review.stage === context.review.CLOSED">
-                            <td>
-                                {% trans "Afhandeling" %}:
-                            </td>
-                            <td v-html="review.get_continuation_display">
+                        <tbody>
+                            <tr v-if="review.stage === context.review.CLOSED">
+                                <td>
+                                    {% trans "Afhandeling" %}:
+                                </td>
+                                <td v-html="review.get_continuation_display">
 
-                            </td>
-                        </tr>
-                        <tr v-if="review.proposal.parent && review.proposal.parent.latest_review">
-                            <td>
-                                {% trans "Revisie/amendement van" %}:
-                            </td>
-                            <td>
-                                <a
-                                    :href="$url('reviews:detail', [review.proposal.parent.latest_review.pk])"
-                                    v-html="review.proposal.parent.reference_number"
-                                >
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% trans "Datum ingediend" %}:
-                            </td>
-                            <td>
-                                {% verbatim %}
-                                {{ review.date_start | date("DD-MM-YYYY") }}
-                                {% endverbatim %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {% trans "Gewenste einddatum" %}:
-                            </td>
-                            <td>
-                                {% verbatim %}
-                                {{ review.date_should_end | date("DD-MM-YYYY") }}
-                                {% endverbatim %}
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                            <tr v-if="review.proposal.parent && review.proposal.parent.latest_review">
+                                <td>
+                                    {% trans "Revisie/amendement van" %}:
+                                </td>
+                                <td>
+                                    <a
+                                        :href="$url('reviews:detail', [review.proposal.parent.latest_review.pk])"
+                                        v-html="review.proposal.parent.reference_number"
+                                    >
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Datum ingediend" %}:
+                                </td>
+                                <td>
+                                    {% verbatim %}
+                                    {{ review.date_start | date("DD-MM-YYYY") }}
+                                    {% endverbatim %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Gewenste einddatum" %}:
+                                </td>
+                                <td>
+                                    {% verbatim %}
+                                    {{ review.date_should_end | date("DD-MM-YYYY") }}
+                                    {% endverbatim %}
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="col-12 col-md-6">
                     <table>
-                        <tr v-if="review.stage >= context.review.COMMISSION">
-                            <td>
-                                {% trans "Route" %}:
-                            </td>
-                            <td v-html="review.route">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                {% trans "Indieners" %}:<br/>
-                                <a
-                                   v-for="(applicant, index) in review.proposal.applicants"
-                                   :href="$url('main:user_detail', [applicant.pk])"
-                               >
-                                    {% verbatim %}
-                                    <span v-if="index != 0">, </span>
-                                    {{ applicant.fullname }}
-                                    {% endverbatim %}
-                                </a>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr v-if="review.stage >= context.review.COMMISSION">
+                                <td>
+                                    {% trans "Route" %}:
+                                </td>
+                                <td v-html="review.route">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    {% trans "Indieners" %}:<br/>
+                                    <a
+                                       v-for="(applicant, index) in review.proposal.applicants"
+                                       :href="$url('main:user_detail', [applicant.pk])"
+                                   >
+                                        {% verbatim %}
+                                        <span v-if="index != 0">, </span>
+                                        {{ applicant.fullname }}
+                                        {% endverbatim %}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
