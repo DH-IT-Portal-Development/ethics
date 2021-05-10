@@ -28,7 +28,7 @@ class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateV
     ]
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data()
+        context = super().get_context_data(**kwargs)
 
         context['list_template'] = "reviews/vue_templates/decision_list.html"
 
