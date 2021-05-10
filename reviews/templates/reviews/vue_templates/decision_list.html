@@ -1,0 +1,201 @@
+{% load static %}
+{% load i18n %}
+
+{% static "proposals/images/arrow_divide.png" as img_diff %}
+{% static "main/images/page_white_acrobat.png" as img_pdf %}
+{% static "proposals/images/folder_delete.png" as img_hide %}
+{% static 'main/images/zoom.png' as img_details %}
+{% static 'reviews/images/user_add.png' as img_add_reviewers %}
+{% static 'reviews/images/folder_edit.png' as img_change_chamber %}
+{% static 'reviews/images/scale.png' as img_decide %}
+{% static 'reviews/images/accept.png' as img_close %}
+{% static 'reviews/images/website.png' as img_export %}
+{% static 'reviews/images/report_go.png' as img_confirm %}
+{% static 'reviews/images/tick.png' as img_confirmed %}
+
+<script type="text/x-template" id="reviewsUFLList">
+    <FancyList
+            {# It's a long, but standard, list, so we just include the default list #}
+            {% include 'uil.vue/fancy-list-params.txt' %}
+    >
+        {# General note: the #{slot}="data" defines in which Vue variable all properties are loaded.  #}
+        {# FancyList only exposes `item` and `context`, where item is the item from the data for a given row.  #}
+        {# and context is the global context data. #}
+        {# (Thus, data.item and data.context). You can use  #}
+
+        {# Here we do some JS deconstructing to pull the data out in seperate variables. We also rename item #}
+        {# to decision, for clarity. #}
+        <template #title="{ item: decision, context }">
+            <h4>
+                {# Verbatim tags are needed to stop Django from interpreting these braces as Django template code #}
+                {# They are actually vue template code #}
+                {% verbatim %}
+                {{ decision.proposal.reference_number }} -
+                {{ decision.proposal.title }}
+                {% endverbatim %}
+            </h4>
+        </template>
+
+
+        <template #actions="{ item: decision, context }">
+            {# The :href means that we use Vue to provide the actual link. Thus, the expression is Vue code! #}
+            <a
+               :href="decision.proposal.pdf.url"
+               target="_blank"
+               :download="decision.proposal.pdf.name"
+            >
+                {# Note the absence of {% verbatim %}, we actually use django here for the image! #}
+                <img src="{{ img_pdf }}" title="{% trans 'Studie inzien' %}">
+            </a>
+            <a :href="$url('reviews:detail', [decision.review.pk])">
+                <img src="{{ img_details }}" title="{% trans 'Details' %}">
+            </a>
+            <a :href="$url('proposals:diff', [decision.proposal.pk])" v-if="decision.proposal.is_revision">
+                <img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}">
+            </a>
+            {# The template tag doesn't add anything by itself, so it's a good if container #}
+            <template v-if="context.is_secretary && decision.review.stage === context.review.ASSIGNMENT">
+                <a :href="$url('reviews:assign', [decision.review.pk])">
+                    <img src="{{ img_add_reviewers }}"
+                         title="{% trans 'Aanstellen' %}">
+                </a>
+                <a :href="$url('reviews:change_chamber', [decision.proposal.pk])">
+                    <img src="{{ img_change_chamber }}"
+                         title="{% trans 'Verplaats naar andere kamer' %}">
+                </a>
+            </template>
+            <template v-else-if="!decision.review.date_end">
+                <a :href="$url('reviews:decide', [decision.pk])" v-if="decision.review.current_reviewers.includes(context.current_user_pk)">
+                    <img src="{{ img_decide }}" title="{% trans 'Beslissen' %}">
+                </a>
+                <a :href="$url('reviews:decide_new', [decision.review.pk])" v-else-if="context.is_secretary">
+                    <img src="{{ img_decide }}" title="{% trans 'Beslissen' %}">
+                </a>
+            </template>
+            <a
+                    v-if="context.is_secretary && decision.review.stage === context.review.CLOSING"
+                    :href="$url('reviews:close', [decision.review.pk])"
+            >
+                <img src="{{ img_close }}" title="{% trans 'Afsluiten' %}">
+            </a>
+            <template v-else-if="context.is_secretary && decision.review.stage === context.review.CLOSED">
+                <template v-if="[context.review.GO, context.review.GO_POST_HOC].includes(decision.review.continuation)">
+                    <a :href="$url('proposals:archive_export', [decision.proposal.pk])">
+                        <img src="{{ img_export }}"
+                             title="{% trans 'Website export tekst' %}">
+                    </a>
+                    <a :href="$url('proposals:confirmation', [decision.proposal.pk])">
+                        <img
+                            v-if="decision.proposal.date_confirmed"
+                            src="{{ img_confirm }}"
+                            title="{% trans 'Bevestigingsbrief versturen' %}"
+                        />
+                        <img
+                            v-else
+                            src="{{ img_confirmed }}"
+                            title="{% trans 'Bevestigingsbrief verstuurd' %}"
+                        />
+                    </a>
+                </template>
+            </template>
+        </template>
+
+
+        <template #undertitle="{ item: decision, context }">
+            <div class="ufl-undertitle-line">
+                {% trans 'Eindverantwoordelijke' %}:
+                {% verbatim %}
+                {{ decision.review.accountable_user.fullname }}
+                {% endverbatim %}
+            </div>
+            <div class="ufl-undertitle-line">
+                {% trans "Fase" %}:
+                {% verbatim %}
+                {{ decision.review.get_stage_display }}
+                {% endverbatim %}
+
+            </div>
+            <div class="ufl-undertitle-line">
+                {% trans "Mijn besluit" %}:
+                {% verbatim %}
+                {{ decision.get_go_display ? decision.get_go_display : "Open" }}
+                {% endverbatim %}
+            </div>
+        </template>
+
+
+        <template #details="{ item: decision, context }">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <table>
+                        <tr v-if="decision.review.stage === context.review.CLOSED">
+                            <td>
+                                {% trans "Afhandeling" %}:
+                            </td>
+                            <td v-html="decision.review.get_continuation_display">
+
+                            </td>
+                        </tr>
+                        <tr v-if="decision.proposal.parent && decision.proposal.parent.latest_review">
+                            <td>
+                                {% trans "Revisie/amendement van" %}:
+                            </td>
+                            <td>
+                                <a
+                                    :href="$url('reviews:detail', [decision.proposal.parent.latest_review.pk])"
+                                    v-html="decision.proposal.parent.reference_number"
+                                >
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% trans "Datum ingediend" %}:
+                            </td>
+                            <td>
+                                {% verbatim %}
+                                {{ decision.review.date_start | date("DD-MM-YYYY") }}
+                                {% endverbatim %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% trans "Gewenste einddatum" %}:
+                            </td>
+                            <td>
+                                {% verbatim %}
+                                {{ decision.review.date_should_end | date("DD-MM-YYYY") }}
+                                {% endverbatim %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6">
+                    <table>
+                        <tr v-if="decision.review.stage >= context.review.COMMISSION">
+                            <td>
+                                {% trans "Route" %}:
+                            </td>
+                            <td v-html="decision.review.route">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                {% trans "Indieners" %}:<br/>
+                                <a
+                                   v-for="(applicant, index) in decision.proposal.applicants"
+                                   :href="$url('main:user_detail', [applicant.pk])"
+                               >
+                                    {% verbatim %}
+                                    <span v-if="index != 0">, </span>
+                                    {{ applicant.fullname }}
+                                    {% endverbatim %}
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </FancyList>
+</script>

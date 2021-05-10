@@ -422,7 +422,7 @@ bij deze studie?'),
         - If no Sessions have yet been created, None is returned.
         """
         current_session = None
-        for study in self.study_set.all():
+        for study in self.study_set.all().prefetch_related('session_set'):
             for session in study.session_set.all():
                 current_session = session
                 if session.tasks_duration is None:

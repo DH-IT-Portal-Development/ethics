@@ -6,6 +6,7 @@ django-modeltranslation
 django-impersonate
 django-simple-menu
 django-debug-toolbar
+djangorestframework
 mysqlclient<2
 xhtml2pdf
 sphinx
@@ -17,7 +18,7 @@ django-user-agents
 pillow>=6.0
 pygments
 requests
--e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v1.1.1#egg=uil-django-core
+-e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v2.0.0-beta4#egg=uil-django-core
 reportlab
 docx2txt
 python-magic

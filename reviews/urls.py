@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import \
     AllProposalReviewsView, DecisionListView, DecisionMyOpenView, \
@@ -12,6 +12,7 @@ from .views import \
 app_name = 'reviews'
 
 urlpatterns = [
+    path('api/', include('reviews.api.urls', namespace='api')),
     path('<str:committee>/', DecisionListView.as_view(),
          name='my_archive'),
     path('<str:committee>/all/', AllProposalReviewsView.as_view(),
