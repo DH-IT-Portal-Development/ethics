@@ -50,6 +50,7 @@ def start_supervisor_phase(proposal):
 
     subject = _('FETC-GW: bevestiging indienen concept-aanmelding')
     params = {
+        'proposal': proposal,
         'supervisor': proposal.supervisor.get_full_name(),
         'secretary': get_secretary().get_full_name(),
         'pdf_url': settings.BASE_URL + proposal.pdf.url,
@@ -60,6 +61,7 @@ def start_supervisor_phase(proposal):
 
     subject = _('FETC-GW: beoordelen als eindverantwoordelijke')
     params = {
+        'proposal': proposal,
         'creator': proposal.created_by.get_full_name(),
         'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
         'secretary': get_secretary().get_full_name(),
