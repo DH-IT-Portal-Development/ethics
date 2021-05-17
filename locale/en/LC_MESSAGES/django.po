@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-10 13:44+0200\n"
+"POT-Creation-Date: 2021-05-17 10:35+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -359,15 +359,15 @@ msgstr "E-mail"
 msgid "Ingediende studies"
 msgstr "Submitted applications"
 
-#: main/templates/auth/user_detail.html:51 reviews/api/views.py:45
-#: reviews/api/views.py:317
+#: main/templates/auth/user_detail.html:51 reviews/api/views.py:49
+#: reviews/api/views.py:321
 msgid "Referentienummer"
 msgstr "Reference number"
 
 #: main/templates/auth/user_detail.html:52
-#: reviews/templates/reviews/vue_templates/decision_list.html:102
+#: reviews/templates/reviews/vue_templates/decision_list.html:106
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:52
-#: reviews/templates/reviews/vue_templates/review_list.html:94
+#: reviews/templates/reviews/vue_templates/review_list.html:98
 msgid "Eindverantwoordelijke"
 msgstr "Researcher with final responsibility"
 
@@ -376,39 +376,39 @@ msgid "Titel studie"
 msgstr "Study title"
 
 #: main/templates/auth/user_detail.html:54
-#: reviews/templates/reviews/vue_templates/decision_list.html:108
+#: reviews/templates/reviews/vue_templates/decision_list.html:112
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:58
-#: reviews/templates/reviews/vue_templates/review_list.html:100
+#: reviews/templates/reviews/vue_templates/review_list.html:104
 msgid "Fase"
 msgstr "Phase"
 
 #: main/templates/auth/user_detail.html:55 proposals/api/views.py:21
 #: proposals/api/views.py:86 proposals/api/views.py:116
 #: proposals/api/views.py:166
-#: proposals/templates/proposals/vue_templates/proposal_list.html:157
-#: reviews/api/views.py:49 reviews/api/views.py:321
-#: reviews/templates/reviews/vue_templates/decision_list.html:149
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:91
-#: reviews/templates/reviews/vue_templates/review_list.html:134
+#: proposals/templates/proposals/vue_templates/proposal_list.html:158
+#: reviews/api/views.py:53 reviews/api/views.py:325
+#: reviews/templates/reviews/vue_templates/decision_list.html:154
+#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:92
+#: reviews/templates/reviews/vue_templates/review_list.html:139
 msgid "Datum ingediend"
 msgstr "Date submitted"
 
 #: main/templates/auth/user_detail.html:56
-#: reviews/templates/reviews/vue_templates/decision_list.html:159
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:101
-#: reviews/templates/reviews/vue_templates/review_list.html:144
+#: reviews/templates/reviews/vue_templates/decision_list.html:164
+#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:102
+#: reviews/templates/reviews/vue_templates/review_list.html:149
 msgid "Gewenste einddatum"
 msgstr "Desired end date"
 
 #: main/templates/auth/user_detail.html:57
-#: reviews/templates/reviews/vue_templates/decision_list.html:115
+#: reviews/templates/reviews/vue_templates/decision_list.html:119
 msgid "Mijn besluit"
 msgstr "My decision"
 
-#: main/templates/auth/user_detail.html:58 reviews/api/views.py:57
-#: reviews/api/views.py:329 reviews/models.py:54
-#: reviews/templates/reviews/vue_templates/decision_list.html:129
-#: reviews/templates/reviews/vue_templates/review_list.html:114
+#: main/templates/auth/user_detail.html:58 reviews/api/views.py:43
+#: reviews/api/views.py:315 reviews/models.py:54
+#: reviews/templates/reviews/vue_templates/decision_list.html:134
+#: reviews/templates/reviews/vue_templates/review_list.html:119
 msgid "Afhandeling"
 msgstr "Conclusion"
 
@@ -417,55 +417,55 @@ msgstr "Conclusion"
 msgid "Acties"
 msgstr "Actions"
 
-#: main/templates/auth/user_detail.html:75 reviews/models.py:108
+#: main/templates/auth/user_detail.html:75 reviews/models.py:114
 msgid ", met revisie"
 msgstr ", with revision"
 
 #: main/templates/auth/user_detail.html:84
-#: reviews/templates/reviews/vue_templates/decision_list.html:44
+#: reviews/templates/reviews/vue_templates/decision_list.html:48
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:43
-#: reviews/templates/reviews/vue_templates/review_list.html:44
+#: reviews/templates/reviews/vue_templates/review_list.html:48
 msgid "Studie inzien"
 msgstr "Show study"
 
 #: main/templates/auth/user_detail.html:86
 #: reviews/templates/reviews/review_detail_sidebar.html:19
-#: reviews/templates/reviews/vue_templates/decision_list.html:47
+#: reviews/templates/reviews/vue_templates/decision_list.html:51
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:46
-#: reviews/templates/reviews/vue_templates/review_list.html:47
+#: reviews/templates/reviews/vue_templates/review_list.html:51
 msgid "Details"
 msgstr "Details"
 
 #: main/templates/auth/user_detail.html:90
-#: reviews/templates/reviews/vue_templates/decision_list.html:56
-#: reviews/templates/reviews/vue_templates/review_list.html:56
+#: reviews/templates/reviews/vue_templates/decision_list.html:60
+#: reviews/templates/reviews/vue_templates/review_list.html:60
 msgid "Aanstellen"
 msgstr "Appoint"
 
 #: main/templates/auth/user_detail.html:93
-#: reviews/templates/reviews/vue_templates/decision_list.html:75
-#: reviews/templates/reviews/vue_templates/review_list.html:67
+#: reviews/templates/reviews/vue_templates/decision_list.html:79
+#: reviews/templates/reviews/vue_templates/review_list.html:71
 msgid "Afsluiten"
 msgstr "Conclude"
 
 #: main/templates/auth/user_detail.html:98
-#: reviews/templates/reviews/vue_templates/decision_list.html:81
-#: reviews/templates/reviews/vue_templates/review_list.html:73
+#: reviews/templates/reviews/vue_templates/decision_list.html:85
+#: reviews/templates/reviews/vue_templates/review_list.html:77
 msgid "Website export tekst"
 msgstr "Website export text"
 
 #: main/templates/auth/user_detail.html:103
 #: proposals/templates/proposals/proposal_confirmation.html:7
 #: proposals/templates/proposals/proposal_confirmation.html:25
-#: reviews/templates/reviews/vue_templates/decision_list.html:87
-#: reviews/templates/reviews/vue_templates/review_list.html:79
+#: reviews/templates/reviews/vue_templates/decision_list.html:91
+#: reviews/templates/reviews/vue_templates/review_list.html:83
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
 #: main/templates/auth/user_detail.html:106
 #: proposals/templates/proposals/proposal_confirmation.html:34
-#: reviews/templates/reviews/vue_templates/decision_list.html:92
-#: reviews/templates/reviews/vue_templates/review_list.html:84
+#: reviews/templates/reviews/vue_templates/decision_list.html:96
+#: reviews/templates/reviews/vue_templates/review_list.html:88
 msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
 
@@ -1035,8 +1035,8 @@ msgstr "Password"
 #: proposals/templates/proposals/vue_templates/proposal_list.html:49
 #: reviews/templates/reviews/review_detail_sidebar.html:35
 #: reviews/templates/reviews/simple_compare_link.html:8
-#: reviews/templates/reviews/vue_templates/decision_list.html:50
-#: reviews/templates/reviews/vue_templates/review_list.html:50
+#: reviews/templates/reviews/vue_templates/decision_list.html:54
+#: reviews/templates/reviews/vue_templates/review_list.html:54
 msgid "Toon verschillen"
 msgstr "Show differences"
 
@@ -1516,7 +1516,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:148
+#: proposals/models.py:182 proposals/models.py:293 reviews/models.py:154
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1622,7 +1622,7 @@ msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
 #: proposals/models.py:344
-#: proposals/templates/proposals/vue_templates/proposal_list.html:170
+#: proposals/templates/proposals/vue_templates/proposal_list.html:171
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -3218,8 +3218,8 @@ msgstr ""
 "the following pages."
 
 #: proposals/templates/proposals/vue_templates/proposal_list.html:41
-#: reviews/templates/reviews/vue_templates/decision_list.html:65
-#: reviews/templates/reviews/vue_templates/decision_list.html:68
+#: reviews/templates/reviews/vue_templates/decision_list.html:69
+#: reviews/templates/reviews/vue_templates/decision_list.html:72
 msgid "Beslissen"
 msgstr "Decide"
 
@@ -3248,25 +3248,25 @@ msgstr "Concluded on"
 msgid "Status"
 msgstr "State"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:143
-#: reviews/templates/reviews/vue_templates/decision_list.html:137
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:79
-#: reviews/templates/reviews/vue_templates/review_list.html:122
+#: proposals/templates/proposals/vue_templates/proposal_list.html:144
+#: reviews/templates/reviews/vue_templates/decision_list.html:142
+#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:80
+#: reviews/templates/reviews/vue_templates/review_list.html:127
 msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:165
+#: proposals/templates/proposals/vue_templates/proposal_list.html:166
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:182
+#: proposals/templates/proposals/vue_templates/proposal_list.html:185
 msgid "Route:"
 msgstr "Route:"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:189
-#: reviews/templates/reviews/vue_templates/decision_list.html:180
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:122
-#: reviews/templates/reviews/vue_templates/review_list.html:165
+#: proposals/templates/proposals/vue_templates/proposal_list.html:192
+#: reviews/templates/reviews/vue_templates/decision_list.html:186
+#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:125
+#: reviews/templates/reviews/vue_templates/review_list.html:172
 msgid "Indieners"
 msgstr "Applicants"
 
@@ -3313,8 +3313,16 @@ msgstr "Documents"
 msgid "Versturen"
 msgstr "Submit"
 
-#: proposals/utils/proposal_utils.py:368
-msgid "FETC-GW: nieuwe studie ingediend"
+#: proposals/utils/proposal_utils.py:369
+#, fuzzy
+#| msgid "Een gereviseerde studie aanmelden"
+msgid "FETC-GW: gereviseerde studie gebruikt labfaciliteiten"
+msgstr "Submit a revised version of your study"
+
+#: proposals/utils/proposal_utils.py:371
+#, fuzzy
+#| msgid "FETC-GW: nieuwe studie ingediend"
+msgid "FETC-GW: nieuwe studie gebruikt labfaciliteiten"
 msgstr "FEtC-H: new application submitted"
 
 #: proposals/utils/validate_proposal.py:98
@@ -3429,21 +3437,21 @@ msgid "Stadium"
 msgstr "Stage"
 
 #: reviews/api/views.py:35 reviews/api/views.py:307 reviews/models.py:43
-#: reviews/templates/reviews/vue_templates/decision_list.html:173
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:115
-#: reviews/templates/reviews/vue_templates/review_list.html:158
+#: reviews/templates/reviews/vue_templates/decision_list.html:179
+#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:118
+#: reviews/templates/reviews/vue_templates/review_list.html:165
 msgid "Route"
 msgstr "Route"
 
-#: reviews/api/views.py:53 reviews/api/views.py:325
+#: reviews/api/views.py:57 reviews/api/views.py:329
 msgid "Start datum"
 msgstr "Start date review"
 
-#: reviews/forms.py:12 reviews/models.py:115
+#: reviews/forms.py:12 reviews/models.py:121
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:13 reviews/models.py:114
+#: reviews/forms.py:13 reviews/models.py:120
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3515,24 +3523,28 @@ msgstr "Post hoc positive advice by FEtC-H"
 msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
-#: reviews/models.py:49 reviews/models.py:142
+#: reviews/models.py:49 reviews/models.py:148
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:116
+#: reviews/models.py:105
+msgid "Onbekend"
+msgstr "Unknown"
+
+#: reviews/models.py:122
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:136
+#: reviews/models.py:142
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:137
+#: reviews/models.py:143
 msgid "niet goegekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:138
+#: reviews/models.py:144
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -3981,8 +3993,8 @@ msgstr "open"
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
-#: reviews/templates/reviews/vue_templates/decision_list.html:60
-#: reviews/templates/reviews/vue_templates/review_list.html:60
+#: reviews/templates/reviews/vue_templates/decision_list.html:64
+#: reviews/templates/reviews/vue_templates/review_list.html:64
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
