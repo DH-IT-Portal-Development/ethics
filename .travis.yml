@@ -6,7 +6,7 @@ python:
     - 3.6
 
 before_install:
-  - sudo apt-get install poppler-utils
+  - sudo apt-get install poppler-utils poppler-data libpoppler-cpp-dev
 
 install:
     - pip install -U pip
