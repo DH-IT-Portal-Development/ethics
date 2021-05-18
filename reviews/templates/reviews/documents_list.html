@@ -23,15 +23,14 @@
             {% endif %}
         </li>
     {% endfor %}
-    {% if data.edit_link %}
-        <li>
-            <a href="{{ data.edit_link }}">
-                {% trans "Documenten wijzigen" %}
-                <img src="{% static 'proposals/images/pencil.png' %}"
-                     title="{% trans 'Documenten wijzigen' %}" />
-            </a>
-        </li>
-    {% endif %}
     </ul>
+
+    {% if data.edit_link %}
+    <a href="{{ data.edit_link }}">
+        {% trans "Documenten wijzigen" %}
+        <img src="{% static 'proposals/images/pencil.png' %}"
+             title="{% trans 'Documenten wijzigen' %}" />
+    </a>
+    {% endif %}
 
 {% endfor %}
