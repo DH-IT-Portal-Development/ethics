@@ -171,28 +171,32 @@ def documents_list(review):
     # Get the proposal PDF
     entries = []
     entries.append(
-        (_('Studie in PDF-vorm'), proposal.pdf, proposal)
+        # name, file, containing object, comparable
+        (_('Studie in PDF-vorm'), proposal.pdf, proposal, False)
     )
     
     # Pre-approval
     if proposal.pre_approval_pdf:
         entries.append(
-            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal)
+            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal, False)
         )
     
     # Pre-assessment
     if proposal.pre_assessment_pdf:
         entries.append(
-            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal)
+            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal, False)
         )
     
     # WMO
     if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
         entries.append(
-            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo)
+            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo, False)
         )
     
-    headers_items[_('Aanmelding')] = entries
+    headers_items[_('Aanmelding')] = {
+        'items': entries,
+        'edit_link': None,
+    }
     
     # Now get all trajectories / extra documents
     # First we get all objects attached to a study, then we append those
@@ -228,18 +232,22 @@ def documents_list(review):
                     (
                     _('Toestemmingsdocument observatiestudie'),
                     d.study.observation.approval_document,
-                    d.study.observation,
+                    d.study.observation
                     )
                 )
         
         for (name, field, obj) in files:
             # If it's got a file in it, add an entry
             if field:
-                entries.append((name, field, obj))
+                # name, file, containing object, comparable
+                entries.append((name, field, obj, True))
         
         
         # Get a humanized name for this documents item
-        headers_items[give_name(d)] = entries
+        headers_items[give_name(d)] = {
+            'items': entries,
+            'edit_link': reverse('studies:attachments', args=[d.pk]),
+        }
     
     return {'review': review,
             'headers_items': headers_items,
