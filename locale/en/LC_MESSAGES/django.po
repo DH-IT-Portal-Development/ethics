@@ -1606,6 +1606,7 @@ msgid ""
 "Ik heb kennis genomen van het bovenstaande en begrijp mijn "
 "verantwoordelijkheden ten opzichte van de AVG."
 msgstr ""
+"I have read the information above and understand my responsibilities with regards to the AVG."
 
 #: proposals/models.py:301
 msgid ""
