@@ -90,7 +90,6 @@ def simple_compare_link(obj, file):
         parent_pk = parent_obj.pk
         
     # Set parent object in case of Proposal PDF or DMP
-    # (currently unused, use proposal diff instead)
     if obj_type == 'proposal':
         parent_obj = parent_proposal
     
