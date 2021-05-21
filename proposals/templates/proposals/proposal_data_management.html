@@ -61,6 +61,9 @@
             </p>
 
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <table>
+            {{ form.as_table }}
+            </table>
                 {% include "base/form_buttons.html" %}
             </form>
         </div>

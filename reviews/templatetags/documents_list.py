@@ -89,7 +89,7 @@ def simple_compare_link(obj, file):
         parent_obj = parent_proposal.wmo
         parent_pk = parent_obj.pk
         
-    # Set parent object in case of Proposal PDF
+    # Set parent object in case of Proposal PDF or DMP
     # (currently unused, use proposal diff instead)
     if obj_type == 'proposal':
         parent_obj = parent_proposal
@@ -185,6 +185,12 @@ def documents_list(review):
     if proposal.pre_assessment_pdf:
         entries.append(
             (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal, False)
+        )
+    
+    # Data management plan
+    if proposal.dmp_file:
+        entries.append(
+            (_('Data Management Plan'), proposal.dmp_file, proposal, True)
         )
     
     # WMO

@@ -13,11 +13,13 @@ mark_safe_lazy = lazy(mark_safe, str)
 
 from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
+from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
+DMP_FILENAME = FilenameFactory('DMP')
 METC_DECISION_FILENAME = FilenameFactory('METC_Decision')
 PRE_APPROVAL_FILENAME = FilenameFactory('Pre_Approval')
 
@@ -287,6 +289,22 @@ gebruikt worden).'),
         null=True,
         blank=True,
     )
+    
+    avg_understood = models.BooleanField(
+        _('Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.'),
+        default=False,
+        null=False,
+        validators=[AVGUnderstoodValidator],
+    )
+    
+    dmp_file = models.FileField(
+        _('Als u een Data Management Plan heeft voor deze studie, kunt u kiezen om deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
+        blank=True,
+        validators=[validate_pdf_or_doc],
+        upload_to=DMP_FILENAME,
+        storage=OverwriteStorage(),
+    )
+
 
     # Confirmation
     confirmation_comments = models.TextField(
