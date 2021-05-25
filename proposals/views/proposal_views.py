@@ -16,7 +16,7 @@ from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     UpdateView, UserAllowedMixin
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
-from reviews.mixins import CommitteeMixin
+from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from ..copy import copy_proposal
@@ -230,14 +230,39 @@ class ProposalDelete(DeleteView):
         return reverse('proposals:my_concepts')
 
 
-class CompareDocumentsView(GroupRequiredMixin, generic.TemplateView):
+class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
     template_name = 'proposals/compare_documents.html'
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
+    
+    def get_allowed_users(self):
+        
+        compare_type = self.kwargs.get('type')
+        new_pk = self.kwargs.get('new')
+        attribute = self.kwargs.get('attribute')
 
+        model = {
+            'documents': Documents,
+            'wmo': Wmo,
+            'observation': Observation,
+            'proposal': Proposal,
+        }.get(compare_type, None)
+        
+        if model == Proposal:
+            proposal = Proposal.objects.get(pk=new_pk)
+        else:
+            proposal = model.objects.get(pk=new_pk).proposal
+        
+        allowed_users = list(proposal.applicants.all())
+        if proposal.supervisor:
+            allowed_users.append(proposal.supervisor)
+        
+        return allowed_users
+        
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -249,7 +274,8 @@ class CompareDocumentsView(GroupRequiredMixin, generic.TemplateView):
         context['new_text'] = get_document_contents(new_file)
 
         return context
-
+    
+    
     def _get_files(self) -> Tuple[
         Union[None, FieldFile],
         Union[None, FieldFile]
