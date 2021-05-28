@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import GroupAdmin
 from django.contrib.auth.models import Group
+from django.db.models import CharField
+from django.forms import Textarea
 
 from .models import Setting, SystemMessage
 
@@ -29,3 +31,6 @@ class SystemMessageAdmin(admin.ModelAdmin):
     list_display = ('level', 'message', 'not_before', 'not_after')
     list_display_links =  ('message', )
     ordering = ['not_before', 'not_after']
+    formfield_overrides = {
+        CharField: {'widget': Textarea}
+    }
