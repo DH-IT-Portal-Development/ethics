@@ -6,36 +6,31 @@
 {% load compare_tags %}
 {% load documents_list %}
 
-{% for header, items in headers_items.items %}
+{% for header, data in headers_items.items %}
 
     <h5>
        {{header}}
     </h5>
 
     <ul>
-    {% for name, file, obj in items %}
+    {% for name, file, obj, comparable in data.items %}
         <li>
             <a href="{{ file.url }}" target="_blank" download="{{file.name}}">
                 {{name}}
             </a>
-            {% if file.field.name != "pdf" %}
+            {% if comparable %}
                 {% simple_compare_link obj file %}
             {% endif %}
         </li>
     {% endfor %}
     </ul>
 
+    {% if data.edit_link %}
+    <a href="{{ data.edit_link }}">
+        {% trans "Documenten wijzigen" %}
+        <img src="{% static 'proposals/images/pencil.png' %}"
+             title="{% trans 'Documenten wijzigen' %}" />
+    </a>
+    {% endif %}
+
 {% endfor %}
-
-{% if review.proposal.study_set.first %}
-
-    <p>
-        {% get_study_documents study_documents review.proposal.study_set.first %}
-        <a href="{% url 'studies:attachments' study_documents.pk %}">
-            {% trans "Documenten wijzigen" %}
-            <img src="{% static 'proposals/images/pencil.png' %}"
-                 title="{% trans 'Documenten wijzigen' %}" />
-        </a>
-    </p>
-                    
-{% endif %}

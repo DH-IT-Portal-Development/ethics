@@ -145,7 +145,6 @@ def remind_reviewers():
     )
 
     for decision in decisions:
-        print(decision.review.date_should_end)
         proposal = decision.review.proposal
         subject = 'FETC-GW: beoordelen studie (Herrinering)'
         params = {

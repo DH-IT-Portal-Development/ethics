@@ -523,10 +523,12 @@ class StudyStartForm(forms.ModelForm):
                     self.add_error(study_name, _('Dit veld is verplicht.'))
 
 
-class ProposalDataManagementForm(forms.ModelForm):
+class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = []
+        fields = ['avg_understood', 'dmp_file']
+    
+    _soft_validation_fields = ['avg_understood']
 
 
 class ProposalSubmitForm(forms.ModelForm):

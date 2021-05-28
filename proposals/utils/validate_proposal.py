@@ -12,7 +12,7 @@ from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
 from studies.forms import StudyForm, StudyDesignForm, SessionStartForm
 from tasks.forms import TaskStartForm, TaskEndForm, TaskForm
-from ..forms import ProposalForm, WmoForm, StudyStartForm, WmoApplicationForm
+from ..forms import ProposalForm, WmoForm, StudyStartForm, WmoApplicationForm, ProposalDataManagementForm
 from ..models import Proposal
 
 from django.utils.translation import ugettext_lazy as _
@@ -216,6 +216,13 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                     ),
                     session,
                 )
+    
+    forms['data_management'] = (
+        ProposalDataManagementForm,
+        reverse('proposals:data_management', args=[proposal.pk]),
+        _('AVG en Data Management'),
+        proposal,
+    )
 
     return forms
 
