@@ -298,7 +298,7 @@ gebruikt worden).'),
     )
     
     dmp_file = models.FileField(
-        _('Als u een Data Management Plan heeft voor deze studie, kunt u kiezen om deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
+        _('Als je een Data Management Plan heeft voor deze studie, kunt u kiezen om deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=DMP_FILENAME,
