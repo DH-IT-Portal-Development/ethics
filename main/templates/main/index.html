@@ -15,7 +15,9 @@
         <div class="col-12">
             {% for message in systemmessage_list %}
                 <div class="{{ message.css_class }}">
+                {% autoescape off %}
                     {{ message.message }}
+                {% endautoescape %}
                 </div>
             {% endfor %}
             <h3>
