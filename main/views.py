@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import ldap
+
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.apps import apps
 from django.conf import settings
@@ -13,11 +14,13 @@ from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 
 from interventions.models import Intervention
+from main.models import SystemMessage
 from observations.models import Observation
 from proposals.models import Proposal
 from reviews.models import Review
@@ -34,8 +37,16 @@ except (ImportError):
 ################
 # Views
 ################
-class HomeView(generic.TemplateView):
+class HomeView(generic.ListView):
     template_name = 'main/index.html'
+    model = SystemMessage
+
+    def get_queryset(self):
+        now = timezone.now()
+        return self.model.objects.filter(
+            not_after__gt=now,
+            not_before__lt=now
+        )
 
 
 class UserDetailView(GroupRequiredMixin, generic.DetailView):
