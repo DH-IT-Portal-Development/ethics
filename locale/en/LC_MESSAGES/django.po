@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-28 10:09+0200\n"
+"POT-Creation-Date: 2021-05-28 13:40+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -376,9 +376,6 @@ msgid "Titel studie"
 msgstr "Study title"
 
 #: main/templates/auth/user_detail.html:54
-#: reviews/templates/reviews/vue_templates/decision_list.html:112
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:58
-#: reviews/templates/reviews/vue_templates/review_list.html:104
 msgid "Fase"
 msgstr "Phase"
 
@@ -405,8 +402,8 @@ msgstr "Desired end date"
 msgid "Mijn besluit"
 msgstr "My decision"
 
-#: main/templates/auth/user_detail.html:58 reviews/api/views.py:57
-#: reviews/api/views.py:329 reviews/models.py:54
+#: main/templates/auth/user_detail.html:58 reviews/api/views.py:311
+#: reviews/models.py:54
 #: reviews/templates/reviews/vue_templates/decision_list.html:134
 #: reviews/templates/reviews/vue_templates/review_list.html:119
 msgid "Afhandeling"
@@ -1516,7 +1513,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:184 proposals/models.py:311 reviews/models.py:148
+#: proposals/models.py:184 proposals/models.py:311 reviews/models.py:154
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1675,7 +1672,7 @@ msgstr "Normal"
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:459 reviews/api/views.py:39 reviews/api/views.py:311
+#: proposals/models.py:459 reviews/api/views.py:39 reviews/api/views.py:307
 #: reviews/templates/reviews/review_detail_sidebar.html:93
 msgid "Revisie"
 msgstr "Revision"
@@ -2140,8 +2137,10 @@ msgstr ""
 "\">data management</a>, as well as on <a href=\"https://www.uu.nl/en/"
 "research/research-data-management/guides/data-management-planning\" target="
 "\"_blank\">how to write a Data Management Plan</a>. You can also have your "
-"plan reviewed, either by <a href=\"https://www.uu.nl/en/research/research-data-management/tools-"
-"services/data-management-plan-review\" target=\"_blank\">Research Data Management Support</a> or the faculty <a href=\"mailto:Datamanagement.gw@uu.nl\" target=\"_blank\">data manager</a>. "
+"plan reviewed, either by <a href=\"https://www.uu.nl/en/research/research-"
+"data-management/tools-services/data-management-plan-review\" target=\"_blank"
+"\">Research Data Management Support</a> or the faculty <a href=\"mailto:"
+"Datamanagement.gw@uu.nl\" target=\"_blank\">data manager</a>. "
 
 #: proposals/templates/proposals/proposal_data_management.html:56
 msgid ""
@@ -3463,7 +3462,7 @@ msgstr "Your study will require assessment by a METC."
 msgid "Stadium"
 msgstr "Stage"
 
-#: reviews/api/views.py:35 reviews/api/views.py:307 reviews/models.py:43
+#: reviews/api/views.py:35 reviews/api/views.py:303 reviews/models.py:43
 #: reviews/templates/reviews/vue_templates/decision_list.html:179
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:118
 #: reviews/templates/reviews/vue_templates/review_list.html:165
