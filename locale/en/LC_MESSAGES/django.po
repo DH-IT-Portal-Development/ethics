@@ -1607,7 +1607,7 @@ msgid ""
 "verantwoordelijkheden ten opzichte van de AVG."
 msgstr ""
 "I have read the information above and have considered my responsibilities "
-"with regards to the AVG."
+"with regard to the AVG."
 
 #: proposals/models.py:301
 msgid ""
@@ -2083,7 +2083,7 @@ msgstr ""
 "Utrecht University pursues integrity, sustainability, and transparency in "
 "dealing with research data (including personal data). Furthermore, since the "
 "introduction of the GDPR there are clear rules which researchers should "
-"follow with regards to data."
+"follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
 msgid "Nuttige workshops:"
