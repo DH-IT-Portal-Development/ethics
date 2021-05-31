@@ -11,6 +11,34 @@ YES_NO_DOUBT = (
 )
 
 
+class SystemMessage(models.Model):
+    URGENT = 1
+    ATTENTION = 2
+    INFO = 3
+    # Not translated, as it's backend only
+    LEVELS = (
+        (URGENT, "Urgent"),
+        (ATTENTION, "Attention"),
+        (INFO, "Info")
+    )
+
+    message = models.CharField(max_length=200)
+    level = models.IntegerField(choices=LEVELS)
+    not_before = models.DateTimeField()
+    not_after = models.DateTimeField()
+
+    @property
+    def css_class(self):
+        if self.level == self.URGENT:
+            return 'failed'
+        if self.level == self.ATTENTION:
+            return 'warning'
+        if self.level == self.INFO:
+            return 'info'
+
+        return ''
+
+
 class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)

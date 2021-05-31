@@ -13,6 +13,13 @@
     </div>
     <div class="uu-inner-container mt-1">
         <div class="col-12">
+            {% for message in systemmessage_list %}
+                <div class="{{ message.css_class }}">
+                {% autoescape off %}
+                    {{ message.message }}
+                {% endautoescape %}
+                </div>
+            {% endfor %}
             <h3>
                 {% if user.is_authenticated %}
                     {% trans "Startpagina" %} - {{ user.get_full_name }}
