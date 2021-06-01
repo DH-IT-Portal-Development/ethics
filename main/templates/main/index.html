@@ -13,6 +13,13 @@
     </div>
     <div class="uu-inner-container mt-1">
         <div class="col-12">
+            {% for message in systemmessage_list %}
+                <div class="{{ message.css_class }}">
+                {% autoescape off %}
+                    {{ message.message }}
+                {% endautoescape %}
+                </div>
+            {% endfor %}
             <h3>
                 {% if user.is_authenticated %}
                     {% trans "Startpagina" %} - {{ user.get_full_name }}
@@ -55,7 +62,7 @@
                 {% endblocktrans %}
                 </li>
                 {% blocktrans trimmed %}
-                    <li>Voor advies over data management (plannen): <a href="mailto:f.bohl@uu.nl">Frans de Liagre Böhl</a>.</li>
+                    <li>Voor advies over data management (plannen): <a href="mailto:datamanagement.gw@uu.nl">Frans de Liagre Böhl</a>.</li>
                     <li>Voor advies over privacy zaken: <a href="mailto:j.w.a.degraaf@uu.nl">Joris de Graaf</a>.</li>
                     <li>Voor vragen over de procedure: <a href="mailto:fetc-gw@uu.nl">Desiree Capel</a>.</li>
                     <li>Voor vragen over de portal zelf: <a href="mailto:labbeheer.gw@uu.nl">labbeheer.gw@uu.nl</a>.</li>

@@ -43,7 +43,7 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
     sort_definitions = [
         FancyListApiView.SortDefinition(
             label=_('Referentienummer'),
-            field='review.proposal.reference_number',
+            field='proposal.reference_number',
         ),
         FancyListApiView.SortDefinition(
             label=_('Datum ingediend'),
@@ -52,10 +52,6 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
         FancyListApiView.SortDefinition(
             label=_('Start datum'),
             field='review.date_start',
-        ),
-        FancyListApiView.SortDefinition(
-            label=_('Afhandeling'),
-            field='review.continuation',
         ),
     ]
     default_sort = ('proposal.date_submitted', 'desc')
@@ -310,6 +306,10 @@ class BaseReviewApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
             'proposal.is_revision',
             _("Revisie"),
         ),
+        FancyListApiView.FilterDefinition(
+            'get_continuation_display',
+            _('Afhandeling'),
+        ),
     ]
 
     sort_definitions = [
@@ -324,10 +324,6 @@ class BaseReviewApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
         FancyListApiView.SortDefinition(
             label=_('Start datum'),
             field='date_start',
-        ),
-        FancyListApiView.SortDefinition(
-            label=_('Afhandeling'),
-            field='continuation',
         ),
     ]
     default_sort = ('proposal.date_submitted', 'desc')

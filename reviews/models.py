@@ -98,6 +98,12 @@ class Review(models.Model):
                 self.save()
 
     def get_continuation_display(self):
+        # If this review hasn't concluded, this will only return 'Approved' as
+        # this is the default. Thus, we return 'unknown' if we are still pre-
+        # conclusion.
+        if self.stage <= Review.COMMISSION:
+            return _("Onbekend")
+
         # Get the human readable string
         continuation = dict(self.CONTINUATIONS).get(
             self.continuation,

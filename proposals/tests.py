@@ -9,9 +9,9 @@ from main.models import Setting, YES, NO
 from interventions.models import Intervention
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment
+from .api.views import MyProposalsApiView
 from .models import Proposal, Relation, Wmo, Institution
 from .utils import generate_ref_number, check_local_facilities, generate_revision_ref_number
-from .views.proposal_views import MyProposalsView
 
 
 class BaseProposalTestCase(TestCase):
@@ -174,7 +174,7 @@ class ProposalTestCase(BaseProposalTestCase):
         s.save()
 
         recruitments = Recruitment.objects.filter(is_local=True)
-        s.recruitment = recruitments
+        s.recruitment.set(recruitments)
         s.save()
 
         facs = check_local_facilities(self.p1)
@@ -182,7 +182,7 @@ class ProposalTestCase(BaseProposalTestCase):
         self.assertSetEqual(facs[Recruitment._meta.verbose_name], set([r.description for r in recruitments]))
 
         # If we remove local Recruitment, we should again return no facilities
-        s.recruitment = Recruitment.objects.filter(is_local=False)
+        s.recruitment.set(Recruitment.objects.filter(is_local=False))
         s.save()
         self.assertEqual(len(check_local_facilities(self.p1)), 0)
 
@@ -193,7 +193,7 @@ class ProposalTestCase(BaseProposalTestCase):
         self.assertEqual(len(check_local_facilities(self.p1)), 0)
 
         settings = Setting.objects.filter(is_local=True)
-        i.setting = settings
+        i.setting.set(settings)
         i.save()
 
         facs = check_local_facilities(self.p1)
@@ -212,7 +212,7 @@ class ProposalTestCase(BaseProposalTestCase):
         s1_t1 = Task.objects.create(session=s1, order=1, name='t1')
 
         registrations = Registration.objects.filter(is_local=True)
-        s1_t1.registrations = registrations
+        s1_t1.registrations.set(registrations)
         s1_t1.save()
 
         facs = check_local_facilities(self.p1)
@@ -226,12 +226,12 @@ class ProposalsViewTestCase(BaseProposalTestCase):
         self.factory = RequestFactory()
 
     def test_supervisor(self):
-        request = self.factory.get('/proposals/my_archive')
+        request = self.factory.get('/proposals/api/my_archive')
         request.user = self.user
 
-        response = MyProposalsView.as_view()(request)
+        response = MyProposalsApiView.as_view()(request)
         self.assertEqual(response.status_code, 200)
-        self.assertSequenceEqual(response.context_data['proposals'], [self.p1])
+        self.assertEqual(response.data['items'][0]['pk'], self.p1.pk)
 
         # Add a Proposal for another User
         user2 = User.objects.create_user(username='test0102', email='test@test.com', password='secret')
@@ -245,24 +245,30 @@ class ProposalsViewTestCase(BaseProposalTestCase):
         p2.save()
 
         # Sanity test: response should still be the same
-        response = MyProposalsView.as_view()(request)
+        response = MyProposalsApiView.as_view()(request)
         self.assertEqual(response.status_code, 200)
-        self.assertSequenceEqual(response.context_data['proposals'], [self.p1])
+        self.assertEqual(response.data['items'][0]['pk'], self.p1.pk)
 
         # Second user should only see his Proposal
         request.user = user2
-        response = MyProposalsView.as_view()(request)
+        response = MyProposalsApiView.as_view()(request)
         self.assertEqual(response.status_code, 200)
-        self.assertSequenceEqual(response.context_data['proposals'], [p2])
+        self.assertEqual(response.data['items'][0]['pk'], p2.pk)
 
         # If we set self.user to be the supervisor, he should see both Proposals
         p2.supervisor = self.user
         p2.save()
 
         request.user = self.user
-        response = MyProposalsView.as_view()(request)
+        response = MyProposalsApiView.as_view()(request)
         self.assertEqual(response.status_code, 200)
-        self.assertSequenceEqual(response.context_data['proposals'], [self.p1, p2])
+        self.assertSequenceEqual(
+            [
+                response.data['items'][0]['pk'],
+                response.data['items'][1]['pk']
+            ],
+            [self.p1.pk, p2.pk]
+        )
 
 
 class WmoTestCase(BaseProposalTestCase):
@@ -283,7 +289,7 @@ class WmoTestCase(BaseProposalTestCase):
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)
 
-        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', 'contents')
+        self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', b'contents')
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.JUDGED)
