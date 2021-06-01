@@ -47,7 +47,9 @@ django==2.2.20
     #   djangorestframework
     #   uil-django-core
 djangorestframework==3.12.4
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   uil-django-core
 docutils==0.16
     # via
     #   sphinx
@@ -165,7 +167,7 @@ sqlparse==0.4.1
     #   django-debug-toolbar
 ua-parser==0.10.0
     # via user-agents
-urllib3==1.26.4
+urllib3==1.26.5
     # via requests
 user-agents==2.2.0
     # via django-user-agents
