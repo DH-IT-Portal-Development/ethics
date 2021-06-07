@@ -266,12 +266,14 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        old_file, new_file = self._get_files()
+        self.old_file, self.new_file = self._get_files()
 
-        context['old_name'] = old_file.name
-        context['old_text'] = get_document_contents(old_file)
-        context['new_name'] = new_file.name
-        context['new_text'] = get_document_contents(new_file)
+        context['old_name'] = self.old_file.name
+        context['old_file'] = self.old_file
+        context['old_text'] = get_document_contents(self.old_file)
+        context['new_name'] = self.new_file.name
+        context['new_file'] = self.new_file
+        context['new_text'] = get_document_contents(self.new_file)
 
         return context
     

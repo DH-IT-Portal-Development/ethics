@@ -2,6 +2,8 @@
 {% load static %}
 {% load i18n %}
 
+{% load describe_documents %}
+
 {% block header_title %}
     {% trans "Vergelijk documenten" %} - {{ block.super }}
 {% endblock %}
@@ -53,31 +55,48 @@
                 in het groen is gemarkeerd.
                 {% endblocktrans %}
             </p>
-            <button id="button-split" class="float-right">
-                {% trans 'Bekijk apart' %}
-            </button>
-            <button id="button-combined" style="display: none" class="float-right">
-                {% trans 'Bekijk gecombineerd' %}
-            </button>
+            <p>{% trans "Old document" %}: {% describe_file old_file %}</p>
+            <p>{% trans "New document" %}: {% describe_file new_file %}</p>
+            <p></p>
             <p>
                 {% blocktrans %}
                 Je kan ook de bestanden naast elkaar bekijken, met dezelfde
                 markeringen. Klik hiervoor op 'Bekijk apart'.
                 {% endblocktrans %}
             </p>
+            <p>
+            <button id="button-split" class="float-right">
+                {% trans 'Bekijk apart' %}
+            </button>
+            <button id="button-combined" style="display: none" class="float-right">
+                {% trans 'Bekijk gecombineerd' %}
+            </button>
+            </p>
             <div class="warning" style="display: none">
                 {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
             </div>
         </div>
     </div>
-    <div class="uu-inner-container compare document-compare">
+        <div class="uu-inner-container document-compare">
+            <div class="col-6">
+                <p>
+                    <strong>{% trans "Oud" %}: </strong>{{ old_name }}
+                </p>
+            </div>
+            <div class="col-6">
+                <p>
+                    <strong>{% trans "Nieuw" %}: </strong>{{ new_name }}
+                </p>
+            </div>
+        </div>
+    <div class="uu-inner-container compare">
         <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
             <img src="{% static 'main/images/loading.gif' %}"/>
         </div>
         <div style="display: none" class="col-6 split_view" id="old_text">
             {{ old_text|linebreaks }}
         </div>
-        <div style="display: none" class="col-6 split_view"  id="new_text">
+        <div style="display: none" class="col-6 split_view" id="new_text">
             {{ new_text|linebreaks }}
         </div>
         <div class="col-12" id="combined_text">
