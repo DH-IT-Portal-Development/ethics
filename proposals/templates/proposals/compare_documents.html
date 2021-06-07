@@ -56,19 +56,15 @@
                 {% endblocktrans %}
             </p>
             <p>
-                <strong>{% trans "Old document" %}:</strong>
-                {% describe_file old_file %}
-            </p>
-            <p>
-                <strong>{% trans "New document" %}:</strong>
-                {% describe_file new_file %}
-            </p>
-            <p>
                 {% blocktrans %}
                 Je kan ook de bestanden naast elkaar bekijken, met dezelfde
                 markeringen. Klik hiervoor op 'Bekijk apart'.
                 {% endblocktrans %}
             </p>
+            <h4>
+                <strong>{% trans "Je vergelijkt" %}:</strong>
+                {% describe_file new_file %}
+            </h4>
             <p>
             <button id="button-split" class="float-right">
                 {% trans 'Bekijk apart' %}

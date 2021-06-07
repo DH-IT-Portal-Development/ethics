@@ -60,9 +60,10 @@ def describe_file(file):
     
     if has_trajectory:
         trajectory_name = trajectory_name.replace('hoofdtraject',
-                                                  'het hoofdtraject')
+                                                  'het hoofdtraject',
+                                                  )
         out_string = _('''
-            {} bij {} van studie <strong>{}-{}</strong>: <i>{}</i>
+            {} bij {} van studie {}-{}: <i>{}</i>
             ''').format(nice_name.capitalize(),
                          trajectory_name,
                          proposal.reviewing_committee.name,
@@ -71,7 +72,7 @@ def describe_file(file):
                          )
     else:
         out_string = _('''
-            {} van studie <strong>{}-{}</strong>: <i>{}</i>
+            {} van studie {}-{}: <i>{}</i>
             ''').format(nice_name.capitalize(),
                          proposal.reviewing_committee.name,
                          proposal.reference_number,

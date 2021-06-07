@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-28 13:40+0200\n"
+"POT-Creation-Date: 2021-06-07 14:58+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -18,12 +18,12 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 
 #: faqs/menus.py:7 main/templates/base/menu.html:125
-#: main/templates/main/index.html:152
+#: main/templates/main/index.html:159
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
 #: faqs/menus.py:12 main/templates/base/menu.html:128
-#: main/templates/main/index.html:156
+#: main/templates/main/index.html:163
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -32,7 +32,7 @@ msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr " Regulations Linguistics Chamber (LC) "
 
 #: faqs/menus.py:22 main/templates/base/menu.html:134
-#: main/templates/main/index.html:164
+#: main/templates/main/index.html:171
 #: proposals/templates/proposals/proposal_pdf.html:395
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/study_consent.html:68
@@ -229,7 +229,7 @@ msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
 #: interventions/templates/interventions/intervention_form.html:17
-#: main/models.py:26
+#: main/models.py:54
 #: observations/templates/observations/observation_form.html:27
 #: studies/templates/studies/study_end.html:67
 #: studies/templates/studies/study_end.html:98
@@ -281,8 +281,8 @@ msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
 #: main/menus.py:5 main/templates/base/menu.html:7
-#: main/templates/main/index.html:7 main/templates/main/index.html:18
-#: main/templates/main/index.html:20
+#: main/templates/main/index.html:7 main/templates/main/index.html:25
+#: main/templates/main/index.html:27
 msgid "Startpagina"
 msgstr "Start page"
 
@@ -306,17 +306,17 @@ msgstr "no"
 msgid "twijfel"
 msgstr "uncertain"
 
-#: main/models.py:35
+#: main/models.py:63
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: main/models.py:39 observations/models.py:126 proposals/models.py:169
+#: main/models.py:67 observations/models.py:126 proposals/models.py:169
 #: studies/models.py:168 studies/models.py:201 tasks/models.py:146
 #: tasks/models.py:158
 msgid "Namelijk"
 msgstr "Please specify"
 
-#: main/models.py:44
+#: main/models.py:72
 msgid ""
 "Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of "
 "een ander persoon die bevoegd is?"
@@ -324,13 +324,13 @@ msgstr ""
 "Will the task be conducted under the supervision of the teacher or another "
 "qualified person?"
 
-#: main/models.py:50
+#: main/models.py:78
 msgid "Is de testleider in het bezit van een VOG?"
 msgstr ""
 "Does the test leader hold a Certificate of Conduct (Verklaring Omtrent "
 "Gedrag, VOG)?"
 
-#: main/models.py:51
+#: main/models.py:79
 msgid ""
 "Iedereen die op een school werkt moet in het bezit         zijn van een "
 "Verklaring Omtrent Gedrag (VOG, zie         <a href=\"https://www.justis.nl/"
@@ -785,7 +785,7 @@ msgstr ""
 "a>. Try to explain what you were doing and note the page that you were on, "
 "if you can.     "
 
-#: main/templates/main/index.html:29
+#: main/templates/main/index.html:36
 msgid ""
 "\n"
 "                De FETC-GW Portal is vernieuwd! We hebben ons best gedaan om "
@@ -804,13 +804,13 @@ msgstr ""
 "href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a> so we can fix them "
 "quickly.     "
 
-#: main/templates/main/index.html:34
+#: main/templates/main/index.html:41
 #: proposals/templates/proposals/proposal_start.html:16
 #: proposals/templates/proposals/proposal_start_practice.html:18
 msgid "Check voor het indienen:"
 msgstr "Before submitting an application, please consult:"
 
-#: main/templates/main/index.html:37
+#: main/templates/main/index.html:44
 msgid ""
 "De <a href=\"https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
 "\" target=\"_blank\"> UU-webpagina van de FETC-GW</a> voor nieuws en de "
@@ -819,7 +819,7 @@ msgstr ""
 "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\" target=\"blank\">UU-"
 "webpage</a> of the FEtC-H for news and upcoming dates."
 
-#: main/templates/main/index.html:44
+#: main/templates/main/index.html:51
 msgid ""
 "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
 "algemene-kamer/\" target=\"blank\">Algemene Kamer (AK)</a> of dat van de <a "
@@ -831,7 +831,7 @@ msgstr ""
 "href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
 "target=\"blank\">Linguistics Chamber</a>."
 
-#: main/templates/main/index.html:53
+#: main/templates/main/index.html:60
 #: proposals/templates/proposals/study_consent.html:79
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
@@ -842,7 +842,7 @@ msgstr ""
 "en/documents-ethics-assessment-committee-humanities\" target=\"_blank"
 "\">model documents</a> for <em>informed consent</em>."
 
-#: main/templates/main/index.html:57
+#: main/templates/main/index.html:64
 msgid ""
 "<li>Voor advies over data management (plannen): <a href=\"mailto:"
 "datamanagement.gw@uu.nl\">Frans de Liagre Böhl</a>.</li> <li>Voor advies "
@@ -858,7 +858,7 @@ msgstr ""
 "<li>For questions about the functioning of the portal itself: <a href="
 "\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
 
-#: main/templates/main/index.html:66
+#: main/templates/main/index.html:73
 msgid ""
 "\n"
 "                        In deze portal kunt u het volgende doen:\n"
@@ -868,95 +868,95 @@ msgstr ""
 "    In this portal you can do the following:\n"
 "    "
 
-#: main/templates/main/index.html:75
+#: main/templates/main/index.html:82
 msgid "Dien een nieuwe studie in"
 msgstr "Submit a new study"
 
-#: main/templates/main/index.html:80
+#: main/templates/main/index.html:87
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: main/templates/main/index.html:83
+#: main/templates/main/index.html:90
 msgid "op basis van een kopie van een oude studie;"
 msgstr "from a copy of an old study;"
 
-#: main/templates/main/index.html:86
+#: main/templates/main/index.html:93
 msgid "voor voortoetsing t.b.v. subsidieaanvraag;"
 msgstr "for preliminary assessment regarding subsidy applications;"
 
-#: main/templates/main/index.html:89
+#: main/templates/main/index.html:96
 msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: main/templates/main/index.html:95
+#: main/templates/main/index.html:102
 msgid "Een gereviseerde studie aanmelden"
 msgstr "Submit a revised version of your study"
 
-#: main/templates/main/index.html:100
+#: main/templates/main/index.html:107
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
-#: main/templates/main/index.html:103
+#: main/templates/main/index.html:110
 msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW."
 msgstr "as an amendment, after your study has been approved by the FEtC-H."
 
-#: main/templates/main/index.html:111
+#: main/templates/main/index.html:118
 msgid "Bekijk"
 msgstr "View"
 
-#: main/templates/main/index.html:115
+#: main/templates/main/index.html:122
 msgid "mijn conceptstudies;"
 msgstr "my draft applications;"
 
-#: main/templates/main/index.html:118
+#: main/templates/main/index.html:125
 msgid "mijn oefenstudies;"
 msgstr "my practice applications;"
 
-#: main/templates/main/index.html:121
+#: main/templates/main/index.html:128
 msgid "mijn ingediende studies;"
 msgstr "my submitted applications;"
 
-#: main/templates/main/index.html:124
+#: main/templates/main/index.html:131
 msgid "mijn afgehandelde studies;"
 msgstr "my processed applications;"
 
-#: main/templates/main/index.html:127
+#: main/templates/main/index.html:134
 msgid "mijn studies als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: main/templates/main/index.html:130
+#: main/templates/main/index.html:137
 msgid "al mijn studies."
 msgstr "all my applications."
 
-#: main/templates/main/index.html:134
+#: main/templates/main/index.html:141
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: main/templates/main/index.html:138
+#: main/templates/main/index.html:145
 msgid "Alle goedgekeurde studies bekijken van de Algemene Kamer"
 msgstr "View all processed and approved studies of the General Chamber"
 
-#: main/templates/main/index.html:141
+#: main/templates/main/index.html:148
 msgid "Alle goedgekeurde studies bekijken van de Linguïstiek Kamer"
 msgstr "View all processed and approved studies of the Linguistics Chamber"
 
-#: main/templates/main/index.html:160
+#: main/templates/main/index.html:167
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: main/templates/main/index.html:167
+#: main/templates/main/index.html:174
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:170
+#: main/templates/main/index.html:177
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: main/templates/main/index.html:174
+#: main/templates/main/index.html:181
 msgid "Bannerfoto door Simona Evsatieva"
 msgstr "Cover image by Simona Evsatieva"
 
-#: main/templates/main/index.html:181
+#: main/templates/main/index.html:188
 #, python-format
 msgid ""
 "\n"
@@ -970,7 +970,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t     "
 
-#: main/templates/main/index.html:187
+#: main/templates/main/index.html:194
 msgid ""
 "\n"
 "                        Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</"
@@ -1764,12 +1764,12 @@ msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
 
-#: proposals/templates/proposals/compare_documents.html:6
-#: proposals/templates/proposals/compare_documents.html:47
+#: proposals/templates/proposals/compare_documents.html:8
+#: proposals/templates/proposals/compare_documents.html:49
 msgid "Vergelijk documenten"
 msgstr "Compare documents"
 
-#: proposals/templates/proposals/compare_documents.html:49
+#: proposals/templates/proposals/compare_documents.html:51
 msgid ""
 "\n"
 "                Hier kan je twee versies van een document vergelijken. "
@@ -1787,15 +1787,7 @@ msgstr ""
 "                text is marked in red and added text is marked in green.\n"
 "                "
 
-#: proposals/templates/proposals/compare_documents.html:57
-msgid "Bekijk apart"
-msgstr "View separately"
-
-#: proposals/templates/proposals/compare_documents.html:60
-msgid "Bekijk gecombineerd"
-msgstr "View combined"
-
-#: proposals/templates/proposals/compare_documents.html:63
+#: proposals/templates/proposals/compare_documents.html:59
 msgid ""
 "\n"
 "                Je kan ook de bestanden naast elkaar bekijken, met dezelfde\n"
@@ -1807,9 +1799,29 @@ msgstr ""
 "'View separately'.\n"
 "    "
 
-#: proposals/templates/proposals/compare_documents.html:69
+#: proposals/templates/proposals/compare_documents.html:65
+msgid "Je vergelijkt"
+msgstr ""
+
+#: proposals/templates/proposals/compare_documents.html:70
+msgid "Bekijk apart"
+msgstr "View separately"
+
+#: proposals/templates/proposals/compare_documents.html:73
+msgid "Bekijk gecombineerd"
+msgstr "View combined"
+
+#: proposals/templates/proposals/compare_documents.html:77
 msgid "Er zijn geen wijzigingen gevonden in dit document!"
 msgstr "No changes were found in this document!"
+
+#: proposals/templates/proposals/compare_documents.html:84
+msgid "Oud"
+msgstr ""
+
+#: proposals/templates/proposals/compare_documents.html:90
+msgid "Nieuw"
+msgstr ""
 
 #: proposals/templates/proposals/diff/intervention_v1.html:8
 #: proposals/templates/proposals/diff/intervention_v2.html:8
@@ -2105,7 +2117,7 @@ msgstr ""
 "Research Data Management</a>.</li>"
 
 #: proposals/templates/proposals/proposal_data_management.html:42
-#: reviews/templatetags/documents_list.py:192
+#: reviews/templatetags/documents_list.py:196
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -3422,11 +3434,11 @@ msgstr ""
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:335
+#: proposals/views/proposal_views.py:337
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:408
+#: proposals/views/proposal_views.py:410
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -4024,59 +4036,59 @@ msgstr "Change appointment of committee members"
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
-#: reviews/templatetags/documents_list.py:140
+#: reviews/templatetags/documents_list.py:142
 msgid "Hoofdtraject"
 msgstr "Main trajectory"
 
-#: reviews/templatetags/documents_list.py:141
-msgid "Traject {}: {}"
-msgstr "Trajectory {}: {}"
+#: reviews/templatetags/documents_list.py:144
+msgid "Traject {}: <i>{}</i>"
+msgstr "Trajectory {}: <i>{}</i>"
 
-#: reviews/templatetags/documents_list.py:151
+#: reviews/templatetags/documents_list.py:155
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:174
+#: reviews/templatetags/documents_list.py:178
 msgid "Studie in PDF-vorm"
 msgstr "Proposal in PDF format"
 
-#: reviews/templatetags/documents_list.py:180
+#: reviews/templatetags/documents_list.py:184
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:186
+#: reviews/templatetags/documents_list.py:190
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:198
+#: reviews/templatetags/documents_list.py:202
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:201
+#: reviews/templatetags/documents_list.py:205
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:218
+#: reviews/templatetags/documents_list.py:222
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:219
+#: reviews/templatetags/documents_list.py:223
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:221
+#: reviews/templatetags/documents_list.py:225
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:226
+#: reviews/templatetags/documents_list.py:230
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:230
+#: reviews/templatetags/documents_list.py:234
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:238
+#: reviews/templatetags/documents_list.py:242
 msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
@@ -4997,6 +5009,54 @@ msgstr ""
 "\n"
 "    Trajectory %(order)s\n"
 "    "
+
+#: studies/templatetags/describe_documents.py:22
+msgid "bestand"
+msgstr "file"
+
+#: studies/templatetags/describe_documents.py:25
+msgid "informed consent"
+msgstr "informed consent"
+
+#: studies/templatetags/describe_documents.py:28
+msgid "informatiebrief"
+msgstr "information letter"
+
+#: studies/templatetags/describe_documents.py:31
+msgid "informed consent voor de schoolleiding of het departementshoofd"
+msgstr "informed consent school director or head of the institution"
+
+#: studies/templatetags/describe_documents.py:34
+msgid "informatiebrief voor de schoolleiding of het departementshoofd"
+msgstr "information letter for the school director or head of the department"
+
+#: studies/templatetags/describe_documents.py:37
+msgid "informatiebrief voor de ouders of verzorgers"
+msgstr "information letter for parents or caretakers"
+
+#: studies/templatetags/describe_documents.py:40
+msgid "data management plan"
+msgstr "data management plan"
+
+#: studies/templatetags/describe_documents.py:64
+msgid ""
+"\n"
+"            {} bij {} van studie <strong>{}-{}</strong>: <i>{}</i>\n"
+"            "
+msgstr ""
+"\n"
+"            {} for {} of proposal <strong>{}-{}</strong>: <i>{}</i>\n"
+"            "
+
+#: studies/templatetags/describe_documents.py:73
+msgid ""
+"\n"
+"            {} van studie {}-{}: <i>{}</i>\n"
+"            "
+msgstr ""
+"\n"
+"            {} van studie {}-{}: <i>{}</i>\n"
+"            "
 
 #: studies/utils.py:65
 msgid "Deelnemers"
