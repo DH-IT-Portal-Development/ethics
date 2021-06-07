@@ -62,19 +62,19 @@ def describe_file(file):
         trajectory_name = trajectory_name.replace('hoofdtraject',
                                                   'het hoofdtraject')
         out_string = _('''
-            <i>{}</i> bij <i>{}</i> van studie <i>{}-{}</i>: <i>{}</i>
+            {} bij {} van studie <strong>{}-{}</strong>: <i>{}</i>
             ''').format(nice_name.capitalize(),
                          trajectory_name,
-                         proposal.reference_number,
                          proposal.reviewing_committee.name,
+                         proposal.reference_number,
                          escape(proposal.title),
                          )
     else:
         out_string = _('''
-            <i>{}</i> van studie <i>{}-{}</i>: <i>{}</i>
+            {} van studie <strong>{}-{}</strong>: <i>{}</i>
             ''').format(nice_name.capitalize(),
-                         proposal.reference_number,
                          proposal.reviewing_committee.name,
+                         proposal.reference_number,
                          escape(proposal.title),
                          )
         

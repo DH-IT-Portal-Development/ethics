@@ -55,9 +55,14 @@
                 in het groen is gemarkeerd.
                 {% endblocktrans %}
             </p>
-            <p>{% trans "Old document" %}: {% describe_file old_file %}</p>
-            <p>{% trans "New document" %}: {% describe_file new_file %}</p>
-            <p></p>
+            <p>
+                <strong>{% trans "Old document" %}:</strong>
+                {% describe_file old_file %}
+            </p>
+            <p>
+                <strong>{% trans "New document" %}:</strong>
+                {% describe_file new_file %}
+            </p>
             <p>
                 {% blocktrans %}
                 Je kan ook de bestanden naast elkaar bekijken, met dezelfde
@@ -80,12 +85,14 @@
         <div class="uu-inner-container document-compare">
             <div class="col-6">
                 <p>
-                    <strong>{% trans "Oud" %}: </strong>{{ old_name }}
+                    <strong>{% trans "Oud" %}: </strong>
+                    <a href="{{ old_file.url }}" download="{{ old_file.name }}">{{ old_name }}</a>
                 </p>
             </div>
             <div class="col-6">
                 <p>
-                    <strong>{% trans "Nieuw" %}: </strong>{{ new_name }}
+                    <strong>{% trans "Nieuw" %}: </strong>
+                    <a href="{{ new_file.url }}" download="{{ new_file.name }}">{{ new_name }}</a>
                 </p>
             </div>
         </div>
