@@ -65,17 +65,15 @@
                 <strong>{% trans "Je vergelijkt" %}:</strong>
                 {% describe_file new_file %}
             </h4>
-            <p>
+            <div class="warning" style="display: none; clear: both;">
+                {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
+            </div>
             <button id="button-split" class="float-right">
                 {% trans 'Bekijk apart' %}
             </button>
             <button id="button-combined" style="display: none" class="float-right">
                 {% trans 'Bekijk gecombineerd' %}
             </button>
-            </p>
-            <div class="warning" style="display: none">
-                {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
-            </div>
         </div>
     </div>
         <div class="uu-inner-container document-compare">

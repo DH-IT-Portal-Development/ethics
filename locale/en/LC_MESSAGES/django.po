@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-07 14:58+0200\n"
+"POT-Creation-Date: 2021-06-10 12:56+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1783,7 +1783,7 @@ msgstr ""
 "\n"
 "                This tool allows you to compare two documents. By default,\n"
 "                you are presented with a <i>combined</i> view in "
-"whichremoved\n"
+"which removed\n"
 "                text is marked in red and added text is marked in green.\n"
 "                "
 
@@ -1801,27 +1801,27 @@ msgstr ""
 
 #: proposals/templates/proposals/compare_documents.html:65
 msgid "Je vergelijkt"
-msgstr ""
+msgstr "Comparing"
 
-#: proposals/templates/proposals/compare_documents.html:70
-msgid "Bekijk apart"
-msgstr "View separately"
-
-#: proposals/templates/proposals/compare_documents.html:73
-msgid "Bekijk gecombineerd"
-msgstr "View combined"
-
-#: proposals/templates/proposals/compare_documents.html:77
+#: proposals/templates/proposals/compare_documents.html:69
 msgid "Er zijn geen wijzigingen gevonden in dit document!"
 msgstr "No changes were found in this document!"
 
-#: proposals/templates/proposals/compare_documents.html:84
-msgid "Oud"
-msgstr ""
+#: proposals/templates/proposals/compare_documents.html:72
+msgid "Bekijk apart"
+msgstr "View separately"
 
-#: proposals/templates/proposals/compare_documents.html:90
+#: proposals/templates/proposals/compare_documents.html:75
+msgid "Bekijk gecombineerd"
+msgstr "View combined"
+
+#: proposals/templates/proposals/compare_documents.html:82
+msgid "Oud"
+msgstr "Old"
+
+#: proposals/templates/proposals/compare_documents.html:88
 msgid "Nieuw"
-msgstr ""
+msgstr "New"
 
 #: proposals/templates/proposals/diff/intervention_v1.html:8
 #: proposals/templates/proposals/diff/intervention_v2.html:8
@@ -5038,24 +5038,24 @@ msgstr "information letter for parents or caretakers"
 msgid "data management plan"
 msgstr "data management plan"
 
-#: studies/templatetags/describe_documents.py:64
+#: studies/templatetags/describe_documents.py:65
 msgid ""
 "\n"
-"            {} bij {} van studie <strong>{}-{}</strong>: <i>{}</i>\n"
+"            {} bij {} van studie {}-{}: <i>{}</i>\n"
 "            "
 msgstr ""
 "\n"
-"            {} for {} of proposal <strong>{}-{}</strong>: <i>{}</i>\n"
+"            {} in {} of proposal {}-{}: <i>{}</i>\n"
 "            "
 
-#: studies/templatetags/describe_documents.py:73
+#: studies/templatetags/describe_documents.py:74
 msgid ""
 "\n"
 "            {} van studie {}-{}: <i>{}</i>\n"
 "            "
 msgstr ""
 "\n"
-"            {} van studie {}-{}: <i>{}</i>\n"
+"            {} of proposal {}-{}: <i>{}</i>\n"
 "            "
 
 #: studies/utils.py:65
@@ -5326,6 +5326,15 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "\n"
+#~ "            {} bij {} van studie <strong>{}-{}</strong>: <i>{}</i>\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "            {} for {} of proposal <strong>{}-{}</strong>: <i>{}</i>\n"
+#~ "            "
 
 #~ msgid ""
 #~ "\n"
