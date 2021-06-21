@@ -2166,7 +2166,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_data_management.html:62
 msgid "Privacy: AVG en GDPR"
-msgstr ""
+msgstr "Privacy: AVG and GDPR"
 
 #: proposals/templates/proposals/proposal_data_management.html:64
 msgid ""
