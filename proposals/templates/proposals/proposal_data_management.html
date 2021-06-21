@@ -13,33 +13,15 @@
             {% with nav_items=proposal.available_urls active=5 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
+            <h1>
                 {% trans "Datamanagement" %}
-            </h2>
+            </h1>
             <p>
                 {% blocktrans trimmed %}
                 De Universiteit Utrecht streeft naar integriteit, duurzaamheid, en transparantie in de omgang met onderzoeksdata, waaronder persoonsgegevens. Sinds de introductie van de AVG zijn er duidelijke regels die onderzoekers moeten volgen met betrekking tot deze data. 
                 {% endblocktrans %}
             </p>
-            <h3>{% trans "Nuttige workshops:" %}</h3>
-            <p>
-                {% blocktrans trimmed %}
-                Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshops te volgen:
-                {% endblocktrans %}
-            </p>
-            <ul>{% blocktrans trimmed %}
-                <li>
-                    de workshop <a href="https://www.uu.nl/en/node/81799" target="_blank">Handling
-personal data in research</a>
-                </li>
-                <li>
-                    de workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
-start to Research Data Management</a>
-                </li>
-                
-                {% endblocktrans %}
-            </ul>
-            <h3>{% trans "Data Management Plan" %}</h3>
+            <h2>{% trans "Data Management Plan" %}</h2>
             <ul>
             <li>
                 {% blocktrans trimmed %}
@@ -58,22 +40,52 @@ NWO en ERC als zij subsidie voor een onderzoek bieden.
                 {% endblocktrans %}
             </li>
             </ul>
+            <h3>{% trans "Nuttige workshops:" %}</h3>
+            <p>
+                {% blocktrans trimmed %}
+                Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop te volgen:
+                {% endblocktrans %}
+            </p>
+            <ul>{% blocktrans trimmed %}
+                <li>
+                    de workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
+start to Research Data Management</a>
+                </li>
+                
+                {% endblocktrans %}
+            </ul>
             <p>
                 {% blocktrans trimmed %}
                 Voor advies op het gebied van data management planning kun je contact opnemen met de datamanager GW, Frans de Liagre Böhl via <a href="mailto:datamanagement.gw@uu.nl" target="_blank">datamanagement.gw@uu.nl</a>.
                 {% endblocktrans %}
             </p>
-            <h3>{% trans "Regels en verplichtingen" %}</h3>
+            <h2>{% trans "Privacy: AVG en GDPR" %}</h2>
             <p>
                 {% blocktrans trimmed %} 
-                Wanneer je persoonlijke data verzamelt, zorg je er voor dat je je houdt aan de Algemene Verordening Persoonsgegevens, of AVG. Deze wet is de Nederlands implementatie van het Europese <a href="https://gdpr.eu/" target="_blank">GDPR</a>.
+                Wanneer je persoonsgebonden data verzamelt, zorg je er voor dat je je houdt aan de Algemene Verordening Gegevensbescherming, of AVG. Deze wet is de Nederlandse implementatie van het Europese <a href="https://gdpr.eu/" target="_blank">GDPR</a>.
                 {% endblocktrans %}
             </p>
-            <p>
+            <ul>
+            <li>
                 {% blocktrans trimmed %}
                 De autoriteit persoonsgegevens heeft <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/algemene-informatie-avg" target="_blank">uitgebreide informatie</a> in het Nederlands over hoe de AVG dataverzameling beïnvloedt. 
                 {% endblocktrans %}
+            </li>
+            </ul>
+            <h3>{% trans "Nuttige workshops:" %}</h3>
+            <p>
+                {% blocktrans trimmed %}
+                Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop te volgen:
+                {% endblocktrans %}
             </p>
+            <ul>{% blocktrans trimmed %}
+                <li>
+                    de workshop <a href="https://www.uu.nl/en/node/81799" target="_blank">Handling
+personal data in research</a>
+                </li>
+                
+                {% endblocktrans %}
+            </ul>
 
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
             <table>
