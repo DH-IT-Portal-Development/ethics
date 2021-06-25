@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-21 11:28+0200\n"
+"POT-Creation-Date: 2021-06-25 16:12+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2065,10 +2065,13 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/templates/proposals/proposal_data_management.html:17
 #: proposals/utils/proposal_utils.py:99
 msgid "Datamanagement"
 msgstr "Data management"
+
+#: proposals/templates/proposals/proposal_data_management.html:17
+msgid "Datamanagement en Privacy"
+msgstr "Data Management and Privacy"
 
 #: proposals/templates/proposals/proposal_data_management.html:20
 msgid ""
@@ -2149,9 +2152,8 @@ msgid ""
 "<li> de workshop <a href=\"https://www.uu.nl/en/node/75859\" target=\"_blank"
 "\">Quick start to Research Data Management</a> </li>"
 msgstr ""
-"<li>the workshop <a href="
-"\"https://www.uu.nl/en/node/75859\" target=\"_blank\">Quick start to "
-"Research Data Management</a></li>"
+"<li>the workshop <a href=\"https://www.uu.nl/en/node/75859\" target=\"_blank"
+"\">Quick start to Research Data Management</a></li>"
 
 #: proposals/templates/proposals/proposal_data_management.html:58
 msgid ""
@@ -2201,6 +2203,14 @@ msgid ""
 msgstr ""
 "<li>the workshop <a href=\"https://www.uu.nl/en/node/81799\" target=\"_blank"
 "\">Handling personal data in research</a></li>"
+
+#: proposals/templates/proposals/proposal_data_management.html:89
+msgid ""
+"Voor advies op het gebied van privacy en de AVG kun je contact opnemen met "
+"de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
+"gw@uu.nl</a>."
+msgstr ""
+"For advice relating to privacy and the AVG, you can contact the privacy officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
 
 #: proposals/templates/proposals/proposal_diff.html:10
 #: proposals/templates/proposals/proposal_diff.html:36
