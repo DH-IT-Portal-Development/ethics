@@ -14,11 +14,11 @@
                 {% include 'base/navigation.html' %}
             {% endwith %}
             <h1>
-                {% trans "Datamanagement" %}
+                {% trans "Datamanagement en Privacy" %}
             </h1>
             <p>
                 {% blocktrans trimmed %}
-                De Universiteit Utrecht streeft naar integriteit, duurzaamheid, en transparantie in de omgang met onderzoeksdata, waaronder persoonsgegevens. Sinds de introductie van de AVG zijn er duidelijke regels die onderzoekers moeten volgen met betrekking tot deze data. 
+                De Universiteit Utrecht streeft naar integriteit, duurzaamheid, en transparantie in de omgang met onderzoeksdata, waaronder persoonsgegevens. Sinds de introductie van de AVG zijn er duidelijke regels die onderzoekers moeten volgen met betrekking tot deze data.
                 {% endblocktrans %}
             </p>
             <h2>{% trans "Data Management Plan" %}</h2>
@@ -31,12 +31,12 @@ NWO en ERC als zij subsidie voor een onderzoek bieden.
             </li>
             <li>
                 {% blocktrans trimmed %}
-                De faculteit biedt uitgebreide informatie op het gebied van data management, waaronder ook <a href="https://www.uu.nl/en/research/research-data-management/guides/data-management-planning" target="_blank">hoe deze te schrijven</a>. <br/> Je kunt bij de faculteit ook je DMP laten nakijken door <a href="https://www.uu.nl/en/research/research-data-management/tools-services/data-management-plan-review" target="_blank">Research Data Management Support</a> of de facultaire <a href="mailto:datamanagement.gw@uu.nl" target="_blank">datamanager</a>. 
+                De faculteit biedt uitgebreide informatie op het gebied van data management, waaronder ook <a href="https://www.uu.nl/en/research/research-data-management/guides/data-management-planning" target="_blank">hoe deze te schrijven</a>. <br/> Je kunt bij de faculteit ook je DMP laten nakijken door <a href="https://www.uu.nl/en/research/research-data-management/tools-services/data-management-plan-review" target="_blank">Research Data Management Support</a> of de facultaire <a href="mailto:datamanagement.gw@uu.nl" target="_blank">datamanager</a>.
                 {% endblocktrans %}
             </li>
             <li>
                 {% blocktrans trimmed %}
-                Op de website <a href="https://dmponline.dcc.ac.uk/" target="_blank">DMP-online</a> vind je na het inloggen met je Solis-ID templates voor een DMP. Dit is waar je de templates die NWO en ERC vereisen kunt terugvinden, aangeboden door de UU. 
+                Op de website <a href="https://dmponline.dcc.ac.uk/" target="_blank">DMP-online</a> vind je na het inloggen met je Solis-ID templates voor een DMP. Dit is waar je de templates die NWO en ERC vereisen kunt terugvinden, aangeboden door de UU.
                 {% endblocktrans %}
             </li>
             </ul>
@@ -51,7 +51,7 @@ NWO en ERC als zij subsidie voor een onderzoek bieden.
                     de workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
 start to Research Data Management</a>
                 </li>
-                
+
                 {% endblocktrans %}
             </ul>
             <p>
@@ -61,14 +61,14 @@ start to Research Data Management</a>
             </p>
             <h2>{% trans "Privacy: AVG en GDPR" %}</h2>
             <p>
-                {% blocktrans trimmed %} 
+                {% blocktrans trimmed %}
                 Wanneer je persoonsgebonden data verzamelt, zorg je er voor dat je je houdt aan de Algemene Verordening Gegevensbescherming, of AVG. Deze wet is de Nederlandse implementatie van het Europese <a href="https://gdpr.eu/" target="_blank">GDPR</a>.
                 {% endblocktrans %}
             </p>
             <ul>
             <li>
                 {% blocktrans trimmed %}
-                De autoriteit persoonsgegevens heeft <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/algemene-informatie-avg" target="_blank">uitgebreide informatie</a> in het Nederlands over hoe de AVG dataverzameling beïnvloedt. 
+                De autoriteit persoonsgegevens heeft <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/algemene-informatie-avg" target="_blank">uitgebreide informatie</a> in het Nederlands over hoe de AVG dataverzameling beïnvloedt.
                 {% endblocktrans %}
             </li>
             </ul>
@@ -83,9 +83,14 @@ start to Research Data Management</a>
                     de workshop <a href="https://www.uu.nl/en/node/81799" target="_blank">Handling
 personal data in research</a>
                 </li>
-                
+
                 {% endblocktrans %}
             </ul>
+            <p>{% blocktrans trimmed %}
+                Voor advies op het gebied van privacy en de AVG kun je contact opnemen met de privacy officer van GW via <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.
+                {% endblocktrans %}
+            </p>
+
 
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
             <table>
