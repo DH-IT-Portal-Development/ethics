@@ -1,0 +1,210 @@
+{% load static %}
+{% load i18n %}
+
+{% static "proposals/images/page_white_go.png" as img_next %}
+{% static "proposals/images/arrow_divide.png" as img_diff %}
+{% static "proposals/images/delete.png" as img_delete %}
+{% static "main/images/page_white_acrobat.png" as img_pdf %}
+{% static "proposals/images/folder_delete.png" as img_hide %}
+{% static 'reviews/images/scale.png' as img_decide %}
+
+<script type="text/x-template" id="proposalsUFLList">
+    <FancyList
+            {# It's a long, but standard, list, so we just include the default list #}
+            {% include 'uil.vue/fancy-list-params.txt' %}
+    >
+        {# General note: the #{slot}="data" defines in which Vue variable all properties are loaded.  #}
+        {# FancyList only exposes `item` and `context`, where item is the item from the data for a given row.  #}
+        {# and context is the global context data. #}
+        {# (Thus, data.item and data.context). You can use  #}
+
+        {# Here we do some JS deconstructing to pull the data out in seperate variables. We also rename item #}
+        {# to proposal, for clarity. #}
+        <template #title="{ item: proposal, context }">
+            <h4>
+                {# Verbatim tags are needed to stop Django from interpreting these braces as Django template code #}
+                {# They are actually vue template code #}
+                {% verbatim %}
+                {{ proposal.reference_number }} -
+                {{ proposal.title }}
+                {% endverbatim %}
+            </h4>
+        </template>
+
+
+        <template #actions="{ item: proposal, context }">
+            <a
+                :href="$url('reviews:decide', [proposal.supervisor_decision.pk])"
+                v-if="proposal.status == context.proposal.SUBMITTED_TO_SUPERVISOR && proposal.supervisor && context.user_pk == proposal.supervisor.pk"
+            >
+                <img src="{% static 'reviews/images/scale.png' %}"
+                     title="{% trans 'Beslissen' %}">
+            </a>
+
+            <a
+                :href="$url('proposals:diff', [proposal.pk])"
+                v-if="proposal.is_revision"
+            >
+                <img src="{{ img_diff }}"
+                     title="{% trans 'Toon verschillen' %}">
+            </a>
+
+            <template
+                v-if="proposal.status < context.proposal.SUBMITTED_TO_SUPERVISOR"
+            >
+                <a
+                    :href="proposal.continue_url"
+                    v-if="proposal.applicants.filter( a => { return a.pk === context.user_pk}).length > 0 || (proposal.supervisor && context.user_pk == proposal.supervisor.pk)"
+                >
+                    <img src="{{ img_next }}"
+                         title="{% trans 'Naar volgende stap' %}">
+                </a>
+                <a :href="$url('proposals:delete', [proposal.pk])">
+                    <img src="{{ img_delete }}"
+                         title="{% trans 'Verwijderen' %}">
+                </a>
+            </template>
+
+            <a
+                :href="proposal.pdf.url"
+                target="_blank"
+                :download="proposal.pdf.name"
+                v-if="proposal.pdf"
+            >
+                <img src="{{ img_pdf }}"
+                     title="{% trans 'Inzien' %}">
+            </a>
+            <a
+                v-else
+                :href="$url('proposals:pdf', [proposal.pk])"
+                target="_blank"
+            >
+                <img src="{{ img_pdf }}"
+                         title="{% trans 'Inzien' %}">
+            </a>
+
+            <a
+                :href="$url('proposals:archive_hide', [proposal.pk])"
+                v-if="proposal.in_archive && context.is_secretary"
+            >
+                <img src="{{ img_hide }}"
+                     title="{% trans 'Verberg' %}">
+            </a>
+        </template>
+
+
+        <template #undertitle="{ item: proposal, context }">
+            <div class="ufl-undertitle-line">
+                {% trans 'Soort studie' %}:
+                {% verbatim %}
+                {{ proposal.type }}
+                {% endverbatim %}
+            </div>
+            <div class="ufl-undertitle-line">
+                <span
+                    v-if="proposal.status >= context.proposal.DECISION_MADE"
+                >
+                    {% trans "Besloten op" %}:
+                    {% verbatim %}
+                    {{ proposal.date_reviewed | date("DD-MM-YYYY, HH:mm") }}
+                    {% endverbatim %}
+                </span>
+                <span v-else>
+                    {% trans "Laatst bijgewerkt" %}:
+                    {% verbatim %}
+                    {{ proposal.date_modified | date("DD-MM-YYYY, HH:mm") }}
+                    {% endverbatim %}
+                </span>
+            </div>
+            <div class="ufl-undertitle-line">
+                {% trans 'Status' %}:
+                <span
+                    v-if="proposal.status >= context.proposal.DECISION_MADE"
+                >
+                    {% verbatim %}
+                    {{ proposal.latest_review.get_continuation_display }}
+                    {% endverbatim %}
+                </span>
+                <span v-else>
+                    {% verbatim %}
+                    {{ proposal.get_status_display }}
+                    {% endverbatim %}
+                </span>
+            </div>
+        </template>
+
+
+        <template #details="{ item: proposal, context }">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <table>
+                        <tbody>
+                            <tr v-if="proposal.parent && proposal.parent.latest_review">
+                                <td>
+                                    {% trans "Revisie/amendement van" %}:
+                                </td>
+                                <td v-if="proposal.parent.pdf != undefined">
+                                    <a
+                                        :href="proposal.parent.pdf.url"
+                                        v-html="proposal.parent.reference_number"
+                                    ></a>
+                                </td>
+                                <td v-else v-html="proposal.parent.reference_number">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Datum ingediend" %}:
+                                </td>
+                                <td v-if="proposal.date_submitted">
+                                    {% verbatim %}
+                                    {{ proposal.date_submitted | date("DD-MM-YYYY, HH:mm") }}
+                                    {% endverbatim %}
+                                </td>
+                                <td v-else>
+                                    {% trans 'Nog niet ingediend' %}
+                                </td>
+                            </tr>
+                            <tr v-if="proposal.supervisor">
+                                <td>
+                                    {% trans "Eindverantwoordelijke onderzoeker" %}:
+                                </td>
+                                <td v-html="proposal.supervisor.fullname">
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6">
+                    <table>
+                        <tbody>
+                            <tr v-if="context.wants_route_info && proposal.latest_review">
+                                <td>
+                                    {% trans "Route:" %}
+                                </td>
+                                <td v-html="proposal.latest_review.route">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    {% trans "Indieners" %}:<br/>
+                                    <span
+                                       v-for="(applicant, index) in proposal.applicants"
+                                   >
+                                        {% verbatim %}
+                                        <span v-if="index != 0">, </span>
+                                        {{ applicant.fullname }}
+                                        {% endverbatim %}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </template>
+    </FancyList>
+</script>

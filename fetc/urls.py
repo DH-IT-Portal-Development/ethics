@@ -34,7 +34,9 @@ urlpatterns = [
     path('impersonate/', include('impersonate.urls')),
 
     path('i18n/', include('django.conf.urls.i18n')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('uilcore/', include('uil.core.urls')),
+    path('vue/', include('uil.vue.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)
 
 if 'debug_toolbar' in settings.INSTALLED_APPS and settings.DEBUG:
     import debug_toolbar

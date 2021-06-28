@@ -13,54 +13,89 @@
             {% with nav_items=proposal.available_urls active=5 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "Datamanagement" %}
-            </h2>
+            <h1>
+                {% trans "Datamanagement en Privacy" %}
+            </h1>
             <p>
-                {% blocktrans %}
-                Een zeer belangrijk ingrediënt van ethisch verantwoord onderzoek met deelnemers,
-                is dat er op adequate wijze met de verzamelde onderzoeks- en persoonsgegevens wordt omgegaan.
-                In het algemeen geldt dat onderzoekers zich wat betreft de opslag van data
-                en het beschikbaar maken van data voor andere onderzoekers gepast behoren te gedragen,
-                en zich dienen houden aan geldende wet- en regelgeving.
+                {% blocktrans trimmed %}
+                De Universiteit Utrecht streeft naar integriteit, duurzaamheid, en transparantie in de omgang met onderzoeksdata, waaronder persoonsgegevens. Sinds de introductie van de AVG zijn er duidelijke regels die onderzoekers moeten volgen met betrekking tot deze data.
                 {% endblocktrans %}
             </p>
-            <p>
-                {% blocktrans %}
-                Wanneer u persoonsgegevens verzamelt moet  zich aan de AVG (Algemene Verordening Gegevensbescherming) houden. Deze verordening is in lijn met de Europese privacywetgeving GDPR (<a href="https://eugdpr.org">https://eugdpr.org</a>).
+            <h2>{% trans "Data Management Plan" %}</h2>
+            <ul>
+            <li>
+                {% blocktrans trimmed %}
+                Een data management plan is sinds 2020 <a href="https://intranet.uu.nl/actueel/nieuws/nieuw-facultair-datamanagementbeleid" target="_blank">verplicht</a> bij de faculteit geesteswetenschappen, zowel als bij de instanties
+NWO en ERC als zij subsidie voor een onderzoek bieden.
                 {% endblocktrans %}
-                <br>
-                {% blocktrans %}
-                Voor meer informatie over hoe om te gaan met persoonsgegevens, zie
-                <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/avg-europese-privacywetgeving/algemene-informatie-avg" target="_blank">Autoriteit Persoonsgegevens (AP)</a>.
+            </li>
+            <li>
+                {% blocktrans trimmed %}
+                De faculteit biedt uitgebreide informatie op het gebied van data management, waaronder ook <a href="https://www.uu.nl/en/research/research-data-management/guides/data-management-planning" target="_blank">hoe deze te schrijven</a>. <br/> Je kunt bij de faculteit ook je DMP laten nakijken door <a href="https://www.uu.nl/en/research/research-data-management/tools-services/data-management-plan-review" target="_blank">Research Data Management Support</a> of de facultaire <a href="mailto:datamanagement.gw@uu.nl" target="_blank">datamanager</a>.
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans trimmed %}
+                Op de website <a href="https://dmponline.dcc.ac.uk/" target="_blank">DMP-online</a> vind je na het inloggen met je Solis-ID templates voor een DMP. Dit is waar je de templates die NWO en ERC vereisen kunt terugvinden, aangeboden door de UU.
+                {% endblocktrans %}
+            </li>
+            </ul>
+            <h3>{% trans "Nuttige workshops:" %}</h3>
+            <p>
+                {% blocktrans trimmed %}
+                Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop te volgen:
                 {% endblocktrans %}
             </p>
+            <ul>{% blocktrans trimmed %}
+                <li>
+                    de workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
+start to Research Data Management</a>
+                </li>
+
+                {% endblocktrans %}
+            </ul>
             <p>
-                {% blocktrans %}
-                Hoe er moet worden omgegaan met (onderzoeks)data volgens de richtlijnen van de VSNU kunt u
-                <a href="http://www.vsnu.nl/code-pers-gegevens.html" target="_blank">hier</a> vinden.
+                {% blocktrans trimmed %}
+                Voor advies op het gebied van data management planning kun je contact opnemen met de datamanager GW, Frans de Liagre Böhl via <a href="mailto:datamanagement.gw@uu.nl" target="_blank">datamanagement.gw@uu.nl</a>.
                 {% endblocktrans %}
             </p>
+            <h2>{% trans "Privacy: AVG en GDPR" %}</h2>
             <p>
-                {% blocktrans %}
-                Steeds vaker zullen subsidieverstrekkers eisen dat u een (zeer) gedetailleerd datamanagement plan (DMP) schrijft.
-                Ook vanuit de UU gaat dit de regel worden.
-                Een DMP houdt in dat u heeft nagedacht over wat voor soort type data u gaat verzamelen en over hoe gevoelig die data is.
-                De opslag van die data wordt medebepaald door de sensitiviteit van die data.
-                Het DMP gaat ook over hoe ziet de infrastructuur van mijn mappen/bestanden eruit;
-                hoe zorg ik ervoor dat ik alles makkelijk kan vinden
-                en dat ook anderen makkelijk hun weg erin kunnen vinden (denk aan hergebruik/ delen van data).
-                Meer informatie over wat een DMP precies inhoudt en hoe er een te schrijven vind u
-                <a href="https://www.uu.nl/en/research/research-data-management/what-we-do/data-management-plan" target="_blank">hier</a>.
+                {% blocktrans trimmed %}
+                Wanneer je persoonsgebonden data verzamelt, zorg je er voor dat je je houdt aan de Algemene Verordening Gegevensbescherming, of AVG. Deze wet is de Nederlandse implementatie van het Europese <a href="https://gdpr.eu/" target="_blank">GDPR</a>.
                 {% endblocktrans %}
-                <br>
-                {% blocktrans %}
-                Voor meer informatie over de UU-richtlijnen en wetten voor onderzoeksdata, zie ook:
-                <a href="http://libguides.library.uu.nl/onderzoeksdata" target="_blank">http://libguides.library.uu.nl/onderzoeksdata</a>.
+            </p>
+            <ul>
+            <li>
+                {% blocktrans trimmed %}
+                De autoriteit persoonsgegevens heeft <a href="https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/algemene-informatie-avg" target="_blank">uitgebreide informatie</a> in het Nederlands over hoe de AVG dataverzameling beïnvloedt.
+                {% endblocktrans %}
+            </li>
+            </ul>
+            <h3>{% trans "Nuttige workshops:" %}</h3>
+            <p>
+                {% blocktrans trimmed %}
+                Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop te volgen:
+                {% endblocktrans %}
+            </p>
+            <ul>{% blocktrans trimmed %}
+                <li>
+                    de workshop <a href="https://www.uu.nl/en/node/81799" target="_blank">Handling
+personal data in research</a>
+                </li>
+
+                {% endblocktrans %}
+            </ul>
+            <p>{% blocktrans trimmed %}
+                Voor advies op het gebied van privacy en de AVG kun je contact opnemen met de privacy officer van GW via <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.
                 {% endblocktrans %}
             </p>
 
+
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <table>
+            {{ form.as_table }}
+            </table>
                 {% include "base/form_buttons.html" %}
             </form>
         </div>

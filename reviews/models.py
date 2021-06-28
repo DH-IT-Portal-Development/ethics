@@ -97,6 +97,24 @@ class Review(models.Model):
                 self.stage = self.CLOSING
                 self.save()
 
+    def get_continuation_display(self):
+        # If this review hasn't concluded, this will only return 'Approved' as
+        # this is the default. Thus, we return 'unknown' if we are still pre-
+        # conclusion.
+        if self.stage <= Review.COMMISSION:
+            return _("Onbekend")
+
+        # Get the human readable string
+        continuation = dict(self.CONTINUATIONS).get(
+            self.continuation,
+            self.continuation
+        )
+
+        if self.proposal.has_minor_revision:
+            continuation += str(_(', met revisie'))
+
+        return continuation
+
     def get_route_display(self):
         route_options = {
             False: _('lange (4-weken) route'),

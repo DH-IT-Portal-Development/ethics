@@ -1,280 +1,139 @@
 from datetime import date
-from collections import OrderedDict
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 
-from main.utils import get_reviewers, get_secretary, is_secretary
+from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
                     ChangeChamberForm)
 from .mixins import (AutoReviewMixin, UserAllowedMixin,
-                     CommitteeMixin, UserOrSecretaryAllowedMixin,
+                     CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
 from .models import Decision, Review
 from .utils import notify_secretary, start_review_route
 
 
-class DecisionListView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
-    context_object_name = 'decisions'
-    template_name = 'reviews/decision_list.html'
+class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
+    template_name = 'reviews/ufl_list.html'
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['list_template'] = "reviews/vue_templates/decision_list.html"
+
+        return context
+
+
+class DecisionListView(BaseDecisionListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['title'] = _("Mijn besluiten")
+        context['data_url'] = reverse(
+            "reviews:api:my_archive",
+            args=[self.committee]
+        )
 
         return context
 
-    def get_queryset(self):
-        """Returns all open Decisions of the current User"""
 
-        if is_secretary(self.request.user):
-            return self.get_queryset_for_secretary()
-
-        return self.get_queryset_for_committee()
-
-
-    def get_queryset_for_committee(self):
-        """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
-
-        objects = Decision.objects.filter(
-            reviewer=self.request.user,
-            review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted')
-
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
-
-    def get_queryset_for_secretary(self):
-        """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
-        # Decision-for-secretary-exists cache.
-        dfse_cache = {}
-
-        objects = Decision.objects.filter(
-            reviewer__groups__name=settings.GROUP_SECRETARY,
-            review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__date_start')
-
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in dfse_cache:
-                dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal,
-                    reviewer=self.request.user
-                ).exists()
-
-            # If there is a decision for this user, but this decision isn't
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-        
-        
-        return [value for key, value in decisions.items()]
-    
-
-class DecisionMyOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
-    context_object_name = 'decisions'
-    template_name = 'reviews/decision_list.html'
-    group_required = [
-        settings.GROUP_SECRETARY,
-        settings.GROUP_GENERAL_CHAMBER,
-        settings.GROUP_LINGUISTICS_CHAMBER,
-    ]
+class DecisionMyOpenView(BaseDecisionListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['title'] = _("Mijn openstaande besluiten")
+        context['data_url'] = reverse(
+            "reviews:api:my_open",
+            args=[self.committee]
+        )
 
         return context
 
-    def get_queryset(self):
-        """Returns all open Decisions of the current User"""
 
-        if is_secretary(self.request.user):
-            return self.get_queryset_for_secretary()
-
-        return self.get_queryset_for_committee()
-
-
-    def get_queryset_for_committee(self):
-        """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
-
-        objects = Decision.objects.filter(
-            reviewer=self.request.user,
-            go='',
-            review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted')
-
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
-
-    def get_queryset_for_secretary(self):
-        """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
-        # Decision-for-secretary-exists cache.
-        dfse_cache = {}
-
-        objects = Decision.objects.filter(
-            reviewer__groups__name=settings.GROUP_SECRETARY,
-            go='',
-            review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__date_start')
-
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in dfse_cache:
-                dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal,
-                    reviewer=self.request.user
-                ).exists()
-
-            # If there is a decision for this user, but this decision isn't
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
-
-
-class DecisionOpenView(GroupRequiredMixin, CommitteeMixin, generic.ListView):
-    context_object_name = 'decisions'
-    template_name = 'reviews/decision_list_open.html'
+class DecisionOpenView(BaseDecisionListView):
     group_required = settings.GROUP_SECRETARY
 
-    def get_queryset(self):
-        """Returns all open Committee Decisions of all Users"""
-        decisions = OrderedDict()
-        # Decision-for-secretary-exists cache.
-        dfse_cache = {}
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-        objects = Decision.objects.filter(
-            go='',
-            review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted'
-            ).exclude(review__stage=Review.SUPERVISOR)
+        context['title'] = _("Openstaande besluiten commissieleden")
+        context['list_template'] = "reviews/vue_templates/decision_list_reviewer.html"
+        context['data_url'] = reverse("reviews:api:open", args=[self.committee])
 
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in dfse_cache:
-                dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal,
-                    reviewer=self.request.user
-                ).exists()
-
-            # If there is a decision for this user, but this decision isn't
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
+        return context
 
 
-class ToConcludeProposalView(GroupRequiredMixin, CommitteeMixin,
-                             generic.ListView):
-    context_object_name = 'reviews'
-    template_name = 'reviews/review_list.html'
+class SupervisorDecisionOpenView(BaseDecisionListView):
+    """
+    This page displays all proposals to be reviewed by supervisors.
+    """
+    group_required = settings.GROUP_SECRETARY
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = _("Openstaande besluiten eindverantwoordelijken")
+        context['list_template'] = "reviews/vue_templates/decision_list_reviewer.html"
+        context['data_url'] = reverse(
+            "reviews:api:open_supervisors",
+            args=[self.committee]
+        )
+
+        return context
+
+
+class BaseReviewListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
+    template_name = 'reviews/ufl_list.html'
+    group_required = [
+        settings.GROUP_SECRETARY,
+    ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+
+        context['list_template'] = "reviews/vue_templates/review_list.html"
+
+        return context
+
+
+class ToConcludeProposalView(BaseReviewListView):
     group_required = settings.GROUP_SECRETARY
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['title'] = _("Nog af te handelen studies")
+        context['data_url'] = reverse(
+            "reviews:api:to_conclude",
+            args=[self.committee]
+        )
 
         return context
 
-    def get_queryset(self):
-        """Returns all open Committee Decisions of all Users"""
-        reviews = {}
-        objects = Review.objects.filter(
-            stage__gte=Review.CLOSING,
-            proposal__status__gte=Proposal.SUBMITTED,
-            proposal__date_confirmed=None,
-            proposal__reviewing_committee=self.committee,
-        ).filter(
-            Q(continuation=Review.GO) |
-            Q(continuation=Review.GO_POST_HOC) |
-            Q(continuation=None)
-        ).order_by('-proposal__date_submitted')
 
-        for obj in objects:
-            proposal = obj.proposal
-            if proposal.pk not in reviews:
-                reviews[proposal.pk] = obj
-            else:
-                if reviews[proposal.pk].pk < obj.pk:
-                    reviews[proposal.pk] = obj
-
-        return [value for key, value in reviews.items()]
-
-
-class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
-                             CommitteeMixin, generic.ListView):
-    context_object_name = 'reviews'
-    template_name = 'reviews/review_list.html'
+class AllProposalReviewsView(BaseReviewListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['title'] = _("Alle ingezonden studies")
+        context['data_url'] = reverse(
+            "reviews:api:archive",
+            args=[self.committee]
+        )
 
         return context
     
@@ -289,88 +148,6 @@ class AllProposalReviewsView(UsersOrGroupsAllowedMixin,
             group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
         
         return group_required
-    
-    def get_queryset(self):
-        """Returns all open Committee Decisions of all Users"""
-        reviews = OrderedDict()
-        objects = Review.objects.filter(
-            stage__gte=Review.ASSIGNMENT,
-            proposal__status__gte=Proposal.SUBMITTED,
-            proposal__reviewing_committee=self.committee,
-        ).order_by('-date_start')
-
-        for obj in objects:
-            proposal = obj.proposal
-            if proposal.pk not in reviews:
-                reviews[proposal.pk] = obj
-            else:
-                if reviews[proposal.pk].pk < obj.pk:
-                    reviews[proposal.pk] = obj
-        
-        return [value for key, value in reviews.items()]
-
-
-class SupervisorDecisionOpenView(GroupRequiredMixin, CommitteeMixin,
-                                 generic.ListView):
-    """
-    This page displays all proposals to be reviewed by supervisors. Not to be
-    confused with SupervisorView, which displays all open reviews for a specific
-     supervisor. Viewable for the secretary only!
-    """
-    context_object_name = 'decisions'
-    template_name = 'reviews/decision_supervisor_list_open.html'
-    group_required = settings.GROUP_SECRETARY
-
-    def get_queryset(self):
-        """Returns all studies that still need conclusion actions by the
-        secretary
-        """
-        objects = Decision.objects.filter(
-            go='',
-            review__stage=Review.SUPERVISOR,
-            review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR,
-            review__proposal__reviewing_committee=self.committee
-        ).order_by('-review__proposal__date_submitted')
-        
-        decisions = OrderedDict()
-
-        for obj in objects:
-            proposal = obj.review.proposal
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
-
-
-class SupervisorView(LoginRequiredMixin, generic.ListView):
-    """
-        This page displays all proposals to be reviewed by a specific
-        supervisors. Not to be confused with SupervisorDecisionOpenView, which
-        displays all open reviews for all supervisors.
-        """
-    context_object_name = 'decisions'
-
-    def get_queryset(self):
-        """Returns all the current open Decisions for the current User"""
-        objects = Decision.objects.filter(
-            review__date_end=None,
-            review__stage=Review.SUPERVISOR,
-            reviewer=self.request.user
-            ).order_by('-review__proposal__date_submitted')
-        decisions = OrderedDict
-
-        for obj in objects:
-            proposal = obj.review.proposal
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
 
 
 class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,

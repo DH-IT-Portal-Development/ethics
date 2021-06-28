@@ -23,6 +23,7 @@ from .views.wmo_views import WmoCreate, WmoUpdate, \
 app_name = 'proposals'
 
 urlpatterns = [
+    path('api/', include('proposals.api.urls', namespace='api')),
     # List views
     path('archive/', include([
         path('export/', ProposalsExportView.as_view(), name='archive_export'),

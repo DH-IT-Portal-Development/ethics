@@ -9,7 +9,7 @@ from .models import Review, Decision
 from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
 from main.models import YES, DOUBT
 from proposals.models import Proposal, Relation
-from proposals.utils import generate_ref_number
+from proposals.utils import generate_ref_number, generate_pdf
 from studies.models import Study, Compensation, AgeGroup
 from observations.models import Observation
 from interventions.models import Intervention
@@ -41,6 +41,7 @@ class BaseReviewTestCase(TestCase):
                                                 reviewing_committee=Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER),
                                                 institution_id=1
                                                 )
+        generate_pdf(self.proposal, 'proposals/proposal_pdf.html')
         self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=2))
 
 
@@ -70,7 +71,10 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(mail.outbox[2].subject, 'FETC-GW: nieuwe studie ingediend')
+        self.assertEqual(
+            mail.outbox[2].subject,
+            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe studie ingediend'
+        )
         self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
 
 
@@ -93,8 +97,14 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(mail.outbox[2].subject, 'FETC-GW: nieuwe studie ingediend')
-        self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
+        self.assertEqual(
+            mail.outbox[2].subject,
+            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe studie ingediend'
+        )
+        self.assertEqual(
+            mail.outbox[3].subject,
+            'FETC-GW: aanmelding ontvangen'
+        )
 
 
 class AssignmentTestCase(BaseReviewTestCase):
@@ -205,7 +215,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_age_groups(self):
         self.study.has_sessions = True
-        self.study.age_groups = AgeGroup.objects.filter(pk=2)  # toddlers
+        self.study.age_groups.set(AgeGroup.objects.filter(pk=2))  # toddlers
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1, tasks_number=2)
@@ -249,7 +259,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_task(self):
         self.study.has_sessions = True
-        self.study.age_groups = AgeGroup.objects.filter(pk=4)  # adolescents
+        self.study.age_groups.set(AgeGroup.objects.filter(pk=4))  # adolescents
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -257,12 +267,12 @@ class AutoReviewTests(BaseReviewTestCase):
 
         s1 = Session.objects.create(study=self.study, order=1, tasks_number=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t1.registrations = Registration.objects.filter(pk=6)  # psychofysiological measurements
+        s1_t1.registrations.set(Registration.objects.filter(pk=6))  # psychofysiological measurements
 
         reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 1)
 
-        s1_t1.registration_kinds = RegistrationKind.objects.filter(requires_review=True)  # psychofysiological measurements / other
+        s1_t1.registration_kinds.set(RegistrationKind.objects.filter(requires_review=True))  # psychofysiological measurements / other
         s1_t1.save()
 
         reasons = auto_review_task(self.study, s1_t1)

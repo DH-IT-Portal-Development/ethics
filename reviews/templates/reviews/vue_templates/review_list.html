@@ -1,0 +1,190 @@
+{% load static %}
+{% load i18n %}
+
+{% static "proposals/images/arrow_divide.png" as img_diff %}
+{% static "main/images/page_white_acrobat.png" as img_pdf %}
+{% static "proposals/images/folder_delete.png" as img_hide %}
+{% static 'main/images/zoom.png' as img_details %}
+{% static 'reviews/images/user_add.png' as img_add_reviewers %}
+{% static 'reviews/images/folder_edit.png' as img_change_chamber %}
+{% static 'reviews/images/scale.png' as img_decide %}
+{% static 'reviews/images/accept.png' as img_close %}
+{% static 'reviews/images/website.png' as img_export %}
+{% static 'reviews/images/report_go.png' as img_confirm %}
+{% static 'reviews/images/tick.png' as img_confirmed %}
+
+<script type="text/x-template" id="reviewsUFLList">
+    <FancyList
+            {# It's a long, but standard, list, so we just include the default list #}
+            {% include 'uil.vue/fancy-list-params.txt' %}
+    >
+        {# General note: the #{slot}="data" defines in which Vue variable all properties are loaded.  #}
+        {# FancyList only exposes `item` and `context`, where item is the item from the data for a given row.  #}
+        {# and context is the global context data. #}
+        {# (Thus, data.item and data.context). You can use  #}
+
+        {# Here we do some JS deconstructing to pull the data out in seperate variables. We also rename item #}
+        {# to review, for clarity. #}
+        <template #title="{ item: review, context }">
+            <h4>
+                {# Verbatim tags are needed to stop Django from interpreting these braces as Django template code #}
+                {# They are actually vue template code #}
+                {% verbatim %}
+                {{ review.proposal.reference_number }} -
+                {{ review.proposal.title }}
+                {% endverbatim %}
+            </h4>
+        </template>
+
+
+        <template #actions="{ item: review, context }">
+            {# The :href means that we use Vue to provide the actual link. Thus, the expression is Vue code! #}
+            <a
+               :href="review.proposal.pdf.url"
+               target="_blank"
+               :download="review.proposal.pdf.name"
+            >
+                {# Note the absence of {% verbatim %}, we actually use django here for the image! #}
+                <img src="{{ img_pdf }}" title="{% trans 'Studie inzien' %}">
+            </a>
+            <a :href="$url('reviews:detail', [review.pk])">
+                <img src="{{ img_details }}" title="{% trans 'Details' %}">
+            </a>
+            <a :href="$url('proposals:diff', [review.proposal.pk])" v-if="review.proposal.is_revision">
+                <img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}">
+            </a>
+            {# The template tag doesn't add anything by itself, so it's a good if container #}
+            <template v-if="context.is_secretary && review.stage === context.review.ASSIGNMENT">
+                <a :href="$url('reviews:assign', [review.pk])">
+                    <img src="{{ img_add_reviewers }}"
+                         title="{% trans 'Aanstellen' %}">
+                </a>
+                <a :href="$url('reviews:change_chamber', [review.proposal.pk])">
+                    <img src="{{ img_change_chamber }}"
+                         title="{% trans 'Verplaats naar andere kamer' %}">
+                </a>
+            </template>
+            <a
+                    v-if="context.is_secretary && review.stage === context.review.CLOSING"
+                    :href="$url('reviews:close', [review.pk])"
+            >
+                <img src="{{ img_close }}" title="{% trans 'Afsluiten' %}">
+            </a>
+            <template v-else-if="context.is_secretary && review.stage === context.review.CLOSED">
+                <template v-if="[context.review.GO, context.review.GO_POST_HOC].includes(review.continuation)">
+                    <a :href="$url('proposals:archive_export', [review.proposal.pk])">
+                        <img src="{{ img_export }}"
+                             title="{% trans 'Website export tekst' %}">
+                    </a>
+                    <a :href="$url('proposals:confirmation', [review.proposal.pk])">
+                        <img
+                            v-if="review.proposal.date_confirmed"
+                            src="{{ img_confirm }}"
+                            title="{% trans 'Bevestigingsbrief versturen' %}"
+                        />
+                        <img
+                            v-else
+                            src="{{ img_confirmed }}"
+                            title="{% trans 'Bevestigingsbrief verstuurd' %}"
+                        />
+                    </a>
+                </template>
+            </template>
+        </template>
+
+
+        <template #undertitle="{ item: review, context }">
+            <div class="ufl-undertitle-line">
+                {% trans 'Eindverantwoordelijke' %}:
+                {% verbatim %}
+                {{ review.accountable_user.fullname }}
+                {% endverbatim %}
+            </div>
+            <div class="ufl-undertitle-line">
+                {% trans "Stadium" %}:
+                {% verbatim %}
+                {{ review.get_stage_display }}
+                {% endverbatim %}
+            </div>
+        </template>
+
+
+        <template #details="{ item: review, context }">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <table>
+                        <tbody>
+                            <tr v-if="review.stage === context.review.CLOSED">
+                                <td>
+                                    {% trans "Afhandeling" %}:
+                                </td>
+                                <td v-html="review.get_continuation_display">
+
+                                </td>
+                            </tr>
+                            <tr v-if="review.proposal.parent && review.proposal.parent.latest_review">
+                                <td>
+                                    {% trans "Revisie/amendement van" %}:
+                                </td>
+                                <td>
+                                    <a
+                                        :href="$url('reviews:detail', [review.proposal.parent.latest_review.pk])"
+                                        v-html="review.proposal.parent.reference_number"
+                                    >
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Datum ingediend" %}:
+                                </td>
+                                <td>
+                                    {% verbatim %}
+                                    {{ review.date_start | date("DD-MM-YYYY") }}
+                                    {% endverbatim %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% trans "Gewenste einddatum" %}:
+                                </td>
+                                <td>
+                                    {% verbatim %}
+                                    {{ review.date_should_end | date("DD-MM-YYYY") }}
+                                    {% endverbatim %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6">
+                    <table>
+                        <tbody>
+                            <tr v-if="review.stage >= context.review.COMMISSION">
+                                <td>
+                                    {% trans "Route" %}:
+                                </td>
+                                <td v-html="review.route">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    {% trans "Indieners" %}:<br/>
+                                    <a
+                                       v-for="(applicant, index) in review.proposal.applicants"
+                                       :href="$url('main:user_detail', [applicant.pk])"
+                                   >
+                                        {% verbatim %}
+                                        <span v-if="index != 0">, </span>
+                                        {{ applicant.fullname }}
+                                        {% endverbatim %}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+    </FancyList>
+</script>

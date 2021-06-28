@@ -16,7 +16,7 @@ from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     UpdateView, UserAllowedMixin
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
-from reviews.mixins import CommitteeMixin
+from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from ..copy import copy_proposal
@@ -32,34 +32,13 @@ from proposals.mixins import ProposalMixin, ProposalContextMixin
 # List views
 ############
 
-class BaseProposalsView(LoginRequiredMixin, generic.ListView):
+class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
     title = _('Publiek archief')
     body = _('Dit overzicht toont alle goedgekeurde studies.')
     is_modifiable = False
     is_submitted = True
     contains_supervised = False
-    context_object_name = 'proposals'
-
-    def get_queryset(self):
-        """Returns all the Proposals that have been decided positively upon"""
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True,
-                                       public=True).order_by("-date_modified")
-    
-    def add_route_info(self, p):
-        """Adds human-readable route info to the given proposal."""
-        
-        last_review = p.review_set.last()
-        
-        try: 
-            route = last_review.get_route_display
-        except AttributeError:
-            route = None
-
-        p.route = route
-        p.has_route_info = True
-        return p
+    template_name = 'proposals/proposal_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(BaseProposalsView, self).get_context_data(**kwargs)
@@ -68,18 +47,92 @@ class BaseProposalsView(LoginRequiredMixin, generic.ListView):
         context['modifiable'] = self.is_modifiable
         context['submitted'] = self.is_submitted
         context['supervised'] = self.contains_supervised
-        context['is_secretary'] = is_secretary(self.request.user)
+        context['data_url'] = None
+
         return context
 
-    def get_my_proposals(self):
-        return Proposal.objects.filter(
-            Q(applicants=self.request.user) | Q(supervisor=self.request.user)
-        ).order_by(
-            "-date_modified"
-        ).distinct()
+
+class MyProposalsView(BaseProposalsView):
+    title = _('Mijn studies')
+    body = _('Dit overzicht toont al uw studies.')
+    is_modifiable = True
+    is_submitted = True
+    contains_supervised = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_url'] = reverse('proposals:api:my_archive',)
+        return context
+
+
+class MyConceptsView(BaseProposalsView):
+    title = _('Mijn conceptstudies')
+    body = _('Dit overzicht toont al uw nog niet ingediende studies.')
+    is_modifiable = True
+    is_submitted = False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_url'] = reverse('proposals:api:my_concepts',)
+        return context
+
+
+class MySubmittedView(BaseProposalsView):
+    title = _('Mijn ingediende studies')
+    body = _('Dit overzicht toont al uw ingediende studies.')
+    is_modifiable = False
+    is_submitted = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_url'] = reverse('proposals:api:my_submitted',)
+        return context
+
+
+class MyCompletedView(BaseProposalsView):
+    title = _('Mijn afgehandelde studies')
+    body = _('Dit overzicht toont al uw beoordeelde studies.')
+    is_modifiable = False
+    is_submitted = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_url'] = reverse('proposals:api:my_completed',)
+        return context
+
+
+class MySupervisedView(BaseProposalsView):
+    title = _('Mijn studies als eindverantwoordelijke')
+    body = _(
+        'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
+    is_modifiable = True
+    is_submitted = True
+    contains_supervised = True
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_url'] = reverse('proposals:api:my_supervised',)
+        return context
+
+class MyPracticeView(BaseProposalsView):
+    title = _('Mijn oefenstudies')
+    body = _('Dit overzicht toont alle oefenstudies waar u als student, \
+onderzoeker of eindverantwoordelijke bij betrokken bent.')
+    is_modifiable = True
+    is_submitted = False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_url'] = reverse('proposals:api:my_practice',)
+        return context
 
 
 class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data_url'] = reverse('proposals:api:archive', args=[self.committee])
+        return context
 
     @property
     def title(self):
@@ -87,14 +140,6 @@ class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
             _('Publiek archief'),
             self.committee_display_name
         )
-
-    def get_queryset(self):
-        """Returns all the Proposals that have been decided positively upon"""
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True,
-                                       reviewing_committee=self.committee,
-                                       public=True).order_by("-date_reviewed")
 
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
@@ -133,110 +178,6 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
         proposal.save()
 
         return reverse('proposals:archive')
-
-
-class MyConceptsView(BaseProposalsView):
-    title = _('Mijn conceptstudies')
-    body = _('Dit overzicht toont al uw nog niet ingediende studies.')
-    is_modifiable = True
-    is_submitted = False
-
-    def get_queryset(self):
-        """Returns all non-submitted Proposals for the current User"""
-        return self.get_my_proposals().filter(
-            status__lt=Proposal.SUBMITTED_TO_SUPERVISOR
-        ).order_by(
-            "-date_modified"
-        )
-
-
-class MySubmittedView(BaseProposalsView):
-    title = _('Mijn ingediende studies')
-    body = _('Dit overzicht toont al uw ingediende studies.')
-    is_modifiable = False
-    is_submitted = True
-
-    def get_queryset(self):
-        """Returns all submitted Proposals for the current User"""
-        return self.get_my_proposals().filter(
-            status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
-            status__lt=Proposal.DECISION_MADE
-        ).order_by(
-            "-date_submitted",
-            "-date_submitted_supervisor",
-        )
-
-
-class MyCompletedView(BaseProposalsView):
-    title = _('Mijn afgehandelde studies')
-    body = _('Dit overzicht toont al uw beoordeelde studies.')
-    is_modifiable = False
-    is_submitted = True
-
-    def get_queryset(self):
-        """Returns all completed Proposals for the current User"""
-        return self.get_my_proposals().filter(
-            status__gte=Proposal.DECISION_MADE
-        ).order_by(
-            "-date_modified"
-        )
-
-
-class MySupervisedView(BaseProposalsView):
-    title = _('Mijn studies als eindverantwoordelijke')
-    body = _(
-        'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True
-    template_name = 'proposals/proposal_list.html'
-    
-    
-    def get_context_data(self, **kwargs):
-        context = super(MySupervisedView, self).get_context_data(**kwargs)
-        context['wants_route_info'] = True
-        return context
-
-    def get_queryset(self):
-        """Returns all Proposals supervised by the current User"""
-        plist = [self.add_route_info(p) for p in Proposal.objects.filter(
-                        supervisor=self.request.user
-                    ).order_by(
-                        "-date_submitted_supervisor"
-                    )
-                 ]
-        return plist
-
-
-class MyProposalsView(BaseProposalsView):
-    title = _('Mijn studies')
-    body = _('Dit overzicht toont al uw studies.')
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True    
-    
-    def get_queryset(self):
-        """Returns all Proposals for the current User"""
-        return self.get_my_proposals()
-
-
-class MyPracticeView(BaseProposalsView):
-    title = _('Mijn oefenstudies')
-    body = _('Dit overzicht toont alle oefenstudies waar u als student, \
-onderzoeker of eindverantwoordelijke bij betrokken bent.')
-    is_modifiable = True
-    is_submitted = False
-
-    def get_queryset(self):
-        """Returns all practice Proposals for the current User"""
-        return Proposal.objects.filter(
-            Q(in_course=True) | Q(is_exploration=True),
-            Q(applicants=self.request.user) |
-            Q(supervisor=self.request.user)
-        ).order_by(
-            "-date_modified"
-        )
-
 
 ##########################
 # CRUD actions on Proposal
@@ -289,14 +230,39 @@ class ProposalDelete(DeleteView):
         return reverse('proposals:my_concepts')
 
 
-class CompareDocumentsView(GroupRequiredMixin, generic.TemplateView):
+class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
     template_name = 'proposals/compare_documents.html'
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
+    
+    def get_allowed_users(self):
+        
+        compare_type = self.kwargs.get('type')
+        new_pk = self.kwargs.get('new')
+        attribute = self.kwargs.get('attribute')
 
+        model = {
+            'documents': Documents,
+            'wmo': Wmo,
+            'observation': Observation,
+            'proposal': Proposal,
+        }.get(compare_type, None)
+        
+        if model == Proposal:
+            proposal = Proposal.objects.get(pk=new_pk)
+        else:
+            proposal = model.objects.get(pk=new_pk).proposal
+        
+        allowed_users = list(proposal.applicants.all())
+        if proposal.supervisor:
+            allowed_users.append(proposal.supervisor)
+        
+        return allowed_users
+        
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -308,7 +274,8 @@ class CompareDocumentsView(GroupRequiredMixin, generic.TemplateView):
         context['new_text'] = get_document_contents(new_file)
 
         return context
-
+    
+    
     def _get_files(self) -> Tuple[
         Union[None, FieldFile],
         Union[None, FieldFile]

@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load vue_tags %}
 
 {% load static %}
 {% load i18n %}
@@ -10,17 +11,21 @@
 {% endblock %}
 
 {% block html_head %}
-    <script src="{% static 'uil.core/js/uu-fancy-list.js' %}"></script>
+
+    {# This template loads in either the dev or prod Vue library, depending on settings.DEBUG #}
+    {% include 'uil.vue/vueloader.html' %}
+    {# Load in the base component FancyList #}
+    {% load_vue_component 'FancyList' %}
+
+    {% include 'proposals/vue_templates/proposal_list.html' %}
 
     <script>
-        $(function () {
-            $('.uu-fancy-list-container').fancyList({
-                language: '{{ LANGUAGE_CODE }}',
-            });
-        });
+        // Needs to be wrapped into an onload to ensure all dependencies are loaded
+        window.onload = _ => {
+            Vue.createFancyList("#list", "#proposalsUFLList", '{{ LANGUAGE_CODE }}', '{{ data_url }}');
+        }
     </script>
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -82,149 +87,7 @@
                 {% endif %}
             </ul>
 
-            <div class="uu-fancy-list-container">
-                <div class="uu-fancy-list">
-                    {% for proposal in proposals %}
-                        <div class="ufl-item clearfix" data-show="true">
-                            <h4>{{ proposal.reference_number }} - {{ proposal.title }} </h4>
-
-                            <div class="ufl-actions">
-                                {% if proposal.status == proposal.SUBMITTED_TO_SUPERVISOR and user == proposal.supervisor %}
-                                    <a href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}">
-                                        <img src="{% static 'reviews/images/scale.png' %}"
-                                             title="{% trans 'Beslissen' %}">
-                                    </a>
-                                {% endif %}
-                                {% if proposal.is_revision %}
-                                    <a href="{% url 'proposals:diff' proposal.pk %}">
-                                        <img src="{{ img_diff }}"
-                                             title="{% trans 'Toon verschillen' %}">
-                                    </a>
-                                {% endif %}
-                                {% if proposal.status < proposal.SUBMITTED_TO_SUPERVISOR %}
-                                    {% if user in proposal.applicants.all or user == proposal.supervisor %}
-                                        <a href="{{ proposal.continue_url }}">
-                                            <img src="{{ img_next }}"
-                                                 title="{% trans 'Naar volgende stap' %}">
-                                        </a>
-                                    {% endif %}
-                                    <a href="{% url 'proposals:delete' proposal.pk %}">
-                                        <img src="{{ img_delete }}"
-                                             title="{% trans 'Verwijderen' %}">
-                                    </a>
-                                {% elif proposal.pdf %}
-                                    <a href="{{ proposal.pdf.url }}" target="_blank" download="{{proposal.pdf.name}}">
-                                        <img src="{{ img_pdf }}"
-                                             title="{% trans 'Inzien' %}">
-                                    </a>
-                                {% else %}
-                                    <a href="{% url 'proposals:pdf' proposal.pk %}" target="_blank">
-                                        <img src="{{ img_pdf }}"
-                                             title="{% trans 'Inzien' %}">
-                                    </a>
-                                {% endif %}
-                                {% if proposal.in_archive and is_secretary %}
-                                    <a href="{% url 'proposals:archive_hide' proposal.pk %}">
-                                        <img src="{{ img_hide }}"
-                                             title="{% trans 'Verberg' %}">
-                                    </a>
-                                {% endif %}
-                            </div>
-
-                            <div class="ufl-undertitle">
-                                <div class="ufl-undertitle-line">
-                                    {% trans 'Soort studie' %}: {{ proposal.type }}
-                                </div>
-                                <div class="ufl-undertitle-line">
-                                    {% if proposal.status >= proposal.DECISION_MADE %}
-                                        {% trans "Besloten op" %}: {{ proposal.date_reviewed|date:'j F Y, H:m' }}
-                                    {% else %}
-                                        {% trans "Laatst bijgewerkt" %}: {{ proposal.date_modified|date:'j F Y, H:m' }}
-                                    {% endif %}
-                                </div>
-                                <div class="ufl-undertitle-line">
-                                    {% trans 'Status' %}:
-                                    {% if proposal.status >= 55 and proposal.review_set.last %}
-                                        {{ proposal.review_set.last.get_continuation_display }}
-                                    {% else %}
-                                        {{ proposal.get_status_display }}
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                            <div class="ufl-details">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <table>
-                                            {% if proposal.parent and proposal.parent.latest_review %}
-                                                <tr>
-                                                    <td>
-                                                        {% trans "Revisie/amendement van" %}:
-                                                    </td>
-                                                    <td>
-                                                        {% if proposals.parent.pdf %}
-                                                            <a href="{{ proposals.parent.pdf.url }}">
-                                                                {{ proposal.parent.reference_number }}
-                                                            </a>
-                                                        {% else %}
-                                                            {{ proposal.parent.reference_number }}
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            <tr>
-                                                <td>
-                                                    {% trans "Datum ingediend" %}:
-                                                </td>
-                                                <td>
-                                                    {% if proposal.date_submitted %}
-                                                        {{ proposal.date_submitted|date:"j F Y" }}
-                                                    {% else %}
-                                                        {% trans 'Nog niet ingediend' %}
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            {% if proposal.supervisor %}
-                                                <tr>
-                                                    <td>
-                                                        {% trans "Eindverantwoordelijke onderzoeker" %}:
-                                                    </td>
-                                                    <td>
-                                                        {{ proposal.supervisor.get_full_name }}
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                        </table>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <table>
-                                            {% if wants_route_info %}
-                                                <tr>
-                                                    <td>
-                                                        {% trans "Route:" %}
-                                                    </td>
-                                                    <td>
-                                                        {{ proposal.route }}
-                                                    </td>
-                                                </tr>
-                                            {% endif %}
-                                            <tr>
-                                                <td colspan="2">
-                                                    {% trans "Indieners" %}:<br/>
-                                                    {% for applicant in proposal.applicants.all %}
-                                                        <a href="{% url 'main:user_detail' applicant.pk %}">{{ applicant.get_full_name }}</a>
-                                                        {% if not forloop.last %},{% endif %}
-                                                    {% endfor %}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+            <div id="list"></div>
 
         </div>
     </div>
