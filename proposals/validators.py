@@ -4,18 +4,18 @@ from django.utils.translation import gettext as _
 
 
 class UniqueTitleValidator:
-    
-    
+
+
     proposal = None
 
     def __init__(self, proposal = None):
         self.proposal = proposal
 
     def __call__(self, value):
-        
+
         # Importing here to prevent circular import
         from .models import Proposal
-        
+
         qs = Proposal.objects.filter(title=value)
 
         if self.proposal:
@@ -26,8 +26,8 @@ class UniqueTitleValidator:
                                           'titel.'), code='unique')
 
 def AVGUnderstoodValidator(value):
-    
+
     if value != True:
         raise forms.ValidationError(
-            _('U dient kennis genomen te hebben van de AVG om uw studie in te dienen'), code='avg'
+            _('Je dient kennis genomen te hebben van de AVG om uw studie in te dienen'), code='avg'
             )
