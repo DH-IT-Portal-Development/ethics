@@ -79,13 +79,13 @@
                     <a :href="$url('proposals:confirmation', [review.proposal.pk])">
                         <img
                             v-if="review.proposal.date_confirmed"
-                            src="{{ img_confirm }}"
-                            title="{% trans 'Bevestigingsbrief versturen' %}"
+                            src="{{ img_confirmed }}"
+                            title="{% trans 'Bevestigingsbrief verstuurd' %}"
                         />
                         <img
                             v-else
-                            src="{{ img_confirmed }}"
-                            title="{% trans 'Bevestigingsbrief verstuurd' %}"
+                            src="{{ img_confirm }}"
+                            title="{% trans 'Bevestigingsbrief versturen' %}"
                         />
                     </a>
                 </template>
