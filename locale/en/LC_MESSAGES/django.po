@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-25 16:12+0200\n"
+"POT-Creation-Date: 2021-06-29 17:12+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2210,7 +2210,9 @@ msgid ""
 "de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
 "gw@uu.nl</a>."
 msgstr ""
-"For advice relating to privacy and the AVG, you can contact the privacy officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
+"For advice relating to privacy and the AVG, you can contact the privacy "
+"officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy."
+"gw@uu.nl</a>."
 
 #: proposals/templates/proposals/proposal_diff.html:10
 #: proposals/templates/proposals/proposal_diff.html:36
@@ -3394,7 +3396,7 @@ msgid "AVG en Data Management"
 msgstr "AVG and Data Management"
 
 #: proposals/validators.py:32
-msgid "U dient kennis genomen te hebben van de AVG om uw studie in te dienen"
+msgid "Je dient kennis genomen te hebben van de AVG om uw studie in te dienen"
 msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
 "proposal."
