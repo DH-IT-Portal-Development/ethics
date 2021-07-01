@@ -136,17 +136,17 @@ class AllProposalReviewsView(BaseReviewListView):
         )
 
         return context
-    
+
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
-        
+
         group_required = [settings.GROUP_SECRETARY]
-        
+
         if self.committee.name == 'AK':
             group_required += [ settings.GROUP_GENERAL_CHAMBER ]
         if self.committee.name == 'LK':
             group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
-        
+
         return group_required
 
 
@@ -156,12 +156,12 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
     Shows the Decisions for a Review
     """
     model = Review
-    
+
     def get_group_required(self):
-        
+
         obj = self.get_object()
         group_required = [ settings.GROUP_SECRETARY, obj.proposal.reviewing_committee.name ]
-        
+
         return group_required
 
 
@@ -220,11 +220,11 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             # Remove the Decision for obsolete reviewers
             Decision.objects.filter(review=review,
                                     reviewer__in=obsolete_reviewers).delete()
-            
+
             # Finally, update the review process
             # This prevents it waiting for removed reviewers
             review.update_go()
-            
+
         else:
             # Directly mark this Proposal as closed: applicants should start a revision Proposal
             for decision in Decision.objects.filter(review=review):
@@ -329,15 +329,118 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         return super(ReviewCloseView, self).form_valid(form)
 
 
+
+class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
+    model = Review
+    form_class = ReviewUnsubmitForm
+    template_name = 'reviews/review_unsubmit_form.html'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_success_url(self):
+        'Return to the detail view after unsubmission'
+        committee = self.object.proposal.reviewing_committee.name
+        return reverse('reviews:detail', args=[self.object.pk])
+
+    def form_valid(self, form):
+        'Sets the unsubmitted continuation on the review'
+        proposal = form.instance.proposal
+
+        return super(ReviewCloseView, self).form_valid(form)
+
+
+
+class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
+    model = Review
+    form_class = ReviewCloseForm
+    template_name = 'reviews/review_close_form.html'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_success_url(self):
+        committee = self.object.proposal.reviewing_committee.name
+        return reverse('reviews:my_archive', args=[committee])
+
+    def get_form_kwargs(self):
+        """
+        Adds allow_long_route_continuation to the form_kwargs.
+        The long route continuation is only allowed for short route Reviews
+        that are not of preliminary assessment Proposals.
+        """
+        review = self.get_object()
+
+        kwargs = super(ReviewCloseView, self).get_form_kwargs()
+        kwargs[
+            'allow_long_route_continuation'] = review.short_route and not review.proposal.is_pre_assessment
+        return kwargs
+
+    def get_initial(self):
+        """
+        Set initial values:
+        - continuation to GO if review was positive
+        - in_archive to True as long as we are not dealing with preliminary assessment
+        """
+        review = self.get_object()
+
+        initial = super(ReviewCloseView, self).get_initial()
+        initial['continuation'] = Review.GO if review.go else Review.NO_GO
+
+        if review.proposal.date_start and \
+           review.proposal.date_start < date.today():
+            initial['continuation'] = \
+                Review.GO_POST_HOC if initial['continuation'] == Review.GO \
+                else Review.NO_GO_POST_HOC
+
+        initial['in_archive'] = not review.proposal.is_pre_assessment
+        return initial
+
+    def form_valid(self, form):
+        proposal = form.instance.proposal
+
+        if form.instance.continuation in [
+            Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
+        ]:
+            proposal.status = Proposal.DECISION_MADE
+            proposal.status_review = form.instance.continuation in [
+                Review.GO, Review.GO_POST_HOC
+            ]
+            proposal.date_reviewed = timezone.now()
+            proposal.save()
+        elif form.instance.continuation == Review.LONG_ROUTE:
+            # Create a new review
+            review = Review.objects.create(
+                proposal=proposal,
+                stage=Review.COMMISSION,
+                short_route=False,
+                date_start=timezone.now())
+            # Create a Decision for the secretary
+            Decision.objects.create(review=review, reviewer=get_secretary())
+            # Start the long review route
+            start_review_route(review, get_reviewers(), False)
+        elif form.instance.continuation == Review.METC:
+            proposal.status = Proposal.DRAFT
+            proposal.save()
+            proposal.wmo.enforced_by_commission = True
+            proposal.wmo.save()
+
+        proposal.in_archive = form.cleaned_data['in_archive']
+        proposal.has_minor_revision = form.cleaned_data['has_minor_revision']
+        proposal.minor_revision_description = form.cleaned_data[
+            'minor_revision_description']
+        proposal.save()
+
+        form.instance.stage = Review.CLOSED
+
+        return super(ReviewCloseView, self).form_valid(form)
+
+
 class CreateDecisionRedirectView(LoginRequiredMixin,
                                  GroupRequiredMixin,
                                  generic.RedirectView):
     """
     This redirect first creates a new decision for a secretary that does not
     have one yet, and redirects to the DecisionUpdateView.
-    
-    NOTE: this view has been removed from templates to allow for multiple 
-    secretaries to work without them unnecessarily creating decisions. It 
+
+    NOTE: this view has been removed from templates to allow for multiple
+    secretaries to work without them unnecessarily creating decisions. It
     might be of use again in the future, but for now the FEtC-H has decided
     to no longer require a secretary decision for every review. See PR
     #188 for details.
@@ -395,10 +498,10 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
         """Save the decision date and send e-mail to secretary"""
         form.instance.date_decision = timezone.now()
         review = form.instance.review
-    
+
         # Don't notify the secretary if this is a supervisor decision.
         # If it was a GO they the secretary will be notified anyway
         if not review.stage == review.SUPERVISOR:
             notify_secretary(form.instance)
-        
+
         return super(DecisionUpdateView, self).form_valid(form)
