@@ -95,7 +95,8 @@ class MyDecisionsApiView(BaseDecisionApiView):
 
         objects = Decision.objects.filter(
             reviewer=self.request.user,
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
+            review__continuation__lt=7,
         )
 
         for obj in objects:
@@ -117,7 +118,8 @@ class MyDecisionsApiView(BaseDecisionApiView):
 
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
+            review__continuation__lt=7,
         )
 
         for obj in objects:
@@ -169,7 +171,8 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             go='',
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
+            review__continuation__lt=7,
         )
 
         for obj in objects:
@@ -192,7 +195,8 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go='',
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
+            review__continuation__lt=7,
         )
 
         for obj in objects:
@@ -233,7 +237,8 @@ class OpenDecisionsApiView(BaseDecisionApiView):
 
         objects = Decision.objects.filter(
             go='',
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
+            review__continuation__lt=7,
         ).exclude(review__stage=Review.SUPERVISOR)
 
         for obj in objects:
@@ -395,6 +400,7 @@ class AllReviewsApiView(BaseReviewApiView):
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
+            continuation__lt=7,
         )
 
         for obj in objects:

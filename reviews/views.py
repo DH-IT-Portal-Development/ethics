@@ -346,7 +346,15 @@ class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
         review = form.instance
         proposal = review.proposal
 
-        return super(ReviewCloseView, self).form_valid(form)
+        # Remove decisions
+        for d in review.decision_set.all():
+            d.delete()
+
+        # Set review continuation
+        review.continuation = 7
+        review.save()
+
+        return super().form_valid(form)
 
 
 
