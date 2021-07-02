@@ -65,12 +65,12 @@ class ReviewAssignForm(ConditionalModelForm):
 
     def clean_reviewers(self):
         reviewers = self.cleaned_data['reviewers']
-        
+
         if len(reviewers) == 0:
             raise ValidationError(
                 _('Er moet tenminste één beoordelaar geselecteerd worden.'),
                 code='no_reviewer')
-        
+
         # See PR #188 if a secretary should be added to every review
         return self.cleaned_data['reviewers']
 
@@ -110,6 +110,24 @@ class ReviewCloseForm(forms.ModelForm):
 
         self.fields['minor_revision_description'].label = _('Opmerkingen over revisie')
         self.fields['minor_revision_description'].widget = forms.Textarea()
+
+
+class ReviewUnsubmitForm(forms.ModelForm):
+    confirm_unsubmit = forms.BooleanField(initial=False, required=True,
+                                          label=_('Bevestig beëindiging'))
+
+    class Meta:
+        model = Review
+        fields = [
+            'confirm_unsubmit',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Check that this review can be unsubmitted
+        """
+
+        return super().__init__(*args, **kwargs)
 
 
 class DecisionForm(forms.ModelForm):

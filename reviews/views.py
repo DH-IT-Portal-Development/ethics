@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
-                    ChangeChamberForm)
+                    ChangeChamberForm, ReviewUnsubmitForm)
 from .mixins import (AutoReviewMixin, UserAllowedMixin,
                      CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
@@ -343,7 +343,8 @@ class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
 
     def form_valid(self, form):
         'Sets the unsubmitted continuation on the review'
-        proposal = form.instance.proposal
+        review = form.instance
+        proposal = review.proposal
 
         return super(ReviewCloseView, self).form_valid(form)
 
