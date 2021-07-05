@@ -171,9 +171,6 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
 
         actions = ReviewActions(self.object)
         context['detail_actions'] = actions.get_detail_actions(self.request.user)
-        print(actions)
-        print(actions.get_detail_actions(self.request.user))
-        print(actions.detail_actions[0].is_available(self.request.user))
 
         return context
 
@@ -259,90 +256,6 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             form.instance.stage = Review.CLOSED
 
         return super(ReviewAssignView, self).form_valid(form)
-
-
-class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
-    model = Review
-    form_class = ReviewCloseForm
-    template_name = 'reviews/review_close_form.html'
-    group_required = settings.GROUP_SECRETARY
-
-    def get_success_url(self):
-        committee = self.object.proposal.reviewing_committee.name
-        return reverse('reviews:my_archive', args=[committee])
-
-    def get_form_kwargs(self):
-        """
-        Adds allow_long_route_continuation to the form_kwargs.
-        The long route continuation is only allowed for short route Reviews
-        that are not of preliminary assessment Proposals.
-        """
-        review = self.get_object()
-
-        kwargs = super(ReviewCloseView, self).get_form_kwargs()
-        kwargs[
-            'allow_long_route_continuation'] = review.short_route and not review.proposal.is_pre_assessment
-        return kwargs
-
-    def get_initial(self):
-        """
-        Set initial values:
-        - continuation to GO if review was positive
-        - in_archive to True as long as we are not dealing with preliminary assessment
-        """
-        review = self.get_object()
-
-        initial = super(ReviewCloseView, self).get_initial()
-        initial['continuation'] = Review.GO if review.go else Review.NO_GO
-
-        if review.proposal.date_start and \
-           review.proposal.date_start < date.today():
-            initial['continuation'] = \
-                Review.GO_POST_HOC if initial['continuation'] == Review.GO \
-                else Review.NO_GO_POST_HOC
-
-        initial['in_archive'] = not review.proposal.is_pre_assessment
-        return initial
-
-    def form_valid(self, form):
-        proposal = form.instance.proposal
-
-        if form.instance.continuation in [
-            Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
-        ]:
-            proposal.status = Proposal.DECISION_MADE
-            proposal.status_review = form.instance.continuation in [
-                Review.GO, Review.GO_POST_HOC
-            ]
-            proposal.date_reviewed = timezone.now()
-            proposal.save()
-        elif form.instance.continuation == Review.LONG_ROUTE:
-            # Create a new review
-            review = Review.objects.create(
-                proposal=proposal,
-                stage=Review.COMMISSION,
-                short_route=False,
-                date_start=timezone.now())
-            # Create a Decision for the secretary
-            Decision.objects.create(review=review, reviewer=get_secretary())
-            # Start the long review route
-            start_review_route(review, get_reviewers(), False)
-        elif form.instance.continuation == Review.METC:
-            proposal.status = Proposal.DRAFT
-            proposal.save()
-            proposal.wmo.enforced_by_commission = True
-            proposal.wmo.save()
-
-        proposal.in_archive = form.cleaned_data['in_archive']
-        proposal.has_minor_revision = form.cleaned_data['has_minor_revision']
-        proposal.minor_revision_description = form.cleaned_data[
-            'minor_revision_description']
-        proposal.save()
-
-        form.instance.stage = Review.CLOSED
-
-        return super(ReviewCloseView, self).form_valid(form)
-
 
 
 class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
