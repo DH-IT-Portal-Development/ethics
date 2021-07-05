@@ -9,6 +9,7 @@ from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 
 from main.utils import get_reviewers, get_secretary
+from .utils.review_actions import ReviewActions
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
                     ChangeChamberForm, ReviewUnsubmitForm)
@@ -16,7 +17,7 @@ from .mixins import (AutoReviewMixin, UserAllowedMixin,
                      CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
 from .models import Decision, Review
-from .utils import notify_secretary, start_review_route
+from reviews.utils.review_utils import notify_secretary, start_review_route
 
 
 class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
@@ -163,6 +164,20 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
         group_required = [ settings.GROUP_SECRETARY, obj.proposal.reviewing_committee.name ]
 
         return group_required
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        actions = ReviewActions(self.object)
+        context['detail_actions'] = actions.get_detail_actions(self.request.user)
+        print(actions)
+        print(actions.get_detail_actions(self.request.user))
+        print(actions.detail_actions[0].is_available(self.request.user))
+
+        return context
+
+
 
 
 class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,

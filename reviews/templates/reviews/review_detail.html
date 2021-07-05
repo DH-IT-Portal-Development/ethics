@@ -30,12 +30,18 @@
     {% with review=review %}
         {% include "reviews/review_detail_sidebar.html" %}
     {% endwith %}
-    
+
         <div class="col-12 col-md-9">
             <h4>
                 {% trans "Reviewers" %}
             </h4>
             {% include "reviews/review_table.html" %}
+
+            {% for action in detail_actions %}
+
+            <p>{{ action }}</p>
+
+            {% endfor %}
 
             {% if not review.proposal.is_pre_assessment %}
                 {% include "reviews/auto_review.html" %}
