@@ -12,7 +12,9 @@ class ReviewActions:
         self.review = review
 
         # Create and initialize actions
-        self.detail_actions = [UnsubmitReview(review)]
+        self.detail_actions = [ChangeAssignment(review),
+                               UnsubmitReview(review),
+        ]
         self.ufl_actions = []
 
         self.all_actions = self.ufl_actions + self.detail_actions
@@ -74,13 +76,18 @@ class ReviewAction:
 class UnsubmitReview(ReviewAction):
 
     def is_available(self, user):
-        '''Only allow secretary to unsubmit'''
+        '''Only allow secretary to unsubmit unclosed reviews'''
+
+        review = self.review
 
         user_groups = user.groups.values_list("name", flat=True)
-        if settings.GROUP_SECRETARY in user_groups:
-            return True
-        else:
+        if not settings.GROUP_SECRETARY in user_groups:
             return False
+
+        if review.stage == review.CLOSED:
+            return False
+
+        return True
 
     def action_url(self, user=None):
 
@@ -89,3 +96,28 @@ class UnsubmitReview(ReviewAction):
     def description(self):
 
         return _('Beëindig de beoordeling van deze studie')
+
+
+class ChangeAssignment(ReviewAction):
+
+    def is_available(self, user):
+        '''Only the secretary should be able to assign reviewers,
+        supervisor reviews should be excluded, and no final decision
+        should yet have been made.'''
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+
+        if self.review.stage not in [ 1, 2, 3 ]:
+            return False
+
+        return True
+
+    def action_url(self):
+
+        return reverse('reviews:assign', args=(self.review.pk,))
+
+    def description(self):
+
+        return _('Verander aangestelde commissieleden')

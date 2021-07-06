@@ -36,13 +36,18 @@
                 {% trans "Reviewers" %}
             </h4>
             {% include "reviews/review_table.html" %}
-
+            <h4>{% trans "Handelingen" %}</h4>
+            <ul>
             {% for action in detail_actions %}
-
-            <p>{{ action }}</p>
-
+                <li>
+                    {{ action }}
+                </li>
+                {% empty %}
+                <li>
+                    {% trans "Geen handelingen beschikbaar" %}
+                </li>
             {% endfor %}
-
+            </ul>
             {% if not review.proposal.is_pre_assessment %}
                 {% include "reviews/auto_review.html" %}
             {% endif %}
