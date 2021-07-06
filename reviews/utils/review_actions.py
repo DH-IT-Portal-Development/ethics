@@ -84,7 +84,7 @@ class UnsubmitReview(ReviewAction):
 
     def action_url(self, user=None):
 
-        return reverse('reviews:unsubmit', args=(self.review.proposal.pk,))
+        return reverse('reviews:unsubmit', args=(self.review.pk,))
 
     def description(self):
 
