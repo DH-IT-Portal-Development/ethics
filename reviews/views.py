@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
@@ -279,7 +279,9 @@ class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
             d.delete()
 
         # Set review continuation
-        review.continuation = 7
+        review.continuation = review.UNSUBMITTED
+        review.stage = review.CLOSED
+        review.date_end = datetime.now()
         review.save()
 
         return super().form_valid(form)

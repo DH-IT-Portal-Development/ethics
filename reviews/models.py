@@ -37,7 +37,7 @@ class Review(models.Model):
         (METC, _('Laat opnieuw beoordelen door METC')),
         (GO_POST_HOC, _('Positief advies van FETC-GW, post-hoc')),
         (NO_GO_POST_HOC, _('Negatief advies van FETC-GW, post-hoc')),
-        (CLOSED, _('Niet verder in behandeling genomen door de FETC-GW')),
+        (UNSUBMITTED, _('Niet verder in behandeling genomen door de FETC-GW')),
     )
 
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)

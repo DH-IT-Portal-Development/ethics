@@ -400,7 +400,6 @@ class AllReviewsApiView(BaseReviewApiView):
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
-            continuation__lt=7,
         )
 
         for obj in objects:
