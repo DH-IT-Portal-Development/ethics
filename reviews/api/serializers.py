@@ -5,52 +5,21 @@ from rest_framework import serializers
 from main.serializers import UserSerializer
 
 
-class InlineReviewProposalSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Proposal
-        fields = ['pk', 'reference_number', 'title', 'is_revision',
-                  'date_confirmed', 'date_submitted', 'latest_review',
-                  'applicants', 'pdf']
-        read_only_fields = fields
-
-    latest_review = serializers.SerializerMethodField()
-    applicants = serializers.SerializerMethodField()
-    pdf = serializers.SerializerMethodField()
-
-    def get_latest_review(self, proposal):
-        review = proposal.latest_review()
-
-        if review:
-            return InlineReviewSerializer(review).data
-
-        return None
-
-    def get_applicants(self, proposal):
-        return UserSerializer(proposal.applicants.all(), many=True).data
-
-    def get_pdf(self, proposal):
-        if proposal.pdf:
-            return {
-                "name": proposal.pdf.name,
-                "url": proposal.pdf.url,
-            }
-
-        return None
-
-
-class ReviewProposalSerializer(InlineReviewProposalSerializer):
+class ReviewProposalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Proposal
         fields = ['pk', 'reference_number', 'title', 'is_revision',
                   'date_confirmed', 'date_submitted', 'parent', 'latest_review',
                   'applicants', 'pdf']
-        read_only_fields = fields
 
     parent = serializers.SerializerMethodField()
+    latest_review = serializers.SerializerMethodField()
+    applicants = serializers.SerializerMethodField()
+    pdf = serializers.SerializerMethodField()
 
     def get_parent(self, proposal):
         if proposal.parent:
-            return InlineReviewProposalSerializer(proposal.parent).data
+            return ReviewProposalSerializer(proposal.parent).data
 
         return None
 
@@ -79,7 +48,6 @@ class InlineDecisionSerializer(ModelDisplaySerializer):
     class Meta:
         model = Decision
         fields = ['pk', 'go', 'date_decision', 'comments', 'reviewer']
-        read_only_fields = fields
 
     reviewer = serializers.SerializerMethodField()
 
@@ -93,7 +61,6 @@ class InlineReviewSerializer(ModelDisplaySerializer):
         fields = ['pk', 'stage', 'route', 'go', 'continuation', 'date_start',
                   'date_end', 'date_should_end', 'accountable_user',
                   'current_reviewers']
-        read_only_fields = fields
 
     route = serializers.CharField(source='get_route_display')
     accountable_user = serializers.SerializerMethodField()
@@ -112,7 +79,6 @@ class ReviewSerializer(InlineReviewSerializer):
         fields = ['pk', 'stage', 'route', 'go', 'continuation', 'date_start',
                   'date_end', 'date_should_end', 'accountable_user', 'decision',
                   'proposal']
-        read_only_fields = fields
 
     decision = serializers.SerializerMethodField()
     proposal = serializers.SerializerMethodField()
@@ -132,7 +98,6 @@ class DecisionSerializer(InlineDecisionSerializer):
         model = Decision
         fields = ['pk', 'go', 'date_decision', 'comments', 'review', 'reviewer',
                   'proposal']
-        read_only_fields = fields
 
     review = serializers.SerializerMethodField()
     proposal = serializers.SerializerMethodField()

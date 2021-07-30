@@ -360,17 +360,6 @@ class ToConcludeReviewApiView(BaseReviewApiView):
             Q(continuation=Review.GO) |
             Q(continuation=Review.GO_POST_HOC) |
             Q(continuation=None)
-        ).select_related(
-            'proposal',
-            "proposal__parent",
-            'proposal__created_by',
-            'proposal__supervisor',
-            'proposal__relation',
-        ).prefetch_related(
-            'proposal__review_set',
-            'proposal__applicants',
-            'decision_set',
-            'decision_set__reviewer'
         )
 
         for obj in objects:
@@ -406,17 +395,6 @@ class AllReviewsApiView(BaseReviewApiView):
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
-        ).select_related(
-            'proposal',
-            "proposal__parent",
-            'proposal__created_by',
-            'proposal__supervisor',
-            'proposal__relation',
-        ).prefetch_related(
-            'proposal__review_set',
-            'proposal__applicants',
-            'decision_set',
-            'decision_set__reviewer'
         )
 
         for obj in objects:
