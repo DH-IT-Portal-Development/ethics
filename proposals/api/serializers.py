@@ -14,18 +14,12 @@ class ProposalInlineSerializer(ModelDisplaySerializer):
                   'date_submitted', 'date_reviewed', 'date_modified', 'latest_review',
                   'supervisor_decision', 'applicants', 'status', 'supervisor', 'pdf', 'in_archive']
 
-    parent = serializers.SerializerMethodField()
     latest_review = serializers.SerializerMethodField()
     supervisor = serializers.SerializerMethodField()
     supervisor_decision = serializers.SerializerMethodField()
     applicants = serializers.SerializerMethodField()
     pdf = serializers.SerializerMethodField()
 
-    def get_parent(self, proposal):
-        if proposal.parent:
-            return ProposalSerializer(proposal.parent).data
-
-        return None
 
     def get_latest_review(self, proposal):
         review = proposal.latest_review()
@@ -75,6 +69,6 @@ class ProposalSerializer(ProposalInlineSerializer):
 
     def get_parent(self, proposal):
         if proposal.parent:
-            return ProposalSerializer(proposal.parent).data
+            return ProposalInlineSerializer(proposal.parent).data
 
         return None
