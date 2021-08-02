@@ -119,7 +119,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=7,
+            review__continuation__lt=Review.UNSUBMITTED,
         )
 
         for obj in objects:
@@ -172,7 +172,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             reviewer=self.request.user,
             go='',
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=7,
+            review__continuation__lt=Review.UNSUBMITTED,
         )
 
         for obj in objects:
@@ -196,7 +196,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go='',
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=7,
+            review__continuation__lt=Review.UNSUBMITTED,
         )
 
         for obj in objects:
@@ -238,7 +238,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             go='',
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=7,
+            review__continuation__lt=Review.UNSUBMITTED,
         ).exclude(review__stage=Review.SUPERVISOR)
 
         for obj in objects:
