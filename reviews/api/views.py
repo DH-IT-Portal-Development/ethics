@@ -96,7 +96,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=7,
+            review__continuation__lt=Review.UNSUBMITTED,
         )
 
         for obj in objects:
