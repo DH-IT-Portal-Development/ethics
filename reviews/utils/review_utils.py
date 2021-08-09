@@ -420,16 +420,14 @@ def auto_review_task(study, task):
     return reasons
 
 
-def unsubmit_review(review):
+def discontinue_review(review):
 
     # Remove decisions
     for d in review.decision_set.all():
         d.delete()
 
        # Set review continuation
-    review.continuation = review.UNSUBMITTED
+    review.continuation = review.DISCONTINUED
     review.stage = review.CLOSED
     review.date_end = datetime.now()
     review.save()
-
-    return super().form_valid(form)

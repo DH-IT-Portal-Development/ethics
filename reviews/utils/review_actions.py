@@ -1,8 +1,10 @@
-from proposals.models import Proposal
 from django.utils.translation import ugettext as _
 from django.urls import reverse
 from django.conf import settings
 from django.utils.safestring import mark_safe
+
+from proposals.models import Proposal
+from reviews.models import Review
 
 class ReviewActions:
 
@@ -13,7 +15,7 @@ class ReviewActions:
 
         # Create and initialize actions
         self.detail_actions = [ChangeAssignment(review),
-                               UnsubmitReview(review),
+                               DiscontinueReview(review),
         ]
         self.ufl_actions = []
 
@@ -73,10 +75,10 @@ class ReviewAction:
         return mark_safe(self.text_with_link())
 
 
-class UnsubmitReview(ReviewAction):
+class DiscontinueReview(ReviewAction):
 
     def is_available(self, user):
-        '''Only allow secretary to unsubmit unclosed reviews'''
+        '''Only allow secretary to discontinue unclosed reviews'''
 
         review = self.review
 
@@ -91,7 +93,7 @@ class UnsubmitReview(ReviewAction):
 
     def action_url(self, user=None):
 
-        return reverse('reviews:unsubmit', args=(self.review.pk,))
+        return reverse('reviews:discontinue', args=(self.review.pk,))
 
     def description(self):
 

@@ -11,13 +11,13 @@ from django.utils.translation import ugettext_lazy as _
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
-                    ChangeChamberForm, ReviewUnsubmitForm)
+                    ChangeChamberForm, ReviewDiscontinueForm)
 from .mixins import (AutoReviewMixin, UserAllowedMixin,
                      CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
 from .models import Decision, Review
 from .utils.review_utils import (notify_secretary, start_review_route,
-                                 unsubmit_review,)
+                                 discontinue_review,)
 from .utils.review_actions import ReviewActions
 
 
@@ -259,10 +259,10 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
         return super(ReviewAssignView, self).form_valid(form)
 
 
-class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
+class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
     model = Review
-    form_class = ReviewUnsubmitForm
-    template_name = 'reviews/review_unsubmit_form.html'
+    form_class = ReviewDiscontinueForm
+    template_name = 'reviews/review_discontinue_form.html'
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
@@ -271,9 +271,9 @@ class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
         return reverse('reviews:detail', args=[self.object.pk])
 
     def form_valid(self, form):
-        'Sets the unsubmitted continuation on the review'
+        'Sets the discontinued continuation on the review'
         review = form.instance
-        unsubmit_review(review)
+        discontinue_review(review)
 
         return super().form_valid(form)
 

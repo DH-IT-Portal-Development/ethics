@@ -112,19 +112,19 @@ class ReviewCloseForm(forms.ModelForm):
         self.fields['minor_revision_description'].widget = forms.Textarea()
 
 
-class ReviewUnsubmitForm(forms.ModelForm):
-    confirm_unsubmit = forms.BooleanField(initial=False, required=True,
+class ReviewDiscontinueForm(forms.ModelForm):
+    confirm_discontinue = forms.BooleanField(initial=False, required=True,
                                           label=_('Bevestig beëindiging'))
 
     class Meta:
         model = Review
         fields = [
-            'confirm_unsubmit',
+            'confirm_discontinue',
         ]
 
     def __init__(self, *args, **kwargs):
         """
-        - Check that this review can be unsubmitted
+        - Check that this review can be discontinued
         """
 
         return super().__init__(*args, **kwargs)
