@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+import datetime
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -11,9 +13,8 @@ from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
 from proposals.utils import notify_local_staff
-from reviews.models import Review, Decision
+from ..models import Review, Decision
 
-import datetime
 
 def start_review(proposal):
     """
@@ -74,6 +75,10 @@ def start_supervisor_phase(proposal):
     return review
 
 
+
+
+
+
 def start_assignment_phase(proposal):
     """
     Starts the assignment phase:
@@ -94,7 +99,7 @@ def start_assignment_phase(proposal):
     review.short_route = short_route
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
-    review.save()
+        review.save()
 
     proposal.date_submitted = timezone.now()
     proposal.status = proposal.SUBMITTED
@@ -117,10 +122,10 @@ def start_assignment_phase(proposal):
     else:
         msg_plain = render_to_string('mail/submitted_longroute.txt', params)
         msg_html = render_to_string('mail/submitted_longroute.html', params)
-    recipients = [proposal.created_by.email]
+        recipients = [proposal.created_by.email]
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -215,7 +220,7 @@ def start_review_route(review, commission_users, use_short_route):
 
     subject = subject.format(review.proposal.reviewing_committee,
                              review.proposal.reference_number,
-                             )
+    )
 
     for user in commission_users:
 
@@ -256,7 +261,7 @@ def notify_secretary(decision):
     subject = _('FETC-GW {} {}: nieuwe beoordeling toegevoegd').format(
         proposal.reviewing_committee,
         proposal.reference_number,
-        )
+    )
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
@@ -413,3 +418,18 @@ def auto_review_task(study, task):
             reasons.append(_('De studie maakt gebruik van {}').format(registration_kind.description))
 
     return reasons
+
+
+def unsubmit_review(review):
+
+    # Remove decisions
+    for d in review.decision_set.all():
+        d.delete()
+
+       # Set review continuation
+    review.continuation = review.UNSUBMITTED
+    review.stage = review.CLOSED
+    review.date_end = datetime.now()
+    review.save()
+
+    return super().form_valid(form)

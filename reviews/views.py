@@ -9,7 +9,6 @@ from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 
 from main.utils import get_reviewers, get_secretary
-from .utils.review_actions import ReviewActions
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
                     ChangeChamberForm, ReviewUnsubmitForm)
@@ -17,7 +16,9 @@ from .mixins import (AutoReviewMixin, UserAllowedMixin,
                      CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
 from .models import Decision, Review
-from reviews.utils.review_utils import notify_secretary, start_review_route
+from .utils.review_utils import (notify_secretary, start_review_route,
+                                 unsubmit_review,)
+from .utils.review_actions import ReviewActions
 
 
 class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
@@ -220,8 +221,8 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             if route and form.instance.date_should_end is None:
                 form.instance.date_should_end = timezone.now() + \
                     timezone.timedelta(
-                    weeks=settings.SHORT_ROUTE_WEEKS
-                )
+                        weeks=settings.SHORT_ROUTE_WEEKS
+                    )
             elif form.instance.date_should_end is not None:
                 # We have no desired end date for long track reviews
                 form.instance.date_should_end = None
@@ -272,17 +273,7 @@ class ReviewUnsubmitView(GroupRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         'Sets the unsubmitted continuation on the review'
         review = form.instance
-        proposal = review.proposal
-
-        # Remove decisions
-        for d in review.decision_set.all():
-            d.delete()
-
-        # Set review continuation
-        review.continuation = review.UNSUBMITTED
-        review.stage = review.CLOSED
-        review.date_end = datetime.now()
-        review.save()
+        unsubmit_review(review)
 
         return super().form_valid(form)
 
@@ -335,7 +326,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         proposal = form.instance.proposal
 
         if form.instance.continuation in [
-            Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
+                Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
         ]:
             proposal.status = Proposal.DECISION_MADE
             proposal.status_review = form.instance.continuation in [
@@ -424,7 +415,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
         user_groups = self.request.user.groups.values_list("name", flat=True)
         return {settings.GROUP_SECRETARY, settings.GROUP_LINGUISTICS_CHAMBER,
                 settings.GROUP_GENERAL_CHAMBER
-                }.intersection(set(user_groups))
+        }.intersection(set(user_groups))
 
     def get_success_url(self):
         if self.is_reviewer():
