@@ -1,6 +1,8 @@
 from braces.views import LoginRequiredMixin
 from django.db.models import Q
+from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
+from django.views.decorators.cache import cache_page
 from rest_framework.authentication import SessionAuthentication
 
 from reviews.mixins import CommitteeMixin
@@ -171,6 +173,10 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
         ),
     ]
     default_sort = ('date_reviewed', 'desc')
+
+    @method_decorator(cache_page(60 * 60 * 4))
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs)
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
