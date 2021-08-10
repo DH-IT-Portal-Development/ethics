@@ -124,14 +124,14 @@ class ToConcludeProposalView(BaseReviewListView):
         return context
 
 
-class AllProposalReviewsView(BaseReviewListView):
+class AllOpenProposalReviewsView(BaseReviewListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Alle ingezonden studies")
+        context['title'] = _("Alle lopende studies")
         context['data_url'] = reverse(
-            "reviews:api:archive",
+            "reviews:api:all_open",
             args=[self.committee]
         )
 
@@ -147,6 +147,32 @@ class AllProposalReviewsView(BaseReviewListView):
         if self.committee.name == 'LK':
             group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
         
+        return group_required
+
+
+class AllProposalReviewsView(BaseReviewListView):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = _("Alle ingezonden studies")
+        context['data_url'] = reverse(
+            "reviews:api:archive",
+            args=[self.committee]
+        )
+
+        return context
+
+    def get_group_required(self):
+        # Depending on committee kwarg we test for the correct group
+
+        group_required = [settings.GROUP_SECRETARY]
+
+        if self.committee.name == 'AK':
+            group_required += [ settings.GROUP_GENERAL_CHAMBER ]
+        if self.committee.name == 'LK':
+            group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
+
         return group_required
 
 
