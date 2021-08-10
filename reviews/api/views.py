@@ -360,6 +360,64 @@ class ToConcludeReviewApiView(BaseReviewApiView):
             Q(continuation=Review.GO) |
             Q(continuation=Review.GO_POST_HOC) |
             Q(continuation=None)
+        ).select_related(
+            'proposal',
+            "proposal__parent",
+            'proposal__created_by',
+            'proposal__supervisor',
+            'proposal__relation',
+        ).prefetch_related(
+            'proposal__review_set',
+            'proposal__applicants',
+            'decision_set',
+            'decision_set__reviewer'
+        )
+
+        for obj in objects:
+            proposal = obj.proposal
+            if proposal.pk not in reviews:
+                reviews[proposal.pk] = obj
+            else:
+                if reviews[proposal.pk].pk < obj.pk:
+                    reviews[proposal.pk] = obj
+
+        return [value for key, value in reviews.items()]
+
+
+class AllOpenReviewsApiView(BaseReviewApiView):
+    default_sort = ('date_start', 'desc')
+
+    def get_group_required(self):
+        # Depending on committee kwarg we test for the correct group
+
+        group_required = [settings.GROUP_SECRETARY]
+
+        if self.committee.name == 'AK':
+            group_required += [settings.GROUP_GENERAL_CHAMBER]
+        if self.committee.name == 'LK':
+            group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
+
+        return group_required
+
+    def get_queryset(self):
+        """Returns all open Reviews"""
+        reviews = OrderedDict()
+        objects = Review.objects.filter(
+            stage__gte=Review.ASSIGNMENT,
+            stage__lte=Review.CLOSING,
+            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__reviewing_committee=self.committee,
+        ).select_related(
+            'proposal',
+            "proposal__parent",
+            'proposal__created_by',
+            'proposal__supervisor',
+            'proposal__relation',
+        ).prefetch_related(
+            'proposal__review_set',
+            'proposal__applicants',
+            'decision_set',
+            'decision_set__reviewer'
         )
 
         for obj in objects:
@@ -395,6 +453,17 @@ class AllReviewsApiView(BaseReviewApiView):
             stage__gte=Review.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
+        ).select_related(
+            'proposal',
+            "proposal__parent",
+            'proposal__created_by',
+            'proposal__supervisor',
+            'proposal__relation',
+        ).prefetch_related(
+            'proposal__review_set',
+            'proposal__applicants',
+            'decision_set',
+            'decision_set__reviewer'
         )
 
         for obj in objects:

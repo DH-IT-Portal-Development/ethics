@@ -1,7 +1,8 @@
 from django.urls import path, include
 
 from .views import \
-    AllProposalReviewsView, DecisionListView, DecisionMyOpenView, \
+    AllOpenProposalReviewsView, AllProposalReviewsView, DecisionListView, \
+    DecisionMyOpenView, \
     SupervisorDecisionOpenView, \
     DecisionOpenView, \
     ReviewDetailView, \
@@ -18,7 +19,9 @@ urlpatterns = [
     path('<str:committee>/all/', AllProposalReviewsView.as_view(),
          name='archive'),
     path('<str:committee>/my_open/', DecisionMyOpenView.as_view(), name='my_open'),
-    path('<str:committee>/open/', DecisionOpenView.as_view(), name='open'),
+    path('<str:committee>/open_decisions/', DecisionOpenView.as_view(),
+         name='open'),
+    path('<str:committee>/open/', AllOpenProposalReviewsView.as_view(), name='all_open'),
     path('<str:committee>/open_supervisors/', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),
     path('<str:committee>/to_conclude/', ToConcludeProposalView.as_view(),
          name='to_conclude'),

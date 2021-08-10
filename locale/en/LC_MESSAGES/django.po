@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-25 16:12+0200\n"
+"POT-Creation-Date: 2021-08-10 09:20+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -454,15 +454,15 @@ msgstr "Website export text"
 #: main/templates/auth/user_detail.html:103
 #: proposals/templates/proposals/proposal_confirmation.html:7
 #: proposals/templates/proposals/proposal_confirmation.html:25
-#: reviews/templates/reviews/vue_templates/decision_list.html:91
-#: reviews/templates/reviews/vue_templates/review_list.html:83
+#: reviews/templates/reviews/vue_templates/decision_list.html:96
+#: reviews/templates/reviews/vue_templates/review_list.html:88
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
 #: main/templates/auth/user_detail.html:106
 #: proposals/templates/proposals/proposal_confirmation.html:34
-#: reviews/templates/reviews/vue_templates/decision_list.html:96
-#: reviews/templates/reviews/vue_templates/review_list.html:88
+#: reviews/templates/reviews/vue_templates/decision_list.html:91
+#: reviews/templates/reviews/vue_templates/review_list.html:83
 msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
 
@@ -568,7 +568,7 @@ msgstr "View all applications of the Linguistics Chamber"
 msgid "Site-export"
 msgstr "Site-export"
 
-#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:45
+#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:50
 #: reviews/mixins.py:127
 msgid "Algemene Kamer"
 msgstr "General Chamber"
@@ -599,11 +599,11 @@ msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
 #: main/templates/base/menu.html:88 main/templates/base/menu.html:115
-#: reviews/menus.py:37 reviews/views.py:132
+#: reviews/menus.py:42 reviews/views.py:158
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
-#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:52
+#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:57
 #: reviews/mixins.py:130
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
@@ -2210,7 +2210,9 @@ msgid ""
 "de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
 "gw@uu.nl</a>."
 msgstr ""
-"For advice relating to privacy and the AVG, you can contact the privacy officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
+"For advice relating to privacy and the AVG, you can contact the privacy "
+"officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy."
+"gw@uu.nl</a>."
 
 #: proposals/templates/proposals/proposal_diff.html:10
 #: proposals/templates/proposals/proposal_diff.html:36
@@ -3394,7 +3396,7 @@ msgid "AVG en Data Management"
 msgstr "AVG and Data Management"
 
 #: proposals/validators.py:32
-msgid "U dient kennis genomen te hebben van de AVG om uw studie in te dienen"
+msgid "Je dient kennis genomen te hebben van de AVG om uw studie in te dienen"
 msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
 "proposal."
@@ -3517,6 +3519,10 @@ msgstr "Add this study to the archive"
 #: reviews/forms.py:111
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
+
+#: reviews/menus.py:37 reviews/views.py:132
+msgid "Alle lopende studies"
+msgstr "All running studies"
 
 #: reviews/models.py:17
 msgid "Beoordeling door eindverantwoordelijke"
