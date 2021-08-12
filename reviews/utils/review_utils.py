@@ -421,6 +421,9 @@ def auto_review_task(study, task):
 
 
 def discontinue_review(review):
+    """
+    Remove all decisions from the current review,
+    and set the continuation to discontinued. """
 
     # Remove decisions
     for d in review.decision_set.all():
@@ -429,5 +432,5 @@ def discontinue_review(review):
        # Set review continuation
     review.continuation = review.DISCONTINUED
     review.stage = review.CLOSED
-    review.date_end = datetime.now()
+    review.date_end = datetime.datetime.now()
     review.save()
