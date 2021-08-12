@@ -5,7 +5,7 @@ from .views import \
     SupervisorDecisionOpenView, \
     DecisionOpenView, \
     ReviewDetailView, \
-    ReviewAssignView, ReviewCloseView, \
+    ReviewAssignView, ReviewCloseView, ReviewDiscontinueView, \
     DecisionUpdateView, ToConcludeProposalView, ChangeChamberView, \
     CreateDecisionRedirectView
 
@@ -29,6 +29,7 @@ urlpatterns = [
     path('change_chamber/<int:pk>/', ChangeChamberView.as_view(),
          name='change_chamber'),
     path('close/<int:pk>/', ReviewCloseView.as_view(), name='close'),
+    path('discontinue/<int:pk>/', ReviewDiscontinueView.as_view(), name='discontinue'),
 
     path('decide/<int:pk>/', DecisionUpdateView.as_view(), name='decide'),
     path('decide/new/<int:review>/', CreateDecisionRedirectView.as_view(),
