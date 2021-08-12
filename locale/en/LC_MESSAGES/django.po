@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-09 16:24+0200\n"
+"POT-Creation-Date: 2021-08-12 16:30+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -380,9 +380,9 @@ msgstr "Study title"
 msgid "Fase"
 msgstr "Phase"
 
-#: main/templates/auth/user_detail.html:55 proposals/api/views.py:21
-#: proposals/api/views.py:86 proposals/api/views.py:116
-#: proposals/api/views.py:166
+#: main/templates/auth/user_detail.html:55 proposals/api/views.py:23
+#: proposals/api/views.py:88 proposals/api/views.py:118
+#: proposals/api/views.py:168
 #: proposals/templates/proposals/vue_templates/proposal_list.html:158
 #: reviews/api/views.py:49 reviews/api/views.py:326
 #: reviews/templates/reviews/vue_templates/decision_list.html:154
@@ -569,7 +569,7 @@ msgstr "View all applications of the Linguistics Chamber"
 msgid "Site-export"
 msgstr "Site-export"
 
-#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:45
+#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:50
 #: reviews/mixins.py:127
 msgid "Algemene Kamer"
 msgstr "General Chamber"
@@ -600,11 +600,11 @@ msgid "Nog af te handelen studies"
 msgstr "To conclude studies"
 
 #: main/templates/base/menu.html:88 main/templates/base/menu.html:115
-#: reviews/menus.py:37 reviews/views.py:134
+#: reviews/menus.py:42 reviews/views.py:160
 msgid "Alle ingezonden studies"
 msgstr "All submitted studies"
 
-#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:52
+#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:57
 #: reviews/mixins.py:130
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
@@ -1223,19 +1223,19 @@ msgstr "Observational research"
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/api/views.py:25 proposals/api/views.py:124
-#: proposals/api/views.py:170
+#: proposals/api/views.py:27 proposals/api/views.py:126
+#: proposals/api/views.py:172
 msgid "Datum afgerond"
 msgstr "Date reviewed"
 
-#: proposals/api/views.py:29 proposals/api/views.py:71
-#: proposals/api/views.py:90 proposals/api/views.py:128
-#: proposals/api/views.py:149
+#: proposals/api/views.py:31 proposals/api/views.py:73
+#: proposals/api/views.py:92 proposals/api/views.py:130
+#: proposals/api/views.py:151
 #: proposals/templates/proposals/vue_templates/proposal_list.html:113
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
-#: proposals/api/views.py:120
+#: proposals/api/views.py:122
 msgid "Datum ingediend bij eindverantwoordelijke"
 msgstr "Date sent to supervisor"
 
@@ -3523,7 +3523,11 @@ msgstr "Comments about this revision"
 
 #: reviews/forms.py:117
 msgid "Bevestig beëindiging"
-msgstr ""
+msgstr "Confirm termination of this review"
+
+#: reviews/menus.py:37 reviews/views.py:134
+msgid "Alle lopende studies"
+msgstr "All running studies"
 
 #: reviews/models.py:17
 msgid "Beoordeling door eindverantwoordelijke"
