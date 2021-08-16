@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+import datetime
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -11,9 +13,8 @@ from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
 from proposals.utils import notify_local_staff
-from .models import Review, Decision
+from ..models import Review, Decision
 
-import datetime
 
 def start_review(proposal):
     """
@@ -74,6 +75,10 @@ def start_supervisor_phase(proposal):
     return review
 
 
+
+
+
+
 def start_assignment_phase(proposal):
     """
     Starts the assignment phase:
@@ -94,7 +99,7 @@ def start_assignment_phase(proposal):
     review.short_route = short_route
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
-    review.save()
+        review.save()
 
     proposal.date_submitted = timezone.now()
     proposal.status = proposal.SUBMITTED
@@ -117,10 +122,10 @@ def start_assignment_phase(proposal):
     else:
         msg_plain = render_to_string('mail/submitted_longroute.txt', params)
         msg_html = render_to_string('mail/submitted_longroute.html', params)
-    recipients = [proposal.created_by.email]
+        recipients = [proposal.created_by.email]
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -202,23 +207,23 @@ def start_review_route(review, commission_users, use_short_route):
     """
     Creates Decisions and sends notification e-mail to the selected Reviewers
     """
-      
+
     template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
-    
+
     was_revised = review.proposal.is_revision
-    
+
     if was_revised:
         subject = 'FETC-GW {} {}: gereviseerde studie ter beoordeling'
     else:
         subject = 'FETC-GW {} {}: nieuwe studie ter beoordeling'
         # These emails are Dutch-only, therefore intentionally untranslated
-    
+
     subject = subject.format(review.proposal.reviewing_committee,
                              review.proposal.reference_number,
-                             )
-    
+    )
+
     for user in commission_users:
-        
+
         Decision.objects.create(review=review, reviewer=user)
         params = {
             'secretary': get_secretary().get_full_name(),
@@ -256,7 +261,7 @@ def notify_secretary(decision):
     subject = _('FETC-GW {} {}: nieuwe beoordeling toegevoegd').format(
         proposal.reviewing_committee,
         proposal.reference_number,
-        )
+    )
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
@@ -271,19 +276,19 @@ def notify_supervisor_nogo(decision):
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
     subject = _('FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld')
-    
+
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
         'supervisor': supervisor,
     }
-    
+
     for applicant in receivers:
         params['applicant'] = applicant
         msg_plain = render_to_string('mail/supervisor_decision.txt', params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [applicant.email])
-    
-    
+
+
 
 def auto_review(proposal: Proposal):
     """
@@ -413,3 +418,19 @@ def auto_review_task(study, task):
             reasons.append(_('De studie maakt gebruik van {}').format(registration_kind.description))
 
     return reasons
+
+
+def discontinue_review(review):
+    """
+    Remove all decisions from the current review,
+    and set the continuation to discontinued. """
+
+    # Remove decisions
+    for d in review.decision_set.all():
+        d.delete()
+
+       # Set review continuation
+    review.continuation = review.DISCONTINUED
+    review.stage = review.CLOSED
+    review.date_end = datetime.datetime.now()
+    review.save()
