@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
@@ -11,14 +11,12 @@ from django.utils.translation import ugettext_lazy as _
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
-                    ChangeChamberForm, ReviewDiscontinueForm)
+                    ChangeChamberForm)
 from .mixins import (AutoReviewMixin, UserAllowedMixin,
                      CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
 from .models import Decision, Review
-from .utils.review_utils import (notify_secretary, start_review_route,
-                                 discontinue_review,)
-from .utils.review_actions import ReviewActions
+from .utils import notify_secretary, start_review_route
 
 
 class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
@@ -138,17 +136,17 @@ class AllOpenProposalReviewsView(BaseReviewListView):
         )
 
         return context
-
+    
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
-
+        
         group_required = [settings.GROUP_SECRETARY]
-
+        
         if self.committee.name == 'AK':
             group_required += [ settings.GROUP_GENERAL_CHAMBER ]
         if self.committee.name == 'LK':
             group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
-
+        
         return group_required
 
 
@@ -184,24 +182,13 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
     Shows the Decisions for a Review
     """
     model = Review
-
+    
     def get_group_required(self):
-
+        
         obj = self.get_object()
         group_required = [ settings.GROUP_SECRETARY, obj.proposal.reviewing_committee.name ]
-
+        
         return group_required
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        actions = ReviewActions(self.object)
-        context['detail_actions'] = actions.get_detail_actions(self.request.user)
-
-        return context
-
-
 
 
 class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
@@ -247,8 +234,8 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             if route and form.instance.date_should_end is None:
                 form.instance.date_should_end = timezone.now() + \
                     timezone.timedelta(
-                        weeks=settings.SHORT_ROUTE_WEEKS
-                    )
+                    weeks=settings.SHORT_ROUTE_WEEKS
+                )
             elif form.instance.date_should_end is not None:
                 # We have no desired end date for long track reviews
                 form.instance.date_should_end = None
@@ -259,11 +246,11 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             # Remove the Decision for obsolete reviewers
             Decision.objects.filter(review=review,
                                     reviewer__in=obsolete_reviewers).delete()
-
+            
             # Finally, update the review process
             # This prevents it waiting for removed reviewers
             review.update_go()
-
+            
         else:
             # Directly mark this Proposal as closed: applicants should start a revision Proposal
             for decision in Decision.objects.filter(review=review):
@@ -283,26 +270,6 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             form.instance.stage = Review.CLOSED
 
         return super(ReviewAssignView, self).form_valid(form)
-
-
-class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
-    model = Review
-    form_class = ReviewDiscontinueForm
-    template_name = 'reviews/review_discontinue_form.html'
-    group_required = settings.GROUP_SECRETARY
-
-    def get_success_url(self):
-        'Return to the detail view after unsubmission'
-        committee = self.object.proposal.reviewing_committee.name
-        return reverse('reviews:detail', args=[self.object.pk])
-
-    def form_valid(self, form):
-        'Sets the discontinued continuation on the review'
-        review = form.instance
-        discontinue_review(review)
-
-        return super().form_valid(form)
-
 
 
 class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
@@ -352,7 +319,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         proposal = form.instance.proposal
 
         if form.instance.continuation in [
-                Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
+            Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
         ]:
             proposal.status = Proposal.DECISION_MADE
             proposal.status_review = form.instance.continuation in [
@@ -394,9 +361,9 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
     """
     This redirect first creates a new decision for a secretary that does not
     have one yet, and redirects to the DecisionUpdateView.
-
-    NOTE: this view has been removed from templates to allow for multiple
-    secretaries to work without them unnecessarily creating decisions. It
+    
+    NOTE: this view has been removed from templates to allow for multiple 
+    secretaries to work without them unnecessarily creating decisions. It 
     might be of use again in the future, but for now the FEtC-H has decided
     to no longer require a secretary decision for every review. See PR
     #188 for details.
@@ -441,7 +408,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
         user_groups = self.request.user.groups.values_list("name", flat=True)
         return {settings.GROUP_SECRETARY, settings.GROUP_LINGUISTICS_CHAMBER,
                 settings.GROUP_GENERAL_CHAMBER
-        }.intersection(set(user_groups))
+                }.intersection(set(user_groups))
 
     def get_success_url(self):
         if self.is_reviewer():
@@ -454,10 +421,10 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
         """Save the decision date and send e-mail to secretary"""
         form.instance.date_decision = timezone.now()
         review = form.instance.review
-
+    
         # Don't notify the secretary if this is a supervisor decision.
         # If it was a GO they the secretary will be notified anyway
         if not review.stage == review.SUPERVISOR:
             notify_secretary(form.instance)
-
+        
         return super(DecisionUpdateView, self).form_valid(form)

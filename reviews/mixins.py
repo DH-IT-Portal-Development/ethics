@@ -9,7 +9,7 @@ from django.views.generic.detail import SingleObjectMixin
 from main.utils import is_secretary
 
 from .models import Decision, Review
-from .utils.review_utils import auto_review
+from .utils import auto_review
 
 
 class UserAllowedMixin(SingleObjectMixin):
@@ -72,7 +72,7 @@ class UsersOrGroupsAllowedMixin():
         if not isinstance(self.group_required, (list, tuple)):
             self.group_required = (self.group_required,)
         return self.group_required
-
+    
     def get_allowed_users(self):
         """Is overwritten to provide a dynamic list of
         users who have access."""
@@ -90,16 +90,16 @@ class UsersOrGroupsAllowedMixin():
         authorized = False
         self.current_user = request.user
         self.current_user_groups = set(self.current_user.groups.values_list("name", flat=True))
-
-        # Default allowed groups and users
+        
+        # Default allowed groups and users        
         try: group_required = self.group_required
         except AttributeError:
             self.group_required = None
-
+        
         try: allowed_users = self.allowed_users
         except AttributeError:
             self.allowed_users = None
-
+        
         if self.current_user.is_authenticated:
             if self.current_user in self.get_allowed_users():
                 authorized = True
@@ -111,7 +111,7 @@ class UsersOrGroupsAllowedMixin():
 
         return super(UsersOrGroupsAllowedMixin, self).dispatch(
             request, *args, **kwargs)
-
+    
 
 
 class CommitteeMixin(ContextMixin):

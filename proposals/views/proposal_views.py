@@ -17,7 +17,7 @@ from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
-from reviews.utils.review_utils import start_review, start_review_pre_assessment
+from reviews.utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
@@ -237,9 +237,9 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
-
+    
     def get_allowed_users(self):
-
+        
         compare_type = self.kwargs.get('type')
         new_pk = self.kwargs.get('new')
         attribute = self.kwargs.get('attribute')
@@ -250,19 +250,19 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
             'observation': Observation,
             'proposal': Proposal,
         }.get(compare_type, None)
-
+        
         if model == Proposal:
             proposal = Proposal.objects.get(pk=new_pk)
         else:
             proposal = model.objects.get(pk=new_pk).proposal
-
+        
         allowed_users = list(proposal.applicants.all())
         if proposal.supervisor:
             allowed_users.append(proposal.supervisor)
-
+        
         return allowed_users
-
-
+        
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -274,8 +274,8 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
         context['new_text'] = get_document_contents(new_file)
 
         return context
-
-
+    
+    
     def _get_files(self) -> Tuple[
         Union[None, FieldFile],
         Union[None, FieldFile]
@@ -338,11 +338,11 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         """Sets the Proposal as a form kwarg"""
         kwargs = super(ProposalSubmit, self).get_form_kwargs()
         kwargs['proposal'] = self.get_object()
-
+        
         # Required for examining POST data
         # to check for js-redirect-submit
         kwargs['request'] = self.request
-
+        
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -358,7 +358,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         - Save the PDF on the Proposal
         - Start the review process on submission (though not for practice Proposals)
         """
-
+        
         success_url = super(ProposalSubmit, self).form_valid(form)
         if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
