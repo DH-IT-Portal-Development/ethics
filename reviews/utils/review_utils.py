@@ -97,9 +97,11 @@ def start_assignment_phase(proposal):
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.ASSIGNMENT
     review.short_route = short_route
+
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
-        review.save()
+
+    review.save()
 
     proposal.date_submitted = timezone.now()
     proposal.status = proposal.SUBMITTED
