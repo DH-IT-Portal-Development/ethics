@@ -92,8 +92,10 @@ def start_assignment_phase(proposal):
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.ASSIGNMENT
     review.short_route = short_route
+
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
+
     review.save()
 
     proposal.date_submitted = timezone.now()
@@ -202,23 +204,23 @@ def start_review_route(review, commission_users, use_short_route):
     """
     Creates Decisions and sends notification e-mail to the selected Reviewers
     """
-      
+
     template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
-    
+
     was_revised = review.proposal.is_revision
-    
+
     if was_revised:
         subject = 'FETC-GW {} {}: gereviseerde studie ter beoordeling'
     else:
         subject = 'FETC-GW {} {}: nieuwe studie ter beoordeling'
         # These emails are Dutch-only, therefore intentionally untranslated
-    
+
     subject = subject.format(review.proposal.reviewing_committee,
                              review.proposal.reference_number,
                              )
-    
+
     for user in commission_users:
-        
+
         Decision.objects.create(review=review, reviewer=user)
         params = {
             'secretary': get_secretary().get_full_name(),
@@ -271,19 +273,19 @@ def notify_supervisor_nogo(decision):
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
     subject = _('FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld')
-    
+
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
         'supervisor': supervisor,
     }
-    
+
     for applicant in receivers:
         params['applicant'] = applicant
         msg_plain = render_to_string('mail/supervisor_decision.txt', params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [applicant.email])
-    
-    
+
+
 
 def auto_review(proposal: Proposal):
     """
