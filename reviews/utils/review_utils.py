@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+import datetime
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -11,9 +13,8 @@ from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
 from proposals.utils import notify_local_staff
-from .models import Review, Decision
+from ..models import Review, Decision
 
-import datetime
 
 def start_review(proposal):
     """
@@ -95,7 +96,6 @@ def start_assignment_phase(proposal):
 
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
-
     review.save()
 
     proposal.date_submitted = timezone.now()
@@ -258,7 +258,7 @@ def notify_secretary(decision):
     subject = _('FETC-GW {} {}: nieuwe beoordeling toegevoegd').format(
         proposal.reviewing_committee,
         proposal.reference_number,
-        )
+    )
     params = {
         'secretary': secretary.get_full_name(),
         'decision': decision,
@@ -415,3 +415,19 @@ def auto_review_task(study, task):
             reasons.append(_('De studie maakt gebruik van {}').format(registration_kind.description))
 
     return reasons
+
+
+def discontinue_review(review):
+    """
+    Remove all decisions from the current review,
+    and set the continuation to discontinued. """
+
+    # Remove decisions
+    for d in review.decision_set.all():
+        d.delete()
+
+       # Set review continuation
+    review.continuation = review.DISCONTINUED
+    review.stage = review.CLOSED
+    review.date_end = datetime.datetime.now()
+    review.save()
