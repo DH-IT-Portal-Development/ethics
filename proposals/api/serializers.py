@@ -10,9 +10,11 @@ from uil.core.rest.serializers import ModelDisplaySerializer
 class ProposalInlineSerializer(ModelDisplaySerializer):
     class Meta:
         model = Proposal
-        fields = ['pk', 'reference_number', 'title', 'is_revision', 'type', 'date_confirmed',
-                  'date_submitted', 'date_reviewed', 'date_modified', 'latest_review',
-                  'supervisor_decision', 'applicants', 'status', 'supervisor', 'pdf', 'in_archive']
+        fields = ['pk', 'reference_number', 'title', 'is_revision',
+                  'type', 'date_confirmed', 'date_submitted',
+                  'date_reviewed', 'date_modified', 'latest_review',
+                  'supervisor_decision', 'applicants', 'status', 'supervisor',
+                  'pdf', 'in_archive']
 
     latest_review = serializers.SerializerMethodField()
     supervisor = serializers.SerializerMethodField()
@@ -61,9 +63,12 @@ class ProposalInlineSerializer(ModelDisplaySerializer):
 class ProposalSerializer(ProposalInlineSerializer):
     class Meta:
         model = Proposal
-        fields = ['pk', 'reference_number', 'title', 'is_revision', 'type', 'date_confirmed',
-                  'date_submitted', 'date_reviewed', 'date_modified', 'parent', 'latest_review',
-                  'supervisor_decision', 'applicants', 'status', 'supervisor', 'continue_url', 'pdf', 'in_archive']
+        fields = ['pk', 'reference_number', 'title', 'is_revision', 'type',
+                  'date_confirmed', 'date_submitted',
+                  'date_submitted_supervisor', 'date_reviewed', 'date_modified',
+                  'parent', 'latest_review', 'supervisor_decision',
+                  'applicants', 'status', 'supervisor', 'continue_url',
+                  'pdf', 'in_archive']
 
     parent = serializers.SerializerMethodField()
 

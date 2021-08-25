@@ -118,7 +118,7 @@ class MySupervisedApiView(BaseProposalsApiView):
             _('Datum ingediend')
         ),
         FancyListApiView.SortDefinition(
-            'date_submitted',
+            'date_submitted_supervisor',
             _('Datum ingediend bij eindverantwoordelijke')
         ),
         FancyListApiView.SortDefinition(
