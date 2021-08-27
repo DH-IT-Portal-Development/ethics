@@ -85,11 +85,11 @@ class Review(models.Model):
                 self.proposal.save()
                 # On GO and not in course, start the assignment phase
                 if self.go and not self.proposal.in_course:
-                    from utils.review_utils import start_assignment_phase
+                    from reviews.utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
                 # On NO-GO, reset the Proposal status
                 else:
-                    from .utils import notify_supervisor_nogo
+                    from reviews.utils import notify_supervisor_nogo
                     notify_supervisor_nogo(last_decision)
                     self.proposal.status = Proposal.DRAFT
                     self.proposal.save()
