@@ -419,14 +419,10 @@ def auto_review_task(study, task):
 
 def discontinue_review(review):
     """
-    Remove all decisions from the current review,
-    and set the continuation to discontinued. """
+    Set continuation to discontinued on the given review,
+    and set DECISION_MADE on its proposal. """
 
-    # Remove decisions
-    for d in review.decision_set.all():
-        d.delete()
-
-       # Set review continuation
+    # Set review continuation
     review.continuation = review.DISCONTINUED
     review.proposal.status = review.proposal.DECISION_MADE
     review.stage = review.CLOSED
