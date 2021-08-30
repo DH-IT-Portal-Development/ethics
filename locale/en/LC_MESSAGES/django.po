@@ -5385,20 +5385,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Revisie indienen"
-#~ msgstr "Submit a revision"
-
-#~ msgid ""
-#~ "U kunt hier op basis van de vorige versie van uw studie een revisie "
-#~ "indienen."
-#~ msgstr ""
-#~ "You can submit a revision here based on the previous version of your "
-#~ "study."
-
-#~ msgid ""
-#~ "U kunt hier op basis van de reeds goedgekeurde studie een amendement "
-#~ "indienen."
-#~ msgstr ""
-#~ "You can submit an amendment here based on the study that has already been "
-#~ "approved."
