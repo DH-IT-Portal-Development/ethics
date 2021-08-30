@@ -131,6 +131,8 @@
                 {% else %}
                     {% if proposal.is_pre_assessment %}
                         {% include "base/form_buttons.html" with next_text=_("Aanvraag voor voortoetsing versturen") %}
+                    {% elif is_supervisor_edit_phase and is_supervisor %}
+                        {% include "base/form_buttons.html" with next_text=_("Terug naar beoordeling >>") %}
                     {% elif proposal.relation.needs_supervisor %}
                         {% include "base/form_buttons.html" with next_text=_("Concept-aanmelding versturen") %}
                     {% else %}

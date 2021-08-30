@@ -25,16 +25,27 @@
                         {{ refnum }} in {{ chamber }}. 
                         De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
                     {% endblocktrans %}
-                    {% if user == proposal.supervisor %}
-                        {% blocktrans %}
-                            Als supervisor kunt u deze studie <a href="{{ update_url }}" target="_blank">hier</a>
-                            aanpassen.
-                        {% endblocktrans %}
-                    {% endif %}
                     {% if decision.review.stage == review.SUPERVISOR %}
                         {% trans "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
                     {% endif %}
                 </p>
+                {% if user == proposal.supervisor %}
+                    <p>
+                        {% blocktrans trimmed %}
+                            Als supervisor kunt u deze studie <a href="{{ update_url }}" target="_blank">hier</a>
+                            aanpassen. Indien je wilt dat de indiener de studie zelf aanpast voordat je de studie
+                            kunt goedkeuren en deze door de FETC-GW in behandeling kan worden genomen, selecteer dan
+                            'revisie noodzakelijk' hieronder. Pas zodra je dit gedaan hebt kan de indiener weer
+                            aanpassingen doen.
+                        {% endblocktrans %}
+                    </p>
+                    <p>
+                        {% blocktrans trimmed %}
+                            Zodra de indiener de gevraagde wijzigingen heeft doorgevoerd, zal je de aangepaste studie
+                            opnieuw moeten beoordelen.
+                        {% endblocktrans %}
+                    </p>
+                {% endif %}
                 {% if proposal.is_revision %}
                     <p class="warning">
                         {% url 'proposals:diff' proposal.id as diff_url %}

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-12 16:30+0200\n"
+"POT-Creation-Date: 2021-08-30 15:48+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -100,7 +100,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:648
 #: reviews/templates/reviews/change_chamber_form.html:19
-#: reviews/templates/reviews/decision_form.html:51
+#: reviews/templates/reviews/decision_form.html:62
 #: reviews/templates/reviews/review_assign_form.html:44
 #: reviews/templates/reviews/review_close_form.html:41
 #: reviews/templates/reviews/review_discontinue_form.html:59
@@ -2007,7 +2007,7 @@ msgid "Verwijderen"
 msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:21
-#: proposals/templates/proposals/proposal_copy.html:49
+#: proposals/templates/proposals/proposal_copy.html:80
 #: tasks/templates/tasks/session_confirm_delete.html:19
 #: tasks/templates/tasks/task_confirm_delete.html:18
 msgid "Annuleren"
@@ -2028,13 +2028,13 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_copy.html:8
 #: proposals/templates/proposals/proposal_copy.html:28
-msgid "Revisie indienen"
-msgstr "Submit a revision"
+msgid "Revisie starten"
+msgstr "Start a revision"
 
 #: proposals/templates/proposals/proposal_copy.html:10
 #: proposals/templates/proposals/proposal_copy.html:30
-msgid "Amendement indienen"
-msgstr "Submit an amendment"
+msgid "Amendement aanmaken"
+msgstr "Create an amendment"
 
 #: proposals/templates/proposals/proposal_copy.html:12
 #: proposals/templates/proposals/proposal_copy.html:32
@@ -2043,25 +2043,51 @@ msgstr "Submit an entirely new study from a copy of an old study"
 
 #: proposals/templates/proposals/proposal_copy.html:37
 msgid ""
-"U kunt hier op basis van de vorige versie van uw studie een revisie indienen."
-msgstr ""
-"You can submit a revision here based on the previous version of your study."
+"Je kan hier op basis van de vorige versie van een studie een revisie "
+"starten. Alleen studies die door de commissie als 'revisie noodzakelijk' "
+"gemarkeed zijn kunnen hier gekozen worden."
+msgstr "You can create a revision here based on the previous version of your "
+"study. Only studies that have been marked as 'revision necessary' by the "
+"committee can be selected here. "
 
-#: proposals/templates/proposals/proposal_copy.html:39
+#: proposals/templates/proposals/proposal_copy.html:43
 msgid ""
-"U kunt hier op basis van de reeds goedgekeurde studie een amendement "
-"indienen."
-msgstr ""
-"You can submit an amendment here based on the study that has already been "
-"approved."
+"Als je supervisor je heeft gevraagd revisies te maken, dien je je huidige "
+"versie aan te passen. (Als je dat niet kan, vraag aan je supervisor of die "
+"je studie wel gemarkeerd heeft als 'revisie noodzakelijk')"
+msgstr "If your supervisor has asked you to make revisions, you should adjust the original study. (If you can't, ask your supervisor if they have correctly marked your study as 'revision necessary') "
 
-#: proposals/templates/proposals/proposal_copy.html:41
+#: proposals/templates/proposals/proposal_copy.html:51
+msgid ""
+"Je kan hier op basis van een reeds goedgekeurde studie een amendement "
+"indienen. Je studie moet eerst goedgekeurd en afgehandeld zijn voordat die "
+"hier gekozen kan worden."
+msgstr "You can create an amendment here based on the study that has already been "
+"approved. Your study must have been approved by the committee before it can be chosen here. "
+
+#: proposals/templates/proposals/proposal_copy.html:60
 msgid ""
 "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren "
 "aangepast worden."
 msgstr "You can copy a study here. All fields can be edited after copying."
 
-#: proposals/templates/proposals/proposal_copy.html:51
+#: proposals/templates/proposals/proposal_copy.html:63
+#, python-format
+msgid ""
+"Deze pagina is alleen bedoeld als je een geheel nieuwe studie gaat doen op "
+"basis van een eerder uitgevoerde studie. Indien je wijzigingen hebt in een "
+"al goedgekeurde studie die daarom opnieuw getoetst moet worden, maak dan <a "
+"href=\"%(amendment_url)s\">hier</a> een amendement aan."
+msgstr "This page is only intended if you are going to do a completely new study based on a previously conducted study. If you have changes to an already approved study that therefore needs to be re-reviewed, please make an amendment <a href=\"%(amendment_url)s\">here</a>."
+
+#: proposals/templates/proposals/proposal_copy.html:70
+#, python-format
+msgid ""
+"Als je gevraagd is om een revisie te maken van een eerder ingediende studie, "
+"kan je dat <a href=\"%(revision_url)s\">hier</a> doen."
+msgstr "If you have been asked to revise a previously submitted study, you can do so <a href=\"%(revision_url)s\">here</a>. "
+
+#: proposals/templates/proposals/proposal_copy.html:82
 msgid "Kopiëren"
 msgstr "Copy"
 
@@ -2388,7 +2414,7 @@ msgid "Informed consent formulieren voor het onderzoek"
 msgstr "Informed consent forms for the study"
 
 #: proposals/templates/proposals/proposal_diff.html:630
-#: proposals/templates/proposals/proposal_submit.html:135
+#: proposals/templates/proposals/proposal_submit.html:137
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
@@ -2598,7 +2624,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/proposal_pdf.html:462
 #: proposals/templates/proposals/proposal_pdf_empty.html:386
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:129
-#: proposals/templates/proposals/proposal_submit.html:137
+#: proposals/templates/proposals/proposal_submit.html:139
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -3132,6 +3158,10 @@ msgstr ""
 "can submit your application when these errors have been corrected.\n"
 "    "
 
+#: proposals/templates/proposals/proposal_submit.html:135
+msgid "Terug naar beoordeling >>"
+msgstr "Back to review >>"
+
 #: proposals/templates/proposals/proposal_submitted.html:8
 #: proposals/templates/proposals/proposal_submitted.html:22
 msgid "Aanvraag voor voortoetsing verstuurd"
@@ -3446,7 +3476,7 @@ msgstr "Application deleted"
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:408
+#: proposals/views/proposal_views.py:423
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3802,20 +3832,6 @@ msgstr ""
 "    "
 
 #: reviews/templates/reviews/decision_form.html:29
-#, python-format
-msgid ""
-"\n"
-"                            Als supervisor kunt u deze studie <a href="
-"\"%(update_url)s\" target=\"_blank\">hier</a>\n"
-"                            aanpassen.\n"
-"                        "
-msgstr ""
-"\n"
-"    As supervisor, you can edit the study <a href=\"%(update_url)s\" target="
-"\"_blank\">here</a>.\n"
-"    "
-
-#: reviews/templates/reviews/decision_form.html:35
 msgid ""
 "Als u akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd "
 "naar de ethische commissie."
@@ -3823,7 +3839,30 @@ msgstr ""
 "If you approve the study, it will be sent for assessment by the ethical "
 "committee."
 
-#: reviews/templates/reviews/decision_form.html:41
+#: reviews/templates/reviews/decision_form.html:34
+#, python-format
+msgid ""
+"Als supervisor kunt u deze studie <a href=\"%(update_url)s\" target=\"_blank"
+"\">hier</a> aanpassen. Indien je wilt dat de indiener de studie zelf aanpast "
+"voordat je de studie kunt goedkeuren en deze door de FETC-GW in behandeling "
+"kan worden genomen, selecteer dan 'revisie noodzakelijk' hieronder. Pas "
+"zodra je dit gedaan hebt kan de indiener weer aanpassingen doen."
+msgstr ""
+"As supervisor, you can edit the study <a href=\"%(update_url)s\" target="
+"\"_blank\">here</a>. If you want the submitter to change the application "
+"themself before it can be assessed by the FEtC-H, select 'revision "
+"necessary' below. If you don't do this, the portal will not allow the "
+"applicant to change this application!"
+
+#: reviews/templates/reviews/decision_form.html:43
+msgid ""
+"Zodra de indiener de gevraagde wijzigingen heeft doorgevoerd, zal je de "
+"aangepaste studie opnieuw moeten beoordelen."
+msgstr ""
+"Once the submitter has made the requested changes, you will have to re-"
+"evaluate the application. "
+
+#: reviews/templates/reviews/decision_form.html:52
 #, python-format
 msgid ""
 "\n"
@@ -3839,7 +3878,7 @@ msgstr ""
 "a>.\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:54
+#: reviews/templates/reviews/decision_form.html:65
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
@@ -4168,41 +4207,41 @@ msgstr "FEtC-H: confirmation of draft application submission"
 msgid "FETC-GW: beoordelen als eindverantwoordelijke"
 msgstr "FEtC-H: assess as researcher with final responsibility"
 
-#: reviews/utils/review_utils.py:113
+#: reviews/utils/review_utils.py:115
 msgid "FETC-GW: aanmelding ontvangen"
 msgstr "FEtC-H: application received"
 
-#: reviews/utils/review_utils.py:188
+#: reviews/utils/review_utils.py:190
 msgid "FETC-GW: nieuwe aanvraag voor voortoetsing"
 msgstr "FEtC-H: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:198
+#: reviews/utils/review_utils.py:200
 msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H: confirmation of submission of application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:246
+#: reviews/utils/review_utils.py:248
 msgid "FETC-GW {} {}: nieuwe studie ingediend"
 msgstr "FEtC-H {} {}: new application submitted"
 
-#: reviews/utils/review_utils.py:261
+#: reviews/utils/review_utils.py:263
 msgid "FETC-GW {} {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {} {}: new decision added"
 
-#: reviews/utils/review_utils.py:278
+#: reviews/utils/review_utils.py:280
 msgid "FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld"
 msgstr "FEtC-H: a supervisor has reviewed your proposal"
 
-#: reviews/utils/review_utils.py:311
+#: reviews/utils/review_utils.py:313
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils/review_utils.py:317
+#: reviews/utils/review_utils.py:319
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils/review_utils.py:321
+#: reviews/utils/review_utils.py:323
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -4211,25 +4250,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:324
+#: reviews/utils/review_utils.py:326
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils/review_utils.py:327
+#: reviews/utils/review_utils.py:329
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils/review_utils.py:333
+#: reviews/utils/review_utils.py:335
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils/review_utils.py:336
+#: reviews/utils/review_utils.py:338
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils/review_utils.py:340
+#: reviews/utils/review_utils.py:342
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4237,7 +4276,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:346
+#: reviews/utils/review_utils.py:348
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4245,7 +4284,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils/review_utils.py:349
+#: reviews/utils/review_utils.py:351
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -4255,7 +4294,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils/review_utils.py:353
+#: reviews/utils/review_utils.py:355
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -4265,13 +4304,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:360
+#: reviews/utils/review_utils.py:362
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:364
+#: reviews/utils/review_utils.py:366
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4282,13 +4321,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:381
+#: reviews/utils/review_utils.py:383
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:385
+#: reviews/utils/review_utils.py:387
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4296,7 +4335,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:387
+#: reviews/utils/review_utils.py:389
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4306,11 +4345,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:392 reviews/utils/review_utils.py:418
+#: reviews/utils/review_utils.py:394 reviews/utils/review_utils.py:420
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils/review_utils.py:413
+#: reviews/utils/review_utils.py:415
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -5347,105 +5386,19 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
-#~ msgid "Regels en verplichtingen"
-#~ msgstr "Rules and obligations"
+#~ msgid "Revisie indienen"
+#~ msgstr "Submit a revision"
 
 #~ msgid ""
-#~ "\n"
-#~ "                Een zeer belangrijk ingrediënt van ethisch verantwoord "
-#~ "onderzoek met deelnemers,\n"
-#~ "                is dat er op adequate wijze met de verzamelde onderzoeks- "
-#~ "en persoonsgegevens wordt omgegaan.\n"
-#~ "                In het algemeen geldt dat onderzoekers zich wat betreft "
-#~ "de opslag van data\n"
-#~ "                en het beschikbaar maken van data voor andere "
-#~ "onderzoekers gepast behoren te gedragen,\n"
-#~ "                en zich dienen houden aan geldende wet- en regelgeving.\n"
-#~ "                "
+#~ "U kunt hier op basis van de vorige versie van uw studie een revisie "
+#~ "indienen."
 #~ msgstr ""
-#~ "\n"
-#~ "    A very important ingredient of ethically responsible research "
-#~ "involving participants\n"
-#~ "    is that the research data and personal data collected are handled "
-#~ "properly.\n"
-#~ "    As a general principle researchers should behave appropriately in "
-#~ "storing data\n"
-#~ "    and making it available for other researchers, and should observe the "
-#~ "applicable laws.\n"
-#~ "    "
+#~ "You can submit a revision here based on the previous version of your "
+#~ "study."
 
 #~ msgid ""
-#~ "\n"
-#~ "                Wanneer u persoonsgegevens verzamelt moet  zich aan de "
-#~ "AVG (Algemene Verordening Gegevensbescherming) houden. Deze verordening "
-#~ "is in lijn met de Europese privacywetgeving GDPR (<a href=\"https://"
-#~ "eugdpr.org\">https://eugdpr.org</a>).\n"
-#~ "                "
+#~ "U kunt hier op basis van de reeds goedgekeurde studie een amendement "
+#~ "indienen."
 #~ msgstr ""
-#~ "\n"
-#~ "    When you collect personal data, you must comply with the AVG "
-#~ "(Algemene Verordening Gegevensbescherming). This regulation is in line "
-#~ "with European GDPR privacy legislation (<a href=\"https://eugdpr.org"
-#~ "\">https://eugdpr.org</a>).    "
-
-#~ msgid ""
-#~ "\n"
-#~ "                Hoe er moet worden omgegaan met (onderzoeks)data volgens "
-#~ "de richtlijnen van de VSNU kunt u\n"
-#~ "                <a href=\"http://www.vsnu.nl/code-pers-gegevens.html\" "
-#~ "target=\"_blank\">hier</a> vinden.\n"
-#~ "                "
-#~ msgstr ""
-#~ "\n"
-#~ "    Other sources of how to deal with (personal) data can be found\n"
-#~ "    <a href=\"http://www.vsnu.nl/code-pers-gegevens.html\" target=\"_blank"
-#~ "\">here</a>.\n"
-#~ "    "
-
-#~ msgid ""
-#~ "\n"
-#~ "                Steeds vaker zullen subsidieverstrekkers eisen dat u een "
-#~ "(zeer) gedetailleerd datamanagement plan (DMP) schrijft.\n"
-#~ "                Ook vanuit de UU gaat dit de regel worden.\n"
-#~ "                Een DMP houdt in dat u heeft nagedacht over wat voor "
-#~ "soort type data u gaat verzamelen en over hoe gevoelig die data is.\n"
-#~ "                De opslag van die data wordt medebepaald door de "
-#~ "sensitiviteit van die data.\n"
-#~ "                Het DMP gaat ook over hoe ziet de infrastructuur van mijn "
-#~ "mappen/bestanden eruit;\n"
-#~ "                hoe zorg ik ervoor dat ik alles makkelijk kan vinden\n"
-#~ "                en dat ook anderen makkelijk hun weg erin kunnen vinden "
-#~ "(denk aan hergebruik/ delen van data).\n"
-#~ "                Meer informatie over wat een DMP precies inhoudt en hoe "
-#~ "er een te schrijven vind u\n"
-#~ "                <a href=\"https://www.uu.nl/en/research/research-data-"
-#~ "management/what-we-do/data-management-plan\" target=\"_blank\">hier</a>.\n"
-#~ "                "
-#~ msgstr ""
-#~ "\n"
-#~ "    The UU and most funding agencies require that researchers create a "
-#~ "Data Management Plan (DMP).\n"
-#~ "    A DMP outlines all key aspects of collecting, storing and managing "
-#~ "research data during and after a project.\n"
-#~ "    If done properly it will help the researcher during the research "
-#~ "process as well as with data sharing during the project and with data "
-#~ "reuse after the research project has ended.\n"
-#~ "    More information can be found \n"
-#~ "    <a href=\"https://www.uu.nl/en/research/research-data-management/what-"
-#~ "we-do/data-management-plan\" target=\"_blank\">here</a>.\n"
-#~ "    "
-
-#~ msgid ""
-#~ "\n"
-#~ "                Voor meer informatie over de UU-richtlijnen en wetten "
-#~ "voor onderzoeksdata, zie ook:\n"
-#~ "                <a href=\"http://libguides.library.uu.nl/onderzoeksdata\" "
-#~ "target=\"_blank\">http://libguides.library.uu.nl/onderzoeksdata</a>.\n"
-#~ "                "
-#~ msgstr ""
-#~ "\n"
-#~ "    For more information about UU guidelines and laws about research "
-#~ "data, see also:\n"
-#~ "    <a href=\"http://libguides.library.uu.nl/onderzoeksdata\" target="
-#~ "\"_blank\">http://libguides.library.uu.nl/onderzoeksdata</a>.\n"
-#~ "    "
+#~ "You can submit an amendment here based on the study that has already been "
+#~ "approved."

@@ -350,8 +350,15 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
 
         context['troublesome_pages'] = get_form_errors(self.get_object())
         context['pagenr'] = self._get_page_number()
+        context['is_supervisor_edit_phase'] = self.is_supervisor_edit_phase()
 
         return context
+
+    def is_supervisor_edit_phase(self):
+        if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:
+            return True
+
+        return False
 
     def form_valid(self, form):
         """
@@ -368,7 +375,15 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         return success_url
 
     def get_next_url(self):
-        """After submission, go to the thank-you view"""
+        """After submission, go to the thank-you view. Unless a supervisor is
+        editing the proposal during their review, in that case: go to their
+        decide page"""
+        if self.is_supervisor_edit_phase() and \
+                self.current_user_is_supervisor():
+            review = self.object.latest_review()
+            decision = review.decision_set.get(reviewer=self.request.user)
+            return reverse('reviews:decide', args=(decision.pk,))
+
         return reverse('proposals:submitted', args=(self.object.pk,))
 
     def get_back_url(self):
