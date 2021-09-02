@@ -2063,7 +2063,7 @@ msgid ""
 "indienen. Je studie moet eerst goedgekeurd en afgehandeld zijn voordat die "
 "hier gekozen kan worden."
 msgstr "You can create an amendment here based on the study that has already been "
-"approved. Your study must have been approved by the committee before it can be chosen here. "
+"approved. Your study must have been approved by the committee before it can be selected here. "
 
 #: proposals/templates/proposals/proposal_copy.html:60
 msgid ""
@@ -2078,7 +2078,7 @@ msgid ""
 "basis van een eerder uitgevoerde studie. Indien je wijzigingen hebt in een "
 "al goedgekeurde studie die daarom opnieuw getoetst moet worden, maak dan <a "
 "href=\"%(amendment_url)s\">hier</a> een amendement aan."
-msgstr "This page is only intended if you are going to do a completely new study based on a previously conducted study. If you have changes to an already approved study that therefore needs to be re-reviewed, please make an amendment <a href=\"%(amendment_url)s\">here</a>."
+msgstr "This page is only intended for creating an entirely new study based on a previously conducted study. If you have changes to an already approved study that therefore needs to be re-reviewed, please make an amendment <a href=\"%(amendment_url)s\">here</a>."
 
 #: proposals/templates/proposals/proposal_copy.html:70
 #, python-format
@@ -3850,9 +3850,9 @@ msgid ""
 msgstr ""
 "As supervisor, you can edit the study <a href=\"%(update_url)s\" target="
 "\"_blank\">here</a>. If you want the submitter to change the application "
-"themself before it can be assessed by the FEtC-H, select 'revision "
+"themselves before it can be assessed by the FEtC-H, select 'revision "
 "necessary' below. If you don't do this, the portal will not allow the "
-"applicant to change this application!"
+"applicant to edit this application!"
 
 #: reviews/templates/reviews/decision_form.html:43
 msgid ""
