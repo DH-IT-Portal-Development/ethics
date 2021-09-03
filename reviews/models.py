@@ -85,11 +85,14 @@ class Review(models.Model):
                 self.proposal.save()
                 # On GO and not in course, start the assignment phase
                 if self.go and not self.proposal.in_course:
-                    from .utils import start_assignment_phase
+                    # Use absolute import. Relative works fine everywhere except
+                    # in an uWSGI environment, in which it errors.
+                    from reviews.utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
                 # On NO-GO, reset the Proposal status
                 else:
-                    from .utils import notify_supervisor_nogo
+                    # See comment above
+                    from reviews.utils import notify_supervisor_nogo
                     notify_supervisor_nogo(last_decision)
                     self.proposal.status = Proposal.DRAFT
                     self.proposal.save()

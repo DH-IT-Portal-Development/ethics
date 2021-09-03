@@ -75,10 +75,6 @@ def start_supervisor_phase(proposal):
     return review
 
 
-
-
-
-
 def start_assignment_phase(proposal):
     """
     Starts the assignment phase:
@@ -100,7 +96,6 @@ def start_assignment_phase(proposal):
 
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
-
     review.save()
 
     proposal.date_submitted = timezone.now()
@@ -124,10 +119,10 @@ def start_assignment_phase(proposal):
     else:
         msg_plain = render_to_string('mail/submitted_longroute.txt', params)
         msg_html = render_to_string('mail/submitted_longroute.html', params)
-        recipients = [proposal.created_by.email]
+    recipients = [proposal.created_by.email]
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -222,7 +217,7 @@ def start_review_route(review, commission_users, use_short_route):
 
     subject = subject.format(review.proposal.reviewing_committee,
                              review.proposal.reference_number,
-    )
+                             )
 
     for user in commission_users:
 
