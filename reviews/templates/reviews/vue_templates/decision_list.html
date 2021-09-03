@@ -40,7 +40,7 @@
         <template #actions="{ item: decision, context }">
             {# The :href means that we use Vue to provide the actual link. Thus, the expression is Vue code! #}
             <a
-               :href="decision.proposal.pdf.url"
+               :href="$url('proposals:pdf', [decision.proposal.pk])"
                target="_blank"
                :download="decision.proposal.pdf.name"
             >
