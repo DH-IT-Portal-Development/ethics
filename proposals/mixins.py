@@ -22,9 +22,12 @@ class ProposalMixin(UserFormKwargsMixin):
 
 
 class ProposalContextMixin:
+
+    def current_user_is_supervisor(self):
+        return self.object.supervisor == self.request.user
         
     def get_context_data(self, **kwargs):
         context = super(ProposalContextMixin, self).get_context_data(**kwargs)
-        context['is_supervisor'] = self.object.supervisor == self.request.user
+        context['is_supervisor'] = self.current_user_is_supervisor()
         context['is_practice'] = self.object.is_practice()
         return context

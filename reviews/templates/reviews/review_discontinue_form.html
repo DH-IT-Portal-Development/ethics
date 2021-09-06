@@ -1,0 +1,67 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Beoordeling beëindigen" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+    <script>
+        $(function () {
+            depends_on_list_value('short_route', ['True', 'False'], 'reviewers');
+
+            {% if review.proposal.is_pre_assessment %}
+                // Hide short_route input for preliminary assessment Proposals
+                $('input[name="short_route"]').parents('tr').hide();
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+
+    {% with review=review %}
+        {% include "reviews/review_detail_sidebar.html" %}
+    {% endwith %}
+
+        <div class="col-12 col-md-9">
+            <h2>
+                {% trans "Beoordeling definitief beëindigen" %}
+            </h2>
+
+            <p>
+                {% blocktrans trimmed %}
+                Als een studie definitief niet meer door de FETC-GW
+                beoordeeld gaat worden, en deze in de weg staat,
+                kan er voor gekozen worden deze te beëindigen.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                Een beëindigde beoordeling verschijnt niet meer in de pagina's
+                van de secretaris en beoordelaars. Deze
+                studie kan ook niet meer gereviseerd worden,
+                maar nog wel gekopieerd.
+                {% endblocktrans %}
+            </p>
+            <p>
+                <strong>{% trans "Studie" %}</strong>:
+                {% blocktrans with title=review.proposal.title author=review.proposal.created_by trimmed %}
+                <em>{{title}}</em> door {{author}}
+                {% endblocktrans %}
+            <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                <div class="float-right">
+                    <a class="button" href="javascript:history.go(-1);">
+                        {% trans "Terug naar de vorige pagina" %}
+                    </a>
+                    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}"/>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
