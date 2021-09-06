@@ -5,10 +5,10 @@ from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+from observations.models import Observation
+from proposals.models import Proposal, Wmo
 from reviews.templatetags.documents_list import give_name
 from studies.models import Documents, Study
-from proposals.models import Proposal, Wmo
-from observations.models import Observation
 
 
 register = template.Library()
