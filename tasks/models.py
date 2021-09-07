@@ -14,14 +14,15 @@ class Session(SettingModel):
         _('Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?'),
         null=True,
         validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is a technical safeguard
-        help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer observeert \
-en de deelnemer vervolgens een vragenlijst afneemt, dan vult u hierboven "2" in. \
-Electrodes plakken, sessie-debriefing en kort (< 3 minuten) exit-interview gelden niet als een taak.')
+        help_text=_('Wanneer je bijvoorbeeld eerst de deelnemer observeert \
+en de deelnemer vervolgens een vragenlijst afneemt, dan vul je hierboven "2" '
+                    'in. Electrodes plakken, sessie-debriefing en kort '
+                    '(< 3 minuten) exit-interview gelden niet als een taak.')
     )
 
     tasks_duration = models.PositiveIntegerField(
-        _('De totale geschatte netto taakduur van uw sessie komt \
-op basis van uw opgave per taak uit op <strong>%d minuten</strong>. \
+        _('De totale geschatte netto taakduur van je sessie komt \
+op basis van je opgave per taak uit op <strong>%d minuten</strong>. \
 Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, \
 instructies per taak, pauzes tussen taken, en debriefing? \
 (bij labbezoek dus van binnenkomst tot vertrek)'),
@@ -119,10 +120,10 @@ class Task(models.Model):
     description = models.TextField(
         _('Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
 uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
-beantwoording van uw onderzoeksvragen bijdraagt. \
+beantwoording van jouw onderzoeksvragen bijdraagt. \
 Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli \
-dat u van plan bent aan de deelnemer aan te bieden. \
-Het moet voor de commissieleden duidelijk zijn wat u precies gaat doen.'),
+dat je van plan bent aan de deelnemer aan te bieden. \
+Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen.'),
         blank=True,
     )
 
@@ -161,7 +162,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
     )
 
     feedback = models.BooleanField(
-        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar '
+        _('Krijgt de deelnemer tijdens of na deze taak feedback op hun '
           'gedrag of toestand?'),
         null=True,
         blank=True,

@@ -272,7 +272,7 @@ def notify_supervisor_nogo(decision):
     proposal = decision.review.proposal
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
-    subject = _('FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld')
+    subject = _('FETC-GW: eindverantwoordelijke heeft je studie beoordeeld')
 
     params = {
         'secretary': secretary.get_full_name(),

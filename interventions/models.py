@@ -56,9 +56,9 @@ class Intervention(SettingModel):
 
     measurement = models.TextField(
         _('Hoe wordt het effect van de interventie gemeten?'),
-        help_text=_('Wanneer u de deelnemer extra taken laat uitvoeren, \
+        help_text=_('Wanneer je de deelnemer extra taken laat uitvoeren, \
 dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet \
-u op de vorige pagina ook "takenonderzoek" aanvinken.'),
+je op de vorige pagina ook "takenonderzoek" aanvinken.'),
         blank=True,
     )
 

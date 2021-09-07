@@ -89,12 +89,12 @@
             {% endif %}
             {% if is_practice %}
             <div class="info">
-                {% trans "U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+                {% trans "Je bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
             </div>
             {% endif %}
             <h2>{% trans "Algemene informatie over de studie" %}</h2>
             {% if not create and is_supervisor %}
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     Je past nu een studie aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je het
                     formulier
                     invult alsof jij die student/PhD kandidaat bent.

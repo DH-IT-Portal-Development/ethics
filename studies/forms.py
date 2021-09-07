@@ -35,7 +35,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         }
         mark_safe_lazy = lazy(mark_safe, str)
         labels = {
-            'legally_incapable': mark_safe_lazy(_('Maakt uw studie gebruik van '
+            'legally_incapable': mark_safe_lazy(_('Maakt je studie gebruik van '
                                              'wils<u>on</u>bekwame ('
                                              'volwassen) deelnemers?'))
         }
@@ -82,7 +82,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                               'legally_incapable_details')
         self.check_empty(cleaned_data, 'has_traits')
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _(
-            'U dient minimaal een bijzonder kenmerk te selecteren.'))
+            'Je dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details',
                                        'traits_details')
         self.check_dependency_singular(cleaned_data, 'compensation',
@@ -136,7 +136,7 @@ class StudyDesignForm(forms.ModelForm):
         cleaned_data = super(StudyDesignForm, self).clean()
         if not (cleaned_data.get('has_intervention') or cleaned_data.get(
                 'has_observation') or cleaned_data.get('has_sessions')):
-            msg = _(u'U dient minstens één van de opties te selecteren')
+            msg = _(u'Je dient minstens één van de opties te selecteren')
             self.add_error('has_sessions',
                            forms.ValidationError(msg, code='required'))
 

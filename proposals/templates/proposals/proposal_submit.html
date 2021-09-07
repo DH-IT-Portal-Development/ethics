@@ -32,42 +32,42 @@
             <p>
                 {% if proposal.is_pre_assessment %}
                     {% blocktrans %}
-                        Uw aanvraag voor voortoetsing is compleet.
+                        Je aanvraag voor voortoetsing is compleet.
                     {% endblocktrans %}
                     {% blocktrans %}
-                        Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
+                        Als je er zeker van bent dat je studie op adequate wijze is gespecifieerd kan je de aanmelding
                         nu ter beoordeling naar de FETC-GW versturen.
                     {% endblocktrans %}
 
                 {% elif proposal.relation.needs_supervisor %}
                     {% blocktrans %}
-                        Uw concept-aanmelding is compleet.
+                        Je concept-aanmelding is compleet.
                     {% endblocktrans %}
                     {% blocktrans %}
-                        U kunt nu uw concept-aanmelding ter beoordeling naar uw supervisor versturen.
+                        Je kan nu je concept-aanmelding ter beoordeling naar je supervisor versturen.
                     {% endblocktrans %}
 
                 {% else %}
                     {% blocktrans %}
-                        Uw aanmelding is compleet.
+                        Je aanmelding is compleet.
                     {% endblocktrans %}
                     {% blocktrans %}
-                        Als u er zeker van bent dat uw studie op adequate wijze is gespecifieerd kunt u de aanmelding
+                        Als je er zeker van bent dat je studie op adequate wijze is gespecifieerd kan je de aanmelding
                         nu ter beoordeling naar de FETC-GW versturen.
                     {% endblocktrans %}
                 {% endif %}
             </p>
             <p>
-                {% blocktrans %}
-                    Als u de aanmelding eerst nog even wilt nakijken kan dat door via "Terug naar begin
-                    van de studie" alle pagina's nog even door te lopen, of gebruik te maken van de knop
-                    "Toon navigatie" in de rechterbovenhoek.
+                {% blocktrans trimmed %}
+                    Als je de aanmelding eerst nog even wilt nakijken kan dat door via "Terug naar begin
+                    van de studie" alle pagina's nog even door te lopen, of gebruik te maken van het stappen-menu
+                    hierboven.
                 {% endblocktrans %}
             </p>
             <p>
-                {% blocktrans %}
-                    Als u de aanmelding nu nog niet wilt versturen kunt u gewoon teruggaan naar de startpagina;
-                    de concept-aanvraag wordt dan bewaard voor evt. latere wijziging en indiening.
+                {% blocktrans trimmed %}
+                    Als je de aanmelding nu nog niet wilt versturen kan je gewoon teruggaan naar de startpagina;
+                    de concept-aanvraag wordt dan bewaard voor eventuele latere wijziging en indiening.
                 {% endblocktrans %}
             </p>
 
@@ -76,22 +76,22 @@
                     {% if study.has_missing_forms %}
                         <div class="warning">
                             {% url "proposals:consent" proposal.pk as consent_link %}
-                            {% blocktrans with study_order=study.order %}
-                                U heeft nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject
+                            {% blocktrans trimmed with study_order=study.order %}
+                                Je hebt nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject
                                 {{ study_order }}.
-                                Die kunt u op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
-                                Als u deze formulieren nog niet klaar hebt, kunt u ook op een later moment terugkeren;
-                                uw studie is reeds opgeslagen en terug te vinden onder "Mijn concepten".
+                                Die kan je op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
+                                Als je deze formulieren nog niet klaar hebt, kan je ook op een later moment terugkeren;
+                                je studie is reeds opgeslagen en terug te vinden onder "Mijn concepten".
                             {% endblocktrans %}
                         </div>
                     {% endif %}
                     {% if  study.has_missing_sessions %}
                         <div class="warning">
                             {% url "studies:design" study.pk as study_link %}
-                            {% blocktrans with study_order=study.order %}
-                                U heeft aangeven dat uw interventie een extra taak heeft, maar nog geen taakonderzoek
+                            {% blocktrans trimmed with study_order=study.order %}
+                                Je hebt aangeven dat je interventie een extra taak heeft, maar nog geen taakonderzoek
                                 toegevoegd voor traject {{ study_order }}.
-                                Die kunt u op <a href="{{ study_link }}">deze pagina</a> alsnog aanmaken.
+                                Die kan je op <a href="{{ study_link }}">deze pagina</a> alsnog aanmaken.
                             {% endblocktrans %}
                         </div>
                     {% endif %}
@@ -102,7 +102,7 @@
 
             {% if troublesome_pages %}
                 <div class="warning">
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                         Er zijn nog errors gevonden op de volgende pagina's:
                     {% endblocktrans %}
                     <ul>
@@ -114,8 +114,8 @@
                             </li>
                         {% endfor %}
                     </ul>
-                    {% blocktrans %}
-                        Dit komt waarschijnlijk doordat u nog niet alle verplichte velden heeft ingevuld. U kunt uw
+                    {% blocktrans trimmed %}
+                        Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft ingevuld. Je kan je
                         aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
                     {% endblocktrans %}
                 </div>
@@ -123,7 +123,7 @@
                 <table>{{ form.as_table }}</table>
                 {% if is_practice %}
                 <div class="info">
-                    {% trans "U bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+                    {% trans "Je bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
                 </div>
                 {% endif %}
                 {% if troublesome_pages or is_practice %}
