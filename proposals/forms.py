@@ -279,9 +279,9 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['title'].label = _('U kunt de titel van uw studie nu, '
+        self.fields['title'].label = _('Je kan de titel van uw studie nu, '
                                        'indien nodig, wijzigen.')
-        self.fields['title'].help_text = _('De titel die u hier opgeeft is '
+        self.fields['title'].help_text = _('De titel die je hier opgeeft is '
                                            'zichtbaar voor de FETC-GW-leden en,'
                                            ' wanneer de studie is goedgekeurd,'
                                            ' ook voor alle medewerkers die in'
@@ -291,7 +291,7 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
         self.fields['parent'].label = _('Te reviseren studie')
         self.fields['parent'].help_text = _('Dit veld toont enkel ingediende,'
                                             ' (nog) niet goedgekeurde studies '
-                                            'waar u zelf een '
+                                            'waar jij een '
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):

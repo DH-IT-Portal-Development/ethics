@@ -122,7 +122,9 @@ class Proposal(models.Model):
 
     title = models.CharField(
         _(
-            'Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.'),
+            'Wat is de titel van je studie? Deze titel zal worden gebruikt in '
+            'alle formele correspondentie.'
+        ),
         max_length=200,
         unique=False,
         help_text=_('De titel die u hier opgeeft is zichtbaar voor de \

@@ -21,7 +21,7 @@
                     {% url 'proposals:pdf' proposal.id as pdf_url %}
                     {% url 'proposals:update' proposal.id as update_url %}
                     {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
-                        U kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>, 
+                        Je kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>,
                         {{ refnum }} in {{ chamber }}. 
                         De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
                     {% endblocktrans %}
@@ -32,17 +32,17 @@
                 {% if user == proposal.supervisor %}
                     <p>
                         {% blocktrans trimmed %}
-                            Als supervisor kunt u deze studie <a href="{{ update_url }}" target="_blank">hier</a>
+                            Als supervisor kan je deze studie <a href="{{ update_url }}" target="_blank">hier</a>
                             aanpassen. Indien je wilt dat de indiener de studie zelf aanpast voordat je de studie
                             kunt goedkeuren en deze door de FETC-GW in behandeling kan worden genomen, selecteer dan
-                            'revisie noodzakelijk' hieronder. Pas zodra je dit gedaan hebt kan de indiener weer
-                            aanpassingen doen.
+                            'revisie noodzakelijk' hieronder, voeg eventuele opmerkingen toe, en klik 'Beslissing
+                            opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen.
                         {% endblocktrans %}
                     </p>
                     <p>
                         {% blocktrans trimmed %}
-                            Zodra de indiener de gevraagde wijzigingen heeft doorgevoerd, zal je de aangepaste studie
-                            opnieuw moeten beoordelen.
+                            Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft verstuurd, zal
+                            je de aangepaste studie opnieuw moeten beoordelen.
                         {% endblocktrans %}
                     </p>
                 {% endif %}
