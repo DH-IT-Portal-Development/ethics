@@ -43,45 +43,44 @@
             <ul>
                 {% if modifiable %}
                     <li>
-                        {% blocktrans %}
+                        {% blocktrans trimmed %}
                             Klik op <img src="{{ img_next }}" title="Naar volgende stap"> om naar de volgende stap in
                             het proces
                             te gaan.
                         {% endblocktrans %}
                     </li>
                     <li>
-                        {% blocktrans %}
+                        {% blocktrans trimmed %}
                             Klik op <img src="{{ img_diff }}" title="Toon verschillen"> om de verschillen met de
                             voorgaande
                             versie te zien (alleen beschikbaar voor revisies/amendementen).
                         {% endblocktrans %}
                     </li>
                     <li>
-                        {% blocktrans %}
-                            Klik op <img src="{{ img_delete }}" title="Verwijderen"> om uw studie te verwijderen.
+                        {% blocktrans trimmed %}
+                            Klik op <img src="{{ img_delete }}" title="Verwijderen"> om je studie te verwijderen.
                         {% endblocktrans %}
                     </li>
                 {% endif %}
                 {% if submitted %}
                     <li>
-                        {% blocktrans %}
+                        {% blocktrans trimmed %}
                             Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
                         {% endblocktrans %}
                     </li>
                 {% endif %}
                 {% if supervised %}
                     <li>
-                        {% blocktrans %}
+                        {% blocktrans trimmed %}
                         Klik op <img src="{{ img_decide }}" title="Beslissen"> om je beslissing door te geven (als eindverantwoordelijke).
                         {% endblocktrans %} 
                     </li>
                 {% endif %}
                 {% if is_secretary %}
                     <li>
-                        {% blocktrans %}
+                        {% blocktrans trimmed %}
                             Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende studie te verbergen
-                            uit het
-                            archief.
+                            uit het archief.
                         {% endblocktrans %}
                     </li>
                 {% endif %}

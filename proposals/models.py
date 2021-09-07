@@ -109,26 +109,28 @@ class Proposal(models.Model):
     institution = models.ForeignKey(
         Institution,
         verbose_name=_(
-            'Aan welk onderzoeksinstituut bent u verbonden?'
+            'Aan welk onderzoeksinstituut ben je verbonden?'
         ),
         on_delete=models.PROTECT,
     )
 
     date_start = models.DateField(
-        _('Wat is, indien bekend, de beoogde startdatum van uw studie?'),
+        _('Wat is, indien bekend, de beoogde startdatum van je studie?'),
         blank=True,
         null=True,
     )
 
     title = models.CharField(
         _(
-            'Wat is de titel van uw studie? Deze titel zal worden gebruikt in alle formele correspondentie.'),
+            'Wat is de titel van je studie? Deze titel zal worden gebruikt in '
+            'alle formele correspondentie.'
+        ),
         max_length=200,
         unique=False,
-        help_text=_('De titel die u hier opgeeft is zichtbaar voor de \
+        help_text=_('De titel die je hier opgeeft is zichtbaar voor de \
 FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle \
 medewerkers die in het archief van deze portal kijken. De titel mag niet \
-identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
+identiek zijn aan een vorige titel van een studie die je hebt ingediend.'),
     )
 
     summary = models.TextField(
@@ -176,7 +178,8 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
         max_length=200,
         blank=True,
         help_text=_(
-            'De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.'
+            'De titel die je hier opgeeft zal in de formele toestemmingsbrief '
+            'gebruikt worden.'
         ),
     )
 
@@ -186,19 +189,19 @@ identiek zijn aan een vorige titel van een studie die u heeft ingediend.'),
     )
 
     inform_local_staff = models.BooleanField(
-        _('<p>U hebt aangegeven dat u gebruik wilt gaan maken van één \
+        _('<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één \
 van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
 en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op \
 de hoogte willen worden gesteld van aankomende studies. \
-Daarom vragen wij hier u toestemming om delen van deze aanvraag door te \
+Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te \
 sturen naar het lab supportteam.</p> \
-<p>Vindt u het goed dat de volgende delen uit de aanvraag \
+<p>Vind je het goed dat de volgende delen uit de aanvraag \
 worden doorgestuurd:</p> \
-- Uw naam en de namen van de andere betrokkenen <br/> \
+- Jouw naam en de namen van de andere betrokkenen <br/> \
 - De eindverantwoordelijke van de studie <br/> \
 - De titel van de studie <br/> \
 - De beoogde startdatum <br/> \
-- Van welke faciliteiten u gebruik wilt maken (database, lab, \
+- Van welke faciliteiten je gebruik wil maken (database, lab, \
 Zep software)'),
         default=None,
         blank=True,
@@ -212,7 +215,7 @@ Zep software)'),
     is_pre_assessment = models.BooleanField(default=False)
 
     pre_assessment_pdf = models.FileField(
-        _('Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)'),
+        _('Upload hier je aanvraag (in .pdf of .doc(x)-formaat)'),
         blank=True,
         upload_to=PREASSESSMENT_FILENAME,
         validators=[validate_pdf_or_doc],
@@ -220,7 +223,7 @@ Zep software)'),
 
     is_pre_approved = models.BooleanField(
         _(
-            'Heeft u formele toestemming van een ethische toetsingcommissie, '
+            'Heb je formele toestemming van een ethische toetsingcommissie, '
             'uitgezonderd deze FETC-GW commissie?'),
         default=None,
         null=True,
@@ -236,7 +239,8 @@ Zep software)'),
 
     pre_approval_pdf = models.FileField(
         _(
-            'Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
+            'Upload hier je formele toestemmingsbrief van dit instituut (in '
+            '.pdf of .doc(x)-formaat)'),
         blank=True,
         upload_to=PRE_APPROVAL_FILENAME,
         validators=[validate_pdf_or_doc],
@@ -298,7 +302,9 @@ gebruikt worden).'),
     )
     
     dmp_file = models.FileField(
-        _('Als je een Data Management Plan heeft voor deze studie, kunt u kiezen om deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
+        _('Als je een Data Management Plan heeft voor deze studie, '
+          'kan je kiezen om deze hier bij te voegen. Het aanleveren van een '
+          'DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=DMP_FILENAME,
@@ -338,7 +344,7 @@ gebruikt worden).'),
     # References to other models
     relation = models.ForeignKey(
         Relation,
-        verbose_name=_('In welke hoedanigheid bent u betrokken \
+        verbose_name=_('In welke hoedanigheid ben je betrokken \
 bij deze studie?'),
         on_delete=models.CASCADE,
         blank=True,
@@ -362,10 +368,13 @@ bij deze studie?'),
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
         blank=True,
         null=True,
-        help_text=_('''Aan het einde van de procedure kunt u deze studie ter verificatie naar uw eindverantwoordelijke
-            sturen. De eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en indienen bij de FETC-GW.
-            <br><br><strong>Tip</strong>: Type een aantal letters van de voornaam, achternaam, of Solis ID van
-            de persoon die u toe wilt voegen in de zoekbalk hiernaast. Merk op dat het laden even kan duren.'''),
+        help_text=_('''Aan het einde van de procedure kan je deze studie ter 
+        verificatie naar je eindverantwoordelijke sturen. De 
+        eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en 
+        indienen bij de FETC-GW. <br><br><strong>Tip</strong>: Type een 
+        aantal letters van de voornaam, achternaam, of Solis ID van het 
+        persoon die je toe wilt voegen in de zoekbalk hiernaast. 
+        Merk op dat het laden even kan duren.'''),
         on_delete=models.CASCADE,
     )
 
@@ -376,7 +385,8 @@ bij deze studie?'),
         related_name='children',
         verbose_name=_('Te kopiëren studie'),
         help_text=_(
-            'Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'),
+            'Dit veld toont enkel studies waar je zelf een medeuitvoerende '
+            'bent.'),
         on_delete=models.CASCADE,
     )
 
@@ -543,7 +553,7 @@ onderzoek, 2005, ccmo.nl)'),
 
 
     metc_application = models.BooleanField(
-        _('Uw studie moet beoordeeld worden door de METC, maar dient nog \
+        _('Je studie moet beoordeeld worden door de METC, maar dient nog \
 wel bij de FETC-GW te worden geregistreerd. Is deze studie al aangemeld \
 bij een METC?'),
         default=False,

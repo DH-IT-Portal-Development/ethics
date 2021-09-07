@@ -25,9 +25,11 @@ class UniqueTitleValidator:
             raise forms.ValidationError(_('Er bestaat al een studie met deze '
                                           'titel.'), code='unique')
 
+
 def AVGUnderstoodValidator(value):
 
     if value != True:
         raise forms.ValidationError(
-            _('Je dient kennis genomen te hebben van de AVG om uw studie in te dienen'), code='avg'
+            _('Je dient kennis genomen te hebben van de AVG om jouw studie in '
+              'te dienen'), code='avg'
             )

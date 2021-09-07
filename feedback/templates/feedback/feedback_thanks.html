@@ -4,18 +4,18 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Bedankt voor uw feedback!" %} - {{ block.super }}
+    {% trans "Bedankt voor je feedback!" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
             <h2>
-                {% trans "Bedankt voor uw feedback!" %}
+                {% trans "Bedankt voor je feedback!" %}
             </h2>
             <p>
                 {% blocktrans with url=feedback.url %}
-                Klik <a href="{{ url }}">hier</a> om terug te keren naar pagina waar u gebleven was.
+                Klik <a href="{{ url }}">hier</a> om terug te keren naar pagina waar je gebleven was.
                 {% endblocktrans %}
             </p>
         </div>

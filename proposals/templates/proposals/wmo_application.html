@@ -30,7 +30,7 @@
                 <table>{{ form.as_table }}</table>
                 {% if wmo.status == wmo.WAITING %}
                     <div class="warning">
-                        {% trans "Zolang uw studie nog niet is beoordeeld door de METC, kunt u niet verder in het aanmeldingsproces." %}
+                        {% trans "Zolang je studie nog niet is beoordeeld door de METC, kan je niet verder in het aanmeldingsproces." %}
                     </div>
                 {% endif %}
                 {% with proposal=wmo.proposal %}

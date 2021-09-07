@@ -70,8 +70,8 @@
                 </ul>
 
                 <p>
-                    {% blocktrans %}
-                        In deze portal kunt u het volgende doen:
+                    {% blocktrans trimmed %}
+                        In deze portal kan je het volgende doen:
                     {% endblocktrans %}
                 </p>
             </div>
@@ -186,7 +186,7 @@
                 <p>
                     {% url 'login' as the_url %}
                     {% blocktrans %}
-                        Welkom bij het portal van de FETC-GW. U kunt <a href="{{ the_url }}">hier</a> inloggen met uw
+                        Welkom bij het portal van de FETC-GW. Je kan <a href="{{ the_url }}">hier</a> inloggen met je
                         Solis-ID.
                     {% endblocktrans %}
                 </p>
