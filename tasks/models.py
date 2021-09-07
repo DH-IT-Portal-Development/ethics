@@ -161,7 +161,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
     )
 
     feedback = models.BooleanField(
-        _('Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar '
+        _('Krijgt de deelnemer tijdens of na deze taak feedback op hun '
           'gedrag of toestand?'),
         null=True,
         blank=True,

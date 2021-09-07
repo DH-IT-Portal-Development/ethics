@@ -190,7 +190,7 @@ te testen?'),
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_(
-            'Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
+            'Welke vergoeding krijgt de deelnemer voor hun deelname?'),
         help_text=_('Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
 cadeautje.'),
