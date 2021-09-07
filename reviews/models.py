@@ -64,7 +64,12 @@ class Review(models.Model):
     def update_go(self, last_decision=None):
         """
         Check all decisions: if all are finished, set the final decision and date_end.
+        If this review is discontinued, don't do anything.
         """
+
+        if self.continuation == self.DISCONTINUED:
+            return
+
         all_decisions = self.decision_set.count()
         closed_decisions = 0
         final_go = True
