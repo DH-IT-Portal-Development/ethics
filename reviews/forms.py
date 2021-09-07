@@ -113,6 +113,7 @@ class ReviewCloseForm(forms.ModelForm):
 
 
 class ReviewDiscontinueForm(forms.ModelForm):
+
     confirm_discontinue = forms.BooleanField(initial=False, required=True,
                                           label=_('Bevestig beëindiging'))
 
