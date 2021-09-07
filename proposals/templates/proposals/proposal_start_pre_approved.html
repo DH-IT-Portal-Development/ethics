@@ -14,7 +14,7 @@
                 {% trans "Een nieuwe studie aanmelden (die al goedgekeurd is door een andere ethische toetsings comissie)" %}
             </h2>
             <p>
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                 Je wilt een nieuwe studie ter toetsing bij de FETC-GW aanmelden, die al getoetst is
                 door een andere ethische (toetsings) commissie.
                 Het is daarvoor <em>noodzakelijk</em> dat je goed bekend bent met het FETC-GW
@@ -22,12 +22,12 @@
                 <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="_blank">reglement Algemene Kamer (AK)</a> en
                 <a href="http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="_blank">reglement Linguïstiek Kamer
                     (LK)</a>.
-                Je kan u jezelf en de commissieleden veel tijd besparen door je eerst
+                Je kan jezelf en de commissieleden veel tijd besparen door je eerst
                 goed te informeren.
                 {% endblocktrans %}
             </p>
             <p>
-                {% blocktrans with secretary_name=secretary.get_full_name %}
+                {% blocktrans trimmed with secretary_name=secretary.get_full_name %}
                 Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht
                 niet mee bekend is.
                 Raadpleeg bij vragen eerst het

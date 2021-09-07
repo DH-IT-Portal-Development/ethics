@@ -103,7 +103,7 @@ een account voor moet worden aangemaakt.'),
     )
 
     needs_approval = models.BooleanField(
-        _('Heeft u toestemming nodig van een (samenwerkende) instantie \
+        _('Heb je toestemming nodig van een (samenwerkende) instantie \
 om deze observatie te mogen uitvoeren?'),
         default=False,
     )

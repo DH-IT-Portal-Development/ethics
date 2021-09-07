@@ -54,7 +54,7 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
 
 class MyProposalsView(BaseProposalsView):
     title = _('Mijn studies')
-    body = _('Dit overzicht toont al uw studies.')
+    body = _('Dit overzicht toont al je studies.')
     is_modifiable = True
     is_submitted = True
     contains_supervised = True
@@ -67,7 +67,7 @@ class MyProposalsView(BaseProposalsView):
 
 class MyConceptsView(BaseProposalsView):
     title = _('Mijn conceptstudies')
-    body = _('Dit overzicht toont al uw nog niet ingediende studies.')
+    body = _('Dit overzicht toont al je nog niet ingediende studies.')
     is_modifiable = True
     is_submitted = False
 
@@ -79,7 +79,7 @@ class MyConceptsView(BaseProposalsView):
 
 class MySubmittedView(BaseProposalsView):
     title = _('Mijn ingediende studies')
-    body = _('Dit overzicht toont al uw ingediende studies.')
+    body = _('Dit overzicht toont al je ingediende studies.')
     is_modifiable = False
     is_submitted = True
 
@@ -91,7 +91,7 @@ class MySubmittedView(BaseProposalsView):
 
 class MyCompletedView(BaseProposalsView):
     title = _('Mijn afgehandelde studies')
-    body = _('Dit overzicht toont al uw beoordeelde studies.')
+    body = _('Dit overzicht toont al je beoordeelde studies.')
     is_modifiable = False
     is_submitted = True
 
@@ -104,7 +104,8 @@ class MyCompletedView(BaseProposalsView):
 class MySupervisedView(BaseProposalsView):
     title = _('Mijn studies als eindverantwoordelijke')
     body = _(
-        'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
+        'Dit overzicht toont al je studies waarvan je eindverantwoordelijke '
+        'bent.')
     is_modifiable = True
     is_submitted = True
     contains_supervised = True
@@ -116,7 +117,7 @@ class MySupervisedView(BaseProposalsView):
 
 class MyPracticeView(BaseProposalsView):
     title = _('Mijn oefenstudies')
-    body = _('Dit overzicht toont alle oefenstudies waar u als student, \
+    body = _('Dit overzicht toont alle oefenstudies waar je als student, \
 onderzoeker of eindverantwoordelijke bij betrokken bent.')
     is_modifiable = True
     is_submitted = False

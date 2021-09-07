@@ -132,7 +132,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                 check_in_course=True)
             self.fields['supervisor'].label = _('Docent')
             self.fields['supervisor'].help_text = _('Vul hier de docent van \
-de cursus in waarbinnen u deze portal moet doorlopen. De docent kan na afloop \
+de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop \
 de studie inkijken in de portal. De studie zal niet in het semipublieke archief \
 van het FETC-GW worden opgenomen.')
 
@@ -178,7 +178,7 @@ van het FETC-GW worden opgenomen.')
         if relation and relation.needs_supervisor and \
            not cleaned_data.get('supervisor'):
             error = forms.ValidationError(
-                _('U dient een eindverantwoordelijke op te geven.'),
+                _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
             self.add_error('supervisor', error)
 
@@ -189,12 +189,12 @@ van het FETC-GW worden opgenomen.')
         # Always make sure the applicant is actually in the applicants list
         if self.user not in applicants and self.user != supervisor:
             error = forms.ValidationError(
-                _('U heeft uzelf niet als onderzoekers geselecteerd.'),
+                _('Je hebt jezelf niet als onderzoekers geselecteerd.'),
                 code='required')
             self.add_error('applicants', error)
         elif other_applicants and len(applicants) == 1:
             error = forms.ValidationError(
-                _('U heeft geen andere onderzoekers geselecteerd.'),
+                _('Je hebt geen andere onderzoekers geselecteerd.'),
                 code='required')
             self.add_error('applicants', error)
 
@@ -202,7 +202,7 @@ van het FETC-GW worden opgenomen.')
             if not cleaned_data['is_pre_approved']:
                 error = forms.ValidationError(
                     _(
-                        'Indien u geen toestemming heeft van een andere ethische commissie, dient u het normale formulier in '
+                        'Indien je geen toestemming hebt van een andere ethische commissie, dien je het normale formulier in '
                         'te vullen. Ga terug naar de startpagina, en selecteer "Een nieuwe studie aanmelden (from scratch in '
                         'een leeg formulier)" of "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)".')
                 )
@@ -245,7 +245,8 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         queryset=Proposal.objects.all(),
         label=_('Te kopiëren studie'),
         help_text=_(
-            'Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'
+            'Dit veld toont enkel studies waar je zelf een medeuitvoerende '
+            'bent.'
         ),
     )
 
@@ -279,7 +280,7 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['title'].label = _('Je kan de titel van uw studie nu, '
+        self.fields['title'].label = _('Je kan de titel van je studie nu, '
                                        'indien nodig, wijzigen.')
         self.fields['title'].help_text = _('De titel die je hier opgeeft is '
                                            'zichtbaar voor de FETC-GW-leden en,'
@@ -313,9 +314,9 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['title'].label = _('U kunt de titel van uw studie nu, '
+        self.fields['title'].label = _('Je kan de titel van je studie nu, '
                                        'indien nodig, wijzigen.')
-        self.fields['title'].help_text = _('De titel die u hier opgeeft is '
+        self.fields['title'].help_text = _('De titel die je hier opgeeft is '
                                            'zichtbaar voor de FETC-GW-leden en,'
                                            ' wanneer de studie is goedgekeurd,'
                                            ' ook voor alle medewerkers die in'
@@ -324,7 +325,7 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
 
         self.fields['parent'].label = _('Te amenderen studie')
         self.fields['parent'].help_text = _('Dit veld toont enkel goedgekeurde'
-                                            ' studies waar u zelf een '
+                                            ' studies waar je zelf een '
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):
@@ -386,7 +387,7 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         self.check_dependency(cleaned_data, 'metc', 'metc_institution',
                               f1_value=YES,
                               error_message=_(
-                                  'U dient een instelling op te geven.'))
+                                  'Je dient een instelling op te geven.'))
         self.check_dependency_list(cleaned_data, 'metc', 'is_medical',
                                    f1_value_list=[NO, DOUBT])
 
