@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-07 16:56+0200\n"
+"POT-Creation-Date: 2021-09-09 11:07+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1016,18 +1016,12 @@ msgid "Beschrijf <b>wie</b> er wordt geobserveerd."
 msgstr "Describe <b>who</b> will be observed."
 
 #: observations/models.py:33
-#, fuzzy
 msgid ""
 "Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies "
 "van de deelnemer wordt geobserveerd. Bijvoorbeeld: De leraar zal "
 "geobserveerd worden. De observatie moet de interactie tussen leraar en "
 "leerling in kaart brengen."
 msgstr ""
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Make sure it is clear to the committee who will be observed and what aspect "
-"will be observed. For example: The teacher will be observed. The observation "
-"of interest is the interaction between the teacher and his/her pupils.\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
 "Make sure it is clear to the committee who will be observed and what aspect "
 "will be observed. For example: The teacher will be observed. The observation "
 "of interest is the interaction between the teacher and their pupils."
@@ -1075,12 +1069,8 @@ msgid "Licht toe"
 msgstr "Explain"
 
 #: observations/models.py:70
-#, fuzzy
 msgid "Doet de onderzoeker zich voor als behorende tot de doelgroep?"
 msgstr ""
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Will the researcher present him/herself as belonging to the target group?\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
 "Will the researcher present themselves as belonging to the target group?"
 
 #: observations/models.py:80
@@ -3967,17 +3957,10 @@ msgid "Beoordeling beëindigen"
 msgstr "Terminate review"
 
 #: reviews/templates/reviews/review_discontinue_form.html:32
-#, fuzzy
-#| msgid "Beoordeling definitief beëindigen"
 msgid "Afhandeling definitief beëindigen"
 msgstr "Terminate this review"
 
 #: reviews/templates/reviews/review_discontinue_form.html:36
-#, fuzzy
-#| msgid ""
-#| "Als een studie definitief niet meer door de FETC-GW beoordeeld gaat "
-#| "worden, en deze in de weg staat, kan er voor gekozen worden deze te "
-#| "beëindigen."
 msgid ""
 "Als een studie definitief niet meer door de FETC-GW afgehandeld gaat worden, "
 "en deze in de weg staat, kan er voor gekozen worden deze te beëindigen."
@@ -3986,11 +3969,6 @@ msgstr ""
 "is getting in the way, it can be terminated using this form."
 
 #: reviews/templates/reviews/review_discontinue_form.html:43
-#, fuzzy
-#| msgid ""
-#| "Een beëindigde beoordeling verschijnt niet meer in de pagina's van de "
-#| "secretaris en beoordelaars. Deze studie kan ook niet meer gereviseerd "
-#| "worden, maar nog wel gekopieerd."
 msgid ""
 "Een beëindigde studie verschijnt niet meer in de pagina's van de secretaris "
 "en beoordelaars. Deze studie kan ook niet meer gereviseerd worden, maar nog "
@@ -3999,7 +3977,8 @@ msgid ""
 msgstr ""
 "A terminated review no longer appears as an open action to the secretary and "
 "assigned reviewers. Its proposal may not be revised, however it may still be "
-"copied."
+"copied. A terminated review still shows up in the list \"all submitted "
+"studies\" for future reference."
 
 #: reviews/templates/reviews/review_discontinue_form.html:52
 msgid "Studie"
@@ -4037,10 +4016,8 @@ msgid "Hoofdtraject"
 msgstr "Main trajectory"
 
 #: reviews/templatetags/documents_list.py:144
-#, fuzzy
-#| msgid "Traject {}: {}"
 msgid "Traject {}: <i>{}</i>"
-msgstr "Trajectory {}: {}"
+msgstr "Trajectory {}: <i>{}</i>"
 
 #: reviews/templatetags/documents_list.py:155
 msgid "Extra documenten {}"
@@ -4091,8 +4068,6 @@ msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
 #: reviews/utils/review_actions.py:100
-#, fuzzy
-#| msgid "Beëindig de beoordeling van deze studie"
 msgid "Beëindig de afhandeling van deze studie"
 msgstr "Discontinue assessment of this proposal"
 
