@@ -2,11 +2,12 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-07 12:53+0200\n"
+"POT-Creation-Date: 2021-09-09 11:07+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -14,6 +15,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
@@ -103,7 +108,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: reviews/templates/reviews/decision_form.html:62
 #: reviews/templates/reviews/review_assign_form.html:44
 #: reviews/templates/reviews/review_close_form.html:41
-#: reviews/templates/reviews/review_discontinue_form.html:59
+#: reviews/templates/reviews/review_discontinue_form.html:60
 #: studies/templates/studies/study_update_attachments.html:26
 msgid "Terug naar de vorige pagina"
 msgstr "Back to the previous page"
@@ -410,7 +415,7 @@ msgstr "Conclusion"
 msgid "Acties"
 msgstr "Actions"
 
-#: main/templates/auth/user_detail.html:75 reviews/models.py:119
+#: main/templates/auth/user_detail.html:75 reviews/models.py:124
 msgid ", met revisie"
 msgstr ", with revision"
 
@@ -1465,7 +1470,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:187 proposals/models.py:317 reviews/models.py:159
+#: proposals/models.py:187 proposals/models.py:317 reviews/models.py:164
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1715,12 +1720,12 @@ msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
 
-#: proposals/templates/proposals/compare_documents.html:6
-#: proposals/templates/proposals/compare_documents.html:47
+#: proposals/templates/proposals/compare_documents.html:8
+#: proposals/templates/proposals/compare_documents.html:49
 msgid "Vergelijk documenten"
 msgstr "Compare documents"
 
-#: proposals/templates/proposals/compare_documents.html:49
+#: proposals/templates/proposals/compare_documents.html:51
 msgid ""
 "\n"
 "                Hier kan je twee versies van een document vergelijken. "
@@ -1738,15 +1743,7 @@ msgstr ""
 "                text is marked in red and added text is marked in green.\n"
 "                "
 
-#: proposals/templates/proposals/compare_documents.html:57
-msgid "Bekijk apart"
-msgstr "View separately"
-
-#: proposals/templates/proposals/compare_documents.html:60
-msgid "Bekijk gecombineerd"
-msgstr "View combined"
-
-#: proposals/templates/proposals/compare_documents.html:63
+#: proposals/templates/proposals/compare_documents.html:59
 msgid ""
 "\n"
 "                Je kan ook de bestanden naast elkaar bekijken, met dezelfde\n"
@@ -1758,9 +1755,29 @@ msgstr ""
 "'View separately'.\n"
 "    "
 
+#: proposals/templates/proposals/compare_documents.html:65
+msgid "Je vergelijkt"
+msgstr "Comparing:"
+
 #: proposals/templates/proposals/compare_documents.html:69
 msgid "Er zijn geen wijzigingen gevonden in dit document!"
 msgstr "No changes were found in this document!"
+
+#: proposals/templates/proposals/compare_documents.html:72
+msgid "Bekijk apart"
+msgstr "View separately"
+
+#: proposals/templates/proposals/compare_documents.html:75
+msgid "Bekijk gecombineerd"
+msgstr "View combined"
+
+#: proposals/templates/proposals/compare_documents.html:82
+msgid "Oud"
+msgstr "Old"
+
+#: proposals/templates/proposals/compare_documents.html:88
+msgid "Nieuw"
+msgstr "New"
 
 #: proposals/templates/proposals/diff/intervention_v1.html:8
 #: proposals/templates/proposals/diff/intervention_v2.html:8
@@ -2073,7 +2090,7 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
-#: reviews/templatetags/documents_list.py:192
+#: reviews/templatetags/documents_list.py:196
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -3328,11 +3345,11 @@ msgstr ""
 msgid "Studie verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:336
+#: proposals/views/proposal_views.py:338
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:424
+#: proposals/views/proposal_views.py:426
 msgid "Studie gekopieerd"
 msgstr "Application copied"
 
@@ -3379,11 +3396,11 @@ msgstr "Route"
 msgid "Start datum"
 msgstr "Start date review"
 
-#: reviews/forms.py:12 reviews/models.py:126
+#: reviews/forms.py:12 reviews/models.py:131
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:13 reviews/models.py:125
+#: reviews/forms.py:13 reviews/models.py:130
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3407,7 +3424,7 @@ msgstr "Add this study to the archive"
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
-#: reviews/forms.py:117
+#: reviews/forms.py:118
 msgid "Bevestig beëindiging"
 msgstr "Confirm termination of this review"
 
@@ -3467,28 +3484,28 @@ msgstr "Post hoc negative advice by FETC-H"
 msgid "Niet verder in behandeling genomen door de FETC-GW"
 msgstr "Not to be assessed further by the FEtC-H"
 
-#: reviews/models.py:51 reviews/models.py:153
+#: reviews/models.py:51 reviews/models.py:158
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:110
+#: reviews/models.py:115
 msgid "Onbekend"
 msgstr "Unknown"
 
-#: reviews/models.py:127
+#: reviews/models.py:132
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:147
+#: reviews/models.py:152
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:148
+#: reviews/models.py:153
 msgid "niet goegekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:149
+#: reviews/models.py:154
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -3665,7 +3682,7 @@ msgstr "Change reviewing chamber"
 
 #: reviews/templates/reviews/change_chamber_form.html:18
 #: reviews/templates/reviews/review_assign_form.html:46
-#: reviews/templates/reviews/review_discontinue_form.html:61
+#: reviews/templates/reviews/review_discontinue_form.html:62
 msgid "OK"
 msgstr "OK"
 
@@ -3940,12 +3957,12 @@ msgid "Beoordeling beëindigen"
 msgstr "Terminate review"
 
 #: reviews/templates/reviews/review_discontinue_form.html:32
-msgid "Beoordeling definitief beëindigen"
+msgid "Afhandeling definitief beëindigen"
 msgstr "Terminate this review"
 
 #: reviews/templates/reviews/review_discontinue_form.html:36
 msgid ""
-"Als een studie definitief niet meer door de FETC-GW beoordeeld gaat worden, "
+"Als een studie definitief niet meer door de FETC-GW afgehandeld gaat worden, "
 "en deze in de weg staat, kan er voor gekozen worden deze te beëindigen."
 msgstr ""
 "If a proposal will not be further assessed by the FEtC-H and its open review "
@@ -3953,19 +3970,21 @@ msgstr ""
 
 #: reviews/templates/reviews/review_discontinue_form.html:43
 msgid ""
-"Een beëindigde beoordeling verschijnt niet meer in de pagina's van de "
-"secretaris en beoordelaars. Deze studie kan ook niet meer gereviseerd "
-"worden, maar nog wel gekopieerd."
+"Een beëindigde studie verschijnt niet meer in de pagina's van de secretaris "
+"en beoordelaars. Deze studie kan ook niet meer gereviseerd worden, maar nog "
+"wel gekopieerd. De studie is nog wel zichtbaar in de lijst met \"alle "
+"ingediende studies\"."
 msgstr ""
 "A terminated review no longer appears as an open action to the secretary and "
 "assigned reviewers. Its proposal may not be revised, however it may still be "
-"copied."
+"copied. A terminated review still shows up in the list \"all submitted "
+"studies\" for future reference."
 
-#: reviews/templates/reviews/review_discontinue_form.html:51
+#: reviews/templates/reviews/review_discontinue_form.html:52
 msgid "Studie"
 msgstr "Proposal"
 
-#: reviews/templates/reviews/review_discontinue_form.html:52
+#: reviews/templates/reviews/review_discontinue_form.html:53
 #, python-format
 msgid "<em>%(title)s</em> door %(author)s"
 msgstr "<em>%(title)s</em> by %(author)s"
@@ -3992,64 +4011,64 @@ msgstr "open"
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
-#: reviews/templatetags/documents_list.py:140
+#: reviews/templatetags/documents_list.py:142
 msgid "Hoofdtraject"
 msgstr "Main trajectory"
 
-#: reviews/templatetags/documents_list.py:141
-msgid "Traject {}: {}"
-msgstr "Trajectory {}: {}"
+#: reviews/templatetags/documents_list.py:144
+msgid "Traject {}: <i>{}</i>"
+msgstr "Trajectory {}: <i>{}</i>"
 
-#: reviews/templatetags/documents_list.py:151
+#: reviews/templatetags/documents_list.py:155
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:174
+#: reviews/templatetags/documents_list.py:178
 msgid "Studie in PDF-vorm"
 msgstr "Proposal in PDF format"
 
-#: reviews/templatetags/documents_list.py:180
+#: reviews/templatetags/documents_list.py:184
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:186
+#: reviews/templatetags/documents_list.py:190
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:198
+#: reviews/templatetags/documents_list.py:202
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:201
+#: reviews/templatetags/documents_list.py:205
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:218
+#: reviews/templatetags/documents_list.py:222
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:219
+#: reviews/templatetags/documents_list.py:223
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:221
+#: reviews/templatetags/documents_list.py:225
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:226
+#: reviews/templatetags/documents_list.py:230
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:230
+#: reviews/templatetags/documents_list.py:234
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:238
+#: reviews/templatetags/documents_list.py:242
 msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
 #: reviews/utils/review_actions.py:100
-msgid "Beëindig de beoordeling van deze studie"
+msgid "Beëindig de afhandeling van deze studie"
 msgstr "Discontinue assessment of this proposal"
 
 #: reviews/utils/review_actions.py:128
@@ -4960,6 +4979,48 @@ msgstr ""
 "    Trajectory %(order)s\n"
 "    "
 
+#: studies/templatetags/describe_documents.py:23
+msgid "bestand"
+msgstr "file"
+
+#: studies/templatetags/describe_documents.py:26
+msgid "informed consent"
+msgstr "informed consent"
+
+#: studies/templatetags/describe_documents.py:29
+msgid "informatiebrief"
+msgstr "information letter"
+
+#: studies/templatetags/describe_documents.py:32
+msgid "informed consent voor de schoolleiding of het departementshoofd"
+msgstr "informed consent for the school director or head of the institution"
+
+#: studies/templatetags/describe_documents.py:35
+msgid "informatiebrief voor de schoolleiding of het departementshoofd"
+msgstr "information letter for the school director or head of the department"
+
+#: studies/templatetags/describe_documents.py:38
+msgid "informatiebrief voor de ouders of verzorgers"
+msgstr "information letter for parents"
+
+#: studies/templatetags/describe_documents.py:41
+msgid "data management plan"
+msgstr "data management plan"
+
+#: studies/templatetags/describe_documents.py:62
+msgid ""
+"\n"
+"            {} bij {} van studie {}-{}: <i>{}</i>\n"
+"            "
+msgstr ""
+
+#: studies/templatetags/describe_documents.py:71
+msgid ""
+"\n"
+"            {} van studie {}-{}: <i>{}</i>\n"
+"            "
+msgstr ""
+
 #: studies/utils.py:65
 msgid "Deelnemers"
 msgstr "Participants"
@@ -5228,3 +5289,90 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Beoordeling definitief beëindigen"
+#~ msgstr "Terminate this review"
+
+#~ msgid ""
+#~ "Als een studie definitief niet meer door de FETC-GW beoordeeld gaat "
+#~ "worden, en deze in de weg staat, kan er voor gekozen worden deze te "
+#~ "beëindigen."
+#~ msgstr ""
+#~ "If a proposal will not be further assessed by the FEtC-H and its open "
+#~ "review is getting in the way, it can be terminated using this form."
+
+#~ msgid ""
+#~ "Een beëindigde beoordeling verschijnt niet meer in de pagina's van de "
+#~ "secretaris en beoordelaars. Deze studie kan ook niet meer gereviseerd "
+#~ "worden, maar nog wel gekopieerd."
+#~ msgstr ""
+#~ "A terminated review no longer appears as an open action to the secretary "
+#~ "and assigned reviewers. Its proposal may not be revised, however it may "
+#~ "still be copied."
+
+#~ msgid "Traject {}: {}"
+#~ msgstr "Trajectory {}: {}"
+
+#~ msgid "Beëindig de beoordeling van deze studie"
+#~ msgstr "Discontinue assessment of this proposal"
+
+#~ msgid ""
+#~ "\n"
+#~ "                        In deze portal kunt u het volgende doen:\n"
+#~ "                    "
+#~ msgstr ""
+#~ "\n"
+#~ "    In this portal you can do the following:\n"
+#~ "    "
+
+#~ msgid ""
+#~ "\n"
+#~ "                    Je past nu een studie aan van een student/PhD "
+#~ "kandidaat onder jouw supervisie. Let er op dat je het\n"
+#~ "                    formulier\n"
+#~ "                    invult alsof jij die student/PhD kandidaat bent.\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "        You are editing a study for a student/PhD candidate under your "
+#~ "supervision. Please note that this form should        be filled out as if "
+#~ "you were that student/PhD candidate.    "
+
+#~ msgid ""
+#~ "\n"
+#~ "                            Klik op <img src=\"%(img_diff)s\" title="
+#~ "\"Toon verschillen\"> om de verschillen met de\n"
+#~ "                            voorgaande\n"
+#~ "                            versie te zien (alleen beschikbaar voor "
+#~ "revisies/amendementen).\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "        Click <img src=\"%(img_diff)s\" title=\"Show differences\"> to "
+#~ "show differences between a previous version (only available for revisions/"
+#~ "amendments).\n"
+#~ "        "
+
+#~ msgid ""
+#~ "\n"
+#~ "                            Klik op <img src=\"%(img_pdf)s\" title="
+#~ "\"Inzien\"> om een ingediende studie in te zien.\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a "
+#~ "submitted study.\n"
+#~ "        "
+
+#~ msgid ""
+#~ "\n"
+#~ "                            Klik op <img src=\"%(img_hide)s\" title="
+#~ "\"Verbergen\"> om een ingediende studie te verbergen\n"
+#~ "                            uit het\n"
+#~ "                            archief.\n"
+#~ "                        "
+#~ msgstr ""
+#~ "\n"
+#~ "        Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a "
+#~ "submitted study from the archive.\n"
+#~ "        "

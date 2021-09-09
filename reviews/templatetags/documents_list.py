@@ -5,6 +5,8 @@ from observations.models import Observation
 from collections import OrderedDict
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import escape
+from django.utils.safestring import mark_safe
 
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -138,9 +140,11 @@ def give_name(doc):
     if doc.study:
         if proposal.study_set.count() == 1:
             return _("Hoofdtraject")
-        return _("Traject {}: {}").format(
-            doc.study.order,
-            doc.study.name,
+        return mark_safe(
+            _("Traject {}: <i>{}</i>").format(
+                doc.study.order,
+                escape(doc.study.name),
+                )
             )
     
     for n, d in enumerate(Documents.objects.filter(
