@@ -19,7 +19,7 @@ new_proposal_menu = (
     ),
     MenuItem(
         _("Nieuwe studie starten (die al goedgekeurd is door een andere "
-          "ethische toetsings comissie)"),
+          "ethische toetsingscomissie)"),
         reverse("proposals:start_pre_approved"),
     ),
     MenuItem(

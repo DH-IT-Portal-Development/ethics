@@ -2,12 +2,11 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-09 11:07+0200\n"
+"POT-Creation-Date: 2021-09-10 11:04+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -105,7 +104,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:648
 #: reviews/templates/reviews/change_chamber_form.html:19
-#: reviews/templates/reviews/decision_form.html:62
+#: reviews/templates/reviews/decision_form.html:89
 #: reviews/templates/reviews/review_assign_form.html:44
 #: reviews/templates/reviews/review_close_form.html:41
 #: reviews/templates/reviews/review_discontinue_form.html:60
@@ -510,7 +509,7 @@ msgstr "Start a new study based on a copy of an old study"
 msgid "Nieuwe voortoetsing studie starten"
 msgstr "Start a new preliminary assessment study"
 
-#: main/templates/base/menu.html:23 proposals/menus.py:21
+#: main/templates/base/menu.html:23
 msgid ""
 "Nieuwe studie starten (die al goedgekeurd is door een andere ethische "
 "toetsings comissie)"
@@ -824,14 +823,14 @@ msgstr ""
 msgid ""
 "<li>Voor advies over data management (plannen): <a href=\"mailto:"
 "datamanagement.gw@uu.nl\">Frans de Liagre Böhl</a>.</li> <li>Voor advies "
-"over privacy zaken: <a href=\"mailto:j.w.a.degraaf@uu.nl\">Joris de Graaf</"
-"a>.</li> <li>Voor vragen over de procedure: <a href=\"mailto:fetc-gw@uu.nl"
+"over privacy zaken: <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
+"</li> <li>Voor vragen over de procedure: <a href=\"mailto:fetc-gw@uu.nl"
 "\">Desiree Capel</a>.</li> <li>Voor vragen over de portal zelf: <a href="
 "\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
 msgstr ""
 "<li>For advice on data management: <a href=\"mailto:datamanagement.gw@uu.nl"
 "\">Frans de Liagre Böhl</a>.</li> <li>For issues concerning privacy: <a href="
-"\"mailto:j.w.a.degraaf@uu.nl\">Joris de Graaf</a>.</li> <li>For questions on "
+"\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>.</li> <li>For questions on "
 "FEtC-H procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree Capel</a>.</li> "
 "<li>For questions about the functioning of the portal itself: <a href="
 "\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
@@ -1366,6 +1365,12 @@ msgstr "Declaration of consent for trajectory {} not yet added."
 #: proposals/forms.py:614
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
+
+#: proposals/menus.py:21
+msgid ""
+"Nieuwe studie starten (die al goedgekeurd is door een andere ethische "
+"toetsingscomissie)"
+msgstr "Start a new study (that has been approved by another ethics committee)"
 
 #: proposals/menus.py:26
 msgid "Nieuwe oefenstudie starten"
@@ -2048,21 +2053,21 @@ msgstr ""
 #: proposals/templates/proposals/proposal_copy.html:69
 #, python-format
 msgid ""
+"Als je gevraagd is om een revisie te maken van een eerder ingediende studie, "
+"kan je dat <a href=\"%(revision_url)s\">hier</a> doen."
+msgstr ""
+"If you have been asked to revise a previously submitted study, you can do so "
+"<a href=\"%(revision_url)s\">here</a>. "
+
+#: proposals/templates/proposals/proposal_copy.html:75
+#, python-format
+msgid ""
 "Indien je wijzigingen hebt in een al goedgekeurde studie die daarom opnieuw "
 "getoetst moet worden, maak dan <a href=\"%(amendment_url)s\">hier</a> een "
 "amendement aan."
 msgstr ""
 "If you have changes to an already approved study that therefore needs to be "
 "re-reviewed, please make an amendment <a href=\"%(amendment_url)s\">here</a>."
-
-#: proposals/templates/proposals/proposal_copy.html:75
-#, python-format
-msgid ""
-"Als je gevraagd is om een revisie te maken van een eerder ingediende studie, "
-"kan je dat <a href=\"%(revision_url)s\">hier</a> doen."
-msgstr ""
-"If you have been asked to revise a previously submitted study, you can do so "
-"<a href=\"%(revision_url)s\">here</a>. "
 
 #: proposals/templates/proposals/proposal_copy.html:87
 msgid "Kopiëren"
@@ -2747,16 +2752,10 @@ msgstr ""
 "Please be advised that a practice proposal cannot be submitted to the FETC-H."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
-msgid ""
-"Een nieuwe studie aanmelden (die al goedgekeurd is door een andere ethische "
-"toetsingscomissie)"
-msgstr ""
-"Register a new study (that has been approved by another ethics committee)"
-
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
 msgid ""
 "Een nieuwe studie aanmelden (die al goedgekeurd is door een andere ethische "
-"toetsings comissie)"
+"toetsingscomissie)"
 msgstr ""
 "Register a new study (that has been approved by another ethics committee)"
 
@@ -3691,7 +3690,7 @@ msgstr "OK"
 msgid "Studie beoordelen"
 msgstr "Assess study"
 
-#: reviews/templates/reviews/decision_form.html:23
+#: reviews/templates/reviews/decision_form.html:24
 #, python-format
 msgid ""
 "Je kunt nu een go of no-go geven voor de studie <em>%(title)s</em>, "
@@ -3704,31 +3703,57 @@ msgstr ""
 "\"_blank\">here</a> (downloads as PDF).\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:29
-msgid ""
-"Als je akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd "
-"naar de ethische commissie."
-msgstr ""
-"If you approve the study, it will be sent for assessment by the ethical "
-"committee."
+#: reviews/templates/reviews/decision_form.html:32
+#, python-format
+msgid "Je kunt nu de aanvraag <em>%(title)s</em> bekijken.<br/>"
+msgstr "You can now (re)view the study <em>%(title)s</em>."
 
-#: reviews/templates/reviews/decision_form.html:34
+#: reviews/templates/reviews/decision_form.html:37
+msgid ""
+"Als de aanvraag (incl. geïnformeerde toestemmingsformulieren) in orde is, "
+"klik dan op ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de "
+"aanvraag ingediend bij de FETC-GW."
+msgstr ""
+"If the application (incl. informed consent forms) is in order, click on "
+"'endorsed' and 'Save decision' below; the application will then be submitted "
+"to the FEtC-H. "
+
+#: reviews/templates/reviews/decision_form.html:44
+msgid ""
+"Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de "
+"studie aan te passen:"
+msgstr ""
+"If the application is not yet in order, there are two methods to amend the "
+"study: "
+
+#: reviews/templates/reviews/decision_form.html:51
 #, python-format
 msgid ""
-"Als supervisor kan je deze studie <a href=\"%(update_url)s\" target=\"_blank"
-"\">hier</a> aanpassen. Indien je wilt dat de indiener de studie zelf aanpast "
-"voordat je de studie kunt goedkeuren en deze door de FETC-GW in behandeling "
-"kan worden genomen, selecteer dan 'revisie noodzakelijk' hieronder, voeg "
-"eventuele opmerkingen toe, en klik 'Beslissing opslaan'. Zodra je dit gedaan "
-"hebt kan de indiener weer aanpassingen doen."
+"door de supervisor (jijzelf)<br/> Als supervisor kan je deze studie <a href="
+"\"%(update_url)s\" target=\"_blank\">hier</a> aanpassen en bij de FETC-GW "
+"indienen."
 msgstr ""
-"As supervisor, you can edit the study <a href=\"%(update_url)s\" target="
-"\"_blank\">here</a>. If you want the submitter to change the application "
-"themselves before it can be assessed by the FEtC-H, select 'revision "
-"necessary' below. If you don't do this, the portal will not allow the "
-"applicant to edit this application!"
+"by the supervisor (yourself)<br/>"
+"As a supervisor you can edit this study "
+"<a href=\"%(update_url)s\" target=\"_blank\">here</a> and submit it to the "
+"FEtC-H."
 
-#: reviews/templates/reviews/decision_form.html:43
+#: reviews/templates/reviews/decision_form.html:58
+msgid ""
+"door de indiener (je student of promovendus)<br/> Indien je wilt dat de "
+"indiener de studie zelf aanpast voordat je de studie kunt goedkeuren en "
+"daarmee bij de FETC-GW indien, selecteer dan 'revisie noodzakelijk' of ‘niet "
+"goedgekeurd’ hieronder, voeg eventuele opmerkingen toe, en klik 'Beslissing "
+"opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen. "
+"<br/>"
+msgstr ""
+"by the submitter (your student or PhD candidate)<br/>"
+"If you want the submitter to amend the study themself before you approve the "
+"study (and thus submit it to the FEtC-H), select 'revision necessary' or "
+"'not endorsed' below, add any comments, and click 'Save decision'. "
+"Once you have done this, the submitter can make changes again. <br/> "
+
+#: reviews/templates/reviews/decision_form.html:69
 msgid ""
 "Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft "
 "verstuurd, zal je de aangepaste studie opnieuw moeten beoordelen."
@@ -3736,7 +3761,7 @@ msgstr ""
 "Once the submitter has made the requested changes and resubmitted the study, "
 "you will have to re-evaluate the application. "
 
-#: reviews/templates/reviews/decision_form.html:52
+#: reviews/templates/reviews/decision_form.html:79
 #, python-format
 msgid ""
 "\n"
@@ -3752,7 +3777,7 @@ msgstr ""
 "a>.\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:65
+#: reviews/templates/reviews/decision_form.html:92
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
@@ -4079,45 +4104,45 @@ msgstr "Change appointment of committee members"
 msgid "FETC-GW: bevestiging indienen concept-aanmelding"
 msgstr "FEtC-H: confirmation of draft application submission"
 
-#: reviews/utils/review_utils.py:62
+#: reviews/utils/review_utils.py:63
 msgid "FETC-GW: beoordelen als eindverantwoordelijke"
 msgstr "FEtC-H: assess as researcher with final responsibility"
 
-#: reviews/utils/review_utils.py:110
+#: reviews/utils/review_utils.py:112
 msgid "FETC-GW: aanmelding ontvangen"
 msgstr "FEtC-H: application received"
 
-#: reviews/utils/review_utils.py:185
+#: reviews/utils/review_utils.py:187
 msgid "FETC-GW: nieuwe aanvraag voor voortoetsing"
 msgstr "FEtC-H: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:195
+#: reviews/utils/review_utils.py:197
 msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H: confirmation of submission of application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:243
+#: reviews/utils/review_utils.py:245
 msgid "FETC-GW {} {}: nieuwe studie ingediend"
 msgstr "FEtC-H {} {}: new application submitted"
 
-#: reviews/utils/review_utils.py:258
+#: reviews/utils/review_utils.py:260
 msgid "FETC-GW {} {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {} {}: new decision added"
 
-#: reviews/utils/review_utils.py:275
+#: reviews/utils/review_utils.py:277
 msgid "FETC-GW: eindverantwoordelijke heeft je studie beoordeeld"
 msgstr "FEtC-H: a supervisor has reviewed your proposal"
 
-#: reviews/utils/review_utils.py:308
+#: reviews/utils/review_utils.py:310
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils/review_utils.py:314
+#: reviews/utils/review_utils.py:316
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils/review_utils.py:318
+#: reviews/utils/review_utils.py:320
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -4126,25 +4151,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:321
+#: reviews/utils/review_utils.py:323
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils/review_utils.py:324
+#: reviews/utils/review_utils.py:326
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils/review_utils.py:330
+#: reviews/utils/review_utils.py:332
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils/review_utils.py:333
+#: reviews/utils/review_utils.py:335
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils/review_utils.py:337
+#: reviews/utils/review_utils.py:339
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4152,7 +4177,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:343
+#: reviews/utils/review_utils.py:345
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4160,7 +4185,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils/review_utils.py:346
+#: reviews/utils/review_utils.py:348
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -4170,7 +4195,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils/review_utils.py:350
+#: reviews/utils/review_utils.py:352
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -4180,13 +4205,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:357
+#: reviews/utils/review_utils.py:359
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:361
+#: reviews/utils/review_utils.py:363
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4197,13 +4222,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:378
+#: reviews/utils/review_utils.py:380
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:382
+#: reviews/utils/review_utils.py:384
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4211,7 +4236,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:384
+#: reviews/utils/review_utils.py:386
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4221,11 +4246,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:389 reviews/utils/review_utils.py:415
+#: reviews/utils/review_utils.py:391 reviews/utils/review_utils.py:417
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils/review_utils.py:410
+#: reviews/utils/review_utils.py:412
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
@@ -5289,90 +5314,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Beoordeling definitief beëindigen"
-#~ msgstr "Terminate this review"
-
-#~ msgid ""
-#~ "Als een studie definitief niet meer door de FETC-GW beoordeeld gaat "
-#~ "worden, en deze in de weg staat, kan er voor gekozen worden deze te "
-#~ "beëindigen."
-#~ msgstr ""
-#~ "If a proposal will not be further assessed by the FEtC-H and its open "
-#~ "review is getting in the way, it can be terminated using this form."
-
-#~ msgid ""
-#~ "Een beëindigde beoordeling verschijnt niet meer in de pagina's van de "
-#~ "secretaris en beoordelaars. Deze studie kan ook niet meer gereviseerd "
-#~ "worden, maar nog wel gekopieerd."
-#~ msgstr ""
-#~ "A terminated review no longer appears as an open action to the secretary "
-#~ "and assigned reviewers. Its proposal may not be revised, however it may "
-#~ "still be copied."
-
-#~ msgid "Traject {}: {}"
-#~ msgstr "Trajectory {}: {}"
-
-#~ msgid "Beëindig de beoordeling van deze studie"
-#~ msgstr "Discontinue assessment of this proposal"
-
-#~ msgid ""
-#~ "\n"
-#~ "                        In deze portal kunt u het volgende doen:\n"
-#~ "                    "
-#~ msgstr ""
-#~ "\n"
-#~ "    In this portal you can do the following:\n"
-#~ "    "
-
-#~ msgid ""
-#~ "\n"
-#~ "                    Je past nu een studie aan van een student/PhD "
-#~ "kandidaat onder jouw supervisie. Let er op dat je het\n"
-#~ "                    formulier\n"
-#~ "                    invult alsof jij die student/PhD kandidaat bent.\n"
-#~ "                "
-#~ msgstr ""
-#~ "\n"
-#~ "        You are editing a study for a student/PhD candidate under your "
-#~ "supervision. Please note that this form should        be filled out as if "
-#~ "you were that student/PhD candidate.    "
-
-#~ msgid ""
-#~ "\n"
-#~ "                            Klik op <img src=\"%(img_diff)s\" title="
-#~ "\"Toon verschillen\"> om de verschillen met de\n"
-#~ "                            voorgaande\n"
-#~ "                            versie te zien (alleen beschikbaar voor "
-#~ "revisies/amendementen).\n"
-#~ "                        "
-#~ msgstr ""
-#~ "\n"
-#~ "        Click <img src=\"%(img_diff)s\" title=\"Show differences\"> to "
-#~ "show differences between a previous version (only available for revisions/"
-#~ "amendments).\n"
-#~ "        "
-
-#~ msgid ""
-#~ "\n"
-#~ "                            Klik op <img src=\"%(img_pdf)s\" title="
-#~ "\"Inzien\"> om een ingediende studie in te zien.\n"
-#~ "                        "
-#~ msgstr ""
-#~ "\n"
-#~ "        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a "
-#~ "submitted study.\n"
-#~ "        "
-
-#~ msgid ""
-#~ "\n"
-#~ "                            Klik op <img src=\"%(img_hide)s\" title="
-#~ "\"Verbergen\"> om een ingediende studie te verbergen\n"
-#~ "                            uit het\n"
-#~ "                            archief.\n"
-#~ "                        "
-#~ msgstr ""
-#~ "\n"
-#~ "        Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a "
-#~ "submitted study from the archive.\n"
-#~ "        "
