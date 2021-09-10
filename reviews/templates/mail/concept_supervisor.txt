@@ -4,6 +4,9 @@
 Beste collega,
 
 {{ creator }} heeft binnen de FETC-GW-webportal een concept-aanmelding opgesteld voor een studie waarbij u als de eindverantwoordelijke onderzoeker bent aangewezen.
+
+{{ proposal.reference_number }}: {{ proposal.title }}
+
 U kunt deze concept-aanmelding bekijken via {{ proposal_url }}, eventueel na aanpassingen van uzelf of {{ creator }}, formeel ter toetsing bij de FETC-GW indienen.
 Indien {{ creator }} wordt geacht de aanpassingen te maken, dient u de studie formeel af te keuren en zelf {{ creator }} hiervan op de hoogte stellen.
 
@@ -19,6 +22,9 @@ Op het webportaal kunt u de wijzigingen ten opzichte van de vorige aanmelding in
 Dear colleague,
 
 {{ creator }} has created, within the portal of the FEtC-H, a draft application for a study for which you are appointed as the supervisor.
+
+{{ proposal.reference_number }}: {{ proposal.title }}
+
 You can review this draft application via {{ proposal_url }} and submit this study to the FEtC-H after you have approved it. Note that in case minor revisions are necessary, you can adjust the study yourself before submitting it.
 In case the application needs to be revised more substantially by {{ creator }}, we ask you to formally disapprove it in order for {{ creator }} to be able to revise it. In such a case, we ask you to inform {{ creator }} about this.
 
