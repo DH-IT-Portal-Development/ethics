@@ -16,35 +16,63 @@
             <h2>
                 {% trans "Studie beoordelen" %}
             </h2>
+            {% url 'proposals:pdf' proposal.id as pdf_url %}
+            {% url 'proposals:update' proposal.id as update_url %}
             {% with proposal=decision.review.proposal %}
-                <p>
-                    {% url 'proposals:pdf' proposal.id as pdf_url %}
-                    {% url 'proposals:update' proposal.id as update_url %}
-                    {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
-                        Je kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>,
-                        {{ refnum }} in {{ chamber }}. 
-                        De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
-                    {% endblocktrans %}
-                    {% if decision.review.stage == review.SUPERVISOR %}
-                        {% trans "Als je akkoord gaat met de studie, dan wordt deze ter beoordeling opgestuurd naar de ethische commissie." %}
-                    {% endif %}
-                </p>
-                {% if user == proposal.supervisor %}
+                {% if user != proposal.supervisor %}
                     <p>
-                        {% blocktrans trimmed %}
-                            Als supervisor kan je deze studie <a href="{{ update_url }}" target="_blank">hier</a>
-                            aanpassen. Indien je wilt dat de indiener de studie zelf aanpast voordat je de studie
-                            kunt goedkeuren en deze door de FETC-GW in behandeling kan worden genomen, selecteer dan
-                            'revisie noodzakelijk' hieronder, voeg eventuele opmerkingen toe, en klik 'Beslissing
-                            opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen.
+                        {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
+                            Je kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>,
+                            {{ refnum }} in {{ chamber }}.
+                            De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
+                        {% endblocktrans %}
+                    </p>
+                {% else %}
+                    <p>
+                        {% blocktrans trimmed with title=proposal.title  %}
+                            Je kunt nu de aanvraag <em>{{ title }}</em> bekijken.<br/>
                         {% endblocktrans %}
                     </p>
                     <p>
                         {% blocktrans trimmed %}
-                            Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft verstuurd, zal
-                            je de aangepaste studie opnieuw moeten beoordelen.
+                            Als de aanvraag (incl. geïnformeerde toestemmingsformulieren) in orde is, klik dan op
+                            ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de aanvraag ingediend
+                            bij de FETC-GW.
                         {% endblocktrans %}
                     </p>
+                    <p>
+                        {% blocktrans trimmed %}
+                            Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de studie aan te
+                            passen:
+                        {% endblocktrans %}
+                    </p>
+                    <ol>
+                        <li>
+                            {% blocktrans trimmed %}
+                                door de supervisor (jijzelf)<br/>
+                                Als supervisor kan je deze studie <a href="{{ update_url }}" target="_blank">hier</a>
+                                aanpassen. Daarna word je teruggeleid naar deze pagina en kun je hieronder de studie
+                                goedkeuren; dat betekent dat de aanvraag wordt ingediend bij de FETC-GW.
+                            {% endblocktrans %}
+                        </li>
+                        <li class="mt-2">
+                            {% blocktrans trimmed %}
+                                door de indiener (je student of promovendus)<br/>
+                                Indien je wilt dat de indiener de studie zelf aanpast voordat je de studie
+                                kunt goedkeuren en daarmee bij de FETC-GW indient, selecteer dan 'revisie noodzakelijk'
+                                of ‘niet goedgekeurd’ hieronder, voeg eventuele opmerkingen toe, en klik op 'Beslissing
+                                opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen.
+                                <br/>
+                            {% endblocktrans %}
+                        </li>
+                        {# This list item is a somewhat hacky way to simulate a p tag, as you can't use those in a li #}
+                        <li class="mt-2 list-unstyled">
+                            {% blocktrans trimmed %}
+                                Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft verstuurd,
+                                zal je de aangepaste studie opnieuw moeten beoordelen.
+                            {% endblocktrans %}
+                        </li>
+                    </ol>
                 {% endif %}
                 {% if proposal.is_revision %}
                     <p class="warning">
