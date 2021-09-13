@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-10 11:04+0200\n"
+"POT-Creation-Date: 2021-09-13 09:42+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -104,7 +104,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:648
 #: reviews/templates/reviews/change_chamber_form.html:19
-#: reviews/templates/reviews/decision_form.html:89
+#: reviews/templates/reviews/decision_form.html:90
 #: reviews/templates/reviews/review_assign_form.html:44
 #: reviews/templates/reviews/review_close_form.html:41
 #: reviews/templates/reviews/review_discontinue_form.html:60
@@ -3730,15 +3730,16 @@ msgstr ""
 #, python-format
 msgid ""
 "door de supervisor (jijzelf)<br/> Als supervisor kan je deze studie <a href="
-"\"%(update_url)s\" target=\"_blank\">hier</a> aanpassen en bij de FETC-GW "
-"indienen."
+"\"%(update_url)s\" target=\"_blank\">hier</a> aanpassen. Daarna wordt je "
+"teruggeleid naar deze pagina en kun je hieronder de studie goedkeuren; dat "
+"betekent dat de aanvraag wordt ingediend bij de FETC-GW."
 msgstr ""
-"by the supervisor (yourself)<br/>"
-"As a supervisor you can edit this study "
-"<a href=\"%(update_url)s\" target=\"_blank\">here</a> and submit it to the "
-"FEtC-H."
+"by the supervisor (yourself)<br/>As a supervisor you can edit this study <a "
+"href=\"%(update_url)s\" target=\"_blank\">here</a>. After which, you will be "
+"redirected back to this page and you can approve the study; this means that "
+"the study is submitted to the FEtC-H. "
 
-#: reviews/templates/reviews/decision_form.html:58
+#: reviews/templates/reviews/decision_form.html:59
 msgid ""
 "door de indiener (je student of promovendus)<br/> Indien je wilt dat de "
 "indiener de studie zelf aanpast voordat je de studie kunt goedkeuren en "
@@ -3747,13 +3748,13 @@ msgid ""
 "opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen. "
 "<br/>"
 msgstr ""
-"by the submitter (your student or PhD candidate)<br/>"
-"If you want the submitter to amend the study themself before you approve the "
-"study (and thus submit it to the FEtC-H), select 'revision necessary' or "
-"'not endorsed' below, add any comments, and click 'Save decision'. "
-"Once you have done this, the submitter can make changes again. <br/> "
+"by the submitter (your student or PhD candidate)<br/>If you want the "
+"submitter to amend the study themself before you approve the study (and thus "
+"submit it to the FEtC-H), select 'revision necessary' or 'not endorsed' "
+"below, add any comments, and click 'Save decision'. Once you have done this, "
+"the submitter can make changes again. <br/> "
 
-#: reviews/templates/reviews/decision_form.html:69
+#: reviews/templates/reviews/decision_form.html:70
 msgid ""
 "Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft "
 "verstuurd, zal je de aangepaste studie opnieuw moeten beoordelen."
@@ -3761,7 +3762,7 @@ msgstr ""
 "Once the submitter has made the requested changes and resubmitted the study, "
 "you will have to re-evaluate the application. "
 
-#: reviews/templates/reviews/decision_form.html:79
+#: reviews/templates/reviews/decision_form.html:80
 #, python-format
 msgid ""
 "\n"
@@ -3777,7 +3778,7 @@ msgstr ""
 "a>.\n"
 "    "
 
-#: reviews/templates/reviews/decision_form.html:92
+#: reviews/templates/reviews/decision_form.html:93
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
