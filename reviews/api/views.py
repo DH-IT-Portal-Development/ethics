@@ -271,6 +271,22 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
         settings.GROUP_SECRETARY,
     ]
 
+    sort_definitions = [
+        FancyListApiView.SortDefinition(
+            label=_('Referentienummer'),
+            field='proposal.reference_number',
+        ),
+        FancyListApiView.SortDefinition(
+            label=_('Datum ingediend'),
+            field='proposal.date_submitted_supervisor',
+        ),
+        FancyListApiView.SortDefinition(
+            label=_('Start datum'),
+            field='review.date_start',
+        ),
+    ]
+    default_sort = ('proposal.date_submitted_supervisor', 'desc')
+
     def get_queryset(self):
         """Returns all studies that still need to be reviewed by the secretary
         """
