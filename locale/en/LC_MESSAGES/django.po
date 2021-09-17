@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-13 11:00+0200\n"
+"POT-Creation-Date: 2021-09-17 12:38+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2268,7 +2268,7 @@ msgstr "unknown"
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:30
 msgid ""
-"Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?"
+"Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
 "Ethical assessment by a Medical Ethical Testing Committee (METC) required?"
 
