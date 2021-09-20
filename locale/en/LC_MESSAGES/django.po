@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-12 16:30+0200\n"
+"POT-Creation-Date: 2021-09-20 16:52+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -103,7 +103,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: reviews/templates/reviews/decision_form.html:51
 #: reviews/templates/reviews/review_assign_form.html:44
 #: reviews/templates/reviews/review_close_form.html:41
-#: reviews/templates/reviews/review_discontinue_form.html:59
+#: reviews/templates/reviews/review_discontinue_form.html:60
 #: studies/templates/studies/study_update_attachments.html:26
 msgid "Terug naar de vorige pagina"
 msgstr "Back to the previous page"
@@ -415,7 +415,7 @@ msgstr "Conclusion"
 msgid "Acties"
 msgstr "Actions"
 
-#: main/templates/auth/user_detail.html:75 reviews/models.py:116
+#: main/templates/auth/user_detail.html:75 reviews/models.py:121
 msgid ", met revisie"
 msgstr ", with revision"
 
@@ -1514,7 +1514,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:184 proposals/models.py:311 reviews/models.py:156
+#: proposals/models.py:184 proposals/models.py:311 reviews/models.py:161
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -3493,11 +3493,11 @@ msgstr "Route"
 msgid "Start datum"
 msgstr "Start date review"
 
-#: reviews/forms.py:12 reviews/models.py:123
+#: reviews/forms.py:12 reviews/models.py:128
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:13 reviews/models.py:122
+#: reviews/forms.py:13 reviews/models.py:127
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3521,7 +3521,7 @@ msgstr "Add this study to the archive"
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
-#: reviews/forms.py:117
+#: reviews/forms.py:118
 msgid "Bevestig beëindiging"
 msgstr "Confirm termination of this review"
 
@@ -3578,31 +3578,31 @@ msgid "Negatief advies van FETC-GW, post-hoc"
 msgstr "Post hoc negative advice by FETC-H"
 
 #: reviews/models.py:40
-msgid "Niet verder in behandeling genomen door de FETC-GW"
-msgstr "Not to be assessed further by the FEtC-H"
+msgid "Niet verder in behandeling genomen"
+msgstr "Not to be assessed further"
 
-#: reviews/models.py:51 reviews/models.py:150
+#: reviews/models.py:51 reviews/models.py:155
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:107
+#: reviews/models.py:112
 msgid "Onbekend"
 msgstr "Unknown"
 
-#: reviews/models.py:124
+#: reviews/models.py:129
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:144
+#: reviews/models.py:149
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:145
+#: reviews/models.py:150
 msgid "niet goegekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:146
+#: reviews/models.py:151
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -3779,7 +3779,7 @@ msgstr "Change reviewing chamber"
 
 #: reviews/templates/reviews/change_chamber_form.html:18
 #: reviews/templates/reviews/review_assign_form.html:46
-#: reviews/templates/reviews/review_discontinue_form.html:61
+#: reviews/templates/reviews/review_discontinue_form.html:62
 msgid "OK"
 msgstr "OK"
 
@@ -4044,12 +4044,12 @@ msgid "Beoordeling beëindigen"
 msgstr "Terminate review"
 
 #: reviews/templates/reviews/review_discontinue_form.html:32
-msgid "Beoordeling definitief beëindigen"
+msgid "Afhandeling definitief beëindigen"
 msgstr "Terminate this review"
 
 #: reviews/templates/reviews/review_discontinue_form.html:36
 msgid ""
-"Als een studie definitief niet meer door de FETC-GW beoordeeld gaat worden, "
+"Als een studie definitief niet meer door de FETC-GW afgehandeld gaat worden, "
 "en deze in de weg staat, kan er voor gekozen worden deze te beëindigen."
 msgstr ""
 "If a proposal will not be further assessed by the FEtC-H and its open review "
@@ -4057,19 +4057,20 @@ msgstr ""
 
 #: reviews/templates/reviews/review_discontinue_form.html:43
 msgid ""
-"Een beëindigde beoordeling verschijnt niet meer in de pagina's van de "
-"secretaris en beoordelaars. Deze studie kan ook niet meer gereviseerd "
-"worden, maar nog wel gekopieerd."
+"Een beëindigde studie verschijnt niet meer in de pagina's van de secretaris "
+"en beoordelaars. Deze studie kan ook niet meer gereviseerd worden, maar nog "
+"wel gekopieerd. De studie is nog wel zichtbaar in de lijst met \"alle "
+"ingediende studies\"."
 msgstr ""
 "A terminated review no longer appears as an open action to the secretary and "
 "assigned reviewers. Its proposal may not be revised, however it may still be "
-"copied."
+"copied. The review will still be visible on the page \"All submitted reviews\"."
 
-#: reviews/templates/reviews/review_discontinue_form.html:51
+#: reviews/templates/reviews/review_discontinue_form.html:52
 msgid "Studie"
 msgstr "Proposal"
 
-#: reviews/templates/reviews/review_discontinue_form.html:52
+#: reviews/templates/reviews/review_discontinue_form.html:53
 #, python-format
 msgid "<em>%(title)s</em> door %(author)s"
 msgstr "<em>%(title)s</em> by %(author)s"
@@ -4153,7 +4154,7 @@ msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
 #: reviews/utils/review_actions.py:100
-msgid "Beëindig de beoordeling van deze studie"
+msgid "Beëindig de afhandeling van deze studie"
 msgstr "Discontinue assessment of this proposal"
 
 #: reviews/utils/review_actions.py:128
@@ -4168,41 +4169,41 @@ msgstr "FEtC-H: confirmation of draft application submission"
 msgid "FETC-GW: beoordelen als eindverantwoordelijke"
 msgstr "FEtC-H: assess as researcher with final responsibility"
 
-#: reviews/utils/review_utils.py:113
+#: reviews/utils/review_utils.py:115
 msgid "FETC-GW: aanmelding ontvangen"
 msgstr "FEtC-H: application received"
 
-#: reviews/utils/review_utils.py:188
+#: reviews/utils/review_utils.py:190
 msgid "FETC-GW: nieuwe aanvraag voor voortoetsing"
 msgstr "FEtC-H: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:198
+#: reviews/utils/review_utils.py:200
 msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H: confirmation of submission of application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:246
+#: reviews/utils/review_utils.py:248
 msgid "FETC-GW {} {}: nieuwe studie ingediend"
 msgstr "FEtC-H {} {}: new application submitted"
 
-#: reviews/utils/review_utils.py:261
+#: reviews/utils/review_utils.py:263
 msgid "FETC-GW {} {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {} {}: new decision added"
 
-#: reviews/utils/review_utils.py:278
+#: reviews/utils/review_utils.py:280
 msgid "FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld"
 msgstr "FEtC-H: a supervisor has reviewed your proposal"
 
-#: reviews/utils/review_utils.py:311
+#: reviews/utils/review_utils.py:313
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils/review_utils.py:317
+#: reviews/utils/review_utils.py:319
 msgid "De studie is een interventiestudie."
 msgstr "The study is an intervention study."
 
-#: reviews/utils/review_utils.py:321
+#: reviews/utils/review_utils.py:323
 #, python-brace-format
 msgid ""
 "De studie heeft een interventiestudie met deelnemers in de volgende setting: "
@@ -4211,25 +4212,25 @@ msgstr ""
 "The study contains an intervention study with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:324
+#: reviews/utils/review_utils.py:326
 msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgstr "The study makes use of adults incapable of informed consent."
 
-#: reviews/utils/review_utils.py:327
+#: reviews/utils/review_utils.py:329
 msgid "De studie werkt met passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils/review_utils.py:333
+#: reviews/utils/review_utils.py:335
 msgid "De studie maakt gebruik van misleiding."
 msgstr "The study makes use of misrepresentation."
 
-#: reviews/utils/review_utils.py:336
+#: reviews/utils/review_utils.py:338
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils/review_utils.py:340
+#: reviews/utils/review_utils.py:342
 msgid ""
 "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4237,7 +4238,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:346
+#: reviews/utils/review_utils.py:348
 msgid ""
 "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4245,7 +4246,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils/review_utils.py:349
+#: reviews/utils/review_utils.py:351
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen "
 "of als geheel zodanig belastend is dat deze ondanks de verkregen informed "
@@ -4255,7 +4256,7 @@ msgstr ""
 "in its entirety is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
-#: reviews/utils/review_utils.py:353
+#: reviews/utils/review_utils.py:355
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
@@ -4265,13 +4266,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:360
+#: reviews/utils/review_utils.py:362
 #, python-brace-format
 msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:364
+#: reviews/utils/review_utils.py:366
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4282,13 +4283,13 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:381
+#: reviews/utils/review_utils.py:383
 #, python-brace-format
 msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:385
+#: reviews/utils/review_utils.py:387
 msgid ""
 "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4296,7 +4297,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:387
+#: reviews/utils/review_utils.py:389
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4306,11 +4307,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:392 reviews/utils/review_utils.py:418
+#: reviews/utils/review_utils.py:394 reviews/utils/review_utils.py:420
 msgid "De studie maakt gebruik van {}"
 msgstr "The study makes use of {}"
 
-#: reviews/utils/review_utils.py:413
+#: reviews/utils/review_utils.py:415
 msgid ""
 "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
 "jaar."
