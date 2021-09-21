@@ -51,6 +51,7 @@ def start_supervisor_phase(proposal):
 
     subject = _('FETC-GW: bevestiging indienen concept-aanmelding')
     params = {
+        'proposal': proposal,
         'supervisor': proposal.supervisor.get_full_name(),
         'secretary': get_secretary().get_full_name(),
         'pdf_url': settings.BASE_URL + proposal.pdf.url,
@@ -61,6 +62,7 @@ def start_supervisor_phase(proposal):
 
     subject = _('FETC-GW: beoordelen als eindverantwoordelijke')
     params = {
+        'proposal': proposal,
         'creator': proposal.created_by.get_full_name(),
         'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
         'secretary': get_secretary().get_full_name(),
@@ -73,10 +75,6 @@ def start_supervisor_phase(proposal):
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
 
     return review
-
-
-
-
 
 
 def start_assignment_phase(proposal):
@@ -100,7 +98,6 @@ def start_assignment_phase(proposal):
 
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
-
     review.save()
 
     proposal.date_submitted = timezone.now()
@@ -124,10 +121,10 @@ def start_assignment_phase(proposal):
     else:
         msg_plain = render_to_string('mail/submitted_longroute.txt', params)
         msg_html = render_to_string('mail/submitted_longroute.html', params)
-        recipients = [proposal.created_by.email]
+    recipients = [proposal.created_by.email]
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -222,7 +219,7 @@ def start_review_route(review, commission_users, use_short_route):
 
     subject = subject.format(review.proposal.reviewing_committee,
                              review.proposal.reference_number,
-    )
+                             )
 
     for user in commission_users:
 
@@ -277,7 +274,7 @@ def notify_supervisor_nogo(decision):
     proposal = decision.review.proposal
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
-    subject = _('FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld')
+    subject = _('FETC-GW: eindverantwoordelijke heeft je studie beoordeeld')
 
     params = {
         'secretary': secretary.get_full_name(),

@@ -2,6 +2,8 @@
 {% load static %}
 {% load i18n %}
 
+{% load describe_documents %}
+
 {% block header_title %}
     {% trans "Vergelijk documenten" %} - {{ block.super }}
 {% endblock %}
@@ -53,31 +55,49 @@
                 in het groen is gemarkeerd.
                 {% endblocktrans %}
             </p>
-            <button id="button-split" class="float-right">
-                {% trans 'Bekijk apart' %}
-            </button>
-            <button id="button-combined" style="display: none" class="float-right">
-                {% trans 'Bekijk gecombineerd' %}
-            </button>
             <p>
                 {% blocktrans %}
                 Je kan ook de bestanden naast elkaar bekijken, met dezelfde
                 markeringen. Klik hiervoor op 'Bekijk apart'.
                 {% endblocktrans %}
             </p>
-            <div class="warning" style="display: none">
+            <h4>
+                <strong>{% trans "Je vergelijkt" %}:</strong>
+                {% describe_file new_file %}
+            </h4>
+            <div class="warning" style="display: none; clear: both;">
                 {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
             </div>
+            <button id="button-split" class="float-right">
+                {% trans 'Bekijk apart' %}
+            </button>
+            <button id="button-combined" style="display: none" class="float-right">
+                {% trans 'Bekijk gecombineerd' %}
+            </button>
         </div>
     </div>
-    <div class="uu-inner-container compare document-compare">
+        <div class="uu-inner-container document-compare">
+            <div class="col-6">
+                <p>
+                    <strong>{% trans "Oud" %}: </strong>
+                    <a href="{{ old_file.url }}" download="{{ old_file.name }}">{{ old_name }}</a>
+                </p>
+            </div>
+            <div class="col-6">
+                <p>
+                    <strong>{% trans "Nieuw" %}: </strong>
+                    <a href="{{ new_file.url }}" download="{{ new_file.name }}">{{ new_name }}</a>
+                </p>
+            </div>
+        </div>
+    <div class="uu-inner-container compare">
         <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
             <img src="{% static 'main/images/loading.gif' %}"/>
         </div>
         <div style="display: none" class="col-6 split_view" id="old_text">
             {{ old_text|linebreaks }}
         </div>
-        <div style="display: none" class="col-6 split_view"  id="new_text">
+        <div style="display: none" class="col-6 split_view" id="new_text">
             {{ new_text|linebreaks }}
         </div>
         <div class="col-12" id="combined_text">

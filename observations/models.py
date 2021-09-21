@@ -39,8 +39,9 @@ class Observation(SettingModel):
     details_why = models.TextField(
         _('Beschrijf <b>waarom</b> er wordt geobserveerd.'),
         help_text=_(
-            'Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen '
-            'in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste '
+            'Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de '
+            'observatie is inzicht te krijgen in hoe de leerkracht omgaat met '
+            'de uitleg van de nieuwe lesmethode. Doet die dat op de gewenste '
             'manier en in begrijpelijke taal?'),
         blank=True,
     )
@@ -102,7 +103,7 @@ een account voor moet worden aangemaakt.'),
     )
 
     needs_approval = models.BooleanField(
-        _('Heeft u toestemming nodig van een (samenwerkende) instantie \
+        _('Heb je toestemming nodig van een (samenwerkende) instantie \
 om deze observatie te mogen uitvoeren?'),
         default=False,
     )

@@ -9,9 +9,7 @@
                 {% trans 'Geen toegang' %}
             </h2>
             <p>
-                {% blocktrans %}
-                    U heeft geen toegang tot de opgevraagde pagina.
-                {% endblocktrans %}
+                {% trans 'Je hebt geen toegang tot de opgevraagde pagina.' %}
             </p>
             {% if request.user.is_authenticated %}
                 <p>
@@ -19,26 +17,26 @@
                 </p>
                 <ul>
                     <li>
-                        {% trans 'U heeft niet de benodigde rechten om deze pagina te bekijken;' %}
+                        {% trans 'Je hebt niet de benodigde rechten om deze pagina te bekijken;' %}
                     </li>
                     <li>
-                        {% trans 'U bent niet als mede-onderzoeker opgegeven voor deze studie;' %}
+                        {% trans 'Je bent niet als mede-onderzoeker opgegeven voor deze studie;' %}
                     </li>
                     <li>
-                        {% trans 'U probeert een door u eerder genomen beslissing aan te passen, maar de beoordelingsperiode is verstreken.' %}
+                        {% trans 'Je probeert een door jou eerder genomen beslissing aan te passen, maar de beoordelingsperiode is verstreken.' %}
                     </li>
                 </ul>
             {% else %}
                 <p>
                     {% url 'login' as login_url %}
-                    {% blocktrans %}
-                        U bent niet ingelogd, probeer <a href="{{ login_url }}"> in te loggen</a>.
+                    {% blocktrans trimmed %}
+                        Je bent niet ingelogd, probeer <a href="{{ login_url }}"> in te loggen</a>.
                     {% endblocktrans %}
                 </p>
             {% endif %}
             <p>
-                {% blocktrans %}
-                    Denkt u dat dit niet klopt? Neem dan contact op met
+                {% blocktrans trimmed %}
+                    Denk je dat dit niet klopt? Neem dan contact op met
                     <a href="https://fetc-gw.wp.hum.uu.nl/contact/" target="_blank">de FETC-GW secretaris</a>.
                 {% endblocktrans %}
             </p>

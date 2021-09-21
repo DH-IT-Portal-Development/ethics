@@ -14,5 +14,13 @@ class ParentChoiceModelField(ModelChoiceField):
     def label_from_instance(self, obj: Proposal):
         last_modified = obj.date_modified.strftime("%b %d %Y %H:%M")
         if obj.is_practice():
-            return '{} ({}) (Practice)'.format(obj.title, last_modified)
-        return '{} ({})'.format(obj.title, last_modified)
+            return '{} - {} ({}) (Practice)'.format(
+                obj.reference_number,
+                obj.title,
+                last_modified
+            )
+        return '{} - {} ({})'.format(
+            obj.reference_number,
+            obj.title,
+            last_modified
+        )

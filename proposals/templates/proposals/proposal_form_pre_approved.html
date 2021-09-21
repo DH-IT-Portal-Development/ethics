@@ -82,9 +82,9 @@ $(function() {
         <div class="col-12">
             <h2>{% trans "Algemene informatie over de studie" %}</h2>
             {% if not create and is_supervisor  %}
-                {% blocktrans %}
-                    u past nu een studie aan van een student/PhD kandidaat onder uw supervisie. Let er op dat u het formulier
-                    invuld alsof u die student/PhD kandidaat bent.
+                {% blocktrans trimmed %}
+                    Je past nu een studie aan van een student/PhD kandidaat onder je supervisie. Let er op dat je het formulier
+                    invuld alsof jij die student/PhD kandidaat bent.
                 {% endblocktrans %}
                 <br/>
                 <br/>
@@ -96,9 +96,9 @@ $(function() {
                 </table>
                 <div class="warning" id="pre_approval_warning">
                     {% url 'proposals:start' as proposal_url %}
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                         Dit formulier is bedoeld voor studies die al goedgekeurd zijn door een andere commissie. Indien dit
-                        niet het geval is, dient u het <a href="{{ proposal_url }}">normale formulier</a> in te vullen.
+                        niet het geval is, dien je het <a href="{{ proposal_url }}">normale formulier</a> in te vullen.
                     {% endblocktrans %}
                 </div>
                 {% include "base/form_buttons.html" %}
