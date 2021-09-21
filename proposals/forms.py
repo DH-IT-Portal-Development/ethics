@@ -231,7 +231,7 @@ class ProposalStartPracticeForm(forms.Form):
 class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['parent', 'is_revision', 'title']
+        fields = ['parent', 'is_revision']
         widgets = {
             'is_revision': forms.HiddenInput(),
         }
@@ -272,7 +272,10 @@ class ProposalCopyForm(BaseProposalCopyForm):
         super().__init__(*args, **kwargs)
         # Only revisions or amendments are allowed to have a title that's not
         # unique, so we have to attach a validator to this version of the form
-        self.fields['title'].validators.append(UniqueTitleValidator())
+
+        # The uniqueness validator has been temporarily disabled to allow for
+        # the removal of the title field in its entirety.
+        # self.fields['title'].validators.append(UniqueTitleValidator())
 
 
 class RevisionProposalCopyForm(BaseProposalCopyForm):
@@ -424,7 +427,7 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
             'metc_application': forms.RadioSelect(choices=YES_NO),
             'metc_decision':    forms.RadioSelect(choices=YES_NO),
         }
-        
+
     _soft_validation_fields = [
         'metc_application',
         'metc_decision',
@@ -437,7 +440,7 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
         - An metc_decision is always required
         """
         cleaned_data = super(WmoApplicationForm, self).clean()
-        
+
         # A PDF is always required for this form, but it's in ProposalSubmit
         # validation that this is actually rejected. Otherwise this is soft
         # validation
@@ -448,7 +451,7 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
                                _('In dit geval is een beslissing van een METC vereist'),
                                )
                            )
-        
+
         return cleaned_data # Sticking to Django conventions
 
 
@@ -528,7 +531,7 @@ class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['avg_understood', 'dmp_file']
-    
+
     _soft_validation_fields = ['avg_understood']
 
 
@@ -546,7 +549,7 @@ class ProposalSubmitForm(forms.ModelForm):
         - Check if the inform_local_staff question should be asked
         """
         self.proposal = kwargs.pop('proposal', None)
-        
+
         # Needed for POST data
         self.request = kwargs.pop('request', None)
 
@@ -573,14 +576,14 @@ class ProposalSubmitForm(forms.ModelForm):
         if not self.instance.is_pre_assessment and \
            not self.instance.is_practice() and \
            not 'js-redirect-submit' in self.request.POST:
-            
+
             if check_local_facilities(self.proposal) and cleaned_data[
                 'inform_local_staff'] is None:
                 self.add_error('inform_local_staff', _('Dit veld is verplicht.'))
-            
+
             for study in self.instance.study_set.all():
                 documents = Documents.objects.get(study=study)
-                
+
                 if study.passive_consent:
                     if not documents.director_consent_declaration:
                         self.add_error('comments', _(
