@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %} - {{ block.super }}
+    {% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %} - {{ block.super }}
 {% endblock %}
 
 {% block html_head %}
@@ -27,7 +27,7 @@
                 {% include 'base/navigation.html' %}
             {% endwith %}
             <h2>
-                {% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}
+                {% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}
             </h2>
 
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
