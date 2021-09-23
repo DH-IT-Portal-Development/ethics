@@ -37,10 +37,10 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         ]
         labels = {
             'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze studie betrokken ' \
-                                                   'die <strong>niet</strong> geaffilieerd zijn aan een van de ' \
-                                                   'onderzoeksinstituten van de Faculteit Geestwetenschappen van de ' \
-                                                   'UU? ')),
-        }
+          'die <strong>niet</strong> geaffilieerd zijn aan een van de ' \
+          'onderzoeksinstituten van de Faculteit Geestwetenschappen van de ' \
+          'UU? ')),
+            }
         widgets = {
             'is_pre_approved':    forms.RadioSelect(choices=YES_NO),
             'institution':        forms.RadioSelect(),
@@ -283,10 +283,7 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # The 'title' field was removed as a bugfix, but may be reinstated
-        # in the future together with the uniqueness constraint for proposal
-        # titles.
-        # Labels and translations left intact for this case.
+
         if 'title' in self.fields:
             self.fields['title'].label = _('Je kan de titel van je studie nu, '
                                            'indien nodig, wijzigen.')
@@ -322,10 +319,6 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # The 'title' field was removed as a bugfix, but may be reinstated
-        # in the future together with the uniqueness constraint for proposal
-        # titles.
-        # Labels and translations left intact for this case.
         if 'title' in self.fields:
             self.fields['title'].label = _('Je kan de titel van je studie nu, '
                                            'indien nodig, wijzigen.')
@@ -442,7 +435,7 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
         'metc_application',
         'metc_decision',
         'metc_decision_pdf',
-    ]
+        ]
 
     def clean(self):
         """
@@ -459,8 +452,8 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
             self.add_error('metc_decision_pdf',
                            ValidationError(
                                _('In dit geval is een beslissing van een METC vereist'),
+                               )
                            )
-            )
 
         return cleaned_data # Sticking to Django conventions
 
@@ -485,7 +478,7 @@ class StudyStartForm(forms.ModelForm):
     study_name_9 = forms.CharField(label=_('Naam traject 9'), max_length=15,
                                    required=False)
     study_name_10 = forms.CharField(label=_('Naam traject 10'), max_length=15,
-                                    required=False)
+                                   required=False)
 
     class Meta:
         model = Proposal
@@ -588,7 +581,7 @@ class ProposalSubmitForm(forms.ModelForm):
            not 'js-redirect-submit' in self.request.POST:
 
             if check_local_facilities(self.proposal) and cleaned_data[
-                    'inform_local_staff'] is None:
+                'inform_local_staff'] is None:
                 self.add_error('inform_local_staff', _('Dit veld is verplicht.'))
 
             for study in self.instance.study_set.all():
@@ -598,31 +591,31 @@ class ProposalSubmitForm(forms.ModelForm):
                     if not documents.director_consent_declaration:
                         self.add_error('comments', _(
                             'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
-                                study.order))
+                            study.order))
                     if not documents.director_consent_information:
                         self.add_error('comments', _(
                             'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                                study.order))
+                            study.order))
                     if not documents.parents_information:
                         self.add_error('comments', _(
                             'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                                study.order))
+                            study.order))
                 else:
                     if not documents.informed_consent:
                         self.add_error('comments', _(
                             'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
-                                study.order))
+                            study.order))
                     if not documents.briefing:
                         self.add_error('comments', _(
                             'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                                study.order))
+                            study.order))
 
                 if study.needs_additional_external_forms():
                     if not documents.director_consent_declaration:
                         self.add_error('comments', _(
                             'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
-                                study.order))
+                            study.order))
                     if not documents.director_consent_information:
                         self.add_error('comments', _(
                             'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                                study.order))
+                            study.order))
