@@ -28,7 +28,10 @@ def copy_proposal(self, form):
         copy_proposal.reference_number = generate_ref_number()
 
 
-    copy_proposal.title = form.cleaned_data['title']
+    # Titles are no longer required to be unique
+    # And the Title field has been removed from the copy form
+    # copy_proposal.title = form.cleaned_data['title']
+
     copy_proposal.created_by = self.request.user
     copy_proposal.status = Proposal.DRAFT
     copy_proposal.status_review = None
