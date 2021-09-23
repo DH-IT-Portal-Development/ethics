@@ -134,7 +134,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
         <p>{{ proposal.summary|linebreaks }}</p>
 
         {% with wmo=proposal.wmo %}
-        <h2 style="page-break-before: always">{% trans "Ethische toetsing nodig door een Medische Ethische ToetsingsCommissie (METC)?" %}</h2>
+        <h2 style="page-break-before: always">{% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}</h2>
         <table>
             <tr>
                 <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{{ wmo.get_metc_display }}</td>
