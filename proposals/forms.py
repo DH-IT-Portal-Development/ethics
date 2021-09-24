@@ -132,7 +132,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                 check_in_course=True)
             self.fields['supervisor'].label = _('Docent')
             self.fields['supervisor'].help_text = _('Vul hier de docent van \
-de cursus in waarbinnen u deze portal moet doorlopen. De docent kan na afloop \
+de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop \
 de studie inkijken in de portal. De studie zal niet in het semipublieke archief \
 van het FETC-GW worden opgenomen.')
 
@@ -178,7 +178,7 @@ van het FETC-GW worden opgenomen.')
         if relation and relation.needs_supervisor and \
            not cleaned_data.get('supervisor'):
             error = forms.ValidationError(
-                _('U dient een eindverantwoordelijke op te geven.'),
+                _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
             self.add_error('supervisor', error)
 
@@ -189,12 +189,12 @@ van het FETC-GW worden opgenomen.')
         # Always make sure the applicant is actually in the applicants list
         if self.user not in applicants and self.user != supervisor:
             error = forms.ValidationError(
-                _('U heeft uzelf niet als onderzoekers geselecteerd.'),
+                _('Je hebt jezelf niet als onderzoekers geselecteerd.'),
                 code='required')
             self.add_error('applicants', error)
         elif other_applicants and len(applicants) == 1:
             error = forms.ValidationError(
-                _('U heeft geen andere onderzoekers geselecteerd.'),
+                _('Je hebt geen andere onderzoekers geselecteerd.'),
                 code='required')
             self.add_error('applicants', error)
 
@@ -202,7 +202,7 @@ van het FETC-GW worden opgenomen.')
             if not cleaned_data['is_pre_approved']:
                 error = forms.ValidationError(
                     _(
-                        'Indien u geen toestemming heeft van een andere ethische commissie, dient u het normale formulier in '
+                        'Indien je geen toestemming hebt van een andere ethische commissie, dien je het normale formulier in '
                         'te vullen. Ga terug naar de startpagina, en selecteer "Een nieuwe studie aanmelden (from scratch in '
                         'een leeg formulier)" of "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)".')
                 )
@@ -231,7 +231,7 @@ class ProposalStartPracticeForm(forms.Form):
 class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['parent', 'is_revision', 'title']
+        fields = ['parent', 'is_revision']
         widgets = {
             'is_revision': forms.HiddenInput(),
         }
@@ -245,7 +245,8 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         queryset=Proposal.objects.all(),
         label=_('Te kopiëren studie'),
         help_text=_(
-            'Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.'
+            'Dit veld toont enkel studies waar je zelf een medeuitvoerende '
+            'bent.'
         ),
     )
 
@@ -271,7 +272,10 @@ class ProposalCopyForm(BaseProposalCopyForm):
         super().__init__(*args, **kwargs)
         # Only revisions or amendments are allowed to have a title that's not
         # unique, so we have to attach a validator to this version of the form
-        self.fields['title'].validators.append(UniqueTitleValidator())
+
+        # The uniqueness validator has been temporarily disabled to allow for
+        # the removal of the title field in its entirety.
+        # self.fields['title'].validators.append(UniqueTitleValidator())
 
 
 class RevisionProposalCopyForm(BaseProposalCopyForm):
@@ -279,19 +283,21 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['title'].label = _('U kunt de titel van uw studie nu, '
-                                       'indien nodig, wijzigen.')
-        self.fields['title'].help_text = _('De titel die u hier opgeeft is '
-                                           'zichtbaar voor de FETC-GW-leden en,'
-                                           ' wanneer de studie is goedgekeurd,'
-                                           ' ook voor alle medewerkers die in'
-                                           ' het archief van deze portal '
-                                           'kijken.')
+
+        if 'title' in self.fields:
+            self.fields['title'].label = _('Je kan de titel van je studie nu, '
+                                           'indien nodig, wijzigen.')
+            self.fields['title'].help_text = _('De titel die je hier opgeeft is '
+                                               'zichtbaar voor de FETC-GW-leden en,'
+                                               ' wanneer de studie is goedgekeurd,'
+                                               ' ook voor alle medewerkers die in'
+                                               ' het archief van deze portal '
+                                               'kijken.')
 
         self.fields['parent'].label = _('Te reviseren studie')
         self.fields['parent'].help_text = _('Dit veld toont enkel ingediende,'
                                             ' (nog) niet goedgekeurde studies '
-                                            'waar u zelf een '
+                                            'waar jij een '
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):
@@ -313,18 +319,19 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['title'].label = _('U kunt de titel van uw studie nu, '
-                                       'indien nodig, wijzigen.')
-        self.fields['title'].help_text = _('De titel die u hier opgeeft is '
-                                           'zichtbaar voor de FETC-GW-leden en,'
-                                           ' wanneer de studie is goedgekeurd,'
-                                           ' ook voor alle medewerkers die in'
-                                           ' het archief van deze portal '
-                                           'kijken.')
+        if 'title' in self.fields:
+            self.fields['title'].label = _('Je kan de titel van je studie nu, '
+                                           'indien nodig, wijzigen.')
+            self.fields['title'].help_text = _('De titel die je hier opgeeft is '
+                                               'zichtbaar voor de FETC-GW-leden en,'
+                                               ' wanneer de studie is goedgekeurd,'
+                                               ' ook voor alle medewerkers die in'
+                                               ' het archief van deze portal '
+                                               'kijken.')
 
         self.fields['parent'].label = _('Te amenderen studie')
         self.fields['parent'].help_text = _('Dit veld toont enkel goedgekeurde'
-                                            ' studies waar u zelf een '
+                                            ' studies waar je zelf een '
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):
@@ -386,7 +393,7 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         self.check_dependency(cleaned_data, 'metc', 'metc_institution',
                               f1_value=YES,
                               error_message=_(
-                                  'U dient een instelling op te geven.'))
+                                  'Je dient een instelling op te geven.'))
         self.check_dependency_list(cleaned_data, 'metc', 'is_medical',
                                    f1_value_list=[NO, DOUBT])
 
@@ -423,7 +430,7 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
             'metc_application': forms.RadioSelect(choices=YES_NO),
             'metc_decision':    forms.RadioSelect(choices=YES_NO),
         }
-        
+
     _soft_validation_fields = [
         'metc_application',
         'metc_decision',
@@ -436,7 +443,7 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
         - An metc_decision is always required
         """
         cleaned_data = super(WmoApplicationForm, self).clean()
-        
+
         # A PDF is always required for this form, but it's in ProposalSubmit
         # validation that this is actually rejected. Otherwise this is soft
         # validation
@@ -447,7 +454,7 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
                                _('In dit geval is een beslissing van een METC vereist'),
                                )
                            )
-        
+
         return cleaned_data # Sticking to Django conventions
 
 
@@ -527,7 +534,7 @@ class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Proposal
         fields = ['avg_understood', 'dmp_file']
-    
+
     _soft_validation_fields = ['avg_understood']
 
 
@@ -545,7 +552,7 @@ class ProposalSubmitForm(forms.ModelForm):
         - Check if the inform_local_staff question should be asked
         """
         self.proposal = kwargs.pop('proposal', None)
-        
+
         # Needed for POST data
         self.request = kwargs.pop('request', None)
 
@@ -572,14 +579,14 @@ class ProposalSubmitForm(forms.ModelForm):
         if not self.instance.is_pre_assessment and \
            not self.instance.is_practice() and \
            not 'js-redirect-submit' in self.request.POST:
-            
+
             if check_local_facilities(self.proposal) and cleaned_data[
                 'inform_local_staff'] is None:
                 self.add_error('inform_local_staff', _('Dit veld is verplicht.'))
-            
+
             for study in self.instance.study_set.all():
                 documents = Documents.objects.get(study=study)
-                
+
                 if study.passive_consent:
                     if not documents.director_consent_declaration:
                         self.add_error('comments', _(

@@ -54,7 +54,7 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
 
 class MyProposalsView(BaseProposalsView):
     title = _('Mijn studies')
-    body = _('Dit overzicht toont al uw studies.')
+    body = _('Dit overzicht toont al je studies.')
     is_modifiable = True
     is_submitted = True
     contains_supervised = True
@@ -67,7 +67,7 @@ class MyProposalsView(BaseProposalsView):
 
 class MyConceptsView(BaseProposalsView):
     title = _('Mijn conceptstudies')
-    body = _('Dit overzicht toont al uw nog niet ingediende studies.')
+    body = _('Dit overzicht toont al je nog niet ingediende studies.')
     is_modifiable = True
     is_submitted = False
 
@@ -79,7 +79,7 @@ class MyConceptsView(BaseProposalsView):
 
 class MySubmittedView(BaseProposalsView):
     title = _('Mijn ingediende studies')
-    body = _('Dit overzicht toont al uw ingediende studies.')
+    body = _('Dit overzicht toont al je ingediende studies.')
     is_modifiable = False
     is_submitted = True
 
@@ -91,7 +91,7 @@ class MySubmittedView(BaseProposalsView):
 
 class MyCompletedView(BaseProposalsView):
     title = _('Mijn afgehandelde studies')
-    body = _('Dit overzicht toont al uw beoordeelde studies.')
+    body = _('Dit overzicht toont al je beoordeelde studies.')
     is_modifiable = False
     is_submitted = True
 
@@ -104,7 +104,8 @@ class MyCompletedView(BaseProposalsView):
 class MySupervisedView(BaseProposalsView):
     title = _('Mijn studies als eindverantwoordelijke')
     body = _(
-        'Dit overzicht toont al uw studies waar u eindverantwoordelijke bent.')
+        'Dit overzicht toont al je studies waarvan je eindverantwoordelijke '
+        'bent.')
     is_modifiable = True
     is_submitted = True
     contains_supervised = True
@@ -116,7 +117,7 @@ class MySupervisedView(BaseProposalsView):
 
 class MyPracticeView(BaseProposalsView):
     title = _('Mijn oefenstudies')
-    body = _('Dit overzicht toont alle oefenstudies waar u als student, \
+    body = _('Dit overzicht toont alle oefenstudies waar je als student, \
 onderzoeker of eindverantwoordelijke bij betrokken bent.')
     is_modifiable = True
     is_submitted = False
@@ -266,12 +267,14 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        old_file, new_file = self._get_files()
+        self.old_file, self.new_file = self._get_files()
 
-        context['old_name'] = old_file.name
-        context['old_text'] = get_document_contents(old_file)
-        context['new_name'] = new_file.name
-        context['new_text'] = get_document_contents(new_file)
+        context['old_name'] = self.old_file.name
+        context['old_file'] = self.old_file
+        context['old_text'] = get_document_contents(self.old_file)
+        context['new_name'] = self.new_file.name
+        context['new_file'] = self.new_file
+        context['new_text'] = get_document_contents(self.new_file)
 
         return context
 
@@ -350,8 +353,15 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
 
         context['troublesome_pages'] = get_form_errors(self.get_object())
         context['pagenr'] = self._get_page_number()
+        context['is_supervisor_edit_phase'] = self.is_supervisor_edit_phase()
 
         return context
+
+    def is_supervisor_edit_phase(self):
+        if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:
+            return True
+
+        return False
 
     def form_valid(self, form):
         """
@@ -368,7 +378,15 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         return success_url
 
     def get_next_url(self):
-        """After submission, go to the thank-you view"""
+        """After submission, go to the thank-you view. Unless a supervisor is
+        editing the proposal during their review, in that case: go to their
+        decide page"""
+        if self.is_supervisor_edit_phase() and \
+                self.current_user_is_supervisor():
+            review = self.object.latest_review()
+            decision = review.decision_set.get(reviewer=self.request.user)
+            return reverse('reviews:decide', args=(decision.pk,))
+
         return reverse('proposals:submitted', args=(self.object.pk,))
 
     def get_back_url(self):

@@ -5,9 +5,9 @@
 
 {% block header_title %}
     {% if is_revision %}
-        {% trans "Revisie indienen" %}
+        {% trans "Revisie starten" %}
     {% elif is_amendment %}
-        {% trans "Amendement indienen" %}
+        {% trans "Amendement aanmaken" %}
     {% else %}
         {% trans "Een geheel nieuwe studie indienen op basis van een oude studie" %}
     {% endif %}
@@ -25,23 +25,59 @@
         <div class="col-12">
             <h2>
                 {% if is_revision %}
-                    {% trans "Revisie indienen" %}
+                    {% trans "Revisie starten" %}
                 {% elif is_amendment %}
-                    {% trans "Amendement indienen" %}
+                    {% trans "Amendement aanmaken" %}
                 {% else %}
                     {% trans "Een geheel nieuwe studie indienen op basis van een oude studie" %}
                 {% endif %}
             </h2>
-            <p>
-                {% if is_revision %}
-                    {% trans "U kunt hier op basis van de vorige versie van uw studie een revisie indienen." %}
-                {% elif is_amendment %}
-                    {% trans "U kunt hier op basis van de reeds goedgekeurde studie een amendement indienen." %}
-                {% else %}
-                    {% trans "U kunt hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
-                {% endif %}
-
-            </p>
+            {% if is_revision %}
+                <p>
+                    {% blocktrans trimmed %}
+                        Je kan hier op basis van de vorige versie van een studie een revisie starten. Alleen studies
+                        die door de commissie als 'revisie noodzakelijk' gemarkeerd zijn kunnen hier gekozen worden.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        Als je supervisor je heeft gevraagd revisies te maken, dien je je huidige versie aan te passen.
+                        (Als je dat niet kan, vraag dan aan je supervisor of die je studie al gemarkeerd heeft als
+                        'revisie noodzakelijk'.)
+                    {% endblocktrans %}
+                </p>
+            {% elif is_amendment %}
+                <p>
+                    {% blocktrans trimmed %}
+                        Je kan hier op basis van een reeds goedgekeurde studie een amendement indienen. Je studie moet
+                        eerst goedgekeurd en afgehandeld zijn voordat die hier gekozen kan worden.
+                    {% endblocktrans %}
+                </p>
+            {% else %}
+                {% url 'proposals:copy_revision' as revision_url %}
+                {% url 'proposals:copy_amendment' as amendment_url %}
+                <p>
+                    {% trans "Je kan hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
+                </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe studie gaat doen op basis van
+                        een eerder uitgevoerde studie.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        Als je gevraagd is om een revisie te maken van een eerder ingediende studie, kan je dat
+                        <a href="{{ revision_url }}">hier</a> doen.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        Indien je wijzigingen hebt in een al goedgekeurde studie die daarom opnieuw getoetst moet
+                        worden, maak dan <a href="{{ amendment_url }}">hier</a> een amendement aan.
+                    {% endblocktrans %}
+                </p>
+            {% endif %}
             <form action="" method="post">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 <div class="float-right mt-2 mb-3">

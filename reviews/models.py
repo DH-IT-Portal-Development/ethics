@@ -37,7 +37,7 @@ class Review(models.Model):
         (METC, _('Laat opnieuw beoordelen door METC')),
         (GO_POST_HOC, _('Positief advies van FETC-GW, post-hoc')),
         (NO_GO_POST_HOC, _('Negatief advies van FETC-GW, post-hoc')),
-        (DISCONTINUED, _('Niet verder in behandeling genomen door de FETC-GW')),
+        (DISCONTINUED, _('Niet verder in behandeling genomen')),
     )
 
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
@@ -64,7 +64,12 @@ class Review(models.Model):
     def update_go(self, last_decision=None):
         """
         Check all decisions: if all are finished, set the final decision and date_end.
+        If this review is discontinued, don't do anything.
         """
+
+        if self.continuation == self.DISCONTINUED:
+            return
+
         all_decisions = self.decision_set.count()
         closed_decisions = 0
         final_go = True

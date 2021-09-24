@@ -51,6 +51,7 @@ def start_supervisor_phase(proposal):
 
     subject = _('FETC-GW: bevestiging indienen concept-aanmelding')
     params = {
+        'proposal': proposal,
         'supervisor': proposal.supervisor.get_full_name(),
         'secretary': get_secretary().get_full_name(),
         'pdf_url': settings.BASE_URL + proposal.pdf.url,
@@ -61,6 +62,7 @@ def start_supervisor_phase(proposal):
 
     subject = _('FETC-GW: beoordelen als eindverantwoordelijke')
     params = {
+        'proposal': proposal,
         'creator': proposal.created_by.get_full_name(),
         'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
         'secretary': get_secretary().get_full_name(),
@@ -272,7 +274,7 @@ def notify_supervisor_nogo(decision):
     proposal = decision.review.proposal
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
-    subject = _('FETC-GW: eindverantwoordelijke heeft uw studie beoordeeld')
+    subject = _('FETC-GW: eindverantwoordelijke heeft je studie beoordeeld')
 
     params = {
         'secretary': secretary.get_full_name(),
@@ -419,14 +421,10 @@ def auto_review_task(study, task):
 
 def discontinue_review(review):
     """
-    Remove all decisions from the current review,
-    and set the continuation to discontinued. """
+    Set continuation to discontinued on the given review,
+    and set DECISION_MADE on its proposal. """
 
-    # Remove decisions
-    for d in review.decision_set.all():
-        d.delete()
-
-       # Set review continuation
+    # Set review continuation
     review.continuation = review.DISCONTINUED
     review.proposal.status = review.proposal.DECISION_MADE
     review.stage = review.CLOSED

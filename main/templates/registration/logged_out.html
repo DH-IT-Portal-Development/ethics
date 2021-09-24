@@ -9,17 +9,17 @@
                 {% trans "Uitloggen" %}
             </h2>
             <p>
-                {% trans "U bent succesvol uitgelogd." %}
+                {% trans "Je bent succesvol uitgelogd." %}
             </p>
             <ul>
                 <li>
                     {% url 'login' as login_url %}
-                    {% blocktrans %}
-                    Klik  <a href="{{ login_url }}">hier</a> om opnieuw in te loggen met uw Solis-ID.
+                    {% blocktrans trimmed %}
+                    Klik  <a href="{{ login_url }}">hier</a> om opnieuw in te loggen met je Solis-ID.
                     {% endblocktrans %}
                 </li>
                 <li>
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                     Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
                     {% endblocktrans %}
                 </li>

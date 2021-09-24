@@ -12,7 +12,7 @@
                 </p>
             {% endif %}
             <p>
-                {% trans "U kunt hier inloggen met uw Solis-ID en wachtwoord." %}
+                {% trans "Je kan hier inloggen met je Solis-ID en wachtwoord." %}
             </p>
             <form class="" method="post" action="{% url 'login' %}">{% csrf_token %}
                 <input id="id_username" maxlength="254" name="username" type="text" placeholder="{% trans 'Gebruikersnaam' %}"><br/>

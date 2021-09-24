@@ -136,11 +136,11 @@ class Study(models.Model):
     age_groups = models.ManyToManyField(
         AgeGroup,
         verbose_name=_(
-            'Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
+            'Uit welke leeftijdscategorie(ën) bestaat je deelnemersgroep?'),
         help_text=_('De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
-Dan moet u hier hier 4-5 én 6-11 invullen.'))
+Dan moet je hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
-        _('Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) \
+        _('Maakt je studie gebruik van wils<u>on</u>bekwame (volwassen) \
 deelnemers?'), # Note: Form labels with HTML are hard-coded in the Form meta class
         help_text=_('Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
@@ -155,7 +155,7 @@ vertegenwoordiger te worden verkregen.'),
         blank=True)
     has_traits = models.BooleanField(
         _('Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
-Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
+Is dit in jouw studie bij (een deel van) de deelnemers het geval?'),
         null=True,
         blank=True
     )
@@ -163,7 +163,7 @@ Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
         Trait,
         blank=True,
         verbose_name=_(
-            'Selecteer de bijzondere kenmerken van uw proefpersonen'))
+            'Selecteer de bijzondere kenmerken van je proefpersonen'))
     traits_details = models.CharField(
         _('Namelijk'),
         max_length=200,
@@ -173,7 +173,7 @@ Is dit in uw studie bij (een deel van) de deelnemers het geval?'),
 noodzakelijk om het geselecteerde type deelnemer aan de studie te \
 laten meedoen?'),
         help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, \
-of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers \
+of zou je de vraag ook kunnen beantwoorden door volwassen deelnemers \
 te testen?'),
         max_length=1,
         choices=YES_NO_DOUBT,
@@ -190,7 +190,7 @@ te testen?'),
     compensation = models.ForeignKey(
         Compensation,
         verbose_name=_(
-            'Welke vergoeding krijgt de deelnemer voor zijn/haar deelname?'),
+            'Welke vergoeding krijgt de deelnemer voor hun deelname?'),
         help_text=_('Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
 cadeautje.'),
@@ -215,18 +215,18 @@ cadeautje.'),
 
     # Fields with respect to informed consent
     passive_consent = models.BooleanField(
-        _('Maakt u gebruik van passieve informed consent?'),
-        help_text=mark_safe_lazy(_('Wanneer u kinderen via een instelling \
-(dus ook school) werft en u de ouders niet laat ondertekenen, maar in \
-plaats daarvan de leiding van die instelling, dan maakt u gebruik van \
-passieve informed consent. U kunt de templates vinden op \
+        _('Maak je gebruik van passieve informed consent?'),
+        help_text=mark_safe_lazy(_('Wanneer je kinderen via een instelling \
+(dus ook school) werft en je de ouders niet laat ondertekenen, maar in \
+plaats daarvan de leiding van die instelling, dan maak je gebruik van \
+passieve informed consent. Je kan de templates vinden op \
 <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
 target="_blank">de FETC-GW-website</a>.')),
         null=True,
         blank=True,
     )
     passive_consent_details = models.TextField(
-        _('Licht uw antwoord toe. Wij willen u wijzen op het reglement, \
+        _('Licht je antwoord toe. Wij willen je wijzen op het reglement, \
 sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
 toegestaan en draagt niet de voorkeur van de commissie.'),
         blank=True)
@@ -236,11 +236,11 @@ toegestaan en draagt niet de voorkeur van de commissie.'),
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
         null=True,
         validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is just a technical safeguard
-        help_text=_('Wanneer u bijvoorbeeld eerst de deelnemer een \
+        help_text=_('Wanneer je bijvoorbeeld eerst de deelnemer een \
 taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en \
-u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
+je laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
 of andere taak/taken te doen, dan spreken we van twee sessies. \
-Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, \
+Wanneer je meerdere taken afneemt op dezelfde dag, met pauzes daartussen, \
 dan geldt dat toch als één sessie.'))
     deception = models.CharField(
         _('Is er binnen bovenstaand onderzoekstraject sprake van \
@@ -269,7 +269,7 @@ uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of \
         choices=YES_NO_DOUBT,
         blank=True)
     negativity_details = models.TextField(
-        _('Licht uw antwoord toe.'),
+        _('Licht je antwoord toe.'),
         blank=True)
     stressful = models.CharField(
         _('Bevat bovenstaand onderzoekstraject elementen die tijdens de \
@@ -288,8 +288,8 @@ door het onderzoek.')),
         choices=YES_NO_DOUBT,
         blank=True)
     stressful_details = models.TextField(
-        _('Licht uw antwoord toe. Geef concrete voorbeelden van de relevante \
-aspecten van uw studie (bijv. representatieve voorbeelden van mogelijk zeer \
+        _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
+aspecten van je studie (bijv. representatieve voorbeelden van mogelijk zeer \
 kwetsende woorden of uitspraken in de taak, of van zeer confronterende \
 vragen in een vragenlijst), zodat de commissie zich een goed beeld kan \
 vormen.'),

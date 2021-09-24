@@ -145,7 +145,7 @@ def check_wmo(request):
     doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT
 
     # Default message: OK.
-    message = _('Uw studie hoeft niet te worden beoordeeld door de METC.')
+    message = _('Je studie hoeft niet te worden beoordeeld door de METC.')
     message_class = 'info'
     needs_metc = False
 
@@ -158,7 +158,7 @@ def check_wmo(request):
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
     elif is_metc or is_medical:
-        message = _('Uw studie zal moeten worden beoordeeld door de METC.')
+        message = _('Je studie zal moeten worden beoordeeld door de METC.')
         message_class = 'warning'
         needs_metc = True
 

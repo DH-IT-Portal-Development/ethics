@@ -27,8 +27,8 @@ $(function() {
                 {% trans "Formulieren aanpassen" %}
             </h2>
             <p>
-                {% blocktrans with title=study.proposal.title ref_number=study.proposal.reference_number order=study.order %}
-                Op deze pagina kunt u de formulieren aanpassen behorende bij de studie {{ title }}
+                {% blocktrans trimmed with title=study.proposal.title ref_number=study.proposal.reference_number order=study.order %}
+                Op deze pagina kan je de formulieren aanpassen behorende bij de studie {{ title }}
                 (referentienummer <em>{{ ref_number }}</em>), traject {{ order }}.
                 {% endblocktrans %}
             </p>
