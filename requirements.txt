@@ -14,7 +14,7 @@ babel==2.9.1
     # via sphinx
 certifi==2021.5.30
     # via requests
-charset-normalizer==2.0.4
+charset-normalizer==2.0.6
     # via requests
 closure==20191111
     # via uil-django-core
@@ -50,7 +50,7 @@ djangorestframework==3.12.4
     # via
     #   -r requirements.in
     #   uil-django-core
-docutils==0.16
+docutils==0.17.1
     # via
     #   sphinx
     #   sphinx-rtd-theme
@@ -87,7 +87,7 @@ pillow==8.3.2
     #   xhtml2pdf
 ply==3.11
     # via lesscpy
-pscript==0.7.5
+pscript==0.7.6
     # via vbuild
 pyasn1==0.4.8
     # via
@@ -138,12 +138,12 @@ six==1.16.0
     #   xhtml2pdf
 snowballstemmer==2.1.0
     # via sphinx
-sphinx==4.1.2
+sphinx==4.2.0
     # via
     #   -r requirements.in
     #   sphinx-rtd-theme
     #   sphinxcontrib-apidoc
-sphinx-rtd-theme==0.5.2
+sphinx-rtd-theme==1.0.0
     # via -r requirements.in
 sphinxcontrib-apidoc==0.3.0
     # via -r requirements.in
@@ -167,7 +167,7 @@ sqlparse==0.4.2
     #   django-debug-toolbar
 ua-parser==0.10.0
     # via user-agents
-urllib3==1.26.6
+urllib3==1.26.7
     # via requests
 user-agents==2.2.0
     # via django-user-agents
