@@ -150,7 +150,7 @@ class Decision(models.Model):
     NEEDS_REVISION = '?'
     APPROVAL = (
         (APPROVED, _('goedgekeurd')),
-        (NOT_APPROVED, _('niet goegekeurd')),
+        (NOT_APPROVED, _('niet goedgekeurd')),
         (NEEDS_REVISION, _('revisie noodzakelijk')),
     )
 
