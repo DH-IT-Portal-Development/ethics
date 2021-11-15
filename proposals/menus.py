@@ -14,7 +14,7 @@ new_proposal_menu = (
         reverse("proposals:copy"),
     ),
     MenuItem(
-        _("Nieuwe voortoetsing studie starten"),
+        _("Nieuwe studie starten voor (al dan niet goedgekeurde) subsidieaanvragen"),
         reverse("proposals:start_pre"),
     ),
     MenuItem(
