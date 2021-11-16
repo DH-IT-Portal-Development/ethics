@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 16:38+0100\n"
+"POT-Creation-Date: 2021-11-16 13:16+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -497,11 +497,11 @@ msgstr "Welcome, {}"
 msgid "Mijn studies"
 msgstr "My applications"
 
-#: main/templates/base/menu.html:14 proposals/menus.py:9
+#: main/templates/base/menu.html:14
 msgid "Nieuwe studie starten"
 msgstr "Start a new study"
 
-#: main/templates/base/menu.html:17 proposals/menus.py:13
+#: main/templates/base/menu.html:17
 msgid "Nieuwe studie starten op basis van een kopie van een oude studie"
 msgstr "Start a new study based on a copy of an old study"
 
@@ -515,11 +515,11 @@ msgid ""
 "toetsings comissie)"
 msgstr "Start a new study (that has been approved by another ethics committee)"
 
-#: main/templates/base/menu.html:26 proposals/menus.py:30
+#: main/templates/base/menu.html:26
 msgid "Maak een revisie van een bestaande studie"
 msgstr "Create a revision for an existing study"
 
-#: main/templates/base/menu.html:29 proposals/menus.py:34
+#: main/templates/base/menu.html:29
 msgid "Maak een amendement van een al goedgekeurde studie"
 msgstr "Create an amendment to an already approved study"
 
@@ -840,16 +840,16 @@ msgid "In deze portal kan je het volgende doen:"
 msgstr "In this portal you can do the following:"
 
 #: main/templates/main/index.html:82
-msgid "Dien een nieuwe studie in"
-msgstr "Submit a new study"
+msgid "Dien een nieuwe aanvraag in"
+msgstr "Submit a new proposal"
 
 #: main/templates/main/index.html:87
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
 #: main/templates/main/index.html:90
-msgid "op basis van een kopie van een oude studie;"
-msgstr "from a copy of an old study;"
+msgid "op basis van een kopie van een oude aanvraag;"
+msgstr "from a copy of an old proposal;"
 
 #: main/templates/main/index.html:93
 msgid "voor (al dan niet goedgekeurde) subsidieaanvragen;"
@@ -860,56 +860,56 @@ msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
 #: main/templates/main/index.html:102
-msgid "Een gereviseerde studie aanmelden"
-msgstr "Submit a revised version of your study"
+msgid "Een aanvraag reviseren"
+msgstr "Revise a proposal"
 
 #: main/templates/main/index.html:107
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
 #: main/templates/main/index.html:110
-msgid "als amendement, wanneer de studie al goedgekeurd is door de FETC-GW."
-msgstr "as an amendment, after your study has been approved by the FEtC-H."
+msgid "als amendement, wanneer de aanvraag al goedgekeurd is door de FETC-GW."
+msgstr "as an amendment, after your proposal has already been approved by the FEtC-H."
 
 #: main/templates/main/index.html:118
 msgid "Bekijk"
 msgstr "View"
 
 #: main/templates/main/index.html:122
-msgid "mijn conceptstudies;"
+msgid "mijn conceptaanvragen;"
 msgstr "my draft applications;"
 
 #: main/templates/main/index.html:125
-msgid "mijn oefenstudies;"
+msgid "mijn oefenaanvragen;"
 msgstr "my practice applications;"
 
 #: main/templates/main/index.html:128
-msgid "mijn ingediende studies;"
+msgid "mijn ingediende aanvragen;"
 msgstr "my submitted applications;"
 
 #: main/templates/main/index.html:131
-msgid "mijn afgehandelde studies;"
+msgid "mijn afgehandelde aanvragen;"
 msgstr "my processed applications;"
 
 #: main/templates/main/index.html:134
-msgid "mijn studies als eindverantwoordelijke;"
+msgid "mijn aanvragen als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
 #: main/templates/main/index.html:137
-msgid "al mijn studies."
-msgstr "all my applications."
+msgid "al mijn aanvragen."
+msgstr "all my applications"
 
 #: main/templates/main/index.html:141
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
 #: main/templates/main/index.html:145
-msgid "Alle goedgekeurde studies bekijken van de Algemene Kamer"
-msgstr "View all processed and approved studies of the General Chamber"
+msgid "Alle goedgekeurde aanvragen bekijken van de Algemene Kamer"
+msgstr "View all processed and approved applications of the General Chamber"
 
 #: main/templates/main/index.html:148
-msgid "Alle goedgekeurde studies bekijken van de Linguïstiek Kamer"
-msgstr "View all processed and approved studies of the Linguistics Chamber"
+msgid "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer"
+msgstr "View all processed and approved applications of the Linguistics Chamber"
 
 #: main/templates/main/index.html:167
 msgid "Reglement Linguïstiek Kamer (LK)"
@@ -1366,23 +1366,40 @@ msgstr "Declaration of consent for trajectory {} not yet added."
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
+#: proposals/menus.py:9
+msgid "Nieuwe aanvraag starten"
+msgstr "Start a new application"
+
+#: proposals/menus.py:13
+msgid "Nieuwe aanvraag starten op basis van een kopie van een oude aanvraag"
+msgstr "Start a new application based on a copy of an old application"
+
 #: proposals/menus.py:17
-msgid "Nieuwe studie starten voor (al dan niet goedgekeurde) subsidieaanvragen"
-msgstr "Start a new study to supplement a grant application"
+msgid ""
+"Nieuwe aanvraag starten voor (al dan niet goedgekeurde) subsidieaanvragen"
+msgstr "Start a new application to supplement a grant application"
 
 #: proposals/menus.py:21
 msgid ""
-"Nieuwe studie starten (die al goedgekeurd is door een andere ethische "
+"Nieuwe aanvraag starten (die al goedgekeurd is door een andere ethische "
 "toetsingscomissie)"
-msgstr "Start a new study (that has been approved by another ethics committee)"
+msgstr "Start a new application (that has been approved by another ethics committee)"
 
 #: proposals/menus.py:26
-msgid "Nieuwe oefenstudie starten"
-msgstr "Start a new practice study"
+msgid "Nieuwe oefenaanvraag starten"
+msgstr "Start a new practice application"
+
+#: proposals/menus.py:30
+msgid "Maak een revisie van een bestaande aanvraag"
+msgstr "Create a revision for an existing application"
+
+#: proposals/menus.py:34
+msgid "Maak een amendement van een al goedgekeurde aanvraag"
+msgstr "Create an amendment to an already approved application"
 
 #: proposals/menus.py:42
-msgid "Nieuwe studie"
-msgstr "New study"
+msgid "Nieuwe aanvraag"
+msgstr "New application"
 
 #: proposals/mixins.py:12
 #, python-format
@@ -2741,7 +2758,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_start.html:78
 #: proposals/templates/proposals/proposal_start_pre_approved.html:43
-#: proposals/templates/proposals/proposal_start_pre_assessment.html:30
+#: proposals/templates/proposals/proposal_start_pre_assessment.html:31
 msgid "Volgende stap >>"
 msgstr "Next step >>"
 
@@ -2805,14 +2822,12 @@ msgstr ""
 "(%(secretary_name)s,<a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:7
-#, fuzzy
-#| msgid "Toetsing voor onderzoeksaanvraag"
 msgid "Toetsing voor subsidieaanvraag"
 msgstr "Ethical assessment for grant application"
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:13
-msgid "Nieuwe studie voor (al dan niet goedgekeurde) subsidieaanvragen;"
-msgstr "Submit a new study to supplement a grant application"
+msgid "Nieuwe FETC-aanvraag voor (al dan niet goedgekeurde) subsidieaanvragen"
+msgstr "Submit a new application to supplement a grant application"
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:19
 msgid ""
@@ -5272,6 +5287,15 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Een gereviseerde studie aanmelden"
+#~ msgstr "Submit a revised version of your study"
+
+#~ msgid "al mijn studies."
+#~ msgstr "all my applications."
+
+#~ msgid "Nieuwe studie"
+#~ msgstr "New study"
 
 #~ msgid "voor voortoetsing t.b.v. subsidieaanvraag;"
 #~ msgstr "for preliminary assessment regarding subsidy applications;"
