@@ -6,32 +6,32 @@ from main.utils import is_secretary
 
 new_proposal_menu = (
     MenuItem(
-        _("Nieuwe studie starten"),
+        _("Nieuwe aanvraag starten"),
         reverse("proposals:start"),
     ),
     MenuItem(
-        _("Nieuwe studie starten op basis van een kopie van een oude studie"),
+        _("Nieuwe aanvraag starten op basis van een kopie van een oude aanvraag"),
         reverse("proposals:copy"),
     ),
     MenuItem(
-        _("Nieuwe studie starten voor (al dan niet goedgekeurde) subsidieaanvragen"),
+        _("Nieuwe aanvraag starten voor (al dan niet goedgekeurde) subsidieaanvragen"),
         reverse("proposals:start_pre"),
     ),
     MenuItem(
-        _("Nieuwe studie starten (die al goedgekeurd is door een andere "
+        _("Nieuwe aanvraag starten (die al goedgekeurd is door een andere "
           "ethische toetsingscomissie)"),
         reverse("proposals:start_pre_approved"),
     ),
     MenuItem(
-        _("Nieuwe oefenstudie starten"),
+        _("Nieuwe oefenaanvraag starten"),
         reverse("proposals:start_practice"),
     ),
     MenuItem(
-        _("Maak een revisie van een bestaande studie"),
+        _("Maak een revisie van een bestaande aanvraag"),
         reverse("proposals:copy_revision"),
     ),
     MenuItem(
-        _("Maak een amendement van een al goedgekeurde studie"),
+        _("Maak een amendement van een al goedgekeurde aanvraag"),
         reverse("proposals:copy_amendment"),
     ),
 )
@@ -39,7 +39,7 @@ new_proposal_menu = (
 Menu.add_item(
     "main",
     MenuItem(
-        _("Nieuwe studie"),
+        _("Nieuwe aanvraag"),
         "#",
         slug='new-studies',  # needed for sub-menu!
         children=new_proposal_menu,
