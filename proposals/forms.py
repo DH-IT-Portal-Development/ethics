@@ -578,7 +578,8 @@ class ProposalSubmitForm(forms.ModelForm):
 
         if not self.instance.is_pre_assessment and \
            not self.instance.is_practice() and \
-           not 'js-redirect-submit' in self.request.POST:
+           not 'js-redirect-submit' in self.request.POST and \
+           not 'save_back' in self.request.POST:
 
             if check_local_facilities(self.proposal) and cleaned_data[
                 'inform_local_staff'] is None:
