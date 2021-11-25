@@ -59,7 +59,7 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
 class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Study
     form_class = StudyDesignForm
-    success_message = _('Studieontwerp opgeslagen')
+    success_message = _('Traject opgeslagen')
     template_name = 'studies/study_design.html'
 
     def get_context_data(self, **kwargs):

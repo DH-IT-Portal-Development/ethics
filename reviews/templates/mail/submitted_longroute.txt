@@ -5,9 +5,9 @@ Beste collega,
 
 Uw aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door u gegeven beschrijving voorlopig de status "niet-standaard onderzoek", zie appendix C van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor hulp bij het inschatten van wat valt onder niet-standaard onderzoek.
 
-Dit houdt in dat uw studie op de eerstvolgende vergadering van de FETC-GW zal worden besproken, zie de FETC-GW-agenda (http://fetc-gw.wp.hum.uu.nl/) voor een overzicht van de komende vergaderingen. Zeer kort na de vergadering zult u de beoordeling ontvangen.
+Dit houdt in dat uw aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, zie de FETC-GW-agenda (http://fetc-gw.wp.hum.uu.nl/) voor een overzicht van de komende vergaderingen. Zeer kort na de vergadering zult u de beoordeling ontvangen.
 
-Zoals beschreven in het reglement kan het hier gaan om een goedkeuring, maar ook om een doorverwijzing naar de METC, een tweede beoordelingsronde waarin de FETC-GW nader advies van derden zal inwinnen, of een afkeuring van de studie in huidige vorm.
+Zoals beschreven in het reglement kan het hier gaan om een goedkeuring, maar ook om een doorverwijzing naar de METC, een tweede beoordelingsronde waarin de FETC-GW nader advies van derden zal inwinnen, of een afkeuring van de aanvraag in huidige vorm.
 
 Houdt u a.u.b. rekening met deze mogelijkheden en hun verschillende tijdspaden.
 {% endblock %}

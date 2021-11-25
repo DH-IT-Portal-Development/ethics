@@ -20,7 +20,7 @@ class Command(BaseCommand):
             csvfile.write(u'\uFEFF'.encode('utf-8'))  # the UTF-8 BOM to hint Excel we are using that...
             csv_writer = UnicodeWriter(csvfile, delimiter=';')
 
-            header = ['titel studie', 'type(s) studie', 'registratie', 'indiener', 'eindverantwoordelijke', 'ingediend op', 'route', 'afhandeling', 'afgehandeld op']
+            header = ['titel aanvraag', 'type(s) aanvraag', 'registratie', 'indiener', 'eindverantwoordelijke', 'ingediend op', 'route', 'afhandeling', 'afgehandeld op']
             csv_writer.writerow(header)
 
             rows = []

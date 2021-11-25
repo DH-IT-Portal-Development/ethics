@@ -34,7 +34,7 @@ from proposals.mixins import ProposalMixin, ProposalContextMixin
 
 class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
     title = _('Publiek archief')
-    body = _('Dit overzicht toont alle goedgekeurde studies.')
+    body = _('Dit overzicht toont alle goedgekeurde aanvragen.')
     is_modifiable = False
     is_submitted = True
     contains_supervised = False
@@ -53,8 +53,8 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
 
 
 class MyProposalsView(BaseProposalsView):
-    title = _('Mijn studies')
-    body = _('Dit overzicht toont al je studies.')
+    title = _('Mijn aanvraag')
+    body = _('Dit overzicht toont al je aanvragen.')
     is_modifiable = True
     is_submitted = True
     contains_supervised = True
@@ -66,8 +66,8 @@ class MyProposalsView(BaseProposalsView):
 
 
 class MyConceptsView(BaseProposalsView):
-    title = _('Mijn conceptstudies')
-    body = _('Dit overzicht toont al je nog niet ingediende studies.')
+    title = _('Mijn conceptaanvragen')
+    body = _('Dit overzicht toont al je nog niet ingediende aanvragen.')
     is_modifiable = True
     is_submitted = False
 
@@ -78,8 +78,8 @@ class MyConceptsView(BaseProposalsView):
 
 
 class MySubmittedView(BaseProposalsView):
-    title = _('Mijn ingediende studies')
-    body = _('Dit overzicht toont al je ingediende studies.')
+    title = _('Mijn ingediende aanvragen')
+    body = _('Dit overzicht toont al je ingediende aanvragen.')
     is_modifiable = False
     is_submitted = True
 
@@ -90,8 +90,8 @@ class MySubmittedView(BaseProposalsView):
 
 
 class MyCompletedView(BaseProposalsView):
-    title = _('Mijn afgehandelde studies')
-    body = _('Dit overzicht toont al je beoordeelde studies.')
+    title = _('Mijn afgehandelde aanvragen')
+    body = _('Dit overzicht toont al je beoordeelde aanvragen.')
     is_modifiable = False
     is_submitted = True
 
@@ -102,9 +102,9 @@ class MyCompletedView(BaseProposalsView):
 
 
 class MySupervisedView(BaseProposalsView):
-    title = _('Mijn studies als eindverantwoordelijke')
+    title = _('Mijn aanvragen als eindverantwoordelijke')
     body = _(
-        'Dit overzicht toont al je studies waarvan je eindverantwoordelijke '
+        'Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke '
         'bent.')
     is_modifiable = True
     is_submitted = True
@@ -116,8 +116,8 @@ class MySupervisedView(BaseProposalsView):
         return context
 
 class MyPracticeView(BaseProposalsView):
-    title = _('Mijn oefenstudies')
-    body = _('Dit overzicht toont alle oefenstudies waar je als student, \
+    title = _('Mijn oefenaanvragen')
+    body = _('Dit overzicht toont alle oefenaanvragen waar je als student, \
 onderzoeker of eindverantwoordelijke bij betrokken bent.')
     is_modifiable = True
     is_submitted = False
@@ -224,7 +224,7 @@ class ProposalUpdate(ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbutto
 
 class ProposalDelete(DeleteView):
     model = Proposal
-    success_message = _('Studie verwijderd')
+    success_message = _('Aanvraag verwijderd')
 
     def get_success_url(self):
         """After deletion, return to the concepts overview"""
@@ -423,7 +423,7 @@ class ProposalConfirmation(GroupRequiredMixin, generic.UpdateView):
 class ProposalCopy(UserFormKwargsMixin, CreateView):
     model = Proposal
     form_class = ProposalCopyForm
-    success_message = _('Studie gekopieerd')
+    success_message = _('Aanvraag gekopieerd')
     template_name = 'proposals/proposal_copy.html'
 
     def get_initial(self):

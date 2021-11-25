@@ -19,7 +19,7 @@
     <ul>
         <li>
             {% blocktrans %}
-                Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende studie in te zien.
+                Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende aanvraag in te zien.
             {% endblocktrans %}
         </li>
         <li>
@@ -31,7 +31,7 @@
         <li>
             {% blocktrans %}
                 Klik op <img src="{{ img_details }}" title="Toon details"> om alle details en beoordelingen van
-                een ingediende studie te zien.
+                een ingediende aanvraag te zien.
             {% endblocktrans %}
         </li>
         <li>
@@ -47,7 +47,7 @@
         {% if request.user|is_secretary %}
             <li>
                 {% blocktrans %}
-                    Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende studie te verbergen uit het
+                    Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende aanvraag te verbergen uit het
                     archief.
                 {% endblocktrans %}
             </li>
@@ -58,13 +58,13 @@
             </li>
             <li>
                 {% blocktrans %}
-                    Klik op <img src="{{ img_change_chamber }}" title="Verplaats naar andere kamer"> om een studie
+                    Klik op <img src="{{ img_change_chamber }}" title="Verplaats naar andere kamer"> om een aanvraag
                     te verplaatsen naar een andere kamer.
                 {% endblocktrans %}
             </li>
             <li>
                 {% blocktrans %}
-                    Klik op <img src="{{ img_close }}" title="Afsluiten"> om een studie af te sluiten.
+                    Klik op <img src="{{ img_close }}" title="Afsluiten"> om een aanvraag af te sluiten.
                 {% endblocktrans %}
             </li>
             <li>

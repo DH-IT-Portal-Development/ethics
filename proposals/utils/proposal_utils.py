@@ -35,7 +35,7 @@ def available_urls(proposal):
 
     if proposal.is_pre_assessment:
         urls.append(AvailableURL(url=reverse('proposals:update_pre', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie')))
+                                 title=_('Algemene informatie over de aanvraag')))
 
         wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'))
         if hasattr(proposal, 'wmo'):
@@ -50,7 +50,7 @@ def available_urls(proposal):
         urls.append(submit_url)
     elif proposal.is_pre_approved:
         urls.append(AvailableURL(url=reverse('proposals:update_pre_approved', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de studie')))
+                                 title=_('Algemene informatie over de aanvraag')))
 
         submit_url = AvailableURL(
             title=_('Aanvraag voor voortoetsing klaar voor versturen'),
@@ -364,12 +364,12 @@ def notify_local_staff(proposal):
     activate('nl')
 
     secretary = get_secretary()
-    
+
     if proposal.is_revision:
-        subject = _('FETC-GW: gereviseerde studie gebruikt labfaciliteiten')
+        subject = _('FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten')
     else:
-        subject = _('FETC-GW: nieuwe studie gebruikt labfaciliteiten')
-    
+        subject = _('FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten')
+
     params = {
         'secretary': secretary.get_full_name(),
         'proposal': proposal,
@@ -388,17 +388,17 @@ def notify_local_staff(proposal):
 class FilenameFactory:
     '''A callable class which can be passed to upload_to() in FileFields
     and can be deconstructed for migrations'''
-    
+
     def __init__(self, document_type):
         self.document_type = document_type
-    
+
     def __call__(self, instance, original_fn):
         '''Returns a custom filename preserving the original extension,
         something like "FETC-2020-002-01-Villeneuve-T2-Informed-Consent.pdf"'''
-        
+
         # Importing here to prevent circular import
         from proposals.models import Proposal, Wmo
-        
+
         if isinstance(instance, Proposal):
             # This is a proposal PDF
             proposal = instance
@@ -416,13 +416,13 @@ class FilenameFactory:
                 # No associated study, so this is an extra Documents instance
                 # We need to give it an index so they don't overwrite each other
                 extra_index = 1
-                
+
                 # Again, to prevent circular imports
                 from studies.models import Documents
                 qs = Documents.objects.filter(
                     proposal=proposal).filter(
                         study=None)
-                
+
                 for docs in qs:
                     # The current Documents instance might not yet be saved and
                     # therefore not exist in the QS. Hence the for loop instead of
@@ -430,16 +430,16 @@ class FilenameFactory:
                     if docs == instance:
                         break # i.e. this may never happen
                     extra_index += 1
-                
+
                 # Unknown
                 trajectory = 'Extra' + str(extra_index)
-        
+
         chamber = proposal.reviewing_committee.name
         lastname = proposal.created_by.last_name
         refnum = proposal.reference_number
-        
+
         extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
-        
+
         fn_parts = ['FETC',
                     chamber,
                     refnum,
@@ -447,17 +447,17 @@ class FilenameFactory:
                     trajectory,
                     self.document_type,
                     ]
-        
+
         def not_empty(item):
             if item == None:
                 return False
             if str(item) == '':
                 return False
             return True
-        
+
         fn_parts = filter(not_empty, fn_parts)
-        
-        return '-'.join(fn_parts) + extension 
+
+        return '-'.join(fn_parts) + extension
 
 
 class OverwriteStorage(FileSystemStorage):
@@ -469,7 +469,7 @@ class OverwriteStorage(FileSystemStorage):
         Modified from http://djangosnippets.org/snippets/976/
         """
         import os
-        
+
         # If the filename already exists, remove it
         if self.exists(name):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))

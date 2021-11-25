@@ -49,27 +49,27 @@ Menu.add_item(
 
 my_proposals_menu = (
     MenuItem(
-        _("Al mijn studies"),
+        _("Al mijn aanvragen"),
         reverse("proposals:my_archive"),
     ),
     MenuItem(
-        _("Mijn conceptstudies"),
+        _("Mijn conceptaanvragen"),
         reverse("proposals:my_concepts"),
     ),
     MenuItem(
-        _("Mijn oefenstudies"),
+        _("Mijn oefenaanvragen"),
         reverse("proposals:my_practice"),
     ),
     MenuItem(
-        _("Mijn ingediende studies"),
+        _("Mijn ingediende aanvragen"),
         reverse("proposals:my_submitted"),
     ),
     MenuItem(
-        _("Mijn afgehandelde studies"),
+        _("Mijn afgehandelde aanvragen"),
         reverse("proposals:my_completed"),
     ),
     MenuItem(
-        _("Mijn studies als eindverantwoordelijke"),
+        _("Mijn aanvragen als eindverantwoordelijke"),
         reverse("proposals:my_supervised"),
     ),
 )
@@ -77,7 +77,7 @@ my_proposals_menu = (
 Menu.add_item(
     "main",
     MenuItem(
-        _("Mijn studies"),
+        _("Mijn aanvragen"),
         reverse("proposals:my_archive"),
         slug='my-studies',  # needed for sub-menu!
         children=my_proposals_menu,
@@ -87,11 +87,11 @@ Menu.add_item(
 
 archive_menu = (
     MenuItem(
-        _("Alle studies bekijken van de Algemene Kamer"),
+        _("Alle aanvragen bekijken van de Algemene Kamer"),
         reverse("proposals:archive", args=['AK']),
     ),
     MenuItem(
-        _("Alle studies bekijken van de Linguïstiek Kamer"),
+        _("Alle aanvragen bekijken van de Linguïstiek Kamer"),
         reverse("proposals:archive", args=['LK']),
     ),
     MenuItem(

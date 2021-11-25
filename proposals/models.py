@@ -80,8 +80,8 @@ class Proposal(models.Model):
          _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
         (SUBMITTED, _('Opgestuurd ter beoordeling door FETC-GW')),
 
-        (DECISION_MADE, _('Studie is beoordeeld door FETC-GW')),
-        (WMO_DECISION_MADE, _('Studie is beoordeeld door FETC-GW')),
+        (DECISION_MADE, _('Aanvraag is beoordeeld door FETC-GW')),
+        (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door FETC-GW')),
     )
 
     COURSE = 1
@@ -100,7 +100,7 @@ class Proposal(models.Model):
     reviewing_committee = models.ForeignKey(
         Group,
         verbose_name=_(
-            'Door welke comissie dient deze studie te worden beoordeeld?'
+            'Door welke comissie dient deze aanvraag te worden beoordeeld?'
         ),
         help_text="",
         on_delete=models.PROTECT,
@@ -115,22 +115,22 @@ class Proposal(models.Model):
     )
 
     date_start = models.DateField(
-        _('Wat is, indien bekend, de beoogde startdatum van je studie?'),
+        _('Wat is, indien bekend, de beoogde startdatum van je aanvraag?'),
         blank=True,
         null=True,
     )
 
     title = models.CharField(
         _(
-            'Wat is de titel van je studie? Deze titel zal worden gebruikt in '
+            'Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in '
             'alle formele correspondentie.'
         ),
         max_length=200,
         unique=False,
         help_text=_('De titel die je hier opgeeft is zichtbaar voor de \
-FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle \
+FETC-GW-leden en, wanneer de aanvraag is goedgekeurd, ook voor alle \
 medewerkers die in het archief van deze portal kijken. De titel mag niet \
-identiek zijn aan een vorige titel van een studie die je hebt ingediend.'),
+identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     summary = models.TextField(
@@ -143,13 +143,13 @@ identiek zijn aan een vorige titel van een studie die je hebt ingediend.'),
 
     other_applicants = models.BooleanField(
         _(
-            'Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?'
+            'Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?'
         ),
         default=False,
     )
 
     other_stakeholders = models.BooleanField(
-        mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze studie betrokken '
+        mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze aanvraag betrokken '
           'die <strong>niet</strong> geaffilieerd zijn aan een van de '
           'onderzoeksinstituten van de Faculteit Geestwetenschappen van de '
           'UU? ')), # Note: form labels with HTML are hard-coded in form Meta classes
@@ -192,14 +192,14 @@ identiek zijn aan een vorige titel van een studie die je hebt ingediend.'),
         _('<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één \
 van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
 en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op \
-de hoogte willen worden gesteld van aankomende studies. \
+de hoogte willen worden gesteld van aankomende onderzoeken. \
 Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te \
 sturen naar het lab supportteam.</p> \
 <p>Vind je het goed dat de volgende delen uit de aanvraag \
 worden doorgestuurd:</p> \
 - Jouw naam en de namen van de andere betrokkenen <br/> \
-- De eindverantwoordelijke van de studie <br/> \
-- De titel van de studie <br/> \
+- De eindverantwoordelijke van het onderzoek <br/> \
+- De titel van het onderzoek <br/> \
 - De beoogde startdatum <br/> \
 - Van welke faciliteiten je gebruik wil maken (database, lab, \
 Zep software)'),
@@ -231,7 +231,7 @@ Zep software)'),
     )
 
     pre_approval_institute = models.CharField(
-        _('Welk instituut heeft de studie goedgekeurd?'),
+        _('Welk instituut heeft de aanvraag goedgekeurd?'),
         max_length=200,
         blank=True,
         null=True,
@@ -293,16 +293,16 @@ gebruikt worden).'),
         null=True,
         blank=True,
     )
-    
+
     avg_understood = models.BooleanField(
         _('Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.'),
         default=False,
         null=False,
         validators=[AVGUnderstoodValidator],
     )
-    
+
     dmp_file = models.FileField(
-        _('Als je een Data Management Plan heeft voor deze studie, '
+        _('Als je een Data Management Plan hebtt voor deze aanvraag, '
           'kan je kiezen om deze hier bij te voegen. Het aanleveren van een '
           'DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
         blank=True,
@@ -331,7 +331,7 @@ gebruikt worden).'),
     )
 
     has_minor_revision = models.BooleanField(
-        _('Is er een revisie geweest na het indienen van deze studie?'),
+        _('Is er een revisie geweest na het indienen van deze aanvraag?'),
         default=False,
     )
 
@@ -345,7 +345,7 @@ gebruikt worden).'),
     relation = models.ForeignKey(
         Relation,
         verbose_name=_('In welke hoedanigheid ben je betrokken \
-bij deze studie?'),
+bij dit onderzoek?'),
         on_delete=models.CASCADE,
         blank=True,
         null=True,
@@ -368,12 +368,12 @@ bij deze studie?'),
         verbose_name=_('Eindverantwoordelijke onderzoeker'),
         blank=True,
         null=True,
-        help_text=_('''Aan het einde van de procedure kan je deze studie ter 
-        verificatie naar je eindverantwoordelijke sturen. De 
-        eindverantwoordelijke zal de studie vervolgens kunnen aanpassen en 
-        indienen bij de FETC-GW. <br><br><strong>Tip</strong>: Type een 
-        aantal letters van de voornaam, achternaam, of Solis ID van het 
-        persoon die je toe wilt voegen in de zoekbalk hiernaast. 
+        help_text=_('''Aan het einde van de procedure kan je deze aanvraag ter
+        verificatie naar je eindverantwoordelijke sturen. De
+        eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen en
+        indienen bij de FETC-GW. <br><br><strong>Tip</strong>: Type een
+        aantal letters van de voornaam, achternaam, of Solis ID van het
+        persoon die je toe wilt voegen in de zoekbalk hiernaast.
         Merk op dat het laden even kan duren.'''),
         on_delete=models.CASCADE,
     )
@@ -383,16 +383,16 @@ bij deze studie?'),
         'self',
         null=True,
         related_name='children',
-        verbose_name=_('Te kopiëren studie'),
+        verbose_name=_('Te kopiëren aanvraag'),
         help_text=_(
-            'Dit veld toont enkel studies waar je zelf een medeuitvoerende '
+            'Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende '
             'bent.'),
         on_delete=models.CASCADE,
     )
 
     is_revision = models.BooleanField(
         _(
-            'Is deze studie een revisie van of amendement op een ingediende studie?'
+            'Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?'
         ),
         default=False,
     )
@@ -553,8 +553,8 @@ onderzoek, 2005, ccmo.nl)'),
 
 
     metc_application = models.BooleanField(
-        _('Je studie moet beoordeeld worden door de METC, maar dient nog \
-wel bij de FETC-GW te worden geregistreerd. Is deze studie al aangemeld \
+        _('Je onderzoek moet beoordeeld worden door een METC, maar dient nog \
+wel bij de FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld \
 bij een METC?'),
         default=False,
     )

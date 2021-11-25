@@ -97,7 +97,7 @@ class DiscontinueReview(ReviewAction):
 
     def description(self):
 
-        return _('Beëindig de afhandeling van deze studie')
+        return _('Beëindig de afhandeling van deze aanvraag')
 
 
 class ChangeAssignment(ReviewAction):

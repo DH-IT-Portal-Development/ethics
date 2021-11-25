@@ -3,10 +3,10 @@
 {% block content %}
 Beste labmanagers,
 
-{% if is_revision %}Er is zojuist een gereviseerde studie ter beoordeling ingediend.{% else %}Er is zojuist een nieuwe studie ter beoordeling ingediend.{% endif %}
-De studie maakt gebruik van enkele labfaciliteiten, en daarom volgt hieronder een korte samenvatting van deze studie.
+{% if is_revision %}Er is zojuist een gereviseerde aanvraag ter beoordeling ingediend.{% else %}Er is zojuist een nieuwe studie ter beoordeling ingediend.{% endif %}
+De aanvraag maakt gebruik van enkele labfaciliteiten, en daarom volgt hieronder een korte samenvatting van deze studie.
 
-Titel studie: {{ proposal.title }}
+Titel: {{ proposal.title }}
 Referentienummer: {{ proposal.reference_number }}
 Betrokkenen: {{ applicants|join:", " }}
 Eindverantwoordelijke: {{ proposal.accountable_user.get_full_name }}

@@ -36,7 +36,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'pre_approval_institute', 'pre_approval_pdf'
         ]
         labels = {
-            'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze studie betrokken ' \
+            'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze aanvraag betrokken ' \
           'die <strong>niet</strong> geaffilieerd zijn aan een van de ' \
           'onderzoeksinstituten van de Faculteit Geestwetenschappen van de ' \
           'UU? ')),
@@ -56,7 +56,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         }
         error_messages = {
             'title': {
-                'unique': _('Er bestaat al een studie met deze titel.'),
+                'unique': _('Er bestaat al een aanvraag met deze titel.'),
             },
         }
 
@@ -133,7 +133,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             self.fields['supervisor'].label = _('Docent')
             self.fields['supervisor'].help_text = _('Vul hier de docent van \
 de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop \
-de studie inkijken in de portal. De studie zal niet in het semipublieke archief \
+de aanvraag inkijken in de portal. De studie zal niet in het semipublieke archief \
 van het FETC-GW worden opgenomen.')
 
         if self.is_pre_assessment:
@@ -203,8 +203,8 @@ van het FETC-GW worden opgenomen.')
                 error = forms.ValidationError(
                     _(
                         'Indien je geen toestemming hebt van een andere ethische commissie, dien je het normale formulier in '
-                        'te vullen. Ga terug naar de startpagina, en selecteer "Een nieuwe studie aanmelden (from scratch in '
-                        'een leeg formulier)" of "Een nieuwe studie aanmelden (vanuit een kopie van een oude studie)".')
+                        'te vullen. Ga terug naar de startpagina, en selecteer "Een nieuwe aanvraag aanmelden (from scratch in '
+                        'een leeg formulier)" of "Een nieuwe aanvraag aanmelden (vanuit een kopie van een oude aanvraag)".')
                 )
                 self.add_error('is_pre_approved', error)
 
@@ -223,7 +223,7 @@ van het FETC-GW worden opgenomen.')
 
 class ProposalStartPracticeForm(forms.Form):
     practice_reason = forms.ChoiceField(
-        label=_('Ik maak een oefenstudie aan'),
+        label=_('Ik maak een oefenaanvraag aan'),
         choices=Proposal.PRACTICE_REASONS,
         widget=forms.RadioSelect())
 
@@ -237,15 +237,15 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         }
         error_messages = {
             'title': {
-                'unique': _('Er bestaat al een studie met deze titel.'),
+                'unique': _('Er bestaat al een aanvraag met deze titel.'),
             },
         }
 
     parent = ParentChoiceModelField(
         queryset=Proposal.objects.all(),
-        label=_('Te kopiëren studie'),
+        label=_('Te kopiëren aanvraag'),
         help_text=_(
-            'Dit veld toont enkel studies waar je zelf een medeuitvoerende '
+            'Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende '
             'bent.'
         ),
     )
@@ -285,18 +285,18 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
 
 
         if 'title' in self.fields:
-            self.fields['title'].label = _('Je kan de titel van je studie nu, '
+            self.fields['title'].label = _('Je kan de titel van je aanvraag nu, '
                                            'indien nodig, wijzigen.')
             self.fields['title'].help_text = _('De titel die je hier opgeeft is '
                                                'zichtbaar voor de FETC-GW-leden en,'
-                                               ' wanneer de studie is goedgekeurd,'
+                                               ' wanneer de aanvraag is goedgekeurd,'
                                                ' ook voor alle medewerkers die in'
                                                ' het archief van deze portal '
                                                'kijken.')
 
-        self.fields['parent'].label = _('Te reviseren studie')
+        self.fields['parent'].label = _('Te reviseren aanvraag')
         self.fields['parent'].help_text = _('Dit veld toont enkel ingediende,'
-                                            ' (nog) niet goedgekeurde studies '
+                                            ' (nog) niet goedgekeurde aanvragen '
                                             'waar jij een '
                                             'medeuitvoerende bent.')
 
@@ -320,18 +320,18 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
         super().__init__(*args, **kwargs)
 
         if 'title' in self.fields:
-            self.fields['title'].label = _('Je kan de titel van je studie nu, '
+            self.fields['title'].label = _('Je kan de titel van je aanvraag nu, '
                                            'indien nodig, wijzigen.')
             self.fields['title'].help_text = _('De titel die je hier opgeeft is '
                                                'zichtbaar voor de FETC-GW-leden en,'
-                                               ' wanneer de studie is goedgekeurd,'
+                                               ' wanneer de aanvraag is goedgekeurd,'
                                                ' ook voor alle medewerkers die in'
                                                ' het archief van deze portal '
                                                'kijken.')
 
-        self.fields['parent'].label = _('Te amenderen studie')
+        self.fields['parent'].label = _('Te amenderen aanvraag')
         self.fields['parent'].help_text = _('Dit veld toont enkel goedgekeurde'
-                                            ' studies waar je zelf een '
+                                            ' aanvragen waar je zelf een '
                                             'medeuitvoerende bent.')
 
     def _get_parent_queryset(self):

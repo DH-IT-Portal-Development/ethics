@@ -117,7 +117,7 @@ class ToConcludeProposalView(BaseReviewListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Nog af te handelen studies")
+        context['title'] = _("Nog af te handelen aanvragen")
         context['data_url'] = reverse(
             "reviews:api:to_conclude",
             args=[self.committee]
@@ -131,7 +131,7 @@ class AllOpenProposalReviewsView(BaseReviewListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Alle lopende studies")
+        context['title'] = _("Alle lopende aanvragen")
         context['data_url'] = reverse(
             "reviews:api:all_open",
             args=[self.committee]
@@ -157,7 +157,7 @@ class AllProposalReviewsView(BaseReviewListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Alle ingezonden studies")
+        context['title'] = _("Alle ingezonden aanvragen")
         context['data_url'] = reverse(
             "reviews:api:archive",
             args=[self.committee]

@@ -3,16 +3,16 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Studie verwijderen" %} - {{ block.super }}
+    {% trans "Aanvraag verwijderen" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>{% trans "Studie verwijderen" %}</h2>
+            <h2>{% trans "Aanvraag verwijderen" %}</h2>
             <p>
                 {% blocktrans trimmed with title=proposal.title %}
-                    Weet je zeker dat je de studie <em>{{ title }}</em> wilt verwijderen?
+                    Weet je zeker dat je de aanvraag <em>{{ title }}</em> wilt verwijderen?
                 {% endblocktrans %}
             </p>
             <form action="" method="post">{% csrf_token %}

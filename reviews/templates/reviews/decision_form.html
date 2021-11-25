@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Studie beoordelen" %} - {{ block.super }}
+    {% trans "Aanvraag beoordelen" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
     {% endwith %}
         <div class="col-12 col-md-9">
             <h2>
-                {% trans "Studie beoordelen" %}
+                {% trans "Aanvraag beoordelen" %}
             </h2>
             {% url 'proposals:pdf' proposal.id as pdf_url %}
             {% url 'proposals:update' proposal.id as update_url %}
@@ -22,9 +22,9 @@
                 {% if user != proposal.supervisor %}
                     <p>
                         {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
-                            Je kunt nu een go of no-go geven voor de studie <em>{{ title }}</em>,
+                            Je kunt nu een go of no-go geven voor de aanvraag <em>{{ title }}</em>,
                             {{ refnum }} in {{ chamber }}.
-                            De studie is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
+                            De aanvraag is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
                         {% endblocktrans %}
                     </p>
                 {% else %}
@@ -42,7 +42,7 @@
                     </p>
                     <p>
                         {% blocktrans trimmed %}
-                            Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de studie aan te
+                            Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de aanvraag aan te
                             passen:
                         {% endblocktrans %}
                     </p>
@@ -50,15 +50,15 @@
                         <li>
                             {% blocktrans trimmed %}
                                 door de supervisor (jijzelf)<br/>
-                                Als supervisor kan je deze studie <a href="{{ update_url }}" target="_blank">hier</a>
-                                aanpassen. Daarna word je teruggeleid naar deze pagina en kun je hieronder de studie
+                                Als supervisor kan je deze aanvraag <a href="{{ update_url }}" target="_blank">hier</a>
+                                aanpassen. Daarna word je teruggeleid naar deze pagina en kun je hieronder de aanvraag
                                 goedkeuren; dat betekent dat de aanvraag wordt ingediend bij de FETC-GW.
                             {% endblocktrans %}
                         </li>
                         <li class="mt-2">
                             {% blocktrans trimmed %}
                                 door de indiener (je student of promovendus)<br/>
-                                Indien je wilt dat de indiener de studie zelf aanpast voordat je de studie
+                                Indien je wilt dat de indiener de aanvraag zelf aanpast voordat je de studie
                                 kunt goedkeuren en daarmee bij de FETC-GW indient, selecteer dan 'revisie noodzakelijk'
                                 of ‘niet goedgekeurd’ hieronder, voeg eventuele opmerkingen toe, en klik op 'Beslissing
                                 opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen.
@@ -69,7 +69,7 @@
                         <li class="mt-2 list-unstyled">
                             {% blocktrans trimmed %}
                                 Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft verstuurd,
-                                zal je de aangepaste studie opnieuw moeten beoordelen.
+                                zal je de aangepaste aanvraag opnieuw moeten beoordelen.
                             {% endblocktrans %}
                         </li>
                     </ol>
@@ -78,8 +78,8 @@
                     <p class="warning">
                         {% url 'proposals:diff' proposal.id as diff_url %}
                         {% blocktrans %}
-                            Dit is een revisie van of amendement op een vorige studie. De verschillen met de vorige
-                            studie zijn <a href="{{ diff_url }}">hier</a> in te zien.
+                            Dit is een revisie van of amendement op een vorige aanvraag. De verschillen met de vorige
+                            aanvraag zijn <a href="{{ diff_url }}">hier</a> in te zien.
                         {% endblocktrans %}
                     </p>
                 {% endif %}

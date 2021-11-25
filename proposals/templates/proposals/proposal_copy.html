@@ -9,7 +9,7 @@
     {% elif is_amendment %}
         {% trans "Amendement aanmaken" %}
     {% else %}
-        {% trans "Een geheel nieuwe studie indienen op basis van een oude studie" %}
+        {% trans "Een geheel nieuwe aanvraag indienen op basis van een oude studie" %}
     {% endif %}
     - {{ block.super }}
 {% endblock %}
@@ -29,27 +29,27 @@
                 {% elif is_amendment %}
                     {% trans "Amendement aanmaken" %}
                 {% else %}
-                    {% trans "Een geheel nieuwe studie indienen op basis van een oude studie" %}
+                    {% trans "Een geheel nieuwe aanvraag indienen op basis van een oude studie" %}
                 {% endif %}
             </h2>
             {% if is_revision %}
                 <p>
                     {% blocktrans trimmed %}
-                        Je kan hier op basis van de vorige versie van een studie een revisie starten. Alleen studies
+                        Je kan hier op basis van de vorige versie van een aanvraag een revisie starten. Alleen studies
                         die door de commissie als 'revisie noodzakelijk' gemarkeerd zijn kunnen hier gekozen worden.
                     {% endblocktrans %}
                 </p>
                 <p>
                     {% blocktrans trimmed %}
                         Als je supervisor je heeft gevraagd revisies te maken, dien je je huidige versie aan te passen.
-                        (Als je dat niet kan, vraag dan aan je supervisor of die je studie al gemarkeerd heeft als
+                        (Als je dat niet kan, vraag dan aan je supervisor of die je aanvraag al gemarkeerd heeft als
                         'revisie noodzakelijk'.)
                     {% endblocktrans %}
                 </p>
             {% elif is_amendment %}
                 <p>
                     {% blocktrans trimmed %}
-                        Je kan hier op basis van een reeds goedgekeurde studie een amendement indienen. Je studie moet
+                        Je kan hier op basis van een reeds goedgekeurde aanvraag een amendement indienen. Je studie moet
                         eerst goedgekeurd en afgehandeld zijn voordat die hier gekozen kan worden.
                     {% endblocktrans %}
                 </p>
@@ -57,23 +57,23 @@
                 {% url 'proposals:copy_revision' as revision_url %}
                 {% url 'proposals:copy_amendment' as amendment_url %}
                 <p>
-                    {% trans "Je kan hier een studie kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
+                    {% trans "Je kan hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
                 </p>
                 <p>
                     {% blocktrans trimmed %}
-                        Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe studie gaat doen op basis van
-                        een eerder uitgevoerde studie.
+                        Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe aanvraag gaat doen op basis van
+                        een eerder uitgevoerde aanvraag.
                     {% endblocktrans %}
                 </p>
                 <p>
                     {% blocktrans trimmed %}
-                        Als je gevraagd is om een revisie te maken van een eerder ingediende studie, kan je dat
+                        Als je gevraagd is om een revisie te maken van een eerder ingediende aanvraag, kan je dat
                         <a href="{{ revision_url }}">hier</a> doen.
                     {% endblocktrans %}
                 </p>
                 <p>
                     {% blocktrans trimmed %}
-                        Indien je wijzigingen hebt in een al goedgekeurde studie die daarom opnieuw getoetst moet
+                        Indien je wijzigingen hebt in een al goedgekeurde aanvraag die daarom opnieuw getoetst moet
                         worden, maak dan <a href="{{ amendment_url }}">hier</a> een amendement aan.
                     {% endblocktrans %}
                 </p>
