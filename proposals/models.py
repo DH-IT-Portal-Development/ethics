@@ -302,7 +302,7 @@ gebruikt worden).'),
     )
 
     dmp_file = models.FileField(
-        _('Als je een Data Management Plan hebtt voor deze aanvraag, '
+        _('Als je een Data Management Plan hebt voor deze aanvraag, '
           'kan je kiezen om deze hier bij te voegen. Het aanleveren van een '
           'DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
         blank=True,
