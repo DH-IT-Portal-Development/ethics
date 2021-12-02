@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-16 13:16+0100\n"
+"POT-Creation-Date: 2021-12-02 12:41+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -107,7 +107,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: reviews/templates/reviews/decision_form.html:90
 #: reviews/templates/reviews/review_assign_form.html:44
 #: reviews/templates/reviews/review_close_form.html:41
-#: reviews/templates/reviews/review_discontinue_form.html:60
+#: reviews/templates/reviews/review_discontinue_form.html:72
 #: studies/templates/studies/study_update_attachments.html:26
 msgid "Terug naar de vorige pagina"
 msgstr "Back to the previous page"
@@ -869,7 +869,8 @@ msgstr "as a revision, based on comments of the FEtC-H;"
 
 #: main/templates/main/index.html:110
 msgid "als amendement, wanneer de aanvraag al goedgekeurd is door de FETC-GW."
-msgstr "as an amendment, after your proposal has already been approved by the FEtC-H."
+msgstr ""
+"as an amendment, after your proposal has already been approved by the FEtC-H."
 
 #: main/templates/main/index.html:118
 msgid "Bekijk"
@@ -909,7 +910,8 @@ msgstr "View all processed and approved applications of the General Chamber"
 
 #: main/templates/main/index.html:148
 msgid "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer"
-msgstr "View all processed and approved applications of the Linguistics Chamber"
+msgstr ""
+"View all processed and approved applications of the Linguistics Chamber"
 
 #: main/templates/main/index.html:167
 msgid "Reglement Linguïstiek Kamer (LK)"
@@ -1383,7 +1385,8 @@ msgstr "Start a new application to supplement a grant application"
 msgid ""
 "Nieuwe aanvraag starten (die al goedgekeurd is door een andere ethische "
 "toetsingscomissie)"
-msgstr "Start a new application (that has been approved by another ethics committee)"
+msgstr ""
+"Start a new application (that has been approved by another ethics committee)"
 
 #: proposals/menus.py:26
 msgid "Nieuwe oefenaanvraag starten"
@@ -2116,7 +2119,7 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
-#: reviews/templatetags/documents_list.py:196
+#: reviews/templatetags/documents_list.py:198
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -3647,7 +3650,7 @@ msgstr "Change reviewing chamber"
 
 #: reviews/templates/reviews/change_chamber_form.html:18
 #: reviews/templates/reviews/review_assign_form.html:46
-#: reviews/templates/reviews/review_discontinue_form.html:62
+#: reviews/templates/reviews/review_discontinue_form.html:74
 msgid "OK"
 msgstr "OK"
 
@@ -3954,29 +3957,43 @@ msgstr "Terminate this review"
 
 #: reviews/templates/reviews/review_discontinue_form.html:36
 msgid ""
-"Als een studie definitief niet meer door de FETC-GW afgehandeld gaat worden, "
-"en deze in de weg staat, kan er voor gekozen worden deze te beëindigen."
+"Als een aanvraag definitief niet meer door de FETC-GW afgehandeld gaat "
+"worden, en deze in de weg staat, kan er voor gekozen worden deze te "
+"beëindigen."
 msgstr ""
-"If a proposal will not be further assessed by the FEtC-H and its open review "
+"If a proposal will not be further assessed by the FEtC-H and its review "
 "is getting in the way, it can be terminated using this form."
 
 #: reviews/templates/reviews/review_discontinue_form.html:43
 msgid ""
-"Een beëindigde studie verschijnt niet meer in de pagina's van de secretaris "
-"en beoordelaars. Deze studie kan ook niet meer gereviseerd worden, maar nog "
-"wel gekopieerd. De studie is nog wel zichtbaar in de lijst met \"alle "
-"ingediende studies\"."
+"Een beëindigde aanvraag verschijnt niet meer in de pagina's van de "
+"secretaris en beoordelaars. Deze aanvraag kan ook niet meer gereviseerd "
+"worden, maar nog wel gekopieerd. De aanvraag is nog wel zichtbaar in de "
+"lijst met \"alle ingediende aanvragen\"."
 msgstr ""
 "A terminated review no longer appears as an open action to the secretary and "
 "assigned reviewers. Its proposal may not be revised, however it may still be "
 "copied. A terminated review still shows up in the list \"all submitted "
 "studies\" for future reference."
 
-#: reviews/templates/reviews/review_discontinue_form.html:52
-msgid "Studie"
-msgstr "Proposal"
+#: reviews/templates/reviews/review_discontinue_form.html:54
+msgid "Attentie"
+msgstr "Warning"
 
-#: reviews/templates/reviews/review_discontinue_form.html:53
+#: reviews/templates/reviews/review_discontinue_form.html:56
+msgid ""
+"Deze aanvraag heeft op dit moment geen lopende beoordeling. Om deze aanvraag "
+"definitief te beëindigen, moeten we de uitkomst van laatste beoordeling (zie "
+"linker balk) veranderen. Dit kan verwarring veroorzaken bij de indiener, dus "
+"houd hier rekening mee."
+msgstr ""
+"This proposal currently has no running review. To terminate this review, we must change the outcome of its most recent review, which can be seen in the left sidebar. Please keep in mind that this can be confusing to the submitter."
+
+#: reviews/templates/reviews/review_discontinue_form.html:64
+msgid "Aanvraag"
+msgstr "New application"
+
+#: reviews/templates/reviews/review_discontinue_form.html:65
 #, python-format
 msgid "<em>%(title)s</em> door %(author)s"
 msgstr "<em>%(title)s</em> by %(author)s"
@@ -4003,67 +4020,67 @@ msgstr "open"
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
-#: reviews/templatetags/documents_list.py:142
+#: reviews/templatetags/documents_list.py:144
 msgid "Hoofdtraject"
 msgstr "Main trajectory"
 
-#: reviews/templatetags/documents_list.py:144
+#: reviews/templatetags/documents_list.py:146
 msgid "Traject {}: <i>{}</i>"
 msgstr "Trajectory {}: <i>{}</i>"
 
-#: reviews/templatetags/documents_list.py:155
+#: reviews/templatetags/documents_list.py:157
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:178
+#: reviews/templatetags/documents_list.py:180
 msgid "Studie in PDF-vorm"
 msgstr "Proposal in PDF format"
 
-#: reviews/templatetags/documents_list.py:184
+#: reviews/templatetags/documents_list.py:186
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:190
+#: reviews/templatetags/documents_list.py:192
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:202
+#: reviews/templatetags/documents_list.py:204
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:205
+#: reviews/templatetags/documents_list.py:207
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:222
+#: reviews/templatetags/documents_list.py:224
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:223
+#: reviews/templatetags/documents_list.py:225
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:225
+#: reviews/templatetags/documents_list.py:227
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:230
+#: reviews/templatetags/documents_list.py:232
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:234
+#: reviews/templatetags/documents_list.py:236
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:242
+#: reviews/templatetags/documents_list.py:244
 msgid "Toestemmingsdocument observatiestudie"
 msgstr "Consent document for observational study"
 
-#: reviews/utils/review_actions.py:100
+#: reviews/utils/review_actions.py:97
 msgid "Beëindig de afhandeling van deze studie"
 msgstr "Discontinue assessment of this proposal"
 
-#: reviews/utils/review_actions.py:128
+#: reviews/utils/review_actions.py:125
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
@@ -5040,11 +5057,11 @@ msgstr "Trajectory {}"
 msgid "%(sessions_number)s sessie(s) voor studie %(title)s aangemaakt"
 msgstr "%(sessions_number)s sessions for application %(title)s created"
 
-#: studies/views/study_views.py:28
+#: studies/views/study_views.py:29
 msgid "Studie opgeslagen"
 msgstr "Application saved"
 
-#: studies/views/study_views.py:62
+#: studies/views/study_views.py:63
 msgid "Studieontwerp opgeslagen"
 msgstr "Study subject saved"
 
@@ -5287,6 +5304,9 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Studie"
+#~ msgstr "Proposal"
 
 #~ msgid "Een gereviseerde studie aanmelden"
 #~ msgstr "Submit a revised version of your study"

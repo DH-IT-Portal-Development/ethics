@@ -78,15 +78,12 @@ class ReviewAction:
 class DiscontinueReview(ReviewAction):
 
     def is_available(self, user):
-        '''Only allow secretary to discontinue unclosed reviews'''
+        '''Only allow secretary to discontinue reviews'''
 
         review = self.review
 
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
-            return False
-
-        if review.stage == review.CLOSED:
             return False
 
         return True
