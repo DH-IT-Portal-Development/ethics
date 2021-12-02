@@ -4,21 +4,23 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from proposals.models import Proposal
-from reviews.models import Review
+from reviews.models import Review, Decision
 
 class ReviewActions:
 
 
-    def __init__(self, review):
+    def __init__(self, review, user=None):
 
         self.review = review
 
         # Create and initialize actions
-        self.detail_actions = [ChangeAssignment(review),
+        self.detail_actions = [DecideAction(review, user=user),
+                               ChangeAssignment(review),
                                DiscontinueReview(review),
         ]
         self.ufl_actions = []
 
+        # Does not check for uniqueness
         self.all_actions = self.ufl_actions + self.detail_actions
 
     def __call__(self, user):
@@ -75,6 +77,47 @@ class ReviewAction:
         return mark_safe(self.text_with_link())
 
 
+class DecideAction(ReviewAction):
+
+    def get_available_decision(self):
+
+        user = self.user
+        review = self.review
+
+        try:
+            decision = Decision.objects.get(review=review,
+                                            reviewer=user,
+            )
+        except Decision.DoesNotExist:
+            return None
+
+        print(self.review, self.user, 'DECISION', decision)
+
+        return decision
+
+
+    def is_available(self, user):
+
+        review = self.review
+
+        if not self.get_available_decision():
+            return False
+
+        return True
+
+    def action_url(self):
+
+        decision_pk = self.get_available_decision().pk
+
+        return reverse('reviews:decide', args=(decision_pk,))
+
+    def description(self):
+
+        decision = self.get_available_decision()
+
+        return _('Geef jouw beslissing en/of commentaar door')
+
+
 class DiscontinueReview(ReviewAction):
 
     def is_available(self, user):
@@ -84,6 +127,9 @@ class DiscontinueReview(ReviewAction):
 
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
+            return False
+
+        if review.continuation == review.DISCONTINUED:
             return False
 
         return True
