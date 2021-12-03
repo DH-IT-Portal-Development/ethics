@@ -14,7 +14,8 @@ class ReviewActions:
         self.review = review
 
         # Create and initialize actions
-        self.detail_actions = [DecideAction(review, user=user),
+        self.detail_actions = [CloseReview(review, user=user),
+                               DecideAction(review, user=user),
                                ChangeAssignment(review),
                                DiscontinueReview(review),
         ]
@@ -95,8 +96,6 @@ class DecideAction(ReviewAction):
         except Decision.DoesNotExist:
             return None
 
-        print(self.review, self.user, 'DECISION', decision)
-
         return decision
 
 
@@ -122,6 +121,35 @@ class DecideAction(ReviewAction):
         return _('Geef jouw beslissing en/of commentaar door')
 
 
+class CloseReview(ReviewAction):
+
+    def is_available(self, user):
+        '''Only secretaries may close reviews, which must be in the
+        closing stage '''
+
+        review = self.review
+
+        if review.stage != review.CLOSING:
+            return False
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+
+        return True
+
+
+    def action_url(self, user=None):
+
+        return reverse('reviews:close', args=(self.review.pk,))
+
+    def description(self):
+
+        return _('Deze aanvraag afsluiten')
+
+
+
+
 class DiscontinueReview(ReviewAction):
 
     def is_available(self, user):
@@ -144,7 +172,7 @@ class DiscontinueReview(ReviewAction):
 
     def description(self):
 
-        return _('Beëindig de afhandeling van deze studie')
+        return _('Beëindig definitief de afhandeling van deze studie')
 
 
 class ChangeAssignment(ReviewAction):
