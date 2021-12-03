@@ -84,9 +84,13 @@ class DecideAction(ReviewAction):
         user = self.user
         review = self.review
 
+        if review.stage != review.COMMISSION:
+            return False
+
         try:
             decision = Decision.objects.get(review=review,
                                             reviewer=user,
+                                            go='',
             )
         except Decision.DoesNotExist:
             return None
