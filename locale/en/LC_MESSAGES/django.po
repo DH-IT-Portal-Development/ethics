@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-29 15:27+0100\n"
+"POT-Creation-Date: 2021-11-29 16:22+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -561,8 +561,6 @@ msgid "Alle aanvragen bekijken van de Algemene Kamer"
 msgstr "View all applications of the General Chamber"
 
 #: main/templates/base/menu.html:58 proposals/menus.py:94
-#, fuzzy
-#| msgid "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer"
 msgid "Alle aanvragen bekijken van de Linguïstiek Kamer"
 msgstr ""
 "View all processed and approved applications of the Linguistics Chamber"
@@ -768,21 +766,15 @@ msgstr ""
 #: main/templates/main/index.html:36
 msgid ""
 "\n"
-"                De FETC-GW Portal is vernieuwd! We hebben ons best gedaan om "
-"gebruikers een mooiere en meer bruikbare portal voor te schotelen. Er kunnen "
-"echter een paar dingen tijdens de vernieuwing over het hoofd gezien zijn. "
-"Ontdek je een foutje, missende functionaliteit, of verkeerde vertaling? Help "
-"ons dan de portal te verbeteren door een mailtje te sturen naar <a href="
-"\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.\n"
+"                <em>Veranderingen in taalgebruik in de portal:</em> "
+"Recentelijk is het woord \"studie\" op de meeste plaatsen vervangen door "
+"\"aanvraag\". In het Engels is gekozen voor het woord \"proposal\", maar u "
+"kunt ook \"application\" tegenkomen in de context van het aanvraagproces. "
+"Vindt u een onduidelijke tekst, foute vertaling, of ander mankement aan de "
+"portal? Meld dit dan vooral aan <a href=\"mailto:labbeheer.gw@uu.nl"
+"\">labbeheer.gw@uu.nl</a>.\n"
 "            "
 msgstr ""
-"\n"
-"The FEtC-H portal has been upgraded! We've tried our hardest to deliver all "
-"users a nicer and more usable portal. As a result of this, there may be a "
-"couple of bugs and ommissions here and there. We kindly ask that you report "
-"any issues, such as a bad translation, bug, or missing functionality to <a "
-"href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a> so we can fix them "
-"quickly.     "
 
 #: main/templates/main/index.html:41
 #: proposals/templates/proposals/proposal_start.html:16
@@ -2452,19 +2444,20 @@ msgid ""
 "supervisie. Let er op dat je het formulier invult alsof jij die student/PhD "
 "kandidaat bent."
 msgstr ""
-"You are editing a proposal from a student/PhD candidate under your supervision. "
-"Please note that this form should be filled in as if you were that student/"
-"PhD candidate. "
+"You are editing a proposal from a student/PhD candidate under your "
+"supervision. Please note that this form should be filled in as if you were "
+"that student/PhD candidate. "
 
 #: proposals/templates/proposals/proposal_form_pre_approved.html:99
+#, python-format
 msgid ""
 "Dit formulier is bedoeld voor aanvragen die al goedgekeurd zijn door een "
 "andere commissie. Indien dit niet het geval is, dien je het <a href="
 "\"%(proposal_url)s\">normale formulier</a> in te vullen."
 msgstr ""
-"his form is meant for proposals that have already been approved by a different "
-"committee. If this is not the case, you are required to fill in the <a href="
-"\"%(proposal_url)s\">full form</a>."
+"his form is meant for proposals that have already been approved by a "
+"different committee. If this is not the case, you are required to fill in "
+"the <a href=\"%(proposal_url)s\">full form</a>."
 
 #: proposals/templates/proposals/proposal_list.html:42
 #: reviews/templates/reviews/action_explaination.html:18
@@ -2492,6 +2485,7 @@ msgstr ""
 "amendments)."
 
 #: proposals/templates/proposals/proposal_list.html:60
+#, python-format
 msgid ""
 "Klik op <img src=\"%(img_delete)s\" title=\"Verwijderen\"> om je aanvraag te "
 "verwijderen."
@@ -2499,6 +2493,7 @@ msgstr ""
 "Click <img src=\"%(img_delete)s\" title=\"Delete\"> to delete your proposal."
 
 #: proposals/templates/proposals/proposal_list.html:67
+#, python-format
 msgid ""
 "Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om een ingediende "
 "aanvraag in te zien."
@@ -2515,6 +2510,7 @@ msgstr ""
 "(as a supervisor)."
 
 #: proposals/templates/proposals/proposal_list.html:81
+#, python-format
 msgid ""
 "Klik op <img src=\"%(img_hide)s\" title=\"Verbergen\"> om een ingediende "
 "aanvraag te verbergen uit het archief."
@@ -2620,7 +2616,7 @@ msgstr "Session"
 msgid "Taak"
 msgstr "Task"
 
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:42
 #, python-format
 msgid ""
 "\n"
@@ -2761,42 +2757,23 @@ msgstr "Next step >>"
 
 #: proposals/templates/proposals/proposal_start_practice.html:7
 #: proposals/templates/proposals/proposal_start_practice.html:14
-#, fuzzy
-#| msgid "Een nieuwe studie aanmelden (oefenportaal)"
 msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
-msgstr "Register a new study (practice portal)"
+msgstr "Register a new proposal (practice portal)"
 
 #: proposals/templates/proposals/proposal_start_practice.html:79
-#, fuzzy
-#| msgid "Houd er rekening mee dat een oefenstudie niet ingediend kan worden."
 msgid "Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden."
 msgstr ""
 "Please be advised that a practice proposal cannot be submitted to the FETC-H."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
-#, fuzzy
-#| msgid ""
-#| "Een nieuwe studie aanmelden (die al goedgekeurd is door een andere "
-#| "ethische toetsingscomissie)"
 msgid ""
 "Een nieuwe aanvraag aanmelden (die al goedgekeurd is door een andere "
 "ethische toetsingscomissie)"
 msgstr ""
-"Register a new study (that has been approved by another ethics committee)"
+"Register a new proposal (that has been approved by another ethics committee)"
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:17
-#, fuzzy
-#| msgid ""
-#| "Je wilt een nieuwe studie ter toetsing bij de FETC-GW aanmelden, die al "
-#| "getoetst is door een andere ethische (toetsings) commissie. Het is "
-#| "daarvoor <em>noodzakelijk</em> dat je goed bekend bent met het FETC-GW "
-#| "reglement. <br />Deze kan je vinden op de UU-webpagina van de FETC-GW: <a "
-#| "href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" target="
-#| "\"_blank\">reglement Algemene Kamer (AK)</a> en <a href=\"http://fetc-gw."
-#| "wp.hum.uu.nl/reglement-linguistiek-kamer/\" target=\"_blank\">reglement "
-#| "Linguïstiek Kamer (LK)</a>. Je kan jezelf en de commissieleden veel tijd "
-#| "besparen door je eerst goed te informeren."
 msgid ""
 "Je wilt een nieuwe aanvraag ter toetsing bij de FETC-GW aanmelden, die al "
 "getoetst is door een andere ethische (toetsings) commissie. Het is daarvoor "
@@ -2808,9 +2785,9 @@ msgid ""
 "Je kan jezelf en de commissieleden veel tijd besparen door je eerst goed te "
 "informeren."
 msgstr ""
-"You want to register a new study for testing by the FEtC-H that has     "
-"already been approved by a different ethics committee.It is therefore "
-"<em>necessary</em> to be familiar with the FEtC-GWregulations.Please refer "
+"You want to register a new application for assessment by the FEtC-H that has     "
+"already been approved by a different ethics committee. It is therefore "
+"<em>necessary</em> to be familiar with the FEtC-GW regulations. Please refer "
 "to the FEtC-H website for the regulations of <a href=\"https://fetc-gw.wp."
 "hum.uu.nl/en/regulations-general-chamber-2/\" target=\"_blank\">the  General "
 "Chamber</a> and <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
@@ -2871,12 +2848,6 @@ msgstr ""
 "by the FEtC-H through this route"
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:25
-#, fuzzy
-#| msgid ""
-#| "NB: De toetsing kan alleen op hoofdlijnen plaatsvinden en vervangt NIET "
-#| "de reguliere toetsing van specifieke studies; elke mensgebonden studie "
-#| "die in het kader van de onderzoeksaanvraag zal worden uitgevoerd dient "
-#| "vóóraf goedgekeurd te zijn door de FETC-GW."
 msgid ""
 "NB: De toetsing kan alleen op hoofdlijnen plaatsvinden en vervangt NIET de "
 "reguliere ethische toetsing van een onderzoek; elke mensgebonden studie die "
@@ -2917,13 +2888,6 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_submit.html:37
 #: proposals/templates/proposals/proposal_submit.html:54
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                        Als je er zeker van bent dat je studie op "
-#| "adequate wijze is gespecifieerd kan je de aanmelding\n"
-#| "                        nu ter beoordeling naar de FETC-GW versturen.\n"
-#| "                    "
 msgid ""
 "\n"
 "                        Als je er zeker van bent dat je aanvraag op adequate "
@@ -2932,7 +2896,7 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"    If you are sure your study is adequately specified, you can now submit "
+"    If you are sure your study is adequately described, you can now submit "
 "the application\n"
 "    to the FEtC-H for assessment.\n"
 "    "
@@ -2970,11 +2934,6 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_submit.html:61
-#, fuzzy
-#| msgid ""
-#| "Als je de aanmelding eerst nog even wilt nakijken kan dat door via "
-#| "\"Terug naar begin van de studie\" alle pagina's nog even door te lopen, "
-#| "of gebruik te maken van het stappen-menu hierboven."
 msgid ""
 "Als je de aanmelding eerst nog even wilt nakijken kan dat door via \"Terug "
 "naar begin van de aanvraag\" alle pagina's nog even door te lopen, of "
@@ -2995,13 +2954,6 @@ msgstr ""
 "submission."
 
 #: proposals/templates/proposals/proposal_submit.html:79
-#, fuzzy, python-format
-#| msgid ""
-#| "Je hebt nog geen toestemmingsverklaring of informatiebrief toegevoegd "
-#| "voor traject %(study_order)s. Die kan je op <a href=\"%(consent_link)s"
-#| "\">deze pagina</a> alsnog toevoegen. Als je deze formulieren nog niet "
-#| "klaar hebt, kan je ook op een later moment terugkeren; je studie is reeds "
-#| "opgeslagen en terug te vinden onder \"Mijn concepten\"."
 msgid ""
 "Je hebt nog geen toestemmingsverklaring of informatiebrief toegevoegd voor "
 "traject %(study_order)s. Die kan je op <a href=\"%(consent_link)s\">deze "
@@ -3012,7 +2964,7 @@ msgstr ""
 "You have not yet added a declaration of consent or information letter for "
 "trajectory %(study_order)s. You can add these on <a href=\"%(consent_link)s"
 "\">this page</a>. If these forms are not yet ready, you can return later; "
-"your study has already been saved and can be found under \"My drafts\"."
+"your application has already been saved and can be found under \"My drafts\"."
 
 #: proposals/templates/proposals/proposal_submit.html:91
 #, python-format
@@ -3074,10 +3026,6 @@ msgid "Je ontvangt een e-mail ter bevestiging."
 msgstr "You will receive a confirmation email."
 
 #: proposals/templates/proposals/proposal_submitted.html:40
-#, fuzzy, python-format
-#| msgid ""
-#| "Klik <a href=\"%(submitted_url)s\">hier</a> om je ingediende studies in "
-#| "te zien."
 msgid ""
 "Klik <a href=\"%(submitted_url)s\">hier</a> om je ingediende aanvragen in te "
 "zien."
@@ -3148,22 +3096,14 @@ msgstr ""
 "Give each trajectory below a descriptive title of a maximum of 15 characters."
 
 #: proposals/templates/proposals/study_start.html:56
-#, fuzzy
-#| msgid ""
-#| "Je kan de aard van de studie nu in detail op de volgende pagina's "
-#| "specificeren."
 msgid ""
 "Je kan de aard van de aanvraag nu in detail op de volgende pagina's "
 "specificeren."
 msgstr ""
-"You can now describe the nature of the study in detail on the following "
+"You can now describe the nature of the proposal in detail on the following "
 "pages."
 
 #: proposals/templates/proposals/study_start.html:57
-#, fuzzy
-#| msgid ""
-#| "Je kan de aard van de studie nu <em>per traject</em> in detail op de "
-#| "volgende pagina's specificeren."
 msgid ""
 "Je kan de aard van de aanvraag nu <em>per traject</em> in detail op de "
 "volgende pagina's specificeren."
@@ -3191,10 +3131,8 @@ msgid "Verberg"
 msgstr "Hide"
 
 #: proposals/templates/proposals/vue_templates/proposal_list.html:98
-#, fuzzy
-#| msgid "Nieuwe aanvraag"
 msgid "Soort aanvraag"
-msgstr "New application"
+msgstr "Type of application"
 
 #: proposals/templates/proposals/vue_templates/proposal_list.html:107
 msgid "Besloten op"
@@ -3227,16 +3165,12 @@ msgid "Indieners"
 msgstr "Applicants"
 
 #: proposals/templates/proposals/wmo_application.html:33
-#, fuzzy
-#| msgid ""
-#| "Zolang je studie nog niet is beoordeeld door de METC, kan je niet verder "
-#| "in het aanmeldingsproces."
 msgid ""
 "Zolang je aanvraag nog niet is beoordeeld door de METC, kan je niet verder "
 "in het aanmeldingsproces."
 msgstr ""
-"Until your study has been assessed by the METC, you cannot continue with the "
-"registration process."
+"Until your proposal has been assessed by the METC, you cannot continue with the "
+"application process."
 
 #: proposals/templates/proposals/wmo_check.html:7
 #: proposals/templates/proposals/wmo_check.html:26
@@ -3274,16 +3208,12 @@ msgid "Versturen"
 msgstr "Submit"
 
 #: proposals/utils/proposal_utils.py:369
-#, fuzzy
-#| msgid "FETC-GW: gereviseerde studie gebruikt labfaciliteiten"
 msgid "FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten"
-msgstr "FEtC-H: A revised study makes use of lab facilities"
+msgstr "FEtC-H: A revised proposal uses lab facilities"
 
 #: proposals/utils/proposal_utils.py:371
-#, fuzzy
-#| msgid "FETC-GW: nieuwe studie gebruikt labfaciliteiten"
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
-msgstr "FEtC-H: New study makes use of lab facilities"
+msgstr "FEtC-H: New proposal uses lab facilities"
 
 #: proposals/utils/validate_proposal.py:98
 msgid "De deelnemers (traject {})"
@@ -3324,9 +3254,6 @@ msgid "AVG en Data Management"
 msgstr "AVG and Data Management"
 
 #: proposals/validators.py:33
-#, fuzzy
-#| msgid ""
-#| "Je dient kennis genomen te hebben van de AVG om jouw studie in te dienen"
 msgid ""
 "Je dient kennis genomen te hebben van de AVG om jouw aanvraag in te dienen"
 msgstr ""
@@ -3338,54 +3265,35 @@ msgid "Publiek archief"
 msgstr "Public archive"
 
 #: proposals/views/proposal_views.py:37
-#, fuzzy
-#| msgid "Dit overzicht toont alle goedgekeurde studies."
 msgid "Dit overzicht toont alle goedgekeurde aanvragen."
 msgstr "This overview shows all approved applications."
 
 #: proposals/views/proposal_views.py:56
-#, fuzzy
-#| msgid "Nieuwe aanvraag"
 msgid "Mijn aanvraag"
 msgstr "New application"
 
 #: proposals/views/proposal_views.py:57
-#, fuzzy
-#| msgid "Dit overzicht toont al je studies."
 msgid "Dit overzicht toont al je aanvragen."
 msgstr "This overview shows all your applications."
 
 #: proposals/views/proposal_views.py:70
-#, fuzzy
-#| msgid "Dit overzicht toont al je nog niet ingediende studies."
 msgid "Dit overzicht toont al je nog niet ingediende aanvragen."
 msgstr "This overview shows all the applications you have not yet submitted."
 
 #: proposals/views/proposal_views.py:82
-#, fuzzy
-#| msgid "Dit overzicht toont al je ingediende studies."
 msgid "Dit overzicht toont al je ingediende aanvragen."
 msgstr "This overview shows all the applications you have submitted."
 
 #: proposals/views/proposal_views.py:94
-#, fuzzy
-#| msgid "Dit overzicht toont al je beoordeelde studies."
 msgid "Dit overzicht toont al je beoordeelde aanvragen."
 msgstr "This overview shows all your applications that have been assessed."
 
 #: proposals/views/proposal_views.py:107
-#, fuzzy
-#| msgid ""
-#| "Dit overzicht toont al je studies waarvan je eindverantwoordelijke bent."
 msgid ""
 "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
 #: proposals/views/proposal_views.py:120
-#, fuzzy
-#| msgid ""
-#| "Dit overzicht toont alle oefenstudies waar je als student, onderzoeker of "
-#| "eindverantwoordelijke bij betrokken bent."
 msgid ""
 "Dit overzicht toont alle oefenaanvragen waar je als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3394,18 +3302,14 @@ msgstr ""
 "student, researcher or accountable researcher."
 
 #: proposals/views/proposal_views.py:227
-#, fuzzy
-#| msgid "Taak verwijderd"
 msgid "Aanvraag verwijderd"
-msgstr "Task deleted"
+msgstr "Application deleted"
 
 #: proposals/views/proposal_views.py:338
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
 #: proposals/views/proposal_views.py:426
-#, fuzzy
-#| msgid "Studie gekopieerd"
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -3422,10 +3326,8 @@ msgid "WMO-gegevens bewerkt"
 msgstr "WMO information edited"
 
 #: proposals/views/wmo_views.py:148
-#, fuzzy
-#| msgid "Je studie hoeft niet te worden beoordeeld door de METC."
 msgid "Je onderzoek hoeft niet te worden beoordeeld door de METC."
-msgstr "Your study does not require assessment by a METC."
+msgstr "Your proposal does not require assessment by an METC."
 
 #: proposals/views/wmo_views.py:155
 #, python-brace-format
@@ -3433,10 +3335,8 @@ msgid "Neem contact op met {secretary} om de twijfels weg te nemen."
 msgstr "Contact {secretary} to make sure."
 
 #: proposals/views/wmo_views.py:161
-#, fuzzy
-#| msgid "Je studie zal moeten worden beoordeeld door de METC."
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
-msgstr "Your study will require assessment by a METC."
+msgstr "Your proposal will require assessment by an METC."
 
 #: reviews/api/views.py:31 reviews/api/views.py:320
 #: reviews/templates/reviews/vue_templates/decision_list.html:112
@@ -3477,10 +3377,8 @@ msgid "Er moet tenminste één beoordelaar geselecteerd worden."
 msgstr "You must select at least one reviewer."
 
 #: reviews/forms.py:105
-#, fuzzy
-#| msgid "Voeg deze studie toe aan het archief"
 msgid "Voeg deze aanvraag toe aan het archief"
-msgstr "Add this study to the archive"
+msgstr "Add this proposal to the archive"
 
 #: reviews/forms.py:111
 msgid "Opmerkingen over revisie"
@@ -3491,8 +3389,6 @@ msgid "Bevestig beëindiging"
 msgstr "Confirm termination of this review"
 
 #: reviews/menus.py:37 reviews/views.py:134
-#, fuzzy
-#| msgid "Alle lopende studies"
 msgid "Alle lopende aanvragen"
 msgstr "All running studies"
 
@@ -3574,12 +3470,6 @@ msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
 #: reviews/templates/reviews/action_explaination.html:21
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om een "
-#| "ingediende studie in te zien.\n"
-#| "            "
 msgid ""
 "\n"
 "                Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om een "
@@ -3588,7 +3478,7 @@ msgid ""
 msgstr ""
 "\n"
 "        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
-"study.\n"
+"proposal.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:26
@@ -3608,13 +3498,6 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:32
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Klik op <img src=\"%(img_details)s\" title=\"Toon details"
-#| "\"> om alle details en beoordelingen van\n"
-#| "                een ingediende studie te zien.\n"
-#| "            "
 msgid ""
 "\n"
 "                Klik op <img src=\"%(img_details)s\" title=\"Toon details\"> "
@@ -3624,7 +3507,7 @@ msgid ""
 msgstr ""
 "\n"
 "        Click <img src=\"%(img_details)s\" title=\"Show details\"> to view "
-"details of a submitted study.\n"
+"details of a submitted proposal.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:38
@@ -3644,14 +3527,8 @@ msgstr ""
 msgid "Uitleg secretaris"
 msgstr "Explanation for secretary"
 
+
 #: reviews/templates/reviews/action_explaination.html:49
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_hide)s\" title=\"Verbergen"
-#| "\"> om een ingediende studie te verbergen uit het\n"
-#| "                    archief.\n"
-#| "                "
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_hide)s\" title=\"Verbergen\"> "
@@ -3661,7 +3538,7 @@ msgid ""
 msgstr ""
 "\n"
 "        Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted "
-"study from the archive.\n"
+"proposal from the archive.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:55
@@ -3678,13 +3555,6 @@ msgstr ""
 "  "
 
 #: reviews/templates/reviews/action_explaination.html:60
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_change_chamber)s\" title="
-#| "\"Verplaats naar andere kamer\"> om een studie\n"
-#| "                    te verplaatsen naar een andere kamer.\n"
-#| "                "
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_change_chamber)s\" title="
@@ -3694,17 +3564,11 @@ msgid ""
 msgstr ""
 "\n"
 "                    Click on <img src=\"%(img_change_chamber)s\" title="
-"\"Move to other chamber\"> to move a study \n"
+"\"Move to other chamber\"> to move an application \n"
 "                    to a different chamber.\n"
 "                "
 
 #: reviews/templates/reviews/action_explaination.html:66
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Klik op <img src=\"%(img_close)s\" title=\"Afsluiten"
-#| "\"> om een studie af te sluiten.\n"
-#| "                "
 msgid ""
 "\n"
 "                    Klik op <img src=\"%(img_close)s\" title=\"Afsluiten\"> "
@@ -3713,7 +3577,7 @@ msgid ""
 msgstr ""
 "\n"
 "                    Click on <img src=\"%(img_close)s\" title=\"Conclude\"> "
-"to conclude a study.\n"
+"to conclude an application.\n"
 "                "
 
 #: reviews/templates/reviews/action_explaination.html:71
@@ -3780,32 +3644,25 @@ msgstr "OK"
 
 #: reviews/templates/reviews/decision_form.html:7
 #: reviews/templates/reviews/decision_form.html:17
-#, fuzzy
-#| msgid "Aanvraag bij voortoetsing"
 msgid "Aanvraag beoordelen"
-msgstr "Application for preliminary assessment"
+msgstr "Assess an application"
 
 #: reviews/templates/reviews/decision_form.html:24
-#, fuzzy, python-format
-#| msgid ""
-#| "Je kunt nu een go of no-go geven voor de studie <em>%(title)s</em>, "
-#| "%(refnum)s in %(chamber)s. De studie is <a href=\"%(pdf_url)s\" target="
-#| "\"_blank\">hier</a> in te zien (downloadt als PDF)."
 msgid ""
 "Je kunt nu een go of no-go geven voor de aanvraag <em>%(title)s</em>, "
 "%(refnum)s in %(chamber)s. De aanvraag is <a href=\"%(pdf_url)s\" target="
 "\"_blank\">hier</a> in te zien (downloadt als PDF)."
 msgstr ""
-"    You can now give a go or no-go for the study <em>%(title)s</em>, "
+"    You can now give a go or no-go for the application <em>%(title)s</em>, "
 "%(refnum)s in %(chamber)s.\n"
-"    You can see the details of this study <a href=\"%(pdf_url)s\" target="
+"    You can see the details of this proposal <a href=\"%(pdf_url)s\" target="
 "\"_blank\">here</a> (downloads as PDF).\n"
 "    "
 
 #: reviews/templates/reviews/decision_form.html:32
 #, python-format
 msgid "Je kunt nu de aanvraag <em>%(title)s</em> bekijken.<br/>"
-msgstr "You can now (re)view the study <em>%(title)s</em>."
+msgstr "You can now (re)view this application here: <em>%(title)s</em>."
 
 #: reviews/templates/reviews/decision_form.html:37
 msgid ""
@@ -3818,10 +3675,6 @@ msgstr ""
 "to the FEtC-H. "
 
 #: reviews/templates/reviews/decision_form.html:44
-#, fuzzy
-#| msgid ""
-#| "Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de "
-#| "studie aan te passen:"
 msgid ""
 "Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de "
 "aanvraag aan te passen:"
@@ -3830,32 +3683,18 @@ msgstr ""
 "study: "
 
 #: reviews/templates/reviews/decision_form.html:51
-#, fuzzy, python-format
-#| msgid ""
-#| "door de supervisor (jijzelf)<br/> Als supervisor kan je deze studie <a "
-#| "href=\"%(update_url)s\" target=\"_blank\">hier</a> aanpassen. Daarna word "
-#| "je teruggeleid naar deze pagina en kun je hieronder de studie goedkeuren; "
-#| "dat betekent dat de aanvraag wordt ingediend bij de FETC-GW."
 msgid ""
 "door de supervisor (jijzelf)<br/> Als supervisor kan je deze aanvraag <a "
 "href=\"%(update_url)s\" target=\"_blank\">hier</a> aanpassen. Daarna word je "
 "teruggeleid naar deze pagina en kun je hieronder de aanvraag goedkeuren; dat "
 "betekent dat de aanvraag wordt ingediend bij de FETC-GW."
 msgstr ""
-"by the supervisor (yourself)<br/>As a supervisor you can edit this study <a "
+"by the supervisor (yourself)<br/>As a supervisor you can edit this proposal <a "
 "href=\"%(update_url)s\" target=\"_blank\">here</a>. After which, you will be "
-"redirected back to this page and you can approve the study; this means that "
-"the study is submitted to the FEtC-H. "
+"redirected back to this page and you can approve the proposal; this means that "
+"the application is submitted to the FEtC-H. "
 
 #: reviews/templates/reviews/decision_form.html:59
-#, fuzzy
-#| msgid ""
-#| "door de indiener (je student of promovendus)<br/> Indien je wilt dat de "
-#| "indiener de studie zelf aanpast voordat je de studie kunt goedkeuren en "
-#| "daarmee bij de FETC-GW indient, selecteer dan 'revisie noodzakelijk' of "
-#| "‘niet goedgekeurd’ hieronder, voeg eventuele opmerkingen toe, en klik op "
-#| "'Beslissing opslaan'. Zodra je dit gedaan hebt kan de indiener weer "
-#| "aanpassingen doen. <br/>"
 msgid ""
 "door de indiener (je student of promovendus)<br/> Indien je wilt dat de "
 "indiener de aanvraag zelf aanpast voordat je de studie kunt goedkeuren en "
@@ -3865,32 +3704,20 @@ msgid ""
 "aanpassingen doen. <br/>"
 msgstr ""
 "by the submitter (your student or PhD candidate)<br/>If you want the "
-"submitter to amend the study before you approve it (and thereby submit it to "
+"submitter to amend the application before you approve it (and thereby submit it to "
 "the FEtC-H), select 'revision necessary' or 'not endorsed' below, add any "
 "comments, and click 'Save decision'. Once you have done this, the submitter "
 "can make changes again. <br/> "
 
 #: reviews/templates/reviews/decision_form.html:70
-#, fuzzy
-#| msgid ""
-#| "Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw "
-#| "heeft verstuurd, zal je de aangepaste studie opnieuw moeten beoordelen."
 msgid ""
 "Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft "
 "verstuurd, zal je de aangepaste aanvraag opnieuw moeten beoordelen."
 msgstr ""
-"Once the submitter has made the requested changes and resubmitted the study, "
+"Once the submitter has made the requested changes and resubmitted the proposal, "
 "you will have to re-evaluate the application. "
 
 #: reviews/templates/reviews/decision_form.html:80
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                            Dit is een revisie van of amendement op een "
-#| "vorige studie. De verschillen met de vorige\n"
-#| "                            studie zijn <a href=\"%(diff_url)s\">hier</a> "
-#| "in te zien.\n"
-#| "                        "
 msgid ""
 "\n"
 "                            Dit is een revisie van of amendement op een "
@@ -3900,8 +3727,8 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"    This is a revision or amendment of a previous study. You can check the "
-"differences compared to the previous study <a href=\"%(diff_url)s\">here</"
+"    This is a revision or amendment of a previous application. You can check the "
+"differences compared to the previous application <a href=\"%(diff_url)s\">here</"
 "a>.\n"
 "    "
 
@@ -3920,12 +3747,6 @@ msgid "Commissieleden aanstellen"
 msgstr "Appoint committee members"
 
 #: reviews/templates/reviews/review_assign_form.html:36
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                    Kies hier de geschikte route en commissieleden voor "
-#| "de studie <em>%(title)s</em>.\n"
-#| "                "
 msgid ""
 "\n"
 "                    Kies hier de geschikte route en commissieleden voor de "
@@ -3933,7 +3754,7 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"    Choose the appropriate route and committee members for the study <em>"
+"    Choose the appropriate route and committee members for the application <em>"
 "%(title)s</em> here.\n"
 "    "
 
@@ -4096,8 +3917,8 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"        A revision was made to this proposal after it was submitted to the FEtC-"
-"H .\n"
+"        A revision was made to this proposal after it was submitted to the "
+"FEtC-H .\n"
 "    "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:97
@@ -4183,8 +4004,6 @@ msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
 #: reviews/templatetags/documents_list.py:178
-#, fuzzy
-#| msgid "Studie in PDF-vorm"
 msgid "Aanvraag in PDF-vorm"
 msgstr "Proposal in PDF format"
 
@@ -4225,14 +4044,10 @@ msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
 #: reviews/templatetags/documents_list.py:242
-#, fuzzy
-#| msgid "Toestemmingsdocument observatiestudie"
 msgid "Toestemmingsdocument observatie"
-msgstr "Consent document for observational study"
+msgstr "Consent document for observation"
 
 #: reviews/utils/review_actions.py:100
-#, fuzzy
-#| msgid "Beëindig de afhandeling van deze studie"
 msgid "Beëindig de afhandeling van deze aanvraag"
 msgstr "Discontinue assessment of this proposal"
 
@@ -4262,8 +4077,6 @@ msgstr ""
 "FEtC-H: confirmation of submission of application for preliminary assessment"
 
 #: reviews/utils/review_utils.py:245
-#, fuzzy
-#| msgid "FETC-GW {} {}: nieuwe studie ingediend"
 msgid "FETC-GW {} {}: nieuwe aanvraag ingediend"
 msgstr "FEtC-H {} {}: new application submitted"
 
@@ -4272,8 +4085,6 @@ msgid "FETC-GW {} {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {} {}: new decision added"
 
 #: reviews/utils/review_utils.py:277
-#, fuzzy
-#| msgid "FETC-GW: eindverantwoordelijke heeft je studie beoordeeld"
 msgid "FETC-GW: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H: a supervisor has reviewed your proposal"
 
@@ -4283,40 +4094,28 @@ msgstr ""
 "The intended start date is before the date that the study was submitted"
 
 #: reviews/utils/review_utils.py:316
-#, fuzzy
-#| msgid "De studie is een interventiestudie."
 msgid "De aanvraag bevat een interventiestudie."
-msgstr "The study is an intervention study."
+msgstr "The proposal contains an intervention study."
 
 #: reviews/utils/review_utils.py:320
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "De studie heeft een interventiestudie met deelnemers in de volgende "
-#| "setting: {s}"
 msgid ""
 "De aanvraag heeft een interventiestudie met deelnemers in de volgende "
 "setting: {s}"
 msgstr ""
-"The study contains an intervention study with participants in the following "
+"The proposal contains an intervention study with participants in the following "
 "setting: {s}"
 
 #: reviews/utils/review_utils.py:323
-#, fuzzy
-#| msgid "De studie maakt gebruik van wilsonbekwame volwassenen."
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
-msgstr "The study makes use of adults incapable of informed consent."
+msgstr "The proposal contains the participation of adults incapable of informed consent."
 
 #: reviews/utils/review_utils.py:326
-#, fuzzy
-#| msgid "De studie werkt met passieve informed consent."
 msgid "De aanvraag bevat passieve informed consent."
 msgstr "The study works with passive informed consent."
 
 #: reviews/utils/review_utils.py:332
-#, fuzzy
-#| msgid "De studie maakt gebruik van misleiding."
 msgid "De aanvraag bevat het gebruik van misleiding."
-msgstr "The study makes use of misrepresentation."
+msgstr "The proposal contains the use of misrepresentation."
 
 #: reviews/utils/review_utils.py:335
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
@@ -4325,10 +4124,6 @@ msgstr ""
 "regulations."
 
 #: reviews/utils/review_utils.py:339
-#, fuzzy
-#| msgid ""
-#| "De studie selecteert deelnemers op bijzondere kenmerken die wellicht "
-#| "verhoogde kwetsbaarheid met zich meebrengen."
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4337,10 +4132,6 @@ msgstr ""
 "might entail increased vulnerability."
 
 #: reviews/utils/review_utils.py:345
-#, fuzzy
-#| msgid ""
-#| "De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
-#| "dagen deel (zoals bij longitudinaal onderzoek)."
 msgid ""
 "Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4349,26 +4140,16 @@ msgstr ""
 "multiple days (as in a longitudinal study)."
 
 #: reviews/utils/review_utils.py:348
-#, fuzzy
-#| msgid ""
-#| "De onderzoeker geeft aan dat (of twijfelt erover of) de studie op "
-#| "onderdelen of als geheel zodanig belastend is dat deze ondanks de "
-#| "verkregen informed consent vragen zou kunnen oproepen."
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
 "onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen "
 "informed consent vragen zou kunnen oproepen."
 msgstr ""
-"The researcher states (or considers it possible) that the study in part or "
-"in its entirety is so burdensome that despite acquiring informed consent it "
+"The researcher states (or considers it possible) that participation in the study, in part or "
+"in its entirety, is so burdensome that despite acquiring informed consent it "
 "might raise questions."
 
 #: reviews/utils/review_utils.py:352
-#, fuzzy
-#| msgid ""
-#| "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
-#| "psychische of fysieke schade bij deelname aan de studie meer dan minimaal "
-#| "zijn."
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan het onderzoek meer dan "
@@ -4379,8 +4160,6 @@ msgstr ""
 "minimal."
 
 #: reviews/utils/review_utils.py:359
-#, fuzzy, python-brace-format
-#| msgid "De studie heeft sessies met deelnemers in de volgende setting: {s}"
 msgid "Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
@@ -4397,17 +4176,11 @@ msgstr ""
 "({max_d} minutes) for the age group {ag}."
 
 #: reviews/utils/review_utils.py:380
-#, fuzzy, python-brace-format
-#| msgid "De studie observeert deelnemers in de volgende setting: {s}"
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
-"The study contains sessions with participants in the following setting: {s}"
+"The proposal contains sessions with participants in the following setting: {s}"
 
 #: reviews/utils/review_utils.py:384
-#, fuzzy
-#| msgid ""
-#| "De studie observeert deelnemers in een niet-publieke ruimte en werkt met "
-#| "informed consent achteraf."
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4426,20 +4199,14 @@ msgstr ""
 "and/or collects data which can be traced back to individuals."
 
 #: reviews/utils/review_utils.py:391 reviews/utils/review_utils.py:417
-#, fuzzy
-#| msgid "De studie maakt gebruik van {}"
 msgid "De aanvraag bevat het gebruik van {}"
-msgstr "The study makes use of {}"
+msgstr "The application makes use of {}"
 
 #: reviews/utils/review_utils.py:412
-#, fuzzy
-#| msgid ""
-#| "De studie gebruikt psychofysiologische metingen bij kinderen onder de {} "
-#| "jaar."
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
-"The study uses psychophysiological measurements on children under {} year(s) "
+"The proposal contains psychophysiological measurements on children under {} year(s) "
 "old."
 
 #: reviews/views.py:45
@@ -4455,13 +4222,10 @@ msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
 #: studies/forms.py:38
-#, fuzzy
-#| msgid ""
-#| "Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
 msgid ""
 "Maakt jouw onderzoek gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
 msgstr ""
-"Does your study make use of (adult) participants <u>incapable</u> of "
+"Does your research make use of (adult) participants <u>incapable</u> of "
 "informed consent?"
 
 #: studies/forms.py:85
@@ -4505,13 +4269,10 @@ msgstr ""
 "fill in 4-5 and 6-11."
 
 #: studies/models.py:143
-#, fuzzy
-#| msgid ""
-#| "Maakt je studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
 msgid ""
 "Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
 msgstr ""
-"Does your study make use of (adult) participants <u>incapable</u> of "
+"Does your proposal contain the use of (adult) participants <u>incapable</u> of "
 "informed consent?"
 
 #: studies/models.py:145
@@ -4531,26 +4292,18 @@ msgstr ""
 "from a relevant representative."
 
 #: studies/models.py:157
-#, fuzzy
-#| msgid ""
-#| "Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. "
-#| "Is dit in jouw studie bij (een deel van) de deelnemers het geval?"
 msgid ""
 "Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is "
 "dit in jouw onderzoek bij (een deel van) de deelnemers het geval?"
 msgstr ""
 "Participants can be included based on particular characteristics. Is this "
-"the case with (some of) the participants in your study?"
+"the case with (some of) the participants in this proposal?"
 
 #: studies/models.py:166
 msgid "Selecteer de bijzondere kenmerken van je proefpersonen"
 msgstr "Select the special characteristics of your participants"
 
 #: studies/models.py:172
-#, fuzzy
-#| msgid ""
-#| "Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het "
-#| "geselecteerde type deelnemer aan de studie te laten meedoen?"
 msgid ""
 "Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het "
 "geselecteerde type deelnemer aan het onderzoek te laten meedoen?"
@@ -4644,15 +4397,6 @@ msgstr ""
 "participant?"
 
 #: studies/models.py:248
-#, fuzzy
-#| msgid ""
-#| "Misleiding is het doelbewust verschaffen van inaccurate informatie over "
-#| "het doel en/of belangrijke aspecten van de gang van zaken tijdens de "
-#| "studie. Denk aan zaken als een bewust misleidende \"cover story\" voor "
-#| "het experiment; het ten onrechte suggereren dat er met andere deelnemers "
-#| "wordt samengewerkt; het onaangekondigd aanbieden van een cruciale "
-#| "geheugentaak of het geven van gefingeerde feedback. Wellicht ten "
-#| "overvloede: het gaat hierbij niet om fillers."
 msgid ""
 "Misleiding is het doelbewust verschaffen van inaccurate informatie over het "
 "doel en/of belangrijke aspecten van de gang van zaken tijdens het onderzoek. "
@@ -4725,13 +4469,6 @@ msgstr ""
 "project."
 
 #: studies/models.py:291
-#, fuzzy
-#| msgid ""
-#| "Licht je antwoord toe. Geef concrete voorbeelden van de relevante "
-#| "aspecten van je studie (bijv. representatieve voorbeelden van mogelijk "
-#| "zeer kwetsende woorden of uitspraken in de taak, of van zeer "
-#| "confronterende vragen in een vragenlijst), zodat de commissie zich een "
-#| "goed beeld kan vormen."
 msgid ""
 "Licht je antwoord toe. Geef concrete voorbeelden van de relevante aspecten "
 "van jouw onderzoek (bijv. representatieve voorbeelden van mogelijk zeer "
@@ -4834,19 +4571,6 @@ msgstr ""
 "    "
 
 #: studies/templates/studies/session_start.html:26
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                <strong>Sessie:</strong> Het geheel van de voor je studie "
-#| "benodigde betrokkenheid die je op één dag van een deelnemer vraagt. Bij "
-#| "een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege "
-#| "gebeurt vanaf het moment dat je de deelnemer ontvangt tot het moment dat "
-#| "je afscheid neemt, inclusief de benodigde pauzes. En bij een internet-"
-#| "vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het "
-#| "welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom "
-#| "inclusief benodigde pauzes. Bij veldwerk is dat de tijd dat je met de "
-#| "deelnemer in interactie bent op één dag.\n"
-#| "                "
 msgid ""
 "\n"
 "                <strong>Sessie:</strong> Het geheel van de voor je onderzoek "
@@ -4913,12 +4637,6 @@ msgid "De onderzoekstype(n)"
 msgstr "Type(s) of research"
 
 #: studies/templates/studies/study_design.html:21
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "                    De FETC-GW onderscheidt 3 typen onderzoek (die evt. "
-#| "ook samen in één studie voor kunnen komen):\n"
-#| "                "
 msgid ""
 "\n"
 "                    De FETC-GW onderscheidt 3 typen onderzoek (die evt. ook "
@@ -4927,7 +4645,7 @@ msgid ""
 msgstr ""
 "\n"
 "    The FEtC-H distinguishes 3 types of research (which may all be used "
-"within one study):\n"
+"within one proposal):\n"
 "    "
 
 #: studies/templates/studies/study_design.html:28
@@ -5209,14 +4927,6 @@ msgid "Vergoeding"
 msgstr "Compensation"
 
 #: studies/templates/studies/study_form.html:110
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                        Let op! Je hebt de vraag <a href=\"%(url)s\">'In "
-#| "welke hoedanigheid ben je betrokken bij deze studie?'</a> nog niet "
-#| "ingevuld, waardoor deze pagina nog kan veranderen op basis van je "
-#| "antwoord.\n"
-#| "                    "
 msgid ""
 "\n"
 "                        Let op! Je hebt de vraag <a href=\"%(url)s\">'In "
@@ -5226,7 +4936,7 @@ msgid ""
 msgstr ""
 "\n"
 "                Warning! The question <a href=\"%(url)s\">'In welke "
-"hoedanigheid ben je betrokken bij deze studie?'</a> has not been answered "
+"hoedanigheid ben je betrokken bij deze aanvraag?'</a> has not been answered "
 "yet. This page might change depending on your answer.\n"
 "            "
 
@@ -5281,33 +4991,23 @@ msgid "data management plan"
 msgstr "data management plan"
 
 #: studies/templatetags/describe_documents.py:62
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "            {} bij {} van studie {}-{}: <i>{}</i>\n"
-#| "            "
 msgid ""
 "\n"
 "            {} bij {} van aanvraag {}-{}: <i>{}</i>\n"
 "            "
 msgstr ""
 "\n"
-"{} of {} in study {}-{}: <i>{}</i>\n"
+"{} of {} in proposal {}-{}: <i>{}</i>\n"
 "      "
 
 #: studies/templatetags/describe_documents.py:71
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "            {} van studie {}-{}: <i>{}</i>\n"
-#| "            "
 msgid ""
 "\n"
 "            {} van aanvraag {}-{}: <i>{}</i>\n"
 "            "
 msgstr ""
 "\n"
-"{} of study {}-{}: <i>{}</i>\n"
+"{} of proposal {}-{}: <i>{}</i>\n"
 "      "
 
 #: studies/utils.py:65
@@ -5336,10 +5036,8 @@ msgid "Studie opgeslagen"
 msgstr "Application saved"
 
 #: studies/views/study_views.py:62
-#, fuzzy
-#| msgid "Consent opgeslagen"
 msgid "Traject opgeslagen"
-msgstr "Consent saved"
+msgstr "Trajectory saved"
 
 #: tasks/forms.py:17
 msgid "Is deze sessie een kopie van een voorgaande sessie?"
@@ -5580,6 +5278,25 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "\n"
+#~ "                De FETC-GW Portal is vernieuwd! We hebben ons best gedaan "
+#~ "om gebruikers een mooiere en meer bruikbare portal voor te schotelen. Er "
+#~ "kunnen echter een paar dingen tijdens de vernieuwing over het hoofd "
+#~ "gezien zijn. Ontdek je een foutje, missende functionaliteit, of verkeerde "
+#~ "vertaling? Help ons dan de portal te verbeteren door een mailtje te "
+#~ "sturen naar <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</"
+#~ "a>.\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "The FEtC-H portal has been upgraded! We've tried our hardest to deliver "
+#~ "all users a nicer and more usable portal. As a result of this, there may "
+#~ "be a couple of bugs and ommissions here and there. We kindly ask that you "
+#~ "report any issues, such as a bad translation, bug, or missing "
+#~ "functionality to <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu."
+#~ "nl</a> so we can fix them quickly.     "
 
 #~ msgid ""
 #~ "Nieuwe aanvraag starten (die al goedgekeurd is door een andere ethische "
