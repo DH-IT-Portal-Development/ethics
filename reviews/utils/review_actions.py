@@ -9,46 +9,47 @@ from reviews.models import Review, Decision
 class ReviewActions:
 
 
-    def __init__(self, review, user=None):
+    def __init__(self, review, user):
 
         self.review = review
+        self.user = user
 
         # Create and initialize actions
-        self.detail_actions = [CloseReview(review, user=user),
-                               DecideAction(review, user=user),
-                               ChangeAssignment(review),
-                               DiscontinueReview(review),
+        self.detail_actions = [CloseReview(review, user),
+                               DecideAction(review, user),
+                               ChangeAssignment(review, user),
+                               DiscontinueReview(review, user),
         ]
         self.ufl_actions = []
 
         # Does not check for uniqueness
         self.all_actions = self.ufl_actions + self.detail_actions
 
-    def __call__(self, user):
+    def __call__(self):
 
-        return self.get_all_actions(user)
+        return self.get_all_actions()
 
-    def get_all_actions(self, user):
+    def get_all_actions(self):
 
-        return [a for a in self.all_actions if a.is_available(user)]
+        return [a for a in self.all_actions if a.is_available()]
 
-    def get_ufl_actions(self, user):
+    def get_ufl_actions(self):
 
-        return [a for a in self.ufl_actions if a.is_available(user)]
+        return [a for a in self.ufl_actions if a.is_available()]
 
-    def get_detail_actions(self, user):
+    def get_detail_actions(self):
 
-        return [a for a in self.detail_actions if a.is_available(user)]
+        return [a for a in self.detail_actions if a.is_available()]
 
 
 class ReviewAction:
 
-    def __init__(self, review, user=None):
+    def __init__(self, review, user):
 
         self.review = review
-        self.user = user
+        self. user = user
 
-    def is_available(user=None):
+    def is_available(self, user=None):
         '''Returns true if this action is available to the specified
         user given the current review.'''
 
@@ -60,6 +61,9 @@ class ReviewAction:
 
     def action_url(self, user=None):
         '''Returns a URL for the action'''
+
+        if not user:
+            user = self.user
 
         return '#'
 
@@ -81,6 +85,7 @@ class ReviewAction:
 class DecideAction(ReviewAction):
 
     def get_available_decision(self):
+        '''Return an available decision for the current user, or None'''
 
         user = self.user
         review = self.review
@@ -99,7 +104,7 @@ class DecideAction(ReviewAction):
         return decision
 
 
-    def is_available(self, user):
+    def is_available(self):
 
         review = self.review
 
@@ -123,7 +128,7 @@ class DecideAction(ReviewAction):
 
 class CloseReview(ReviewAction):
 
-    def is_available(self, user):
+    def is_available(self):
         '''Only secretaries may close reviews, which must be in the
         closing stage '''
 
@@ -139,7 +144,7 @@ class CloseReview(ReviewAction):
         return True
 
 
-    def action_url(self, user=None):
+    def action_url(self):
 
         return reverse('reviews:close', args=(self.review.pk,))
 
@@ -152,10 +157,12 @@ class CloseReview(ReviewAction):
 
 class DiscontinueReview(ReviewAction):
 
-    def is_available(self, user):
-        '''Only allow secretary to discontinue reviews'''
+    def is_available(self):
+        '''Only allow secretaries to discontinue reviews which have
+        not yet been discontinued'''
 
         review = self.review
+        user = self.user
 
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
@@ -177,10 +184,12 @@ class DiscontinueReview(ReviewAction):
 
 class ChangeAssignment(ReviewAction):
 
-    def is_available(self, user):
+    def is_available(self):
         '''Only the secretary should be able to assign reviewers,
         supervisor reviews should be excluded, and no final decision
         should yet have been made.'''
+
+        user = self.user
 
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
