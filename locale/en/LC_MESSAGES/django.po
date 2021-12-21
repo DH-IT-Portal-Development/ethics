@@ -1202,7 +1202,7 @@ msgstr ""
 
 #: proposals/forms.py:59 proposals/forms.py:240 proposals/validators.py:25
 msgid "Er bestaat al een aanvraag met deze titel."
-msgstr "There is an existing study with this title."
+msgstr "There is an existing application with this title."
 
 #: proposals/forms.py:127
 msgid "Selecteer..."
@@ -1245,12 +1245,12 @@ msgid ""
 msgstr ""
 "If you don't already have formal approval from a different ethics committee, "
 "you need to complete the regular registration form. Return to the start "
-"page, and select \"Submit a new proposal that is completely new in this "
-"portal\" or \"from a copy of an old proposal.\""
+"page, and select \"Submit a new application that is completely new in this "
+"portal\" or \"from a copy of an old application.\""
 
 #: proposals/forms.py:226
 msgid "Ik maak een oefenaanvraag aan"
-msgstr "I am creating a practice proposal"
+msgstr "I am creating a practice application"
 
 #: proposals/forms.py:246 proposals/models.py:386
 msgid "Te kopiëren aanvraag"
@@ -1262,7 +1262,7 @@ msgstr "This field shows only applications in which you are involved."
 
 #: proposals/forms.py:288 proposals/forms.py:323
 msgid "Je kan de titel van je aanvraag nu, indien nodig, wijzigen."
-msgstr "You can, if necessary, change the title of your proposal here."
+msgstr "You can, if necessary, change the title of your application here."
 
 #: proposals/forms.py:290 proposals/forms.py:325
 msgid ""
@@ -1271,7 +1271,7 @@ msgid ""
 "deze portal kijken."
 msgstr ""
 "The title you submit here will be visible to the FEtC-H members and, if the "
-"proposal is approved, also to employees viewing the archive of this portal."
+"application is approved, also to employees viewing the archive of this portal."
 
 #: proposals/forms.py:297
 msgid "Te reviseren aanvraag"
@@ -1428,14 +1428,14 @@ msgstr "To which research institute are you affiliated?"
 
 #: proposals/models.py:118
 msgid "Wat is, indien bekend, de beoogde startdatum van je aanvraag?"
-msgstr "What is the intended start date of your proposal, if known?"
+msgstr "What is the intended start date of your proposed study, if known?"
 
 #: proposals/models.py:125
 msgid ""
 "Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in alle "
 "formele correspondentie."
 msgstr ""
-"What is the title of your proposal? This title will be used in all formal "
+"What is the title of your application? This title will be used in all formal "
 "correspondence."
 
 #: proposals/models.py:130
@@ -1446,7 +1446,7 @@ msgid ""
 "een aanvraag die je hebt ingediend."
 msgstr ""
 "The title you submit here will be visible to the FEtC-H members and, if the "
-"study is approved, also to employees viewing the archive of this portal. The "
+"application is approved, also to employees viewing the archive of this portal. The "
 "title cannot be identical to that of a study you have previously submitted."
 
 #: proposals/models.py:138
@@ -1524,7 +1524,7 @@ msgstr ""
 
 #: proposals/models.py:234
 msgid "Welk instituut heeft de aanvraag goedgekeurd?"
-msgstr "Which institute has approved the proposal?"
+msgstr "Which institute approved the application?"
 
 #: proposals/models.py:242
 msgid ""
@@ -1600,7 +1600,7 @@ msgstr "Explain why"
 
 #: proposals/models.py:347
 msgid "In welke hoedanigheid ben je betrokken bij dit onderzoek?"
-msgstr "In what capacity are you involved in this proposal?"
+msgstr "In what capacity are you involved in this application?"
 
 #: proposals/models.py:362
 msgid "Uitvoerende(n) (inclusief uzelf)"
@@ -1719,8 +1719,8 @@ msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
 msgstr ""
-"Your proposal must be assessed by a METC, but it still needs to be "
-"registered with the FEtC-H. Has an application for this proposal already "
+"Your application must be assessed by an METC, but it still needs to be "
+"registered with the FEtC-H. Has an application for this project already "
 "been submitted to an METC?"
 
 #: proposals/models.py:563
@@ -2024,7 +2024,7 @@ msgid ""
 "gemarkeerd zijn kunnen hier gekozen worden."
 msgstr ""
 "You can create a revision here based on the previous version of your "
-"proposal. Only applications that have been marked as 'revision necessary' by "
+"application. Only applications that have been marked as 'revision necessary' by "
 "the committee can be selected here. "
 
 #: proposals/templates/proposals/proposal_copy.html:43
@@ -2034,7 +2034,7 @@ msgid ""
 "die je aanvraag al gemarkeerd heeft als 'revisie noodzakelijk'.)"
 msgstr ""
 "If your supervisor has asked you to make revisions, you should adjust the "
-"original proposal. (If you can't, ask your supervisor if they have correctly "
+"original application. (If you can't, ask your supervisor if they have correctly "
 "marked your study as 'revision necessary') "
 
 #: proposals/templates/proposals/proposal_copy.html:51
@@ -2043,22 +2043,22 @@ msgid ""
 "indienen. Je studie moet eerst goedgekeurd en afgehandeld zijn voordat die "
 "hier gekozen kan worden."
 msgstr ""
-"You can create an amendment here based on a proposal that has already been "
-"approved. Your proposal must have been approved by the committee before it "
+"You can create an amendment here based on an application that has already been "
+"approved. Your application must have been approved by the committee before it "
 "can be selected here. "
 
 #: proposals/templates/proposals/proposal_copy.html:60
 msgid ""
 "Je kan hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren "
 "aangepast worden."
-msgstr "Here you can copy a proposal. All fields can be edited after copying."
+msgstr "Here you can copy an application. All fields can be edited after copying."
 
 #: proposals/templates/proposals/proposal_copy.html:63
 msgid ""
 "Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe aanvraag "
 "gaat doen op basis van een eerder uitgevoerde aanvraag."
 msgstr ""
-"This page is only intended for creating an entirely new proposal based on a "
+"This page is only intended for creating an entirely new application based on a "
 "previous application. "
 
 #: proposals/templates/proposals/proposal_copy.html:69
@@ -2067,7 +2067,7 @@ msgid ""
 "Als je gevraagd is om een revisie te maken van een eerder ingediende "
 "aanvraag, kan je dat <a href=\"%(revision_url)s\">hier</a> doen."
 msgstr ""
-"If you have been asked to revise a previously submitted proposal, you can do "
+"If you have been asked to revise a previously submitted application, you can do "
 "so <a href=\"%(revision_url)s\">here</a>. "
 
 #: proposals/templates/proposals/proposal_copy.html:75
@@ -2077,7 +2077,7 @@ msgid ""
 "opnieuw getoetst moet worden, maak dan <a href=\"%(amendment_url)s\">hier</"
 "a> een amendement aan."
 msgstr ""
-"If you have changes to an already approved proposal that therefore needs to "
+"If you have changes to an already approved application that therefore needs to "
 "be re-reviewed, please make an amendment <a href=\"%(amendment_url)s\">here</"
 "a>."
 
@@ -2246,7 +2246,7 @@ msgid ""
 "opzichte van de originele aanvraag."
 msgstr ""
 "This overview shows the changes made in the revision/amendment with respect "
-"to the original proposal."
+"to the original application."
 
 #: proposals/templates/proposals/proposal_diff.html:48
 #: proposals/templates/proposals/proposal_form.html:7
@@ -2263,7 +2263,7 @@ msgstr ""
 #: proposals/utils/validate_proposal.py:50
 #: proposals/utils/validate_proposal.py:57
 msgid "Algemene informatie over de aanvraag"
-msgstr "General information about the proposal"
+msgstr "General information about the application"
 
 #: proposals/templates/proposals/proposal_diff.html:93
 #: proposals/templates/proposals/proposal_diff.html:94
@@ -2315,7 +2315,7 @@ msgid ""
 "maar deze zijn niet te vergelijken. Dit komt doordat de revisie een andere "
 "versie van het formulier gebruikt."
 msgstr ""
-"This revision and the original proposal both involve intervention research, "
+"This revision and the original application both involve intervention research, "
 "but this aspect cannot be compared. The revision uses a newer version of the "
 "form than the original."
 
@@ -2333,7 +2333,7 @@ msgid ""
 "dat wel bevat."
 msgstr ""
 "This revision does not involve intervention research, whereas the original "
-"proposal does include this."
+"application does include this."
 
 #: proposals/templates/proposals/proposal_diff.html:346
 msgid ""
@@ -2341,7 +2341,7 @@ msgid ""
 "maar deze zijn niet te vergelijken. Dit komt doordat de revisie een andere "
 "versie van het formulier gebruikt."
 msgstr ""
-"This revision and the original study both involve observation research, but "
+"This revision and the original application both involve observation research, but "
 "this aspect cannot be compared. The revision uses a newer version of the "
 "form than the original."
 
@@ -2350,7 +2350,7 @@ msgid ""
 "De revisie bevat observatieonderzoek, terwijl de originele aanvraag dat niet "
 "bevat."
 msgstr ""
-"This revision involves observation research, whereas the original proposal "
+"This revision involves observation research, whereas the original application "
 "does not."
 
 #: proposals/templates/proposals/proposal_diff.html:356
@@ -2359,7 +2359,7 @@ msgid ""
 "wel bevat."
 msgstr ""
 "This revision does not involve intervention research, whereas the original "
-"proposal does involve this."
+"application involve this."
 
 #: proposals/templates/proposals/proposal_diff.html:362
 #: proposals/templates/proposals/proposal_pdf.html:273
@@ -2385,7 +2385,7 @@ msgid ""
 "De revisie bevat takenonderzoek, terwijl de originele aanvraag dat niet "
 "bevat."
 msgstr ""
-"This revision involves tasks research, whereas the original proposal does "
+"This revision involves tasks research, whereas the original application does "
 "not."
 
 #: proposals/templates/proposals/proposal_diff.html:508
@@ -2393,7 +2393,7 @@ msgid ""
 "De revisie bevat geen takenonderzoek, terwijl de originele aanvraag dat wel "
 "bevat."
 msgstr ""
-"This revision does not involve tasks research, whereas the original proposal "
+"This revision does not involve tasks research, whereas the original application "
 "does involve this."
 
 #: proposals/templates/proposals/proposal_diff.html:513
@@ -2425,7 +2425,7 @@ msgid ""
 "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling "
 "door de FETC-GW worden ingediend."
 msgstr ""
-"You are currently editing a practice proposal. These can not be submitted to "
+"You are currently editing a practice application. These can not be submitted to "
 "the FETC-H for review."
 
 #: proposals/templates/proposals/proposal_form.html:97
@@ -2434,7 +2434,7 @@ msgid ""
 "supervisie. Let er op dat je het formulier invult alsof jij die student/PhD "
 "kandidaat bent."
 msgstr ""
-"You are editing a proposal from a student/PhD candidate under your "
+"You are editing a application from a student/PhD candidate under your "
 "supervision. Please note that this form should be filled in as if you were "
 "that student/PhD candidate. "
 
@@ -2444,7 +2444,7 @@ msgid ""
 "supervisie. Let er op dat je het formulier invult alsof jij die student/PhD "
 "kandidaat bent."
 msgstr ""
-"You are editing a proposal from a student/PhD candidate under your "
+"You are editing an application from a student/PhD candidate under your "
 "supervision. Please note that this form should be filled in as if you were "
 "that student/PhD candidate. "
 
@@ -2455,7 +2455,7 @@ msgid ""
 "andere commissie. Indien dit niet het geval is, dien je het <a href="
 "\"%(proposal_url)s\">normale formulier</a> in te vullen."
 msgstr ""
-"his form is meant for proposals that have already been approved by a "
+"his form is meant for applications that have already been approved by a "
 "different committee. If this is not the case, you are required to fill in "
 "the <a href=\"%(proposal_url)s\">full form</a>."
 
@@ -2490,7 +2490,7 @@ msgid ""
 "Klik op <img src=\"%(img_delete)s\" title=\"Verwijderen\"> om je aanvraag te "
 "verwijderen."
 msgstr ""
-"Click <img src=\"%(img_delete)s\" title=\"Delete\"> to delete your proposal."
+"Click <img src=\"%(img_delete)s\" title=\"Delete\"> to delete your application."
 
 #: proposals/templates/proposals/proposal_list.html:67
 #, python-format
@@ -2498,7 +2498,7 @@ msgid ""
 "Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om een ingediende "
 "aanvraag in te zien."
 msgstr ""
-"Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted study."
+"Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted application."
 
 #: proposals/templates/proposals/proposal_list.html:74
 #, python-format
@@ -2515,7 +2515,7 @@ msgid ""
 "Klik op <img src=\"%(img_hide)s\" title=\"Verbergen\"> om een ingediende "
 "aanvraag te verbergen uit het archief."
 msgstr ""
-"Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted proposal "
+"Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted application "
 "from the archive."
 
 #: proposals/templates/proposals/proposal_pdf.html:44
@@ -2588,7 +2588,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    FEtC-H - <em>proposal name</em> (reference number <em>reference number</"
+"    FEtC-H - <em>application name</em> (reference number <em>reference number</"
 "em>)\n"
 "    "
 
@@ -2650,7 +2650,7 @@ msgstr "Submit application for preliminary assessment"
 #: proposals/templates/proposals/proposal_start.html:7
 #: proposals/templates/proposals/proposal_start.html:13
 msgid "Een nieuwe aanvraag aanmelden"
-msgstr "Register a new proposal"
+msgstr "Register a new application"
 
 #: proposals/templates/proposals/proposal_start.html:19
 #: proposals/templates/proposals/proposal_start_practice.html:21
@@ -2708,7 +2708,7 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"A proposal consists of (i) trajectories, (ii) sessions, and (iii) tasks, in "
+"An application consists of (i) trajectories, (ii) sessions, and (iii) tasks, in "
 "descending order of subdivision.          "
 
 #: proposals/templates/proposals/proposal_start.html:53
@@ -2746,7 +2746,7 @@ msgid ""
 "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
 "invullen van een vragenlijst, een interview, of een taaltest. </p>"
 msgstr ""
-" A task or procedure within your research proposal. <p> <u>For example</u>: "
+" A task or procedure within your study. <p> <u>For example</u>: "
 "completing an interview, questionnaire, or language test.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:78
@@ -2758,12 +2758,12 @@ msgstr "Next step >>"
 #: proposals/templates/proposals/proposal_start_practice.html:7
 #: proposals/templates/proposals/proposal_start_practice.html:14
 msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
-msgstr "Register a new proposal (practice portal)"
+msgstr "Register a new application (practice portal)"
 
 #: proposals/templates/proposals/proposal_start_practice.html:79
 msgid "Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden."
 msgstr ""
-"Please be advised that a practice proposal cannot be submitted to the FETC-H."
+"Please be advised that a practice application cannot be submitted to the FETC-H."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
@@ -2771,7 +2771,7 @@ msgid ""
 "Een nieuwe aanvraag aanmelden (die al goedgekeurd is door een andere "
 "ethische toetsingscomissie)"
 msgstr ""
-"Register a new proposal (that has been approved by another ethics committee)"
+"Register a new application (that has been approved by another ethics committee)"
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:17
 msgid ""
@@ -2787,7 +2787,7 @@ msgid ""
 msgstr ""
 "You want to register a new application for assessment by the FEtC-H that has     "
 "already been approved by a different ethics committee. It is therefore "
-"<em>necessary</em> to be familiar with the FEtC-GW regulations. Please refer "
+"<em>necessary</em> to be familiar with the FEtC-H regulations. Please refer "
 "to the FEtC-H website for the regulations of <a href=\"https://fetc-gw.wp."
 "hum.uu.nl/en/regulations-general-chamber-2/\" target=\"_blank\">the  General "
 "Chamber</a> and <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
@@ -2896,7 +2896,7 @@ msgid ""
 "                    "
 msgstr ""
 "\n"
-"    If you are sure your study is adequately described, you can now submit "
+"    If you are sure your application is adequately described, you can now submit "
 "the application\n"
 "    to the FEtC-H for assessment.\n"
 "    "
@@ -3100,7 +3100,7 @@ msgid ""
 "Je kan de aard van de aanvraag nu in detail op de volgende pagina's "
 "specificeren."
 msgstr ""
-"You can now describe the nature of the proposal in detail on the following "
+"You can now describe the details of the application on the following "
 "pages."
 
 #: proposals/templates/proposals/study_start.html:57
@@ -3169,7 +3169,7 @@ msgid ""
 "Zolang je aanvraag nog niet is beoordeeld door de METC, kan je niet verder "
 "in het aanmeldingsproces."
 msgstr ""
-"Until your proposal has been assessed by the METC, you cannot continue with the "
+"Until your application been assessed by the METC, you cannot continue with the "
 "application process."
 
 #: proposals/templates/proposals/wmo_check.html:7
@@ -3209,11 +3209,11 @@ msgstr "Submit"
 
 #: proposals/utils/proposal_utils.py:369
 msgid "FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten"
-msgstr "FEtC-H: A revised proposal uses lab facilities"
+msgstr "FEtC-H: A revised application uses lab facilities"
 
 #: proposals/utils/proposal_utils.py:371
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
-msgstr "FEtC-H: New proposal uses lab facilities"
+msgstr "FEtC-H: New application uses lab facilities"
 
 #: proposals/utils/validate_proposal.py:98
 msgid "De deelnemers (traject {})"
@@ -3258,7 +3258,7 @@ msgid ""
 "Je dient kennis genomen te hebben van de AVG om jouw aanvraag in te dienen"
 msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
-"proposal."
+"application."
 
 #: proposals/views/proposal_views.py:36 proposals/views/proposal_views.py:141
 msgid "Publiek archief"
@@ -3270,7 +3270,7 @@ msgstr "This overview shows all approved applications."
 
 #: proposals/views/proposal_views.py:56
 msgid "Mijn aanvraag"
-msgstr "New application"
+msgstr "My application"
 
 #: proposals/views/proposal_views.py:57
 msgid "Dit overzicht toont al je aanvragen."
@@ -3327,7 +3327,7 @@ msgstr "WMO information edited"
 
 #: proposals/views/wmo_views.py:148
 msgid "Je onderzoek hoeft niet te worden beoordeeld door de METC."
-msgstr "Your proposal does not require assessment by an METC."
+msgstr "Your application does not require assessment by an METC."
 
 #: proposals/views/wmo_views.py:155
 #, python-brace-format
@@ -3336,7 +3336,7 @@ msgstr "Contact {secretary} to make sure."
 
 #: proposals/views/wmo_views.py:161
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
-msgstr "Your proposal will require assessment by an METC."
+msgstr "Your application will require assessment by an METC."
 
 #: reviews/api/views.py:31 reviews/api/views.py:320
 #: reviews/templates/reviews/vue_templates/decision_list.html:112
@@ -3378,7 +3378,7 @@ msgstr "You must select at least one reviewer."
 
 #: reviews/forms.py:105
 msgid "Voeg deze aanvraag toe aan het archief"
-msgstr "Add this proposal to the archive"
+msgstr "Add this application to the archive"
 
 #: reviews/forms.py:111
 msgid "Opmerkingen over revisie"
@@ -3390,7 +3390,7 @@ msgstr "Confirm termination of this review"
 
 #: reviews/menus.py:37 reviews/views.py:134
 msgid "Alle lopende aanvragen"
-msgstr "All running studies"
+msgstr "All running applications"
 
 #: reviews/models.py:17
 msgid "Beoordeling door eindverantwoordelijke"
@@ -3478,7 +3478,7 @@ msgid ""
 msgstr ""
 "\n"
 "        Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
-"proposal.\n"
+"application.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:26
@@ -3507,7 +3507,7 @@ msgid ""
 msgstr ""
 "\n"
 "        Click <img src=\"%(img_details)s\" title=\"Show details\"> to view "
-"details of a submitted proposal.\n"
+"details of a submitted application.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:38
@@ -3538,7 +3538,7 @@ msgid ""
 msgstr ""
 "\n"
 "        Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted "
-"proposal from the archive.\n"
+"application from the archive.\n"
 "        "
 
 #: reviews/templates/reviews/action_explaination.html:55
@@ -3619,13 +3619,13 @@ msgid ""
 "Volgens de automatische review kan dit voorstel de <em>korte (2-weken) "
 "route</em> volgen."
 msgstr ""
-"According to the automatic review this proposal can follow the <em>short (2-"
+"According to the automatic review this application can follow the <em>short (2-"
 "week route)</em>."
 
 #: reviews/templates/reviews/auto_review.html:9
 msgid "Volgens de automatische review moet dit voorstel nader worden bekeken."
 msgstr ""
-"According to the automatic review this proposal must be examined further."
+"According to the automatic review this application must be examined further."
 
 #: reviews/templates/reviews/auto_review.html:13
 msgid "Redenen"
@@ -3645,7 +3645,7 @@ msgstr "OK"
 #: reviews/templates/reviews/decision_form.html:7
 #: reviews/templates/reviews/decision_form.html:17
 msgid "Aanvraag beoordelen"
-msgstr "Assess an application"
+msgstr "Assess the application"
 
 #: reviews/templates/reviews/decision_form.html:24
 msgid ""
@@ -3655,7 +3655,7 @@ msgid ""
 msgstr ""
 "    You can now give a go or no-go for the application <em>%(title)s</em>, "
 "%(refnum)s in %(chamber)s.\n"
-"    You can see the details of this proposal <a href=\"%(pdf_url)s\" target="
+"    You can see the details of this application <a href=\"%(pdf_url)s\" target="
 "\"_blank\">here</a> (downloads as PDF).\n"
 "    "
 
@@ -3689,9 +3689,9 @@ msgid ""
 "teruggeleid naar deze pagina en kun je hieronder de aanvraag goedkeuren; dat "
 "betekent dat de aanvraag wordt ingediend bij de FETC-GW."
 msgstr ""
-"by the supervisor (yourself)<br/>As a supervisor you can edit this proposal <a "
+"by the supervisor (yourself)<br/>As a supervisor you can edit this application <a "
 "href=\"%(update_url)s\" target=\"_blank\">here</a>. After which, you will be "
-"redirected back to this page and you can approve the proposal; this means that "
+"redirected back to this page and you can approve the application; this means that "
 "the application is submitted to the FEtC-H. "
 
 #: reviews/templates/reviews/decision_form.html:59
@@ -3714,7 +3714,7 @@ msgid ""
 "Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft "
 "verstuurd, zal je de aangepaste aanvraag opnieuw moeten beoordelen."
 msgstr ""
-"Once the submitter has made the requested changes and resubmitted the proposal, "
+"Once the submitter has made the requested changes and resubmitted the application, "
 "you will have to re-evaluate the application. "
 
 #: reviews/templates/reviews/decision_form.html:80
@@ -3794,7 +3794,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Details on the review process of proposal %(proposal)s\n"
+"Details on the review process of application %(proposal)s\n"
 "     "
 
 #: reviews/templates/reviews/review_detail.html:21
@@ -3806,7 +3806,7 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"Details on the review process of proposal <em>%(proposal)s</em>\n"
+"Details on the review process of application <em>%(proposal)s</em>\n"
 "     "
 
 #: reviews/templates/reviews/review_detail.html:36
@@ -3917,7 +3917,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"        A revision was made to this proposal after it was submitted to the "
+"        A revision was made to this application after it was submitted to the "
 "FEtC-H .\n"
 "    "
 
@@ -3955,14 +3955,14 @@ msgid ""
 "worden, maar nog wel gekopieerd. De aanvraag is nog wel zichtbaar in de "
 "lijst met \"alle ingediende aanvragen\"."
 msgstr ""
-"A terminated review no longer appears as an open action to the secretary and "
-"assigned reviewers. Its proposal may not be revised, however it may still be "
-"copied. A terminated review still shows up in the list \"all submitted "
-"studies\" for future reference."
+"A terminated application no longer appears as an open action to the secretary and "
+"assigned reviewers. Its application may not be revised, however it may still be "
+"copied. A terminated application still shows up in the list \"all submitted "
+"applications\" for future reference."
 
 #: reviews/templates/reviews/review_discontinue_form.html:52
 msgid "Aanvraag"
-msgstr "Proposal"
+msgstr "Application"
 
 #: reviews/templates/reviews/review_discontinue_form.html:53
 #, python-format
@@ -4005,7 +4005,7 @@ msgstr "Extra documents {}"
 
 #: reviews/templatetags/documents_list.py:178
 msgid "Aanvraag in PDF-vorm"
-msgstr "Proposal in PDF format"
+msgstr "Application in PDF format"
 
 #: reviews/templatetags/documents_list.py:184
 msgid "Eerdere goedkeuring"
@@ -4049,7 +4049,7 @@ msgstr "Consent document for observation"
 
 #: reviews/utils/review_actions.py:100
 msgid "Beëindig de afhandeling van deze aanvraag"
-msgstr "Discontinue assessment of this proposal"
+msgstr "Discontinue assessment of this application"
 
 #: reviews/utils/review_actions.py:128
 msgid "Verander aangestelde commissieleden"
@@ -4086,7 +4086,7 @@ msgstr "FEtC-H {} {}: new decision added"
 
 #: reviews/utils/review_utils.py:277
 msgid "FETC-GW: eindverantwoordelijke heeft je aanvraag beoordeeld"
-msgstr "FEtC-H: a supervisor has reviewed your proposal"
+msgstr "FEtC-H: a supervisor has reviewed your application"
 
 #: reviews/utils/review_utils.py:310
 msgid "De beoogde startdatum ligt voor de datum van indiening"
@@ -4095,19 +4095,19 @@ msgstr ""
 
 #: reviews/utils/review_utils.py:316
 msgid "De aanvraag bevat een interventiestudie."
-msgstr "The proposal contains an intervention study."
+msgstr "The application contains an intervention study."
 
 #: reviews/utils/review_utils.py:320
 msgid ""
 "De aanvraag heeft een interventiestudie met deelnemers in de volgende "
 "setting: {s}"
 msgstr ""
-"The proposal contains an intervention study with participants in the following "
+"The application contains an intervention study with participants in the following "
 "setting: {s}"
 
 #: reviews/utils/review_utils.py:323
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
-msgstr "The proposal contains the participation of adults incapable of informed consent."
+msgstr "The application contains the participation of adults incapable of informed consent."
 
 #: reviews/utils/review_utils.py:326
 msgid "De aanvraag bevat passieve informed consent."
@@ -4115,7 +4115,7 @@ msgstr "The study works with passive informed consent."
 
 #: reviews/utils/review_utils.py:332
 msgid "De aanvraag bevat het gebruik van misleiding."
-msgstr "The proposal contains the use of misrepresentation."
+msgstr "The application contains the use of misrepresentation."
 
 #: reviews/utils/review_utils.py:335
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
@@ -4178,7 +4178,7 @@ msgstr ""
 #: reviews/utils/review_utils.py:380
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
-"The proposal contains sessions with participants in the following setting: {s}"
+"The application contains sessions with participants in the following setting: {s}"
 
 #: reviews/utils/review_utils.py:384
 msgid ""
@@ -4206,7 +4206,7 @@ msgstr "The application makes use of {}"
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
-"The proposal contains psychophysiological measurements on children under {} year(s) "
+"The application contains psychophysiological measurements on children under {} year(s) "
 "old."
 
 #: reviews/views.py:45
@@ -4272,7 +4272,7 @@ msgstr ""
 msgid ""
 "Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
 msgstr ""
-"Does your proposal contain the use of (adult) participants <u>incapable</u> of "
+"Does your application contain the use of (adult) participants <u>incapable</u> of "
 "informed consent?"
 
 #: studies/models.py:145
@@ -4297,7 +4297,7 @@ msgid ""
 "dit in jouw onderzoek bij (een deel van) de deelnemers het geval?"
 msgstr ""
 "Participants can be included based on particular characteristics. Is this "
-"the case with (some of) the participants in this proposal?"
+"the case with (some of) the participants in this application?"
 
 #: studies/models.py:166
 msgid "Selecteer de bijzondere kenmerken van je proefpersonen"
@@ -4522,8 +4522,8 @@ msgstr ""
 
 #: studies/models.py:417
 #, python-format
-msgid "Study details for proposal %s"
-msgstr "Study details for proposal %s"
+msgid "Study details for application %s"
+msgstr "Study details for application %s"
 
 #: studies/models.py:430
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
@@ -4645,7 +4645,7 @@ msgid ""
 msgstr ""
 "\n"
 "    The FEtC-H distinguishes 3 types of research (which may all be used "
-"within one proposal):\n"
+"within one application):\n"
 "    "
 
 #: studies/templates/studies/study_design.html:28
@@ -4997,7 +4997,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"{} of {} in proposal {}-{}: <i>{}</i>\n"
+"{} of {} in application {}-{}: <i>{}</i>\n"
 "      "
 
 #: studies/templatetags/describe_documents.py:71
@@ -5007,7 +5007,7 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"{} of proposal {}-{}: <i>{}</i>\n"
+"{} of application {}-{}: <i>{}</i>\n"
 "      "
 
 #: studies/utils.py:65
