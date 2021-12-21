@@ -1,4 +1,6 @@
 from django import template
+
+from main.utils import is_secretary
 from studies.models import Documents, Study
 from proposals.models import Proposal, Wmo
 from observations.models import Observation
@@ -156,7 +158,7 @@ def give_name(doc):
 
 
 @register.inclusion_tag('reviews/documents_list.html')
-def documents_list(review):
+def documents_list(review, user):
     """This retrieves all files associated with
     a certain review and its proposal and returns them as a
     dict of dicts with display-ready descriptions"""
@@ -175,7 +177,7 @@ def documents_list(review):
     entries = []
     entries.append(
         # name, file, containing object, comparable
-        (_('Aanvraag in PDF-vorm'), proposal.pdf, proposal, False)
+        (_('Aanvraag in PDF-vorm'), reverse('proposals:pdf', args=(proposal.pk,)), proposal, False)
     )
 
     # Pre-approval
@@ -251,11 +253,16 @@ def documents_list(review):
                 # name, file, containing object, comparable
                 entries.append((name, field, obj, True))
 
+        edit_link = None
+
+
+        if is_secretary(user):
+            edit_link = reverse('studies:attachments', args=[d.pk])
 
         # Get a humanized name for this documents item
         headers_items[give_name(d)] = {
             'items': entries,
-            'edit_link': reverse('studies:attachments', args=[d.pk]),
+            'edit_link': edit_link,
         }
 
     return {'review': review,

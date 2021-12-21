@@ -48,6 +48,18 @@
                 in de lijst met "alle ingediende aanvragen".
                 {% endblocktrans %}
             </p>
+            {% if review.stage == review.CLOSED %}
+            <p>
+                <strong>
+                    {% trans "Attentie" %}
+                </strong>:
+                {% blocktrans trimmed %}
+                Deze aanvraag heeft op dit moment geen lopende beoordeling. Om deze aanvraag definitief te
+                beëindigen, moeten we de uitkomst van laatste beoordeling (zie linker balk) veranderen.
+                Dit kan verwarring veroorzaken bij de indiener, dus houd hier rekening mee.
+                {% endblocktrans %}
+            </p>
+            {% endif %}
             <p>
                 <strong>{% trans "Aanvraag" %}</strong>:
                 {% blocktrans with title=review.proposal.title author=review.proposal.created_by trimmed %}

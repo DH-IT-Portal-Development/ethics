@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from braces import views as braces
 from django.conf import settings
 from django.urls import reverse
 from django.http import JsonResponse
@@ -149,7 +150,7 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         return reverse(next_url, args=(pk,))
 
 
-class StudyUpdateAttachments(generic.UpdateView):
+class StudyUpdateAttachments(braces.GroupRequiredMixin, generic.UpdateView):
     """
     Allows the secretary to change the attachments on Study level
     """

@@ -196,8 +196,8 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        actions = ReviewActions(self.object)
-        context['detail_actions'] = actions.get_detail_actions(self.request.user)
+        actions = ReviewActions(self.object, user=self.request.user)
+        context['detail_actions'] = actions.get_detail_actions()
 
         return context
 
