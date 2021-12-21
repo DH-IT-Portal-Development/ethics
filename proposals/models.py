@@ -115,7 +115,7 @@ class Proposal(models.Model):
     )
 
     date_start = models.DateField(
-        _('Wat is, indien bekend, de beoogde startdatum van je aanvraag?'),
+        _('Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?'),
         blank=True,
         null=True,
     )
