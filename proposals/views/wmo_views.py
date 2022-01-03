@@ -90,7 +90,7 @@ class WmoApplication(UpdateView):
             return reverse('proposals:wmo_application', args=(wmo.pk,))
         else:
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
-        
+
     def get_back_url(self):
         """Return to the Wmo overview"""
         return reverse('proposals:wmo_update', args=(self.object.pk,))
@@ -125,7 +125,7 @@ class WmoUpdatePreAssessment(PreAssessmentMixin, WmoUpdate):
     pass
 
 class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
-    
+
     def get_next_url(self):
         """Different continue URL for pre-assessment Proposals"""
         return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
@@ -145,7 +145,7 @@ def check_wmo(request):
     doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT
 
     # Default message: OK.
-    message = _('Je studie hoeft niet te worden beoordeeld door de METC.')
+    message = _('Je onderzoek hoeft niet te worden beoordeeld door de METC.')
     message_class = 'info'
     needs_metc = False
 
@@ -158,7 +158,7 @@ def check_wmo(request):
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
     elif is_metc or is_medical:
-        message = _('Je studie zal moeten worden beoordeeld door de METC.')
+        message = _('Je onderzoek zal moeten worden beoordeeld door de METC.')
         message_class = 'warning'
         needs_metc = True
 

@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Algemene informatie over de studie" %} - {{ block.super }}
+    {% trans "Algemene informatie over de aanvraag" %} - {{ block.super }}
 {% endblock %}
 
 {% block html_head %}
@@ -89,13 +89,13 @@
             {% endif %}
             {% if is_practice %}
             <div class="info">
-                {% trans "Je bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+                {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
             </div>
             {% endif %}
-            <h2>{% trans "Algemene informatie over de studie" %}</h2>
+            <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
             {% if not create and is_supervisor %}
                 {% blocktrans trimmed %}
-                    Je past nu een studie aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je het
+                    Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je het
                     formulier
                     invult alsof jij die student/PhD kandidaat bent.
                 {% endblocktrans %}

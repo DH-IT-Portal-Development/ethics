@@ -29,17 +29,17 @@ def create_committee_menu(commitee: str) -> List[MenuItem]:
             check=lambda x: is_secretary(x.user),
         ),
         MenuItem(
-            _("Nog af te handelen studies"),
+            _("Nog af te handelen aanvragen"),
             reverse("reviews:to_conclude", args=[commitee]),
             check=lambda x: is_secretary(x.user),
         ),
         MenuItem(
-            _("Alle lopende studies"),
+            _("Alle lopende aanvragen"),
             reverse("reviews:all_open", args=[commitee]),
             check=lambda x: is_secretary(x.user),
         ),
         MenuItem(
-            _("Alle ingezonden studies"),
+            _("Alle ingezonden aanvragen"),
             reverse("reviews:archive", args=[commitee]),
             check=lambda x: is_secretary(x.user),
         ),

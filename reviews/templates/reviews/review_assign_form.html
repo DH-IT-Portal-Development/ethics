@@ -22,11 +22,11 @@
 
 {% block content %}
     <div class="uu-inner-container">
-    
+
     {% with review=review %}
         {% include "reviews/review_detail_sidebar.html" %}
     {% endwith %}
-    
+
         <div class="col-12 col-md-9">
             <h2>
                 {% trans "Commissieleden aanstellen" %}
@@ -34,7 +34,7 @@
 
             <p>
                 {% blocktrans with title=review.proposal.title %}
-                    Kies hier de geschikte route en commissieleden voor de studie <em>{{ title }}</em>.
+                    Kies hier de geschikte route en commissieleden voor de aanvraag <em>{{ title }}</em>.
                 {% endblocktrans %}
             </p>
             <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}

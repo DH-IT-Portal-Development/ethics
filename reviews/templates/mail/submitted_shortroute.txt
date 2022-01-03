@@ -6,7 +6,7 @@ Beste collega,
 Uw aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door u gegeven beschrijving voorlopig de status "standaard GW onderzoek" gekregen.
 Dit houdt in dat u binnen uiterlijk twee werkweken een eerste beoordeling van de FETC-GW tegemoet mag zien.
 
-Zoals beschreven in het reglement kan dat een snelle goedkeuring zijn, maar het is ook mogelijk dat uw studie op grond van deze eerste FETC-GW beoordeling alsnog als "niet-standaard UiL OTS-onderzoek" wordt gekenmerkt (in welk geval de beoordeling langer zal duren, zie hiervoor appendix B van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor hulp bij het inschatten van wat valt onder niet-standaard UiL OTS onderzoek en de sectie 2.8 van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor de mogelijke tijdspaden.
+Zoals beschreven in het reglement kan dat een snelle goedkeuring zijn, maar het is ook mogelijk dat uw aanvraag op grond van deze eerste FETC-GW beoordeling alsnog als "niet-standaard UiL OTS-onderzoek" wordt gekenmerkt (in welk geval de beoordeling langer zal duren, zie hiervoor appendix B van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor hulp bij het inschatten van wat valt onder niet-standaard UiL OTS onderzoek en de sectie 2.8 van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor de mogelijke tijdspaden.
 Houdt u hier a.u.b. rekening mee.
 {% endblock %}
 

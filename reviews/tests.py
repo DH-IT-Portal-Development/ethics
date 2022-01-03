@@ -73,7 +73,7 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(len(mail.outbox), 4)
         self.assertEqual(
             mail.outbox[2].subject,
-            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe studie ingediend'
+            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe aanvraag ingediend'
         )
         self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
 
@@ -99,7 +99,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(len(mail.outbox), 4)
         self.assertEqual(
             mail.outbox[2].subject,
-            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe studie ingediend'
+            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe aanvraag ingediend'
         )
         self.assertEqual(
             mail.outbox[3].subject,

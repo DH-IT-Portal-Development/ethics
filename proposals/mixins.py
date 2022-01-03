@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
-    success_message = _('Studie %(title)s bewerkt')
+    success_message = _('Aanvraag %(title)s bewerkt')
 
     def get_next_url(self):
         """If the Proposal has a Wmo model attached, go to update, else, go to create"""
@@ -25,7 +25,7 @@ class ProposalContextMixin:
 
     def current_user_is_supervisor(self):
         return self.object.supervisor == self.request.user
-        
+
     def get_context_data(self, **kwargs):
         context = super(ProposalContextMixin, self).get_context_data(**kwargs)
         context['is_supervisor'] = self.current_user_is_supervisor()

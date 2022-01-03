@@ -150,7 +150,7 @@ def remind_reviewers():
 
     for decision in decisions:
         proposal = decision.review.proposal
-        subject = 'FETC-GW: beoordelen studie (Herrinering)'
+        subject = 'FETC-GW: beoordelen aanvraag (Herrinering)'
         params = {
             'creator': proposal.created_by.get_full_name(),
             'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
@@ -212,9 +212,9 @@ def start_review_route(review, commission_users, use_short_route):
     was_revised = review.proposal.is_revision
 
     if was_revised:
-        subject = 'FETC-GW {} {}: gereviseerde studie ter beoordeling'
+        subject = 'FETC-GW {} {}: gereviseerde aanvraag ter beoordeling'
     else:
-        subject = 'FETC-GW {} {}: nieuwe studie ter beoordeling'
+        subject = 'FETC-GW {} {}: nieuwe aanvraag ter beoordeling'
         # These emails are Dutch-only, therefore intentionally untranslated
 
     subject = subject.format(review.proposal.reviewing_committee,
@@ -242,7 +242,7 @@ def notify_secretary_assignment(review):
     secretary = get_secretary()
     proposal = review.proposal
     committee = review.proposal.reviewing_committee
-    subject = _('FETC-GW {} {}: nieuwe studie ingediend').format(committee, proposal.reference_number)
+    subject = _('FETC-GW {} {}: nieuwe aanvraag ingediend').format(committee, proposal.reference_number)
     params = {
         'secretary': secretary.get_full_name(),
         'review': review,
@@ -274,7 +274,7 @@ def notify_supervisor_nogo(decision):
     proposal = decision.review.proposal
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
-    subject = _('FETC-GW: eindverantwoordelijke heeft je studie beoordeeld')
+    subject = _('FETC-GW: eindverantwoordelijke heeft je aanvraag beoordeeld')
 
     params = {
         'secretary': secretary.get_full_name(),
@@ -313,50 +313,50 @@ def auto_review(proposal: Proposal):
     for study in proposal.study_set.all():
 
         if study.has_intervention:
-            reasons.append(_('De studie is een interventiestudie.'))
+            reasons.append(_('De aanvraag bevat een interventiestudie.'))
 
             for setting in study.intervention.settings_requires_review():
                 reasons.append(
-                    _('De studie heeft een interventiestudie met deelnemers in de volgende setting: {s}').format(s=setting))
+                    _('De aanvraag heeft een interventiestudie met deelnemers in de volgende setting: {s}').format(s=setting))
 
         if study.legally_incapable:
-            reasons.append(_('De studie maakt gebruik van wilsonbekwame volwassenen.'))
+            reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
 
         if study.passive_consent:
-            reasons.append(_('De studie werkt met passieve informed consent.'))
+            reasons.append(_('De aanvraag bevat passieve informed consent.'))
 
         if study.has_observation:
             reasons.extend(auto_review_observation(study.observation))
 
         if study.deception in [YES, DOUBT]:
-            reasons.append(_('De studie maakt gebruik van misleiding.'))
+            reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
 
         if study.compensation.requires_review:
             reasons.append(_('De beloning van deelnemers wijkt af van de '
                              'standaardregeling.'))
 
         if study.has_traits:
-            reasons.append(_('De studie selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
+            reasons.append(_('Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
 
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
         if study.sessions_number and study.sessions_number > 1:
-            reasons.append(_('De studie bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek).'))
+            reasons.append(_('Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek).'))
 
         if study.stressful in [YES, DOUBT]:
-            reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de studie op onderdelen of \
+            reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
         if study.risk in [YES, DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
-fysieke schade bij deelname aan de studie meer dan minimaal zijn.'))
+fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn.'))
 
         if study.has_sessions:
             for session in study.session_set.all():
                 for setting in session.settings_requires_review():
                     reasons.append(
-                        _('De studie heeft sessies met deelnemers in de volgende setting: {s}').format(s=setting))
+                        _('Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}').format(s=setting))
 
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
@@ -377,18 +377,18 @@ def auto_review_observation(observation):
 
     if observation.settings_requires_review():
         for setting in observation.settings_requires_review():
-            reasons.append(_('De studie observeert deelnemers in de volgende setting: {s}').format(s=setting))
+            reasons.append(_('Het onderzoek observeert deelnemers in de volgende setting: {s}').format(s=setting))
 
     if observation.is_nonpublic_space:
         if not observation.has_advanced_consent:
-            reasons.append(_('De studie observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf.'))
+            reasons.append(_('Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf.'))
         if observation.is_anonymous:
             reasons.append(_('De onderzoeker begeeft zich "under cover" in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.'))
 
     for registration in observation.registrations.all():
         if registration.requires_review:
             reasons.append(
-                _('De studie maakt gebruik van {}').format(
+                _('De aanvraag bevat het gebruik van {}').format(
                     registration.description
                 )
             )
@@ -409,12 +409,12 @@ def auto_review_task(study, task):
             if registration.age_min:
                 for age_group in study.age_groups.all():
                     if age_group.age_max is not None and age_group.age_max < registration.age_min:
-                        reasons.append(_('De studie gebruikt psychofysiologische metingen bij kinderen onder de {} jaar.').format(registration.age_min))
+                        reasons.append(_('De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar.').format(registration.age_min))
                         break
 
     for registration_kind in task.registration_kinds.all():
         if registration_kind.requires_review:
-            reasons.append(_('De studie maakt gebruik van {}').format(registration_kind.description))
+            reasons.append(_('De aanvraag bevat het gebruik van {}').format(registration_kind.description))
 
     return reasons
 
