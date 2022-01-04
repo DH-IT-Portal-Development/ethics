@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-21 16:52+0100\n"
+"POT-Creation-Date: 2022-01-04 11:57+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 
 #: faqs/menus.py:7 main/templates/base/menu.html:125
-#: main/templates/main/index.html:159
+#: main/templates/main/index.html:169
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
 #: faqs/menus.py:12 main/templates/base/menu.html:128
-#: main/templates/main/index.html:163
+#: main/templates/main/index.html:173
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -36,7 +36,7 @@ msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr " Regulations Linguistics Chamber (LC) "
 
 #: faqs/menus.py:22 main/templates/base/menu.html:134
-#: main/templates/main/index.html:171
+#: main/templates/main/index.html:181
 #: proposals/templates/proposals/proposal_pdf.html:395
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/study_consent.html:68
@@ -275,7 +275,7 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:11 main/forms/conditional_form.py:20
 #: main/forms/conditional_form.py:29 main/forms/conditional_form.py:38
 #: main/forms/conditional_form.py:48 main/forms/mixins.py:83
-#: proposals/forms.py:530 proposals/forms.py:585 studies/forms.py:104
+#: proposals/forms.py:530 proposals/forms.py:586 studies/forms.py:104
 #: studies/forms.py:115 studies/forms.py:121 tasks/forms.py:87
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -763,35 +763,37 @@ msgstr ""
 "a>. Try to explain what you were doing and note the page that you were on, "
 "if you can.     "
 
-#: main/templates/main/index.html:36
+#: main/templates/main/index.html:37
 msgid ""
-"\n"
-"                <em>Veranderingen in taalgebruik in de portal:</em> "
-"Recentelijk is het woord \"studie\" op de meeste plaatsen vervangen door "
-"\"aanvraag\". In het Engels is gekozen voor het woord \"proposal\", maar u "
-"kunt ook \"application\" tegenkomen in de context van het aanvraagproces. "
-"Vindt u een onduidelijke tekst, foute vertaling, of ander mankement aan de "
-"portal? Meld dit dan vooral aan <a href=\"mailto:labbeheer.gw@uu.nl"
-"\">labbeheer.gw@uu.nl</a>.\n"
-"            "
+"Formele goedkeuring door één van beide kamers van de FETC-GW (middels een "
+"formele goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de "
+"Faculteit Geesteswetenschappen. Voorafgaand aan het onderzoek, maar ook "
+"voorafgaand aan het rekruteren van deelnemers, moet de aanvraag zijn "
+"goedgekeurd. Het is dus van belang om te wachten met de aanvang van het "
+"onderzoek tot deze brief ontvangen is."
 msgstr ""
-"\n"
-"<em>Textual changes in the portal:</em> Recently we have made some changes "
-"to the terminology used in the portal. Many uses of the term \"study\" have "
-"been changed to either \"application\" or \"proposal\", depending on the "
-"context. If you find some text to be confusing, come across a poor "
+"Formal approval by a chamber for the FEtC-H (by means of an official approval letter) "
+"is required for research involving human participants within the UU Faculty of Humanities. "
+"You must acquire this approval prior even to recruiting participants. Therefore, always wait for the letter of approval before starting research activities."
+
+#: main/templates/main/index.html:44
+msgid ""
+"Heb je een vraag over de werking van de portal, ontdek je een foutje, "
+"missende functionaliteit, of verkeerde vertaling? Neem dan contact op met  "
+"<a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>."
+msgstr ""
+"If you find some text to be confusing, come across a poor "
 "translation, or have any other feedback on the Portal, please don't hesitate "
 "to send an email to <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu."
-"nl</a>.\n"
-"    "
+"nl</a>."
 
-#: main/templates/main/index.html:41
+#: main/templates/main/index.html:51
 #: proposals/templates/proposals/proposal_start.html:16
 #: proposals/templates/proposals/proposal_start_practice.html:18
 msgid "Check voor het indienen:"
 msgstr "Before submitting an application, please consult:"
 
-#: main/templates/main/index.html:44
+#: main/templates/main/index.html:54
 msgid ""
 "De <a href=\"https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
 "\" target=\"_blank\"> UU-webpagina van de FETC-GW</a> voor nieuws en de "
@@ -800,7 +802,7 @@ msgstr ""
 "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\" target=\"blank\">UU-"
 "webpage</a> of the FEtC-H for news and upcoming dates."
 
-#: main/templates/main/index.html:51
+#: main/templates/main/index.html:61
 msgid ""
 "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
 "algemene-kamer/\" target=\"blank\">Algemene Kamer (AK)</a> of dat van de <a "
@@ -812,128 +814,146 @@ msgstr ""
 "href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
 "target=\"blank\">Linguistics Chamber</a>."
 
-#: main/templates/main/index.html:60
-#: proposals/templates/proposals/study_consent.html:79
+#: main/templates/main/index.html:70
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" target=\"blank"
-"\">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>"
+"\">voorbeelddocumenten</a> voor de <em>informed consent</em>. (de laatstse "
+"versie is van <u>december 2021</u>)</li>"
 msgstr ""
 "Make sure to use the correct (most recent) <a href=\"https://intranet.uu.nl/"
 "en/documents-ethics-assessment-committee-humanities\" target=\"_blank"
-"\">model documents</a> for <em>informed consent</em>."
+"\">model documents</a> for <em>informed consent</em>. (Latest version: <u>December 2021</u>)"
 
-#: main/templates/main/index.html:64
+#: main/templates/main/index.html:74
 msgid ""
 "<li>Voor advies over data management (plannen): <a href=\"mailto:"
-"datamanagement.gw@uu.nl\">Frans de Liagre Böhl</a>.</li> <li>Voor advies "
+"datamanagement.gw@uu.nl\">datamanagement.gw@uu.nl</a>.</li> <li>Voor advies "
 "over privacy zaken: <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
 "</li> <li>Voor vragen over de procedure: <a href=\"mailto:fetc-gw@uu.nl"
 "\">Desiree Capel</a>.</li> <li>Voor vragen over de portal zelf: <a href="
 "\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
 msgstr ""
 "<li>For advice on data management: <a href=\"mailto:datamanagement.gw@uu.nl"
-"\">Frans de Liagre Böhl</a>.</li> <li>For issues concerning privacy: <a href="
+"\">datamanagement.gw@uu.nl</a>.</li> <li>For issues concerning privacy: <a href="
 "\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>.</li> <li>For questions on "
 "FEtC-H procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree Capel</a>.</li> "
 "<li>For questions about the functioning of the portal itself: <a href="
 "\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
 
-#: main/templates/main/index.html:73
+#: main/templates/main/index.html:83
 msgid "In deze portal kan je het volgende doen:"
 msgstr "In this portal you can do the following:"
 
-#: main/templates/main/index.html:82
+#: main/templates/main/index.html:92
 msgid "Dien een nieuwe aanvraag in"
 msgstr "Submit a new proposal"
 
-#: main/templates/main/index.html:87
+#: main/templates/main/index.html:97
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: main/templates/main/index.html:90
+#: main/templates/main/index.html:100
 msgid "op basis van een kopie van een oude aanvraag;"
 msgstr "from a copy of an old proposal;"
 
-#: main/templates/main/index.html:93
+#: main/templates/main/index.html:103
 msgid "voor (al dan niet goedgekeurde) subsidieaanvragen;"
 msgstr "to supplement a grant application"
 
-#: main/templates/main/index.html:96
+#: main/templates/main/index.html:106
 msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: main/templates/main/index.html:102
+#: main/templates/main/index.html:112
 msgid "Een aanvraag reviseren"
 msgstr "Revise a proposal"
 
-#: main/templates/main/index.html:107
+#: main/templates/main/index.html:117
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
-#: main/templates/main/index.html:110
+#: main/templates/main/index.html:120
 msgid "als amendement, wanneer de aanvraag al goedgekeurd is door de FETC-GW."
 msgstr ""
 "as an amendment, after your proposal has already been approved by the FEtC-H."
 
-#: main/templates/main/index.html:118
+#: main/templates/main/index.html:128
 msgid "Bekijk"
 msgstr "View"
 
-#: main/templates/main/index.html:122
+#: main/templates/main/index.html:132
 msgid "mijn conceptaanvragen;"
 msgstr "my draft applications;"
 
-#: main/templates/main/index.html:125
+#: main/templates/main/index.html:135
 msgid "mijn oefenaanvragen;"
 msgstr "my practice applications;"
 
-#: main/templates/main/index.html:128
+#: main/templates/main/index.html:138
 msgid "mijn ingediende aanvragen;"
 msgstr "my submitted applications;"
 
-#: main/templates/main/index.html:131
+#: main/templates/main/index.html:141
 msgid "mijn afgehandelde aanvragen;"
 msgstr "my processed applications;"
 
-#: main/templates/main/index.html:134
+#: main/templates/main/index.html:144
 msgid "mijn aanvragen als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: main/templates/main/index.html:137
+#: main/templates/main/index.html:147
 msgid "al mijn aanvragen."
 msgstr "all my applications"
 
-#: main/templates/main/index.html:141
+#: main/templates/main/index.html:151
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: main/templates/main/index.html:145
+#: main/templates/main/index.html:155
 msgid "Alle goedgekeurde aanvragen bekijken van de Algemene Kamer"
 msgstr "View all processed and approved applications of the General Chamber"
 
-#: main/templates/main/index.html:148
+#: main/templates/main/index.html:158
 msgid "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer"
 msgstr ""
 "View all processed and approved applications of the Linguistics Chamber"
 
-#: main/templates/main/index.html:167
+#: main/templates/main/index.html:177
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: main/templates/main/index.html:174
+#: main/templates/main/index.html:184
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:177
+#: main/templates/main/index.html:187
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: main/templates/main/index.html:181
+#: main/templates/main/index.html:200
+msgid ""
+"<em>Veranderingen in taalgebruik in de portal:</em> Recentelijk is het woord "
+"\"studie\" op de meeste plaatsen vervangen door \"aanvraag\". In het Engels "
+"is gekozen voor het woord \"proposal\", maar u kunt ook \"application\" "
+"tegenkomen in de context van het aanvraagproces. Vindt u een onduidelijke "
+"tekst, foute vertaling, of ander mankement aan de portal? Meld dit dan "
+"vooral aan <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>."
+msgstr ""
+"<em>Textual changes in the portal:</em> Recently we have made some changes "
+"to the terminology used in the portal. Many uses of the term \"study\" have "
+"been changed to either \"application\" or \"proposal\", depending on the "
+"context. As always, if you find some text to be confusing, come across a poor "
+"translation, or have any other feedback on the Portal, please don't hesitate "
+"to send an email to <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu."
+"nl</a>."
+"    "
+
+#: main/templates/main/index.html:206
 msgid "Bannerfoto door Simona Evsatieva"
 msgstr "Cover image by Simona Evsatieva"
 
-#: main/templates/main/index.html:188
+#: main/templates/main/index.html:214
 #, python-format
 msgid ""
 "\n"
@@ -947,7 +967,7 @@ msgstr ""
 "\">here</a> with your Solis-ID.\n"
 "\t     "
 
-#: main/templates/main/index.html:194
+#: main/templates/main/index.html:220
 msgid ""
 "\n"
 "                        Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</"
@@ -1365,12 +1385,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:593 proposals/forms.py:606 proposals/forms.py:616
+#: proposals/forms.py:594 proposals/forms.py:607 proposals/forms.py:617
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:597 proposals/forms.py:601 proposals/forms.py:610
-#: proposals/forms.py:620
+#: proposals/forms.py:598 proposals/forms.py:602 proposals/forms.py:611
+#: proposals/forms.py:621
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -3070,6 +3090,16 @@ msgstr ""
 "here. If needed, you can also upload up to 2 sets of additional forms. <br/"
 ">         These extra fields can be removed by clearing all forms in one "
 "section.     "
+
+#: proposals/templates/proposals/study_consent.html:79
+msgid ""
+"Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
+"documenten-ethische-toetsingscommissie-gw\" target=\"blank"
+"\">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>"
+msgstr ""
+"Make sure to use the correct (most recent) <a href=\"https://intranet.uu.nl/"
+"en/documents-ethics-assessment-committee-humanities\" target=\"_blank"
+"\">model documents</a> for <em>informed consent</em>."
 
 #: proposals/templates/proposals/study_consent.html:89
 msgid ""
