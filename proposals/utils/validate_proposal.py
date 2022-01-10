@@ -30,7 +30,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
         forms['start'] = (
             ProposalForm,
             reverse('proposals:update_pre', args=[proposal.pk]),
-            _('Algemene informatie over de studie'),
+            _('Algemene informatie over de aanvraag'),
             proposal,
         )
 
@@ -40,21 +40,21 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
         forms['start'] = (
             ProposalForm,
             reverse('proposals:update_pre_approved', args=[proposal.pk]),
-            _('Algemene informatie over de studie'),
+            _('Algemene informatie over de aanvraag'),
             proposal,
         )
     elif proposal.is_practice():
         forms['start'] = (
             ProposalForm,
             reverse('proposals:update_practice', args=[proposal.pk]),
-            _('Algemene informatie over de studie'),
+            _('Algemene informatie over de aanvraag'),
             proposal,
         )
     else:
         forms['start'] = (
             ProposalForm,
             reverse('proposals:update', args=[proposal.pk]),
-            _('Algemene informatie over de studie'),
+            _('Algemene informatie over de aanvraag'),
             proposal,
         )
 
@@ -216,7 +216,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                     ),
                     session,
                 )
-    
+
     forms['data_management'] = (
         ProposalDataManagementForm,
         reverse('proposals:data_management', args=[proposal.pk]),
@@ -233,7 +233,7 @@ def get_form_errors(proposal: Proposal) -> list:
     troublesome_pages = []
 
     for key, form in forms.items():
-        form_class, url, page_name, obj = form        
+        form_class, url, page_name, obj = form
         try:
             kwargs = {
                 'instance': obj,
@@ -252,9 +252,9 @@ def get_form_errors(proposal: Proposal) -> list:
                 kwargs['study'] = obj.study
 
             instance = form_class(**kwargs)
-            
+
             for field, error in instance.errors.items():
-                
+
                 if field in instance.fields:
                     troublesome_pages.append({
                         'url':  url,

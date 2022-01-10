@@ -34,22 +34,34 @@
 
             <p>
                 {% blocktrans trimmed %}
-                Als een studie definitief niet meer door de FETC-GW
+                Als een aanvraag definitief niet meer door de FETC-GW
                 afgehandeld gaat worden, en deze in de weg staat,
                 kan er voor gekozen worden deze te beëindigen.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}
-                Een beëindigde studie verschijnt niet meer in de pagina's
+                Een beëindigde aanvraag verschijnt niet meer in de pagina's
                 van de secretaris en beoordelaars. Deze
-                studie kan ook niet meer gereviseerd worden,
-                maar nog wel gekopieerd. De studie is nog wel zichtbaar
-                in de lijst met "alle ingediende studies".
+                aanvraag kan ook niet meer gereviseerd worden,
+                maar nog wel gekopieerd. De aanvraag is nog wel zichtbaar
+                in de lijst met "alle ingediende aanvragen".
                 {% endblocktrans %}
             </p>
+            {% if review.stage == review.CLOSED %}
             <p>
-                <strong>{% trans "Studie" %}</strong>:
+                <strong>
+                    {% trans "Attentie" %}
+                </strong>:
+                {% blocktrans trimmed %}
+                Deze aanvraag heeft op dit moment geen lopende beoordeling. Om deze aanvraag definitief te
+                beëindigen, moeten we de uitkomst van laatste beoordeling (zie linker balk) veranderen.
+                Dit kan verwarring veroorzaken bij de indiener, dus houd hier rekening mee.
+                {% endblocktrans %}
+            </p>
+            {% endif %}
+            <p>
+                <strong>{% trans "Aanvraag" %}</strong>:
                 {% blocktrans with title=review.proposal.title author=review.proposal.created_by trimmed %}
                 <em>{{title}}</em> door {{author}}
                 {% endblocktrans %}

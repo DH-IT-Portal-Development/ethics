@@ -22,7 +22,7 @@ class UniqueTitleValidator:
             qs = qs.exclude(pk=self.proposal.pk)
 
         if qs.exists():
-            raise forms.ValidationError(_('Er bestaat al een studie met deze '
+            raise forms.ValidationError(_('Er bestaat al een aanvraag met deze '
                                           'titel.'), code='unique')
 
 
@@ -30,6 +30,6 @@ def AVGUnderstoodValidator(value):
 
     if value != True:
         raise forms.ValidationError(
-            _('Je dient kennis genomen te hebben van de AVG om jouw studie in '
+            _('Je dient kennis genomen te hebben van de AVG om jouw aanvraag in '
               'te dienen'), code='avg'
             )

@@ -3,8 +3,8 @@
 {% block content_nl %}
 Beste collega,
 
-Je moet met spoed de studie van {{ creator }} beoordelen. De deadline voor beoordeling is (bijna) verlopen.
-U kunt deze studie beoordelen via {{ proposal_url }}
+Je moet met spoed de aanvraag van {{ creator }} beoordelen. De deadline voor beoordeling is (bijna) verlopen.
+U kunt deze aanvraag beoordelen via {{ proposal_url }}
 {% endblock %}
 
 {% block content_en %}

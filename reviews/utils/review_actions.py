@@ -4,48 +4,52 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 from proposals.models import Proposal
-from reviews.models import Review
+from reviews.models import Review, Decision
 
 class ReviewActions:
 
 
-    def __init__(self, review):
-
-        self.review = review
-
-        # Create and initialize actions
-        self.detail_actions = [ChangeAssignment(review),
-                               DiscontinueReview(review),
-        ]
-        self.ufl_actions = []
-
-        self.all_actions = self.ufl_actions + self.detail_actions
-
-    def __call__(self, user):
-
-        return self.get_all_actions(user)
-
-    def get_all_actions(self, user):
-
-        return [a for a in self.all_actions if a.is_available(user)]
-
-    def get_ufl_actions(self, user):
-
-        return [a for a in self.ufl_actions if a.is_available(user)]
-
-    def get_detail_actions(self, user):
-
-        return [a for a in self.detail_actions if a.is_available(user)]
-
-
-class ReviewAction:
-
-    def __init__(self, review, user=None):
+    def __init__(self, review, user):
 
         self.review = review
         self.user = user
 
-    def is_available(user=None):
+        # Create and initialize actions
+        self.detail_actions = [CloseReview(review, user),
+                               DecideAction(review, user),
+                               ChangeAssignment(review, user),
+                               DiscontinueReview(review, user),
+        ]
+        self.ufl_actions = []
+
+        # Does not check for uniqueness
+        self.all_actions = self.ufl_actions + self.detail_actions
+
+    def __call__(self):
+
+        return self.get_all_actions()
+
+    def get_all_actions(self):
+
+        return [a for a in self.all_actions if a.is_available()]
+
+    def get_ufl_actions(self):
+
+        return [a for a in self.ufl_actions if a.is_available()]
+
+    def get_detail_actions(self):
+
+        return [a for a in self.detail_actions if a.is_available()]
+
+
+class ReviewAction:
+
+    def __init__(self, review, user):
+
+        self.review = review
+        self. user = user
+
+    def is_available(self, user=None):
         '''Returns true if this action is available to the specified
         user given the current review.'''
 
@@ -57,6 +61,9 @@ class ReviewAction:
 
     def action_url(self, user=None):
         '''Returns a URL for the action'''
+
+        if not user:
+            user = self.user
 
         return '#'
 
@@ -75,18 +82,93 @@ class ReviewAction:
         return mark_safe(self.text_with_link())
 
 
-class DiscontinueReview(ReviewAction):
+class DecideAction(ReviewAction):
 
-    def is_available(self, user):
-        '''Only allow secretary to discontinue unclosed reviews'''
+    def get_available_decision(self):
+        '''Return an available decision for the current user, or None'''
+
+        user = self.user
+        review = self.review
+
+        if review.stage != review.COMMISSION:
+            return False
+
+        try:
+            decision = Decision.objects.get(review=review,
+                                            reviewer=user,
+                                            go='',
+            )
+        except Decision.DoesNotExist:
+            return None
+
+        return decision
+
+
+    def is_available(self):
 
         review = self.review
+
+        if not self.get_available_decision():
+            return False
+
+        return True
+
+    def action_url(self):
+
+        decision_pk = self.get_available_decision().pk
+
+        return reverse('reviews:decide', args=(decision_pk,))
+
+    def description(self):
+
+        decision = self.get_available_decision()
+
+        return _('Geef jouw beslissing en/of commentaar door')
+
+
+class CloseReview(ReviewAction):
+
+    def is_available(self):
+        '''Only secretaries may close reviews, which must be in the
+        closing stage '''
+
+        review = self.review
+
+        if review.stage != review.CLOSING:
+            return False
 
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
-        if review.stage == review.CLOSED:
+        return True
+
+
+    def action_url(self):
+
+        return reverse('reviews:close', args=(self.review.pk,))
+
+    def description(self):
+
+        return _('Deze aanvraag afsluiten')
+
+
+
+
+class DiscontinueReview(ReviewAction):
+
+    def is_available(self):
+        '''Only allow secretaries to discontinue reviews which have
+        not yet been discontinued'''
+
+        review = self.review
+        user = self.user
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+
+        if review.continuation == review.DISCONTINUED:
             return False
 
         return True
@@ -97,15 +179,17 @@ class DiscontinueReview(ReviewAction):
 
     def description(self):
 
-        return _('Beëindig de afhandeling van deze studie')
+        return _('Beëindig definitief de afhandeling van deze aanvraag')
 
 
 class ChangeAssignment(ReviewAction):
 
-    def is_available(self, user):
+    def is_available(self):
         '''Only the secretary should be able to assign reviewers,
         supervisor reviews should be excluded, and no final decision
         should yet have been made.'''
+
+        user = self.user
 
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:

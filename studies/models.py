@@ -140,7 +140,7 @@ class Study(models.Model):
         help_text=_('De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
 Dan moet je hier hier 4-5 én 6-11 invullen.'))
     legally_incapable = models.BooleanField(
-        _('Maakt je studie gebruik van wils<u>on</u>bekwame (volwassen) \
+        _('Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) \
 deelnemers?'), # Note: Form labels with HTML are hard-coded in the Form meta class
         help_text=_('Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
@@ -155,7 +155,7 @@ vertegenwoordiger te worden verkregen.'),
         blank=True)
     has_traits = models.BooleanField(
         _('Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
-Is dit in jouw studie bij (een deel van) de deelnemers het geval?'),
+Is dit in jouw onderzoek bij (een deel van) de deelnemers het geval?'),
         null=True,
         blank=True
     )
@@ -170,7 +170,7 @@ Is dit in jouw studie bij (een deel van) de deelnemers het geval?'),
         blank=True)
     necessity = models.CharField(
         _('Is het, om de onderzoeksvraag beantwoord te krijgen, \
-noodzakelijk om het geselecteerde type deelnemer aan de studie te \
+noodzakelijk om het geselecteerde type deelnemer aan het onderzoek te \
 laten meedoen?'),
         help_text=_('Is het bijvoorbeeld noodzakelijk om kinderen te testen, \
 of zou je de vraag ook kunnen beantwoorden door volwassen deelnemers \
@@ -247,7 +247,7 @@ dan geldt dat toch als één sessie.'))
 misleiding van de deelnemer?'),
         help_text=_('Misleiding is het doelbewust verschaffen van inaccurate \
 informatie over het doel en/of belangrijke aspecten van de gang van zaken \
-tijdens de studie. Denk aan zaken als een bewust misleidende "cover story" \
+tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" \
 voor het experiment; het ten onrechte suggereren dat er met andere \
 deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale \
 geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: \
@@ -289,7 +289,7 @@ door het onderzoek.')),
         blank=True)
     stressful_details = models.TextField(
         _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
-aspecten van je studie (bijv. representatieve voorbeelden van mogelijk zeer \
+aspecten van jouw onderzoek (bijv. representatieve voorbeelden van mogelijk zeer \
 kwetsende woorden of uitspraken in de taak, of van zeer confronterende \
 vragen in een vragenlijst), zodat de commissie zich een goed beeld kan \
 vormen.'),
@@ -433,7 +433,7 @@ class Documents(models.Model):
         upload_to=INFORMED_CONSENT_FILENAME,
         storage=OverwriteStorage(),
     )
-        
+
     briefing = models.FileField(
         _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
         blank=True,

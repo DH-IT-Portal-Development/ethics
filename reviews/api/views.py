@@ -288,7 +288,7 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
     default_sort = ('proposal.date_submitted_supervisor', 'desc')
 
     def get_queryset(self):
-        """Returns all studies that still need to be reviewed by the secretary
+        """Returns all proposals that still need to be reviewed by the secretary
         """
         objects = Decision.objects.filter(
             go='',

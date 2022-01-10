@@ -60,7 +60,7 @@ def describe_file(file):
                                                   'het hoofdtraject',
                                                   )
         out_string = _('''
-            {} bij {} van studie {}-{}: <i>{}</i>
+            {} bij {} van aanvraag {}-{}: <i>{}</i>
             ''').format(nice_name.capitalize(),
                          trajectory_name,
                          proposal.reviewing_committee.name,
@@ -69,7 +69,7 @@ def describe_file(file):
                          )
     else:
         out_string = _('''
-            {} van studie {}-{}: <i>{}</i>
+            {} van aanvraag {}-{}: <i>{}</i>
             ''').format(nice_name.capitalize(),
                          proposal.reviewing_committee.name,
                          proposal.reference_number,

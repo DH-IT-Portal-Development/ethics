@@ -6,32 +6,32 @@ from main.utils import is_secretary
 
 new_proposal_menu = (
     MenuItem(
-        _("Nieuwe studie starten"),
+        _("Nieuwe aanvraag starten"),
         reverse("proposals:start"),
     ),
     MenuItem(
-        _("Nieuwe studie starten op basis van een kopie van een oude studie"),
+        _("Nieuwe aanvraag starten op basis van een kopie van een oude aanvraag"),
         reverse("proposals:copy"),
     ),
     MenuItem(
-        _("Nieuwe voortoetsing studie starten"),
+        _("Nieuwe aanvraag starten voor (al dan niet goedgekeurde) subsidieaanvragen"),
         reverse("proposals:start_pre"),
     ),
     MenuItem(
-        _("Nieuwe studie starten (die al goedgekeurd is door een andere "
+        _("Nieuwe aanvraag starten (die al goedgekeurd is door een andere "
           "ethische toetsingscomissie)"),
         reverse("proposals:start_pre_approved"),
     ),
     MenuItem(
-        _("Nieuwe oefenstudie starten"),
+        _("Nieuwe oefenaanvraag starten"),
         reverse("proposals:start_practice"),
     ),
     MenuItem(
-        _("Maak een revisie van een bestaande studie"),
+        _("Maak een revisie van een bestaande aanvraag"),
         reverse("proposals:copy_revision"),
     ),
     MenuItem(
-        _("Maak een amendement van een al goedgekeurde studie"),
+        _("Maak een amendement van een al goedgekeurde aanvraag"),
         reverse("proposals:copy_amendment"),
     ),
 )
@@ -39,7 +39,7 @@ new_proposal_menu = (
 Menu.add_item(
     "main",
     MenuItem(
-        _("Nieuwe studie"),
+        _("Nieuwe aanvraag"),
         "#",
         slug='new-studies',  # needed for sub-menu!
         children=new_proposal_menu,
@@ -49,27 +49,27 @@ Menu.add_item(
 
 my_proposals_menu = (
     MenuItem(
-        _("Al mijn studies"),
+        _("Al mijn aanvragen"),
         reverse("proposals:my_archive"),
     ),
     MenuItem(
-        _("Mijn conceptstudies"),
+        _("Mijn conceptaanvragen"),
         reverse("proposals:my_concepts"),
     ),
     MenuItem(
-        _("Mijn oefenstudies"),
+        _("Mijn oefenaanvragen"),
         reverse("proposals:my_practice"),
     ),
     MenuItem(
-        _("Mijn ingediende studies"),
+        _("Mijn ingediende aanvragen"),
         reverse("proposals:my_submitted"),
     ),
     MenuItem(
-        _("Mijn afgehandelde studies"),
+        _("Mijn afgehandelde aanvragen"),
         reverse("proposals:my_completed"),
     ),
     MenuItem(
-        _("Mijn studies als eindverantwoordelijke"),
+        _("Mijn aanvragen als eindverantwoordelijke"),
         reverse("proposals:my_supervised"),
     ),
 )
@@ -77,7 +77,7 @@ my_proposals_menu = (
 Menu.add_item(
     "main",
     MenuItem(
-        _("Mijn studies"),
+        _("Mijn aanvragen"),
         reverse("proposals:my_archive"),
         slug='my-studies',  # needed for sub-menu!
         children=my_proposals_menu,
@@ -87,11 +87,11 @@ Menu.add_item(
 
 archive_menu = (
     MenuItem(
-        _("Alle studies bekijken van de Algemene Kamer"),
+        _("Alle aanvragen bekijken van de Algemene Kamer"),
         reverse("proposals:archive", args=['AK']),
     ),
     MenuItem(
-        _("Alle studies bekijken van de Linguïstiek Kamer"),
+        _("Alle aanvragen bekijken van de Linguïstiek Kamer"),
         reverse("proposals:archive", args=['LK']),
     ),
     MenuItem(

@@ -35,7 +35,7 @@
                         Je aanvraag voor voortoetsing is compleet.
                     {% endblocktrans %}
                     {% blocktrans %}
-                        Als je er zeker van bent dat je studie op adequate wijze is gespecifieerd kan je de aanmelding
+                        Als je er zeker van bent dat je aanvraag op adequate wijze is gespecifieerd kan je de aanmelding
                         nu ter beoordeling naar de FETC-GW versturen.
                     {% endblocktrans %}
 
@@ -52,7 +52,7 @@
                         Je aanmelding is compleet.
                     {% endblocktrans %}
                     {% blocktrans %}
-                        Als je er zeker van bent dat je studie op adequate wijze is gespecifieerd kan je de aanmelding
+                        Als je er zeker van bent dat je aanvraag op adequate wijze is gespecifieerd kan je de aanmelding
                         nu ter beoordeling naar de FETC-GW versturen.
                     {% endblocktrans %}
                 {% endif %}
@@ -60,7 +60,7 @@
             <p>
                 {% blocktrans trimmed %}
                     Als je de aanmelding eerst nog even wilt nakijken kan dat door via "Terug naar begin
-                    van de studie" alle pagina's nog even door te lopen, of gebruik te maken van het stappen-menu
+                    van de aanvraag" alle pagina's nog even door te lopen, of gebruik te maken van het stappen-menu
                     hierboven.
                 {% endblocktrans %}
             </p>
@@ -81,7 +81,7 @@
                                 {{ study_order }}.
                                 Die kan je op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
                                 Als je deze formulieren nog niet klaar hebt, kan je ook op een later moment terugkeren;
-                                je studie is reeds opgeslagen en terug te vinden onder "Mijn concepten".
+                                je aanvraag is reeds opgeslagen en terug te vinden onder "Mijn concepten".
                             {% endblocktrans %}
                         </div>
                     {% endif %}
@@ -123,7 +123,7 @@
                 <table>{{ form.as_table }}</table>
                 {% if is_practice %}
                 <div class="info">
-                    {% trans "Je bewerkt op het moment een oefenstudie. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+                    {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
                 </div>
                 {% endif %}
                 {% if troublesome_pages or is_practice %}

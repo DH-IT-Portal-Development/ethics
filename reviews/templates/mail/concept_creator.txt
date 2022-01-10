@@ -3,7 +3,7 @@
 {% block content_nl %}
 Beste collega,
 
-Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze studie gecontroleerd.
+Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze aanvraag gecontroleerd.
 Zodra deze de concept-aanmelding, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijgt u van ons bericht.
 Indien de concept-aanmelding nog aanzienlijke wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker zelf contact met u opnemen.
 U kunt uw ingediende aanmelding hier in PDF vorm bekijken:

@@ -53,8 +53,8 @@ $(function() {
 {% endblock %}
 
 {% block content %}
-    {% trans "Je kan de aard van de studie nu in detail op de volgende pagina's specificeren." as is_similar %}
-    {% trans "Je kan de aard van de studie nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
+    {% trans "Je kan de aard van de aanvraag nu in detail op de volgende pagina's specificeren." as is_similar %}
+    {% trans "Je kan de aard van de aanvraag nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
     <div class="uu-inner-container">
         <div class="col-12">
             {% with nav_items=proposal.available_urls active=3 %}
@@ -70,7 +70,7 @@ $(function() {
             </p>
             <ul>
             <p>
-            <li><strong>{% trans "Traject" %}</strong>: 
+            <li><strong>{% trans "Traject" %}</strong>:
                 {% blocktrans trimmed %}
                     Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.
                 <p><u>Bijvoorbeeld</u>: schoolleiding, ouders van leerlingen 15 jaar en jonger, docenten.</p>
@@ -84,12 +84,12 @@ $(function() {
             </li>
             </p>
             <p>
-            <li><strong>{% trans "Taak" %}</strong>: 
+            <li><strong>{% trans "Taak" %}</strong>:
                 {% blocktrans trimmed %}
                     Een taak of onderdeel van je onderzoek.
                 <p>
                     <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
-                </p> 
+                </p>
                 {% endblocktrans %}
             </li>
             </p>

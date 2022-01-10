@@ -1,4 +1,3 @@
-
 {% load static %}
 {% load proposal_filters %}
 {% load fetc_filters %}
@@ -23,7 +22,7 @@ Remember to include it in a with statement if the view does not provide it.
             {% trans "Referentie" %}: {{ review.proposal.reference_number }}
         </li>
         <li>
-            {% trans "Commissie" %}: {{review.proposal.reviewing_committee}}        
+            {% trans "Commissie" %}: {{review.proposal.reviewing_committee}}
         </li>
         {% if review.proposal.parent and review.proposal.parent.latest_review %}
             <li>
@@ -92,7 +91,7 @@ Remember to include it in a with statement if the view does not provide it.
         {% if review.proposal.has_minor_revision %}
             <h4>{% trans 'Revisie' %}</h4>
             <p>{% blocktrans %}
-                Deze studie heeft een revisie gehad tijdens het beslisproces.
+                Deze aanvraag heeft een revisie gehad tijdens het beslisproces.
             {% endblocktrans %}</p>
             {% if review.proposal.minor_revision_description %}
                 <p>{% blocktrans %}
@@ -102,7 +101,7 @@ Remember to include it in a with statement if the view does not provide it.
             {% endif %}
         {% endif %}
 
-    
+
     <h3>{% trans "Documenten" %}</h3>
     {% documents_list review user %}
 </div>

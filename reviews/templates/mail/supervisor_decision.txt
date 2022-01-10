@@ -4,7 +4,7 @@
 Beste {{ applicant.get_full_name }},
 
 Er is zojuist een nieuwe beoordeling toegevoegd door de eindverantwoordelijke, {{ supervisor.get_full_name }}
-bij de studie {{ decision.review.proposal.reference_number }}: "{{ decision.review.proposal.title }}".
+bij de aanvraag {{ decision.review.proposal.reference_number }}: "{{ decision.review.proposal.title }}".
 
 Beoordeling: {{ decision.get_go_display }}
 Opmerkingen: {{ decision.comments|default:"geen"|safe }}

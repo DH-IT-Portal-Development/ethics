@@ -4,30 +4,30 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Een nieuwe studie aanmelden" %} - {{ block.super }}
+    {% trans "Een nieuwe aanvraag aanmelden" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>{% trans "Een nieuwe studie aanmelden" %}</h2>
-            
+            <h2>{% trans "Een nieuwe aanvraag aanmelden" %}</h2>
+
                 <ul>
                 <li>{% trans "Check voor het indienen:" %}
                     <ul>
                     <li>
                         {% blocktrans trimmed %}
-                            De 
+                            De
                             <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">
                             UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
                         {% endblocktrans %}
                     </li>
                     <li>
                         {% blocktrans trimmed %}
-                            Het reglement van de 
-                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/">Algemene Kamer (AK)</a> 
-                            of dat van de 
-                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/">Linguïstiek Kamer (LK)</a>. 
+                            Het reglement van de
+                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/">Algemene Kamer (AK)</a>
+                            of dat van de
+                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/">Linguïstiek Kamer (LK)</a>.
                         {% endblocktrans %}
                     </li>
                     </ul>
@@ -50,7 +50,7 @@
             </p>
             <ul>
             <p>
-            <li><strong>{% trans "Traject" %}</strong>: 
+            <li><strong>{% trans "Traject" %}</strong>:
                 {% blocktrans trimmed %}
                     Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.
                 <p><u>Bijvoorbeeld</u>: schoolleiding, ouders van leerlingen 15 jaar en jonger, docenten.</p>
@@ -64,12 +64,12 @@
             </li>
             </p>
             <p>
-            <li><strong>{% trans "Taak" %}</strong>: 
+            <li><strong>{% trans "Taak" %}</strong>:
                 {% blocktrans trimmed %}
                     Een taak of onderdeel van je onderzoek.
                 <p>
                     <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
-                </p> 
+                </p>
                 {% endblocktrans %}
             </li>
             </p>

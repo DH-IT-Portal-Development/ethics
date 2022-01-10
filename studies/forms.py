@@ -35,7 +35,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         }
         mark_safe_lazy = lazy(mark_safe, str)
         labels = {
-            'legally_incapable': mark_safe_lazy(_('Maakt je studie gebruik van '
+            'legally_incapable': mark_safe_lazy(_('Maakt jouw onderzoek gebruik van '
                                              'wils<u>on</u>bekwame ('
                                              'volwassen) deelnemers?'))
         }
