@@ -195,25 +195,25 @@ def documents_list(review, user):
     # Pre-approval
     if proposal.pre_approval_pdf:
         entries.append(
-            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf.url, proposal, False)
+            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal, False)
         )
 
     # Pre-assessment
     if proposal.pre_assessment_pdf:
         entries.append(
-            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf.url, proposal, False)
+            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal, False)
         )
 
     # Data management plan
     if proposal.dmp_file:
         entries.append(
-            (_('Data Management Plan'), proposal.dmp_file.url, proposal, True)
+            (_('Data Management Plan'), proposal.dmp_file, proposal, True)
         )
 
     # WMO
     if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
         entries.append(
-            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf.url, proposal.wmo, False)
+            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo, False)
         )
 
     headers_items[_('Aanmelding')] = {
