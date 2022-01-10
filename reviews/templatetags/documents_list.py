@@ -1,16 +1,18 @@
 from django import template
-
-from main.utils import is_secretary
-from studies.models import Documents, Study
-from proposals.models import Proposal, Wmo
-from observations.models import Observation
-from collections import OrderedDict
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
-
 from django.core.exceptions import ObjectDoesNotExist
+
+
+from main.utils import is_secretary
+from studies.models import Documents, Study
+from proposals.models import Proposal, Wmo
+from proposals.utils.proposal_utils import FilenameFactory
+from observations.models import Observation
+from collections import OrderedDict
+
 
 register = template.Library()
 
@@ -128,6 +130,12 @@ def simple_compare_link(obj, file):
 
     return {'compare_url': url}
 
+class DynamicFakeFileField:
+
+    def __init__(self, url, name):
+
+        self.url = url
+        self.name = name
 
 
 def give_name(doc):
@@ -169,7 +177,7 @@ def documents_list(review, user):
     # When we upgrade we can let go of OrderedDict
     #
     # Format:
-    # headers_items['Header'] = [ ( name, filefield, owner_object ), ... ]
+    # headers_items['Header'] = [ ( name, url, owner_object ), ... ]
     # (see template for details)
     headers_items = OrderedDict()
 
@@ -177,31 +185,35 @@ def documents_list(review, user):
     entries = []
     entries.append(
         # name, file, containing object, comparable
-        (_('Aanvraag in PDF-vorm'), reverse('proposals:pdf', args=(proposal.pk,)), proposal, False)
+        (_('Aanvraag in PDF-vorm'),
+         DynamicFakeFileField(
+             reverse('proposals:pdf', args=(proposal.pk,)),
+             FilenameFactory('Proposal')(proposal, 'proposal.pdf')),
+         proposal, False)
     )
 
     # Pre-approval
     if proposal.pre_approval_pdf:
         entries.append(
-            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal, False)
+            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf.url, proposal, False)
         )
 
     # Pre-assessment
     if proposal.pre_assessment_pdf:
         entries.append(
-            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal, False)
+            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf.url, proposal, False)
         )
 
     # Data management plan
     if proposal.dmp_file:
         entries.append(
-            (_('Data Management Plan'), proposal.dmp_file, proposal, True)
+            (_('Data Management Plan'), proposal.dmp_file.url, proposal, True)
         )
 
     # WMO
     if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
         entries.append(
-            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo, False)
+            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf.url, proposal.wmo, False)
         )
 
     headers_items[_('Aanmelding')] = {
