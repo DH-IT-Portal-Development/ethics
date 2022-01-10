@@ -177,7 +177,7 @@ def documents_list(review, user):
     # When we upgrade we can let go of OrderedDict
     #
     # Format:
-    # headers_items['Header'] = [ ( name, url, owner_object ), ... ]
+    # headers_items['Header'] = [ ( name, file, owner_object ), ... ]
     # (see template for details)
     headers_items = OrderedDict()
 
