@@ -1,4 +1,3 @@
-    
 {% load static %}
 {% load proposal_filters %}
 {% load fetc_filters %}
@@ -6,31 +5,33 @@
 {% load compare_tags %}
 {% load documents_list %}
 
-{% for header, data in headers_items.items %}
 
-    <h5>
-       {{header}}
-    </h5>
 
-    <ul>
-    {% for name, file, obj, comparable in data.items %}
-        <li>
-            <a href="{{ file.url }}" target="_blank" download="{{file.name}}">
-                {{name}}
-            </a>
-            {% if comparable %}
-                {% simple_compare_link obj file %}
-            {% endif %}
-        </li>
+{% for container in containers %}
+
+<h5>
+    {{container.header}}
+</h5>
+
+<ul>
+    {% for item in container.items %}
+    <li>
+        <a href="{{ item.link_url }}" target="_blank" download="{{item.field.name}}">
+            {{item.name}}
+        </a>
+        {% if item.comparable %}
+        {% simple_compare_link item.object item.field %}
+        {% endif %}
+    </li>
     {% endfor %}
-    </ul>
+</ul>
 
-    {% if data.edit_link %}
-    <a href="{{ data.edit_link }}">
-        {% trans "Documenten wijzigen" %}
-        <img src="{% static 'proposals/images/pencil.png' %}"
-             title="{% trans 'Documenten wijzigen' %}" />
-    </a>
-    {% endif %}
+{% if container.edit_link %}
+<a href="{{ data.edit_link }}">
+    {% trans "Documenten wijzigen" %}
+    <img src="{% static 'proposals/images/pencil.png' %}"
+         title="{% trans 'Documenten wijzigen' %}" />
+</a>
+{% endif %}
 
 {% endfor %}

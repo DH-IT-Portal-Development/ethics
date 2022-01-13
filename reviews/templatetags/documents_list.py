@@ -180,11 +180,11 @@ class DocItem:
         self.__dict__.update(kwargs)
 
 
-@register.inclusion_tag('reviews/documents_list_v2.html')
-def documents_list_v2(review, user):
+@register.inclusion_tag('reviews/documents_list.html')
+def documents_list(review, user):
     """This retrieves all files associated with
     a certain review and its proposal and returns them as a
-    dict of dicts with display-ready descriptions"""
+    list of Container objects"""
 
     proposal = review.proposal
     containers = []
@@ -225,7 +225,6 @@ def documents_list_v2(review, user):
     # WMO
     if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
 
-
         metc_decision = DocItem(_('Beslissing METC'))
         metc_decision.link_url = proposal.wmo.metc_decision_pdf.url
 
@@ -245,7 +244,7 @@ def documents_list_v2(review, user):
 
     for d in qs:
         items = []
-        files = [
+        potential_files = [
             (_('Informed consent'), d.informed_consent, d),
             (_('Informatiebrief'), d.briefing, d),
             (
@@ -264,7 +263,7 @@ def documents_list_v2(review, user):
         # Search for old-style observations (deprecated)
         if d.study and d.study.has_observation:
             if d.study.observation.needs_approval:
-                files.append(
+                potential_files.append(
                     (
                     _('Toestemmingsdocument observatie'),
                     d.study.observation.approval_document,
@@ -272,24 +271,22 @@ def documents_list_v2(review, user):
                     )
                 )
 
-        for (name, field, obj) in files:
-            # If it's got a file in it, add an entry
+        for (name, field, obj) in potential_files:
+            # If it's got a file in it, add an item
             if field:
-                # name, file, containing object, comparable
                 item = DocItem(name)
                 item.comparable = True
                 item.field = field
                 item.object = obj
-
                 items.append(item)
 
         edit_link = None
 
-
+        # Only the secretary gets an edit link
         if is_secretary(user):
             edit_link = reverse('studies:attachments', args=[d.pk])
 
-        # Get a humanized name for this documents item
+        # Get a humanized name and create container item
         documents_container = Container(give_name(d))
         documents_container.items = items
         documents_container.edit_link = edit_link
@@ -299,119 +296,4 @@ def documents_list_v2(review, user):
 
     return {'review': review,
             'containers': containers,
-            'proposal': proposal}
-
-
-
-
-@register.inclusion_tag('reviews/documents_list.html')
-def documents_list(review, user):
-    """This retrieves all files associated with
-    a certain review and its proposal and returns them as a
-    dict of dicts with display-ready descriptions"""
-
-    proposal = review.proposal
-
-    # From Python 3.7 dicts should be insertion-ordered
-    # When we upgrade we can let go of OrderedDict
-    #
-    # Format:
-    # headers_items['Header'] = [ ( name, filefield, owner_object ), ... ]
-    # (see template for details)
-    headers_items = OrderedDict()
-
-    # Get the proposal PDF
-    entries = []
-    entries.append(
-        # name, file, containing object, comparable
-        (_('Aanvraag in PDF-vorm'), reverse('proposals:pdf', args=(proposal.pk,)), proposal, False)
-    )
-
-    # Pre-approval
-    if proposal.pre_approval_pdf:
-        entries.append(
-            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal, False)
-        )
-
-    # Pre-assessment
-    if proposal.pre_assessment_pdf:
-        entries.append(
-            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal, False)
-        )
-
-    # Data management plan
-    if proposal.dmp_file:
-        entries.append(
-            (_('Data Management Plan'), proposal.dmp_file, proposal, True)
-        )
-
-    # WMO
-    if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
-        entries.append(
-            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo, False)
-        )
-
-    headers_items[_('Aanmelding')] = {
-        'items': entries,
-        'edit_link': None,
-    }
-
-    # Now get all trajectories / extra documents
-    # First we get all objects attached to a study, then we append those
-    # without. This way we get the ordering we want.
-    qs = Documents.objects.filter(
-        proposal=proposal
-    ).exclude(study=None) | Documents.objects.filter(
-        proposal=proposal, study=None
-    )
-
-    for d in qs:
-        entries = []
-        files = [
-            (_('Informed consent'), d.informed_consent, d),
-            (_('Informatiebrief'), d.briefing, d),
-            (
-                _('Consent declaratie directeur/departementshoofd'),
-                d.director_consent_declaration,
-                d
-            ),
-            (
-                _('Informatiebrief directeur/departementshoofd'),
-                d.director_consent_information,
-                d
-            ),
-            (_('Informatiebrief ouders'), d.parents_information, d),
-        ]
-
-        # Search for old-style observations (deprecated)
-        if d.study and d.study.has_observation:
-            if d.study.observation.needs_approval:
-                files.append(
-                    (
-                    _('Toestemmingsdocument observatie'),
-                    d.study.observation.approval_document,
-                    d.study.observation
-                    )
-                )
-
-        for (name, field, obj) in files:
-            # If it's got a file in it, add an entry
-            if field:
-                # name, file, containing object, comparable
-                entries.append((name, field, obj, True))
-
-        edit_link = None
-
-
-        if is_secretary(user):
-            edit_link = reverse('studies:attachments', args=[d.pk])
-
-        # Get a humanized name for this documents item
-        headers_items[give_name(d)] = {
-            'items': entries,
-            'edit_link': edit_link,
-        }
-
-    return {'review': review,
-            'headers_items': headers_items,
             'proposal': proposal}
