@@ -157,6 +157,153 @@ def give_name(doc):
                 return _("Extra documenten {}").format(n+1)
 
 
+
+class Container:
+
+    def __init__(self, header, **kwargs):
+
+        self.edit_link = False
+        self.header = header
+        self.items = []
+
+        self.__dict__.update(kwargs)
+
+
+
+class DocItem:
+
+    def __init__(self, name, **kwargs):
+
+        self.name = name
+        self.comparable = False
+
+        self.__dict__.update(kwargs)
+
+
+@register.inclusion_tag('reviews/documents_list_v2.html')
+def documents_list_v2(review, user):
+    """This retrieves all files associated with
+    a certain review and its proposal and returns them as a
+    dict of dicts with display-ready descriptions"""
+
+    proposal = review.proposal
+    containers = []
+
+    # Get the proposal PDF
+    pdf_container = Container(_('Aanmelding'))
+
+    proposal_pdf = DocItem(_('Aanvraag in PDF-vorm'))
+    proposal_pdf.link_url = reverse('proposals:pdf', args=(proposal.pk,))
+
+    pdf_container.items.append(proposal_pdf)
+
+    # Pre-approval
+    if proposal.pre_approval_pdf:
+
+        pre_approval = DocItem(_('Eerdere goedkeuring'))
+        pre_approval.link_url = proposal.pre_approval_pdf.url
+
+        pdf_container.items.append(pre_approval_pdf)
+
+    # Pre-assessment
+    if proposal.pre_assessment_pdf:
+
+        pre_assessment = DocItem(_('Aanvraag bij voortoetsing'))
+        pre_assessment.link_url = proposal.pre_assessment_pdf.url
+
+        pdf_container.items.append(pre_assessment)
+
+
+    # Data management plan
+    if proposal.dmp_file:
+
+        dmp_file = DocItem(_('Data Management Plan'))
+        dmp_file.link_url = proposal.dmp_file.url
+
+        pdf_container.items.append(dmp_file)
+
+    # WMO
+    if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
+
+
+        metc_decision = DocItem(_('Beslissing METC'))
+        metc_decision.link_url = proposal.wmo.metc_decision_pdf.url
+
+        pdf_container.items.append(metc_decision)
+
+    # Finally, append the container
+    containers.append(pdf_container)
+
+    # Now get all trajectories / extra documents
+    # First we get all objects attached to a study, then we append those
+    # without. This way we get the ordering we want.
+    qs = Documents.objects.filter(
+        proposal=proposal
+    ).exclude(study=None) | Documents.objects.filter(
+        proposal=proposal, study=None
+    )
+
+    for d in qs:
+        items = []
+        files = [
+            (_('Informed consent'), d.informed_consent, d),
+            (_('Informatiebrief'), d.briefing, d),
+            (
+                _('Consent declaratie directeur/departementshoofd'),
+                d.director_consent_declaration,
+                d
+            ),
+            (
+                _('Informatiebrief directeur/departementshoofd'),
+                d.director_consent_information,
+                d
+            ),
+            (_('Informatiebrief ouders'), d.parents_information, d),
+        ]
+
+        # Search for old-style observations (deprecated)
+        if d.study and d.study.has_observation:
+            if d.study.observation.needs_approval:
+                files.append(
+                    (
+                    _('Toestemmingsdocument observatie'),
+                    d.study.observation.approval_document,
+                    d.study.observation
+                    )
+                )
+
+        for (name, field, obj) in files:
+            # If it's got a file in it, add an entry
+            if field:
+                # name, file, containing object, comparable
+                item = DocItem(name)
+                item.comparable = True
+                item.field = field
+                item.object = obj
+
+                items.append(item)
+
+        edit_link = None
+
+
+        if is_secretary(user):
+            edit_link = reverse('studies:attachments', args=[d.pk])
+
+        # Get a humanized name for this documents item
+        documents_container = Container(give_name(d))
+        documents_container.items = items
+        documents_container.edit_link = edit_link
+
+        containers.append(documents_container)
+
+
+    return {'review': review,
+            'containers': containers,
+            'proposal': proposal}
+
+
+
+
 @register.inclusion_tag('reviews/documents_list.html')
 def documents_list(review, user):
     """This retrieves all files associated with
