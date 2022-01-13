@@ -54,7 +54,7 @@ docutils==0.17.1
     # via
     #   sphinx
     #   sphinx-rtd-theme
-git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
+docx2txt @ git+https://github.com/UiL-OTS-labs/python-docx2txt
     # via -r requirements.in
 future==0.18.2
     # via arabic-reshaper
@@ -80,7 +80,7 @@ pbr==5.6.0
     # via sphinxcontrib-apidoc
 pdftotext==2.2.1
     # via -r requirements.in
-pillow==8.4.0
+pillow==9.0.0
     # via
     #   -r requirements.in
     #   reportlab
