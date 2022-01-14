@@ -12,6 +12,8 @@ from django.utils.safestring import mark_safe
 
 from django.core.exceptions import ObjectDoesNotExist
 
+from proposals.utils.proposal_utils import FilenameFactory
+
 register = template.Library()
 
 
@@ -176,8 +178,25 @@ class DocItem:
 
         self.name = name
         self.comparable = False
+        self.filename = None
+        self.link_url = None
 
         self.__dict__.update(kwargs)
+
+    def get_filename(self):
+
+        if self.filename:
+            return self.filename
+
+        return self.field.name
+
+    def get_link_url(self):
+
+        if self.link_url:
+            return self.link_url
+
+        return self.field.url
+
 
 
 @register.inclusion_tag('reviews/documents_list.html')
@@ -195,13 +214,19 @@ def documents_list(review, user):
     proposal_pdf = DocItem(_('Aanvraag in PDF-vorm'))
     proposal_pdf.link_url = reverse('proposals:pdf', args=(proposal.pk,))
 
+    # Because the pdf is generated on the spot, we need to
+    # generate the filename here too
+    proposal_pdf.filename = FilenameFactory('Proposal')(
+        proposal, 'proposal.pdf') # Original filename is just to determine
+                                  # the extension
+
     pdf_container.items.append(proposal_pdf)
 
     # Pre-approval
     if proposal.pre_approval_pdf:
 
         pre_approval = DocItem(_('Eerdere goedkeuring'))
-        pre_approval.link_url = proposal.pre_approval_pdf.url
+        pre_approval.field = proposal.pre_approval_pdf
 
         pdf_container.items.append(pre_approval_pdf)
 
@@ -209,7 +234,7 @@ def documents_list(review, user):
     if proposal.pre_assessment_pdf:
 
         pre_assessment = DocItem(_('Aanvraag bij voortoetsing'))
-        pre_assessment.link_url = proposal.pre_assessment_pdf.url
+        pre_assessment.field = proposal.pre_assessment_pdf
 
         pdf_container.items.append(pre_assessment)
 
@@ -218,7 +243,7 @@ def documents_list(review, user):
     if proposal.dmp_file:
 
         dmp_file = DocItem(_('Data Management Plan'))
-        dmp_file.link_url = proposal.dmp_file.url
+        dmp_file.field = proposal.dmp_file
 
         pdf_container.items.append(dmp_file)
 
@@ -226,7 +251,7 @@ def documents_list(review, user):
     if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
 
         metc_decision = DocItem(_('Beslissing METC'))
-        metc_decision.link_url = proposal.wmo.metc_decision_pdf.url
+        metc_decision.field = proposal.wmo.metc_decision_pdf
 
         pdf_container.items.append(metc_decision)
 
@@ -243,20 +268,19 @@ def documents_list(review, user):
     )
 
     for d in qs:
-        items = []
+
+        # Get a humanized name and create container item
+        documents_container = Container(give_name(d))
+
+        # We create a list of possible files
+        # with the format [(Name, FileField, Containing object)...]
         potential_files = [
             (_('Informed consent'), d.informed_consent, d),
             (_('Informatiebrief'), d.briefing, d),
-            (
-                _('Consent declaratie directeur/departementshoofd'),
-                d.director_consent_declaration,
-                d
-            ),
-            (
-                _('Informatiebrief directeur/departementshoofd'),
-                d.director_consent_information,
-                d
-            ),
+            ( _('Consent declaratie directeur/departementshoofd'),
+                d.director_consent_declaration, d),
+            (_('Informatiebrief directeur/departementshoofd'),
+                d.director_consent_information, d),
             (_('Informatiebrief ouders'), d.parents_information, d),
         ]
 
@@ -271,29 +295,23 @@ def documents_list(review, user):
                     )
                 )
 
+        # We then iterate over potential files for every Documents object in the QS
         for (name, field, obj) in potential_files:
-            # If it's got a file in it, add an item
+            # If it's got a file in it, add an item to this container
             if field:
                 item = DocItem(name)
                 item.comparable = True
                 item.field = field
                 item.object = obj
-                items.append(item)
-
-        edit_link = None
+                documents_container.items.append(item)
 
         # Only the secretary gets an edit link
         if is_secretary(user):
-            edit_link = reverse('studies:attachments', args=[d.pk])
-
-        # Get a humanized name and create container item
-        documents_container = Container(give_name(d))
-        documents_container.items = items
-        documents_container.edit_link = edit_link
+            documents_container.edit_link = reverse('studies:attachments', args=[d.pk])
 
         containers.append(documents_container)
 
-
+    # Finally, return template context
     return {'review': review,
             'containers': containers,
             'proposal': proposal}

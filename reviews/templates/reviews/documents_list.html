@@ -16,7 +16,7 @@
 <ul>
     {% for item in container.items %}
     <li>
-        <a href="{{ item.link_url }}" target="_blank" download="{{item.field.name}}">
+        <a href="{{ item.get_link_url }}" target="_blank" download="{{item.get_filename}}">
             {{item.name}}
         </a>
         {% if item.comparable %}
