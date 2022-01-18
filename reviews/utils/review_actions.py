@@ -137,12 +137,11 @@ class CloseReview(ReviewAction):
         if review.stage != review.CLOSING:
             return False
 
-        user_groups = user.groups.values_list("name", flat=True)
+        user_groups = self.user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
         return True
-
 
     def action_url(self):
 
