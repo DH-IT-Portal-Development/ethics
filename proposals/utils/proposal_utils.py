@@ -455,7 +455,8 @@ class FilenameFactory:
                 return False
             return True
 
-        fn_parts = filter(not_empty, fn_parts)
+        # Translations will trip up join(), so we convert them here
+        fn_parts = [str(p) for p in filter(not_empty, fn_parts)]
 
         return '-'.join(fn_parts) + extension
 
