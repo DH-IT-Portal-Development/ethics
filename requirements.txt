@@ -18,7 +18,7 @@ charset-normalizer==2.0.7
     # via requests
 closure==20191111
     # via uil-django-core
-django==2.2.24
+django==2.2.27
     # via
     #   -r requirements.in
     #   django-auth-ldap
@@ -54,7 +54,7 @@ docutils==0.17.1
     # via
     #   sphinx
     #   sphinx-rtd-theme
-git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
+docx2txt @ git+https://github.com/UiL-OTS-labs/python-docx2txt
     # via -r requirements.in
 future==0.18.2
     # via arabic-reshaper
