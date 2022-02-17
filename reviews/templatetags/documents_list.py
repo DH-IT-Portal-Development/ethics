@@ -1,18 +1,18 @@
 from django import template
-from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
-from django.utils.html import escape
-from django.utils.safestring import mark_safe
-from django.core.exceptions import ObjectDoesNotExist
-
 
 from main.utils import is_secretary
 from studies.models import Documents, Study
 from proposals.models import Proposal, Wmo
-from proposals.utils.proposal_utils import FilenameFactory
 from observations.models import Observation
 from collections import OrderedDict
+from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
+from django.utils.html import escape
+from django.utils.safestring import mark_safe
 
+from django.core.exceptions import ObjectDoesNotExist
+
+from proposals.utils.proposal_utils import FilenameFactory
 
 register = template.Library()
 
@@ -130,12 +130,6 @@ def simple_compare_link(obj, file):
 
     return {'compare_url': url}
 
-class DynamicFakeFileField:
-
-    def __init__(self, url, name):
-
-        self.url = url
-        self.name = name
 
 
 def give_name(doc):
@@ -165,61 +159,104 @@ def give_name(doc):
                 return _("Extra documenten {}").format(n+1)
 
 
+
+class Container:
+
+    def __init__(self, header, **kwargs):
+
+        self.edit_link = False
+        self.header = header
+        self.items = []
+
+        self.__dict__.update(kwargs)
+
+
+
+class DocItem:
+
+    def __init__(self, name, **kwargs):
+
+        self.name = name
+        self.comparable = False
+        self.filename = None
+        self.link_url = None
+
+        self.__dict__.update(kwargs)
+
+    def get_filename(self):
+
+        if self.filename:
+            return self.filename
+
+        return self.field.name
+
+    def get_link_url(self):
+
+        if self.link_url:
+            return self.link_url
+
+        return self.field.url
+
+
+
 @register.inclusion_tag('reviews/documents_list.html')
 def documents_list(review, user):
     """This retrieves all files associated with
     a certain review and its proposal and returns them as a
-    dict of dicts with display-ready descriptions"""
+    list of Container objects"""
 
     proposal = review.proposal
-
-    # From Python 3.7 dicts should be insertion-ordered
-    # When we upgrade we can let go of OrderedDict
-    #
-    # Format:
-    # headers_items['Header'] = [ ( name, file, owner_object ), ... ]
-    # (see template for details)
-    headers_items = OrderedDict()
+    containers = []
 
     # Get the proposal PDF
-    entries = []
-    entries.append(
-        # name, file, containing object, comparable
-        (_('Aanvraag in PDF-vorm'),
-         DynamicFakeFileField(
-             reverse('proposals:pdf', args=(proposal.pk,)),
-             FilenameFactory('Proposal')(proposal, 'proposal.pdf')),
-         proposal, False)
-    )
+    pdf_container = Container(_('Aanmelding'))
+
+    proposal_pdf = DocItem(_('Aanvraag in PDF-vorm'))
+    proposal_pdf.link_url = reverse('proposals:pdf', args=(proposal.pk,))
+
+    # Because the pdf is generated on the spot, we need to
+    # generate the filename here too
+    proposal_pdf.filename = FilenameFactory('Proposal')(
+        proposal, 'proposal.pdf') # Original filename is just to determine
+                                  # the extension
+
+    pdf_container.items.append(proposal_pdf)
 
     # Pre-approval
     if proposal.pre_approval_pdf:
-        entries.append(
-            (_('Eerdere goedkeuring'), proposal.pre_approval_pdf, proposal, False)
-        )
+
+        pre_approval = DocItem(_('Eerdere goedkeuring'))
+        pre_approval.field = proposal.pre_approval_pdf
+
+        pdf_container.items.append(pre_approval_pdf)
 
     # Pre-assessment
     if proposal.pre_assessment_pdf:
-        entries.append(
-            (_('Aanvraag bij voortoetsing'), proposal.pre_assessment_pdf, proposal, False)
-        )
+
+        pre_assessment = DocItem(_('Aanvraag bij voortoetsing'))
+        pre_assessment.field = proposal.pre_assessment_pdf
+
+        pdf_container.items.append(pre_assessment)
+
 
     # Data management plan
     if proposal.dmp_file:
-        entries.append(
-            (_('Data Management Plan'), proposal.dmp_file, proposal, True)
-        )
+
+        dmp_file = DocItem(_('Data Management Plan'))
+        dmp_file.field = proposal.dmp_file
+
+        pdf_container.items.append(dmp_file)
 
     # WMO
     if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
-        entries.append(
-            (_('Beslissing METC'), proposal.wmo.metc_decision_pdf, proposal.wmo, False)
-        )
 
-    headers_items[_('Aanmelding')] = {
-        'items': entries,
-        'edit_link': None,
-    }
+        metc_decision = DocItem(_('Beslissing METC'))
+        metc_decision.field = proposal.wmo.metc_decision_pdf
+
+        pdf_container.items.append(metc_decision)
+
+    # Finally, append the container
+    containers.append(pdf_container)
 
     # Now get all trajectories / extra documents
     # First we get all objects attached to a study, then we append those
@@ -231,27 +268,26 @@ def documents_list(review, user):
     )
 
     for d in qs:
-        entries = []
-        files = [
+
+        # Get a humanized name and create container item
+        documents_container = Container(give_name(d))
+
+        # We create a list of possible files
+        # with the format [(Name, FileField, Containing object)...]
+        potential_files = [
             (_('Informed consent'), d.informed_consent, d),
             (_('Informatiebrief'), d.briefing, d),
-            (
-                _('Consent declaratie directeur/departementshoofd'),
-                d.director_consent_declaration,
-                d
-            ),
-            (
-                _('Informatiebrief directeur/departementshoofd'),
-                d.director_consent_information,
-                d
-            ),
+            ( _('Consent declaratie directeur/departementshoofd'),
+                d.director_consent_declaration, d),
+            (_('Informatiebrief directeur/departementshoofd'),
+                d.director_consent_information, d),
             (_('Informatiebrief ouders'), d.parents_information, d),
         ]
 
         # Search for old-style observations (deprecated)
         if d.study and d.study.has_observation:
             if d.study.observation.needs_approval:
-                files.append(
+                potential_files.append(
                     (
                     _('Toestemmingsdocument observatie'),
                     d.study.observation.approval_document,
@@ -259,24 +295,23 @@ def documents_list(review, user):
                     )
                 )
 
-        for (name, field, obj) in files:
-            # If it's got a file in it, add an entry
+        # We then iterate over potential files for every Documents object in the QS
+        for (name, field, obj) in potential_files:
+            # If it's got a file in it, add an item to this container
             if field:
-                # name, file, containing object, comparable
-                entries.append((name, field, obj, True))
+                item = DocItem(name)
+                item.comparable = True
+                item.field = field
+                item.object = obj
+                documents_container.items.append(item)
 
-        edit_link = None
-
-
+        # Only the secretary gets an edit link
         if is_secretary(user):
-            edit_link = reverse('studies:attachments', args=[d.pk])
+            documents_container.edit_link = reverse('studies:attachments', args=[d.pk])
 
-        # Get a humanized name for this documents item
-        headers_items[give_name(d)] = {
-            'items': entries,
-            'edit_link': edit_link,
-        }
+        containers.append(documents_container)
 
+    # Finally, return template context
     return {'review': review,
-            'headers_items': headers_items,
+            'containers': containers,
             'proposal': proposal}

@@ -45,7 +45,9 @@ class Intervention(SettingModel):
     )
 
     has_controls = models.BooleanField(
-        _('Is er sprake van een controlegroep?'),
+        _('Is er sprake van een controlegroep? (Let op: als de controlegroep \
+ook een ander soort taken krijgt, moet je hier een apart traject \
+voor aanmaken)'),
         default=False,
     )
 
