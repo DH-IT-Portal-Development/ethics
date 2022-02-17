@@ -271,7 +271,8 @@ een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
 helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
 hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
 dan wel bij de beschrijving van de interventie welke varianten precies \
-gebruikt worden).'),
+gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
+<i>soorten</i> taken krijgen, dan zijn dit verschillende trajecten.'),
         blank=True,
         null=True,
     )
