@@ -188,7 +188,8 @@ def get_average_turnaround_time(review_data: QuerySet) -> float:
     # We don't sum the num of days, as some reviews are closed in less than a
     # day which would cause the calculation to ignore that review
     return sum(
-        [(x.date_end - x.date_start).seconds / 60 / 24 for x in review_data]
+        [(x.date_end - x.date_start).seconds / 60 / 60 / 24 for x in
+         review_data]
     ) / total
 
 
