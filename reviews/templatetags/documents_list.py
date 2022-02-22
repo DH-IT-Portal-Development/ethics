@@ -228,7 +228,7 @@ def documents_list(review, user):
         pre_approval = DocItem(_('Eerdere goedkeuring'))
         pre_approval.field = proposal.pre_approval_pdf
 
-        pdf_container.items.append(pre_approval_pdf)
+        pdf_container.items.append(pre_approval)
 
     # Pre-assessment
     if proposal.pre_assessment_pdf:
