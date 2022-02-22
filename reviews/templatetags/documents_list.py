@@ -244,6 +244,8 @@ def documents_list(review, user):
 
         dmp_file = DocItem(_('Data Management Plan'))
         dmp_file.field = proposal.dmp_file
+        dmp_file.comparable = True
+        dmp_file.object = proposal
 
         pdf_container.items.append(dmp_file)
 
