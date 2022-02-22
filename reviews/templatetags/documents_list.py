@@ -228,7 +228,7 @@ def documents_list(review, user):
         pre_approval = DocItem(_('Eerdere goedkeuring'))
         pre_approval.field = proposal.pre_approval_pdf
 
-        pdf_container.items.append(pre_approval_pdf)
+        pdf_container.items.append(pre_approval)
 
     # Pre-assessment
     if proposal.pre_assessment_pdf:
@@ -244,6 +244,8 @@ def documents_list(review, user):
 
         dmp_file = DocItem(_('Data Management Plan'))
         dmp_file.field = proposal.dmp_file
+        dmp_file.comparable = True
+        dmp_file.object = proposal
 
         pdf_container.items.append(dmp_file)
 
