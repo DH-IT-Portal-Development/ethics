@@ -235,6 +235,7 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
 
         if route is not None:
             # Start a short/long route
+
             form.instance.stage = Review.COMMISSION
 
             current_reviewers = set(review.current_reviewers())
@@ -260,6 +261,7 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
             Decision.objects.filter(review=review,
                                     reviewer__in=obsolete_reviewers).delete()
 
+            assign_reviewers(review, selected_reviewers)
             # Finally, update the review process
             # This prevents it waiting for removed reviewers
             review.update_go()
