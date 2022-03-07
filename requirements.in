@@ -19,7 +19,7 @@ pillow>=6.0
 pygments
 requests
 -e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v2.0.9#egg=uil-django-core
-reportlab
+reportlab==3.6.2 # Pinned because of incompatibilty problems. pls check again sometime later
 git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
 python-magic
 pdftotext

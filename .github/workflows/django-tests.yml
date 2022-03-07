@@ -10,10 +10,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    continue-on-error: true
     strategy:
       max-parallel: 2
       matrix:
-        python-version: [3.6, 3.9]
+        python-version: [3.8, 3.9, '3.10']
 
     steps:
       - name: Install OS dependencies
