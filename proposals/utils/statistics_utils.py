@@ -1,4 +1,5 @@
 from collections import Counter, defaultdict
+import statistics
 
 from django.contrib.auth.models import Group
 from django.db.models import QuerySet
@@ -130,7 +131,7 @@ def get_total_long_route_proposals(data: QuerySet) -> int:
     :return: the num of long route proposals in the given QuerySet
     :rtype: int
     """
-    return get_qs_for_short_route_reviews(data).count()
+    return get_qs_for_long_route_reviews(data).count()
 
 
 def get_total_students(data: QuerySet) -> dict:
@@ -176,21 +177,9 @@ def get_average_turnaround_time(review_data: QuerySet) -> float:
     using a float to represent partial days)
     :rtype: float
     """
-    total = review_data.count()
-
-    # Protect against division by 0
-    if total == 0:
-        return 0
-
-    # First calculate the delta in seconds and then divide it by 60 to get
-    # hours and then by 24 to get a day representation in floats.
-    # Sidenote; PYTHON WHY ARE MY ONLY OPTIONS MICROSECONDS, SECONDS AND DAYS
-    # We don't sum the num of days, as some reviews are closed in less than a
-    # day which would cause the calculation to ignore that review
-    return sum(
-        [(x.date_end - x.date_start).seconds / 60 / 60 / 24 for x in
-         review_data]
-    ) / total
+    return statistics.mean(
+        [(x.date_end - x.date_start).days for x in review_data]
+    )
 
 
 #
