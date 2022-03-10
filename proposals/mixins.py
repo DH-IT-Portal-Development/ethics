@@ -9,6 +9,7 @@ from xhtml2pdf import pisa
 from django.http import HttpResponse
 from django.template.loader import get_template
 
+
 class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
@@ -21,7 +22,6 @@ class ProposalMixin(UserFormKwargsMixin):
             return reverse('proposals:wmo_update', args=(proposal.pk,))
         else:
             return reverse('proposals:wmo_create', args=(proposal.pk,))
-
 
 
 class ProposalContextMixin:
@@ -58,54 +58,34 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         """
         return self.pdf_filename
 
-    def get_pdf_kwargs(self):
-        """
-        Returns :attr:`pdf_kwargs` by default.
+    def get_pdf_response(self, context, dest=None, **response_kwargs):
+        """Renders HTML from template and subsequently a pdf
+        using xhtml2pdf"""
 
-        The kwargs are passed to :func:`render_to_pdf_response` and
-        :func:`xhtml2pdf.pisa.pisaDocument`.
+        if not dest:
+            # Create a Django response object, and specify content_type as pdf
+            # This is the default when using this view
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="{}"'.format(
+                self.get_pdf_filename)
+            dest = response
 
-        :rtype: :class:`dict`
-        """
-        if self.pdf_kwargs is None:
-            return {}
-        return copy.copy(self.pdf_kwargs)
-
-    def get_pdf_response(self, context, **response_kwargs):
-        """
-        Renders PDF document and prepares response.
-
-        :returns: Django HTTP response
-        :rtype: :class:`django.http.HttpResponse`
-        """
-        return render_to_pdf_response(
-            request=self.request,
-            template=self.get_template_names(),
-            context=context,
-            using=self.template_engine,
-            filename=self.get_pdf_filename(),
-            **self.get_pdf_kwargs()
-        )
-
-    def make_pisa_response(self, context):
-
-
-        # context = self.get_context_data()
-        # Create a Django response object, and specify content_type as pdf
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="filename.pdf"'
         # find the template and render it.
         template = get_template(self.template_name)
         html = template.render(context)
 
         # Create PDF with pisa object
         pisa_status = pisa.CreatePDF(
-            html, dest=response, )
+            html, dest=dest, )
 
         if pisa_status.err:
             return HttpResponse('We had some errors <pre>' + html + '</pre>')
         return response
 
-
     def render_to_response(self, context, **response_kwargs):
-        return self.make_pisa_response(context, **response_kwargs)
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="{}"'.format(
+            self.get_pdf_filename())
+
+        return self.get_pdf_response(context, **response_kwargs)
