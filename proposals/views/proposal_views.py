@@ -8,7 +8,7 @@ from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
-from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
+#from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
 
 from main.utils import get_document_contents, get_secretary, is_secretary
@@ -25,7 +25,8 @@ from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
-from proposals.mixins import ProposalMixin, ProposalContextMixin
+from proposals.mixins import ProposalMixin, ProposalContextMixin, \
+    PDFTemplateResponseMixin
 
 
 ############
@@ -513,7 +514,10 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
         return context
 
 
-class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
+
+
+class EmptyPDF(LoginRequiredMixin, generic.TemplateView,
+               PDFTemplateResponseMixin):
     template_name = 'proposals/proposal_pdf_empty.html'
 
 

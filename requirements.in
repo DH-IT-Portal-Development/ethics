@@ -1,4 +1,4 @@
-Django>=2.2,<3.0
+Django>=3.2,<4.0
 django-auth-ldap
 django-braces
 django-easy-pdf
@@ -23,3 +23,4 @@ reportlab
 git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
 python-magic
 pdftotext
+bpython
