@@ -13,7 +13,8 @@ from django.template.loader import render_to_string
 from django.utils.translation import activate, get_language, ugettext as _
 from django.utils.deconstruct import deconstructible
 
-from easy_pdf.rendering import render_to_pdf
+#from easy_pdf.rendering import render_to_pdf
+from xhtml2pdf import pisa
 
 from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
@@ -278,42 +279,47 @@ def _get_next_proposal_number(current_year) -> int:
         return 1
 
 
-def generate_pdf(proposal, template):
-    """
-    Generates the PDF for a Proposal and attaches it.
-    :param proposal: the current Proposal
-    :param template: the template for the PDF
-    """
-    # Local import, as otherwise a circular import will happen because the proposal model imports this file
-    # (And the document model imports the proposal model)
-    from studies.models import Documents
+# def generate_pdf(proposal, template):
+#     """
+#     Generates the PDF for a Proposal and attaches it.
+#     :param proposal: the current Proposal
+#     :param template: the template for the PDF
+#     """
+#     # Local import, as otherwise a circular import will happen because the proposal model imports this file
+#     # (And the document model imports the proposal model)
+#     from studies.models import Documents
 
-    # Change language to English for this PDF, but save the current language to reset it later
-    current_language = get_language()
-    activate('en')
+#     # Change language to English for this PDF, but save the current language to reset it later
+#     current_language = get_language()
+#     activate('en')
 
-    documents = {
-        'extra': []
-    }
+#     documents = {
+#         'extra': []
+#     }
 
-    for document in Documents.objects.filter(proposal=proposal).all():
-        if document.study:
-            documents[document.study.pk] = document
-        else:
-            documents['extra'].append(document)
+#     for document in Documents.objects.filter(proposal=proposal).all():
+#         if document.study:
+#             documents[document.study.pk] = document
+#         else:
+#             documents['extra'].append(document)
 
-    # This try catch does not actually handle any errors. It only makes sure the language is properly reset before
-    # reraising the exception.
-    try:
-        context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL, 'documents': documents}
-        pdf = ContentFile(render_to_pdf(template, context))
-        proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
-    except Exception as e:
-        activate(current_language)
-        raise e
+#     # This try catch does not actually handle any errors. It only makes sure the language is properly reset before
+#     # reraising the exception.
+#     try:
+#         context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL, 'documents': documents}
+#         pdf = ContentFile(render_to_pdf(template, context))
+#         proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
+#     except Exception as e:
+#         activate(current_language)
+#         raise e
 
-    # Reset the current language
-    activate(current_language)
+#     # Reset the current language
+#     activate(current_language)
+
+def generate_pdf(*args, **kwargs):
+    """Placeholder function for pdf saving"""
+
+    print(args, kwargs)
 
 
 def check_local_facilities(proposal):
