@@ -435,6 +435,7 @@ def discontinue_review(review):
 def assign_reviewers(review, list_of_users, route):
     """Assigns or reassigns a list of reviewers to a review"""
 
+    # Set stage to commission if users are assigned
     if len(list_of_users) > 0:
         review.stage = review.COMMISSION
     else:
