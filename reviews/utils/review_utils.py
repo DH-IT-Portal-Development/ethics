@@ -432,9 +432,13 @@ def discontinue_review(review):
     review.proposal.save()
 
 
-def assign_reviewers(review, list_of_users):
+def assign_reviewers(review, list_of_users, route):
     """Assigns or reassigns a list of reviewers to a review"""
-    form.instance.stage = Review.COMMISSION
+
+    if len(list_of_users) > 0:
+        review.stage = review.COMMISSION
+    else:
+        review.stage = review.ASSIGNMENT
 
     current_reviewers = set(review.current_reviewers())
     new_reviewers = list_of_users - current_reviewers
@@ -443,20 +447,22 @@ def assign_reviewers(review, list_of_users):
     # Set the proper end date
     # It should be 2 weeks for short_routes
     if review.short_route and review.date_should_end is None:
-        form.instance.date_should_end = timezone.now() + \
+        review.date_should_end = timezone.now() + \
             timezone.timedelta(
                 weeks=settings.SHORT_ROUTE_WEEKS
             )
-    elif form.instance.date_should_end is not None:
+    elif review.date_should_end is not None:
         # We have no desired end date for long track reviews
-        form.instance.date_should_end = None
+        review.date_should_end = None
 
     # Create a new Decision for new reviewers
-    start_review_route(form.instance, new_reviewers, route)
+    start_review_route(review, new_reviewers, route)
 
     # Remove the Decision for obsolete reviewers
     Decision.objects.filter(review=review,
                             reviewer__in=obsolete_reviewers).delete()
+
+    review.save()
 
     # Finally, update the review process
     # This prevents it waiting for removed reviewers
