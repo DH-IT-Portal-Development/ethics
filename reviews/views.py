@@ -1,3 +1,5 @@
+from datetime import date
+
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
