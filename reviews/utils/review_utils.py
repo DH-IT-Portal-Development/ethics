@@ -288,7 +288,6 @@ def notify_supervisor_nogo(decision):
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [applicant.email])
 
 
-
 def auto_review(proposal: Proposal):
     """
     Reviews a Proposal machine-wise.
@@ -431,3 +430,45 @@ def discontinue_review(review):
     review.date_end = datetime.datetime.now()
     review.save()
     review.proposal.save()
+
+
+def assign_reviewers(review, list_of_users, route):
+    """Assigns or reassigns a list of reviewers to a review"""
+
+    # Set stage to commission if users are assigned
+    if len(list_of_users) > 0:
+        review.stage = review.COMMISSION
+    else:
+        review.stage = review.ASSIGNMENT
+
+    current_reviewers = set(review.current_reviewers())
+    new_reviewers = list_of_users - current_reviewers
+    obsolete_reviewers = current_reviewers - list_of_users
+
+    # Set the proper end date
+    # It should be 2 weeks for short_routes
+    if review.short_route and review.date_should_end is None:
+        review.date_should_end = timezone.now() + \
+            timezone.timedelta(
+                weeks=settings.SHORT_ROUTE_WEEKS
+            )
+    elif review.date_should_end is not None:
+        # We have no desired end date for long track reviews
+        review.date_should_end = None
+
+    # Create a new Decision for new reviewers
+    start_review_route(review, new_reviewers, route)
+
+    # Remove the Decision for obsolete reviewers
+    Decision.objects.filter(review=review,
+                            reviewer__in=obsolete_reviewers).delete()
+
+    review.save()
+
+    # Finally, update the review process
+    # This prevents it waiting for removed reviewers
+    review.update_go()
+
+def straight_to_revision(review):
+    """This action by the secretary in ReviewAssignForm bypasses
+    the usual review process and sends a review straight to revision"""
