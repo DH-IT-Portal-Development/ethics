@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
@@ -16,8 +16,8 @@ from .mixins import (AutoReviewMixin, UserAllowedMixin,
                      CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
 from .models import Decision, Review
-from .utils.review_utils import (notify_secretary, start_review_route,
-                                 discontinue_review,)
+from .utils.review_utils import notify_secretary, start_review_route, \
+                                 discontinue_review, assign_reviewers
 from .utils.review_actions import ReviewActions
 
 
@@ -232,37 +232,11 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
         """Updates the Review stage and start the selected Review route for the selected Users."""
         route = form.instance.short_route
         review = self.object
+        selected_reviewers = set(form.cleaned_data['reviewers'])
 
         if route is not None:
-            # Start a short/long route
-            form.instance.stage = Review.COMMISSION
-
-            current_reviewers = set(review.current_reviewers())
-            selected_reviewers = set(form.cleaned_data['reviewers'])
-            new_reviewers = selected_reviewers - current_reviewers
-            obsolete_reviewers = current_reviewers - selected_reviewers
-
-            # Set the proper end date
-            # It should be 2 weeks for short_routes
-            if route and form.instance.date_should_end is None:
-                form.instance.date_should_end = timezone.now() + \
-                    timezone.timedelta(
-                        weeks=settings.SHORT_ROUTE_WEEKS
-                    )
-            elif form.instance.date_should_end is not None:
-                # We have no desired end date for long track reviews
-                form.instance.date_should_end = None
-
-            # Create a new Decision for new reviewers
-            start_review_route(form.instance, new_reviewers, route)
-
-            # Remove the Decision for obsolete reviewers
-            Decision.objects.filter(review=review,
-                                    reviewer__in=obsolete_reviewers).delete()
-
-            # Finally, update the review process
-            # This prevents it waiting for removed reviewers
-            review.update_go()
+            # Start a short/long route or reassign reviewers
+            assign_reviewers(review, selected_reviewers, route)
 
         else:
             # Directly mark this Proposal as closed: applicants should start a revision Proposal
@@ -426,6 +400,7 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
             decision_pk = decision.pk
 
         return reverse('reviews:decide', args=[decision_pk])
+
 
 class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
                          generic.UpdateView):

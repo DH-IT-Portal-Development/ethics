@@ -1,137 +1,137 @@
 [
 {
+    "model": "tasks.registration",
+    "pk": 1,
     "fields": {
-        "is_local": false,
-        "needs_details": false,
+        "order": 1,
         "description": "audio-opname",
-        "needs_kind": false,
-        "description_en": "audio recording",
         "description_nl": "audio-opname",
-        "age_min": null,
-        "requires_review": false,
-        "order": 1
-    },
-    "model": "tasks.registration",
-    "pk": 1
-},
-{
-    "fields": {
+        "description_en": "audio recording",
         "is_local": false,
         "needs_details": false,
+        "needs_kind": false,
+        "requires_review": false,
+        "age_min": null
+    }
+},
+{
+    "model": "tasks.registration",
+    "pk": 2,
+    "fields": {
+        "order": 2,
         "description": "video-opname",
-        "needs_kind": false,
-        "description_en": "video recording",
         "description_nl": "video-opname",
-        "age_min": null,
-        "requires_review": false,
-        "order": 2
-    },
-    "model": "tasks.registration",
-    "pk": 2
-},
-{
-    "fields": {
+        "description_en": "video recording",
         "is_local": false,
         "needs_details": false,
+        "needs_kind": false,
+        "requires_review": false,
+        "age_min": null
+    }
+},
+{
+    "model": "tasks.registration",
+    "pk": 3,
+    "fields": {
+        "order": 3,
         "description": "een vragenlijst (papier of digitaal, evt via internet)",
-        "needs_kind": false,
-        "description_en": "a survey (on paper or digitally, possibly using internet)",
         "description_nl": "een vragenlijst (papier of digitaal, evt via internet)",
-        "age_min": null,
-        "requires_review": false,
-        "order": 3
-    },
-    "model": "tasks.registration",
-    "pk": 3
-},
-{
-    "fields": {
-        "is_local": true,
+        "description_en": "a survey (on paper or digitally, possibly using internet)",
+        "is_local": false,
         "needs_details": false,
-        "description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
         "needs_kind": false,
-        "description_en": "behavioral and/or reaction time registration using Zep, Presentation, E-prime, etc.",
-        "description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, E-prime, etc",
-        "age_min": null,
         "requires_review": false,
-        "order": 4
-    },
-    "model": "tasks.registration",
-    "pk": 4
+        "age_min": null
+    }
 },
 {
+    "model": "tasks.registration",
+    "pk": 4,
     "fields": {
+        "order": 4,
+        "description": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, E-prime, etc",
+        "description_nl": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, E-prime, etc",
+        "description_en": "behavioral- and/or reaction time registration using experiment software such as jsPsych, Zep, Presentation, E-prime, etc.",
         "is_local": true,
         "needs_details": false,
+        "needs_kind": false,
+        "requires_review": false,
+        "age_min": null
+    }
+},
+{
+    "model": "tasks.registration",
+    "pk": 5,
+    "fields": {
+        "order": 5,
         "description": "oogbewegingsregistratie via een eye-tracker",
-        "needs_kind": false,
-        "description_en": "eye movement registration using an eye-tracker",
         "description_nl": "oogbewegingsregistratie via een eye-tracker",
-        "age_min": null,
-        "requires_review": false,
-        "order": 5
-    },
-    "model": "tasks.registration",
-    "pk": 5
-},
-{
-    "fields": {
+        "description_en": "eye movement registration using an eye-tracker",
         "is_local": true,
         "needs_details": false,
+        "needs_kind": false,
+        "requires_review": false,
+        "age_min": null
+    }
+},
+{
+    "model": "tasks.registration",
+    "pk": 6,
+    "fields": {
+        "order": 6,
         "description": "psychofysiologische meting (bijv. EEG, fMRI, EMA)",
-        "needs_kind": true,
-        "description_en": "psychofysiological measurement (e.g. EEG, fMRI, EMA)",
         "description_nl": "psychofysiologische meting (bijv. EEG, fMRI, EMA)",
-        "age_min": 18,
+        "description_en": "psychofysiological measurement (e.g. EEG, fMRI, EMA)",
+        "is_local": true,
+        "needs_details": false,
+        "needs_kind": true,
         "requires_review": true,
-        "order": 6
-    },
-    "model": "tasks.registration",
-    "pk": 6
+        "age_min": 18
+    }
 },
 {
+    "model": "tasks.registration",
+    "pk": 7,
     "fields": {
-        "is_local": false,
-        "needs_details": false,
+        "order": 7,
         "description": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
-        "needs_kind": false,
-        "description_en": "manual behavioral scoring (e.g. what's pointed at, what's looked at, and for how long)",
         "description_nl": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)",
-        "age_min": null,
-        "requires_review": false,
-        "order": 7
-    },
-    "model": "tasks.registration",
-    "pk": 7
-},
-{
-    "fields": {
+        "description_en": "manual behavioral scoring (e.g. what's pointed at, what's looked at, and for how long)",
         "is_local": false,
         "needs_details": false,
-        "description": "logdata van digitaal gedrag (bijv. usability tests)",
         "needs_kind": false,
-        "description_en": "log data of digital behavior (e.g. usability tests)",
-        "description_nl": "logdata van digitaal gedrag (bijv. usability tests)",
-        "age_min": null,
         "requires_review": false,
-        "order": 8
-    },
-    "model": "tasks.registration",
-    "pk": 8
+        "age_min": null
+    }
 },
 {
+    "model": "tasks.registration",
+    "pk": 8,
     "fields": {
+        "order": 8,
+        "description": "logdata van digitaal gedrag (bijv. usability tests)",
+        "description_nl": "logdata van digitaal gedrag (bijv. usability tests)",
+        "description_en": "log data of digital behavior (e.g. usability tests)",
+        "is_local": false,
+        "needs_details": false,
+        "needs_kind": false,
+        "requires_review": false,
+        "age_min": null
+    }
+},
+{
+    "model": "tasks.registration",
+    "pk": 9,
+    "fields": {
+        "order": 9,
+        "description": "anders, namelijk",
+        "description_nl": "anders, namelijk",
+        "description_en": "otherwise, viz.",
         "is_local": false,
         "needs_details": true,
-        "description": "anders, namelijk",
         "needs_kind": false,
-        "description_en": "otherwise, viz.",
-        "description_nl": "anders, namelijk",
-        "age_min": null,
         "requires_review": true,
-        "order": 9
-    },
-    "model": "tasks.registration",
-    "pk": 9
+        "age_min": null
+    }
 }
 ]

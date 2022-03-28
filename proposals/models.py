@@ -372,10 +372,11 @@ bij dit onderzoek?'),
         help_text=_('''Aan het einde van de procedure kan je deze aanvraag ter
         verificatie naar je eindverantwoordelijke sturen. De
         eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen en
-        indienen bij de FETC-GW. <br><br><strong>Tip</strong>: Type een
-        aantal letters van de voornaam, achternaam, of Solis ID van het
-        persoon die je toe wilt voegen in de zoekbalk hiernaast.
-        Merk op dat het laden even kan duren.'''),
+        indienen bij de FETC-GW. <br><br><strong>NB</strong>: als je je
+        eindverantwoordelijke niet kunt vinden met dit veld, moeten zij
+        waarschijnlijk eerst één keer inloggen in deze portal. Je kunt nog wel
+        verder met de aanvraag, maar vergeet dit veld niet in te vullen voor je de
+        aanvraag indient.'''),
         on_delete=models.CASCADE,
     )
 
