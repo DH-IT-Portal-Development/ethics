@@ -153,7 +153,9 @@ def remind_reviewers():
 
     for decision in decisions:
         proposal = decision.review.proposal
-        subject = 'FETC-GW: beoordelen aanvraag (Herrinering)'
+        subject = "FETC-GW: beoordelen aanvraag {ref_num} (herinnering)".format(
+            ref_num=proposal.reference_number
+        )
         params = {
             'creator': proposal.created_by.get_full_name(),
             'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
