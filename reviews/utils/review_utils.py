@@ -145,12 +145,17 @@ def remind_reviewers():
         review__stage=Review.COMMISSION,
         review__short_route=True,
         review__date_should_end__gte=today,
-        review__date_should_end__lte=next_two_days
+        review__date_should_end__lte=next_two_days,
+        go='',  # Checks if the decision has already been done; we don't
+        # check for None as the field cannot be None according to the field
+        # definition
     )
 
     for decision in decisions:
         proposal = decision.review.proposal
-        subject = 'FETC-GW: beoordelen aanvraag (Herrinering)'
+        subject = "FETC-GW: beoordelen aanvraag {ref_num} (herinnering)".format(
+            ref_num=proposal.reference_number
+        )
         params = {
             'creator': proposal.created_by.get_full_name(),
             'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
