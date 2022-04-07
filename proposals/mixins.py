@@ -41,8 +41,14 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
     A mixin class that implements PDF rendering and Django response construction.
     """
 
-    #: Optional name of the PDF file for download. Leave blank for display in browser.
-    pdf_filename = None
+    #: Default filename for PDF downloads
+    pdf_filename = "document.pdf"
+
+    #: Determines if the user will see a "Save as" dialog
+    pdf_save_as = True
+
+    #: Optional custom content disposition
+    content_disposition = None
 
     #: Additional params passed to :func:`render_to_pdf_response`
     pdf_kwargs = None
@@ -58,6 +64,25 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         """
         return self.pdf_filename
 
+    def get_content_disposition(self):
+        """Should a view wish to set this disposition themselves
+        dynamically, overwriting this method alolows that."""
+
+        # Check if a custom disposition is set
+        if self.content_disposition:
+            return self.content_disposition
+
+        # Else, choose right disposition depending on save as
+        cd = "attachment"
+        if not self.pdf_save_as:
+            cd = "inline"
+
+        self.content_disposition = '{}; filename="{}"'.format(
+            cd,
+            self.get_pdf_filename())
+
+        return self.content_disposition
+
     def get_pdf_response(self, context, dest=None, **response_kwargs):
         """Renders HTML from template and subsequently a pdf
         using xhtml2pdf"""
@@ -66,8 +91,7 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
             # Create a Django response object, and specify content_type as pdf
             # This is the default when using this view
             response = HttpResponse(content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="{}"'.format(
-                self.get_pdf_filename)
+            response['Content-Disposition'] = self.get_content_disposition()
             dest = response
 
         # find the template and render it.
@@ -80,12 +104,11 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
 
         if pisa_status.err:
             return HttpResponse('We had some errors <pre>' + html + '</pre>')
-        return response
+        return dest
 
     def render_to_response(self, context, **response_kwargs):
 
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="{}"'.format(
-            self.get_pdf_filename())
+        response['Content-Disposition'] = self.get_content_disposition()
 
-        return self.get_pdf_response(context, **response_kwargs)
+        return self.get_pdf_response(context, **response_kwargs, dest=response)
