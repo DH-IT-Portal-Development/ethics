@@ -9,6 +9,7 @@ from xhtml2pdf import pisa
 from django.http import HttpResponse
 from django.template.loader import get_template
 
+
 class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
@@ -21,7 +22,6 @@ class ProposalMixin(UserFormKwargsMixin):
             return reverse('proposals:wmo_update', args=(proposal.pk,))
         else:
             return reverse('proposals:wmo_create', args=(proposal.pk,))
-
 
 
 class ProposalContextMixin:
@@ -41,11 +41,20 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
     A mixin class that implements PDF rendering and Django response construction.
     """
 
-    #: Optional name of the PDF file for download. Leave blank for display in browser.
-    pdf_filename = None
+    #: Default filename for PDF downloads
+    pdf_filename = "document.pdf"
+
+    #: Determines if the user will see a "Save as" dialog
+    pdf_save_as = True
+
+    #: Optional custom content disposition
+    content_disposition = None
 
     #: Additional params passed to :func:`render_to_pdf_response`
     pdf_kwargs = None
+
+    #: Document type for the filename factory
+    filename_factory = None
 
     def get_pdf_filename(self):
         """
@@ -56,56 +65,60 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
 
         :rtype: :func:`str`
         """
+
+        if self.filename_factory:
+            return self.filename_factory(
+                self.object,
+                self.pdf_filename,
+                )
+
         return self.pdf_filename
 
-    def get_pdf_kwargs(self):
-        """
-        Returns :attr:`pdf_kwargs` by default.
+    def get_content_disposition(self):
+        """Should a view wish to set this disposition themselves
+        dynamically, overwriting this method alolows that."""
 
-        The kwargs are passed to :func:`render_to_pdf_response` and
-        :func:`xhtml2pdf.pisa.pisaDocument`.
+        # Check if a custom disposition is set
+        if self.content_disposition:
+            return self.content_disposition
 
-        :rtype: :class:`dict`
-        """
-        if self.pdf_kwargs is None:
-            return {}
-        return copy.copy(self.pdf_kwargs)
+        # Else, choose right disposition depending on save as
+        cd = "attachment"
+        if not self.pdf_save_as:
+            cd = "inline"
 
-    def get_pdf_response(self, context, **response_kwargs):
-        """
-        Renders PDF document and prepares response.
+        self.content_disposition = '{}; filename="{}"'.format(
+            cd,
+            self.get_pdf_filename())
 
-        :returns: Django HTTP response
-        :rtype: :class:`django.http.HttpResponse`
-        """
-        return render_to_pdf_response(
-            request=self.request,
-            template=self.get_template_names(),
-            context=context,
-            using=self.template_engine,
-            filename=self.get_pdf_filename(),
-            **self.get_pdf_kwargs()
-        )
+        return self.content_disposition
 
-    def make_pisa_response(self, context):
+    def get_pdf_response(self, context, dest=None, **response_kwargs):
+        """Renders HTML from template and subsequently a pdf
+        using xhtml2pdf"""
 
+        if not dest:
+            # Create a Django response object, and specify content_type as pdf
+            # This is the default when using this view
+            response = HttpResponse(content_type='application/pdf')
+            response['Content-Disposition'] = self.get_content_disposition()
+            dest = response
 
-        # context = self.get_context_data()
-        # Create a Django response object, and specify content_type as pdf
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="filename.pdf"'
         # find the template and render it.
         template = get_template(self.template_name)
         html = template.render(context)
 
         # Create PDF with pisa object
         pisa_status = pisa.CreatePDF(
-            html, dest=response, )
+            html, dest=dest, )
 
         if pisa_status.err:
             return HttpResponse('We had some errors <pre>' + html + '</pre>')
-        return response
-
+        return dest
 
     def render_to_response(self, context, **response_kwargs):
-        return self.make_pisa_response(context, **response_kwargs)
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = self.get_content_disposition()
+
+        return self.get_pdf_response(context, **response_kwargs, dest=response)
