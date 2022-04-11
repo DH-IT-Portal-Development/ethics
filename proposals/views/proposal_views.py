@@ -27,6 +27,7 @@ from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import ProposalMixin, ProposalContextMixin, \
     PDFTemplateResponseMixin
+from proposals.utils.proposal_utils import FilenameFactory
 
 
 ############
@@ -489,6 +490,9 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
     model = Proposal
     template_name = 'proposals/proposal_pdf.html'
 
+    # The PDF mixin generates a filename with this factory
+    filename_factory = FilenameFactory('Proposal')
+
     def get_context_data(self, **kwargs):
         """Adds 'BASE_URL' to template context"""
         context = super(ProposalAsPdf, self).get_context_data(**kwargs)
@@ -512,13 +516,6 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
         context['documents'] = documents
 
         return context
-
-
-
-
-class EmptyPDF(LoginRequiredMixin, generic.TemplateView,
-               PDFTemplateResponseMixin):
-    template_name = 'proposals/proposal_pdf_empty.html'
 
 
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):

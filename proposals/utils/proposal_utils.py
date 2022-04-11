@@ -375,6 +375,9 @@ class FilenameFactory:
     and can be deconstructed for migrations'''
 
     def __init__(self, document_type):
+
+        # document_type is a string describing the document kind,
+        # such as "Informed_Consent"
         self.document_type = document_type
 
     def __call__(self, instance, original_fn):
