@@ -53,6 +53,9 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
     #: Additional params passed to :func:`render_to_pdf_response`
     pdf_kwargs = None
 
+    #: Document type for the filename factory
+    filename_factory = None
+
     def get_pdf_filename(self):
         """
         Returns :attr:`pdf_filename` value by default.
@@ -62,6 +65,13 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
 
         :rtype: :func:`str`
         """
+
+        if self.filename_factory:
+            return self.filename_factory(
+                self.object,
+                self.pdf_filename,
+                )
+
         return self.pdf_filename
 
     def get_content_disposition(self):
