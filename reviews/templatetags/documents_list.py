@@ -180,6 +180,7 @@ class DocItem:
         self.comparable = False
         self.filename = None
         self.link_url = None
+        self.sets_content_disposition = False
 
         self.__dict__.update(kwargs)
 
@@ -214,11 +215,10 @@ def documents_list(review, user):
     proposal_pdf = DocItem(_('Aanvraag in PDF-vorm'))
     proposal_pdf.link_url = reverse('proposals:pdf', args=(proposal.pk,))
 
-    # Because the pdf is generated on the spot, we need to
-    # generate the filename here too
-    proposal_pdf.filename = FilenameFactory('Proposal')(
-        proposal, 'proposal.pdf') # Original filename is just to determine
-                                  # the extension
+    # The proposals:pdf view sets an attachment and filename
+    # HTTP header (Content-disposition:) which does not interact well with
+    # the download= link attribute. So we add a flag here that circumvents it
+    proposal_pdf.sets_content_disposition = True
 
     pdf_container.items.append(proposal_pdf)
 
