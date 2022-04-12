@@ -49,22 +49,18 @@ class Command(BaseCommand):
             print()
             print("Turnaround times:")
             print(
-                "Total",
-                get_average_turnaround_time(
-                    get_review_qs_for_proposals(dataset)
-                )
-            )
-            print(
                 "Short route",
                 get_average_turnaround_time(
                     get_qs_for_short_route_reviews(dataset)
-                )
+                ),
+                'days'
             )
             print(
                 "Long route",
                 get_average_turnaround_time(
                     get_qs_for_long_route_reviews(dataset)
-                )
+                ),
+                'days'
             )
 
             print()

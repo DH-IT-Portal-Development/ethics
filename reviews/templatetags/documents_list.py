@@ -1,10 +1,9 @@
 from django import template
 
 from main.utils import is_secretary
-from studies.models import Documents, Study
+from studies.models import Documents
 from proposals.models import Proposal, Wmo
 from observations.models import Observation
-from collections import OrderedDict
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import escape
@@ -279,7 +278,7 @@ def documents_list(review, user):
         potential_files = [
             (_('Informed consent'), d.informed_consent, d),
             (_('Informatiebrief'), d.briefing, d),
-            ( _('Consent declaratie directeur/departementshoofd'),
+            (_('Consent declaratie directeur/departementshoofd'),
                 d.director_consent_declaration, d),
             (_('Informatiebrief directeur/departementshoofd'),
                 d.director_consent_information, d),

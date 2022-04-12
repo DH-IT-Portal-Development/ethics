@@ -67,6 +67,7 @@ class Review(models.Model):
         If this review is discontinued, don't do anything.
         """
 
+        # If this review is discontinued, it is set in stone
         if self.continuation == self.DISCONTINUED:
             return
 
@@ -106,6 +107,12 @@ class Review(models.Model):
                 # Set the stage to CLOSING
                 self.stage = self.CLOSING
                 self.save()
+        else:
+            # In case there is still an unmade decision, make sure to
+            # unset date end. This re-opens the review in case a new reviewer
+            # is added after the first conclusion.
+            self.date_end = None
+            self.save()
 
     def get_continuation_display(self):
         # If this review hasn't concluded, this will only return 'Approved' as
