@@ -215,7 +215,7 @@ def documents_list(review, user):
     proposal_pdf = DocItem(_('Aanvraag in PDF-vorm'))
     proposal_pdf.link_url = reverse('proposals:pdf', args=(proposal.pk,))
 
-    # The on-the-fly PDF generation view sets an attachment and filename
+    # The proposals:pdf view sets an attachment and filename
     # HTTP header (Content-disposition:) which does not interact well with
     # the download= link attribute. So we add a flag here that circumvents it
     proposal_pdf.sets_content_disposition = True

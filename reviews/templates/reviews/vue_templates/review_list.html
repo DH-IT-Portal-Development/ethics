@@ -42,7 +42,6 @@
             <a
                :href="$url('proposals:pdf', [review.proposal.pk])"
                target="_blank"
-               :download="review.proposal.pdf.name"
             >
                 {# Note the absence of {% verbatim %}, we actually use django here for the image! #}
                 <img src="{{ img_pdf }}" title="{% trans 'Aanvraag inzien' %}">
