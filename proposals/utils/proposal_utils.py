@@ -2,10 +2,11 @@
 
 from collections import defaultdict
 from datetime import datetime
-from io import BytesIO, StringIO
-
+from io import BytesIO
+import os
 
 from django.conf import settings
+from django.contrib.staticfiles import finders
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
@@ -14,8 +15,6 @@ from django.urls import reverse
 from django.template.loader import render_to_string, get_template
 from django.utils.translation import activate, get_language, ugettext as _
 from django.utils.deconstruct import deconstructible
-
-from xhtml2pdf import pisa
 
 from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
@@ -290,14 +289,14 @@ def generate_pdf(proposal, template=False):
 
     view = ProposalAsPdf()
     view.object = proposal
-    context = view.get_context_data()
 
-    template = get_template(view.template_name)
-    html = template.render(context)
+    # Note, this is where the _view_ decides what kind of proposal it is
+    # and chooses the appropriate template.
+    context = view.get_context_data()
 
     with BytesIO() as f:
         view.get_pdf_response(
-            view.get_context_data(),
+            context,
             dest=f,
         )
         pdf = ContentFile(f.getvalue())
@@ -307,37 +306,37 @@ def generate_pdf(proposal, template=False):
 
 
 def pdf_link_callback(uri, rel):
-        """
-        Convert HTML URIs to absolute system paths so xhtml2pdf can access those
-        resources
+    """
+    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
+    resources
 
-        Retrieved from xhtml2pdf docs
-        """
-        result = finders.find(uri)
-        if result:
-                if not isinstance(result, (list, tuple)):
-                        result = [result]
-                result = list(os.path.realpath(path) for path in result)
-                path=result[0]
+    Retrieved from xhtml2pdf docs
+    """
+    result = finders.find(uri)
+    if result:
+        if not isinstance(result, (list, tuple)):
+            result = [result]
+        result = list(os.path.realpath(path) for path in result)
+        path=result[0]
+    else:
+        sUrl = settings.STATIC_URL        # Typically /static/
+        sRoot = settings.STATIC_ROOT      # Typically /home/userX/project_static/
+        mUrl = settings.MEDIA_URL         # Typically /media/
+        mRoot = settings.MEDIA_ROOT       # Typically /home/userX/project_static/media/
+
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+        elif uri.startswith(sUrl):
+            path = os.path.join(sRoot, uri.replace(sUrl, ""))
         else:
-                sUrl = settings.STATIC_URL        # Typically /static/
-                sRoot = settings.STATIC_ROOT      # Typically /home/userX/project_static/
-                mUrl = settings.MEDIA_URL         # Typically /media/
-                mRoot = settings.MEDIA_ROOT       # Typically /home/userX/project_static/media/
+            return uri
 
-                if uri.startswith(mUrl):
-                        path = os.path.join(mRoot, uri.replace(mUrl, ""))
-                elif uri.startswith(sUrl):
-                        path = os.path.join(sRoot, uri.replace(sUrl, ""))
-                else:
-                        return uri
-
-        # make sure that file exists
-        if not os.path.isfile(path):
-                raise Exception(
-                        'media URI must start with %s or %s' % (sUrl, mUrl)
-                )
-        return path
+    # make sure that file exists
+    if not os.path.isfile(path):
+        raise Exception(
+            'media URI must start with %s or %s' % (sUrl, mUrl)
+        )
+    return path
 
 
 def check_local_facilities(proposal):
