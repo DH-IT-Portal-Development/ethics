@@ -1,14 +1,15 @@
 from braces.views import UserFormKwargsMixin
-from .models import Proposal
-from .forms import ProposalForm
+from xhtml2pdf import pisa
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from django.views.generic.base import TemplateResponseMixin
-from xhtml2pdf import pisa
 from django.http import HttpResponse
 from django.template.loader import get_template
 
+from .models import Proposal
+from .forms import ProposalForm
+from .utils.proposal_utils import pdf_link_callback
 
 class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
@@ -76,7 +77,7 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
 
     def get_content_disposition(self):
         """Should a view wish to set this disposition themselves
-        dynamically, overwriting this method alolows that."""
+        dynamically, overwriting this method allows that."""
 
         # Check if a custom disposition is set
         if self.content_disposition:
@@ -110,7 +111,10 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
 
         # Create PDF with pisa object
         pisa_status = pisa.CreatePDF(
-            html, dest=dest, )
+            html,
+            dest=dest,
+            link_callback=pdf_link_callback,
+        )
 
         if pisa_status.err:
             return HttpResponse('We had some errors <pre>' + html + '</pre>')

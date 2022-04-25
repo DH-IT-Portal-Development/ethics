@@ -2,7 +2,7 @@
 
 from collections import defaultdict
 from datetime import datetime
-from io import StringIO
+from io import BytesIO, StringIO
 
 
 from django.conf import settings
@@ -11,11 +11,10 @@ from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 from django.utils.translation import activate, get_language, ugettext as _
 from django.utils.deconstruct import deconstructible
 
-#from easy_pdf.rendering import render_to_pdf
 from xhtml2pdf import pisa
 
 from main.utils import AvailableURL, get_secretary
@@ -287,18 +286,58 @@ def generate_pdf(proposal, template=False):
     """Grandfathered function for pdf saving. The template arg currently
     only exists for backwards compatibility."""
 
+    from proposals.views.proposal_views import ProposalAsPdf
+
     view = ProposalAsPdf()
     view.object = proposal
-    context = proposal.get_context_data()
+    context = view.get_context_data()
 
     template = get_template(view.template_name)
     html = template.render(context)
 
-    with StringIO as f:
-        pisa_status = pisa.CreatePDF(
-            html, dest=dest, )
+    with BytesIO() as f:
+        view.get_pdf_response(
+            view.get_context_data(),
+            dest=f,
+        )
         pdf = ContentFile(f.getvalue())
-        proposal.pdf.save(view.get_pdf_filename(), pdf)
+    proposal.pdf.save(view.get_pdf_filename(), pdf)
+
+    return proposal.pdf
+
+
+def pdf_link_callback(uri, rel):
+        """
+        Convert HTML URIs to absolute system paths so xhtml2pdf can access those
+        resources
+
+        Retrieved from xhtml2pdf docs
+        """
+        result = finders.find(uri)
+        if result:
+                if not isinstance(result, (list, tuple)):
+                        result = [result]
+                result = list(os.path.realpath(path) for path in result)
+                path=result[0]
+        else:
+                sUrl = settings.STATIC_URL        # Typically /static/
+                sRoot = settings.STATIC_ROOT      # Typically /home/userX/project_static/
+                mUrl = settings.MEDIA_URL         # Typically /media/
+                mRoot = settings.MEDIA_ROOT       # Typically /home/userX/project_static/media/
+
+                if uri.startswith(mUrl):
+                        path = os.path.join(mRoot, uri.replace(mUrl, ""))
+                elif uri.startswith(sUrl):
+                        path = os.path.join(sRoot, uri.replace(sUrl, ""))
+                else:
+                        return uri
+
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                        'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
 
 
 def check_local_facilities(proposal):
