@@ -50,7 +50,6 @@ INSTALLED_APPS = (
     'feedback',
     'faqs',
 
-    'easy_pdf',
     'modeltranslation',
     'impersonate',
 
