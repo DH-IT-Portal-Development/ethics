@@ -1,7 +1,6 @@
-Django>=2.2,<3.0
+Django>=3.2,<4.0
 django-auth-ldap
 django-braces
-django-easy-pdf
 django-modeltranslation
 django-impersonate
 django-simple-menu
@@ -19,7 +18,7 @@ pillow>=6.0
 pygments
 requests
 -e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v2.0.9#egg=uil-django-core
-reportlab==3.6.2 # Pinned because of incompatibilty problems. pls check again sometime later
-git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
+-e git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
 python-magic
 pdftotext
+bpython

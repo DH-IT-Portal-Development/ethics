@@ -50,7 +50,6 @@ INSTALLED_APPS = (
     'feedback',
     'faqs',
 
-    'easy_pdf',
     'modeltranslation',
     'impersonate',
 
@@ -108,6 +107,10 @@ DATABASES = {
     #    'PASSWORD': 'root++',
     #}
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

@@ -16,7 +16,12 @@
 <ul>
     {% for item in container.items %}
     <li>
-        <a href="{{ item.get_link_url }}" target="_blank" download="{{item.get_filename}}">
+        <a href="{{ item.get_link_url }}" target="_blank"
+
+           {% if not item.sets_content_disposition %}
+               download="{{item.get_filename}}"
+           {% endif %}
+        >
             {{item.name}}
         </a>
         {% if item.comparable %}

@@ -2,21 +2,23 @@
 
 from collections import defaultdict
 from datetime import datetime
+from io import BytesIO
+import os
 
 from django.conf import settings
+from django.contrib.staticfiles import finders
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 from django.utils.translation import activate, get_language, ugettext as _
 from django.utils.deconstruct import deconstructible
 
-from easy_pdf.rendering import render_to_pdf
-
 from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
+
 
 __all__ = ['available_urls', 'generate_ref_number',
            'generate_revision_ref_number', 'generate_pdf',
@@ -278,42 +280,63 @@ def _get_next_proposal_number(current_year) -> int:
         return 1
 
 
-def generate_pdf(proposal, template):
+
+def generate_pdf(proposal, template=False):
+    """Grandfathered function for pdf saving. The template arg currently
+    only exists for backwards compatibility."""
+
+    from proposals.views.proposal_views import ProposalAsPdf
+
+    view = ProposalAsPdf()
+    view.object = proposal
+
+    # Note, this is where the _view_ decides what kind of proposal it is
+    # and chooses the appropriate template.
+    context = view.get_context_data()
+
+    with BytesIO() as f:
+        view.get_pdf_response(
+            context,
+            dest=f,
+        )
+        pdf = ContentFile(f.getvalue())
+    proposal.pdf.save(view.get_pdf_filename(), pdf)
+
+    return proposal.pdf
+
+
+def pdf_link_callback(uri, rel):
     """
-    Generates the PDF for a Proposal and attaches it.
-    :param proposal: the current Proposal
-    :param template: the template for the PDF
+    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
+    resources
+
+    Retrieved from xhtml2pdf docs
     """
-    # Local import, as otherwise a circular import will happen because the proposal model imports this file
-    # (And the document model imports the proposal model)
-    from studies.models import Documents
+    result = finders.find(uri)
+    if result:
+        if not isinstance(result, (list, tuple)):
+            result = [result]
+        result = list(os.path.realpath(path) for path in result)
+        path=result[0]
+    else:
+        sUrl = settings.STATIC_URL        # Typically /static/
+        sRoot = settings.STATIC_ROOT      # Typically /home/userX/project_static/
+        mUrl = settings.MEDIA_URL         # Typically /media/
+        mRoot = settings.MEDIA_ROOT       # Typically /home/userX/project_static/media/
 
-    # Change language to English for this PDF, but save the current language to reset it later
-    current_language = get_language()
-    activate('en')
-
-    documents = {
-        'extra': []
-    }
-
-    for document in Documents.objects.filter(proposal=proposal).all():
-        if document.study:
-            documents[document.study.pk] = document
+        if uri.startswith(mUrl):
+            path = os.path.join(mRoot, uri.replace(mUrl, ""))
+        elif uri.startswith(sUrl):
+            path = os.path.join(sRoot, uri.replace(sUrl, ""))
         else:
-            documents['extra'].append(document)
+            return uri
 
-    # This try catch does not actually handle any errors. It only makes sure the language is properly reset before
-    # reraising the exception.
-    try:
-        context = {'proposal': proposal, 'BASE_URL': settings.BASE_URL, 'documents': documents}
-        pdf = ContentFile(render_to_pdf(template, context))
-        proposal.pdf.save('{}.pdf'.format(proposal.reference_number), pdf)
-    except Exception as e:
-        activate(current_language)
-        raise e
-
-    # Reset the current language
-    activate(current_language)
+    # make sure that file exists
+    if not os.path.isfile(path):
+        raise Exception(
+            'media URI must start with %s or %s' % (sUrl, mUrl)
+        )
+    return path
 
 
 def check_local_facilities(proposal):
@@ -390,6 +413,9 @@ class FilenameFactory:
     and can be deconstructed for migrations'''
 
     def __init__(self, document_type):
+
+        # document_type is a string describing the document kind,
+        # such as "Informed_Consent"
         self.document_type = document_type
 
     def __call__(self, instance, original_fn):
