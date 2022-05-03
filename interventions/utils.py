@@ -21,7 +21,7 @@ def copy_intervention_to_study(study, intervention):
     """
     Copies the given Intervention to the given Study
     """
-    setting = intervention.setting.all()
+    setting = list(intervention.setting.all())
 
     i = intervention
     i.pk = None

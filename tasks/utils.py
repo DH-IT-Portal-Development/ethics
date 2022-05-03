@@ -70,8 +70,8 @@ def tasks_urls(session):
 
 
 def copy_task_to_session(session, task):
-    r = task.registrations.all()
-    rk = task.registration_kinds.all()
+    r = list(task.registrations.all())
+    rk = list(task.registration_kinds.all())
 
     t = task
     t.pk = None
@@ -84,8 +84,8 @@ def copy_task_to_session(session, task):
 
 
 def copy_session_to_study(study, session):
-    setting = session.setting.all()
-    tasks = session.task_set.all()
+    setting = list(session.setting.all())
+    tasks = list(session.task_set.all())
 
     s = session
     s.pk = None

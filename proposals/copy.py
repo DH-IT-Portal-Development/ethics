@@ -11,9 +11,13 @@ def copy_proposal(self, form):
     parent = form.cleaned_data['parent']
     parent_pk = parent.pk
     relation = parent.relation
-    applicants = parent.applicants.all()
-    funding = parent.funding.all()
-    copy_studies = parent.study_set.all()
+    # We convert to list to force evaluation of the QS. Otherwise,
+    # the evaluation will happen after we've updated the proposal's ID and
+    # the queryset will try to retrieve the new (non-existing) data instead
+    # of the old
+    applicants = list(parent.applicants.all())
+    funding = list(parent.funding.all())
+    copy_studies = list(parent.study_set.all())
     copy_wmo = None
     if hasattr(parent, 'wmo'):
         copy_wmo = parent.wmo
@@ -26,11 +30,6 @@ def copy_proposal(self, form):
         copy_proposal.reference_number = generate_revision_ref_number(parent)
     else:
         copy_proposal.reference_number = generate_ref_number()
-
-
-    # Titles are no longer required to be unique
-    # And the Title field has been removed from the copy form
-    # copy_proposal.title = form.cleaned_data['title']
 
     copy_proposal.created_by = self.request.user
     copy_proposal.status = Proposal.DRAFT
