@@ -14,25 +14,41 @@
         <td>{{ intervention.setting.all|unordered_list }}</td>
     </tr>
     {% if intervention.setting.all|needs_details or p_intervention.setting.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th>
-        <td>{{ p_intervention.setting_details }}</td>
-        <td>{{ intervention.setting_details }}</td>
-    </tr>
+        <tr>
+            <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th>
+            <td>{{ p_intervention.setting_details }}</td>
+            <td>{{ intervention.setting_details }}</td>
+        </tr>
     {% endif %}
     {% if study.has_children and intervention.setting.all|needs_details:"needs_supervision" or p_study.has_children and p_intervention.setting.all|needs_details:"needs_supervision" %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th>
-        <td>{{ p_intervention.supervision|yesno:_("ja,nee,") }}</td>
-        <td>{{ intervention.supervision|yesno:_("ja,nee,") }}</td>
-    </tr>
-    {% if not intervention.supervision or not p_intervention.supervision %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th>
-        <td>{{ p_intervention.leader_has_coc|yesno:_("ja,nee,") }}</td>
-        <td>{{ intervention.leader_has_coc|yesno:_("ja,nee,") }}</td>
-    </tr>
-    {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th>
+            <td>
+                {% if p_intervention %}
+                    {{ p_intervention.supervision|yesno:_("ja,nee,") }}
+                {% endif %}
+            </td>
+            <td>
+                {% if intervention %}
+                    {{ intervention.supervision|yesno:_("ja,nee,") }}
+                {% endif %}
+            </td>
+        </tr>
+        {% if not intervention.supervision or not p_intervention.supervision %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th>
+                <td>
+                    {% if p_intervention %}
+                        {{ p_intervention.leader_has_coc|yesno:_("ja,nee,") }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if intervention %}
+                        {{ intervention.leader_has_coc|yesno:_("ja,nee,") }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
     {% endif %}
     <tr>
         <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th>
@@ -66,14 +82,22 @@
     </tr>
     <tr>
         <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th>
-        <td>{{ p_intervention.has_controls|yesno:_("ja,nee") }}</td>
-        <td>{{ intervention.has_controls|yesno:_("ja,nee") }}</td>
+        <td>
+            {% if p_intervention %}
+                {{ p_intervention.has_controls|yesno:_("ja,nee") }}
+            {% endif %}
+        </td>
+        <td>
+            {% if intervention %}
+                {{ intervention.has_controls|yesno:_("ja,nee") }}
+            {% endif %}
+        </td>
     </tr>
     {% if intervention.has_controls or p_intervention.has_controls %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th>
-        <td>{{ p_intervention.controls_description }}</td>
-        <td>{{ intervention.controls_description }}</td>
-    </tr>
+        <tr>
+            <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th>
+            <td>{{ p_intervention.controls_description }}</td>
+            <td>{{ intervention.controls_description }}</td>
+        </tr>
     {% endif %}
 </table>

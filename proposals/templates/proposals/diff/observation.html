@@ -1,0 +1,33 @@
+{% load i18n %}
+
+{% if study.has_observation or p_study.has_observation %}
+    <h2 class="mt-5 mb-1">{% trans "Het observatieonderzoek" %}</h2>
+
+    {% if study.has_observation and not p_study.has_observation %}
+        <div class="warning">
+            {% trans "De revisie bevat observatieonderzoek, terwijl de originele aanvraag dat niet bevat." %}
+        </div>
+    {% elif not study.has_observation and p_study.has_observation %}
+        <div class="warning">
+            {% trans "De revisie bevat geen observatieonderzoek, terwijl de originele aanvraag dat wel bevat." %}
+        </div>
+    {% endif %}
+
+    {% with observation=study.observation p_observation=p_study.observation %}
+        {% if not observation or not p_observation or observation.version == p_observation.version %}
+            {% include "studies/study_title.html" %}
+
+            {% if observation.version == 1 %}
+                {% include "proposals/diff/observation_v1.html" %}
+            {% elif observation.version == 2 %}
+                {% include "proposals/diff/observation_v2.html" %}
+            {% endif %}
+
+        {% else %}
+            <div class="warning">
+                {% trans "De revisie en de originele aanvraag hebben beide een observatieonderzoek, maar deze zijn niet te vergelijken. Dit komt doordat de revisie een andere versie van het formulier gebruikt." %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+{% endif %}
