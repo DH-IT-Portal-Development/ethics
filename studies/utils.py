@@ -114,13 +114,13 @@ def copy_study_to_proposal(proposal, study):
     :return: the Proposal appended with the details of the given Study.
     """
     old_pk = study.pk
-    age_groups = study.age_groups.all()
-    traits = study.traits.all()
+    age_groups = list(study.age_groups.all())
+    traits = list(study.traits.all())
     compensation = study.compensation
-    recruitment = study.recruitment.all()
+    recruitment = list(study.recruitment.all())
     intervention = study.intervention if study.has_intervention else None
     observation = study.observation if study.has_observation else None
-    sessions = study.session_set.all() if study.has_sessions else []
+    sessions = list(study.session_set.all()) if study.has_sessions else []
 
     s = study
     s.pk = None

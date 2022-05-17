@@ -15,8 +15,8 @@ def observation_url(study):
 
 
 def copy_observation_to_study(study, observation):
-    setting = observation.setting.all()
-    registrations = observation.registrations.all()
+    setting = list(observation.setting.all())
+    registrations = list(observation.registrations.all())
 
     o = observation
     o.pk = None
@@ -25,5 +25,5 @@ def copy_observation_to_study(study, observation):
     o.save()
 
     o.setting.set(setting)
-    o.registrations.set(registrations.all())
+    o.registrations.set(registrations)
     o.save()
