@@ -17,17 +17,17 @@ def intervention_url(study):
     return result
 
 
-def copy_intervention_to_study(study, intervention):
+def copy_intervention_to_study(study, original_intervention):
     """
     Copies the given Intervention to the given Study
     """
-    setting = list(intervention.setting.all())
+    from interventions.models import Intervention
 
-    i = intervention
+    i = Intervention.objects.get(pk=original_intervention.pk)
     i.pk = None
     i.version = 2  # Auto upgrade old versions
     i.study = study
     i.save()
 
-    i.setting.set(setting)
+    i.setting.set(original_intervention.setting.all())
     i.save()
