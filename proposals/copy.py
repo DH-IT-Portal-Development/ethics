@@ -51,6 +51,8 @@ def copy_proposal(original_proposal, is_revision, created_by_user):
 
     if is_revision:
         copy_proposal.parent = original_proposal
+    else:
+        copy_proposal.parent = None
 
     copy_proposal.save()
 
