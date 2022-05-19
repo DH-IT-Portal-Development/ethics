@@ -69,31 +69,31 @@ def tasks_urls(session):
     return result
 
 
-def copy_task_to_session(session, task):
-    r = list(task.registrations.all())
-    rk = list(task.registration_kinds.all())
+def copy_task_to_session(session, original_task):
+    from tasks.models import Task
 
-    t = task
+    t = Task.objects.get(pk=original_task.pk)
     t.pk = None
     t.session = session
     t.save()
 
-    t.registrations.set(r)
-    t.registration_kinds.set(rk)
+    t.registrations.set(original_task.registrations.all())
+    t.registration_kinds.set(
+        original_task.registration_kinds.all()
+    )
     t.save()
 
 
-def copy_session_to_study(study, session):
-    setting = list(session.setting.all())
-    tasks = list(session.task_set.all())
+def copy_session_to_study(study, original_session):
+    from tasks.models import Session
 
-    s = session
+    s = Session.objects.get(pk=original_session.pk)
     s.pk = None
     s.study = study
     s.save()
 
-    s.setting.set(setting)
+    s.setting.set(original_session.setting.all())
     s.save()
 
-    for task in tasks:
+    for task in original_session.task_set.all():
         copy_task_to_session(s, task)

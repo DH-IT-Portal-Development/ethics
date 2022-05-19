@@ -106,23 +106,24 @@ def create_documents_for_study(study):
     d.save()
 
 
-def copy_study_to_proposal(proposal, study):
+def copy_study_to_proposal(proposal, original_study):
     """
     Copies the given Study to the given Proposal.
     :param proposal: the current Proposal
     :param study: the current Study
     :return: the Proposal appended with the details of the given Study.
     """
-    old_pk = study.pk
-    age_groups = list(study.age_groups.all())
-    traits = list(study.traits.all())
-    compensation = study.compensation
-    recruitment = list(study.recruitment.all())
-    intervention = study.intervention if study.has_intervention else None
-    observation = study.observation if study.has_observation else None
-    sessions = list(study.session_set.all()) if study.has_sessions else []
+    from studies.models import Study
 
-    s = study
+    age_groups = original_study.age_groups.all()
+    traits = original_study.traits.all()
+    compensation = original_study.compensation
+    recruitment = original_study.recruitment.all()
+    intervention = original_study.intervention if original_study.has_intervention else None
+    observation = original_study.observation if original_study.has_observation else None
+    sessions = original_study.session_set.all() if original_study.has_sessions else []
+
+    s = Study.objects.get(pk=original_study.pk)
     s.pk = None
     s.proposal = proposal
     s.save()
@@ -140,7 +141,7 @@ def copy_study_to_proposal(proposal, study):
     for session in sessions:
         copy_session_to_study(s, session)
 
-    copy_documents_to_study(old_pk, s)
+    copy_documents_to_study(original_study.pk, s)
 
 
 def copy_documents_to_study(study_old, study):

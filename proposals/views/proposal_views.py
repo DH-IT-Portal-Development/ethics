@@ -439,7 +439,11 @@ class ProposalCopy(UserFormKwargsMixin, CreateView):
 
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""
-        form.instance = copy_proposal(self, form)
+        form.instance = copy_proposal(
+            form.cleaned_data['parent'],
+            form.cleaned_data['is_revision'],
+            self.request.user,
+        )
         return super(ProposalCopy, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
