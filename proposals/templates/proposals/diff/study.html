@@ -1,0 +1,254 @@
+{% load i18n %}
+{% load proposal_filters %}
+{% load static %}
+{% load uil_filters %}
+{% load get_field_name %}
+{% load diff_tags %}
+
+{% for study, p_study in proposal.study_set.all|zip_equalize_lists:p_proposal.study_set.all %}
+    <h2 class="mt-5 mb-1">{% trans "De deelnemers" %}</h2>
+    {% include "studies/study_title.html" %}
+
+    {% if study and not p_study %}
+        <div class="warning">
+            {% trans "Dit traject is nieuw in de revisie." %}
+        </div>
+    {% elif not study and p_study %}
+        <div class="warning">
+            {% trans "Dit traject is weggehaald uit de revisie" %}
+        </div>
+    {% endif %}
+
+    <table class="proposals-diff ">
+        <tr>
+            <th class="proposals-diff-question"></th>
+            <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
+            <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
+        </tr>
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th>
+            <td>{{ p_study.age_groups.all|unordered_list }}</td>
+            <td>{{ study.age_groups.all|unordered_list }}</td>
+        </tr>
+        {% if study|has_adults or p_study|has_adults %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th>
+                <td>
+                    {# You're going to see this a lot, so lemme explain. #}
+                    {# One would think `yesno` has a 'None' option. It does! #}
+                    {# But if you reference an attribute of None, Django will  #}
+                    {# insert 'False' instead.... So this if is the only way #}
+                    {# to not display anything if one of the two studies is None #}
+                    {% if p_study %}
+                        {{ p_study.legally_incapable|yesno:_("ja,nee") }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if study %}
+                        {{ study.legally_incapable|yesno:_("ja,nee") }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% if study.legally_incapable or p_study.legally_incapable %}
+                <tr>
+                    <th>{% get_verbose_field_name "studies" "study" "legally_incapable_details" %}</th>
+                    <td>{{ p_study.legally_incapable_details }}</td>
+                    <td>{{ study.legally_incapable_details }}</td>
+                </tr>
+            {% endif %}
+        {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th>
+            <td>
+                {% if p_study %}
+                    {{ p_study.has_traits|yesno:_("ja,nee") }}
+                {% endif %}
+            </td>
+            <td>
+                {% if study %}
+                    {{ study.has_traits|yesno:_("ja,nee") }}
+                {% endif %}
+            </td>
+        </tr>
+        {% if study.has_traits or p_study.has_traits %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "traits" %}</th>
+                <td>{{ p_study.traits.all|unordered_list }}</td>
+                <td>{{ study.traits.all|unordered_list }}</td>
+            </tr>
+            {% if study.traits.all|needs_details or p_study.traits.all|needs_details %}
+                <tr>
+                    <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th>
+                    <td>{{ p_study.traits_details }}</td>
+                    <td>{{ study.traits_details }}</td>
+                </tr>
+            {% endif %}
+        {% endif %}
+        {% if study|necessity_required or p_study|necessity_required %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th>
+                <td>{{ p_study.get_necessity_display }}</td>
+                <td>{{ study.get_necessity_display }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "necessity_reason" %}</th>
+                <td>{{ p_study.necessity_reason }}</td>
+                <td>{{ study.necessity_reason }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "recruitment" %}</th>
+            <td>{{ p_study.recruitment.all|unordered_list }}</td>
+            <td>{{ study.recruitment.all|unordered_list }}</td>
+        </tr>
+        {% if study.recruitment.all|needs_details or p_study.recruitment.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "recruitment_details" %}</th>
+                <td>{{ p_study.recruitment_details }}</td>
+                <td>{{ study.recruitment_details }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th>
+            <td>{{ p_study.compensation }}</td>
+            <td>{{ study.compensation }}</td>
+        </tr>
+        {% if study.compensation.needs_details or p_study.compensation.needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th>
+                <td>{{ p_study.compensation_details }}</td>
+                <td>{{ study.compensation_details }}</td>
+            </tr>
+        {% endif %}
+    </table>
+
+    {% include 'proposals/diff/intervention.html' %}
+
+    {% include 'proposals/diff/observation.html' %}
+
+    {% include 'proposals/diff/sessions.html' %}
+
+    <h2 class="mt-5 mb-1">{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
+    <br/>
+    {% include "studies/study_title.html" %}
+    <br/>
+    <table class="proposals-diff ">
+        <tr>
+            <th class="proposals-diff-question"></th>
+            <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
+            <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
+        </tr>
+        {% if study.has_sessions or p_study.has_sessions %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th>
+                <td>{{ p_study.get_deception_display }}</td>
+                <td>{{ study.get_deception_display }}</td>
+            </tr>
+            {% if study.deception == 'Y' or study.deception == '?' or p_study.deception == 'Y' or p_study.deception == '?' %}
+                <tr>
+                    <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th>
+                    <td>{{ p_study.deception_details }}</td>
+                    <td>{{ study.deception_details }}</td>
+                </tr>
+            {% endif %}
+        {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "negativity" %}</th>
+            <td>{{ p_study.get_negativity_display }}</td>
+            <td>{{ study.get_negativity_display }}</td>
+        </tr>
+        {% if study.negativity == 'Y' or study.negativity == '?' or p_study.negativity == 'Y' or p_study.negativity == '?' %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "negativity_details" %}</th>
+                <td>{{ p_study.negativity_details }}</td>
+                <td>{{ study.negativity_details }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th>
+            <td>{{ p_study.get_stressful_display }}</td>
+            <td>{{ study.get_stressful_display }}</td>
+        </tr>
+        {% if study.stressful == 'Y' or study.stressful == '?' or p_study.stressful == 'Y' or p_study.stressful == '?' %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "stressful_details" %}</th>
+                <td>{{ p_study.stressful_details }}</td>
+                <td>{{ study.stressful_details }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "risk" %}</th>
+            <td>{{ p_study.get_risk_display }}</td>
+            <td>{{ study.get_risk_display }}</td>
+        </tr>
+        {% if study.risk == 'Y' or study.risk == '?' or p_study.risk == 'Y' or p_study.risk == '?' %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th>
+                <td>{{ p_study.risk_details }}</td>
+                <td>{{ study.risk_details }}</td>
+            </tr>
+        {% endif %}
+    </table>
+
+    <h2 class="mt-5 mb-1">{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
+    {% include "studies/study_title.html" %}
+
+    {% get_study_documents documents study %}
+    {% get_study_documents p_documents p_study %}
+
+    <table class="proposals-diff ">
+        <tr>
+            <th class="proposals-diff-question"></th>
+            <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
+            <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
+        </tr>
+        <tr>
+            <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th>
+            {% if p_documents.informed_consent %}
+                <td><a href="{{ p_documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+            {% if documents.informed_consent %}
+                <td><a href="{{ documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th>
+            {% if p_documents.briefing %}
+                <td><a href="{{ p_documents.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+            {% else %}
+                <td></td>
+            {% endif %}
+
+            {% if documents.briefing %}
+                <td><a href="{{ documents.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+            {% else %}
+                <td></td>
+            {% endif %}
+        </tr>
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th>
+            <td>
+                {% if p_study %}
+                    {{ p_study.passive_consent|yesno:_("ja,nee") }}
+                {% endif %}
+            </td>
+            <td>
+                {% if study %}
+                    {{ study.passive_consent|yesno:_("ja,nee") }}
+                {% endif %}
+            </td>
+        </tr>
+        {% if study.passive_consent or p_study.passive_consent %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th>
+                <td>{{ p_study.passive_consent_details }}</td>
+                <td>{{ study.passive_consent_details }}</td>
+            </tr>
+        {% endif %}
+    </table>
+{% endfor %}

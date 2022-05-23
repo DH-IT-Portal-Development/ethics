@@ -68,7 +68,6 @@
             <a
                 :href="$url('proposals:pdf', [proposal.pk])"
                 target="_blank"
-                :download="proposal.pdf.name"
                 v-if="proposal.pdf"
             >
                 <img src="{{ img_pdf }}"

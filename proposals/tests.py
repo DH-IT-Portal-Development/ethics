@@ -7,9 +7,11 @@ from django.conf import settings
 
 from main.models import Setting, YES, NO
 from interventions.models import Intervention
+from observations.models import Observation
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment
 from .api.views import MyProposalsApiView
+from .copy import copy_proposal
 from .models import Proposal, Relation, Wmo, Institution
 from .utils import generate_ref_number, check_local_facilities, generate_revision_ref_number
 
@@ -293,3 +295,87 @@ class WmoTestCase(BaseProposalTestCase):
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.JUDGED)
+
+
+class CopyTestCase(BaseProposalTestCase):
+
+    def setUp(self):
+        super().setUp()
+
+        self.wmo_1 = Wmo.objects.create(
+            proposal=self.p1,
+            metc=Wmo.JUDGED,
+        )
+
+        self.study_1 = Study.objects.create(
+            proposal=self.p1,
+            order=1,
+            name="Study 1",
+            has_intervention=True,
+            has_sessions=True,
+            has_observation=True,
+        )
+        self.intervention_1 = Intervention.objects.create(
+            study=self.study_1,
+            description="Intervention 1",
+        )
+        self.observation_1 = Observation.objects.create(
+            study=self.study_1,
+            details_who="Observation 1",
+        )
+        self.session_1 = Session.objects.create(
+            study=self.study_1,
+            order=1,
+            tasks_number=1,
+        )
+        self.task_1 = Task.objects.create(
+            session=self.session_1,
+            name="Task 1",
+            order=1,
+        )
+
+    def test_parent_present_for_rev(self):
+        """Test if parent is set when making a revision/amendment copy"""
+        p2 = copy_proposal(
+            self.p1,
+            True,
+            self.user
+        )
+
+        self.assertIsNotNone(p2.parent)
+        self.assertEqual(p2.parent.pk, self.p1.pk)
+
+    def test_parent_missing_for_copy(self):
+        """Test if parent is missing if making a regular copy"""
+        p2 = copy_proposal(
+            self.p1,
+            False,
+            self.user
+        )
+
+        self.assertIsNone(p2.parent)
+
+    def test_related_copying(self):
+        """Test if related objects are copied during copying"""
+        p2 = copy_proposal(
+            self.p1,
+            False,
+            self.user
+        )
+
+        self.assertEqual(p2.study_set.count(), 1)
+
+        study = p2.study_set.first()
+
+        self.assertIsNotNone(study.observation)
+        self.assertEqual(study.observation.details_who, "Observation 1")
+
+        self.assertIsNotNone(study.intervention)
+        self.assertEqual(study.intervention.description, "Intervention 1")
+
+        self.assertEqual(study.session_set.count(), 1)
+
+        session = study.session_set.first()
+        self.assertEqual(session.task_set.count(), 1)
+        task = session.task_set.first()
+        self.assertEqual(task.name, "Task 1")

@@ -5,7 +5,6 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
 from django.utils.translation import ugettext_lazy as _
-import django.utils.six as six
 
 import magic  # whoooooo
 import pdftotext
@@ -88,7 +87,7 @@ def is_empty(value):
         result = True
     if hasattr(value, '__len__') and len(value) == 0:
         result = True
-    if isinstance(value, six.text_type) and not value.strip():
+    if isinstance(value, str) and not value.strip():
         result = True
     return result
 

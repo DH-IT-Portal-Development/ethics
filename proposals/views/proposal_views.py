@@ -8,7 +8,7 @@ from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
-from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
+#from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
 
 from main.utils import get_document_contents, get_secretary, is_secretary
@@ -25,7 +25,9 @@ from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
-from proposals.mixins import ProposalMixin, ProposalContextMixin
+from proposals.mixins import ProposalMixin, ProposalContextMixin, \
+    PDFTemplateResponseMixin
+from proposals.utils.proposal_utils import FilenameFactory
 
 
 ############
@@ -437,7 +439,11 @@ class ProposalCopy(UserFormKwargsMixin, CreateView):
 
     def form_valid(self, form):
         """Create a copy of the selected Proposal"""
-        form.instance = copy_proposal(self, form)
+        form.instance = copy_proposal(
+            form.cleaned_data['parent'],
+            form.cleaned_data['is_revision'],
+            self.request.user,
+        )
         return super(ProposalCopy, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -488,6 +494,9 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
     model = Proposal
     template_name = 'proposals/proposal_pdf.html'
 
+    # The PDF mixin generates a filename with this factory
+    filename_factory = FilenameFactory('Proposal')
+
     def get_context_data(self, **kwargs):
         """Adds 'BASE_URL' to template context"""
         context = super(ProposalAsPdf, self).get_context_data(**kwargs)
@@ -511,10 +520,6 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
         context['documents'] = documents
 
         return context
-
-
-class EmptyPDF(LoginRequiredMixin, PDFTemplateView):
-    template_name = 'proposals/proposal_pdf_empty.html'
 
 
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):
