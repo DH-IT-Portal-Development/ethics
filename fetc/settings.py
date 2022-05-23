@@ -40,8 +40,8 @@ INSTALLED_APPS = (
     'rest_framework',
 
     'main',
-    'uil.core',
-    'uil.vue',
+    'cdh.core',
+    'cdh.vue',
     'proposals',
     'studies',
     'tasks',

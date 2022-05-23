@@ -6,7 +6,7 @@ from django.views.decorators.cache import cache_page
 from rest_framework.authentication import SessionAuthentication
 
 from reviews.mixins import CommitteeMixin
-from uil.vue.rest import FancyListApiView
+from cdh.vue.rest import FancyListApiView
 
 from main.utils import is_secretary
 from .serializers import ProposalSerializer

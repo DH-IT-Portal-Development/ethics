@@ -4,7 +4,7 @@ from main.serializers import UserSerializer
 from proposals.models import Proposal
 from reviews.api.serializers import InlineReviewSerializer, \
     InlineDecisionSerializer
-from uil.core.rest.serializers import ModelDisplaySerializer
+from cdh.core.rest.serializers import ModelDisplaySerializer
 
 
 class ProposalInlineSerializer(ModelDisplaySerializer):

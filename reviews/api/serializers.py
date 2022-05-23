@@ -1,5 +1,5 @@
 from proposals.models import Proposal
-from uil.core.rest.serializers import ModelDisplaySerializer
+from cdh.core.rest.serializers import ModelDisplaySerializer
 from ..models import Decision, Review
 from rest_framework import serializers
 from main.serializers import UserSerializer
