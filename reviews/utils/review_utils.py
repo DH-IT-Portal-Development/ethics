@@ -268,7 +268,7 @@ def notify_secretary(decision):
     """
     secretary = get_secretary()
     proposal = decision.review.proposal
-    subject = _('{}: nieuwe beoordeling toegevoegd').format(
+    subject = _('FETC-GW {}: nieuwe beoordeling toegevoegd').format(
         proposal.get_reference_and_committee(),
     )
     params = {
@@ -284,7 +284,7 @@ def notify_supervisor_nogo(decision):
     proposal = decision.review.proposal
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
-    subject = _('{}: eindverantwoordelijke heeft je aanvraag beoordeeld'.format(
+    subject = _('FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld'.format(
         proposal.get_reference_and_committee(),)
     )
     params = {
