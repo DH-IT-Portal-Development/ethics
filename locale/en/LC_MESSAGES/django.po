@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-03 13:52+0200\n"
+"POT-Creation-Date: 2022-05-31 14:23+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -255,17 +255,13 @@ msgstr "Extra task"
 
 #: interventions/templates/interventions/intervention_form.html:61
 msgid ""
-"Je zult binnen dit traject van de leerling nog een onderzoekstype moeten "
-"selecteren. Druk op 'Opslaan en vorige stap' om terug te gaan naar de vorige "
-"pagina. Op die pagina selecteer je naast interventie (die staat al "
-"aangevinkt) ook ‘takenonderzoek’. Vul de vragen in die onder dit kopje "
-"verschijnen."
+"Als je dit nog niet gedaan hebt, zul je op de vorige pagina naast "
+"\"interventie\" ook \"takenonderzoek\" moeten aanvinken, om je aanvraag "
+"volledig in te vullen."
 msgstr ""
-"You will have to choose an additional type of research within this "
-"trajectory; the pupils will also perform task-based research. Go to the "
-"previous page by  clicking 'Save and go back to previous step'. Select ‘task-"
-"based research’ and fill out the new questions in the portal. \n"
-"                "
+"If you have not yet done so, you must check the box for \"task-based research"
+"\" on the previous page to answer the required task questions related to "
+"tasks."
 
 #: interventions/utils.py:11 studies/models.py:126 studies/models.py:207
 #: studies/templates/studies/study_end.html:58
@@ -344,8 +340,8 @@ msgid ""
 "onderzoekers         waarschuwen dat de school om een VOG kan vragen."
 msgstr ""
 "Anybody who works at a school needs to be able to show a Certificate of "
-"Conduct (VOG, see <a href=\"https://www.justis.nl/producten/vog/\" target="
-"\"_blank\">https://www.justis.nl/producten/vog/</a>). It is the "
+"Conduct (VOG, see <a href=\"https://www.justis.nl/producten/vog/\" "
+"target=\"_blank\">https://www.justis.nl/producten/vog/</a>). It is the "
 "responsibility of the school to verify if the employees have such a VOG. The "
 "role of the FEtC-H in this matter is just to inform the researchers that the "
 "school probably will ask about this certificate."
@@ -751,19 +747,16 @@ msgstr ""
 "    We encountered an error while processing your request.\n"
 "     "
 
-#: main/templates/error/500.html:17
+#: main/templates/error/500.html:17      "
 msgid ""
-"\n"
-"                    Blijft dit probleem aanhouden? Neem dan contact op met "
-"het technisch beheer van de portal via \n"
-"                    <a href=\"mailto:labbeheer.gw@uu.nl\" target=\"_blank"
-"\">labbeheer.gw@uu.nl</a>. Maak hierbij zo veel mogelijk duidelijk wat je "
-"aan het doen was, en op welke pagina.\n"
-"                "
+"Blijft dit probleem aanhouden? Neem dan contact op met het technisch beheer "
+"van de portal via <a href=\"mailto:portaldev.gw@uu.nl\" "
+"target=\"_blank\">portaldev.gw@uu.nl</a>. Maak hierbij zo veel mogelijk "
+"duidelijk wat je aan het doen was, en op welke pagina."
 msgstr ""
 "\n"
 "If this problem persists, please contact the technical support staff of the "
-"portal by email at <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</"
+"portal by email at <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</"
 "a>. Try to explain what you were doing and note the page that you were on, "
 "if you can.     "
 
@@ -796,11 +789,11 @@ msgstr ""
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met  "
-"<a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>."
+"<a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>."
 msgstr ""
 "If you find some text to be confusing, come across a poor translation, or "
 "have any other feedback on the Portal, please don't hesitate to send an "
-"email to <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>."
+"email to <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>."
 
 #: main/templates/main/index.html:59
 #: proposals/templates/proposals/proposal_start.html:16
@@ -822,8 +815,8 @@ msgstr ""
 msgid ""
 "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
 "algemene-kamer/\" target=\"blank\">Algemene Kamer (AK)</a> of dat van de <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" target="
-"\"blank\">Linguïstiek Kamer (LK)</a>."
+"href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
+"target=\"blank\">Linguïstiek Kamer (LK)</a>."
 msgstr ""
 "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
 "general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
@@ -833,30 +826,30 @@ msgstr ""
 #: main/templates/main/index.html:78
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-"documenten-ethische-toetsingscommissie-gw\" target=\"blank"
-"\">voorbeelddocumenten</a> voor de <em>informed consent</em>. (de laatstse "
-"versie is van <u>december 2021</u>)</li>"
+"documenten-ethische-toetsingscommissie-gw\" "
+"target=\"blank\">voorbeelddocumenten</a> voor de <em>informed consent</em>. "
+"(de laatstse versie is van <u>december 2021</u>)</li>"
 msgstr ""
 "Make sure to use the correct (most recent) <a href=\"https://intranet.uu.nl/"
-"en/documents-ethics-assessment-committee-humanities\" target=\"_blank"
-"\">model documents</a> for <em>informed consent</em>. (Latest version: "
-"<u>December 2021</u>)"
+"en/documents-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">model documents</a> for <em>informed consent</em>. (Latest "
+"version: <u>December 2021</u>)"
 
 #: main/templates/main/index.html:82
 msgid ""
 "<li>Voor advies over data management (plannen): <a href=\"mailto:"
 "datamanagement.gw@uu.nl\">datamanagement.gw@uu.nl</a>.</li> <li>Voor advies "
 "over privacy zaken: <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
-"</li> <li>Voor vragen over de procedure: <a href=\"mailto:fetc-gw@uu.nl"
-"\">Desiree Capel</a>.</li> <li>Voor vragen over de portal zelf: <a href="
-"\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
+"</li> <li>Voor vragen over de procedure: <a href=\"mailto:fetc-gw@uu."
+"nl\">Desiree Capel</a>.</li> <li>Voor vragen over de portal zelf: <a "
+"href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>.</li>"
 msgstr ""
-"<li>For advice on data management: <a href=\"mailto:datamanagement.gw@uu.nl"
-"\">datamanagement.gw@uu.nl</a>.</li> <li>For issues concerning privacy: <a "
+"<li>For advice on data management: <a href=\"mailto:datamanagement.gw@uu."
+"nl\">datamanagement.gw@uu.nl</a>.</li> <li>For issues concerning privacy: <a "
 "href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>.</li> <li>For "
 "questions on FEtC-H procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree "
 "Capel</a>.</li> <li>For questions about the functioning of the portal "
-"itself: <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>.</li>"
+"itself: <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>.</li>"
 
 #: main/templates/main/index.html:91
 msgid "In deze portal kan je het volgende doen:"
@@ -955,14 +948,14 @@ msgid ""
 "is gekozen voor het woord \"proposal\", maar u kunt ook \"application\" "
 "tegenkomen in de context van het aanvraagproces. Vindt u een onduidelijke "
 "tekst, foute vertaling, of ander mankement aan de portal? Meld dit dan "
-"vooral aan <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer.gw@uu.nl</a>."
+"vooral aan <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>."
 msgstr ""
 "<em>Textual changes in the portal:</em> Recently we have made some changes "
 "to the terminology used in the portal. Many uses of the term \"study\" have "
 "been changed to either \"application\" or \"proposal\", depending on the "
 "context. As always, if you find some text to be confusing, come across a "
 "poor translation, or have any other feedback on the Portal, please don't "
-"hesitate to send an email to <a href=\"mailto:labbeheer.gw@uu.nl\">labbeheer."
+"hesitate to send an email to <a href=\"mailto:portaldev.gw@uu.nl\">portaldev."
 "gw@uu.nl</a>.    "
 
 #: main/templates/main/index.html:214
@@ -973,14 +966,14 @@ msgstr "Cover image by Simona Evsatieva"
 #, python-format
 msgid ""
 "\n"
-"                        Welkom bij het portal van de FETC-GW. Je kan <a href="
-"\"%(the_url)s\">hier</a> inloggen met je\n"
+"                        Welkom bij het portal van de FETC-GW. Je kan <a "
+"href=\"%(the_url)s\">hier</a> inloggen met je\n"
 "                        Solis-ID.\n"
 "                    "
 msgstr ""
 "\n"
-"\t Welcome to the FEtC-H web portal. You can sign in <a href=\"%(the_url)s"
-"\">here</a> with your Solis-ID.\n"
+"\t Welcome to the FEtC-H web portal. You can sign in <a "
+"href=\"%(the_url)s\">here</a> with your Solis-ID.\n"
 "\t     "
 
 #: main/templates/main/index.html:228
@@ -1104,7 +1097,7 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:65 observations/models.py:75
-#: observations/models.py:88 proposals/models.py:529 studies/models.py:154
+#: observations/models.py:88 proposals/models.py:534 studies/models.py:154
 #: studies/models.py:188 studies/models.py:321
 msgid "Licht toe"
 msgstr "Explain"
@@ -1695,44 +1688,44 @@ msgstr ""
 "Is this application a revision or an amendment of a previously submitted "
 "application?"
 
-#: proposals/models.py:466
+#: proposals/models.py:471
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:469
+#: proposals/models.py:474
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:471 reviews/api/views.py:39 reviews/api/views.py:328
+#: proposals/models.py:476 reviews/api/views.py:39 reviews/api/views.py:328
 #: reviews/templates/reviews/review_detail_sidebar.html:92
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:473
+#: proposals/models.py:478
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:475
+#: proposals/models.py:480
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:477
+#: proposals/models.py:482
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:514
+#: proposals/models.py:519
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:515
+#: proposals/models.py:520
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:516
+#: proposals/models.py:521
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:520
+#: proposals/models.py:525
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1740,11 +1733,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:534
+#: proposals/models.py:539
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:540
+#: proposals/models.py:545
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1752,7 +1745,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:542
+#: proposals/models.py:547
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1773,7 +1766,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:558
+#: proposals/models.py:563
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -1782,15 +1775,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:565
+#: proposals/models.py:570
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:570
+#: proposals/models.py:575
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:608
+#: proposals/models.py:613
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -2255,8 +2248,8 @@ msgid ""
 "a> een amendement aan."
 msgstr ""
 "If you have changes to an already approved application that therefore needs "
-"to be re-reviewed, please make an amendment <a href=\"%(amendment_url)s"
-"\">here</a>."
+"to be re-reviewed, please make an amendment <a "
+"href=\"%(amendment_url)s\">here</a>."
 
 #: proposals/templates/proposals/proposal_copy.html:87
 msgid "Kopiëren"
@@ -2292,14 +2285,14 @@ msgstr "Data Management Plan"
 #: proposals/templates/proposals/proposal_data_management.html:27
 msgid ""
 "Een data management plan is sinds 2020 <a href=\"https://intranet.uu.nl/"
-"actueel/nieuws/nieuw-facultair-datamanagementbeleid\" target=\"_blank"
-"\">verplicht</a> bij de faculteit geesteswetenschappen, zowel als bij de "
-"instanties NWO en ERC als zij subsidie voor een onderzoek bieden."
+"actueel/nieuws/nieuw-facultair-datamanagementbeleid\" "
+"target=\"_blank\">verplicht</a> bij de faculteit geesteswetenschappen, zowel "
+"als bij de instanties NWO en ERC als zij subsidie voor een onderzoek bieden."
 msgstr ""
 "A data management plan is <a href=\"https://intranet.uu.nl/en/current-"
-"affairs/news/new-faculty-data-management-policy\" target=\"_blank"
-"\">required</a> by the Faculty of Humanities from 2020 onwards as well as by "
-"NWO or ERC if you are financed by these organizations. "
+"affairs/news/new-faculty-data-management-policy\" "
+"target=\"_blank\">required</a> by the Faculty of Humanities from 2020 "
+"onwards as well as by NWO or ERC if you are financed by these organizations. "
 
 #: proposals/templates/proposals/proposal_data_management.html:33
 msgid ""
@@ -2313,14 +2306,14 @@ msgid ""
 "gw@uu.nl\" target=\"_blank\">datamanager</a>."
 msgstr ""
 "The faculty provides information on <a href=\"https://intranet.uu.nl/en/"
-"current-affairs/news/new-faculty-data-management-policy\" target=\"_blank"
-"\">data management</a>, as well as on <a href=\"https://www.uu.nl/en/"
-"research/research-data-management/guides/data-management-planning\" target="
-"\"_blank\">how to write a Data Management Plan</a>. You can also have your "
-"plan reviewed, either by <a href=\"https://www.uu.nl/en/research/research-"
-"data-management/tools-services/data-management-plan-review\" target=\"_blank"
-"\">Research Data Management Support</a> or the faculty <a href=\"mailto:"
-"Datamanagement.gw@uu.nl\" target=\"_blank\">data manager</a>. "
+"current-affairs/news/new-faculty-data-management-policy\" "
+"target=\"_blank\">data management</a>, as well as on <a href=\"https://www."
+"uu.nl/en/research/research-data-management/guides/data-management-planning\" "
+"target=\"_blank\">how to write a Data Management Plan</a>. You can also have "
+"your plan reviewed, either by <a href=\"https://www.uu.nl/en/research/"
+"research-data-management/tools-services/data-management-plan-review\" "
+"target=\"_blank\">Research Data Management Support</a> or the faculty <a "
+"href=\"mailto:Datamanagement.gw@uu.nl\" target=\"_blank\">data manager</a>. "
 
 #: proposals/templates/proposals/proposal_data_management.html:38
 msgid ""
@@ -2348,11 +2341,11 @@ msgstr "If you have not already done so, it is highly recommended you attend: "
 
 #: proposals/templates/proposals/proposal_data_management.html:49
 msgid ""
-"<li> de workshop <a href=\"https://www.uu.nl/en/node/75859\" target=\"_blank"
-"\">Quick start to Research Data Management</a> </li>"
+"<li> de workshop <a href=\"https://www.uu.nl/en/node/75859\" "
+"target=\"_blank\">Quick start to Research Data Management</a> </li>"
 msgstr ""
-"<li>the workshop <a href=\"https://www.uu.nl/en/node/75859\" target=\"_blank"
-"\">Quick start to Research Data Management</a></li>"
+"<li>the workshop <a href=\"https://www.uu.nl/en/node/75859\" "
+"target=\"_blank\">Quick start to Research Data Management</a></li>"
 
 #: proposals/templates/proposals/proposal_data_management.html:58
 msgid ""
@@ -2361,9 +2354,9 @@ msgid ""
 "datamanagement.gw@uu.nl\" target=\"_blank\">datamanagement.gw@uu.nl</a>."
 msgstr ""
 "For advice on data management planning you can also contact Frans de Liagre "
-"Böhl at <a href=\"mailto:Datamanagement.gw@uu.nl\" target=\"_blank"
-"\">datamanagement.gw@uu.nl</a>, who is the data manager of the Faculty of "
-"Humanities."
+"Böhl at <a href=\"mailto:Datamanagement.gw@uu.nl\" "
+"target=\"_blank\">datamanagement.gw@uu.nl</a>, who is the data manager of "
+"the Faculty of Humanities."
 
 #: proposals/templates/proposals/proposal_data_management.html:62
 msgid "Privacy: AVG en GDPR"
@@ -2376,11 +2369,11 @@ msgid ""
 "Nederlandse implementatie van het Europese <a href=\"https://gdpr.eu/\" "
 "target=\"_blank\">GDPR</a>."
 msgstr ""
-"When you collect personal data, make sure you comply with the Dutch <a href="
-"\"https://business.gov.nl/regulation/protection-personal-data/\" target="
-"\"_blank\">Algemene Verordening Persoonsgegevens</a>, or AVG. This "
-"regulation is in line with European <a href=\"https://gdpr.eu/\" target="
-"\"_blank\">GDPR privacy legislation</a>."
+"When you collect personal data, make sure you comply with the Dutch <a "
+"href=\"https://business.gov.nl/regulation/protection-personal-data/\" "
+"target=\"_blank\">Algemene Verordening Persoonsgegevens</a>, or AVG. This "
+"regulation is in line with European <a href=\"https://gdpr.eu/\" "
+"target=\"_blank\">GDPR privacy legislation</a>."
 
 #: proposals/templates/proposals/proposal_data_management.html:70
 msgid ""
@@ -2397,11 +2390,11 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_data_management.html:81
 msgid ""
-"<li> de workshop <a href=\"https://www.uu.nl/en/node/81799\" target=\"_blank"
-"\">Handling personal data in research</a> </li>"
+"<li> de workshop <a href=\"https://www.uu.nl/en/node/81799\" "
+"target=\"_blank\">Handling personal data in research</a> </li>"
 msgstr ""
-"<li>the workshop <a href=\"https://www.uu.nl/en/node/81799\" target=\"_blank"
-"\">Handling personal data in research</a></li>"
+"<li>the workshop <a href=\"https://www.uu.nl/en/node/81799\" "
+"target=\"_blank\">Handling personal data in research</a></li>"
 
 #: proposals/templates/proposals/proposal_data_management.html:89
 msgid ""
@@ -2522,8 +2515,8 @@ msgstr ""
 #, python-format
 msgid ""
 "Dit formulier is bedoeld voor aanvragen die al goedgekeurd zijn door een "
-"andere commissie. Indien dit niet het geval is, dien je het <a href="
-"\"%(proposal_url)s\">normale formulier</a> in te vullen."
+"andere commissie. Indien dit niet het geval is, dien je het <a "
+"href=\"%(proposal_url)s\">normale formulier</a> in te vullen."
 msgstr ""
 "his form is meant for applications that have already been approved by a "
 "different committee. If this is not the case, you are required to fill in "
@@ -2745,8 +2738,8 @@ msgid ""
 "<em>informed consent</em>."
 msgstr ""
 "Make sure to use the correct (most recent) <a href=\"https://intranet.uu.nl/"
-"en/documents-ethics-assessment-committee-humanities\" target=\"_blank"
-"\">model documents</a> for <em>informed consent</em>."
+"en/documents-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">model documents</a> for <em>informed consent</em>."
 
 #: proposals/templates/proposals/proposal_start.html:40
 #: proposals/templates/proposals/proposal_start_practice.html:42
@@ -2861,30 +2854,31 @@ msgstr ""
 "has     already been approved by a different ethics committee. It is "
 "therefore <em>necessary</em> to be familiar with the FEtC-H regulations. "
 "Please refer to the FEtC-H website for the regulations of <a href=\"https://"
-"fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" target=\"_blank"
-"\">the  General Chamber</a> and <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
-"regulations-linguistics-chamber/\" target=\"_blank\">the Linguistics "
-"Chamber</a>. You can save yourself and the committee members a great deal of "
-"time by making sure you are properly informed."
+"fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" "
+"target=\"_blank\">the  General Chamber</a> and <a href=\"https://fetc-gw.wp."
+"hum.uu.nl/en/regulations-linguistics-chamber/\" target=\"_blank\">the "
+"Linguistics Chamber</a>. You can save yourself and the committee members a "
+"great deal of time by making sure you are properly informed."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:30
 #, python-format
 msgid ""
 "Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht "
-"niet mee bekend is. Raadpleeg bij vragen eerst het reglement van de <a href="
-"\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" target=\"_blank\"> "
-"Algemene Kamer (AK)</a> of de <a href=\"http://fetc-gw.wp.hum.uu.nl/"
-"reglement-linguistiek-kamer/\" target=\"_blank\">Linguïstiek Kamer (LK)</a>, "
-"en neem eventueel daarna contact op met de secretaris (%(secretary_name)s, "
-"<a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
+"niet mee bekend is. Raadpleeg bij vragen eerst het reglement van de <a "
+"href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" "
+"target=\"_blank\"> Algemene Kamer (AK)</a> of de <a href=\"http://fetc-gw.wp."
+"hum.uu.nl/reglement-linguistiek-kamer/\" target=\"_blank\">Linguïstiek Kamer "
+"(LK)</a>, en neem eventueel daarna contact op met de secretaris "
+"(%(secretary_name)s, <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
 msgstr ""
 "When filling in the forms please avoid using abbreviations the FEtC-Hmight "
 "not be familiar with.If you have questions, first consult the regulations of "
 "the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/"
 "\" target=\"_blank\">General Chamber</a> or the <a href=\"https://fetc-gw.wp."
-"hum.uu.nl/en/regulations-linguistics-chamber/\" target=\"_blank"
-"\">Linguistics Chamber</a>,and if necessary contact the secretary "
-"(%(secretary_name)s,<a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
+"hum.uu.nl/en/regulations-linguistics-chamber/\" "
+"target=\"_blank\">Linguistics Chamber</a>,and if necessary contact the "
+"secretary (%(secretary_name)s,<a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu."
+"nl</a>)."
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:7
 msgid "Toetsing voor subsidieaanvraag"
@@ -3035,16 +3029,17 @@ msgid ""
 "en terug te vinden onder \"Mijn concepten\"."
 msgstr ""
 "You have not yet added a declaration of consent or information letter for "
-"trajectory %(study_order)s. You can add these on <a href=\"%(consent_link)s"
-"\">this page</a>. If these forms are not yet ready, you can return later; "
-"your application has already been saved and can be found under \"My drafts\"."
+"trajectory %(study_order)s. You can add these on <a "
+"href=\"%(consent_link)s\">this page</a>. If these forms are not yet ready, "
+"you can return later; your application has already been saved and can be "
+"found under \"My drafts\"."
 
 #: proposals/templates/proposals/proposal_submit.html:91
 #, python-format
 msgid ""
 "Je hebt aangeven dat je interventie een extra taak heeft, maar nog geen "
-"taakonderzoek toegevoegd voor traject %(study_order)s. Die kan je op <a href="
-"\"%(study_link)s\">deze pagina</a> alsnog aanmaken."
+"taakonderzoek toegevoegd voor traject %(study_order)s. Die kan je op <a "
+"href=\"%(study_link)s\">deze pagina</a> alsnog aanmaken."
 msgstr ""
 "You have indicated that your intervention study contains an extra task, but "
 "the task-based research form is missing for trajectory %(study_order)s.You "
@@ -3126,12 +3121,13 @@ msgstr ""
 #: proposals/templates/proposals/study_consent.html:79
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-"documenten-ethische-toetsingscommissie-gw\" target=\"blank"
-"\">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>"
+"documenten-ethische-toetsingscommissie-gw\" "
+"target=\"blank\">voorbeelddocumenten</a> voor de <em>informed consent</em>. "
+"</li>"
 msgstr ""
 "Make sure to use the correct (most recent) <a href=\"https://intranet.uu.nl/"
-"en/documents-ethics-assessment-committee-humanities\" target=\"_blank"
-"\">model documents</a> for <em>informed consent</em>."
+"en/documents-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">model documents</a> for <em>informed consent</em>."
 
 #: proposals/templates/proposals/study_consent.html:89
 msgid ""
@@ -3541,8 +3537,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                Klik op <img src=\"%(img_diff)s\" title=\"Toon verschillen"
-"\"> om de verschillen met de voorgaande\n"
+"                Klik op <img src=\"%(img_diff)s\" title=\"Toon "
+"verschillen\"> om de verschillen met de voorgaande\n"
 "                versie te zien (alleen beschikbaar voor revisies/"
 "amendementen).\n"
 "            "
@@ -3602,8 +3598,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Klik op <img src=\"%(img_add_reviewers)s\" title="
-"\"Aanstellen\"> om beoordelaars aan te stellen.\n"
+"                    Klik op <img src=\"%(img_add_reviewers)s\" "
+"title=\"Aanstellen\"> om beoordelaars aan te stellen.\n"
 "                "
 msgstr ""
 "\n"
@@ -3615,14 +3611,14 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Klik op <img src=\"%(img_change_chamber)s\" title="
-"\"Verplaats naar andere kamer\"> om een aanvraag\n"
+"                    Klik op <img src=\"%(img_change_chamber)s\" "
+"title=\"Verplaats naar andere kamer\"> om een aanvraag\n"
 "                    te verplaatsen naar een andere kamer.\n"
 "                "
 msgstr ""
 "\n"
-"                    Click on <img src=\"%(img_change_chamber)s\" title="
-"\"Move to other chamber\"> to move an application \n"
+"                    Click on <img src=\"%(img_change_chamber)s\" "
+"title=\"Move to other chamber\"> to move an application \n"
 "                    to a different chamber.\n"
 "                "
 
@@ -3643,14 +3639,14 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Klik op <img src=\"%(img_confirm)s\" title="
-"\"Bevestigingsbrief\"> om aan te geven dat de\n"
+"                    Klik op <img src=\"%(img_confirm)s\" "
+"title=\"Bevestigingsbrief\"> om aan te geven dat de\n"
 "                    bevestigingsbrief is verstuurd.\n"
 "                "
 msgstr ""
 "\n"
-"                    Click on <img src=\"%(img_confirm)s\" title="
-"\"Confirmation letter\"> to note that the\n"
+"                    Click on <img src=\"%(img_confirm)s\" "
+"title=\"Confirmation letter\"> to note that the\n"
 "                    confirmation letter has been sent.\n"
 "                "
 
@@ -3658,14 +3654,14 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Klik op <img src=\"%(img_confirmed)s\" title="
-"\"Bevestigingsbrief\"> om de opgegeven datum\n"
+"                    Klik op <img src=\"%(img_confirmed)s\" "
+"title=\"Bevestigingsbrief\"> om de opgegeven datum\n"
 "                    van de bevestigingsbrief te veranderen.\n"
 "                "
 msgstr ""
 "\n"
-"                    Click on <img src=\"%(img_confirmed)s\" title="
-"\"Confirmation letter\"> to change the date of \n"
+"                    Click on <img src=\"%(img_confirmed)s\" "
+"title=\"Confirmation letter\"> to change the date of \n"
 "                    the confirmation letter.\n"
 "                "
 
@@ -3710,8 +3706,8 @@ msgstr "Assess the application"
 #, python-format
 msgid ""
 "Je kunt nu een go of no-go geven voor de aanvraag <em>%(title)s</em>, "
-"%(refnum)s in %(chamber)s. De aanvraag is <a href=\"%(pdf_url)s\" target="
-"\"_blank\">hier</a> in te zien (downloadt als PDF)."
+"%(refnum)s in %(chamber)s. De aanvraag is <a href=\"%(pdf_url)s\" "
+"target=\"_blank\">hier</a> in te zien (downloadt als PDF)."
 msgstr ""
 "    You can now give a go or no-go for the application <em>%(title)s</em>, "
 "%(refnum)s in %(chamber)s.\n"
@@ -3790,8 +3786,8 @@ msgid ""
 msgstr ""
 "\n"
 "    This is a revision or amendment of a previous application. You can check "
-"the differences compared to the previous application <a href=\"%(diff_url)s"
-"\">here</a>.\n"
+"the differences compared to the previous application <a "
+"href=\"%(diff_url)s\">here</a>.\n"
 "    "
 
 #: reviews/templates/reviews/decision_form.html:93
@@ -3864,8 +3860,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Details van besluitvorming bij aanmelding <em>"
-"%(proposal)s</em>\n"
+"                    Details van besluitvorming bij aanmelding "
+"<em>%(proposal)s</em>\n"
 "                "
 msgstr ""
 "\n"
@@ -4142,49 +4138,50 @@ msgstr "Discontinue assessment of this application"
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
-#: reviews/utils/review_utils.py:52
-msgid "FETC-GW: bevestiging indienen concept-aanmelding"
-msgstr "FEtC-H: confirmation of draft application submission"
+#: reviews/utils/review_utils.py:53
+msgid "FETC-GW {}: bevestiging indienen concept-aanmelding"
+msgstr "FEtC-H {}: confirmation of draft application submission"
 
-#: reviews/utils/review_utils.py:63
-msgid "FETC-GW: beoordelen als eindverantwoordelijke"
-msgstr "FEtC-H: assess as researcher with final responsibility"
+#: reviews/utils/review_utils.py:64
+msgid "FETC-GW {}: beoordelen als eindverantwoordelijke"
+msgstr "FEtC-H {}: assess as researcher with final responsibility"
 
-#: reviews/utils/review_utils.py:112
-msgid "FETC-GW: aanmelding ontvangen"
-msgstr "FEtC-H: application received"
+#: reviews/utils/review_utils.py:113
+msgid "FETC-GW {}: aanmelding ontvangen"
+msgstr "FEtC-H {}: application received"
 
-#: reviews/utils/review_utils.py:192
-msgid "FETC-GW: nieuwe aanvraag voor voortoetsing"
-msgstr "FEtC-H: new application for preliminary assessment"
+#: reviews/utils/review_utils.py:193
+msgid "FETC-GW {}: nieuwe aanvraag voor voortoetsing"
+msgstr "FEtC-H {}: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:202
-msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
+#: reviews/utils/review_utils.py:207
+msgid "FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
-"FEtC-H: confirmation of submission of application for preliminary assessment"
+"FEtC-H {}: confirmation of submission of application for preliminary "
+"assessment"
 
-#: reviews/utils/review_utils.py:250
-msgid "FETC-GW {} {}: nieuwe aanvraag ingediend"
-msgstr "FEtC-H {} {}: new application submitted"
+#: reviews/utils/review_utils.py:256
+msgid "FETC-GW {}: nieuwe aanvraag ingediend"
+msgstr "FEtC-H {}: new application submitted"
 
-#: reviews/utils/review_utils.py:265
-msgid "FETC-GW {} {}: nieuwe beoordeling toegevoegd"
-msgstr "FEtC-H {} {}: new decision added"
+#: reviews/utils/review_utils.py:271
+msgid "FETC-GW {}: nieuwe beoordeling toegevoegd"
+msgstr "FEtC-H{}: new decision added"
 
-#: reviews/utils/review_utils.py:282
-msgid "FETC-GW: eindverantwoordelijke heeft je aanvraag beoordeeld"
-msgstr "FEtC-H: a supervisor has reviewed your application"
+#: reviews/utils/review_utils.py:287
+msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
+msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
-#: reviews/utils/review_utils.py:314
+#: reviews/utils/review_utils.py:320
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils/review_utils.py:320
+#: reviews/utils/review_utils.py:326
 msgid "De aanvraag bevat een interventiestudie."
 msgstr "The application contains an intervention study."
 
-#: reviews/utils/review_utils.py:324
+#: reviews/utils/review_utils.py:330
 #, python-brace-format
 msgid ""
 "De aanvraag heeft een interventiestudie met deelnemers in de volgende "
@@ -4193,27 +4190,27 @@ msgstr ""
 "The application contains an intervention study with participants in the "
 "following setting: {s}"
 
-#: reviews/utils/review_utils.py:327
+#: reviews/utils/review_utils.py:333
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:330
+#: reviews/utils/review_utils.py:336
 msgid "De aanvraag bevat passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils/review_utils.py:336
+#: reviews/utils/review_utils.py:342
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:339
+#: reviews/utils/review_utils.py:345
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils/review_utils.py:343
+#: reviews/utils/review_utils.py:349
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4221,7 +4218,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:349
+#: reviews/utils/review_utils.py:355
 msgid ""
 "Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4229,7 +4226,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils/review_utils.py:352
+#: reviews/utils/review_utils.py:358
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
 "onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen "
@@ -4239,7 +4236,7 @@ msgstr ""
 "study, in part or in its entirety, is so burdensome that despite acquiring "
 "informed consent it might raise questions."
 
-#: reviews/utils/review_utils.py:356
+#: reviews/utils/review_utils.py:362
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan het onderzoek meer dan "
@@ -4249,13 +4246,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:363
+#: reviews/utils/review_utils.py:369
 #, python-brace-format
 msgid "Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:367
+#: reviews/utils/review_utils.py:373
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4266,14 +4263,14 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:384
+#: reviews/utils/review_utils.py:390
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:388
+#: reviews/utils/review_utils.py:394
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4281,7 +4278,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:390
+#: reviews/utils/review_utils.py:396
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4291,11 +4288,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:395 reviews/utils/review_utils.py:421
+#: reviews/utils/review_utils.py:401 reviews/utils/review_utils.py:427
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:416
+#: reviews/utils/review_utils.py:422
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
@@ -4855,8 +4852,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Deelnemers uit de leeftijdscategorieën <em>"
-"%(age_groups)s</em>\n"
+"                    Deelnemers uit de leeftijdscategorieën "
+"<em>%(age_groups)s</em>\n"
 "                "
 msgstr ""
 "\n"
@@ -5372,3 +5369,4 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+

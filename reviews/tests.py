@@ -44,9 +44,19 @@ class BaseReviewTestCase(TestCase):
         generate_pdf(self.proposal, 'proposals/proposal_pdf.html')
         self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=2))
 
+    def check_subject_lines(self, outbox):
+        """
+        Make sure every outgoing email contains a reference number and the
+        text FETC-GW
+        """
+        for message in outbox:
+            subject = message.subject
+            self.assertTrue('FETC-GW' in subject)
+            self.assertTrue(self.proposal.reference_number in subject)
+
 
 class ReviewTestCase(BaseReviewTestCase):
-    def test_start_review(self):
+    def test_start_supervisor_review(self):
         """
         Tests starting of a Review from a submitted Proposal.
         """
@@ -57,25 +67,25 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
 
-        self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(mail.outbox[0].subject, 'FETC-GW: bevestiging indienen concept-aanmelding')
-        self.assertEqual(mail.outbox[1].subject, 'FETC-GW: beoordelen als eindverantwoordelijke')
+        self.assertEqual(len(mail.outbox), 2) # check we sent 2 emails
+        self.check_subject_lines(mail.outbox)
+        mail.outbox = []
 
+
+    def test_start_review(self):
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
         self.proposal.relation = Relation.objects.get(pk=5)
         self.proposal.save()
+
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.ASSIGNMENT)
         self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
-
-        self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(
-            mail.outbox[2].subject,
-            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe aanvraag ingediend'
-        )
-        self.assertEqual(mail.outbox[3].subject, 'FETC-GW: aanmelding ontvangen')
+        
+        self.assertEqual(len(mail.outbox), 2)
+        self.check_subject_lines(mail.outbox)
+        mail.outbox = []
 
 
 class SupervisorTestCase(BaseReviewTestCase):
@@ -87,8 +97,8 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, None)
 
         self.assertEqual(len(mail.outbox), 2)
-        self.assertEqual(mail.outbox[0].subject, 'FETC-GW: bevestiging indienen concept-aanmelding')
-        self.assertEqual(mail.outbox[1].subject, 'FETC-GW: beoordelen als eindverantwoordelijke')
+        self.check_subject_lines(mail.outbox)
+        mail.outbox = []
 
         decision = Decision.objects.filter(review=review)[0]
         decision.go = Decision.APPROVED
@@ -96,15 +106,8 @@ class SupervisorTestCase(BaseReviewTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, True)
 
-        self.assertEqual(len(mail.outbox), 4)
-        self.assertEqual(
-            mail.outbox[2].subject,
-            f'FETC-GW {self.proposal.reviewing_committee.name} {self.proposal.reference_number}: nieuwe aanvraag ingediend'
-        )
-        self.assertEqual(
-            mail.outbox[3].subject,
-            'FETC-GW: aanmelding ontvangen'
-        )
+        self.assertEqual(len(mail.outbox), 2)
+        self.check_subject_lines(mail.outbox)
 
 
 class AssignmentTestCase(BaseReviewTestCase):

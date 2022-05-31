@@ -37,8 +37,8 @@ def check_necessity_required(proposal, age_groups, has_traits, legally_incapable
     else:
         required_values = AgeGroup.objects.filter(needs_details=True).values_list('id', flat=True)
         result = bool(set(required_values).intersection(age_groups))
-        result |= has_traits
-        result |= legally_incapable
+        result |= bool(has_traits)
+        result |= bool(legally_incapable)
     return result
 
 
