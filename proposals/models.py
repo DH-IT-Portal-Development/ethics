@@ -418,6 +418,11 @@ bij dit onderzoek?'),
                     result = available_url.url
         return result
 
+    def committee_prefixed_refnum(self):
+        """Returns the reference number including the reviewing committee"""
+        parts = (self.reviewing_committee.name, self.reference_number)
+        return '-'.join(parts)
+
     def available_urls(self):
         """Returns the available URLs for this Proposal"""
         return available_urls(self)

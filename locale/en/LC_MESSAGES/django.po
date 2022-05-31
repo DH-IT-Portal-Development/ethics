@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-31 12:58+0200\n"
+"POT-Creation-Date: 2022-05-31 14:23+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -255,17 +255,13 @@ msgstr "Extra task"
 
 #: interventions/templates/interventions/intervention_form.html:61
 msgid ""
-"Je zult binnen dit traject van de leerling nog een onderzoekstype moeten "
-"selecteren. Druk op 'Opslaan en vorige stap' om terug te gaan naar de vorige "
-"pagina. Op die pagina selecteer je naast interventie (die staat al "
-"aangevinkt) ook ‘takenonderzoek’. Vul de vragen in die onder dit kopje "
-"verschijnen."
+"Als je dit nog niet gedaan hebt, zul je op de vorige pagina naast "
+"\"interventie\" ook \"takenonderzoek\" moeten aanvinken, om je aanvraag "
+"volledig in te vullen."
 msgstr ""
-"You will have to choose an additional type of research within this "
-"trajectory; the pupils will also perform task-based research. Go to the "
-"previous page by  clicking 'Save and go back to previous step'. Select ‘task-"
-"based research’ and fill out the new questions in the portal. \n"
-"                "
+"If you have not yet done so, you must check the box for \"task-based research"
+"\" on the previous page to answer the required task questions related to "
+"tasks."
 
 #: interventions/utils.py:11 studies/models.py:126 studies/models.py:207
 #: studies/templates/studies/study_end.html:58
@@ -1101,7 +1097,7 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:65 observations/models.py:75
-#: observations/models.py:88 proposals/models.py:529 studies/models.py:154
+#: observations/models.py:88 proposals/models.py:534 studies/models.py:154
 #: studies/models.py:188 studies/models.py:321
 msgid "Licht toe"
 msgstr "Explain"
@@ -1692,44 +1688,44 @@ msgstr ""
 "Is this application a revision or an amendment of a previously submitted "
 "application?"
 
-#: proposals/models.py:466
+#: proposals/models.py:471
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:469
+#: proposals/models.py:474
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:471 reviews/api/views.py:39 reviews/api/views.py:328
+#: proposals/models.py:476 reviews/api/views.py:39 reviews/api/views.py:328
 #: reviews/templates/reviews/review_detail_sidebar.html:92
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:473
+#: proposals/models.py:478
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:475
+#: proposals/models.py:480
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:477
+#: proposals/models.py:482
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:514
+#: proposals/models.py:519
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:515
+#: proposals/models.py:520
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:516
+#: proposals/models.py:521
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:520
+#: proposals/models.py:525
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1737,11 +1733,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:534
+#: proposals/models.py:539
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:540
+#: proposals/models.py:545
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1749,7 +1745,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:542
+#: proposals/models.py:547
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1770,7 +1766,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:558
+#: proposals/models.py:563
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -1779,15 +1775,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:565
+#: proposals/models.py:570
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:570
+#: proposals/models.py:575
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:608
+#: proposals/models.py:613
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -4142,49 +4138,50 @@ msgstr "Discontinue assessment of this application"
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
-#: reviews/utils/review_utils.py:52
-msgid "FETC-GW: bevestiging indienen concept-aanmelding"
-msgstr "FEtC-H: confirmation of draft application submission"
+#: reviews/utils/review_utils.py:53
+msgid "FETC-GW {}: bevestiging indienen concept-aanmelding"
+msgstr "FEtC-H {}: confirmation of draft application submission"
 
-#: reviews/utils/review_utils.py:63
-msgid "FETC-GW: beoordelen als eindverantwoordelijke"
-msgstr "FEtC-H: assess as researcher with final responsibility"
+#: reviews/utils/review_utils.py:64
+msgid "FETC-GW {}: beoordelen als eindverantwoordelijke"
+msgstr "FEtC-H {}: assess as researcher with final responsibility"
 
-#: reviews/utils/review_utils.py:112
-msgid "FETC-GW: aanmelding ontvangen"
-msgstr "FEtC-H: application received"
+#: reviews/utils/review_utils.py:113
+msgid "FETC-GW {}: aanmelding ontvangen"
+msgstr "FEtC-H {}: application received"
 
-#: reviews/utils/review_utils.py:192
-msgid "FETC-GW: nieuwe aanvraag voor voortoetsing"
-msgstr "FEtC-H: new application for preliminary assessment"
+#: reviews/utils/review_utils.py:193
+msgid "FETC-GW {}: nieuwe aanvraag voor voortoetsing"
+msgstr "FEtC-H {}: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:202
-msgid "FETC-GW: bevestiging indienen aanvraag voor voortoetsing"
+#: reviews/utils/review_utils.py:207
+msgid "FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
-"FEtC-H: confirmation of submission of application for preliminary assessment"
+"FEtC-H {}: confirmation of submission of application for preliminary "
+"assessment"
 
-#: reviews/utils/review_utils.py:250
-msgid "FETC-GW {} {}: nieuwe aanvraag ingediend"
-msgstr "FEtC-H {} {}: new application submitted"
+#: reviews/utils/review_utils.py:256
+msgid "FETC-GW {}: nieuwe aanvraag ingediend"
+msgstr "FEtC-H {}: new application submitted"
 
-#: reviews/utils/review_utils.py:265
-msgid "FETC-GW {} {}: nieuwe beoordeling toegevoegd"
-msgstr "FEtC-H {} {}: new decision added"
+#: reviews/utils/review_utils.py:271
+msgid "FETC-GW {}: nieuwe beoordeling toegevoegd"
+msgstr "FEtC-H{}: new decision added"
 
-#: reviews/utils/review_utils.py:282
-msgid "FETC-GW: eindverantwoordelijke heeft je aanvraag beoordeeld"
-msgstr "FEtC-H: a supervisor has reviewed your application"
+#: reviews/utils/review_utils.py:287
+msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
+msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
-#: reviews/utils/review_utils.py:314
+#: reviews/utils/review_utils.py:320
 msgid "De beoogde startdatum ligt voor de datum van indiening"
 msgstr ""
 "The intended start date is before the date that the study was submitted"
 
-#: reviews/utils/review_utils.py:320
+#: reviews/utils/review_utils.py:326
 msgid "De aanvraag bevat een interventiestudie."
 msgstr "The application contains an intervention study."
 
-#: reviews/utils/review_utils.py:324
+#: reviews/utils/review_utils.py:330
 #, python-brace-format
 msgid ""
 "De aanvraag heeft een interventiestudie met deelnemers in de volgende "
@@ -4193,27 +4190,27 @@ msgstr ""
 "The application contains an intervention study with participants in the "
 "following setting: {s}"
 
-#: reviews/utils/review_utils.py:327
+#: reviews/utils/review_utils.py:333
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:330
+#: reviews/utils/review_utils.py:336
 msgid "De aanvraag bevat passieve informed consent."
 msgstr "The study works with passive informed consent."
 
-#: reviews/utils/review_utils.py:336
+#: reviews/utils/review_utils.py:342
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:339
+#: reviews/utils/review_utils.py:345
 msgid "De beloning van deelnemers wijkt af van de standaardregeling."
 msgstr ""
 "The compensation to participants differs from that of the standard "
 "regulations."
 
-#: reviews/utils/review_utils.py:343
+#: reviews/utils/review_utils.py:349
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4221,7 +4218,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:349
+#: reviews/utils/review_utils.py:355
 msgid ""
 "Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
 "dagen deel (zoals bij longitudinaal onderzoek)."
@@ -4229,7 +4226,7 @@ msgstr ""
 "The study consists of several sessions, i.e. the participant takes part on "
 "multiple days (as in a longitudinal study)."
 
-#: reviews/utils/review_utils.py:352
+#: reviews/utils/review_utils.py:358
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
 "onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen "
@@ -4239,7 +4236,7 @@ msgstr ""
 "study, in part or in its entirety, is so burdensome that despite acquiring "
 "informed consent it might raise questions."
 
-#: reviews/utils/review_utils.py:356
+#: reviews/utils/review_utils.py:362
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan het onderzoek meer dan "
@@ -4249,13 +4246,13 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:363
+#: reviews/utils/review_utils.py:369
 #, python-brace-format
 msgid "Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}"
 msgstr ""
 "The study contains sessions with participants in the following setting: {s}"
 
-#: reviews/utils/review_utils.py:367
+#: reviews/utils/review_utils.py:373
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4266,14 +4263,14 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:384
+#: reviews/utils/review_utils.py:390
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:388
+#: reviews/utils/review_utils.py:394
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4281,7 +4278,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:390
+#: reviews/utils/review_utils.py:396
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4291,11 +4288,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:395 reviews/utils/review_utils.py:421
+#: reviews/utils/review_utils.py:401 reviews/utils/review_utils.py:427
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:416
+#: reviews/utils/review_utils.py:422
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
@@ -5372,3 +5369,4 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
