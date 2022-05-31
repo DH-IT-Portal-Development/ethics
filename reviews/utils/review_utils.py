@@ -48,7 +48,7 @@ def start_supervisor_phase(proposal):
     proposal.save()
 
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
-    reference = proposal.get_reference_and_committee()
+    reference = proposal.committee_prefixed_refnum()
 
     subject = _('FETC-GW {}: bevestiging indienen concept-aanmelding'.format(reference))
     params = {
@@ -110,7 +110,7 @@ def start_assignment_phase(proposal):
 
     notify_secretary_assignment(review)
 
-    subject = _('FETC-GW {}: aanmelding ontvangen'.format(proposal.get_reference_and_committee()))
+    subject = _('FETC-GW {}: aanmelding ontvangen'.format(proposal.committee_prefixed_refnum()))
     params = {
         'secretary': secretary.get_full_name(),
         'review_date': review.date_should_end,
@@ -155,7 +155,7 @@ def remind_reviewers():
     for decision in decisions:
         proposal = decision.review.proposal
         subject = "Herinnering: beoordeel aanvraag {}".format(
-            proposal.get_reference_and_committee(),
+            proposal.committee_prefixed_refnum(),
         )
         params = {
             'creator': proposal.created_by.get_full_name(),
@@ -191,7 +191,7 @@ def start_review_pre_assessment(proposal):
     Decision.objects.create(review=review, reviewer=secretary)
 
     subject = _('FETC-GW {}: nieuwe aanvraag voor voortoetsing'.format(
-        proposal.get_reference_and_committee(),
+        proposal.committee_prefixed_refnum(),
         )
                 )
                 
@@ -205,7 +205,7 @@ def start_review_pre_assessment(proposal):
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email], html_message=msg_html)
 
     subject = _('FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing'.format(
-        proposal.get_reference_and_committee(),)
+        proposal.committee_prefixed_refnum(),)
                 )
     params = {
         'secretary': secretary.get_full_name(),
@@ -229,7 +229,7 @@ def start_review_route(review, commission_users, use_short_route):
         subject = 'FETC-GW {}: nieuwe aanvraag ter beoordeling'
         # These emails are Dutch-only, therefore intentionally untranslated
 
-    subject = subject.format(review.proposal.get_reference_and_committee(),
+    subject = subject.format(review.proposal.committee_prefixed_refnum(),
                              )
 
     for user in commission_users:
@@ -253,7 +253,7 @@ def notify_secretary_assignment(review):
     secretary = get_secretary()
     proposal = review.proposal
     committee = review.proposal.reviewing_committee
-    subject = _('FETC-GW {}: nieuwe aanvraag ingediend').format(proposal.get_reference_and_committee())
+    subject = _('FETC-GW {}: nieuwe aanvraag ingediend').format(proposal.committee_prefixed_refnum())
     params = {
         'secretary': secretary.get_full_name(),
         'review': review,
@@ -269,7 +269,7 @@ def notify_secretary(decision):
     secretary = get_secretary()
     proposal = decision.review.proposal
     subject = _('FETC-GW {}: nieuwe beoordeling toegevoegd').format(
-        proposal.get_reference_and_committee(),
+        proposal.committee_prefixed_refnum(),
     )
     params = {
         'secretary': secretary.get_full_name(),
@@ -285,7 +285,7 @@ def notify_supervisor_nogo(decision):
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
     subject = _('FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld'.format(
-        proposal.get_reference_and_committee(),)
+        proposal.committee_prefixed_refnum(),)
     )
     params = {
         'secretary': secretary.get_full_name(),
