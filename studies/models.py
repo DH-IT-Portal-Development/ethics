@@ -322,6 +322,12 @@ geschoolde specialisten).')),
         max_length=200,
         blank=True)
 
+    self_assesment = models.TextField(
+        _('PLACEHOLDER QUESTION FOR SELF ASSESMENT: precise question text is being drafted by the General Chamber'),
+        max_length=500,
+        blank=True
+    )
+
     # References
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
