@@ -234,6 +234,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             'negativity',
             'stressful',
             'risk',
+            'self_assesment'
         )
 
         if 'deception' in self.fields:
