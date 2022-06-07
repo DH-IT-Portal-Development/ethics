@@ -323,7 +323,7 @@ geschoolde specialisten).')),
         blank=True)
 
     self_assesment = models.TextField(
-        _('PLACEHOLDER QUESTION FOR SELF ASSESMENT: precise question text is being drafted by the General Chamber'),
+        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
         max_length=500,
         blank=True
     )
