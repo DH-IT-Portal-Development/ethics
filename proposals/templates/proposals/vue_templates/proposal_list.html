@@ -64,24 +64,17 @@
                          title="{% trans 'Verwijderen' %}">
                 </a>
             </template>
-
+<template
+                v-if="proposal.status > context.proposal.SUBMITTED_TO_SUPERVISOR"
+>
             <a
                 :href="$url('proposals:pdf', [proposal.pk])"
                 target="_blank"
-                v-if="proposal.pdf"
             >
                 <img src="{{ img_pdf }}"
                      title="{% trans 'Inzien' %}">
             </a>
-            <a
-                v-else
-                :href="$url('proposals:pdf', [proposal.pk])"
-                target="_blank"
-            >
-                <img src="{{ img_pdf }}"
-                         title="{% trans 'Inzien' %}">
-            </a>
-
+</template>
             <a
                 :href="$url('proposals:archive_hide', [proposal.pk])"
                 v-if="proposal.in_archive && context.is_secretary"
