@@ -12,7 +12,7 @@ alabaster==0.7.12
     # via sphinx
 arabic-reshaper==2.1.3
     # via xhtml2pdf
-asgiref==3.5.0
+asgiref==3.5.2
     # via django
 asn1crypto==1.5.1
     # via
@@ -25,17 +25,17 @@ blessings==1.7
     # via curtsies
 bpython==0.22.1
     # via -r requirements.in
-certifi==2021.10.8
+certifi==2022.5.18.1
     # via requests
 cffi==1.15.0
     # via cryptography
 charset-normalizer==2.0.12
     # via requests
-click==8.1.2
+click==8.1.3
     # via pyhanko
 closure==20191111
     # via uil-django-core
-cryptography==36.0.2
+cryptography==37.0.2
     # via
     #   pyhanko
     #   pyhanko-certvalidator
@@ -53,20 +53,23 @@ django==3.2.13
     #   django-auth-ldap
     #   django-braces
     #   django-debug-toolbar
+    #   django-extensions
     #   django-modeltranslation
     #   django-simple-menu
     #   django-user-agents
     #   djangorestframework
     #   uil-django-core
-django-auth-ldap==4.0.0
+django-auth-ldap==4.1.0
     # via -r requirements.in
 django-braces==1.15.0
     # via -r requirements.in
-django-debug-toolbar==3.2.4
+django-debug-toolbar==3.4.0
+    # via -r requirements.in
+django-extensions==3.1.5
     # via -r requirements.in
 django-impersonate==1.8.2
     # via -r requirements.in
-django-modeltranslation==0.17.5
+django-modeltranslation==0.18.2
     # via -r requirements.in
 django-simple-menu==1.2.1
     # via -r requirements.in
@@ -92,9 +95,9 @@ idna==3.3
     # via requests
 imagesize==1.3.0
     # via sphinx
-importlib-metadata==4.11.3
+importlib-metadata==4.11.4
     # via sphinx
-jinja2==3.1.1
+jinja2==3.1.2
     # via sphinx
 lesscpy==0.15.0
     # via uil-django-core
@@ -108,11 +111,11 @@ oscrypto==1.3.0
     # via pyhanko-certvalidator
 packaging==21.3
     # via sphinx
-pbr==5.8.1
+pbr==5.9.0
     # via sphinxcontrib-apidoc
 pdftotext==2.2.2
     # via -r requirements.in
-pillow==9.1.0
+pillow==9.1.1
     # via
     #   -r requirements.in
     #   reportlab
@@ -134,15 +137,15 @@ pygments==2.12.0
     #   -r requirements.in
     #   bpython
     #   sphinx
-pyhanko==0.13.0
+pyhanko==0.13.1
     # via xhtml2pdf
 pyhanko-certvalidator==0.19.5
     # via
     #   pyhanko
     #   xhtml2pdf
-pyjwt==2.3.0
+pyjwt==2.4.0
     # via uil-django-core
-pyparsing==3.0.8
+pyparsing==3.0.9
     # via packaging
 pypdf3==1.0.6
     # via xhtml2pdf
@@ -152,7 +155,7 @@ python-bidi==0.4.2
     # via xhtml2pdf
 python-ldap==3.4.0
     # via django-auth-ldap
-python-magic==0.4.25
+python-magic==0.4.26
     # via -r requirements.in
 pytz==2022.1
     # via
@@ -190,7 +193,7 @@ six==1.16.0
     #   python-bidi
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==4.5.0
+sphinx==5.0.0
     # via
     #   -r requirements.in
     #   sphinx-rtd-theme
@@ -217,7 +220,7 @@ sqlparse==0.4.2
     # via
     #   django
     #   django-debug-toolbar
-svglib==1.2.1
+svglib==1.3.0
     # via xhtml2pdf
 tinycss2==1.1.1
     # via
