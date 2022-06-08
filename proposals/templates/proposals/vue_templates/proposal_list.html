@@ -65,7 +65,7 @@
                 </a>
             </template>
 <template
-                v-if="proposal.status > context.proposal.SUBMITTED_TO_SUPERVISOR"
+                v-if="proposal.status >= context.proposal.SUBMITTED_TO_SUPERVISOR"
 >
             <a
                 :href="$url('proposals:pdf', [proposal.pk])"
