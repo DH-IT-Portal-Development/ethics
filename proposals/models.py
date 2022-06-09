@@ -505,11 +505,6 @@ bij dit onderzoek?'),
 
         return Review.objects.filter(proposal=self).last()
 
-    def get_status_display(self):
-        "Return the proposal's status readably"
-
-        return dict(self.STATUSES)[self.status]
-
     def __str__(self):
         if self.is_practice():
             return '{} ({}) (Practice)'.format(self.title, self.created_by)
