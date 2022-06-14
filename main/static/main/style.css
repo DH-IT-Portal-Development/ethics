@@ -39,9 +39,26 @@ form label {
     display: inline-block;
 }
 
+.button-grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 5px;
+    text-align: center;
+}
+
+.button-grid > .button {
+    line-height: 1.5em;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 10px;
+    padding-left: 10px;    
+}
+
 .form-buttons a, .form-buttons input {
     margin-top: 5px;
 }
+
+
 
 @media (min-width: 768px)
 {
