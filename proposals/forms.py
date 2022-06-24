@@ -33,7 +33,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'date_start', 'title',
             'summary', 'pre_assessment_pdf',
             'funding', 'funding_details', 'funding_name',
-            'pre_approval_institute', 'pre_approval_pdf'
+            'pre_approval_institute', 'pre_approval_pdf', 'self_assesment',
         ]
         labels = {
             'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze aanvraag betrokken ' \
@@ -172,7 +172,7 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'funding')
             self.mark_soft_required(cleaned_data, 'summary')
 
-        self.mark_soft_required(cleaned_data, 'relation')
+        self.mark_soft_required(cleaned_data, 'relation', 'self_assesment')
 
         relation = cleaned_data.get('relation')
         if relation and relation.needs_supervisor and \
