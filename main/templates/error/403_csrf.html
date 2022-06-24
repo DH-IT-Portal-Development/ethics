@@ -1,0 +1,39 @@
+{% extends "base/base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans 'Missende of onjuiste CSRF token' %}
+            </h2>
+            <p>
+                {% trans 'Er is iets fout gegaan met het verifiëren van je browser.' %}
+            </p>
+            <p>
+                {% trans 'Dit kan meerdere oorzaken hebben, zoals het gebruik van een script- of ad-blocker, of je cookie-instellingen. Probeer eerst een fresh refresh van de pagina:' %}
+            </p>
+            <ul>
+                <li>
+                    {% trans 'Voor Chrome: ctrl + F5 (Windows) of cmd + shift + R (Mac)' %}
+                </li>
+                <li>
+                    {% trans 'Voor Firefox: ctrl + shift + R (Windows) of cmd + shift + R (Mac)' %}
+                </li>
+                <li>
+                    {% trans 'Voor Edge: ctrl + F5' %}
+                </li>
+                <li>
+                    {% trans 'Voor Safari: option + cmnd + E' %}
+                </li>
+            </ul>
+            <p>
+                {% blocktrans trimmed %}
+                    Denk je dat dit niet klopt? Neem dan contact op met
+                    <a href="https://fetc-gw.wp.hum.uu.nl/contact/" target="_blank">de FETC-GW secretaris</a>.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
+{% endblock %}
