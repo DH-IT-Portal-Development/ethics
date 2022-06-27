@@ -9,7 +9,8 @@ from proposals.utils.statistics_utils import get_average_turnaround_time, \
     get_qs_for_year_and_committee, get_review_qs_for_proposals, \
     get_total_long_route_proposals, \
     get_total_short_route_proposals, \
-    get_total_students, get_total_submitted_proposals
+    get_total_students, get_total_submitted_proposals, \
+    get_average_first_review_time
 
 
 class Command(BaseCommand):
@@ -61,6 +62,21 @@ class Command(BaseCommand):
                     get_qs_for_long_route_reviews(dataset)
                 ),
                 'days'
+            )
+            print(
+                "All",
+                get_average_turnaround_time(
+                    get_qs_for_long_route_reviews(dataset).union(
+                    get_qs_for_short_route_reviews(dataset))
+                ),
+                'days'
+            )
+
+            print()            
+            print("Time until first decision after submission:")
+            print(
+                get_average_first_review_time(dataset),
+                'days',
             )
 
             print()

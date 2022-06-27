@@ -181,6 +181,29 @@ def get_average_turnaround_time(review_data: QuerySet) -> float:
         [(x.date_end - x.date_start).days for x in review_data]
     )
 
+def get_first_committee_review(proposal):
+    """Return the first committee review for this proposal"""
+
+    rs = proposal.review_set.all()
+    crs = [r for r in rs if r.stage != r.SUPERVISOR]
+    first = min(crs, key=lambda r: r.date_start)
+    return first
+
+def get_average_first_review_time(proposal_qs):
+    """Given an iterable of proposals, returns the average time between
+    their committee submission and first response"""
+
+    review_times = []
+    for proposal in proposal_qs:
+        first_review = get_first_committee_review(proposal)
+        review_times.append((first_review.date_end - first_review.date_start).days)
+
+    return statistics.mean(review_times)
+        
+        
+
+    
+
 
 #
 # OUTPUT FUNCTIONS
