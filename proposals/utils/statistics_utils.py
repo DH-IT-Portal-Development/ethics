@@ -177,6 +177,8 @@ def get_average_turnaround_time(review_data: QuerySet) -> float:
     using a float to represent partial days)
     :rtype: float
     """
+    if len(review_data) == 0:
+        return "NaN"
     return statistics.mean(
         [(x.date_end - x.date_start).days for x in review_data]
     )
@@ -201,7 +203,7 @@ def get_average_first_review_time(proposal_qs):
     return statistics.mean(review_times)
         
 def filter_outlier_reviews(review_data, max_days=35, exclude_no_route=True):
-    """Remove very short and long reviews from the dataset"""
+    """Remove long reviews from the dataset"""
 
     filtered = []
     for review in review_data:

@@ -13,6 +13,7 @@ from proposals.utils.statistics_utils import get_average_turnaround_time, \
     get_average_first_review_time, filter_outlier_reviews
 
 
+
 class Command(BaseCommand):
     help = 'Calculate statistics for a given year'
 
@@ -24,7 +25,7 @@ class Command(BaseCommand):
         LK = Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
 
         datasets = {
-            'Total': get_qs_for_year(options['year']),
+            'Both chambers': get_qs_for_year(options['year']),
             'AK': get_qs_for_year_and_committee(options['year'], AK),
             'LK': get_qs_for_year_and_committee(options['year'], LK)
         }
@@ -103,8 +104,6 @@ class Command(BaseCommand):
                 'days'
             )
 
-            print()            
-            print("Average amount of reviews per proposal:")
 
 
             print()
