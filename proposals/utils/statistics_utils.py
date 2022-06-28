@@ -200,7 +200,31 @@ def get_average_first_review_time(proposal_qs):
 
     return statistics.mean(review_times)
         
-        
+def filter_outlier_reviews(review_data, max_days=35, exclude_no_route=True):
+    """Remove very short and long reviews from the dataset"""
+
+    filtered = []
+    for review in review_data:
+        time = (review.date_end - review.date_start).days
+        if time > max_days:
+            continue
+        if exclude_no_route:
+            if review.short_route == None:
+                continue                    
+        filtered.append(review)
+
+    return filtered
+
+
+def get_all_child_reviews(proposal):
+
+    identifier = proposal.reference_number[:-3]
+
+    return get_review_qs_for_proposals(
+        Proposal.objects.filter(
+            reference_number__contains=identifier
+            )
+    )
 
     
 

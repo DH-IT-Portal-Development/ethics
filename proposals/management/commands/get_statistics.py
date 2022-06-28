@@ -10,7 +10,7 @@ from proposals.utils.statistics_utils import get_average_turnaround_time, \
     get_total_long_route_proposals, \
     get_total_short_route_proposals, \
     get_total_students, get_total_submitted_proposals, \
-    get_average_first_review_time
+    get_average_first_review_time, filter_outlier_reviews
 
 
 class Command(BaseCommand):
@@ -72,11 +72,39 @@ class Command(BaseCommand):
                 'days'
             )
 
-            print()            
-            print("Time until first decision after submission:")
+            print()
+            print("Turnaround times with outlier filter:")
             print(
-                get_average_first_review_time(dataset),
-                'days',
+                "Short route",
+                get_average_turnaround_time(
+                    filter_outlier_reviews(
+                        get_qs_for_short_route_reviews(dataset)
+                        )
+                ),
+                'days'
             )
+            print(
+                "Long route",
+                get_average_turnaround_time(
+                    filter_outlier_reviews(
+                        get_qs_for_long_route_reviews(dataset)
+                        )
+                ),
+                'days'
+            )
+            print(
+                "All",
+                get_average_turnaround_time(
+                    filter_outlier_reviews(
+                        get_qs_for_long_route_reviews(dataset).union(
+                            get_qs_for_short_route_reviews(dataset))
+                        )
+                ),
+                'days'
+            )
+
+            print()            
+            print("Average amount of reviews per proposal:")
+
 
             print()
