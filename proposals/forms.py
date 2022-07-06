@@ -33,7 +33,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'date_start', 'title',
             'summary', 'pre_assessment_pdf',
             'funding', 'funding_details', 'funding_name',
-            'pre_approval_institute', 'pre_approval_pdf', 'self_assesment',
+            'pre_approval_institute', 'pre_approval_pdf', 'self_assessment',
         ]
         labels = {
             'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze aanvraag betrokken ' \
@@ -71,7 +71,9 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                                'funding_details',
                                'funding_name',
                                'pre_approval_institute',
-                               'pre_approval_pdf']
+                               'pre_approval_pdf',
+                               'self_assessment',
+                               ]
 
     def __init__(self, *args, **kwargs):
         """
