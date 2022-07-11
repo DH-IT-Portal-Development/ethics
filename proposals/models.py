@@ -256,23 +256,27 @@ Zep software)'),
         default=False,
     )
 
-    pdf = models.FileField(blank = True,
+    pdf = models.FileField(
+        blank = True,
         upload_to=PROPOSAL_FILENAME,
         storage=OverwriteStorage(),
     )
 
     # Fields with respect to Studies
     studies_similar = models.BooleanField(
-        _('Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
+        _('Kan voor alle deelnemersgroepen dezelfde informatiebrief en \
+        toestemmingsverklaring gebruikt worden?'),
         help_text=_('Daar waar de verschillen klein en qua belasting of \
-risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk \
+risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
+voldoet één set documenten voor de informed consent. Denk \
 hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
 een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
 helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
 hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
 dan wel bij de beschrijving van de interventie welke varianten precies \
 gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
-<i>soorten</i> taken krijgen, dan zijn dit verschillende trajecten.'),
+<i>soorten</i> taken krijgen, dan kan dit niet en zijn dit afzonderlijke \
+trajecten.'),
         blank=True,
         null=True,
     )
