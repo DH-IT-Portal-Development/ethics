@@ -33,7 +33,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'date_start', 'title',
             'summary', 'pre_assessment_pdf',
             'funding', 'funding_details', 'funding_name',
-            'pre_approval_institute', 'pre_approval_pdf', 'self_assesment',
+            'pre_approval_institute', 'pre_approval_pdf', 'self_assessment',
         ]
         labels = {
             'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze aanvraag betrokken ' \
@@ -71,7 +71,9 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                                'funding_details',
                                'funding_name',
                                'pre_approval_institute',
-                               'pre_approval_pdf']
+                               'pre_approval_pdf',
+                               'self_assessment',
+                               ]
 
     def __init__(self, *args, **kwargs):
         """
@@ -172,7 +174,7 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'funding')
             self.mark_soft_required(cleaned_data, 'summary')
 
-        self.mark_soft_required(cleaned_data, 'relation', 'self_assesment')
+        self.mark_soft_required(cleaned_data, 'relation')
 
         relation = cleaned_data.get('relation')
         if relation and relation.needs_supervisor and \
@@ -197,6 +199,19 @@ van het FETC-GW worden opgenomen.')
                 _('Je hebt geen andere onderzoekers geselecteerd.'),
                 code='required')
             self.add_error('applicants', error)
+
+        # Add an error if self_assessment is missing
+        self_assessment = cleaned_data.get('self_assessment')
+        if self_assessment == '':
+            self.add_error(
+                'self_assessment',
+                forms.ValidationError(
+                    _('Dit veld is verplicht, maar je kunt later terugkomen om hem \
+                    verder in te vullen.'),
+                    code='required',
+                )
+            )
+        
 
         if 'is_pre_approved' in cleaned_data:
             if not cleaned_data['is_pre_approved']:

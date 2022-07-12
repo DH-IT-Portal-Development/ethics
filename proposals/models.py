@@ -342,10 +342,10 @@ gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
         blank=True,
     )
 
-    self_assesment = models.TextField(
+    self_assessment = models.TextField(
         _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
         max_length=500,
-        blank=True
+        blank=True,
     )
 
     # References to other models
