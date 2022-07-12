@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-12 10:52+0200\n"
+"POT-Creation-Date: 2022-07-12 11:48+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1608,18 +1608,6 @@ msgid ""
 msgstr ""
 
 #: proposals/models.py:269
-#, fuzzy
-#| msgid ""
-#| "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn "
-#| "is sprake van in essentie hetzelfde traject. Denk hierbij aan "
-#| "taakonderzoek waarin de ene groep in taak X de ene helft van een set "
-#| "verhaaltjes te lezen krijgt, en de andere groep in taak X de andere "
-#| "helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op "
-#| "hetzelfde moment een verschillende interventie-variant krijgen "
-#| "(specificeer dan wel bij de beschrijving van de interventie welke "
-#| "varianten precies gebruikt worden). Let op: als verschillende groepen "
-#| "deelnemers verschillende <i>soorten</i> taken krijgen, dan zijn dit "
-#| "verschillende trajecten."
 msgid ""
 "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is "
 "sprake van in essentie hetzelfde traject, en voldoet één set documenten voor "
@@ -1632,15 +1620,16 @@ msgid ""
 "deelnemers verschillende <i>soorten</i> taken krijgen, dan kan dit niet en "
 "zijn dit afzonderlijke trajecten."
 msgstr ""
-"Where the differences are small, and irrelevant in terms of burden or risk, "
-"essentially this is the same trajectory. An example would be a task-based "
-"study in which one group receives the first half of a set of short stories "
-"to read from task X, and the other group receives the other half of task X, "
-"or an intervention study in which three comparable groups receive a "
-"different variant of the intervention at the same time (in which case the "
-"variants of the intervention used should be specified in the description). "
-"However, if separate groups receive essentially different <i>kinds</i> of "
-"tasks, they constitute separate trajectories."
+"Complicated experimental designs can define many different groups of "
+"participants. For ethical assessment, it's usually not necessary to "
+"differentiate them down to the smallest detail. If differences between "
+"groups are small, and insignificant in terms of burden and risk, these "
+"groups may constitute a single trajectory requiring only one set of informed "
+"consent documents. For example, two experimental groups who read different "
+"halves of the same pool of short stories. Or perhaps three comparable "
+"groups, each receiving a different variant of an intervention at the same "
+"time. However, if separate groups receive different <i>kinds</i> of tasks, "
+"they constitute separate trajectories."
 
 #: proposals/models.py:285
 msgid "Hoeveel verschillende trajecten zijn er?"
@@ -2664,7 +2653,7 @@ msgid "Niet aangeleverd"
 msgstr "Not provided"
 
 #: proposals/templates/proposals/proposal_pdf.html:448
-#: proposals/templates/proposals/study_consent.html:122
+#: proposals/templates/proposals/study_consent.html:125
 msgid "Extra formulieren"
 msgstr "Additional forms"
 
@@ -3158,13 +3147,22 @@ msgstr ""
 
 #: proposals/templates/proposals/study_consent.html:89
 msgid ""
+"Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: "
+"een aanvraag kan hierom direct voor revisie worden teruggestuurd."
+msgstr ""
+"Please make sure these documents do not contain any editorial, spelling, or "
+"grammatical errors. Your application may be sent straight back for revision "
+"because of these."
+
+#: proposals/templates/proposals/study_consent.html:92
+msgid ""
 "Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen "
 "belangrijke informatie in."
 msgstr ""
 "Files are renamed upon arrival, so please do not put information in the "
 "filename that you later rely on."
 
-#: proposals/templates/proposals/study_consent.html:116
+#: proposals/templates/proposals/study_consent.html:119
 msgid "Voeg extra formulieren toe"
 msgstr "Add additional forms"
 

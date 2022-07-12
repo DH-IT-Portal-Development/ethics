@@ -87,7 +87,10 @@
 
             <p>
                 {% blocktrans trimmed %}
-                    Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
+                Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: een aanvraag kan hierom direct voor revisie worden teruggestuurd.
+                {% endblocktrans %}
+		{% blocktrans trimmed %}
+                Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
                 {% endblocktrans %}
             </p>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
