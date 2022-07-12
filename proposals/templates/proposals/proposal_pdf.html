@@ -67,6 +67,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             Referentienummer {{ reference_number }}
             {% endblocktrans %}
         </h1>
+	<p>{% trans 'Huidige staat van de aanvraag' %}: <em>{{proposal.get_status_display}}</em>
+	</p>
+	
         <h2>{% trans 'Indiener' %}</h2>
         <table>
             <tr>
