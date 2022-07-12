@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-08 15:53+0200\n"
+"POT-Creation-Date: 2022-07-12 12:06+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -382,7 +382,7 @@ msgstr "Phase"
 #: main/templates/auth/user_detail.html:55 proposals/api/views.py:23
 #: proposals/api/views.py:88 proposals/api/views.py:118
 #: proposals/api/views.py:168
-#: proposals/templates/proposals/vue_templates/proposal_list.html:150
+#: proposals/templates/proposals/vue_templates/proposal_list.html:147
 #: reviews/api/views.py:49 reviews/api/views.py:280 reviews/api/views.py:342
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
@@ -1096,7 +1096,7 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:65 observations/models.py:75
-#: observations/models.py:88 proposals/models.py:539 studies/models.py:154
+#: observations/models.py:88 proposals/models.py:534 studies/models.py:154
 #: studies/models.py:188 studies/models.py:321
 msgid "Licht toe"
 msgstr "Explain"
@@ -1220,7 +1220,7 @@ msgstr "Date reviewed"
 #: proposals/api/views.py:31 proposals/api/views.py:73
 #: proposals/api/views.py:92 proposals/api/views.py:130
 #: proposals/api/views.py:151
-#: proposals/templates/proposals/vue_templates/proposal_list.html:105
+#: proposals/templates/proposals/vue_templates/proposal_list.html:102
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
@@ -1654,7 +1654,7 @@ msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
 #: proposals/models.py:369
-#: proposals/templates/proposals/vue_templates/proposal_list.html:163
+#: proposals/templates/proposals/vue_templates/proposal_list.html:160
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -1712,19 +1712,19 @@ msgstr "Practice"
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:524
+#: proposals/models.py:519
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:525
+#: proposals/models.py:520
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:526
+#: proposals/models.py:521
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:530
+#: proposals/models.py:525
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1732,11 +1732,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:544
+#: proposals/models.py:539
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:550
+#: proposals/models.py:545
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1744,7 +1744,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:552
+#: proposals/models.py:547
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1765,7 +1765,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:568
+#: proposals/models.py:563
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -1774,15 +1774,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:575
+#: proposals/models.py:570
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:580
+#: proposals/models.py:575
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:618
+#: proposals/models.py:613
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -3172,42 +3172,42 @@ msgstr "Decide"
 msgid "Naar volgende stap"
 msgstr "To next step"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:75
+#: proposals/templates/proposals/vue_templates/proposal_list.html:73
 msgid "Inzien"
 msgstr "Show"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:83
+#: proposals/templates/proposals/vue_templates/proposal_list.html:80
 msgid "Verberg"
 msgstr "Hide"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:90
+#: proposals/templates/proposals/vue_templates/proposal_list.html:87
 msgid "Soort aanvraag"
 msgstr "Type of application"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:99
+#: proposals/templates/proposals/vue_templates/proposal_list.html:96
 msgid "Besloten op"
 msgstr "Concluded on"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:112
+#: proposals/templates/proposals/vue_templates/proposal_list.html:109
 msgid "Status"
 msgstr "State"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:136
+#: proposals/templates/proposals/vue_templates/proposal_list.html:133
 #: reviews/templates/reviews/vue_templates/decision_list.html:141
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:83
 #: reviews/templates/reviews/vue_templates/review_list.html:126
 msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:158
+#: proposals/templates/proposals/vue_templates/proposal_list.html:155
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:177
+#: proposals/templates/proposals/vue_templates/proposal_list.html:174
 msgid "Route:"
 msgstr "Route:"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:184
+#: proposals/templates/proposals/vue_templates/proposal_list.html:181
 #: reviews/templates/reviews/vue_templates/decision_list.html:185
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:128
 #: reviews/templates/reviews/vue_templates/review_list.html:171
@@ -4309,37 +4309,6 @@ msgstr "Pending decisions committee members"
 #: reviews/views.py:90
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
-
-#: src/uil-django-core/uil/rest_client/clients/_base.py:104
-#: src/uil-django-core/uil/rest_client/clients/_base.py:107
-msgid "api:host_unreachable"
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:28
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:29
-msgid "This field cannot be null."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:30
-msgid "This field cannot be blank."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:31
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
-#: src/uil-django-core/uil/rest_client/fields.py:35
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
 
 #: studies/forms.py:38
 msgid ""
