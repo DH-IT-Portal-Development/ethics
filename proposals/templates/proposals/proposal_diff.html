@@ -123,6 +123,11 @@
                             <td>{{ proposal.funding_name }}</td>
                         </tr>
                     {% endif %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th>
+                        <td>{{ p_proposal.self_assessment }}</td>
+                        <td>{{ proposal.self_assessment }}</td>
+                    </tr>
                 </table>
 
                 {% with wmo=proposal.wmo %}

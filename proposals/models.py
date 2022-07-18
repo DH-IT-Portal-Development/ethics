@@ -346,6 +346,12 @@ trajecten.'),
         blank=True,
     )
 
+    self_assessment = models.TextField(
+        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
+        max_length=500,
+        blank=True,
+    )
+
     # References to other models
     relation = models.ForeignKey(
         Relation,
