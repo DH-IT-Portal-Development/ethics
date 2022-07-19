@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-12 13:16+0200\n"
+"POT-Creation-Date: 2022-07-19 13:29+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -713,6 +713,58 @@ msgid ""
 msgstr ""
 "Do you believe this to be in error? Please contact <a href=\"https://fetc-gw."
 "wp.hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>."
+
+#: main/templates/error/403_csrf.html:6
+msgid "Verificatie Fout"
+msgstr ""
+"Verification Error"
+
+#: main/templates/error/403_csrf.html:13
+msgid "Verzoek kon niet geverifieerd worden"
+msgstr ""
+"Request could not be verified"
+
+#: main/templates/error/403_csrf.html:16
+msgid "Er is iets fout gegaan met het verifiëren van je browser."
+msgstr ""
+"Something went wrong while verifying your browser"
+
+#: main/templates/error/403_csrf.html:19
+msgid ""
+"Dit kan meerdere oorzaken hebben, zoals het gebruik van een script- of ad-"
+"blocker, of je cookie-instellingen. Probeer eerst een <em>volledige "
+"verversing</em> van de pagina:"
+msgstr ""
+"This can have several causes, like using a script- or ad-"
+"blocker, or your cookie settings. First try a <em>fresh refresh</em> "
+"of the page:"
+
+#: main/templates/error/403_csrf.html:23
+msgid "Voor Chrome: ctrl + F5 (Windows) of cmd + shift + R (Mac)"
+msgstr ""
+"For Chrome: ctrl + F5 (Windows) or cmd + shift + R (Mac)"
+#: main/templates/error/403_csrf.html:26
+msgid "Voor Firefox: ctrl + shift + R (Windows) of cmd + shift + R (Mac)"
+msgstr ""
+"For Firefox: ctrl + shift + R (Windows) or cmd + shift + R (Mac)"
+
+#: main/templates/error/403_csrf.html:29
+msgid "Voor Edge: ctrl + F5"
+msgstr ""
+"For Edge: ctrl + F5"
+
+#: main/templates/error/403_csrf.html:32
+msgid "Voor Safari: option + cmnd + E"
+msgstr ""
+"For Safari: option + cmnd + E"
+
+#: main/templates/error/403_csrf.html:36
+msgid ""
+"Denk je dat dit niet klopt? Neem dan contact op met <a href=\"mailto:"
+"portaldev.gw@uu.nl\" target=\"_blank\">het FETC-GW IT team</a>."
+msgstr ""
+"Do you believe this to be in error? Please contact <a href=\"mailto:"
+"portaldev.gw@uu.nl\" target=\"_blank\">the FEtC-H IT team</a>."
 
 #: main/templates/error/404.html:9
 msgid "Pagina niet gevonden"
@@ -4636,6 +4688,8 @@ msgid ""
 "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf "
 "kort hoe ga je daarmee omgaat."
 msgstr ""
+"What are the most important ethical considerations in this research and "
+"please describe briefly how you will address them."
 
 #: studies/models.py:423
 #, python-format
