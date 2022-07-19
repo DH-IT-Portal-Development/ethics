@@ -4688,12 +4688,8 @@ msgid ""
 "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf "
 "kort hoe ga je daarmee omgaat."
 msgstr ""
-<<<<<<< HEAD
 "What are the most important ethical considerations in this research and "
 "please describe briefly how you will address them."
-=======
-"What ethical considerations have you identified in this study yourself? Describe them and how you will take them into account."
->>>>>>> develop
 
 #: studies/models.py:423
 #, python-format
