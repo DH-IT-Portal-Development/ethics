@@ -132,6 +132,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th><td>{{ proposal.funding_name }}</td>
             </tr>
             {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th><td>{{ proposal.self_assessment }}</td>
+            </tr>
         </table>
         <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
         <p>{{ proposal.summary|linebreaks }}</p>
@@ -393,10 +396,6 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
             </tr>
             {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "self_assesment" %}</th><td>{{ study.self_assesment }}</td>
-            </tr>
-
         </table>
 
         <h2>{% trans "Informed consent formulieren" %}</h2>
