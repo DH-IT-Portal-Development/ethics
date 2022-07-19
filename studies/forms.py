@@ -169,7 +169,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             'deception', 'deception_details',
             'negativity', 'negativity_details',
             'stressful', 'stressful_details',
-            'risk', 'risk_details'
+            'risk', 'risk_details', 'self_assesment',
         ]
         widgets = {
             'deception':  forms.RadioSelect(),
@@ -234,6 +234,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             'negativity',
             'stressful',
             'risk',
+            'self_assesment'
         )
 
         if 'deception' in self.fields:

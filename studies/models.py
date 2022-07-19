@@ -322,6 +322,12 @@ geschoolde specialisten).')),
         max_length=200,
         blank=True)
 
+    self_assesment = models.TextField(
+        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
+        max_length=500,
+        blank=True
+    )
+
     # References
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 

@@ -21,7 +21,7 @@ class GenericGroup(GroupAdmin):
 
 @admin.register(Setting)
 class SettingAdmin(admin.ModelAdmin):
-    list_display = ('order', 'description', 'is_local', 'needs_details', 'needs_supervision', 'requires_review', )
+    list_display = ('order', 'description', 'is_local', 'needs_details', 'needs_supervision', 'requires_review', 'is_school',)
     list_display_links = ('description', )
     ordering = ['order']
 

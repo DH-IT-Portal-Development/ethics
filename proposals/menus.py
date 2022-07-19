@@ -87,11 +87,11 @@ Menu.add_item(
 
 archive_menu = (
     MenuItem(
-        _("Alle aanvragen bekijken van de Algemene Kamer"),
+        _("Bekijk alle goedgekeurde aanvragen van de Algemene Kamer"),
         reverse("proposals:archive", args=['AK']),
     ),
     MenuItem(
-        _("Alle aanvragen bekijken van de Linguïstiek Kamer"),
+        _("Bekijk alle goedgekeurde aanvragen van de Linguïstiek Kamer"),
         reverse("proposals:archive", args=['LK']),
     ),
     MenuItem(

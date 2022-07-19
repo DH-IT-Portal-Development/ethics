@@ -67,6 +67,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             Referentienummer {{ reference_number }}
             {% endblocktrans %}
         </h1>
+	<p>{% trans 'Huidige staat van de aanvraag' %}: <em>{{proposal.get_status_display}}</em>
+	</p>
+	
         <h2>{% trans 'Indiener' %}</h2>
         <table>
             <tr>
@@ -390,6 +393,10 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
             </tr>
             {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "self_assesment" %}</th><td>{{ study.self_assesment }}</td>
+            </tr>
+
         </table>
 
         <h2>{% trans "Informed consent formulieren" %}</h2>
