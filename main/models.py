@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 YES = 'Y'
 NO = 'N'
@@ -30,7 +30,7 @@ class SystemMessage(models.Model):
     @property
     def css_class(self):
         if self.level == self.URGENT:
-            return 'failed'
+            return 'danger'
         if self.level == self.ATTENTION:
             return 'warning'
         if self.level == self.INFO:

@@ -44,9 +44,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-hero">
+        <h2>{% trans 'Vergelijk documenten' %}</h2>
+    </div>
+    <div class="uu-container">
         <div class="col-12">
-            <h2>{% trans 'Vergelijk documenten' %}</h2>
             <p>
                 {% blocktrans %}
                 Hier kan je twee versies van een document vergelijken. Standaard
@@ -65,18 +67,18 @@
                 <strong>{% trans "Je vergelijkt" %}:</strong>
                 {% describe_file new_file %}
             </h4>
-            <div class="warning" style="display: none; clear: both;">
+            <div class="alert alert-warning" style="display: none; clear: both;">
                 {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
             </div>
-            <button id="button-split" class="float-right">
+            <button id="button-split" class="btn btn-secondary float-end">
                 {% trans 'Bekijk apart' %}
             </button>
-            <button id="button-combined" style="display: none" class="float-right">
+            <button id="button-combined" style="display: none" class="btn btn-secondary float-end">
                 {% trans 'Bekijk gecombineerd' %}
             </button>
         </div>
     </div>
-        <div class="uu-inner-container document-compare">
+        <div class="uu-container pt-4 document-compare">
             <div class="col-6">
                 <p>
                     <strong>{% trans "Oud" %}: </strong>
@@ -90,7 +92,7 @@
                 </p>
             </div>
         </div>
-    <div class="uu-inner-container compare">
+    <div class="uu-container compare">
         <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
             <img src="{% static 'main/images/loading.gif' %}"/>
         </div>

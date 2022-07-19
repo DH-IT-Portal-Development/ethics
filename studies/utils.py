@@ -1,7 +1,7 @@
 from __future__ import division
 
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from main.utils import AvailableURL
 from interventions.utils import intervention_url, copy_intervention_to_study
@@ -53,7 +53,7 @@ def get_study_progress(study, is_end=False):
     return int(STUDY_PROGRESS_START + progress)
 
 
-def study_urls(study, prev_study_completed):
+def study_urls(study, prev_study_completed, troublesome_urls):
     """
     Returns the available URLs for the current Study.
     :param study: the current Study
@@ -65,36 +65,46 @@ def study_urls(study, prev_study_completed):
     study_url = AvailableURL(title=_('Deelnemers'))
     if study:
         study_url.url = reverse('studies:update', args=(study.pk,))
+        study_url.has_errors = study_url.url in troublesome_urls
 
     urls.append(study_url)
 
     design_url = AvailableURL(title=_('Onderzoekstype(n)'))
     if study.compensation:
         design_url.url = reverse('studies:design', args=(study.pk,))
+        design_url.has_errors = design_url.url in troublesome_urls
+
     urls.append(design_url)
 
     if study.has_intervention:
-        urls.append(intervention_url(study))
+        urls.append(intervention_url(study, troublesome_urls))
 
     if study.has_observation:
-        urls.append(observation_url(study))
+        urls.append(observation_url(study, troublesome_urls))
 
     if study.has_sessions:
-        urls.append(session_urls(study))
+        urls.append(session_urls(study, troublesome_urls))
 
     end_url = AvailableURL(
         title=_('Overzicht'),
     )
 
-    if prev_study_completed:
+    # Only show overview when we also show design
+    if study.compensation and prev_study_completed:
         end_url.url = reverse('studies:design_end', args=(study.pk,))
+        end_url.has_errors = end_url.url in troublesome_urls
+
     urls.append(end_url)
 
-    return AvailableURL(
+    main = AvailableURL(
         title=_('Traject {}').format(study.order),
-        is_title=True,
         children=urls,
     )
+
+    if study_url.url:
+        main.url = study_url.url
+
+    return main
 
 
 def create_documents_for_study(study):

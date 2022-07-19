@@ -3,8 +3,8 @@
 
 {% if request.user.is_authenticated %}
     {% with request.user as user %}
-        {% transformat "Welkom {}" user.get_full_name %}
-        <a href="{% url 'logout' %}">({% trans 'Log uit' %})</a>
+        {% transformat "Welkom {}" user.get_full_name %}&nbsp;
+        <a href="{% url 'logout' %}" class="text-decoration-underline">({% trans 'Log uit' %})</a>
     {% endwith %}
     {% else %}
     &nbsp; {# UI requires a line here #}

@@ -2,17 +2,19 @@
 
 {% load static %}
 {% load i18n %}
+{% load proposal_form_components %}
+{% load messages %}
 
 {% block header_title %}
     {% trans "De onderzoekstype(n)" %} - {{ block.super }}
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=study.proposal.available_urls active=3 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+{% block uu-content %}
+    {% proposal_hero object %}
+    {% display_messages messages %}
+    <div class="uu-container flex-nowrap gap-5">
+        {% stepper object %}
+        <div class="flex-fill">
             <h2>
                 {% trans "De onderzoekstype(n)" %}
             </h2>
@@ -97,9 +99,7 @@
                         de relevante informatie verschaffen.
                     {% endblocktrans %}
                 </p>
-                {% with proposal=study.proposal %}
-                    {% include "base/form_buttons.html" %}
-                {% endwith %}
+                {% form_buttons object %}
             </form>
         </div>
     </div>

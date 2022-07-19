@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
+from cdh.core.forms import BootstrapCheckboxSelectMultiple, \
+    BootstrapRadioSelect, TemplatedModelForm
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
 from .models import Session, Task
@@ -16,7 +18,7 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
     is_copy = forms.BooleanField(
         label=_('Is deze sessie een kopie van een voorgaande sessie?'),
         help_text=_(u'Na het kopiëren zijn alle velden bewerkbaar.'),
-        widget=forms.RadioSelect(choices=YES_NO),
+        widget=BootstrapRadioSelect(choices=YES_NO),
         initial=False,
         required=False)
     parent_session = forms.ModelChoiceField(
@@ -31,9 +33,9 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
             'tasks_number',
         ]
         widgets = {
-            'setting': forms.CheckboxSelectMultiple(),
-            'supervision': forms.RadioSelect(choices=YES_NO),
-            'leader_has_coc': forms.RadioSelect(choices=YES_NO),
+            'setting': BootstrapCheckboxSelectMultiple(),
+            'supervision': BootstrapRadioSelect(choices=YES_NO),
+            'leader_has_coc': BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = [
@@ -86,9 +88,10 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
             if 'tasks_number' not in self.errors:
                 self.add_error('tasks_number', forms.ValidationError(_('Dit veld is verplicht.'), code='required'))
 
-            
 
 class TaskForm(SoftValidationMixin, ConditionalModelForm):
+    show_help_column = False
+
     class Meta:
         model = Task
         fields = [
@@ -105,9 +108,9 @@ Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion)
 geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.')),
             }
         widgets = {
-            'registrations': forms.CheckboxSelectMultiple(),
-            'registration_kinds': forms.CheckboxSelectMultiple(),
-            'feedback': forms.RadioSelect(choices=YES_NO),
+            'registrations': BootstrapCheckboxSelectMultiple(),
+            'registration_kinds': BootstrapCheckboxSelectMultiple(),
+            'feedback': BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -143,7 +146,9 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.')),
         self.check_dependency(cleaned_data, 'feedback', 'feedback_details')
 
 
-class TaskEndForm(SoftValidationMixin, forms.ModelForm):
+class TaskEndForm(SoftValidationMixin, TemplatedModelForm):
+    show_help_column = False
+
     class Meta:
         model = Session
         fields = ['tasks_duration']
@@ -153,11 +158,17 @@ class TaskEndForm(SoftValidationMixin, forms.ModelForm):
         - Set the tasks_duration label
         - Set the tasks_duration as required
         """
-        super(TaskEndForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
+        print("meep!")
+        print( self.fields[
+            'tasks_duration'].label)
 
         tasks_duration = self.fields['tasks_duration']
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
+
+        # Reset bound fields cache, as it holds a copy of our original label
+        self._bound_fields_cache = {}
 
     _soft_validation_fields = ['tasks_duration']
 

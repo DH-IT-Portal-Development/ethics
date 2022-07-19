@@ -5,9 +5,14 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
+
+from cdh.core.forms import BootstrapCheckboxInput, \
+    BootstrapCheckboxSelectMultiple, \
+    BootstrapRadioSelect, DateInput, TemplatedModelForm
+
 mark_safe_lazy = lazy(mark_safe, str)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
@@ -42,15 +47,16 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
           'UU? ')),
             }
         widgets = {
-            'is_pre_approved':    forms.RadioSelect(choices=YES_NO),
-            'institution':        forms.RadioSelect(),
-            'relation':           forms.RadioSelect(),
-            'other_applicants':   forms.RadioSelect(choices=YES_NO),
-            'other_stakeholders': forms.RadioSelect(choices=YES_NO),
+            'is_pre_approved':    BootstrapRadioSelect(choices=YES_NO),
+            'institution':        BootstrapRadioSelect(),
+            'relation':           BootstrapRadioSelect(),
+            'other_applicants':   BootstrapRadioSelect(choices=YES_NO),
+            'other_stakeholders': BootstrapRadioSelect(choices=YES_NO),
+            'date_start':         DateInput(),
             'summary':            forms.Textarea(attrs={
                 'cols': 50
             }),
-            'funding':            forms.CheckboxSelectMultiple(),
+            'funding':            BootstrapCheckboxSelectMultiple(),
             'applicants':         SelectMultipleUser(),
             'supervisor':         SelectUser(),
         }
@@ -99,7 +105,6 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                 False
             )
         )
-
 
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
@@ -211,7 +216,7 @@ van het FETC-GW worden opgenomen.')
                     code='required',
                 )
             )
-        
+
 
         if 'is_pre_approved' in cleaned_data:
             if not cleaned_data['is_pre_approved']:
@@ -243,7 +248,7 @@ class ProposalStartPracticeForm(forms.Form):
         widget=forms.RadioSelect())
 
 
-class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
+class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ['parent', 'is_revision']
@@ -375,17 +380,21 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
             'metc', 'metc_details', 'metc_institution',
             'is_medical']
         widgets = {
-            'metc':             forms.RadioSelect(),
-            'is_medical':       forms.RadioSelect()}
+            'metc':             BootstrapRadioSelect(),
+            'is_medical':       BootstrapRadioSelect(),
+        }
 
     _soft_validation_fields = ['metc_details', 'metc_institution',
                                'is_medical']
+
+    template_name = 'cdh.core/form_template.html'
 
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from is_medical/is_behavioristic field and reset the choices
         """
         super(WmoForm, self).__init__(*args, **kwargs)
+
         self.fields['metc'].empty_label = None
         self.fields['metc'].choices = YES_NO_DOUBT
         self.fields['is_medical'].empty_label = None
@@ -434,6 +443,8 @@ class WmoCheckForm(forms.ModelForm):
 
 
 class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
+    show_help_column = False
+
     class Meta:
         model = Wmo
         fields = [
@@ -442,8 +453,8 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
             'metc_decision_pdf',
         ]
         widgets = {
-            'metc_application': forms.RadioSelect(choices=YES_NO),
-            'metc_decision':    forms.RadioSelect(choices=YES_NO),
+            'metc_application': BootstrapRadioSelect(choices=YES_NO),
+            'metc_decision':    BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = [
@@ -473,7 +484,9 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
         return cleaned_data # Sticking to Django conventions
 
 
-class StudyStartForm(forms.ModelForm):
+class StudyStartForm(TemplatedModelForm):
+    show_help_column = False
+
     study_name_1 = forms.CharField(label=_('Naam traject 1'), max_length=15,
                                    required=False)
     study_name_2 = forms.CharField(label=_('Naam traject 2'), max_length=15,
@@ -504,7 +517,7 @@ class StudyStartForm(forms.ModelForm):
             'study_name_9', 'study_name_10',
         ]
         widgets = {
-            'studies_similar': forms.RadioSelect(choices=YES_NO),
+            'studies_similar': BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -545,20 +558,27 @@ class StudyStartForm(forms.ModelForm):
                     self.add_error(study_name, _('Dit veld is verplicht.'))
 
 
-class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
+class ProposalDataManagementForm(SoftValidationMixin, TemplatedModelForm):
+    show_help_column = False
+
     class Meta:
         model = Proposal
         fields = ['avg_understood', 'dmp_file']
+        widgets = {
+            'avg_understood': BootstrapRadioSelect(choices=[(True, _('ja'))],),
+        }
 
     _soft_validation_fields = ['avg_understood']
 
 
-class ProposalSubmitForm(forms.ModelForm):
+class ProposalSubmitForm(TemplatedModelForm):
+    show_help_column = False
+
     class Meta:
         model = Proposal
         fields = ['comments', 'inform_local_staff']
         widgets = {
-            'inform_local_staff': forms.RadioSelect(choices=YES_NO),
+            'inform_local_staff': BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -580,6 +600,8 @@ class ProposalSubmitForm(forms.ModelForm):
 
         if not check_local_facilities(self.proposal):
             del self.fields['inform_local_staff']
+
+        self._bound_fields_cache = {}
 
     def clean(self):
         """

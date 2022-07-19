@@ -1,16 +1,17 @@
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from main.utils import AvailableURL
 
 
-def observation_url(study):
+def observation_url(study, troublesome_urls):
     result = AvailableURL(title=_('Observatieonderzoek'), margin=2)
     if study.has_observation:
         if hasattr(study, 'observation'):
             result.url = reverse('observations:update', args=(study.observation.pk,))
         else:
             result.url = reverse('observations:create', args=(study.pk,))
+        result.has_errors = result.url in troublesome_urls
     return result
 
 

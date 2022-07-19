@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>
                 {% trans "Feedback versturen" %}
@@ -17,12 +17,12 @@
                 {% trans "Hier kan je feedback achterlaten op het FETC-GW portal." %}
             </p>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
-                <p class="float-right">
-                    <a class="button" href="javascript:history.go(-1);">
+                {{ form }}
+                <p class="float-end">
+                    <a class="btn btn-secondary" href="javascript:history.go(-1);">
                         {% trans "Terug naar de vorige pagina" %}
                     </a>
-                    <input type="submit" value="{% trans 'Feedback versturen' %}"/>
+                    <input class="btn btn-primary" type="submit" value="{% trans 'Feedback versturen' %}"/>
                 </p>
             </form>
         </div>

@@ -8,15 +8,15 @@
 
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>
                 {% trans "Sessie verwijderen" %}
             </h2>
             <form action="" method="post">{% csrf_token %}
                 <p>Weet u zeker dat u deze sessie <strong>{{ session.order }}</strong> in de aanvraag <em>{{ session.study.proposal.title }}</em> wilt verwijderen?</p>
-                <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Verwijderen' %}" />
-                <a class="pure-button pure-button-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
+                <input class="btn btn-primary" type="submit" value="{% trans 'Verwijderen' %}" />
+                <a class="btn btn-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
             </form>
         </div>
     </div>

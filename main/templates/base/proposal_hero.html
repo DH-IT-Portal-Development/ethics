@@ -1,0 +1,10 @@
+{% if refnum %}
+    <div class="uu-hero">
+        <h2>
+            {{ refnum }}
+            {% if title %}
+                - {{ title }}
+            {% endif %}
+        </h2>
+    </div>
+{% endif %}

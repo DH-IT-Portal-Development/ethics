@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.models import YES, DOUBT
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
@@ -146,20 +146,20 @@ def check_wmo(request):
 
     # Default message: OK.
     message = _('Je onderzoek hoeft niet te worden beoordeeld door de METC.')
-    message_class = 'info'
+    message_class = 'alert alert-info'
     needs_metc = False
 
     # On doubt, contact secretary.
     if doubt:
         secretary = get_secretary().get_full_name()
         message = _('Neem contact op met {secretary} om de twijfels weg te nemen.').format(secretary=secretary)
-        message_class = 'warning'
+        message_class = 'alert alert-warning'
         needs_metc = True
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
     elif is_metc or is_medical:
         message = _('Je onderzoek zal moeten worden beoordeeld door de METC.')
-        message_class = 'warning'
+        message_class = 'alert alert-warning'
         needs_metc = True
 
     return JsonResponse({'needs_metc': needs_metc, 'message': message, 'message_class': message_class})

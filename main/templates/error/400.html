@@ -3,11 +3,13 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-hero">
+        <h2>
+            {% trans 'Server error' %}
+        </h2>
+    </div>
+    <div class="uu-container">
         <div class="col-12">
-            <h2>
-                {% trans 'Server error' %}
-            </h2>
             <p>
             {% blocktrans %}
                 Er is een fout opgetreden tijdens het opvragen van deze pagina.

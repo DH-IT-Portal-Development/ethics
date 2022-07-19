@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load proposal_form_components %}
 
 {% load static %}
 {% load i18n %}
@@ -21,7 +22,8 @@ $(function() {
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    {% proposal_hero object %}
+    <div class="uu-container">
         <div class="col-12">
             <h2>
                 {% trans "Formulieren aanpassen" %}

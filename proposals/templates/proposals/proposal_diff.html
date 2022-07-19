@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans "Overzicht van wijzigingen" %}</h2>
             <p>
@@ -40,14 +40,14 @@
             </p>
         </div>
     </div>
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12 compare document-compare">
             <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
                 <img src="{% static 'main/images/loading.gif' %}"/>
             </div>
             {% with p_proposal=proposal.parent %}
                 <h2 class="mt-3 mb-1">{% trans "Algemene informatie over de aanvraag" %}</h2>
-                <table class="proposals-diff ">
+                <table class="proposals-diff table">
                     <tr>
                         <th class="proposals-diff-question"></th>
                         <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
@@ -133,7 +133,7 @@
                 {% with wmo=proposal.wmo %}
                     {% with p_wmo=p_proposal.wmo %}
                         <h2 class="mt-5 mb-1">{% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}</h2>
-                        <table class="proposals-diff ">
+                        <table class="proposals-diff table">
                             <tr>
                                 <th class="proposals-diff-question"></th>
                                 <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
@@ -166,7 +166,7 @@
 
                         {% if wmo.status != wmo.NO_WMO or p_wmo.status != p_wmo.NO_WMO %}
                             <h2 class="mt-5 mb-1">{% trans "Aanmelding bij de METC" %}</h2>
-                            <table class="proposals-diff ">
+                            <table class="proposals-diff table">
                                 <tr>
                                     <th class="proposals-diff-question"></th>
                                     <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
@@ -199,7 +199,7 @@
                 {% endwith %}
 
                 <h2 class="mt-5 mb-1">{% trans "Eén of meerdere trajecten?" %}</h2>
-                <table class="proposals-diff ">
+                <table class="proposals-diff table">
                     <tr>
                         <th class="proposals-diff-question"></th>
                         <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
@@ -223,7 +223,7 @@
                     {% include 'proposals/diff/study.html' %}
 
                     <h2 class="mt-5 mb-1">{% trans "Concept-aanmelding versturen" %}</h2>
-                    <table class="proposals-diff ">
+                    <table class="proposals-diff table">
                         <tr>
                             <th class="proposals-diff-question"></th>
                             <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
@@ -239,7 +239,7 @@
             {% endwith %}
 
             <p class="mt-5 float-right">
-                <button class="button" onclick="window.history.back();">
+                <button class="btn btn-primary" onclick="window.history.back();">
                     {% trans "Terug naar de vorige pagina" %}
                 </button>
             </p>

@@ -1,5 +1,7 @@
 {% extends "base/base.html" %}
 
+{% load proposal_form_components %}
+{% load messages %}
 {% load static %}
 {% load i18n %}
 
@@ -17,19 +19,19 @@
     </script>
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=wmo.proposal.available_urls active=2 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+{% block uu-content %}
+    {% proposal_hero object %}
+    {% display_messages messages %}
+    <div class="uu-container flex-nowrap gap-5">
+        {% stepper object %}
+        <div class="flex-fill">
             <h2>
                 {% trans "Aanmelding bij de METC" %}
             </h2>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+                {{ form }}
                 {% if wmo.status == wmo.WAITING %}
-                    <div class="warning">
+                    <div class="alert alert-warning">
                         {% trans "Zolang je aanvraag nog niet is beoordeeld door de METC, kan je niet verder in het aanmeldingsproces." %}
                     </div>
                 {% endif %}

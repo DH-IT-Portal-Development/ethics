@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
 #from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -535,6 +535,12 @@ class ProposalStartPreAssessment(ProposalStart):
 
 
 class PreAssessmentMixin(ProposalMixin):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_pre_assessment'] = True
+        return context
+
     def get_form_kwargs(self):
         """Sets is_pre_assessment as a form kwarg"""
         kwargs = super(PreAssessmentMixin, self).get_form_kwargs()

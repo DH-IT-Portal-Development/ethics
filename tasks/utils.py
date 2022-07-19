@@ -1,7 +1,7 @@
 from __future__ import division
 
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from main.utils import AvailableURL
 
@@ -27,12 +27,13 @@ def get_task_progress(task):
     return int(session_progress + (SESSION_PROGRESS_TOTAL / session.study.sessions_number) * task_progress - SESSION_PROGRESS_EPSILON)
 
 
-def session_urls(study):
+def session_urls(study, troublesome_urls):
 
     tasks_url = AvailableURL(title=_('Takenonderzoek'))
 
     if study.has_sessions:
         tasks_url.url = reverse('studies:session_start', args=(study.pk,))
+        tasks_url.has_errors = tasks_url.has_errors in troublesome_urls
 
     if study.has_sessions:
         prev_session_completed = True
@@ -40,13 +41,15 @@ def session_urls(study):
             task_start_url = AvailableURL(title=_('Het takenonderzoek: sessie {}').format(session.order))
             if prev_session_completed:
                 task_start_url.url = reverse('tasks:start', args=(session.pk,))
+                task_start_url.has_errors = task_start_url.url in troublesome_urls
             tasks_url.children.append(task_start_url)
 
-            tasks_url.children.extend(tasks_urls(session))
+            tasks_url.children.extend(tasks_urls(session, troublesome_urls))
 
             task_end_url = AvailableURL(title=_('Overzicht van takenonderzoek: sessie {}').format(session.order))
             if session.tasks_completed():
                 task_end_url.url = reverse('tasks:end', args=(session.pk,))
+                task_end_url.has_errors = task_end_url.url in troublesome_urls
             tasks_url.children.append(task_end_url)
 
             prev_session_completed = session.is_completed()
@@ -54,7 +57,7 @@ def session_urls(study):
     return tasks_url
 
 
-def tasks_urls(session):
+def tasks_urls(session, troublesome_urls):
     result = list()
 
     prev_task_completed = True
@@ -62,6 +65,7 @@ def tasks_urls(session):
         task_url = AvailableURL(title=_('Het takenonderzoek: sessie {} taak {}').format(session.order, task.order))
         if prev_task_completed:
             task_url.url = reverse('tasks:update', args=(task.pk,))
+            task_url.has_errors = task_url.url in troublesome_urls
         result.append(task_url)
 
         prev_task_completed = task.is_completed()

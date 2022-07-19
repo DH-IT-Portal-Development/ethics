@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>
                 {% if is_revision %}
@@ -79,12 +79,12 @@
                 </p>
             {% endif %}
             <form action="" method="post">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
-                <div class="float-right mt-2 mb-3">
-                    <a class="button" href="javascript:history.go(-1)">
+                {{ form }}
+                <div class="float-end mt-2 mb-3">
+                    <a class="btn btn-secondary" href="javascript:history.go(-1)">
                         {% trans "Annuleren" %}
                     </a>
-                    <input class="button" type="submit" value="{% trans 'Kopiëren' %}"/>
+                    <input class="btn btn-primary" type="submit" value="{% trans 'Kopiëren' %}"/>
                 </div>
 
             </form>

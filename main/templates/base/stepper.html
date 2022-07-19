@@ -1,0 +1,44 @@
+{% load static %}
+{% load i18n %}
+{% load fetc_filters %}
+{% load cdh_filters %}
+
+<div>
+    <h3 class="mb-3">{% trans 'Voortgang' %}</h3>
+    <div class="stepper">
+        <ul>
+            {% counter main_counter create 1 %}
+            {% for item in nav_items %}
+                <li>
+                    {% counter main_counter store %}
+                    {% with item=item size="large" bubble_text=main_counter %}
+                        {% include 'base/stepper_item.html' %}
+                    {% endwith %}
+                    {% if item.children and item.is_active %}
+                        <ul>
+                            {% for child in item.children %}
+                                <li>
+                                    {% with item=child size="normal" bubble_text="&nbsp;" %}
+                                        {% include 'base/stepper_item.html' %}
+                                    {% endwith %}
+                                    {% if child.children and child.is_active %}
+                                        <ul>
+                                            {% for subchild in child.children %}
+                                                <li>
+                                                    {% with item=subchild size="small" bubble_text="&nbsp;" %}
+                                                        {% include 'base/stepper_item.html' %}
+                                                    {% endwith %}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+                {% counter main_counter increment %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

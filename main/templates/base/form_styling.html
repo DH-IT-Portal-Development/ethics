@@ -17,7 +17,7 @@ function depends_on_value(a, a_value, b)
     $('input[name=' + a + ']').change(function() {
         var check = $('input[name=' + a + ']:checked').val() === a_value;
 
-        $('#id_' + b).parents('tr').toggle(check);
+        $('#id_' + b).parents('.row').toggle(check);
     });
     $('input[name=' + a + ']').change();
 }
@@ -39,10 +39,10 @@ function depends_on_hidden_value(a, a_value, b, header=false)
 
         if(header)
         {
-            $('#id_' + b).parents('tr').prev().toggle(check);
+            $('#id_' + b).parents('.row').prev().toggle(check);
         }
 
-        $('#id_' + b).parents('tr').toggle(check);
+        $('#id_' + b).parents('.row').toggle(check);
     });
     $('input[name=' + a + ']').change();
 }
@@ -78,10 +78,10 @@ function check_field_required(input_name, field_name, required_input, app_name, 
         var url = "{% url 'main:check_requires' %}";
         var params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
         $.post(url, params, function(data) {
-            $('#id_' + required_input).parents('tr').toggle(data.result);
+            $('#id_' + required_input).parents('.row').toggle(data.result);
             if(header)
             {
-                $('#id_' + required_input).parents('tr').prev().toggle(data.result);
+                $('#id_' + required_input).parents('.row').prev().toggle(data.result);
             }
         });
     });
@@ -91,8 +91,8 @@ function check_field_required(input_name, field_name, required_input, app_name, 
 // Adds a title row to a form field
 function add_title(field, title)
 {
-    var insert = $('<tr>').append($('<th>').append($('<strong>').text(title))).append($('<td>'));
-    $('#id_' + field).parents('tr').before(insert);
+    var insert = $('<div>').append($('<h3>').text(title));
+    $('#id_' + field).parents('.row').before(insert);
 }
 
 $(function() {
@@ -117,6 +117,7 @@ $(function() {
     });
 
     // Will remove labels off table headers for checkbox/radio fields
+    // TODO wth does this even _do_
     $('input[type="radio"], input[type="checkbox"]').parents('tr').find('th label').contents().unwrap();
 
     // Will automatically create tabindices

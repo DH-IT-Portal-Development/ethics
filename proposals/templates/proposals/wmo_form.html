@@ -1,5 +1,7 @@
 {% extends "base/base.html" %}
 
+{% load proposal_form_components %}
+{% load messages %}
 {% load static %}
 {% load i18n %}
 
@@ -20,18 +22,19 @@
 {% endblock %}
 
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=proposal.available_urls active=2 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+{% block uu-content %}
+    {% proposal_hero proposal %}
+    {% display_messages messages %}
+    <div class="uu-container gap-5 flex-nowrap">
+        {% stepper proposal %}
+        <div class="flex-fill">
             <h2>
                 {% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}
             </h2>
 
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post" enctype="multipart/form-data" class="mt-3">
+                {% csrf_token %}
+                {{ form }}
                 <div id="metc_status"></div>
                 {% with proposal=wmo.proposal %}
                     {% include "base/form_buttons.html" %}

@@ -7,174 +7,145 @@
     {% trans "Startpagina" %} - {{ block.super }}
 {% endblock %}
 
-{% block content %}
-    <div class="coverimage">
-        <img src="{% static 'main/images/coverimage-winter.jpg' %}" />
-    </div>
-    <div class="uu-inner-container mt-1">
-        <div class="col-12">
-            {% for message in systemmessage_list %}
-                <div class="{{ message.css_class }}">
-                {% autoescape off %}
-                    {{ message.message }}
-                {% endautoescape %}
-                </div>
-            {% endfor %}
-            <h3>
-                {% if user.is_authenticated %}
-                    {% trans "Startpagina" %} - {{ user.get_full_name }}
-                {% else %}
-                    {% trans "Startpagina" %}
-                {% endif %}
-            </h3>
+{% block uu-content %}
+    <div class="uu-cover align-items-end h-300">
+        <img class="uu-cover-image" alt="cover" src="{% static 'main/images/coverimage-spring.jpg' %}"/>
+        <div class="uu-cover-copyright uu-cover-copyright-right">
+            Cover by Dick Boetekees
         </div>
     </div>
-    {% if user.is_authenticated %}
-        <div class="uu-inner-container">
+    <div class="uu-hero">
+        <h2>
+            {% if user.is_authenticated %}
+                {% trans "Startpagina" %} - {{ user.get_full_name }}
+            {% else %}
+                {% trans "Startpagina" %}
+            {% endif %}
+        </h2>
+    </div>
+    {% if systemmessage_list %}
+        <div class="uu-container">
             <div class="col-12">
-
-            <p>
-                {% blocktrans trimmed %}
-
-
-                Formele goedkeuring door één van beide kamers van de FETC-GW (middels een formele goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de Faculteit Geesteswetenschappen. Voorafgaand aan het onderzoek, maar ook voorafgaand aan het rekruteren van deelnemers, moet de aanvraag zijn goedgekeurd. Het is dus van belang om te wachten met de aanvang van het onderzoek tot deze brief ontvangen is.
-
-                {% endblocktrans %}
-</p><p>
-                {% blocktrans trimmed %}
-
-
-
-    NB: Goedgekeurde aanvragen komen in het archief van deze portal te staan, zie het menu hierboven. Dit archief is toegankelijk voor iedereen met een Solis-ID die bij de Faculteit Geesteswetenschappen werkt of studeert.
-
-    {% endblocktrans %}
-</p><p>
-    {% blocktrans trimmed %}
-
-    Heb je een vraag over de werking van de portal, ontdek je een foutje, missende functionaliteit, of verkeerde vertaling? Neem dan contact op met  <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.
-                {% endblocktrans %}
-
-            </p>
-                <ul>
-                <li>{% trans "Check voor het indienen:" %}
-                    <ul>
-                    <li>
-                        {% blocktrans trimmed %}
-                            De
-                        <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">
-                            UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Het reglement van de
-                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="blank">Algemene Kamer (AK)</a>
-                            of dat van de
-                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="blank">Linguïstiek Kamer (LK)</a>.
-                        {% endblocktrans %}
-                    </li>
-                    </ul>
-                <li>
-                {% blocktrans trimmed %}
-                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. (de laatstse versie is van <u>december 2021</u>)</li>
-                {% endblocktrans %}
-                </li>
-                {% blocktrans trimmed %}
-                    <li>Voor advies over data management (plannen): <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.</li>
-                    <li>Voor advies over privacy zaken: <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.</li>
-                    <li>Voor vragen over de procedure: <a href="mailto:fetc-gw@uu.nl">Desiree Capel</a>.</li>
-                    <li>Voor vragen over de portal zelf: <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.</li>
-                {% endblocktrans %}
-                </ul>
-
+                {% for message in systemmessage_list %}
+                    <div class="alert text-center alert-{{ message.css_class }}">
+                        {% autoescape off %}
+                            {{ message.message }}
+                        {% endautoescape %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <div class="uu-container">
+            <div class="col-12 col-md-8 pe-5">
                 <p>
                     {% blocktrans trimmed %}
-                        In deze portal kan je het volgende doen:
+                        Formele goedkeuring door één van beide kamers van de FETC-GW (middels een formele
+                        goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de Faculteit
+                        Geesteswetenschappen. Voorafgaand aan het onderzoek, maar ook voorafgaand aan het rekruteren van
+                        deelnemers, moet de aanvraag zijn goedgekeurd. Het is dus van belang om te wachten met deaanvang
+                        van het onderzoek tot deze brief ontvangen is.
                     {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        NB: Goedgekeurde aanvragen komen in het archief van deze portal te staan, zie het menuhierboven.
+                        Dit archief is toegankelijk voor iedereen met een Solis-ID die bij de Faculteit
+                        Geesteswetenschappen werkt of studeert.
+                    {% endblocktrans %}
+                </p>
+                <p>
+
                 </p>
             </div>
         </div>
-        <div class="uu-inner-container">
-            <div class="col-md-6 col-12">
-                <h5>
-                    {% trans "Dien een nieuwe aanvraag in" %}
-                </h5>
-{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
-                <ul class="startpage-ul">
+        <div class="uu-container">
+            <div class="col-12">
+                <h2>{% trans "Voordat je begint" %}</h2>
+                <ul>
+                    <li>{% trans "Check voor het indienen:" %}
+                        <ul>
+                            <li>
+                                {% blocktrans trimmed %}
+                                    De
+                                    <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">
+                                        UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
+                                {% endblocktrans %}
+                            </li>
+                            <li>
+                                {% blocktrans trimmed %}
+                                    Het reglement van de
+                                    <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/" target="blank">Algemene
+                                        Kamer (AK)</a>
+                                    of dat van de
+                                    <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/" target="blank">Linguïstiek
+                                        Kamer (LK)</a>.
+                                {% endblocktrans %}
+                            </li>
+                        </ul>
                     <li>
-                        <a href="{% url 'proposals:start' %}">{% trans "die volledig nieuw is in deze portal;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:copy' %}">{% trans "op basis van een kopie van een oude aanvraag;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:start_pre' %}">{% trans "voor (al dan niet goedgekeurde) subsidieaanvragen;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:start_pre_approved' %}">{% trans "die al goedgekeurd is door een andere ethische toetsingscomissie." %}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-6 col-12">
-                <h5>
-                    {% trans "Een aanvraag reviseren" %}
-                </h5>
-{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
-                <ul class="startpage-ul">
-                    <li>
-                        <a href="{% url 'proposals:copy_revision' %}">{% trans "als een revisie, gebaseerd op opmerkingen van de FETC-GW;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:copy_amendment' %}">{% trans "als amendement, wanneer de aanvraag al goedgekeurd is door de FETC-GW." %}</a>
+                        {% blocktrans trimmed %}
+                            Gebruik de juiste (meest recente)
+                            <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a>
+                            voor de <em>informed consent</em>. (de laatstse versie is van <u>december 2021</u>)</li>
+                        {% endblocktrans %}
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="uu-inner-container mt-2 mb-2">
-            <div class="col-md-6 col-12">
-                <h6>
-                    {% trans "Bekijk" %}
-                </h6>
-                <ul class="startpage-ul">
-                    <li>
-                        <a href="{% url 'proposals:my_concepts' %}">{% trans "mijn conceptaanvragen;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:my_practice' %}">{% trans "mijn oefenaanvragen;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:my_submitted' %}">{% trans "mijn ingediende aanvragen;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:my_completed' %}">{% trans "mijn afgehandelde aanvragen;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:my_supervised' %}">{% trans "mijn aanvragen als eindverantwoordelijke;" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:my_archive' %}">{% trans "al mijn aanvragen." %}</a>
-                    </li>
-                </ul>
-                <h6 class="mt-2 d-inline-block">
-                    {% trans 'FETC-GW archief' %}
-                </h6>
-                <ul class="startpage-ul">
-                    <li>
-                        <a href="{% url 'proposals:archive' 'AK' %}">{% trans "Alle goedgekeurde aanvragen bekijken van de Algemene Kamer" %}</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'proposals:archive' 'LK' %}">{% trans "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer" %}</a>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="col-md-6 col-12">
-                <h6>
-                    Help
-                </h6>
-                <ul class="startpage-ul">
+        <div class="uu-hero text-bg-secondary justify-content-md-between justify-content-center flex-wrap gap-3">
+            <a class="btn btn-outline-light" href="{% url 'proposals:my_concepts' %}">
+                View my applications
+            </a>
+            <a class="btn btn-outline-light" href="{% url 'proposals:start' %}">
+                Create new proposal
+            </a>
+            <a class="btn btn-outline-light" href="{% url 'proposals:copy_revision' %}">
+                Create new revison
+            </a>
+            <a class="btn btn-outline-light" href="{% url 'proposals:copy_amendment' %}">
+                Create new amendment
+            </a>
+            <a class="btn btn-outline-light" href="{% url 'proposals:archive' 'LK' %}">
+                View archive
+            </a>
+        </div>
+        <div class="uu-container pt-4 pb-4 flex-column flex-md-row gap-md-0 gap-3">
+            <div class="col-12 col-md-4">
+                <h3>{% trans 'Contact' %}</h3>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>FEtC-H secretaris</strong><br/>
+                        Desiree Capel (fetc.gw@uu.nl)
+                    {% endblocktrans %}
+                </p>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>Data Management advies</strong><br/>
+                        datamanagement.gw@uu.nl
+                    {% endblocktrans %}
+                </p>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>Privacy kwesties/vragen</strong><br/>
+                        privacy.gw@uu.nl
+                    {% endblocktrans %}
+                </p>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>Technical support</strong><br/>
+                        portalsupport.gw@uu.nl
+                    {% endblocktrans %}
+                </p>
+            </div>
+            <div class="col-12 col-md-4">
+                <h3>{% trans 'Resources' %}</h3> {# What should this be in dutch tho? #}
+                <ul>
                     <li>
                         <a href="http://fetc-gw.wp.hum.uu.nl/" target="_blank">{% trans "FETC-GW website" %}</a>
+
                     </li>
                     <li>
                         <a href="http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/"
@@ -191,31 +162,22 @@
                     <li>
                         <a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
                     </li>
-                    <li>
-                        <a href="{% url 'feedback:create' %}">{% trans "Feedback op dit portal geven" %}</a>
-                    </li>
                 </ul>
-
-
             </div>
 
-<hr> </hr>
-            <div class="col-12 mt-4">
-                                <h6>
-                    Updates
-                                </h6>
-                                <p>
-                                    {% blocktrans trimmed %}
-                                    <em>Veranderingen in taalgebruik in de portal:</em> Recentelijk is het woord "studie" op de meeste plaatsen vervangen door "aanvraag". In het Engels is gekozen voor het woord "proposal", maar u kunt ook "application" tegenkomen in de context van het aanvraagproces. Vindt u een onduidelijke tekst, foute vertaling, of ander mankement aan de portal? Meld dit dan vooral aan <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.
-                                    {% endblocktrans %}
-                                </p></div>
-
-
-            <div class="col-12 mt-4">            <p>{% trans "Bannerfoto door Simona Evsatieva" %}</p></div>
-
+            <div class="col-12 col-md-4">
+                <h3>{% trans 'Feedback' %}</h3>
+                <p>
+                    {% blocktrans trimmed %}
+                        Heb je een vraag over de werking van de portal, ontdek je een foutje, missende functionaliteit,
+                        of verkeerde vertaling? Neem dan contact op met
+                        <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.
+                    {% endblocktrans %}
+                </p>
+            </div>
         </div>
     {% else %}
-        <div class="uu-inner-container mt-2 mb-2">
+        <div class="uu-container">
             <div class="col-12">
                 <p>
                     {% url 'login' as the_url %}

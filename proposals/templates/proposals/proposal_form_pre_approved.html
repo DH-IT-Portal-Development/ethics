@@ -1,4 +1,5 @@
 {% extends "base/base.html" %}
+{% load proposal_form_components %}
 
 {% load static %}
 {% load i18n %}
@@ -34,12 +35,6 @@ $(function() {
 
     // Add datepicker for date_start, set locale to current language
     $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
-
-    var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
-    $("#id_date_start").datepicker({
-        dateFormat: date_format,
-        minDate: 'now',
-    })
 
     // AJAX applicants
     $('select#id_applicants').select2({
@@ -77,9 +72,11 @@ $(function() {
 </script>
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
+{% block uu-content %}
+    {% proposal_hero None True %}
+    <div class="uu-container flex-nowrap gap-5">
+        {% stepper None True False True %}
+        <div class="flex-fill">
             <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
             {% if not create and is_supervisor  %}
                 {% blocktrans trimmed %}
@@ -94,7 +91,7 @@ $(function() {
                 <table>
                     {{ form.as_table }}
                 </table>
-                <div class="warning" id="pre_approval_warning">
+                <div class="alert alert-warning" id="pre_approval_warning">
                     {% url 'proposals:start' as proposal_url %}
                     {% blocktrans trimmed %}
                         Dit formulier is bedoeld voor aanvragen die al goedgekeurd zijn door een andere commissie. Indien dit

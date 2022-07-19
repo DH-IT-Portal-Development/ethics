@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans "Aanvraag verwijderen" %}</h2>
             <p>
@@ -16,8 +16,8 @@
                 {% endblocktrans %}
             </p>
             <form action="" method="post">{% csrf_token %}
-                <input class="button" type="submit" value="{% trans 'Verwijderen' %}"/>
-                <a class="button"
+                <input class="btn btn-primary" type="submit" value="{% trans 'Verwijderen' %}"/>
+                <a class="btn btn-secondary"
                    href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
             </form>
         </div>

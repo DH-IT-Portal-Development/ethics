@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans "Een nieuwe aanvraag aanmelden" %}</h2>
 
@@ -76,7 +76,7 @@
             </li>
             </p>
             </ul>
-            <a class="button button-colored float-right mb-4" href="{% url 'proposals:create' %}">
+            <a class="btn btn-primary float-end mb-4" href="{% url 'proposals:create' %}">
                 {% trans "Volgende stap >>" %}
             </a>
         </div>

@@ -3,8 +3,10 @@
 from django import forms
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
+from cdh.core.forms import BootstrapCheckboxSelectMultiple, \
+    BootstrapRadioSelect, TemplatedModelForm
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.models import DOUBT, YES, YES_NO_DOUBT
 from main.utils import YES_NO
@@ -24,14 +26,14 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             'compensation', 'compensation_details',
         ]
         widgets = {
-            'age_groups':        forms.CheckboxSelectMultiple(),
-            'passive_consent':   forms.RadioSelect(choices=YES_NO),
-            'legally_incapable': forms.RadioSelect(choices=YES_NO),
-            'has_traits':        forms.RadioSelect(choices=YES_NO),
-            'traits':            forms.CheckboxSelectMultiple(),
-            'necessity':         forms.RadioSelect(),
-            'recruitment':       forms.CheckboxSelectMultiple(),
-            'compensation':      forms.RadioSelect(),
+            'age_groups':        BootstrapCheckboxSelectMultiple(),
+            'passive_consent':   BootstrapRadioSelect(choices=YES_NO),
+            'legally_incapable': BootstrapRadioSelect(choices=YES_NO),
+            'has_traits':        BootstrapRadioSelect(choices=YES_NO),
+            'traits':            BootstrapCheckboxSelectMultiple(),
+            'necessity':         BootstrapRadioSelect(),
+            'recruitment':       BootstrapCheckboxSelectMultiple(),
+            'compensation':      BootstrapRadioSelect(),
         }
         mark_safe_lazy = lazy(mark_safe, str)
         labels = {
@@ -142,6 +144,7 @@ class StudyDesignForm(forms.ModelForm):
 
 
 class StudyConsentForm(ConditionalModelForm):
+    show_help_column = False
     class Meta:
         model = Documents
         fields = [
@@ -172,10 +175,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             'risk', 'risk_details',
         ]
         widgets = {
-            'deception':  forms.RadioSelect(),
-            'negativity': forms.RadioSelect(),
-            'stressful':  forms.RadioSelect(),
-            'risk':       forms.RadioSelect(),
+            'deception':  BootstrapRadioSelect(),
+            'negativity': BootstrapRadioSelect(),
+            'stressful':  BootstrapRadioSelect(),
+            'risk':       BootstrapRadioSelect(),
         }
 
     _soft_validation_fields = [
@@ -213,6 +216,8 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         self.fields['stressful'].label = mark_safe(
             self.fields['stressful'].label)
         self.fields['risk'].label = mark_safe(self.fields['risk'].label)
+
+        self._bound_fields_cache = {}
 
         if not self.study.has_sessions:
             del self.fields['deception']
@@ -252,7 +257,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
                                    f1_value_list=[YES, DOUBT])
 
 
-class StudyUpdateAttachmentsForm(forms.ModelForm):
+class StudyUpdateAttachmentsForm(TemplatedModelForm):
     class Meta:
         model = Documents
         fields = [
@@ -268,7 +273,9 @@ class StudyUpdateAttachmentsForm(forms.ModelForm):
         }
 
 
-class SessionStartForm(forms.ModelForm):
+class SessionStartForm(TemplatedModelForm):
+    show_help_column = False
+
     class Meta:
         model = Study
         fields = ['sessions_number']

@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% load proposal_form_components %}
+{% load messages messages %}
+
+{% block uu-content %}
+    {% proposal_hero object %}
+    {% display_messages messages %}
+    <div class="uu-container flex-nowrap gap-5">
+        {% stepper object %}
+        <div class="flex-fill">
+            {% block content %}{% endblock %}
+            {% block form %}
+                <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    {{ form }}
+                    {% form_buttons object %}
+                </form>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

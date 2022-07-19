@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 from main.models import YES, DOUBT
@@ -194,7 +194,7 @@ def start_review_pre_assessment(proposal):
         proposal.committee_prefixed_refnum(),
         )
                 )
-                
+
     params = {
         'secretary': secretary.get_full_name(),
         'proposal': proposal,

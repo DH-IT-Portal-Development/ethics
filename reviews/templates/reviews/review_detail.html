@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>
                 {% blocktrans with proposal=review.proposal.title %}
@@ -25,7 +25,7 @@
             </h2>
         </div>
     </div>
-    <div class="uu-inner-container">
+    <div class="uu-container">
 
     {% with review=review %}
         {% include "reviews/review_detail_sidebar.html" %}

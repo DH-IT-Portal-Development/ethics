@@ -1,5 +1,7 @@
 {% extends "base/base.html" %}
 
+{% load messages %}
+{% load proposal_form_components %}
 {% load static %}
 {% load i18n %}
 
@@ -16,12 +18,11 @@ $(function() {
 </script>
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
+{% block uu-content %}
+    {% proposal_hero object %}
+    <div class="uu-container">
+        {% stepper object %}
         <div class="col-12">
-            {% with nav_items=wmo.proposal.available_urls active=2 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
             <h2>
                 {% trans "WMO-check" %}
             </h2>

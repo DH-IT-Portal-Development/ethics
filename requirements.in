@@ -1,4 +1,4 @@
-Django>=3.2,<4.0
+Django>=4.0,<4.1
 django-auth-ldap
 django-braces
 django-modeltranslation
@@ -18,7 +18,7 @@ django-user-agents
 pillow>=6.0
 pygments
 requests
--e git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.0.0-alpha-6#egg=cdh-django-core
+-e git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.0.0-alpha7#egg=cdh-django-core
 -e git+https://github.com/DH-IT-Portal-Development/python-docx2txt#egg=docx2txt
 python-magic
 pdftotext

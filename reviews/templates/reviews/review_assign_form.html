@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
 
     {% with review=review %}
         {% include "reviews/review_detail_sidebar.html" %}
@@ -40,10 +40,10 @@
             <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 <div class="float-right">
-                    <a class="button" href="javascript:history.go(-1);">
+                    <a class="btn btn-secondary" href="javascript:history.go(-1);">
                         {% trans "Terug naar de vorige pagina" %}
                     </a>
-                    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}"/>
+                    <input class="btn btn-primary" type="submit" value="{% trans 'OK' %}"/>
                 </div>
 
             </form>

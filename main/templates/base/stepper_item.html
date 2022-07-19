@@ -1,0 +1,26 @@
+{% if item.is_title %}
+<div class="fst-italic stepper-item">
+{% elif item.url %}
+<a class="js-submit-redirect stepper-item" href="{{ item.url }}">
+{% else %}
+<div class="text-muted stepper-item">
+{% endif %}
+
+<span class="
+    stepper-bubble
+    stepper-bubble-{{ size }}
+    {% if item.url and not item.has_errors %}finished{% endif %}
+    {% if item.has_errors %}incomplete{% endif %}
+">
+    {{bubble_text}}
+</span>
+<span class="{% if item.is_active_exact %}fw-bold{% endif %}">
+{{ item.title }}
+</span>
+{% if item.is_title %}
+</div>
+{% elif item.url %}
+</a>
+{% else %}
+</div>
+{% endif %}

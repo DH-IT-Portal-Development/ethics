@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
 from django.template.loader import render_to_string, get_template
-from django.utils.translation import activate, get_language, ugettext as _
+from django.utils.translation import activate, get_language, gettext as _
 from django.utils.deconstruct import deconstructible
 
 from main.utils import AvailableURL, get_secretary
@@ -33,42 +33,88 @@ def available_urls(proposal):
     :param proposal: the current Proposal
     :return: a list of available URLs for this Proposal.
     """
+    from proposals.utils.validate_proposal import get_form_errors
+    troublesome_urls = [x.get('url') for x in get_form_errors(proposal)]
     urls = list()
 
     if proposal.is_pre_assessment:
-        urls.append(AvailableURL(url=reverse('proposals:update_pre', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de aanvraag')))
+        update_proposal = AvailableURL(
+            title=_('Algemeen'),
+        )
+        if proposal.pk:
+            update_url = reverse('proposals:update_pre',
+                                 args=(proposal.pk,))
+        else:
+            update_url = reverse('proposals:create_pre')
 
-        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'))
+        update_proposal.url = update_url
+        update_proposal.has_errors_from_list(troublesome_urls)
+        urls.append(
+            update_proposal
+        )
+
+        wmo_url = AvailableURL(title=_('METC'))
         if hasattr(proposal, 'wmo'):
             wmo_url.url = reverse('proposals:wmo_update_pre', args=(proposal.wmo.pk,))
-        else:
+            wmo_url.has_errors = wmo_url.url in troublesome_urls
+            if proposal.wmo.status != proposal.wmo.NO_WMO:
+                application_url = reverse('proposals:wmo_application_pre',
+                                          args=[proposal.wmo.pk])
+                wmo_url.children = [
+                    AvailableURL(
+                        title=_('Beslissing'),
+                        url=application_url,
+                        has_errors=application_url in troublesome_urls,
+                    )
+                ]
+        elif proposal.pk:
             wmo_url.url = reverse('proposals:wmo_create_pre', args=(proposal.pk,))
+            wmo_url.has_errors = wmo_url.url in troublesome_urls
         urls.append(wmo_url)
 
-        submit_url = AvailableURL(title=_('Aanvraag voor voortoetsing klaar voor versturen'))
+        submit_url = AvailableURL(title=_('Vesturen'))
         if hasattr(proposal, 'wmo'):
             submit_url.url = reverse('proposals:submit_pre', args=(proposal.pk,))
+            submit_url.has_errors = submit_url.url in troublesome_urls
         urls.append(submit_url)
     elif proposal.is_pre_approved:
-        urls.append(AvailableURL(url=reverse('proposals:update_pre_approved', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de aanvraag')))
-
-        submit_url = AvailableURL(
-            title=_('Aanvraag voor voortoetsing klaar voor versturen'),
-            margin=0,
-            url = reverse('proposals:submit_pre_approved', args=(proposal.pk,))
+        update_proposal = AvailableURL(
+            title=_('Algemeen'),
         )
+        if proposal.pk:
+            update_url = reverse('proposals:update_pre_approved', args=(proposal.pk,))
+        else:
+            update_url = reverse('proposals:create_pre_approved')
+
+        update_proposal.url = update_url
+        update_proposal.has_errors_from_list(troublesome_urls)
+        urls.append(
+            update_proposal
+        )
+        submit_url = AvailableURL(
+            title=_('Vesturen'),
+            margin=0,
+        )
+        if proposal.pk:
+            submit_url.url = reverse('proposals:submit_pre_approved',
+                                     args=(proposal.pk,))
         urls.append(submit_url)
     else:
-        update_url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
-        urls.append(
-            AvailableURL(
-                url=reverse(update_url, args=(proposal.pk,)),
+        update_proposal = AvailableURL(
                 title=_('Algemeen'),
             )
+        if proposal.pk:
+            update_url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
+            update_url = reverse(update_url, args=(proposal.pk,))
+        else:
+            update_url = 'proposals:create_practice' if proposal.is_practice() \
+                else 'proposals:create'
+            update_url = reverse(update_url)
+        update_proposal.url = update_url
+        update_proposal.has_errors_from_list(troublesome_urls)
+        urls.append(
+            update_proposal
         )
-
         wmo_url = AvailableURL(
             title=_('METC')
         )
@@ -77,11 +123,26 @@ def available_urls(proposal):
                 'proposals:wmo_update',
                 args=(proposal.wmo.pk,)
             )
-        else:
+            wmo_url.has_errors = wmo_url.url in troublesome_urls
+
+            if proposal.wmo.status != proposal.wmo.NO_WMO:
+                application_url = reverse('proposals:wmo_application',
+                                          args=[proposal.wmo.pk])
+                wmo_url.children = [
+                    AvailableURL(
+                        title=_('Beslissing'),
+                        url=application_url,
+                        has_errors=application_url in troublesome_urls,
+                    )
+                ]
+        # If proposal is new, don't even have a url
+        elif proposal.pk:
             wmo_url.url = reverse(
                 'proposals:wmo_create',
                 args=(proposal.pk,)
             )
+            wmo_url.has_errors = wmo_url.url in troublesome_urls
+
         urls.append(wmo_url)
 
         studies_url = AvailableURL(title=_('Trajecten'))
@@ -90,9 +151,10 @@ def available_urls(proposal):
                         'proposals:study_start',
                         args=(proposal.pk,)
                     )
+            studies_url.has_errors = studies_url.url in troublesome_urls
 
             if proposal.study_set.count() > 0:
-                _add_study_urls(studies_url, proposal)
+                _add_study_urls(studies_url, proposal, troublesome_urls)
 
         urls.append(studies_url)
 
@@ -103,7 +165,9 @@ def available_urls(proposal):
 
         if proposal.last_study() and proposal.last_study().is_completed():
             consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
+            consent_url.has_errors = consent_url.url in troublesome_urls
             data_management_url.url = reverse('proposals:data_management', args=(proposal.pk, ))
+            data_management_url.has_errors = data_management_url.url in troublesome_urls
             submit_url.url = reverse('proposals:submit', args=(proposal.pk,))
 
         urls.append(consent_url)
@@ -113,12 +177,12 @@ def available_urls(proposal):
     return urls
 
 
-def _add_study_urls(main_element, proposal):
+def _add_study_urls(main_element, proposal, troublesome_urls):
     # If only one trajectory, add the children urls of that study directly.
     # (Bypassing the study's own node)
     if proposal.studies_number == 1:
         main_element.children.extend(
-            study_urls(proposal.study_set.first(), True).children
+            study_urls(proposal.study_set.first(), True, troublesome_urls).children
         )
         return
 
@@ -126,7 +190,7 @@ def _add_study_urls(main_element, proposal):
     prev_study_completed = True
     for study in proposal.study_set.all():
         main_element.children.append(
-            study_urls(study, prev_study_completed)
+            study_urls(study, prev_study_completed, troublesome_urls)
         )
         prev_study_completed = study.is_completed()
 
