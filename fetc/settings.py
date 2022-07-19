@@ -164,6 +164,9 @@ SHORT_ROUTE_WEEKS = 2
 # Base URL
 BASE_URL = '127.0.0.1:8000'
 
+# CSRF Setting
+CSRF_FAILURE_VIEW = 'main.error_views.csrf_failure'
+
 try:
     from .ldap_settings import *
 except ImportError:

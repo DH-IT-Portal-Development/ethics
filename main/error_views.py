@@ -16,3 +16,6 @@ def error_404(request, exception):
 
 def error_500(request):
     return render(request, 'error/500.html', status=500)
+
+def csrf_failure(request, reason=""):
+    return render(request, 'error/403_csrf.html', status=403)
