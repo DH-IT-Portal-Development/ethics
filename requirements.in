@@ -2,6 +2,7 @@ Django>=3.2,<4.0
 django-auth-ldap
 django-braces
 django-modeltranslation
+django-extensions
 django-impersonate
 django-simple-menu
 django-debug-toolbar
