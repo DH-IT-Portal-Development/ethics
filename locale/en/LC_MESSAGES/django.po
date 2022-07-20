@@ -4239,7 +4239,7 @@ msgstr "FEtC-H {}: new application submitted"
 
 #: reviews/utils/review_utils.py:271
 msgid "FETC-GW {}: nieuwe beoordeling toegevoegd"
-msgstr "FEtC-H{}: new decision added"
+msgstr "FEtC-H {}: new decision added"
 
 #: reviews/utils/review_utils.py:287
 msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
