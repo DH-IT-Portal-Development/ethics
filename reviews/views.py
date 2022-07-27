@@ -138,10 +138,9 @@ class InRevisionReviewsView(BaseReviewListView):
             "reviews:api:in_revision",
             args=[self.committee]
         )
-
         return context
 
-    
+
 class AllOpenProposalReviewsView(BaseReviewListView):
 
     def get_context_data(self, **kwargs):
