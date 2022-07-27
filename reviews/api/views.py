@@ -3,7 +3,7 @@ from typing import Tuple
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, Exists, OuterRef
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.authentication import SessionAuthentication
 
@@ -404,6 +404,41 @@ class ToConcludeReviewApiView(BaseReviewApiView):
 
         return [value for key, value in reviews.items()]
 
+
+class InRevisionApiView(BaseReviewApiView):
+    """Return reviews for proposals which have been sent back for revision,
+    but for which a revision has not yet been submitted"""
+
+    default_sort = ('date_start', 'desc')
+    group_required = [settings.GROUP_SECRETARY]
+
+    def get_queryset(self):
+
+        # Find reviews of revisions:
+        # A proposal not having one of these means
+        # that the review of its parent is "in revision"
+        revision_reviews = Review.objects.filter(
+            proposal__is_revision=True,    # Not a copy
+            stage__gte=Review.ASSIGNMENT,  # Not a supervisor review
+        )
+        # Get candidate reviews:
+        # All reviews whose conclusion is "revision necessary"
+        candidates = Review.objects.filter(
+            stage=Review.CLOSED,
+            continuation=Review.REVISION,
+        )
+        # Finally, exclude candidates whose proposal
+        # has a child with a revision review
+        in_revision = candidates.exclude(
+            Exists(revision_reviews.filter(
+                proposal__parent__pk=OuterRef("proposal__pk")
+                )
+            )
+        )
+        return in_revision
+        
+    
+    
 
 class AllOpenReviewsApiView(BaseReviewApiView):
     default_sort = ('date_start', 'desc')
