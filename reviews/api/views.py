@@ -430,6 +430,7 @@ class InRevisionApiView(BaseReviewApiView):
         # has a child with a revision review
         in_revision = candidates.exclude(
             Exists(revision_reviews.filter(
+                # OuterRef refers to the candidate being evaluated
                 proposal__parent__pk=OuterRef("proposal__pk")
                 )
             )
