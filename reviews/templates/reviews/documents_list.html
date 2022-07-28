@@ -32,12 +32,11 @@
 </ul>
 
 {% if container.edit_link %}
-<a href="{{ container.edit_link }}">
+<a href="{{ container.edit_link }}" class="d-block mb-3">
     {% trans "Documenten wijzigen" %}
     <img src="{% static 'proposals/images/pencil.png' %}"
          title="{% trans 'Documenten wijzigen' %}" />
 </a>
-<br />
 {% endif %}
 
 {% endfor %}
