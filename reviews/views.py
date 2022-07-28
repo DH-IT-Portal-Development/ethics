@@ -136,9 +136,10 @@ class InRevisionReviewsView(BaseReviewListView):
         context['title'] = _("Aanvragen in revisie")
         context['data_url'] = reverse(
             "reviews:api:in_revision",
-            args=[self.committee]
-        )
+            args=[self.committee],
+            )
         return context
+
 
 
 class AllOpenProposalReviewsView(BaseReviewListView):

@@ -414,7 +414,7 @@ class InRevisionApiView(BaseReviewApiView):
 
     def get_queryset(self):
         # 1. Find reviews of revisions:
-        # A proposal not having one of these means
+        # A revision not having a review means
         # that the review of its parent is "in revision"
         revision_reviews = Review.objects.filter(
             proposal__is_revision=True,    # Not a copy
@@ -422,7 +422,9 @@ class InRevisionApiView(BaseReviewApiView):
         )
         # 2. Get candidate reviews:
         # All reviews whose conclusion is "revision necessary"
+        # that are in the current committee
         candidates = Review.objects.filter(
+            proposal__reviewing_committee=self.committee,
             stage=Review.CLOSED,
             continuation=Review.REVISION,
         )
