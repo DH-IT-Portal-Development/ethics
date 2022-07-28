@@ -2,7 +2,8 @@ from django.urls import path
 
 from .views import AllOpenReviewsApiView, MyDecisionsApiView, \
     MyOpenDecisionsApiView, OpenDecisionsApiView, \
-    OpenSupervisorDecisionApiView, ToConcludeReviewApiView, AllReviewsApiView
+    OpenSupervisorDecisionApiView, ToConcludeReviewApiView, AllReviewsApiView, \
+    InRevisionApiView    
 
 app_name = 'api'
 
@@ -19,7 +20,9 @@ urlpatterns = [
     path('<str:committee>/open_supervisors/',
          OpenSupervisorDecisionApiView.as_view(),
          name='open_supervisors'),
-
+    path('<str:committee>/in_revision/',
+         InRevisionApiView.as_view(),
+         name='in_revision'),
     path('<str:committee>/open/',
          AllOpenReviewsApiView.as_view(),
          name='all_open'),
