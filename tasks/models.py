@@ -38,7 +38,13 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         unique_together = ('study', 'order')
 
     def net_duration(self):
-        return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
+        if duration := self.task_set.aggregate(models.Sum('duration'))[
+            'duration__sum'
+        ]:
+            return duration
+
+        return 0
+
 
     def first_task(self):
         tasks = self.task_set.order_by('order')
