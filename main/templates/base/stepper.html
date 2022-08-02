@@ -3,42 +3,107 @@
 {% load fetc_filters %}
 {% load cdh_filters %}
 
-<div>
-    <h3 class="mb-3">{% trans 'Voortgang' %}</h3>
-    <div class="stepper">
-        <ul>
-            {% counter main_counter create 1 %}
-            {% for item in nav_items %}
-                <li>
-                    {% counter main_counter store %}
-                    {% with item=item size="large" bubble_text=main_counter %}
-                        {% include 'base/stepper_item.html' %}
-                    {% endwith %}
-                    {% if item.children and item.is_active %}
-                        <ul>
-                            {% for child in item.children %}
-                                <li>
-                                    {% with item=child size="normal" bubble_text="&nbsp;" %}
-                                        {% include 'base/stepper_item.html' %}
-                                    {% endwith %}
-                                    {% if child.children and child.is_active %}
-                                        <ul>
-                                            {% for subchild in child.children %}
-                                                <li>
-                                                    {% with item=subchild size="small" bubble_text="&nbsp;" %}
-                                                        {% include 'base/stepper_item.html' %}
-                                                    {% endwith %}
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
-                {% counter main_counter increment %}
-            {% endfor %}
-        </ul>
+<style>
+    #progress-button {
+        width: 100%;
+    }
+
+    #progress {
+        --bs-offcanvas-width: 80vw;
+    }
+
+    @media (min-width: 400px) {
+        #progress {
+            --bs-offcanvas-width: 300px;
+        }
+    }
+</style>
+
+<div class="col-12 d-lg-none">
+    <button
+            id="progress-button"
+            class="btn btn-light text-start"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#progress"
+            aria-controls="progress"
+    >
+        {% trans 'Bekijk voortgang' %}
+    </button>
+</div>
+
+<div id="progress" class="offcanvas-lg offcanvas-start" tabindex="-1" aria-labelledby="progressLabel">
+    <h3 class="mb-3 d-none d-md-block">{% trans 'Voortgang' %}</h3>
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="progressLabel">{% trans 'Voortgang' %}</h5>
+        <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                data-bs-target="#progress"
+                aria-label="Close"
+        ></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="stepper">
+            <ul>
+                {% counter main_counter create 1 %}
+                {% for item in nav_items %}
+                    <li>
+                        {% counter main_counter store %}
+                        {% with item=item size="largest" bubble_text=main_counter %}
+                            {% include 'base/stepper_item.html' %}
+                        {% endwith %}
+                        {% if item.children and item.is_active %}
+                            {% counter item_counter create 1 %}
+                            <ul>
+                                {% for child in item.children %}
+                                    <li>
+                                        {% with item=child size="large" bubble_text="&nbsp;" %}
+                                            {% include 'base/stepper_item.html' %}
+                                        {% endwith %}
+                                    {% counter item_counter increment %}
+                                        {% if child.children and child.is_active %}
+                                            <ul>
+                                                {% for subchild in child.children %}
+                                                    <li>
+                                                        {% with item=subchild size="medium" bubble_text="&nbsp;" %}
+                                                            {% include 'base/stepper_item.html' %}
+                                                        {% endwith %}
+                                                        {% if subchild.children and subchild.is_active %}
+                                                            <ul>
+                                                                {% for subsubchild in subchild.children %}
+                                                                    <li>
+                                                                        {% with item=subsubchild size="small" bubble_text="&nbsp;" %}
+                                                                            {% include 'base/stepper_item.html' %}
+                                                                        {% endwith %}
+                                                                        {% if subsubchild.children and subsubchild.is_active %}
+                                                                            <ul>
+                                                                                {% for subsubsubchild in subsubchild.children %}
+                                                                                    <li>
+                                                                                        {% with item=subsubsubchild size="smallest" bubble_text="&nbsp;" %}
+                                                                                            {% include 'base/stepper_item.html' %}
+                                                                                        {% endwith %}
+                                                                                    </li>
+                                                                                {% endfor %}
+                                                                            </ul>
+                                                                        {% endif %}
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% endif %}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                    {% counter main_counter increment %}
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>

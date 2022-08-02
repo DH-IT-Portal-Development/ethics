@@ -4,7 +4,7 @@
 #
 #    pip-compile
 #
--e git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.0.0-alpha7#egg=cdh-django-core
+-e git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.0.0-alpha8#egg=cdh-django-core
     # via -r requirements.in
 -e git+https://github.com/DH-IT-Portal-Development/python-docx2txt#egg=docx2txt
     # via -r requirements.in

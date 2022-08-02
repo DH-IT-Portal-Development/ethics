@@ -24,11 +24,17 @@ form label {
     padding-left: 10px;
 }
 
+
+@media (max-width: 768px)
+{
+    .button-grid {
+        grid-auto-flow: row;
+    }
+}
+
 .form-buttons a, .form-buttons input {
     margin-top: 5px;
 }
-
-
 
 @media (min-width: 768px)
 {
