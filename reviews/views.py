@@ -3,6 +3,7 @@ from datetime import date
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
@@ -127,7 +128,7 @@ class ToConcludeProposalView(BaseReviewListView):
 
 
 class InRevisionReviewsView(BaseReviewListView):
-    
+
     group_required = [settings.GROUP_SECRETARY]
 
     def get_context_data(self, **kwargs):
@@ -281,10 +282,23 @@ class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
     template_name = 'reviews/review_discontinue_form.html'
     group_required = settings.GROUP_SECRETARY
 
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        review = self.get_object()
+
+        if review.continuation in [review.DISCONTINUED,
+                                   review.GO,
+                                   review.GO_POST_HOC,
+                                   ]:
+            return HttpResponseRedirect(self.get_success_url())
+
+        return super().dispatch(
+            request, *args, **kwargs
+        )
+
     def get_success_url(self):
         'Return to the detail view after unsubmission'
-        committee = self.object.proposal.reviewing_committee.name
-        return reverse('reviews:detail', args=[self.object.pk])
+        return reverse('reviews:detail', args=[self.get_object().pk])
 
     def form_valid(self, form):
         'Sets the discontinued continuation on the review'
