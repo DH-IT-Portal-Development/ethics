@@ -126,6 +126,22 @@ class ToConcludeProposalView(BaseReviewListView):
         return context
 
 
+class InRevisionReviewsView(BaseReviewListView):
+    
+    group_required = [settings.GROUP_SECRETARY]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = _("Aanvragen in revisie")
+        context['data_url'] = reverse(
+            "reviews:api:in_revision",
+            args=[self.committee],
+            )
+        return context
+
+
+
 class AllOpenProposalReviewsView(BaseReviewListView):
 
     def get_context_data(self, **kwargs):
