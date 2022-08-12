@@ -101,11 +101,66 @@
                 {% endblocktrans %}
                 <br/>
                 <br/>
-            {% endif %}
+		{% endif %}
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 {% include "base/form_buttons.html" %}
             </form>
         </div>
     </div>
+    <!-- Code for intended start date warning -->
+    <style>
+     .red {
+	 color: red;
+     }
+     #date_start_warning {
+	 margin-top: 0.5rem;
+	 margin-bottom: 0.5rem;
+	 line-height: 1.5;
+     }
+    </style>
+    <script>
+     /* Find date start input */
+     let date_start_input = $("#id_date_start")
+
+     /* Insert warning element */
+     date_start_input.after(`
+<p id="date_start_warning">
+    {% trans "Attentie: Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven!"%}
+</p>
+     `)
+
+     /* Re-select warning paragraph */
+     const date_start_warning = $("#date_start_warning")
+
+     /* Define checker function */
+     function checkDateStart()
+     {
+	 let date_value = date_start_input.val();
+	 let parsed_date = new Date(date_value);
+	 const today = new Date();
+	 let date_difference = parsed_date - today;
+	 const two_weeks_ms = 1000*60*60*24*14;
+	 return date_difference>two_weeks_ms;
+     }
+
+     /* Define warning update function */
+     function updateWarning()
+     {
+	 if (checkDateStart())
+	 {
+	     date_start_warning.removeClass("red");
+	 } else {
+	     date_start_warning.addClass("red");
+	 }
+     }
+     
+     /* Listen for changing of start date */
+     date_start_input.on('change', () =>{
+	 updateWarning();
+	 });
+     
+    </script>
+    
+    
 {% endblock %}

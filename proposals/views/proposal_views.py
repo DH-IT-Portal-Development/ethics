@@ -187,6 +187,9 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
 ##########################
 
 class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+
+    # Note: template_name is auto-generated to proposal_form.html
+    
     def get_initial(self):
         """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
