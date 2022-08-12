@@ -373,7 +373,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         start_date = self.object.date_start
         two_weeks = datetime.timedelta(days=14)
         two_weeks_from_now = datetime.date.today() + two_weeks
-        return start_date < two_weeks_from_now
+        return start_date <= two_weeks_from_now
 
     def is_supervisor_edit_phase(self):
         if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:
