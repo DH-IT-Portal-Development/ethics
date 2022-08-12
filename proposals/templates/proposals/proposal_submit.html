@@ -101,10 +101,12 @@
             <form action="" method="post" enctype="multipart/form-data">
 
             {% if troublesome_pages %}
-                <div class="warning">
+            <div class="warning">
+	      <h5>
                     {% blocktrans trimmed %}
                         Er zijn nog errors gevonden op de volgende pagina's:
                     {% endblocktrans %}
+		    </h5>
                     <ul>
                         {% for error_page in troublesome_pages %}
                             <li>
@@ -119,7 +121,25 @@
                         aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
                     {% endblocktrans %}
                 </div>
-            {% endif %}{% csrf_token %}
+		{% endif %}
+		{% if start_date_warning %}
+		<div class="warning">
+		  <h5>{% trans "Controleer uw beoogde startdatum" %}</h5>
+		  <p>
+		    {% blocktrans trimmed %}
+		    Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC helaas geen officiële goedkeuring meer geven. Controleer daarom bij een revisie altijd of deze nog klopt!
+		    {% endblocktrans %}
+		    {% url "proposals:update" proposal.pk as first_page_url %}
+		    {% blocktrans trimmed %}
+		    De beoogde startdatum vindt u op
+		    <a href="{{first_page_url}}">deze pagina</a>.
+		    {% endblocktrans %}
+		  </p>
+		</div>		
+		{% endif %}
+
+
+		{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 {% if is_practice %}
                 <div class="info">
