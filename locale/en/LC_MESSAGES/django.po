@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-27 14:42+0200\n"
+"POT-Creation-Date: 2022-08-12 15:17+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -311,8 +311,8 @@ msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
 #: main/models.py:67 observations/models.py:127 proposals/models.py:171
-#: studies/models.py:168 studies/models.py:201 tasks/models.py:147
-#: tasks/models.py:159
+#: studies/models.py:168 studies/models.py:201 tasks/models.py:153
+#: tasks/models.py:165
 msgid "Namelijk"
 msgstr "Please specify"
 
@@ -524,27 +524,27 @@ msgid "Maak een amendement van een al goedgekeurde aanvraag"
 msgstr "Create an amendment to an already approved application"
 
 #: main/templates/base/menu.html:32 proposals/menus.py:56
-#: proposals/views/proposal_views.py:71
+#: proposals/views/proposal_views.py:73
 msgid "Mijn conceptaanvragen"
 msgstr "My draft applications"
 
 #: main/templates/base/menu.html:35 proposals/menus.py:60
-#: proposals/views/proposal_views.py:121
+#: proposals/views/proposal_views.py:123
 msgid "Mijn oefenaanvragen"
 msgstr "My practice applications"
 
 #: main/templates/base/menu.html:38 proposals/menus.py:64
-#: proposals/views/proposal_views.py:83
+#: proposals/views/proposal_views.py:85
 msgid "Mijn ingediende aanvragen"
 msgstr "My submitted applications"
 
 #: main/templates/base/menu.html:41 proposals/menus.py:68
-#: proposals/views/proposal_views.py:95
+#: proposals/views/proposal_views.py:97
 msgid "Mijn afgehandelde aanvragen"
 msgstr "My processed applications"
 
 #: main/templates/base/menu.html:44 proposals/menus.py:72
-#: proposals/views/proposal_views.py:107
+#: proposals/views/proposal_views.py:109
 msgid "Mijn aanvragen als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -1322,7 +1322,8 @@ msgid ""
 "Dit veld is verplicht, maar je kunt later terugkomen om "
 "hem                     verder in te vullen."
 msgstr ""
-"This field is required, but you may choose to come back to this page later to fill it in."
+"This field is required, but you may choose to come back to this page later "
+"to fill it in."
 
 #: proposals/forms.py:220
 msgid ""
@@ -2545,7 +2546,7 @@ msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
 #: proposals/templates/proposals/proposal_diff.html:225
-#: proposals/templates/proposals/proposal_submit.html:137
+#: proposals/templates/proposals/proposal_submit.html:157
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
@@ -2555,7 +2556,7 @@ msgid "Aantal woorden:"
 msgstr "Number of words:"
 
 #: proposals/templates/proposals/proposal_form.html:92
-#: proposals/templates/proposals/proposal_submit.html:126
+#: proposals/templates/proposals/proposal_submit.html:146
 msgid ""
 "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling "
 "door de FETC-GW worden ingediend."
@@ -2572,6 +2573,14 @@ msgstr ""
 "You are editing a application from a student/PhD candidate under your "
 "supervision. Please note that this form should be filled in as if you were "
 "that student/PhD candidate. "
+
+#: proposals/templates/proposals/proposal_form.html:129
+msgid ""
+"Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag "
+"ligt, kan de FETC geen officiële goedkeuring meer geven."
+msgstr ""
+"If the intended start date lies within two weeks of submission, the FETC-H "
+"will not be able to provide official approval for this proposal."
 
 #: proposals/templates/proposals/proposal_form_pre_approved.html:85
 msgid ""
@@ -2717,7 +2726,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/proposal_pdf.html:482
 #: proposals/templates/proposals/proposal_pdf_empty.html:386
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:129
-#: proposals/templates/proposals/proposal_submit.html:139
+#: proposals/templates/proposals/proposal_submit.html:159
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2784,7 +2793,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:117
-#: proposals/templates/proposals/proposal_submit.html:133
+#: proposals/templates/proposals/proposal_submit.html:153
 msgid "Aanvraag voor voortoetsing versturen"
 msgstr "Submit application for preliminary assessment"
 
@@ -3119,11 +3128,11 @@ msgstr ""
 "the task-based research form is missing for trajectory %(study_order)s.You "
 "can add it on <a href=\"%(study_link)s\">this page</a>."
 
-#: proposals/templates/proposals/proposal_submit.html:105
+#: proposals/templates/proposals/proposal_submit.html:106
 msgid "Er zijn nog errors gevonden op de volgende pagina's:"
 msgstr "Errors were found on the following pages:"
 
-#: proposals/templates/proposals/proposal_submit.html:117
+#: proposals/templates/proposals/proposal_submit.html:119
 msgid ""
 "Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft "
 "ingevuld. Je kan je aanmelding pas versturen wanneer deze fouten "
@@ -3132,7 +3141,30 @@ msgstr ""
 "This is probably because you have not yet filled in all required fields. You "
 "can submit your application when these errors have been corrected."
 
-#: proposals/templates/proposals/proposal_submit.html:135
+#: proposals/templates/proposals/proposal_submit.html:127
+msgid "Controleer uw beoogde startdatum"
+msgstr "Check your intended start date"
+
+#: proposals/templates/proposals/proposal_submit.html:129
+msgid ""
+"Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC "
+"helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer "
+"daarom bij een revisie altijd of de beoogde startdatum nog klopt."
+msgstr ""
+"Because the intended start date of research activities lies within two weeks "
+"of today, the FETC-H will not be able to provide official approval for this proposal. Please "
+"make sure the entered date is still correct."
+
+#: proposals/templates/proposals/proposal_submit.html:133
+#, python-format
+msgid ""
+"De beoogde startdatum vindt u op <a href=\"%(first_page_url)s\">deze pagina</"
+"a>."
+msgstr ""
+"The intended start date can be edited on <a href=\"%(first_page_url)s\">this "
+"page</a>."
+
+#: proposals/templates/proposals/proposal_submit.html:155
 msgid "Terug naar beoordeling >>"
 msgstr "Back to review >>"
 
@@ -3392,40 +3424,40 @@ msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
 "application."
 
-#: proposals/views/proposal_views.py:38 proposals/views/proposal_views.py:143
+#: proposals/views/proposal_views.py:40 proposals/views/proposal_views.py:145
 msgid "Publiek archief"
 msgstr "Public archive"
 
-#: proposals/views/proposal_views.py:39
+#: proposals/views/proposal_views.py:41
 msgid "Dit overzicht toont alle goedgekeurde aanvragen."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:58
+#: proposals/views/proposal_views.py:60
 msgid "Mijn aanvraag"
 msgstr "My application"
 
-#: proposals/views/proposal_views.py:59
+#: proposals/views/proposal_views.py:61
 msgid "Dit overzicht toont al je aanvragen."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:72
+#: proposals/views/proposal_views.py:74
 msgid "Dit overzicht toont al je nog niet ingediende aanvragen."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:84
+#: proposals/views/proposal_views.py:86
 msgid "Dit overzicht toont al je ingediende aanvragen."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:96
+#: proposals/views/proposal_views.py:98
 msgid "Dit overzicht toont al je beoordeelde aanvragen."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:109
+#: proposals/views/proposal_views.py:111
 msgid ""
 "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:122
+#: proposals/views/proposal_views.py:124
 msgid ""
 "Dit overzicht toont alle oefenaanvragen waar je als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3433,15 +3465,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:229
+#: proposals/views/proposal_views.py:234
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:340
+#: proposals/views/proposal_views.py:345
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:428
+#: proposals/views/proposal_views.py:444
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -5227,7 +5259,7 @@ msgstr "All fields can be edited after copying."
 msgid "Te kopiëren sessie"
 msgstr "Session to be copied"
 
-#: tasks/forms.py:101 tasks/models.py:131
+#: tasks/forms.py:101 tasks/models.py:137
 msgid ""
 "Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, "
 "dus vanaf het moment dat de taak van start gaat tot en met het einde van de "
@@ -5278,19 +5310,19 @@ msgstr ""
 "task, breaks between tasks, and debriefing? (in case of a lab visit from "
 "entering the lab until leaving)"
 
-#: tasks/models.py:78
+#: tasks/models.py:84
 msgid "Sessie {}"
 msgstr "Session {}"
 
-#: tasks/models.py:92
+#: tasks/models.py:98
 msgid "Vastlegging gedrag"
 msgstr "Registration of behaviour"
 
-#: tasks/models.py:115
+#: tasks/models.py:121
 msgid "Wat is de naam van de taak?"
 msgstr "What is the title of the task?"
 
-#: tasks/models.py:121
+#: tasks/models.py:127
 msgid ""
 "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe deze "
 "taak (en de eventuele manipulaties daarbinnen) aan de beantwoording van jouw "
@@ -5306,7 +5338,7 @@ msgstr ""
 "participant. The committee members need to be in the clear on your exact "
 "plans."
 
-#: tasks/models.py:143
+#: tasks/models.py:149
 msgid ""
 "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak "
 "vastgelegd?"
@@ -5314,11 +5346,11 @@ msgstr ""
 "How will the behaviour or the state of the participant be recorded in this "
 "task?"
 
-#: tasks/models.py:154
+#: tasks/models.py:160
 msgid "Kies het soort meting"
 msgstr "Select the type of measurement"
 
-#: tasks/models.py:165
+#: tasks/models.py:171
 msgid ""
 "Krijgt de deelnemer tijdens of na deze taak feedback op hun gedrag of "
 "toestand?"
@@ -5326,11 +5358,11 @@ msgstr ""
 "Will the participant receive feedback on their behaviour or state during or "
 "after this task?"
 
-#: tasks/models.py:172
+#: tasks/models.py:178
 msgid "Beschrijf hoe de feedback wordt gegeven."
 msgstr "Describe how the feedback will be given."
 
-#: tasks/models.py:196
+#: tasks/models.py:202
 msgid "Taak {} in sessie {}"
 msgstr "Task {} in session {}"
 

@@ -126,7 +126,7 @@
      /* Insert warning element */
      date_start_input.after(`
 <p id="date_start_warning">
-    {% trans "Attentie: Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."%}
+    {% trans "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."%}
 </p>
      `)
 
@@ -137,6 +137,9 @@
      function checkDateStart()
      {
 	 let date_value = date_start_input.val();
+	 if (date_value=="") {
+	     return true
+	 }
 	 let parsed_date = new Date(date_value);
 	 let today = new Date();
 	 let date_difference = parsed_date - today;
