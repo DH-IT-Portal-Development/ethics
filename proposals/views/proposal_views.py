@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import datetime
+
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
     UserFormKwargsMixin
 from django.conf import settings
@@ -359,8 +361,19 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         context['troublesome_pages'] = get_form_errors(self.get_object())
         context['pagenr'] = self._get_page_number()
         context['is_supervisor_edit_phase'] = self.is_supervisor_edit_phase()
+        context['start_date_warning'] = self.check_start_date()
 
         return context
+
+    def check_start_date(self):
+        """
+        Return true if the proposal's intended start date lies within
+        two weeks of today.
+        """
+        start_date = self.object.date_start
+        two_weeks = datetime.timedelta(days=14)
+        two_weeks_from_now = datetime.date.today() + two_weeks
+        return start_date < two_weeks_from_now
 
     def is_supervisor_edit_phase(self):
         if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:
