@@ -229,7 +229,7 @@ class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
 
     def get_success_url(self):
         committee = self.object.reviewing_committee.name
-        return reverse('reviews:my_open', args=[committee])
+        return reverse('reviews:detail', args=[self.object.latest_review().pk])
 
 
 class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
@@ -243,7 +243,7 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
 
     def get_success_url(self):
         committee = self.object.proposal.reviewing_committee.name
-        return reverse('reviews:my_open', args=[committee])
+        return reverse('reviews:detail', args=[self.object.pk])
 
     def form_valid(self, form):
         """Updates the Review stage and start the selected Review route for the selected Users."""
@@ -317,7 +317,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         committee = self.object.proposal.reviewing_committee.name
-        return reverse('reviews:my_archive', args=[committee])
+        return reverse('reviews:detail', args=[self.object.pk])
 
     def get_form_kwargs(self):
         """
@@ -451,7 +451,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
     def get_success_url(self):
         if self.is_reviewer():
             committee = self.object.review.proposal.reviewing_committee.name
-            return reverse('reviews:my_archive', args=[committee])
+            return reverse('reviews:detail', args=[self.object.review.pk])
         else:
             return reverse('proposals:my_archive')
 
