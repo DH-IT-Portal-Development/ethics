@@ -74,12 +74,13 @@ def proposal_hero(obj, new=False):
 
 
 @register.inclusion_tag('base/form_buttons.html')
-def form_buttons(obj):
+def form_buttons(obj, back=True):
     """Generates a compare icon"""
 
     if proposal := _get_proposal_object(obj):
         return {
             'proposal': proposal,
+            'no_back': not back
         }
     else:
         # Unknown/unsupported type, so we'll stop here
