@@ -1,13 +1,13 @@
 {% load i18n %}
 
-<div class="mt-3 mb-3 d-flex gap-3">
+<div class="mt-2 mb-2 d-flex flex-column flex-sm-row gap-3 align-items-center">
     {% if not no_back %}
         <button class="btn btn-secondary btn-arrow-left" type="submit" name="save_back">
             {% trans 'Opslaan en vorige stap' %}
         </button>
     {% endif %}
     {% if not no_forward %}
-        <button class="ms-auto btn btn-primary btn-arrow-right" type="submit" name="save_continue">
+        <button class="ms-sm-auto btn btn-primary btn-arrow-right" type="submit" name="save_continue">
             {{ next_text|default:_('Opslaan en volgende stap') }}
         </button>
     {% endif %}
