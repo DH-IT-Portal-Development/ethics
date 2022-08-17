@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% load menu %}
+{% load i18n %}
+{% load static %}
+
+{% block uu-footer %}
+    {% generate_menu %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <div class="col-12 col-md-8">
+        <h5>{% trans "Facultaire Ethische Toetsingscommissie" %}</h5>
+        <p>
+            {% trans "Faculteit Geesteswetenschappen" %}<br/>
+            {% trans "Unversiteit Utrecht" %}
+        </p>
+    </div>
+
+    <div class="col-12 col-md-4 text-end">
+        {% with 'cdh.core/images/logo-footer-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
+            <img src="{% static header_image %}" alt="{% trans 'cdh.core:uu' %}" title="{% trans 'cdh.core:uu' %}"/>
+        {% endwith %}
+    </div>
+{% endblock %}
