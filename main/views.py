@@ -54,7 +54,7 @@ class HomeView(generic.ListView):
     def get_priority_proposals(self):
         proposals = []
 
-        pproposals += Proposal.objects.filter(
+        proposals += Proposal.objects.filter(
             supervisor=self.request.user,
             status=Proposal.SUBMITTED_TO_SUPERVISOR,
             date_reviewed_supervisor=None,
