@@ -148,13 +148,7 @@ function checkDateStart()
 /* Define warning update function */
 function updateWarning()
 {
-  date_start_warning.addClass("red");
-  if (checkDateStart())
-  {
-    date_start_warning.removeClass("red");
-  } else {
-    date_start_warning.addClass("red");
-  }
+  date_start_warning.toggleClass("text-danger", checkDateStart()==false);
 }
 
 /* Listen for changing of start date */
