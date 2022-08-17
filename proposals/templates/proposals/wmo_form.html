@@ -32,7 +32,7 @@
                 {% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}
             </h2>
 
-            <form action="" method="post" enctype="multipart/form-data" class="mt-3">
+            <form action="" class="uu-form" method="post" enctype="multipart/form-data" class="mt-3">
                 {% csrf_token %}
                 {{ form }}
                 <div id="metc_status"></div>

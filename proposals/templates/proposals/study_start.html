@@ -25,14 +25,14 @@
                     text = "{{ is_dissimilar }}";
                 } else {
                     $('input[name="studies_number"]').val('1');
-                    $('input[name^="study_name"]').parents('.row').hide();
-                    $('input[name="study_name_1"]').parents('.row').prev().hide();
+                    $('input[name^="study_name"]').parents('.uu-form-row').hide();
+                    $('input[name="study_name_1"]').parents('.uu-form-row').prev().hide();
                 }
 
                 $('#next_text').html(text);
                 $('#next_text').show();
 
-                $('#id_studies_number').parents('.row').toggle(is_dissimilar);
+                $('#id_studies_number').parents('.uu-form-row').toggle(is_dissimilar);
                 $('#id_studies_number').change();
             });
             $('input[name=studies_similar]').change();
@@ -41,9 +41,9 @@
                 var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
 
                 if (is_dissimilar) {
-                    $('input[name="study_name_1"]').parents('.row').prev().show();
+                    $('input[name="study_name_1"]').parents('.uu-form-row').prev().show();
                     for (var i = 1; i <= 10; i++) {
-                        $('input[name="study_name_' + i + '"]').parents('.row').toggle(i <= $(this).val());
+                        $('input[name="study_name_' + i + '"]').parents('.uu-form-row').toggle(i <= $(this).val());
                     }
                 }
             });

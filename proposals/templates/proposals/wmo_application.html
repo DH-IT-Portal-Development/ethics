@@ -28,7 +28,7 @@
             <h2>
                 {% trans "Aanmelding bij de METC" %}
             </h2>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form action="" class="uu-form" method="post" enctype="multipart/form-data">{% csrf_token %}
                 {{ form }}
                 {% if wmo.status == wmo.WAITING %}
                     <div class="alert alert-warning">

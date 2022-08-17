@@ -34,7 +34,7 @@ $(function() {
                 (referentienummer <em>{{ ref_number }}</em>), traject {{ order }}.
                 {% endblocktrans %}
             </p>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form action="" class="uu-form" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
                 <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Formulieren aanpassen' %}" />

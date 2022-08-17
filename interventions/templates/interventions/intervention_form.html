@@ -28,9 +28,9 @@
                 var url = "{% url 'main:check_requires' %}";
                 var params = {'value': checked_inputs, 'app': 'main', 'model': 'setting', 'field': 'is_school'};
                 $.post(url, params, function (data) {
-                    $('#id_extra_task').parents('.row').toggle(data.result);
+                    $('#id_extra_task').parents('.uu-form-row').toggle(data.result);
                     // Toggle header as well
-                    $('#id_extra_task').parents('.row').prev().toggle(data.result);
+                    $('#id_extra_task').parents('.uu-form-row').prev().toggle(data.result);
                 });
             });
 
