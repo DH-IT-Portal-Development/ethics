@@ -114,8 +114,6 @@ $(function () {
   color: red;
 }
 #date_start_warning {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   line-height: 1.5;
 }
 </style>
@@ -125,7 +123,7 @@ let date_start_input = $("#id_date_start")
 
 /* Insert warning element */
 date_start_input.after(`
-<p id="date_start_warning">
+<p id="date_start_warning" class="mb-2 mt-2">
     {% trans "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."%}
 </p>
 `)
