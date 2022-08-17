@@ -55,9 +55,11 @@
                         Geesteswetenschappen werkt of studeert.
                     {% endblocktrans %}
                 </p>
-                <p>
-
-                </p>
+            </div>
+            <div class="col-12 col-md-4">
+                {% for proposal in proposals %}
+                    {% include "main/homepage_proposal_box.html" %}
+                {% endfor %}
             </div>
         </div>
         <div class="uu-container">

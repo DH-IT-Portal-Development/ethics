@@ -41,6 +41,51 @@ class HomeView(generic.ListView):
     template_name = 'main/index.html'
     model = SystemMessage
 
+    max_n_proposals = 2
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        if self.request.user.is_authenticated:
+            context['proposals'] = self.get_priority_proposals()
+
+        return context
+
+    def get_priority_proposals(self):
+        proposals = []
+
+        pproposals += Proposal.objects.filter(
+            supervisor=self.request.user,
+            status=Proposal.SUBMITTED_TO_SUPERVISOR,
+            date_reviewed_supervisor=None,
+        ).order_by('date_submitted_supervisor')[:self.max_n_proposals]
+
+        if len(proposals) == self.max_n_proposals:
+            return proposals
+
+        n_needed = self.max_n_proposals - len(proposals)
+
+        proposals += Proposal.objects.filter(
+            applicants=self.request.user,
+            status=Proposal.DRAFT,
+        ).distinct().order_by(
+            '-date_modified',
+        )[:n_needed]
+
+        if len(proposals) == self.max_n_proposals:
+            return proposals
+
+        n_needed = self.max_n_proposals - len(proposals)
+
+        proposals += Proposal.objects.filter(
+            applicants=self.request.user,
+            status__gt=Proposal.DRAFT,
+        ).distinct().order_by(
+            '-date_modified',
+        )[:n_needed]
+
+        return proposals
+
     def get_queryset(self):
         now = timezone.now()
         return self.model.objects.filter(
@@ -172,11 +217,11 @@ def user_search(query, page):
     # Paging-more should be true if there are no LDAP results included in this page, the LDAP is available and
     # the query is not a wildcard
     paging_more = not ldap_results_needed and ldap_connection and query != '*'
-    
+
     # Unbind the ldap connection after we are done with it
     if ldap_connection:
         ldap_connection.unbind()
-    
+
     # Return a formatted dict with the results
     return {
         'results':    users,

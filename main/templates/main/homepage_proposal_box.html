@@ -1,0 +1,36 @@
+{% load i18n %}
+
+<div class="text-bg-light mb-2 p-3">
+    <div class="d-flex mb-2 align-items-center">
+        <div class="h3 mb-0">
+            {{ proposal.reference_number }}
+        </div>
+        <div class="text-muted ms-auto">
+            {% if proposal.status == proposal.DRAFT %}
+                {% trans "Laatst bijgewerkt" %}: {{ proposal.date_modified|date:"j-m-Y" }}
+            {% elif proposal.status == proposal.SUBMITTED_TO_SUPERVISOR %}
+                {% trans "Ingediend op" %}: {{ proposal.date_submitted_supervisor|date:"j-m-Y" }}
+            {% else %}
+                {% trans "Ingediend op" %}: {{ proposal.date_submitted|date:"j-m-Y" }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="h4 text-truncate">{{ proposal.title }}</div>
+
+    <div class="text-muted">
+        {{ proposal.get_status_display }}
+    </div>
+
+    <div class="d-flex mt-3">
+        {% if proposal.status == proposal.DRAFT %}
+            <a class="ms-auto btn btn-primary btn-arrow-right" href="{{ proposal.continue_url }}">
+                {% trans "Verder" %}
+            </a>
+        {% elif proposal.status == proposal.SUBMITTED_TO_SUPERVISOR %}
+            <a class="ms-auto btn btn-primary btn-arrow-right" href="{% url 'reviews:decide' proposal.supervisor_decision.pk %}">
+                {% trans "Beoordeel" %}
+            </a>
+        {% endif %}
+    </div>
+</div>
