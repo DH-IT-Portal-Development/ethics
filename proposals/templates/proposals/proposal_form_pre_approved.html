@@ -88,9 +88,7 @@ $(function() {
             {% endif %}
             <form action="" class="uu-form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
+                {{ form }}
                 <div class="alert alert-warning" id="pre_approval_warning">
                     {% url 'proposals:start' as proposal_url %}
                     {% blocktrans trimmed %}
