@@ -90,12 +90,18 @@
                 {% endverbatim %}
             </div>
             <div class="ufl-undertitle-line">
-                <span
-                    v-if="proposal.status >= context.proposal.DECISION_MADE"
-                >
+                <span v-if="proposal.latest_review && proposal.latest_review.continuation == context.review.REVISION">
                     {% trans "Besloten op" %}:
                     {% verbatim %}
                     {{ proposal.date_reviewed | date("DD-MM-YYYY, HH:mm") }}
+                    {% endverbatim %}
+                </span>
+                <span
+                    v-else-if="proposal.date_confirmed"
+                >
+                    {% trans "Besloten op" %}:
+                    {% verbatim %}
+                    {{ proposal.date_confirmed | date("DD-MM-YYYY, HH:mm") }}
                     {% endverbatim %}
                 </span>
                 <span v-else>

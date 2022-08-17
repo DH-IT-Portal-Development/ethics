@@ -9,6 +9,7 @@ from reviews.mixins import CommitteeMixin
 from cdh.vue.rest import FancyListApiView
 
 from main.utils import is_secretary
+from reviews.models import Review
 from .serializers import ProposalSerializer
 from ..models import Proposal
 
@@ -52,6 +53,9 @@ class BaseProposalsApiView(LoginRequiredMixin, FancyListApiView):
         context['proposal'] = {
             'SUBMITTED_TO_SUPERVISOR': Proposal.SUBMITTED_TO_SUPERVISOR,
             'DECISION_MADE': Proposal.DECISION_MADE,
+        }
+        context['review'] = {
+            'REVISION': Review.REVISION,
         }
         context['user_pk'] = self.request.user.pk
 

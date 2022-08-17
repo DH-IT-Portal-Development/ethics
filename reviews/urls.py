@@ -2,6 +2,7 @@ from django.urls import path, include
 
 from .views import \
     AllOpenProposalReviewsView, AllProposalReviewsView, DecisionListView, \
+    InRevisionReviewsView, \
     DecisionMyOpenView, \
     SupervisorDecisionOpenView, \
     DecisionOpenView, \
@@ -21,6 +22,10 @@ urlpatterns = [
     path('<str:committee>/my_open/', DecisionMyOpenView.as_view(), name='my_open'),
     path('<str:committee>/open_decisions/', DecisionOpenView.as_view(),
          name='open'),
+    path('<str:committee>/in_revision/',
+         InRevisionReviewsView.as_view(),
+         name='in_revision',
+         ),
     path('<str:committee>/open/', AllOpenProposalReviewsView.as_view(), name='all_open'),
     path('<str:committee>/open_supervisors/', SupervisorDecisionOpenView.as_view(), name='open_supervisors'),
     path('<str:committee>/to_conclude/', ToConcludeProposalView.as_view(),
