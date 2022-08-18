@@ -242,7 +242,6 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        committee = self.object.proposal.reviewing_committee.name
         return reverse('reviews:detail', args=[self.object.pk])
 
     def form_valid(self, form):
@@ -316,7 +315,6 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        committee = self.object.proposal.reviewing_committee.name
         return reverse('reviews:detail', args=[self.object.pk])
 
     def get_form_kwargs(self):
