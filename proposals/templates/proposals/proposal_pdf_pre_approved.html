@@ -57,6 +57,15 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             Referentienummer {{ reference_number }}
             {% endblocktrans %}
         </h1>
+        <h2>{% trans 'Indiener' %}</h2>
+        <table>
+            <tr>
+                <th>{% trans 'Naam' %}</th><td>{{ proposal.created_by.get_full_name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'E-mail' %}</th><td>{{ proposal.created_by.email }}</td>
+            </tr>
+        </table>
         <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
         <table>
             <tr>
