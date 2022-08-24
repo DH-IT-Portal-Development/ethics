@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from proposals.models import Proposal
 
-
+    
 class Review(models.Model):
     SUPERVISOR = 0
     ASSIGNMENT = 1
@@ -40,6 +40,19 @@ class Review(models.Model):
         (DISCONTINUED, _('Niet verder in behandeling genomen')),
     )
 
+    REVIEW_TYPES = [
+        ("supervisor", _("Beoordeling door eindverantwoordelijke")),
+        ("committee", _("Beoordeling door commissie")),
+    ]
+
+    review_type = models.CharField(
+        _("Soort beoordeling"),
+        choices=REVIEW_TYPES,
+        max_length=50,
+        null=False,
+        blank=False,
+    )
+    
     stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
     short_route = models.BooleanField(
         _('Route'),
@@ -186,3 +199,4 @@ class Decision(models.Model):
 
     def __str__(self):
         return 'Decision #%d by %s on %s: %s' % (self.pk, self.reviewer.username, self.review.proposal, self.go)
+
