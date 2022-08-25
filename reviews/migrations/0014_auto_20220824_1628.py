@@ -2,13 +2,25 @@
 
 from django.db import migrations
 
+
 def choose_review_type(apps, schema_editor):
+    "Assign every review a type based on its stage."
     Review = apps.get_model("reviews", "Review")
     for review in Review.objects.all():
         if review.stage == review.SUPERVISOR:
             review.review_type = "supervisor"
         else:
             review.review_type = "committee"
+        review.save()
+
+
+def choose_stage(apps, schema_editor):
+    "Close all finished reviews of the supervisor type."
+    Review = apps.get_model("reviews", "Review")
+    for review in Review.objects.filter(review_type="supervisor"):
+        if not review.decision_set.exists(go=""):
+            review.stage = review.CLOSED
+        review.save()
 
 
 class Migration(migrations.Migration):
@@ -19,4 +31,5 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunPython(choose_review_type),
+        migrations.RunPython(choose_stage),
     ]
