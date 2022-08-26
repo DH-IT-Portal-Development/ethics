@@ -27,7 +27,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         fields = [
             'is_pre_approved',
             'institution',
-            'relation', 'supervisor',
+            'relation', 'student_program','supervisor',
             'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
             'date_start', 'title',

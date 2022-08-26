@@ -362,6 +362,12 @@ bij dit onderzoek?'),
         null=True,
     )
 
+    student_program = models.CharField(
+        verbose_name=_('Wat is je studierichting?'),
+        max_length = 200,
+        blank=True,
+    )
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='created_by',
