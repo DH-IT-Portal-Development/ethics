@@ -55,9 +55,9 @@
     "fields": {
         "is_local": false,
         "needs_details": true,
-        "description": "Amazon Mechanical Turk (MTurk),",
-        "description_en": "Amazon Mechanical Turk (MTurk)",
-        "description_nl": "Amazon Mechanical Turk (MTurk)",
+        "description": "Amazon Mechanical Turk (MTurk) / Prolific,",
+        "description_en": "Amazon Mechanical Turk (MTurk) / Prolific",
+        "description_nl": "Amazon Mechanical Turk (MTurk) / Prolific",
         "requires_review": true,
         "order": 4
     },
