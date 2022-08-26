@@ -123,6 +123,7 @@ om deze observatie te mogen uitvoeren?'),
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe wordt het gedrag geregistreerd?'))
+    registrations.help_text = _('Help!')
     registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,

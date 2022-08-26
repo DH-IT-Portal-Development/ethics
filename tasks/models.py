@@ -146,7 +146,8 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
 
     registrations = models.ManyToManyField(
         Registration,
-        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?')
+        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'),
+        help_text = _("Help!")
     )
 
     registrations_details = models.CharField(
