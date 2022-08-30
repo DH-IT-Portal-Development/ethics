@@ -37,6 +37,17 @@ class Relation(models.Model):
     def __str__(self):
         return self.description
 
+class StudentContext(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
 
 class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -366,6 +377,14 @@ bij dit onderzoek?'),
         verbose_name=_('Wat is je studierichting?'),
         max_length = 200,
         blank=True,
+    )
+
+    student_context = models.ForeignKey(
+        StudentContext,
+        verbose_name=_("In welke context doe je dit onderzoek?"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
     )
 
     created_by = models.ForeignKey(

@@ -1,6 +1,6 @@
 from modeltranslation.translator import register, TranslationOptions
 
-from .models import Funding, Relation, Institution
+from .models import Funding, Relation, Institution, StudentContext
 
 
 @register(Funding)
@@ -14,5 +14,9 @@ class FundingTranslationOptions(TranslationOptions):
 
 
 @register(Relation)
+class RelationTranslationOptions(TranslationOptions):
+    fields = ('description',)
+
+@register(StudentContext)
 class RelationTranslationOptions(TranslationOptions):
     fields = ('description',)
