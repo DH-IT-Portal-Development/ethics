@@ -66,6 +66,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th><td></td>
             </tr>
             <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th><td>{{ proposal.student_program }}</td>
+            </tr>
+            <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th><td>{% show_yesno %}</td>
             </tr>
             <tr>
