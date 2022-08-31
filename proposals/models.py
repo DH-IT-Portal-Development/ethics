@@ -369,7 +369,7 @@ trajecten.'),
         verbose_name=_('In welke hoedanigheid ben je betrokken \
 bij dit onderzoek?'),
         on_delete=models.CASCADE,
-        blank=True,
+        blank=False,
         null=True,
     )
 
@@ -383,6 +383,13 @@ bij dit onderzoek?'),
         StudentContext,
         verbose_name=_("In welke context doe je dit onderzoek?"),
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
+    student_context_details = models.CharField(
+        verbose_name=('Namelijk:'),
+        max_length=200,
         blank=True,
         null=True,
     )

@@ -28,6 +28,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'is_pre_approved',
             'institution',
             'relation', 'student_program', 'student_context',
+            'student_context_details',
             'supervisor', 'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
             'date_start', 'title',
@@ -45,6 +46,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'is_pre_approved':    forms.RadioSelect(choices=YES_NO),
             'institution':        forms.RadioSelect(),
             'relation':           forms.RadioSelect(),
+            'student_context':    forms.RadioSelect(),
             'other_applicants':   forms.RadioSelect(choices=YES_NO),
             'other_stakeholders': forms.RadioSelect(choices=YES_NO),
             'summary':            forms.Textarea(attrs={
@@ -104,6 +106,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
         self.fields['institution'].empty_label = None
+        self.fields['student_context'].empty_label = None
 
         # Only revisions or amendments are allowed to have a title that's not
         # unique.
