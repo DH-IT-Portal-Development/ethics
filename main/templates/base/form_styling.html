@@ -68,6 +68,8 @@ function intersect(a, b)
 // Checks whether a field is required given the selected inputs
 function check_field_required(input_name, field_name, required_input, app_name, model_name, header=false)
 {
+    // model_name is the name of the model as it is stored in the database (without punctuation)
+    // input_name is the name of the model as it is stored in the form (potentially with punctuation)
     model_name = typeof model_name !== 'undefined' ? model_name : input_name;
 
     $('input[name=' + input_name + ']').change(function() {
