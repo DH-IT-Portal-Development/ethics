@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-31 10:51+0200\n"
+"POT-Creation-Date: 2022-09-01 15:37+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -310,7 +310,7 @@ msgstr "uncertain"
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: main/models.py:67 observations/models.py:128 proposals/models.py:182
+#: main/models.py:67 observations/models.py:129 proposals/models.py:182
 #: studies/models.py:168 studies/models.py:204 tasks/models.py:154
 #: tasks/models.py:166
 msgid "Namelijk"
@@ -1194,14 +1194,30 @@ msgid "Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)"
 msgstr "Upload the permission document (in .pdf or .doc(x)-format) here"
 
 #: observations/models.py:125
+msgid ""
+"Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
+"gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor "
+"deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum.uu."
+"nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-"
+"geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
+"versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde "
+"toestemming, ‘Beeld en geluid’</a>."
+msgstr "Recordings are never anonymous and are not able to be anonymized. Take "
+"note of this when using the terms 'anonymous' and 'anonymized' in the documents "
+"for participants. For more information, see <a href='https://fetc-gw.wp.hum.uu."
+"nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-"
+"geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
+"versie-1.1_21dec2021.pdf' target='_blank'>Guidelines for Informed Consent, ‘Audio and Video’</a>."
+
+#: observations/models.py:126
 msgid "Hoe wordt het gedrag geregistreerd?"
 msgstr "How will the behaviour be recorded?"
 
-#: observations/models.py:134
+#: observations/models.py:135
 msgid "Op hoeveel dagen wordt er geobserveerd (per deelnemer)?"
 msgstr "How many days will observations be taken on (per participant)?"
 
-#: observations/models.py:138
+#: observations/models.py:139
 msgid "Hoeveel uur wordt er gemiddeld per dag geobserveerd?"
 msgstr "How many hours of observation will take place on average per day?"
 
@@ -1728,7 +1744,6 @@ msgid "Wat is je studierichting?"
 msgstr "What is your course of study?"
 
 #: proposals/models.py:384
-#| msgid "In welke hoedanigheid ben je betrokken bij dit onderzoek?"
 msgid "In welke context doe je dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
 
@@ -3474,7 +3489,7 @@ msgid "Je onderzoek hoeft niet te worden beoordeeld door de METC."
 msgstr "Your application does not require assessment by an METC."
 
 #: proposals/views/wmo_views.py:155
-#| msgid "Neem contact op met {secretary} om de twijfels weg te nemen."
+#, python-brace-format
 msgid ""
 "Neem contact op met <a href=\"{link}\">{secretary}</a> om de twijfels weg te "
 "nemen."
@@ -5338,7 +5353,6 @@ msgstr ""
 "task?"
 
 #: tasks/models.py:150
-#| msgid "Help"
 msgid "Help!"
 msgstr "Help"
 
