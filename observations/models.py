@@ -122,6 +122,7 @@ om deze observatie te mogen uitvoeren?'),
 
     registrations = models.ManyToManyField(
         Registration,
+        help_text="Voeg bij ‘audio-opname’ en bij ‘video-opname’ een informatietekstje toe: Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>.",
         verbose_name=_('Hoe wordt het gedrag geregistreerd?'))
 
     registrations_details = models.CharField(
