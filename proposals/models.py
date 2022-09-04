@@ -185,7 +185,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     funding_name = models.CharField(
-        _('Wat is de naam van het gefinancierde project?'),
+        _('Wat is de naam van het gefinancierde project en wat is het projectnummer?'),
         max_length=200,
         blank=True,
         help_text=_(
