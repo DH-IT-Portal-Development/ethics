@@ -49,7 +49,7 @@ class Review(models.Model):
         _("Soort beoordeling"),
         choices=REVIEW_TYPES,
         max_length=50,
-        null=False,
+        null=True,
         blank=False,
     )
     
