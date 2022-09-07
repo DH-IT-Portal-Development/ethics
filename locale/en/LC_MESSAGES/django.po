@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-04 14:18+0200\n"
+"POT-Creation-Date: 2022-09-07 10:41+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -311,8 +311,8 @@ msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
 #: main/models.py:67 observations/models.py:129 proposals/models.py:182
-#: studies/models.py:168 studies/models.py:204 tasks/models.py:154
-#: tasks/models.py:166
+#: studies/models.py:168 studies/models.py:204 tasks/models.py:157
+#: tasks/models.py:169
 msgid "Namelijk"
 msgstr "Please specify"
 
@@ -1596,7 +1596,6 @@ msgid "Hoe wordt dit onderzoek gefinancierd?"
 msgstr "How is this study funded?"
 
 #: proposals/models.py:188
-#, fuzzy
 #| msgid "Wat is de naam van het gefinancierde project?"
 msgid ""
 "Wat is de naam van het gefinancierde project en wat is het projectnummer?"
@@ -1751,6 +1750,11 @@ msgstr "What is your course of study?"
 #: proposals/models.py:384
 msgid "In welke context doe je dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
+
+#: proposals/models.py:391
+#| msgid "Namelijk"
+msgid "Namelijk:"
+msgstr "Please specify"
 
 #: proposals/models.py:405
 msgid "Uitvoerende(n) (inclusief uzelf)"
@@ -5358,14 +5362,37 @@ msgstr ""
 "task?"
 
 #: tasks/models.py:150
-msgid "Help!"
-msgstr "Help"
+#, fuzzy
+#| msgid ""
+#| "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
+#| "gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor "
+#| "deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum."
+#| "uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-"
+#| "geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
+#| "versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde "
+#| "toestemming, ‘Beeld en geluid’</a>."
+msgid ""
+"Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
+"gebruik van de term         ‘anoniem’ of ‘geanonimiseerd’ in je documenten "
+"voor deelnemers. Voor meer informatie, zie de         <a href='https://fetc-"
+"gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-"
+"voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
+"versie-1.1_21dec2021.pdf'>         Richtlijnen voor geïnformeerde "
+"toestemming, ‘Beeld en geluid’</a>."
+msgstr ""
+"Recordings are never anonymous and are not able to be anonymized. Take note "
+"of this when using the terms 'anonymous' and 'anonymized' in the documents "
+"for participants. For more information, see <a href='https://fetc-gw.wp.hum."
+"uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-"
+"geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
+"versie-1.1_21dec2021.pdf' target='_blank'>Guidelines for Informed Consent, "
+"‘Audio and Video’ (in Dutch)</a>."
 
-#: tasks/models.py:161
+#: tasks/models.py:164
 msgid "Kies het soort meting"
 msgstr "Select the type of measurement"
 
-#: tasks/models.py:172
+#: tasks/models.py:175
 msgid ""
 "Krijgt de deelnemer tijdens of na deze taak feedback op hun gedrag of "
 "toestand?"
@@ -5373,11 +5400,11 @@ msgstr ""
 "Will the participant receive feedback on their behaviour or state during or "
 "after this task?"
 
-#: tasks/models.py:179
+#: tasks/models.py:182
 msgid "Beschrijf hoe de feedback wordt gegeven."
 msgstr "Describe how the feedback will be given."
 
-#: tasks/models.py:203
+#: tasks/models.py:206
 msgid "Taak {} in sessie {}"
 msgstr "Task {} in session {}"
 
@@ -5501,3 +5528,6 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Help!"
+#~ msgstr "Help"
