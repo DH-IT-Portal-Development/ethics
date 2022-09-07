@@ -23,8 +23,8 @@
     "fields": {
         "needs_details": true,
         "order": 3,
-        "description_nl": "anders, namelijk",
-        "description_en": "other, viz."
+        "description_nl": "anders",
+        "description_en": "other"
     },
     "model": "proposals.studentcontext",
     "pk": 3
