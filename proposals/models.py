@@ -388,7 +388,7 @@ bij dit onderzoek?'),
     )
 
     student_context_details = models.CharField(
-        verbose_name=('Namelijk:'),
+        verbose_name=_('Namelijk:'),
         max_length=200,
         blank=True,
         null=True,
