@@ -1754,7 +1754,7 @@ msgstr "In what capacity are you involved in this application?"
 #: proposals/models.py:391
 #| msgid "Namelijk"
 msgid "Namelijk:"
-msgstr "Please specify"
+msgstr "Please specify:"
 
 #: proposals/models.py:405
 msgid "Uitvoerende(n) (inclusief uzelf)"
@@ -5363,14 +5363,6 @@ msgstr ""
 
 #: tasks/models.py:150
 #, fuzzy
-#| msgid ""
-#| "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
-#| "gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor "
-#| "deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum."
-#| "uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-"
-#| "geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
-#| "versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde "
-#| "toestemming, ‘Beeld en geluid’</a>."
 msgid ""
 "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
 "gebruik van de term         ‘anoniem’ of ‘geanonimiseerd’ in je documenten "
@@ -5528,6 +5520,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Help!"
-#~ msgstr "Help"
