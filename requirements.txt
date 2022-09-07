@@ -6,7 +6,7 @@
 #
 -e git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
     # via -r requirements.in
--e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v2.0.9#egg=uil-django-core
+-e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v2.0.10#egg=uil-django-core
     # via -r requirements.in
 alabaster==0.7.12
     # via sphinx
