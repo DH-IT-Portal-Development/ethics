@@ -178,6 +178,8 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'summary')
 
         self.mark_soft_required(cleaned_data, 'relation')
+        self.mark_soft_required(cleaned_data, 'student_context')
+
 
         relation = cleaned_data.get('relation')
         if relation and relation.needs_supervisor and \
@@ -237,6 +239,10 @@ van het FETC-GW worden opgenomen.')
                                        'funding_details')
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_name',
                                        'funding_name')
+        self.check_dependency_singular(cleaned_data, 'relation', 'check_in_course',
+                                       'student_program')
+        self.check_dependency_singular(cleaned_data, 'student_context', 'needs_details',
+                                       'student_context_details')
 
 
 class ProposalStartPracticeForm(forms.Form):
