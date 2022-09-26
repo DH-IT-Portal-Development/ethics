@@ -22,7 +22,7 @@ class SystemMessage(models.Model):
         (INFO, "Info")
     )
 
-    message = models.CharField(max_length=200)
+    message = models.TextField()
     level = models.IntegerField(choices=LEVELS)
     not_before = models.DateTimeField()
     not_after = models.DateTimeField()
