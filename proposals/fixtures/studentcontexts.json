@@ -1,0 +1,32 @@
+[
+{
+    "fields": {
+        "needs_details": false,
+        "order": 1,
+        "description_nl": "als deel van mijn scriptie",
+        "description_en": "as a part of my thesis"
+    },
+    "model": "proposals.studentcontext",
+    "pk": 1
+},
+{
+    "fields": {
+        "needs_details": false,
+        "order": 2,
+        "description_nl": "als deel van een stage",
+        "description_en": "as part of an internship"
+    },
+    "model": "proposals.studentcontext",
+    "pk": 2
+},
+{
+    "fields": {
+        "needs_details": true,
+        "order": 3,
+        "description_nl": "anders",
+        "description_en": "other"
+    },
+    "model": "proposals.studentcontext",
+    "pk": 3
+}
+]

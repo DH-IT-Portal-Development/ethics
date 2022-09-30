@@ -37,6 +37,17 @@ class Relation(models.Model):
     def __str__(self):
         return self.description
 
+class StudentContext(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
 
 class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -174,7 +185,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     funding_name = models.CharField(
-        _('Wat is de naam van het gefinancierde project?'),
+        _('Wat is de naam van het gefinancierde project en wat is het projectnummer?'),
         max_length=200,
         blank=True,
         help_text=_(
@@ -358,6 +369,27 @@ trajecten.'),
         verbose_name=_('In welke hoedanigheid ben je betrokken \
 bij dit onderzoek?'),
         on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+    )
+
+    student_program = models.CharField(
+        verbose_name=_('Wat is je studierichting?'),
+        max_length = 200,
+        blank=True,
+    )
+
+    student_context = models.ForeignKey(
+        StudentContext,
+        verbose_name=_("In welke context doe je dit onderzoek?"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
+    student_context_details = models.CharField(
+        verbose_name=_('Namelijk:'),
+        max_length=200,
         blank=True,
         null=True,
     )
