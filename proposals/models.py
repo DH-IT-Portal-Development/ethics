@@ -394,6 +394,16 @@ bij dit onderzoek?'),
         null=True,
     )
 
+    student_justification = models.TextField(
+        verbose_name=_('Studenten (die mensgebonden onderzoek uitvoeren binnen hun \
+            studieprogramma) hoeven in principe geen aanvraag in te dienen bij de \
+            FETC-GW. Bespreek met je begeleider of je daadwerkelijk een aanvraag \
+            moet indienen. Als dat niet hoeft kun je nu je aanvraag afbreken. \
+            Als dat wel moet, geef dan hier aan wat de reden is:'),
+        max_length=500,
+        blank=True,
+    )
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='created_by',
