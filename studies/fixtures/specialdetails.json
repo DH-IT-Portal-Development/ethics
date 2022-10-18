@@ -1,0 +1,82 @@
+[
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 1,
+        "description_nl": "ras of etnische afkomst",
+        "description_en": "race or ethnicity"
+    },
+    "model": "studies.specialdetail",
+    "pk": 1
+},
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 2,
+        "description_nl": "politieke opvattingen",
+        "description_en": "political views"
+    },
+    "model": "studies.specialdetail",
+    "pk": 2
+},
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 3,
+        "description_nl": "religieuze of levensbeschouwelijke overtuigingen",
+        "description_en": "religious or philosophical convictions"
+    },
+    "model": "studies.specialdetail",
+    "pk": 3
+},
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 4,
+        "description_nl": "lidmaatschap van een vakbond",
+        "description_en": "union membership"
+    },
+    "model": "studies.specialdetail",
+    "pk": 4
+},
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 5,
+        "description_nl": "biometrische gegevens met het oog op de unieke identificatie van een persoon",
+        "description_en": "biometric data that makes a person uniquely identifiable"
+    },
+    "model": "studies.specialdetail",
+    "pk": 5
+},
+{
+    "fields": {
+        "medical_traits": true,
+        "order": 6,
+        "description_nl": "gegevens over gezondheid",
+        "description_en": "medical details"
+    },
+    "model": "studies.specialdetail",
+    "pk": 6
+},
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 7,
+        "description_nl": "gegevens met betrekking tot iemands seksuele gedrag of seksuele gerichtheid",
+        "description_en": "details concerning someone's sexual orientation or behaviour"
+    },
+    "model": "studies.specialdetail",
+    "pk": 7
+},
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 8,
+        "description_nl": "strafrechtelijk verleden",
+        "description_en": "criminal history"
+    },
+    "model": "studies.specialdetail",
+    "pk": 8
+}
+]

@@ -18,18 +18,22 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         fields = [
             'age_groups', 'passive_consent', 'passive_consent_details',
             'legally_incapable', 'legally_incapable_details',
+            'has_special_details', 'special_details',
             'has_traits', 'traits', 'traits_details',
             'necessity', 'necessity_reason',
             'recruitment', 'recruitment_details',
             'compensation', 'compensation_details',
-            'hierarchy', 'hierarchy_details'
+            'hierarchy', 'hierarchy_details',
+            
         ]
         widgets = {
             'age_groups':        forms.CheckboxSelectMultiple(),
             'passive_consent':   forms.RadioSelect(choices=YES_NO),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
+            'has_special_details': forms.RadioSelect(choices=YES_NO),
             'has_traits':        forms.RadioSelect(choices=YES_NO),
             'hierarchy':         forms.RadioSelect(choices=YES_NO),
+            'special_details':   forms.CheckboxSelectMultiple(),
             'traits':            forms.CheckboxSelectMultiple(),
             'necessity':         forms.RadioSelect(),
             'recruitment':       forms.CheckboxSelectMultiple(),
@@ -85,6 +89,8 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.check_empty(cleaned_data, 'has_traits')
         self.check_dependency(cleaned_data, 'has_traits', 'traits', _(
             'Je dient minimaal een bijzonder kenmerk te selecteren.'))
+        self.check_dependency(cleaned_data, 'has_special_details', 'special_details', True, _(
+            'Je dient minimaal één type gegevens te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details',
                                        'traits_details')
         self.check_dependency_singular(cleaned_data, 'compensation',

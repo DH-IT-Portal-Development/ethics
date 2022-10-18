@@ -34,6 +34,7 @@ $(function() {
     });
     $('input[name=age_groups]').change();
 
+    depends_on_value('has_special_details', 'True', 'special_details');
     depends_on_value('has_traits', 'True', 'traits');
     check_field_required('traits', 'needs_details', 'traits_details', 'studies', 'Trait');
     check_field_required('compensation', 'needs_details', 'compensation_details', 'studies');
@@ -42,6 +43,7 @@ $(function() {
 
     add_title('age_groups', "{% trans 'De leeftijdsgroep van je deelnemers' %}");
     add_title('legally_incapable', "{% trans 'Wilsonbekwaamheid' %}");
+    add_title('has_special_details', "{% trans 'Bijzondere persoonsgegevens' %}");
     add_title('has_traits', "{% trans 'Bijzondere kenmerken van de deelnemers' %}");
     add_title('necessity', "{% trans 'Noodzakelijkheid' %}");
     add_title('recruitment', "{% trans 'Werving' %}");
