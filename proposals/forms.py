@@ -178,7 +178,6 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'summary')
 
         self.mark_soft_required(cleaned_data, 'relation')
-        self.mark_soft_required(cleaned_data, 'student_context')
 
 
         relation = cleaned_data.get('relation')
@@ -188,6 +187,10 @@ van het FETC-GW worden opgenomen.')
                 _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
             self.add_error('supervisor', error)
+
+        if relation.check_in_course:
+            self.mark_soft_required(cleaned_data, 'student_context')
+
 
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
