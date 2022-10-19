@@ -87,8 +87,10 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.check_dependency(cleaned_data, 'legally_incapable',
                               'legally_incapable_details')
         self.check_empty(cleaned_data, 'has_traits')
-        self.check_dependency(cleaned_data, 'has_traits', 'traits', True, _(
-            'Je dient minimaal een bijzonder kenmerk te selecteren.'))
+        # self.check_dependency(cleaned_data, 'has_traits', 'traits', True, _(
+        #     'Je dient minimaal een bijzonder kenmerk te selecteren.'))
+        self.check_dependency_multiple(cleaned_data, 'special_details',
+            'medical_traits', 'traits', _('Je dient minimaal een bijzonder kenmerk te selecteren.'))
         self.check_dependency(cleaned_data, 'has_special_details', 'special_details', True, _(
             'Je dient minimaal één type gegevens te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details',
