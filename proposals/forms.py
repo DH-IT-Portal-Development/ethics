@@ -192,6 +192,10 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'student_context')
             self.mark_soft_required(cleaned_data, 'student_justification')
 
+        if relation.check_in_course:
+            self.mark_soft_required(cleaned_data, 'student_context')
+
+
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
         supervisor = cleaned_data.get('supervisor')
