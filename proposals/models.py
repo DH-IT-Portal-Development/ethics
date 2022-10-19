@@ -127,6 +127,9 @@ class Proposal(models.Model):
 
     date_start = models.DateField(
         _('Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?'),
+        help_text=_("NB: Voor een aanvraag van een onderzoek dat al gestart is voordat \
+de FETC-GW de aanvraag heeft goedgekeurd kan geen formele goedkeuring meer \
+gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."),
         blank=True,
         null=True,
     )
