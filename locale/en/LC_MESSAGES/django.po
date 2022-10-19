@@ -1754,16 +1754,31 @@ msgstr "In what capacity are you involved in this application?"
 msgid "Namelijk:"
 msgstr "Please specify:"
 
-#: proposals/models.py:405
+#: proposals/models.py:398
+msgid ""
+"Studenten (die mensgebonden onderzoek uitvoeren binnen hun             "
+"studieprogramma) hoeven in principe geen aanvraag in te dienen bij "
+"de             FETC-GW. Bespreek met je begeleider of je daadwerkelijk een "
+"aanvraag             moet indienen. Als dat niet hoeft kun je nu je aanvraag "
+"afbreken.             Als dat wel moet, geef dan hier aan wat de reden is:"
+msgstr ""
+"Students (who do person-oriented research as part of their program) "
+"do, in principle, not need to submit a proposal with the ethical "
+"committee. Discuss with your supervisor whether you actually need "
+"to submit a proposal. If you do not not, you can terminate your "
+"proposal now. If you do, please explain what the reason is:"
+
+
+#: proposals/models.py:415
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: proposals/models.py:411
+#: proposals/models.py:421
 #: proposals/templates/proposals/vue_templates/proposal_list.html:166
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
-#: proposals/models.py:414
+#: proposals/models.py:424
 msgid ""
 "Aan het einde van de procedure kan je deze aanvraag ter\n"
 "        verificatie naar je eindverantwoordelijke sturen. De\n"
@@ -1785,51 +1800,51 @@ msgstr ""
 "can continue filling in the application while you wait for them to do this, "
 "but remember to come back and fill in this field before submitting."
 
-#: proposals/models.py:439
+#: proposals/models.py:449
 msgid ""
 "Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?"
 msgstr ""
 "Is this application a revision or an amendment of a previously submitted "
 "application?"
 
-#: proposals/models.py:513
+#: proposals/models.py:523
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:516
+#: proposals/models.py:526
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:518 reviews/api/views.py:39 reviews/api/views.py:328
+#: proposals/models.py:528 reviews/api/views.py:39 reviews/api/views.py:328
 #: reviews/templates/reviews/review_detail_sidebar.html:92
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:520
+#: proposals/models.py:530
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:522
+#: proposals/models.py:532
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:524
+#: proposals/models.py:534
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:561
+#: proposals/models.py:571
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:562
+#: proposals/models.py:572
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:563
+#: proposals/models.py:573
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:567
+#: proposals/models.py:577
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1837,11 +1852,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:581
+#: proposals/models.py:591
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:587
+#: proposals/models.py:597
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1849,7 +1864,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:589
+#: proposals/models.py:599
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1870,7 +1885,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:605
+#: proposals/models.py:615
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -1879,15 +1894,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:612
+#: proposals/models.py:622
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:617
+#: proposals/models.py:627
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:655
+#: proposals/models.py:665
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -2526,7 +2541,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_diff.html:49
 #: proposals/templates/proposals/proposal_form.html:7
-#: proposals/templates/proposals/proposal_form.html:98
+#: proposals/templates/proposals/proposal_form.html:99
 #: proposals/templates/proposals/proposal_form_pre_approved.html:7
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/templates/proposals/proposal_pdf.html:82
@@ -2582,12 +2597,12 @@ msgstr "One or more trajectories?"
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
-#: proposals/templates/proposals/proposal_form.html:78
+#: proposals/templates/proposals/proposal_form.html:79
 #: proposals/templates/proposals/proposal_form_pre_approved.html:73
 msgid "Aantal woorden:"
 msgstr "Number of words:"
 
-#: proposals/templates/proposals/proposal_form.html:95
+#: proposals/templates/proposals/proposal_form.html:96
 #: proposals/templates/proposals/proposal_submit.html:126
 msgid ""
 "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling "
@@ -2596,7 +2611,7 @@ msgstr ""
 "You are currently editing a practice application. These can not be submitted "
 "to the FETC-H for review."
 
-#: proposals/templates/proposals/proposal_form.html:100
+#: proposals/templates/proposals/proposal_form.html:101
 msgid ""
 "Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw "
 "supervisie. Let er op dat je het formulier invult alsof jij die student/PhD "
