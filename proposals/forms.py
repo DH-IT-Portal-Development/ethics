@@ -28,7 +28,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'is_pre_approved',
             'institution',
             'relation', 'student_program', 'student_context',
-            'student_context_details',
+            'student_context_details', 'student_justification',
             'supervisor', 'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
             'date_start', 'title',
@@ -178,7 +178,6 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'summary')
 
         self.mark_soft_required(cleaned_data, 'relation')
-        self.mark_soft_required(cleaned_data, 'student_context')
 
 
         relation = cleaned_data.get('relation')
@@ -188,6 +187,10 @@ van het FETC-GW worden opgenomen.')
                 _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
             self.add_error('supervisor', error)
+        
+        if relation.check_in_course:
+            self.mark_soft_required(cleaned_data, 'student_context')
+            self.mark_soft_required(cleaned_data, 'student_justification')
 
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
@@ -243,6 +246,8 @@ van het FETC-GW worden opgenomen.')
                                        'student_program')
         self.check_dependency_singular(cleaned_data, 'student_context', 'needs_details',
                                        'student_context_details')
+        self.check_dependency_singular(cleaned_data, 'relation', 'check_in_course',
+                                       'student_justification')
 
 
 class ProposalStartPracticeForm(forms.Form):
