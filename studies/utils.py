@@ -22,7 +22,7 @@ def check_has_adults(selected_age_groups):
     return bool(set(selected_age_groups).intersection(adult_age_groups))
 
 
-def check_necessity_required(proposal, age_groups, has_traits, legally_incapable):
+def check_necessity_required(proposal, age_groups, legally_incapable):
     """
     This call checks whether the necessity questions are required. They are required when:
     - The researcher requires a supervisor AND one of these cases applies:
@@ -37,7 +37,6 @@ def check_necessity_required(proposal, age_groups, has_traits, legally_incapable
     else:
         required_values = AgeGroup.objects.filter(needs_details=True).values_list('id', flat=True)
         result = bool(set(required_values).intersection(age_groups))
-        result |= bool(has_traits)
         result |= bool(legally_incapable)
     return result
 
