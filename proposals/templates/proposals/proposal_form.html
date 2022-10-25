@@ -23,10 +23,9 @@
             // Add datepicker for date_start, set locale to current language
             $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
-            var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
+            var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'yy-mm-dd';
             $("#id_date_start").datepicker({
                 dateFormat: date_format,
-                minDate: 'now',
             })
 
             // AJAX applicants
