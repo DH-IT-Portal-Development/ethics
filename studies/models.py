@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from xml.dom import HierarchyRequestErr
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q
@@ -210,6 +211,18 @@ cadeautje.'),
         _('Namelijk'),
         max_length=200,
         blank=True)
+    
+    hierarchy = models.BooleanField(
+        verbose_name=_('Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?'),
+        null=True,
+        blank=True,
+    )
+
+    hierarchy_details = models.TextField(
+        verbose_name=_('Zo ja, wat is de relatie (bijv. docent-student)?'),
+        max_length=500,
+        blank=True,
+    )
 
     # Fields with respect to experimental design
     has_intervention = models.BooleanField(

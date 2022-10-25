@@ -179,7 +179,6 @@ van het FETC-GW worden opgenomen.')
 
         self.mark_soft_required(cleaned_data, 'relation')
 
-
         relation = cleaned_data.get('relation')
         if relation and relation.needs_supervisor and \
            not cleaned_data.get('supervisor'):
@@ -187,14 +186,10 @@ van het FETC-GW worden opgenomen.')
                 _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
             self.add_error('supervisor', error)
-        
+
         if relation.check_in_course:
             self.mark_soft_required(cleaned_data, 'student_context')
             self.mark_soft_required(cleaned_data, 'student_justification')
-
-        if relation.check_in_course:
-            self.mark_soft_required(cleaned_data, 'student_context')
-
 
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
@@ -223,7 +218,6 @@ van het FETC-GW worden opgenomen.')
                     code='required',
                 )
             )
-        
 
         if 'is_pre_approved' in cleaned_data:
             if not cleaned_data['is_pre_approved']:
