@@ -16,6 +16,15 @@ def needs_details(selected_values, field='needs_details'):
             break
     return result
 
+@register.filter
+def medical_traits(selected_values, field='medical_traits'):
+    result = False
+    for sv in selected_values:
+        if getattr(sv, field):
+            result = True
+            break
+    return result
+
 
 @register.filter
 def has_adults(study):
