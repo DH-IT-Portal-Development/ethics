@@ -218,17 +218,22 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% endif %}
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th><td>{{ study.has_traits|yesno:_("ja,nee") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th><td>{{ study.has_special_details }}</td>
             </tr>
-            {% if study.has_traits %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
-            </tr>
-            {% if study.traits.all|needs_details %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
-            </tr>
-            {% endif %}
+            {% if study.has_special_details %}
+                <tr>
+                    <th>{% get_verbose_field_name "studies" "study" "special_details" %}</th><td>{{ study.special_details.all|unordered_list }}</td>
+                </tr>
+                {% if study.special_details.all|medical_traits %}
+                    <tr>
+                        <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
+                    </tr>
+                    {% if study.traits.all|needs_details %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
             {% endif %}
             {% if study|necessity_required %}
             <tr>
