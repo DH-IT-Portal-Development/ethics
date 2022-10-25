@@ -127,6 +127,9 @@ class Proposal(models.Model):
 
     date_start = models.DateField(
         _('Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?'),
+        help_text=_("NB: Voor een aanvraag van een onderzoek dat al gestart is voordat \
+de FETC-GW de aanvraag heeft goedgekeurd kan geen formele goedkeuring meer \
+gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."),
         blank=True,
         null=True,
     )
@@ -396,10 +399,10 @@ bij dit onderzoek?'),
 
     student_justification = models.TextField(
         verbose_name=_('Studenten (die mensgebonden onderzoek uitvoeren binnen hun \
-            studieprogramma) hoeven in principe geen aanvraag in te dienen bij de \
-            FETC-GW. Bespreek met je begeleider of je daadwerkelijk een aanvraag \
-            moet indienen. Als dat niet hoeft kun je nu je aanvraag afbreken. \
-            Als dat wel moet, geef dan hier aan wat de reden is:'),
+studieprogramma) hoeven in principe geen aanvraag in te dienen bij de \
+FETC-GW. Bespreek met je begeleider of je daadwerkelijk een aanvraag \
+moet indienen. Als dat niet hoeft kun je nu je aanvraag afbreken. \
+Als dat wel moet, geef dan hier aan wat de reden is:'),
         max_length=500,
         blank=True,
     )

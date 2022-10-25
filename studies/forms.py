@@ -23,8 +23,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             'necessity', 'necessity_reason',
             'recruitment', 'recruitment_details',
             'compensation', 'compensation_details',
-            'hierarchy', 'hierarchy_details',
-            
+            'hierarchy', 'hierarchy_details'
         ]
         widgets = {
             'age_groups':        forms.CheckboxSelectMultiple(),
