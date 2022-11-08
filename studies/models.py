@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from xml.dom import HierarchyRequestErr
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q
@@ -156,6 +157,12 @@ vertegenwoordiger te worden verkregen.'),
     has_traits = models.BooleanField(
         _('Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in jouw onderzoek bij (een deel van) de deelnemers het geval?'),
+        help_text =_("In de meeste gevallen kun je dit soort gegevens alleen verzamelen als je \
+daar toestemming voor hebt: zie de \
+<a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming,</a> \
+‘Bijzondere persoonsgegevens’. Is het in de praktijk onmogelijk of \
+disproportioneel moeilijk om om toestemming te vragen, neem dan \
+eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, voordat je je aanvraag indient."),
         null=True,
         blank=True
     )
@@ -186,6 +193,9 @@ te testen?'),
         verbose_name=_('Hoe worden de deelnemers geworven?'))
     recruitment_details = models.TextField(
         _('Licht toe'),
+        help_text=_('Er zijn specifieke voorbeelddocumenten voor het gebruik van \
+            Amazon Mechanical Turk/Prolific op <a href="{link}">deze pagina</a>.').format(
+                link='https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities'),
         blank=True)
     compensation = models.ForeignKey(
         Compensation,
@@ -201,6 +211,18 @@ cadeautje.'),
         _('Namelijk'),
         max_length=200,
         blank=True)
+    
+    hierarchy = models.BooleanField(
+        verbose_name=_('Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?'),
+        null=True,
+        blank=True,
+    )
+
+    hierarchy_details = models.TextField(
+        verbose_name=_('Zo ja, wat is de relatie (bijv. docent-student)?'),
+        max_length=500,
+        blank=True,
+    )
 
     # Fields with respect to experimental design
     has_intervention = models.BooleanField(

@@ -32,8 +32,9 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         fields = [
             'is_pre_approved',
             'institution',
-            'relation', 'supervisor',
-            'other_applicants', 'applicants',
+            'relation', 'student_program', 'student_context',
+            'student_context_details', 'student_justification',
+            'supervisor', 'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
             'date_start', 'title',
             'summary', 'pre_assessment_pdf',
@@ -49,7 +50,8 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         widgets = {
             'is_pre_approved':    BootstrapRadioSelect(choices=YES_NO),
             'institution':        BootstrapRadioSelect(),
-            'relation':           BootstrapRadioSelect(),
+            'relation':           BootstrapRadioSelect,
+            'student_context':    BootstrapRadioSelect(),
             'other_applicants':   BootstrapRadioSelect(choices=YES_NO),
             'other_stakeholders': BootstrapRadioSelect(choices=YES_NO),
             'date_start':         DateInput(),
@@ -109,6 +111,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
         self.fields['institution'].empty_label = None
+        self.fields['student_context'].empty_label = None
 
         # Only revisions or amendments are allowed to have a title that's not
         # unique.
@@ -189,6 +192,10 @@ van het FETC-GW worden opgenomen.')
                 code='required')
             self.add_error('supervisor', error)
 
+        if relation.check_in_course:
+            self.mark_soft_required(cleaned_data, 'student_context')
+            self.mark_soft_required(cleaned_data, 'student_justification')
+
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
         supervisor = cleaned_data.get('supervisor')
@@ -217,7 +224,6 @@ van het FETC-GW worden opgenomen.')
                 )
             )
 
-
         if 'is_pre_approved' in cleaned_data:
             if not cleaned_data['is_pre_approved']:
                 error = forms.ValidationError(
@@ -239,6 +245,12 @@ van het FETC-GW worden opgenomen.')
                                        'funding_details')
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_name',
                                        'funding_name')
+        self.check_dependency_singular(cleaned_data, 'relation', 'check_in_course',
+                                       'student_program')
+        self.check_dependency_singular(cleaned_data, 'student_context', 'needs_details',
+                                       'student_context_details')
+        self.check_dependency_singular(cleaned_data, 'relation', 'check_in_course',
+                                       'student_justification')
 
 
 class ProposalStartPracticeForm(forms.Form):

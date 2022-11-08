@@ -37,6 +37,17 @@ class Relation(models.Model):
     def __str__(self):
         return self.description
 
+class StudentContext(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
 
 class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -116,6 +127,9 @@ class Proposal(models.Model):
 
     date_start = models.DateField(
         _('Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?'),
+        help_text=_("NB: Voor een aanvraag van een onderzoek dat al gestart is voordat \
+de FETC-GW de aanvraag heeft goedgekeurd kan geen formele goedkeuring meer \
+gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."),
         blank=True,
         null=True,
     )
@@ -174,7 +188,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     funding_name = models.CharField(
-        _('Wat is de naam van het gefinancierde project?'),
+        _('Wat is de naam van het gefinancierde project en wat is het projectnummer?'),
         max_length=200,
         blank=True,
         help_text=_(
@@ -358,8 +372,39 @@ trajecten.'),
         verbose_name=_('In welke hoedanigheid ben je betrokken \
 bij dit onderzoek?'),
         on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+    )
+
+    student_program = models.CharField(
+        verbose_name=_('Wat is je studierichting?'),
+        max_length = 200,
+        blank=True,
+    )
+
+    student_context = models.ForeignKey(
+        StudentContext,
+        verbose_name=_("In welke context doe je dit onderzoek?"),
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
+    )
+
+    student_context_details = models.CharField(
+        verbose_name=_('Namelijk:'),
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+
+    student_justification = models.TextField(
+        verbose_name=_('Studenten (die mensgebonden onderzoek uitvoeren binnen hun \
+studieprogramma) hoeven in principe geen aanvraag in te dienen bij de \
+FETC-GW. Bespreek met je begeleider of je daadwerkelijk een aanvraag \
+moet indienen. Als dat niet hoeft kun je nu je aanvraag afbreken. \
+Als dat wel moet, geef dan hier aan wat de reden is:'),
+        max_length=500,
+        blank=True,
     )
 
     created_by = models.ForeignKey(

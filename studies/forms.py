@@ -24,12 +24,14 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             'necessity', 'necessity_reason',
             'recruitment', 'recruitment_details',
             'compensation', 'compensation_details',
+            'hierarchy', 'hierarchy_details'
         ]
         widgets = {
             'age_groups':        BootstrapCheckboxSelectMultiple(),
             'passive_consent':   BootstrapRadioSelect(choices=YES_NO),
             'legally_incapable': BootstrapRadioSelect(choices=YES_NO),
             'has_traits':        BootstrapRadioSelect(choices=YES_NO),
+            'hierarchy':         BootstrapRadioSelect(choices=YES_NO),
             'traits':            BootstrapCheckboxSelectMultiple(),
             'necessity':         BootstrapRadioSelect(),
             'recruitment':       BootstrapCheckboxSelectMultiple(),
@@ -91,6 +93,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                                        'needs_details', 'compensation_details')
         self.check_dependency_multiple(cleaned_data, 'recruitment',
                                        'needs_details', 'recruitment_details')
+        self.check_dependency(cleaned_data, 'hierarchy', 'hierarchy_details', True, _('Leg uit wat de hiërarchische relatie is.'))
 
     def necessity_required(self, cleaned_data):
         """

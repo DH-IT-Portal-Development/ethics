@@ -13,6 +13,10 @@
     <script>
         $(function () {
             check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
+            check_field_required('relation', 'check_in_course', 'student_program', 'proposals');
+            check_field_required('relation', 'check_in_course', 'student_context', 'proposals');
+            check_field_required('relation', 'check_in_course', 'student_justification', 'proposals');
+            check_field_required('student_context', 'needs_details', 'student_context_details', 'proposals', 'studentcontext');
             depends_on_value('other_applicants', 'True', 'applicants');
             depends_on_value('other_stakeholders', 'True', 'stakeholders');
             check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
@@ -69,17 +73,62 @@
                 }, false);
             }
         });
+
+        /* Find date start input */
+        let date_start_input = $("#id_date_start")
+
+        /* Insert warning element */
+        date_start_input.after(`
+            <p id="date_start_warning" class="mb-2 mt-2">
+            {% trans "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."%}
+            </p>
+        `)
+
+        /* Re-select warning paragraph */
+        const date_start_warning = $("#date_start_warning")
+
+        /* Define checker function */
+        function checkDateStart() {
+            let date_value = date_start_input.val();
+            if (date_value=="") {
+                return true
+            }
+            let parsed_date = new Date(date_value);
+            let today = new Date();
+            let date_difference = parsed_date - today;
+            const two_weeks_ms = 1000*60*60*24*14;
+            return date_difference>two_weeks_ms;
+        }
+
+        /* Define warning update function */
+        function updateWarning() {
+            date_start_warning.toggleClass("text-danger", checkDateStart()==false);
+        }
+
+        /* Listen for changing of start date */
+        date_start_input.on('change', () => {
+            updateWarning();
+        });
+
+        /* Give the update function a warmup run */
+        updateWarning();
     </script>
+    <style>
+        #date_start_warning {
+            line-height: 1.5;
+        }
+    </style>
 {% endblock %}
 
-
-{% block uu-content %}
+{% block pre-messages-content %}
     {% proposal_hero object create %}
     {% display_messages messages %}
+{% endblock %}
+
+{% block content %}
     <div class="uu-container flex-lg-nowrap gap-3 gap-lg-5">
         {% stepper object create is_pre_assessment %}
         <div class="flex-fill">
-
             {% if is_practice %}
                 <div class="alert alert-info">
                     {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
@@ -89,9 +138,7 @@
             {% if not create and is_supervisor %}
                 {% blocktrans trimmed %}
                     Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je
-                    het
-                    formulier
-                    invult alsof jij die student/PhD kandidaat bent.
+                    het formulier invult alsof jij die student/PhD kandidaat bent.
                 {% endblocktrans %}
                 <br/>
                 <br/>
@@ -105,4 +152,3 @@
         </div>
     </div>
 {% endblock %}
-

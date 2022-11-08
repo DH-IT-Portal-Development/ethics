@@ -31,7 +31,7 @@
                     {% trans "Aanmelding klaar voor versturen" %}
                 {% endif %}
             </h2>
-        {% if troublesome_pages %}
+            {% if troublesome_pages %}
                 <div class="alert alert-warning text-center">
                     {% blocktrans trimmed %}
                         Er zijn nog errors gevonden op de volgende pagina's:
@@ -50,6 +50,21 @@
                         aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
                     {% endblocktrans %}
                 </div>
+            {% endif %}
+            {% if start_date_warning %}
+            <div class="alert alert-warning text-center">
+                <p>{% trans "Controleer uw beoogde startdatum" %}</p>
+                <p>
+                    {% blocktrans trimmed %}
+                    Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer daarom bij een revisie altijd of de beoogde startdatum nog klopt.
+                    {% endblocktrans %}
+                    {% url "proposals:update" proposal.pk as first_page_url %}
+                    {% blocktrans trimmed %}
+                    De beoogde startdatum vindt u op
+                    <a href="{{first_page_url}}">deze pagina</a>.
+                    {% endblocktrans %}
+                </p>
+            </div>
             {% endif %}
             <p>
                 {% if proposal.is_pre_assessment %}
@@ -122,8 +137,27 @@
 
             <form action="" method="post" enctype="multipart/form-data" class="uu-form mt-3">
 
-            {% csrf_token %}
-                {{ form }}
+            {% if troublesome_pages %}
+                <div class="warning">
+                    {% blocktrans trimmed %}
+                        Er zijn nog errors gevonden op de volgende pagina's:
+                    {% endblocktrans %}
+                    <ul>
+                        {% for error_page in troublesome_pages %}
+                            <li>
+                                <a href="{{ error_page.url }}">
+                                    {{ error_page.page_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% blocktrans trimmed %}
+                        Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft ingevuld. Je kan je
+                        aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
+                    {% endblocktrans %}
+                </div>
+            {% endif %}{% csrf_token %}
+                <table>{{ form.as_table }}</table>
                 {% if is_practice %}
                 <div class="info">
                     {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
