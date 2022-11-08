@@ -18,8 +18,9 @@ django-user-agents
 pillow>=6.0
 pygments
 requests
--e git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.0.0-alpha9#egg=cdh-django-core
+-e git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.0.0#egg=cdh-django-core
 -e git+https://github.com/DH-IT-Portal-Development/python-docx2txt#egg=docx2txt
 python-magic
 pdftotext
 bpython
+pip-tools
