@@ -12,7 +12,7 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
     HideFromArchiveView, ProposalsExportView, ProposalStartPreApproved, \
     ProposalCreatePreApproved, ProposalSubmittedPreApproved, \
-    ProposalSubmitPreApproved, ProposalUpdatePreApproved, ProposalArchiveView, \
+    ProposalSubmitPreApproved, ProposalUpdatePreApproved, ProposalPrivateArchiveView, \
     ProposalCopyAmendment
 
 from .views.study_views import StudyStart, StudyConsent
@@ -35,7 +35,7 @@ urlpatterns = [
         # through the list and picks the first one that fits, and the regex
         # will always fit for the other 2 URL's, effectively superseding them
         # if it's above them).
-        path('<str:committee>/', ProposalArchiveView.as_view(),
+        path('<str:committee>/', ProposalPrivateArchiveView.as_view(),
              name='archive'),
     ])),
 

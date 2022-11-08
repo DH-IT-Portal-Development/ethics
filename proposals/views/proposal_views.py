@@ -132,7 +132,8 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
+    template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -191,7 +192,7 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
 class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
 
     # Note: template_name is auto-generated to proposal_form.html
-    
+
     def get_initial(self):
         """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
