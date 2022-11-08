@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-12 15:17+0200\n"
+"POT-Creation-Date: 2022-11-08 13:01+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -352,6 +352,7 @@ msgstr "Username"
 
 #: main/templates/auth/user_detail.html:30
 #: proposals/templates/proposals/proposal_pdf.html:79
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:66
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -365,6 +366,7 @@ msgid "Referentienummer"
 msgstr "Reference number"
 
 #: main/templates/auth/user_detail.html:52
+#: proposals/templates/proposals/proposal_public_archive.html:21
 #: reviews/templates/reviews/vue_templates/decision_list.html:105
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:55
 #: reviews/templates/reviews/vue_templates/review_list.html:97
@@ -379,10 +381,11 @@ msgstr "Proposed title"
 msgid "Fase"
 msgstr "Phase"
 
-#: main/templates/auth/user_detail.html:55 proposals/api/views.py:23
-#: proposals/api/views.py:88 proposals/api/views.py:118
-#: proposals/api/views.py:168
-#: proposals/templates/proposals/vue_templates/proposal_list.html:147
+#: main/templates/auth/user_detail.html:55 proposals/api/views.py:24
+#: proposals/api/views.py:92 proposals/api/views.py:122
+#: proposals/api/views.py:172
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:102
+#: proposals/templates/proposals/vue_templates/proposal_list.html:153
 #: reviews/api/views.py:49 reviews/api/views.py:280 reviews/api/views.py:342
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
@@ -1257,19 +1260,20 @@ msgstr "Observational research"
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/api/views.py:27 proposals/api/views.py:126
-#: proposals/api/views.py:172
+#: proposals/api/views.py:28 proposals/api/views.py:130
+#: proposals/api/views.py:176
 msgid "Datum afgerond"
 msgstr "Date reviewed"
 
-#: proposals/api/views.py:31 proposals/api/views.py:73
-#: proposals/api/views.py:92 proposals/api/views.py:130
-#: proposals/api/views.py:151
-#: proposals/templates/proposals/vue_templates/proposal_list.html:102
+#: proposals/api/views.py:32 proposals/api/views.py:77
+#: proposals/api/views.py:96 proposals/api/views.py:134
+#: proposals/api/views.py:155
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:71
+#: proposals/templates/proposals/vue_templates/proposal_list.html:108
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
-#: proposals/api/views.py:122
+#: proposals/api/views.py:126
 msgid "Datum ingediend bij eindverantwoordelijke"
 msgstr "Date sent to supervisor"
 
@@ -1728,7 +1732,8 @@ msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
 #: proposals/models.py:379
-#: proposals/templates/proposals/vue_templates/proposal_list.html:160
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:115
+#: proposals/templates/proposals/vue_templates/proposal_list.html:166
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -2084,8 +2089,8 @@ msgstr "yes,no,"
 #: proposals/templates/proposals/proposal_pdf.html:304
 #: proposals/templates/proposals/proposal_pdf.html:340
 #: proposals/templates/proposals/proposal_pdf.html:414
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:78
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:88
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:87
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:97
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:70
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:78
 #: tasks/templates/tasks/task_list.html:21
@@ -2138,7 +2143,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_pdf.html:455
 #: proposals/templates/proposals/proposal_pdf.html:460
 #: proposals/templates/proposals/proposal_pdf.html:476
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:122
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:131
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:92
 msgid "Download"
 msgstr "Download"
@@ -2500,7 +2505,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/templates/proposals/proposal_pdf.html:82
 #: proposals/templates/proposals/proposal_pdf_empty.html:60
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:60
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:69
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:59
 #: proposals/utils/proposal_utils.py:40 proposals/utils/proposal_utils.py:55
 #: proposals/utils/validate_proposal.py:33
@@ -2513,7 +2518,7 @@ msgstr "General information about the application"
 #: proposals/templates/proposals/proposal_diff.html:94
 #: proposals/templates/proposals/proposal_diff.html:95
 #: proposals/templates/proposals/proposal_pdf.html:117
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:98
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:107
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:86
 msgid "onbekend"
 msgstr "unknown"
@@ -2575,7 +2580,7 @@ msgstr ""
 "supervision. Please note that this form should be filled in as if you were "
 "that student/PhD candidate. "
 
-#: proposals/templates/proposals/proposal_form.html:129
+#: proposals/templates/proposals/proposal_form.html:124
 msgid ""
 "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag "
 "ligt, kan de FETC geen officiële goedkeuring meer geven."
@@ -2605,11 +2610,13 @@ msgstr ""
 "the <a href=\"%(proposal_url)s\">full form</a>."
 
 #: proposals/templates/proposals/proposal_list.html:42
+#: proposals/templates/proposals/proposal_private_archive.html:42
 #: reviews/templates/reviews/action_explaination.html:18
 msgid "Uitleg"
 msgstr "Explanation"
 
 #: proposals/templates/proposals/proposal_list.html:46
+#: proposals/templates/proposals/proposal_private_archive.html:46
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_next)s\" title=\"Naar volgende stap\"> om naar de "
@@ -2619,6 +2626,7 @@ msgstr ""
 "next step in the progress."
 
 #: proposals/templates/proposals/proposal_list.html:53
+#: proposals/templates/proposals/proposal_private_archive.html:53
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_diff)s\" title=\"Toon verschillen\"> om de "
@@ -2630,6 +2638,7 @@ msgstr ""
 "amendments)."
 
 #: proposals/templates/proposals/proposal_list.html:60
+#: proposals/templates/proposals/proposal_private_archive.html:60
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_delete)s\" title=\"Verwijderen\"> om je aanvraag te "
@@ -2639,6 +2648,7 @@ msgstr ""
 "application."
 
 #: proposals/templates/proposals/proposal_list.html:67
+#: proposals/templates/proposals/proposal_private_archive.html:67
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om een ingediende "
@@ -2648,6 +2658,7 @@ msgstr ""
 "application."
 
 #: proposals/templates/proposals/proposal_list.html:74
+#: proposals/templates/proposals/proposal_private_archive.html:74
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_decide)s\" title=\"Beslissen\"> om je beslissing "
@@ -2657,6 +2668,7 @@ msgstr ""
 "(as a supervisor)."
 
 #: proposals/templates/proposals/proposal_list.html:81
+#: proposals/templates/proposals/proposal_private_archive.html:81
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_hide)s\" title=\"Verbergen\"> om een ingediende "
@@ -2707,10 +2719,12 @@ msgid "Huidige staat van de aanvraag"
 msgstr "Current state of the application"
 
 #: proposals/templates/proposals/proposal_pdf.html:73
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:60
 msgid "Indiener"
 msgstr "Applicant"
 
 #: proposals/templates/proposals/proposal_pdf.html:76
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:63
 #: tasks/templates/tasks/task_list.html:7
 msgid "Naam"
 msgstr "Name"
@@ -2726,7 +2740,7 @@ msgstr "Additional forms"
 
 #: proposals/templates/proposals/proposal_pdf.html:482
 #: proposals/templates/proposals/proposal_pdf_empty.html:386
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:129
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:138
 #: proposals/templates/proposals/proposal_submit.html:159
 msgid "Aanmelding versturen"
 msgstr "Submit application"
@@ -2797,6 +2811,39 @@ msgstr ""
 #: proposals/templates/proposals/proposal_submit.html:153
 msgid "Aanvraag voor voortoetsing versturen"
 msgstr "Submit application for preliminary assessment"
+
+#: proposals/templates/proposals/proposal_public_archive.html:8
+#: proposals/templates/proposals/proposal_public_archive.html:14
+msgid "Goedgekeurde aanvragen"
+msgstr "Approved applications;"
+
+#: proposals/templates/proposals/proposal_public_archive.html:18
+msgid "Referentie nummer"
+msgstr "Reference Number"
+
+#: proposals/templates/proposals/proposal_public_archive.html:19
+msgid "Titel"
+msgstr "Title"
+
+#: proposals/templates/proposals/proposal_public_archive.html:20
+msgid "Aanvrager"
+msgstr "Applicant"
+
+#: proposals/templates/proposals/proposal_public_archive.html:22
+msgid "Datum goedgekeurd"
+msgstr "Approval date"
+
+#: proposals/templates/proposals/proposal_public_archive.html:23
+msgid "FETC-GW Kamer"
+msgstr "FEtC-H cahnger"
+
+#: proposals/templates/proposals/proposal_public_archive.html:42
+msgid "AK"
+msgstr "GC"
+
+#: proposals/templates/proposals/proposal_public_archive.html:44
+msgid "LK"
+msgstr "LC"
 
 #: proposals/templates/proposals/proposal_start.html:7
 #: proposals/templates/proposals/proposal_start.html:13
@@ -3155,8 +3202,8 @@ msgid ""
 "daarom bij een revisie altijd of de beoogde startdatum nog klopt."
 msgstr ""
 "Because the intended start date of research activities lies within two weeks "
-"of today, the FETC-H will not be able to provide official approval for this proposal. Please "
-"make sure the entered date is still correct."
+"of today, the FETC-H will not be able to provide official approval for this "
+"proposal. Please make sure the entered date is still correct."
 
 #: proposals/templates/proposals/proposal_submit.html:133
 #, python-format
@@ -3280,6 +3327,46 @@ msgstr ""
 "You can now describe the nature of <em>each trajectory</em> of the study on "
 "the following pages."
 
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:43
+#: proposals/templates/proposals/vue_templates/proposal_list.html:73
+msgid "Inzien"
+msgstr "Show"
+
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:50
+#: proposals/templates/proposals/vue_templates/proposal_list.html:87
+msgid "Soort aanvraag"
+msgstr "Type of application"
+
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:57
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:65
+#: proposals/templates/proposals/vue_templates/proposal_list.html:94
+#: proposals/templates/proposals/vue_templates/proposal_list.html:102
+msgid "Besloten op"
+msgstr "Concluded on"
+
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:78
+#: proposals/templates/proposals/vue_templates/proposal_list.html:115
+msgid "Status"
+msgstr "State"
+
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:110
+#: proposals/templates/proposals/vue_templates/proposal_list.html:161
+msgid "Nog niet ingediend"
+msgstr "Not yet submitted"
+
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:129
+#: proposals/templates/proposals/vue_templates/proposal_list.html:180
+msgid "Route:"
+msgstr "Route:"
+
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:136
+#: proposals/templates/proposals/vue_templates/proposal_list.html:187
+#: reviews/templates/reviews/vue_templates/decision_list.html:185
+#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:128
+#: reviews/templates/reviews/vue_templates/review_list.html:171
+msgid "Indieners"
+msgstr "Applicants"
+
 #: proposals/templates/proposals/vue_templates/proposal_list.html:41
 #: reviews/templates/reviews/vue_templates/decision_list.html:68
 #: reviews/templates/reviews/vue_templates/decision_list.html:71
@@ -3290,47 +3377,16 @@ msgstr "Decide"
 msgid "Naar volgende stap"
 msgstr "To next step"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:73
-msgid "Inzien"
-msgstr "Show"
-
 #: proposals/templates/proposals/vue_templates/proposal_list.html:80
 msgid "Verberg"
 msgstr "Hide"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:87
-msgid "Soort aanvraag"
-msgstr "Type of application"
-
-#: proposals/templates/proposals/vue_templates/proposal_list.html:96
-msgid "Besloten op"
-msgstr "Concluded on"
-
-#: proposals/templates/proposals/vue_templates/proposal_list.html:109
-msgid "Status"
-msgstr "State"
-
-#: proposals/templates/proposals/vue_templates/proposal_list.html:133
+#: proposals/templates/proposals/vue_templates/proposal_list.html:139
 #: reviews/templates/reviews/vue_templates/decision_list.html:141
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:83
 #: reviews/templates/reviews/vue_templates/review_list.html:126
 msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
-
-#: proposals/templates/proposals/vue_templates/proposal_list.html:155
-msgid "Nog niet ingediend"
-msgstr "Not yet submitted"
-
-#: proposals/templates/proposals/vue_templates/proposal_list.html:174
-msgid "Route:"
-msgstr "Route:"
-
-#: proposals/templates/proposals/vue_templates/proposal_list.html:181
-#: reviews/templates/reviews/vue_templates/decision_list.html:185
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:128
-#: reviews/templates/reviews/vue_templates/review_list.html:171
-msgid "Indieners"
-msgstr "Applicants"
 
 #: proposals/templates/proposals/wmo_application.html:33
 msgid ""
@@ -3428,7 +3484,7 @@ msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
 "application."
 
-#: proposals/views/proposal_views.py:40 proposals/views/proposal_views.py:145
+#: proposals/views/proposal_views.py:40 proposals/views/proposal_views.py:146
 msgid "Publiek archief"
 msgstr "Public archive"
 
@@ -3469,15 +3525,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:234
+#: proposals/views/proposal_views.py:255
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:345
+#: proposals/views/proposal_views.py:366
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:444
+#: proposals/views/proposal_views.py:465
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
