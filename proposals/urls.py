@@ -12,8 +12,9 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
     HideFromArchiveView, ProposalsExportView, ProposalStartPreApproved, \
     ProposalCreatePreApproved, ProposalSubmittedPreApproved, \
-    ProposalSubmitPreApproved, ProposalUpdatePreApproved, ProposalPrivateArchiveView, \
-    ProposalCopyAmendment
+    ProposalSubmitPreApproved, ProposalUpdatePreApproved, \
+    ProposalPrivateArchiveView, \
+    ProposalCopyAmendment, ProposalsPublicArchiveView
 
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
@@ -26,6 +27,8 @@ urlpatterns = [
     path('api/', include('proposals.api.urls', namespace='api')),
     # List views
     path('archive/', include([
+        path('public/', ProposalsPublicArchiveView.as_view(),
+             name='public_archive'),
         path('export/', ProposalsExportView.as_view(), name='archive_export'),
         path('export/<int:pk>/', ProposalsExportView.as_view(),
             name='archive_export'),

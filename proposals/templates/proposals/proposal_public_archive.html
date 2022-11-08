@@ -1,0 +1,54 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+{% get_current_language as language_code %}
+
+{% block header_title %}
+    {% trans 'Goedgekeurde aanvragen' %} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>{% trans 'Goedgekeurde aanvragen' %}</h2>
+            <table class="table table-striped w-100 mt-5">
+                <thead>
+                    <tr>
+                        <th>{% trans 'Referentie nummer' %}</th>
+                        <th>{% trans 'Titel' %}</th>
+                        <th>{% trans 'Aanvrager' %}</th>
+                        <th>{% trans 'Eindverantwoordelijke' %}</th>
+                        <th>{% trans 'Datum goedgekeurd' %}</th>
+                        <th>{% trans 'FETC-GW Kamer' %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proposal in proposal_list %}
+                        <tr>
+                            <td>{{ proposal.reference_number }}</td>
+                            <td>{{ proposal.title }}</td>
+                            <td>{{ proposal.created_by.get_full_name }}</td>
+                            <td>
+                                {% if proposal.supervisor %}
+                                    {{ proposal.supervisor.get_full_name }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ proposal.date_confirmed|date:"d M Y" }}
+                            </td>
+                            <td>
+                                {% if proposal.reviewing_committee.name == "AK" %}
+                                {% trans 'AK' %}
+                                {% else %}
+                                {% trans 'LK' %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br/>
+        </div>
+    </div>
+{% endblock %}

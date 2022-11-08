@@ -148,6 +148,26 @@ class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
         )
 
 
+class ProposalsPublicArchiveView(generic.ListView):
+    template_name = "proposals/proposal_public_archive.html"
+    model = Proposal
+
+    def get_queryset(self):
+        """Returns all the Proposals that have been decided positively upon"""
+        two_years_ago = (
+                datetime.date.today() -
+                datetime.timedelta(weeks=104)
+        )
+        return super().get_queryset().filter(
+            status__gte=Proposal.DECISION_MADE,
+            status_review=True,
+            in_archive=True,
+            date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
+        )
+
+
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
     group_required = [
