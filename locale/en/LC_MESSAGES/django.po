@@ -2815,7 +2815,7 @@ msgstr "Submit application for preliminary assessment"
 #: proposals/templates/proposals/proposal_public_archive.html:8
 #: proposals/templates/proposals/proposal_public_archive.html:14
 msgid "Goedgekeurde aanvragen"
-msgstr "Approved applications;"
+msgstr "Approved applications"
 
 #: proposals/templates/proposals/proposal_public_archive.html:18
 msgid "Referentie nummer"
@@ -2835,7 +2835,7 @@ msgstr "Approval date"
 
 #: proposals/templates/proposals/proposal_public_archive.html:23
 msgid "FETC-GW Kamer"
-msgstr "FEtC-H cahnger"
+msgstr "FEtC-H chamber"
 
 #: proposals/templates/proposals/proposal_public_archive.html:42
 msgid "AK"
