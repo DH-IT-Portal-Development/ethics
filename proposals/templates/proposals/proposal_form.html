@@ -72,46 +72,50 @@
                     $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
                 }, false);
             }
-        });
 
-        /* Find date start input */
-        let date_start_input = $("#id_date_start")
 
-        /* Insert warning element */
-        date_start_input.after(`
-            <p id="date_start_warning" class="mb-2 mt-2">
-            {% trans "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."%}
-            </p>
-        `)
+            /* Find date start input */
+            let date_start_input = $("#id_date_start");
 
-        /* Re-select warning paragraph */
-        const date_start_warning = $("#date_start_warning")
+            console.log(date_start_input)
 
-        /* Define checker function */
-        function checkDateStart() {
-            let date_value = date_start_input.val();
-            if (date_value=="") {
-                return true
+            /* Insert warning element */
+            date_start_input.after(`
+                <p id="date_start_warning" class="mb-2 mt-2">
+                {% trans "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."%}
+                </p>
+            `);
+
+            /* Re-select warning paragraph */
+            const date_start_warning = $("#date_start_warning");
+
+            /* Define checker function */
+            function checkDateStart() {
+                let date_value = date_start_input.val();
+                if (date_value == "") {
+                    return true;
+                }
+                let parsed_date = new Date(date_value);
+                let today = new Date();
+                let date_difference = parsed_date - today;
+                const two_weeks_ms = 1000 * 60 * 60 * 24 * 14;
+                return date_difference > two_weeks_ms;
             }
-            let parsed_date = new Date(date_value);
-            let today = new Date();
-            let date_difference = parsed_date - today;
-            const two_weeks_ms = 1000*60*60*24*14;
-            return date_difference>two_weeks_ms;
-        }
 
-        /* Define warning update function */
-        function updateWarning() {
-            date_start_warning.toggleClass("text-danger", checkDateStart()==false);
-        }
+            /* Define warning update function */
+            function updateWarning() {
+                date_start_warning.toggleClass("text-danger", checkDateStart() == false);
+            }
 
-        /* Listen for changing of start date */
-        date_start_input.on('change', () => {
+            /* Listen for changing of start date */
+            date_start_input.on('change', () => {
+                updateWarning();
+            });
+
+            /* Give the update function a warmup run */
             updateWarning();
         });
 
-        /* Give the update function a warmup run */
-        updateWarning();
     </script>
     <style>
         #date_start_warning {
