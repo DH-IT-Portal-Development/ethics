@@ -2819,7 +2819,7 @@ msgstr "Approved applications"
 
 #: proposals/templates/proposals/proposal_public_archive.html:18
 msgid "Referentie nummer"
-msgstr "Reference Number"
+msgstr "Reference number"
 
 #: proposals/templates/proposals/proposal_public_archive.html:19
 msgid "Titel"
@@ -2834,7 +2834,7 @@ msgid "Datum goedgekeurd"
 msgstr "Approval date"
 
 #: proposals/templates/proposals/proposal_public_archive.html:23
-msgid "FETC-GW Kamer"
+msgid "FETC-GW kamer"
 msgstr "FEtC-H chamber"
 
 #: proposals/templates/proposals/proposal_public_archive.html:42
