@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-10 14:58+0100\n"
+"POT-Creation-Date: 2022-11-10 15:38+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -27,7 +27,6 @@ msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
 #: faqs/menus.py:12 main/templates/base/menu.html:128
-#: main/templates/main/index.html:178
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -36,7 +35,7 @@ msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr " Regulations Linguistics Chamber (LC) "
 
 #: faqs/menus.py:22 main/templates/base/menu.html:134
-#: main/templates/main/index.html:186
+#: main/templates/main/index.html:182
 #: proposals/templates/proposals/proposal_pdf.html:401
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/study_consent.html:68
@@ -861,8 +860,8 @@ msgid ""
 "Het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\" "
 "target=\"blank\">reglement van de FETC-GW</a>."
 msgstr ""
-"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\"  target=\"_blank\">"
-"regulations of the FEtC-H </a>."
+"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\"  "
+"target=\"_blank\">regulations of the FEtC-H </a>."
 
 #: main/templates/main/index.html:75
 msgid ""
@@ -970,19 +969,23 @@ msgid "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer"
 msgstr ""
 "View all processed and approved applications of the Linguistics Chamber"
 
-#: main/templates/main/index.html:182
-msgid "Reglement Linguïstiek Kamer (LK)"
-msgstr "Regulations Linguistics Chamber (LC)"
+#: main/templates/main/index.html:177
+msgid "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"
+msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 
-#: main/templates/main/index.html:189
+#: main/templates/main/index.html:178
+msgid "Reglement van de FETC-GW"
+msgstr "Regulations of the FEtC-H"
+
+#: main/templates/main/index.html:185
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:192
+#: main/templates/main/index.html:188
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: main/templates/main/index.html:205
+#: main/templates/main/index.html:201
 msgid ""
 "<em>Veranderingen in taalgebruik in de portal:</em> Recentelijk is het woord "
 "\"studie\" op de meeste plaatsen vervangen door \"aanvraag\". In het Engels "
@@ -999,11 +1002,11 @@ msgstr ""
 "hesitate to send an email to <a href=\"mailto:portaldev.gw@uu.nl\">portaldev."
 "gw@uu.nl</a>.    "
 
-#: main/templates/main/index.html:211
+#: main/templates/main/index.html:207
 msgid "Bannerfoto door Simona Evsatieva"
 msgstr "Cover image by Simona Evsatieva"
 
-#: main/templates/main/index.html:219
+#: main/templates/main/index.html:215
 #, python-format
 msgid ""
 "\n"
@@ -1017,7 +1020,7 @@ msgstr ""
 "href=\"%(the_url)s\">here</a> with your Solis-ID.\n"
 "\t     "
 
-#: main/templates/main/index.html:225
+#: main/templates/main/index.html:221
 msgid ""
 "\n"
 "                        Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</"
@@ -5496,6 +5499,9 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Reglement Linguïstiek Kamer (LK)"
+#~ msgstr "Regulations Linguistics Chamber (LC)"
 
 #~ msgid ""
 #~ "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
