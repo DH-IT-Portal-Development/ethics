@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-12 15:17+0200\n"
+"POT-Creation-Date: 2022-11-10 14:58+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Generator: Poedit 2.4.1\n"
 
 #: faqs/menus.py:7 main/templates/base/menu.html:125
-#: main/templates/main/index.html:177
+#: main/templates/main/index.html:174
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
 #: faqs/menus.py:12 main/templates/base/menu.html:128
-#: main/templates/main/index.html:181
+#: main/templates/main/index.html:178
 msgid "Reglement Algemene Kamer (AK)"
 msgstr "Regulations General Chamber (GC)"
 
@@ -36,7 +36,7 @@ msgid " Reglement Linguïstiek Kamer (LK) "
 msgstr " Regulations Linguistics Chamber (LC) "
 
 #: faqs/menus.py:22 main/templates/base/menu.html:134
-#: main/templates/main/index.html:189
+#: main/templates/main/index.html:186
 #: proposals/templates/proposals/proposal_pdf.html:401
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/study_consent.html:68
@@ -352,6 +352,7 @@ msgstr "Username"
 
 #: main/templates/auth/user_detail.html:30
 #: proposals/templates/proposals/proposal_pdf.html:79
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:66
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -379,10 +380,10 @@ msgstr "Proposed title"
 msgid "Fase"
 msgstr "Phase"
 
-#: main/templates/auth/user_detail.html:55 proposals/api/views.py:23
-#: proposals/api/views.py:88 proposals/api/views.py:118
-#: proposals/api/views.py:168
-#: proposals/templates/proposals/vue_templates/proposal_list.html:147
+#: main/templates/auth/user_detail.html:55 proposals/api/views.py:24
+#: proposals/api/views.py:92 proposals/api/views.py:122
+#: proposals/api/views.py:172
+#: proposals/templates/proposals/vue_templates/proposal_list.html:153
 #: reviews/api/views.py:49 reviews/api/views.py:280 reviews/api/views.py:342
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
@@ -857,17 +858,13 @@ msgstr ""
 
 #: main/templates/main/index.html:69
 msgid ""
-"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
-"algemene-kamer/\" target=\"blank\">Algemene Kamer (AK)</a> of dat van de <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
-"target=\"blank\">Linguïstiek Kamer (LK)</a>."
+"Het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\" "
+"target=\"blank\">reglement van de FETC-GW</a>."
 msgstr ""
-"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
-"target=\"blank\">Linguistics Chamber</a>."
+"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\"  target=\"_blank\">"
+"regulations of the FEtC-H </a>."
 
-#: main/templates/main/index.html:78
+#: main/templates/main/index.html:75
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" "
@@ -879,7 +876,7 @@ msgstr ""
 "target=\"_blank\">model documents</a> for <em>informed consent</em>. (Latest "
 "version: <u>December 2021</u>)"
 
-#: main/templates/main/index.html:82
+#: main/templates/main/index.html:79
 msgid ""
 "<li>Voor advies over data management (plannen): <a href=\"mailto:"
 "datamanagement.gw@uu.nl\">datamanagement.gw@uu.nl</a>.</li> <li>Voor advies "
@@ -895,97 +892,97 @@ msgstr ""
 "Capel</a>.</li> <li>For questions about the functioning of the portal "
 "itself: <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>.</li>"
 
-#: main/templates/main/index.html:91
+#: main/templates/main/index.html:88
 msgid "In deze portal kan je het volgende doen:"
 msgstr "In this portal you can do the following:"
 
-#: main/templates/main/index.html:100
+#: main/templates/main/index.html:97
 msgid "Dien een nieuwe aanvraag in"
 msgstr "Submit a new proposal"
 
-#: main/templates/main/index.html:105
+#: main/templates/main/index.html:102
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: main/templates/main/index.html:108
+#: main/templates/main/index.html:105
 msgid "op basis van een kopie van een oude aanvraag;"
 msgstr "from a copy of an old proposal;"
 
-#: main/templates/main/index.html:111
+#: main/templates/main/index.html:108
 msgid "voor (al dan niet goedgekeurde) subsidieaanvragen;"
 msgstr "to supplement a grant application"
 
-#: main/templates/main/index.html:114
+#: main/templates/main/index.html:111
 msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: main/templates/main/index.html:120
+#: main/templates/main/index.html:117
 msgid "Een aanvraag reviseren"
 msgstr "Revise a proposal"
 
-#: main/templates/main/index.html:125
+#: main/templates/main/index.html:122
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
-#: main/templates/main/index.html:128
+#: main/templates/main/index.html:125
 msgid "als amendement, wanneer de aanvraag al goedgekeurd is door de FETC-GW."
 msgstr ""
 "as an amendment, after your proposal has already been approved by the FEtC-H."
 
-#: main/templates/main/index.html:136
+#: main/templates/main/index.html:133
 msgid "Bekijk"
 msgstr "View"
 
-#: main/templates/main/index.html:140
+#: main/templates/main/index.html:137
 msgid "mijn conceptaanvragen;"
 msgstr "my draft applications;"
 
-#: main/templates/main/index.html:143
+#: main/templates/main/index.html:140
 msgid "mijn oefenaanvragen;"
 msgstr "my practice applications;"
 
-#: main/templates/main/index.html:146
+#: main/templates/main/index.html:143
 msgid "mijn ingediende aanvragen;"
 msgstr "my submitted applications;"
 
-#: main/templates/main/index.html:149
+#: main/templates/main/index.html:146
 msgid "mijn afgehandelde aanvragen;"
 msgstr "my processed applications;"
 
-#: main/templates/main/index.html:152
+#: main/templates/main/index.html:149
 msgid "mijn aanvragen als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: main/templates/main/index.html:155
+#: main/templates/main/index.html:152
 msgid "al mijn aanvragen."
 msgstr "all my applications"
 
-#: main/templates/main/index.html:159
+#: main/templates/main/index.html:156
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: main/templates/main/index.html:163
+#: main/templates/main/index.html:160
 msgid "Alle goedgekeurde aanvragen bekijken van de Algemene Kamer"
 msgstr "View all processed and approved applications of the General Chamber"
 
-#: main/templates/main/index.html:166
+#: main/templates/main/index.html:163
 msgid "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer"
 msgstr ""
 "View all processed and approved applications of the Linguistics Chamber"
 
-#: main/templates/main/index.html:185
+#: main/templates/main/index.html:182
 msgid "Reglement Linguïstiek Kamer (LK)"
 msgstr "Regulations Linguistics Chamber (LC)"
 
-#: main/templates/main/index.html:192
+#: main/templates/main/index.html:189
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:195
+#: main/templates/main/index.html:192
 msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
-#: main/templates/main/index.html:208
+#: main/templates/main/index.html:205
 msgid ""
 "<em>Veranderingen in taalgebruik in de portal:</em> Recentelijk is het woord "
 "\"studie\" op de meeste plaatsen vervangen door \"aanvraag\". In het Engels "
@@ -1002,11 +999,11 @@ msgstr ""
 "hesitate to send an email to <a href=\"mailto:portaldev.gw@uu.nl\">portaldev."
 "gw@uu.nl</a>.    "
 
-#: main/templates/main/index.html:214
+#: main/templates/main/index.html:211
 msgid "Bannerfoto door Simona Evsatieva"
 msgstr "Cover image by Simona Evsatieva"
 
-#: main/templates/main/index.html:222
+#: main/templates/main/index.html:219
 #, python-format
 msgid ""
 "\n"
@@ -1020,7 +1017,7 @@ msgstr ""
 "href=\"%(the_url)s\">here</a> with your Solis-ID.\n"
 "\t     "
 
-#: main/templates/main/index.html:228
+#: main/templates/main/index.html:225
 msgid ""
 "\n"
 "                        Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</"
@@ -1257,19 +1254,19 @@ msgstr "Observational research"
 msgid "Observatie opgeslagen"
 msgstr "Observation saved"
 
-#: proposals/api/views.py:27 proposals/api/views.py:126
-#: proposals/api/views.py:172
+#: proposals/api/views.py:28 proposals/api/views.py:130
+#: proposals/api/views.py:176
 msgid "Datum afgerond"
 msgstr "Date reviewed"
 
-#: proposals/api/views.py:31 proposals/api/views.py:73
-#: proposals/api/views.py:92 proposals/api/views.py:130
-#: proposals/api/views.py:151
-#: proposals/templates/proposals/vue_templates/proposal_list.html:102
+#: proposals/api/views.py:32 proposals/api/views.py:77
+#: proposals/api/views.py:96 proposals/api/views.py:134
+#: proposals/api/views.py:155
+#: proposals/templates/proposals/vue_templates/proposal_list.html:108
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
-#: proposals/api/views.py:122
+#: proposals/api/views.py:126
 msgid "Datum ingediend bij eindverantwoordelijke"
 msgstr "Date sent to supervisor"
 
@@ -1728,7 +1725,7 @@ msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
 #: proposals/models.py:379
-#: proposals/templates/proposals/vue_templates/proposal_list.html:160
+#: proposals/templates/proposals/vue_templates/proposal_list.html:166
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
@@ -2084,8 +2081,8 @@ msgstr "yes,no,"
 #: proposals/templates/proposals/proposal_pdf.html:304
 #: proposals/templates/proposals/proposal_pdf.html:340
 #: proposals/templates/proposals/proposal_pdf.html:414
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:78
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:88
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:87
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:97
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:70
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:78
 #: tasks/templates/tasks/task_list.html:21
@@ -2138,7 +2135,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_pdf.html:455
 #: proposals/templates/proposals/proposal_pdf.html:460
 #: proposals/templates/proposals/proposal_pdf.html:476
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:122
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:131
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:92
 msgid "Download"
 msgstr "Download"
@@ -2500,8 +2497,10 @@ msgstr ""
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/templates/proposals/proposal_pdf.html:82
 #: proposals/templates/proposals/proposal_pdf_empty.html:60
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:60
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:69
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:59
+#: proposals/templates/proposals/temp_propo_form.html:7
+#: proposals/templates/proposals/temp_propo_form.html:95
 #: proposals/utils/proposal_utils.py:40 proposals/utils/proposal_utils.py:55
 #: proposals/utils/validate_proposal.py:33
 #: proposals/utils/validate_proposal.py:43
@@ -2513,7 +2512,7 @@ msgstr "General information about the application"
 #: proposals/templates/proposals/proposal_diff.html:94
 #: proposals/templates/proposals/proposal_diff.html:95
 #: proposals/templates/proposals/proposal_pdf.html:117
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:98
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:107
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:86
 msgid "onbekend"
 msgstr "unknown"
@@ -2553,11 +2552,13 @@ msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_form.html:75
 #: proposals/templates/proposals/proposal_form_pre_approved.html:73
+#: proposals/templates/proposals/temp_propo_form.html:75
 msgid "Aantal woorden:"
 msgstr "Number of words:"
 
 #: proposals/templates/proposals/proposal_form.html:92
 #: proposals/templates/proposals/proposal_submit.html:146
+#: proposals/templates/proposals/temp_propo_form.html:92
 msgid ""
 "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling "
 "door de FETC-GW worden ingediend."
@@ -2566,6 +2567,7 @@ msgstr ""
 "to the FETC-H for review."
 
 #: proposals/templates/proposals/proposal_form.html:97
+#: proposals/templates/proposals/temp_propo_form.html:97
 msgid ""
 "Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw "
 "supervisie. Let er op dat je het formulier invult alsof jij die student/PhD "
@@ -2575,7 +2577,8 @@ msgstr ""
 "supervision. Please note that this form should be filled in as if you were "
 "that student/PhD candidate. "
 
-#: proposals/templates/proposals/proposal_form.html:129
+#: proposals/templates/proposals/proposal_form.html:124
+#: proposals/templates/proposals/temp_propo_form.html:128
 msgid ""
 "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag "
 "ligt, kan de FETC geen officiële goedkeuring meer geven."
@@ -2707,10 +2710,12 @@ msgid "Huidige staat van de aanvraag"
 msgstr "Current state of the application"
 
 #: proposals/templates/proposals/proposal_pdf.html:73
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:60
 msgid "Indiener"
 msgstr "Applicant"
 
 #: proposals/templates/proposals/proposal_pdf.html:76
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:63
 #: tasks/templates/tasks/task_list.html:7
 msgid "Naam"
 msgstr "Name"
@@ -2726,7 +2731,7 @@ msgstr "Additional forms"
 
 #: proposals/templates/proposals/proposal_pdf.html:482
 #: proposals/templates/proposals/proposal_pdf_empty.html:386
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:129
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:138
 #: proposals/templates/proposals/proposal_submit.html:159
 msgid "Aanmelding versturen"
 msgstr "Submit application"
@@ -3155,8 +3160,8 @@ msgid ""
 "daarom bij een revisie altijd of de beoogde startdatum nog klopt."
 msgstr ""
 "Because the intended start date of research activities lies within two weeks "
-"of today, the FETC-H will not be able to provide official approval for this proposal. Please "
-"make sure the entered date is still correct."
+"of today, the FETC-H will not be able to provide official approval for this "
+"proposal. Please make sure the entered date is still correct."
 
 #: proposals/templates/proposals/proposal_submit.html:133
 #, python-format
@@ -3302,30 +3307,31 @@ msgstr "Hide"
 msgid "Soort aanvraag"
 msgstr "Type of application"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:96
+#: proposals/templates/proposals/vue_templates/proposal_list.html:94
+#: proposals/templates/proposals/vue_templates/proposal_list.html:102
 msgid "Besloten op"
 msgstr "Concluded on"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:109
+#: proposals/templates/proposals/vue_templates/proposal_list.html:115
 msgid "Status"
 msgstr "State"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:133
+#: proposals/templates/proposals/vue_templates/proposal_list.html:139
 #: reviews/templates/reviews/vue_templates/decision_list.html:141
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:83
 #: reviews/templates/reviews/vue_templates/review_list.html:126
 msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:155
+#: proposals/templates/proposals/vue_templates/proposal_list.html:161
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:174
+#: proposals/templates/proposals/vue_templates/proposal_list.html:180
 msgid "Route:"
 msgstr "Route:"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:181
+#: proposals/templates/proposals/vue_templates/proposal_list.html:187
 #: reviews/templates/reviews/vue_templates/decision_list.html:185
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:128
 #: reviews/templates/reviews/vue_templates/review_list.html:171
@@ -5490,3 +5496,14 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "algemene-kamer/\" target=\"blank\">Algemene Kamer (AK)</a> of dat van de "
+#~ "<a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
+#~ "target=\"blank\">Linguïstiek Kamer (LK)</a>."
+#~ msgstr ""
+#~ "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "regulations-general-chamber-2/\" target=\"blank\">General Chamber</a> or "
+#~ "those of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+#~ "linguistics-chamber/\" target=\"blank\">Linguistics Chamber</a>."
