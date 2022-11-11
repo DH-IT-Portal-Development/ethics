@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import ldap
+import os
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.apps import apps
@@ -11,10 +12,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import Q
 from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, FileResponse, \
+    Http404
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
@@ -449,6 +452,27 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
         return super(DeleteView, self).delete(request, *args, **kwargs)
 
 
+class UserMediaView(LoginRequiredMixin, generic.View):
+    """Respond with a given user uploaded file if the request
+    is logged in. Makes it so that user uploads are no longer
+    public."""
+
+    def get_response_file(self, filename):
+        filepath = os.path.join(settings.MEDIA_ROOT, filename)
+        try:
+            f = open(filepath, "rb")
+            return f
+        except FileNotFoundError:
+            raise Http404
+
+    def get(self, request, filename):
+        return FileResponse(
+            self.get_response_file(filename),
+            filename=filename,
+            as_attachment=True,
+        )
+
+
 def success_url(self):
     if 'next' in self.request.GET:
         return self.request.GET['next']
@@ -458,3 +482,4 @@ def success_url(self):
         return self.get_back_url()
     else:
         return reverse('proposals:my_concepts')
+
