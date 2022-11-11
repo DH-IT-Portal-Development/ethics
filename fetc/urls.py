@@ -10,8 +10,6 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
-from main.views import UserMediaView
-
 handler404 = 'main.error_views.error_404'
 handler500 = 'main.error_views.error_500'
 handler403 = 'main.error_views.error_403'
@@ -21,16 +19,6 @@ handler400 = 'main.error_views.error_400'
 urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
-
-    # Access user uploads
-    path('media/<str:filename>',
-         UserMediaView.as_view(),
-         name='user_upload'),
-    # And a duplicate path for user media
-    # Use this for testing on servers that rewrite /media/
-    path('view_media/<str:filename>',
-         UserMediaView.as_view(),
-         name='user_upload_2'),
 
     path('', include('main.urls')),
     path('proposals/', include('proposals.urls')),
@@ -48,7 +36,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('uilcore/', include('uil.core.urls')),
     path('vue/', include('uil.vue.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)
 
 if 'debug_toolbar' in settings.INSTALLED_APPS and settings.DEBUG:
     import debug_toolbar
