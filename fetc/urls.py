@@ -26,11 +26,6 @@ urlpatterns = [
     path('media/<str:filename>',
          UserMediaView.as_view(),
          name='user_upload'),
-    # And a duplicate path for user media
-    # Use this for testing on servers that rewrite /media/
-    path('view_media/<str:filename>',
-         UserMediaView.as_view(),
-         name='user_upload_2'),
 
     path('', include('main.urls')),
     path('proposals/', include('proposals.urls')),
