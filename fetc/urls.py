@@ -10,6 +10,8 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
+from main.views import UserMediaView
+
 handler404 = 'main.error_views.error_404'
 handler500 = 'main.error_views.error_500'
 handler403 = 'main.error_views.error_403'
@@ -41,7 +43,7 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('uilcore/', include('uil.core.urls')),
     path('vue/', include('uil.vue.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)
+]
 
 if 'debug_toolbar' in settings.INSTALLED_APPS and settings.DEBUG:
     import debug_toolbar

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import ldap
+import os
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from django.apps import apps
@@ -11,10 +12,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import Q
 from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, FileResponse, \
+    Http404
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
@@ -493,3 +496,4 @@ def success_url(self):
         return self.get_back_url()
     else:
         return reverse('proposals:my_concepts')
+
