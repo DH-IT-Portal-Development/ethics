@@ -457,8 +457,22 @@ class UserMediaView(LoginRequiredMixin, generic.View):
     is logged in. Makes it so that user uploads are no longer
     public."""
 
+    def get_response_path(self, filename):
+        """Make sure the requested filename exists within MEDIA_ROOT,
+        to prevent upwards directory traversal."""
+        media_root = os.path.realpath(
+            settings.MEDIA_ROOT
+        )
+        filepath = os.path.realpath(
+            os.path.join(media_root, filename),
+        )
+        if not os.path.commonpath([filepath, media_root]) == media_root:
+            raise Http404
+        else:
+            return filepath
+
     def get_response_file(self, filename):
-        filepath = os.path.join(settings.MEDIA_ROOT, filename)
+        filepath = self.get_response_path(filename)
         try:
             f = open(filepath, "rb")
             return f
