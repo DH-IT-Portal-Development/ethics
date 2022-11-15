@@ -16,7 +16,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
-            'age_groups', 'passive_consent', 'passive_consent_details',
+            'age_groups',
             'legally_incapable', 'legally_incapable_details',
             'has_traits', 'traits', 'traits_details',
             'necessity', 'necessity_reason',
@@ -26,7 +26,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         ]
         widgets = {
             'age_groups':        forms.CheckboxSelectMultiple(),
-            'passive_consent':   forms.RadioSelect(choices=YES_NO),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
             'has_traits':        forms.RadioSelect(choices=YES_NO),
             'hierarchy':         forms.RadioSelect(choices=YES_NO),
