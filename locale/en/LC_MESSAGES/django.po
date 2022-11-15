@@ -3140,7 +3140,7 @@ msgid ""
 msgstr ""
 "Because the intended start date of research activities lies within two weeks "
 "of today, the FETC-H will not be able to provide official approval for this "
-"proposal. Please make sure the entered date is still correct."
+"application. Please make sure the entered date is still correct."
 
 #: proposals/templates/proposals/proposal_submit.html:133
 #, python-format
