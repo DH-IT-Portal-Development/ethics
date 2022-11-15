@@ -64,7 +64,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         Check for conditional requirements:
         - Check that a compensation was selected
         - Check whether necessity was required
-        - Check all passive_consent fields are filled in correctly when needed
         - Check that legally_incapable has a value
         - If legally_incapable is set, make sure the details are filled
         - Check that has_traits has a value
@@ -78,7 +77,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.mark_soft_required(cleaned_data, 'compensation', 'recruitment')
 
         self.necessity_required(cleaned_data)
-        self.passive_consent(cleaned_data)
         self.check_dependency(cleaned_data, 'legally_incapable',
                               'legally_incapable_details')
         self.check_empty(cleaned_data, 'has_traits')
@@ -106,23 +104,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                 error = forms.ValidationError(_('Dit veld is verplicht.'),
                                               code='required')
                 self.add_error('necessity_reason', error)
-
-    def passive_consent(self, cleaned_data):
-        """Checks whether the passive consent fields are filled in correctly"""
-        if not 'age_groups' in cleaned_data:
-            return
-
-        if cleaned_data['age_groups'].filter(is_adult=False).exists():
-            if not 'passive_consent' in cleaned_data:
-                error = forms.ValidationError(_('Dit veld is verplicht.'),
-                                              code='required')
-                self.add_error('passive_consent', error)
-
-            if cleaned_data['passive_consent'] and not cleaned_data[
-                'passive_consent_details']:
-                error = forms.ValidationError(_('Dit veld is verplicht.'),
-                                              code='required')
-                self.add_error('passive_consent_details', error)
 
 
 class StudyDesignForm(forms.ModelForm):
