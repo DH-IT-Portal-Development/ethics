@@ -456,9 +456,8 @@ geschoolde specialisten).')),
         return False
 
     def needs_additional_external_forms(self):
-        """This method checks if the school/other external institution forms are needed when passive consent is false"""
-        if self.passive_consent:
-            return False
+        """This method checks if the school/other external institution forms
+        are needed"""
 
         return self.research_settings_contains_schools() and not self.has_participants_below_age(
             16)
