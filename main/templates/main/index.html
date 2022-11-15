@@ -15,9 +15,9 @@
         <div class="col-12">
             {% for message in systemmessage_list %}
                 <div class="{{ message.css_class }}">
-                {% autoescape off %}
-                    {{ message.message }}
-                {% endautoescape %}
+                    {% autoescape off %}
+                        {{ message.message }}
+                    {% endautoescape %}
                 </div>
             {% endfor %}
             <h3>
@@ -33,55 +33,55 @@
         <div class="uu-inner-container">
             <div class="col-12">
 
-            <p>
-                {% blocktrans trimmed %}
+                <p>
+                    {% blocktrans trimmed %}
 
 
-                Formele goedkeuring door één van beide kamers van de FETC-GW (middels een formele goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de Faculteit Geesteswetenschappen. Voorafgaand aan het onderzoek, maar ook voorafgaand aan het rekruteren van deelnemers, moet de aanvraag zijn goedgekeurd. Het is dus van belang om te wachten met de aanvang van het onderzoek tot deze brief ontvangen is.
+                        Formele goedkeuring door één van beide kamers van de FETC-GW (middels een formele goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de Faculteit Geesteswetenschappen. Voorafgaand aan het onderzoek, maar ook voorafgaand aan het rekruteren van deelnemers, moet de aanvraag zijn goedgekeurd. Het is dus van belang om te wachten met de aanvang van het onderzoek tot deze brief ontvangen is.
 
-                {% endblocktrans %}
-</p><p>
-                {% blocktrans trimmed %}
+                    {% endblocktrans %}
+                </p><p>
+                    {% blocktrans trimmed %}
 
 
 
-    NB: Goedgekeurde aanvragen komen in het archief van deze portal te staan, zie het menu hierboven. Dit archief is toegankelijk voor iedereen met een Solis-ID die bij de Faculteit Geesteswetenschappen werkt of studeert.
+                        NB: Goedgekeurde aanvragen komen in het archief van deze portal te staan, zie het menu hierboven. Dit archief is toegankelijk voor iedereen met een Solis-ID die bij de Faculteit Geesteswetenschappen werkt of studeert.
 
-    {% endblocktrans %}
-</p><p>
-    {% blocktrans trimmed %}
+                    {% endblocktrans %}
+                </p><p>
+                    {% blocktrans trimmed %}
 
-    Heb je een vraag over de werking van de portal, ontdek je een foutje, missende functionaliteit, of verkeerde vertaling? Neem dan contact op met  <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.
-                {% endblocktrans %}
+                        Heb je een vraag over de werking van de portal, ontdek je een foutje, missende functionaliteit, of verkeerde vertaling? Neem dan contact op met  <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.
+                    {% endblocktrans %}
 
-            </p>
+                </p>
                 <ul>
-                <li>{% trans "Check voor het indienen:" %}
-                    <ul>
-                    <li>
-                        {% blocktrans trimmed %}
-                            De
-                        <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">
-                            UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
-                        {% endblocktrans %}
+                    <li>{% trans "Check voor het indienen:" %}
+                        <ul>
+                            <li>
+                                {% blocktrans trimmed %}
+                                    De
+                                    <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">
+                                        UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
+                                {% endblocktrans %}
+                            </li>
+                            <li>
+                                {% blocktrans trimmed %}
+                                    Het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/" target="blank">reglement van de FETC-GW</a>.
+                                {% endblocktrans %}
+                            </li>
+                        </ul>
+                        <li>
+                            {% blocktrans trimmed %}
+                                Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. (de laatstse versie is van <u>december 2021</u>)</li>
+                            {% endblocktrans %}
                     </li>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/" target="blank">reglement van de FETC-GW</a>.
-                        {% endblocktrans %}
-                    </li>
-                    </ul>
-                <li>
-                {% blocktrans trimmed %}
-                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. (de laatstse versie is van <u>december 2021</u>)</li>
-                {% endblocktrans %}
-                </li>
-                {% blocktrans trimmed %}
-                    <li>Voor advies over data management (plannen): <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.</li>
-                    <li>Voor advies over privacy zaken: <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.</li>
-                    <li>Voor vragen over de procedure: <a href="mailto:fetc-gw@uu.nl">Desiree Capel</a>.</li>
-                    <li>Voor vragen over de portal zelf: <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.</li>
-                {% endblocktrans %}
+                    {% blocktrans trimmed %}
+                        <li>Voor advies over data management (plannen): <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.</li>
+                        <li>Voor advies over privacy zaken: <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.</li>
+                        <li>Voor vragen over de procedure: <a href="mailto:fetc-gw@uu.nl">Desiree Capel</a>.</li>
+                        <li>Voor vragen over de portal zelf: <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.</li>
+                    {% endblocktrans %}
                 </ul>
 
                 <p>
@@ -96,7 +96,7 @@
                 <h5>
                     {% trans "Dien een nieuwe aanvraag in" %}
                 </h5>
-{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
+                {#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
                 <ul class="startpage-ul">
                     <li>
                         <a href="{% url 'proposals:start' %}">{% trans "die volledig nieuw is in deze portal;" %}</a>
@@ -116,7 +116,7 @@
                 <h5>
                     {% trans "Een aanvraag reviseren" %}
                 </h5>
-{#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
+                {#                {% trans '(check de meest recente voorbeelddocumenten op <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="_blank">intranet</a>)' %}#}
                 <ul class="startpage-ul">
                     <li>
                         <a href="{% url 'proposals:copy_revision' %}">{% trans "als een revisie, gebaseerd op opmerkingen van de FETC-GW;" %}</a>
@@ -192,7 +192,7 @@
 
             </div>
 
-<hr> </hr>
+            <hr> </hr>
 
 
             <div class="col-12 mt-4">            <p>{% trans "Bannerfoto door Simona Evsatieva" %}</p></div>
