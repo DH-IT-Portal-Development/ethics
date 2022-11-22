@@ -12,11 +12,11 @@
   <script>
     // This function hides school-related extra forms
     function hide_school_forms(prefix) {
-    $("#id_" + prefix + "-director_consent_information").parents("tr").hide();
-    $("#id_" + prefix + "-parents_information").parents("tr").hide();
-    // We need prev() to also hide the header for DCC
-    $("#id_" + prefix + "-director_consent_declaration").parents("tr").prev().hide();
-    $("#id_" + prefix + "-director_consent_declaration").parents("tr").hide();
+      $("#id_" + prefix + "-director_consent_information").parents("tr").hide();
+      $("#id_" + prefix + "-parents_information").parents("tr").hide();
+      // We need prev() to also hide the header for DCC
+      $("#id_" + prefix + "-director_consent_declaration").parents("tr").prev().hide();
+      $("#id_" + prefix + "-director_consent_declaration").parents("tr").hide();
     }
     $(function() {
     {# We use a counter so that in case we need more than 2 extra forms, this piece of code just works without changes #}
