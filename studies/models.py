@@ -459,8 +459,7 @@ geschoolde specialisten).')),
         """This method checks if the school/other external institution forms
         are needed"""
 
-        return self.research_settings_contains_schools() and not self.has_participants_below_age(
-            16)
+        return self.research_settings_contains_schools()
 
     def get_documents_object(self):
         """Gets the document object for this study"""
