@@ -332,9 +332,6 @@ def auto_review(proposal: Proposal):
         if study.legally_incapable:
             reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
 
-        if study.passive_consent:
-            reasons.append(_('De aanvraag bevat passieve informed consent.'))
-
         if study.has_observation:
             reasons.extend(auto_review_observation(study.observation))
 
