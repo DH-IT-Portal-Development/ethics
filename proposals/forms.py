@@ -624,13 +624,3 @@ class ProposalSubmitForm(forms.ModelForm):
                     self.add_error('comments', _(
                         'Informatiebrief voor traject {} nog niet toegevoegd.').format(
                         study.order))
-
-                if study.needs_additional_external_forms():
-                    if not documents.director_consent_declaration:
-                        self.add_error('comments', _(
-                            'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
-                            study.order))
-                    if not documents.director_consent_information:
-                        self.add_error('comments', _(
-                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                            study.order))
