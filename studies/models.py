@@ -234,25 +234,7 @@ cadeautje.'),
     has_sessions = models.BooleanField(
         _('Taakonderzoek en interviews'),
         default=False)
-
-    # Fields with respect to informed consent
-    passive_consent = models.BooleanField(
-        _('Maak je gebruik van passieve informed consent?'),
-        help_text=mark_safe_lazy(_('Wanneer je kinderen via een instelling \
-(dus ook school) werft en je de ouders niet laat ondertekenen, maar in \
-plaats daarvan de leiding van die instelling, dan maak je gebruik van \
-passieve informed consent. Je kan de templates vinden op \
-<a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
-target="_blank">de FETC-GW-website</a>.')),
-        null=True,
-        blank=True,
-    )
-    passive_consent_details = models.TextField(
-        _('Licht je antwoord toe. Wij willen je wijzen op het reglement, \
-sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
-toegestaan en draagt niet de voorkeur van de commissie.'),
-        blank=True)
-
+    
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
