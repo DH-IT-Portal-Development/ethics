@@ -408,14 +408,7 @@ geschoolde specialisten).')),
 
     def has_missing_forms(self):
         documents = self.get_documents_object()
-        if self.passive_consent:
-            return not documents.director_consent_declaration or not documents.director_consent_information or not documents.parents_information
-        else:
-            has_missing = False
-            if self.needs_additional_external_forms():
-                has_missing = not documents.director_consent_declaration or not documents.director_consent_information
-
-            return not documents.informed_consent or not documents.briefing or has_missing
+        return not documents.informed_consent or not documents.briefing
 
     def has_missing_sessions(self):
         if self.has_intervention and self.intervention.extra_task:
