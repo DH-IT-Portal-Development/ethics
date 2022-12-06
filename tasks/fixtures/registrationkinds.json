@@ -49,7 +49,7 @@
 },
 {
     "fields": {
-        "requires_review": true,
+        "requires_review": false,
         "needs_details": false,
         "registration": 6,
         "order": 5,
