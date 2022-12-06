@@ -322,9 +322,6 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.sessions_number and study.sessions_number > 1:
-            reasons.append(_('Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek).'))
-
         if study.stressful in [YES, DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
