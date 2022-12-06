@@ -375,7 +375,6 @@ def auto_review_task(study, task):
     Reviews a Task machine-wise.
     Based on the regulations on
     https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
-    NB: currently there are no tasks that require direct classification of 'long route'
     """
     reasons = []
 
@@ -386,10 +385,6 @@ def auto_review_task(study, task):
                     if age_group.age_max is not None and age_group.age_max < registration.age_min:
                         reasons.append(_('De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar.').format(registration.age_min))
                         break
-
-    for registration_kind in task.registration_kinds.all():
-        if registration_kind.requires_review:
-            reasons.append(_('De aanvraag bevat het gebruik van {}').format(registration_kind.description))
 
     return reasons
 
