@@ -157,7 +157,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
 
     other_applicants = models.BooleanField(
         _(
-            'Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?'
+            'Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?'
         ),
         default=False,
     )
@@ -204,8 +204,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
 
     inform_local_staff = models.BooleanField(
         _('<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één \
-van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
-en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op \
+van de faciliteiten van het ILS, namelijk de database, Zep software \
+en/of het ILS lab. Het lab supportteam van het ILS zou graag op \
 de hoogte willen worden gesteld van aankomende onderzoeken. \
 Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te \
 sturen naar het lab supportteam.</p> \
