@@ -6,17 +6,21 @@
     <div class="uu-inner-container">
         <div class="col-12">
             <h2>
+                {# Technically untrue, but we act like it's our fault when it's actually theirs. #}
                 {% trans 'Server error' %}
             </h2>
             <p>
-            {% blocktrans %}
+            {% blocktrans trimmed %}
                 Er is een fout opgetreden tijdens het opvragen van deze pagina.
             {% endblocktrans %}
             </p>
             <p>
-            {% blocktrans %}
-                Blijft dit probleem aanhouden? Neem dan contact op met <a href="https://fetc-gw.wp.hum.uu.nl/contact/" target="_blank">de FETC-GW secretaris</a>.
-            {% endblocktrans %}
+                {% blocktrans trimmed %}
+                    Blijft dit probleem aanhouden?
+                {% endblocktrans %}
+                {% blocktrans trimmed %}
+                    Neem dan contact op met het technisch beheer van de portal via <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
+                {% endblocktrans %}
             </p>
         </div>
     </div>
