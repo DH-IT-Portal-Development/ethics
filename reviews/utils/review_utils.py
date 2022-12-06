@@ -382,6 +382,7 @@ def auto_review_task(study, task):
     Reviews a Task machine-wise.
     Based on the regulations on
     https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
+    NB: currently there are no tasks that require direct classification of 'long route'
     """
     reasons = []
 
