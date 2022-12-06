@@ -332,10 +332,6 @@ fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn.'))
 
         if study.has_sessions:
             for session in study.session_set.all():
-                for setting in session.settings_requires_review():
-                    reasons.append(
-                        _('Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}').format(s=setting))
-
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
                         reasons.append(_('De totale duur van de taken in sessie {s}, exclusief pauzes \
