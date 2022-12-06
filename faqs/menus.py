@@ -10,7 +10,7 @@ help_menu = (
     ),
     MenuItem(
         _("Reglement Algemene Kamer (AK)"),
-        "http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/",
+        "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/",
         open_in_new_tab=True,
     ),
     MenuItem(

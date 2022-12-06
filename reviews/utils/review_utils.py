@@ -303,51 +303,22 @@ def auto_review(proposal: Proposal):
     """
     Reviews a Proposal machine-wise.
     Based on the regulations on
-    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
+    https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
     """
     reasons = []
 
-    # Use the provided date_submitted if available, otherwise pretend it is
-    # today
-    # (It almost certainly is now, as it's only not set when called in the
-    # submit method)
-    if proposal.date_submitted:
-        date_submitted = proposal.date_submitted.date()
-    else:
-        date_submitted = datetime.date.today()
-
-    if proposal.date_start and proposal.date_start < date_submitted:
-        reasons.append(_("De beoogde startdatum ligt voor de datum van "
-                         "indiening"))
-
     for study in proposal.study_set.all():
-
-        if study.has_intervention:
-            reasons.append(_('De aanvraag bevat een interventiestudie.'))
-
-            for setting in study.intervention.settings_requires_review():
-                reasons.append(
-                    _('De aanvraag heeft een interventiestudie met deelnemers in de volgende setting: {s}').format(s=setting))
 
         if study.legally_incapable:
             reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
 
-        if study.passive_consent:
-            reasons.append(_('De aanvraag bevat passieve informed consent.'))
-
-        if study.has_observation:
-            reasons.extend(auto_review_observation(study.observation))
-
         if study.deception in [YES, DOUBT]:
             reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
-
-        if study.compensation.requires_review:
-            reasons.append(_('De beloning van deelnemers wijkt af van de '
-                             'standaardregeling.'))
 
         if study.has_traits:
             reasons.append(_('Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
 
+        # auto_review_task establishes 
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
@@ -381,7 +352,7 @@ def auto_review_observation(observation):
     """
     Reviews an Observation machine-wise.
     Based on the regulations on
-    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
+    https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
     """
     reasons = []
 
@@ -410,7 +381,7 @@ def auto_review_task(study, task):
     """
     Reviews a Task machine-wise.
     Based on the regulations on
-    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
+    https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
     """
     reasons = []
 
