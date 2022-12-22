@@ -174,8 +174,8 @@ vertegenwoordiger te worden verkregen.'),
 
     has_special_details = models.BooleanField(
         verbose_name=_('Worden er bijzondere persoonsgegevens verzameld?'),
-        help_text="zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' \
-            target='_blank'>Richtlijnen</a>",
+        help_text=_("zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' \
+            target='_blank'>Richtlijnen</a>"),
         null=True,
         blank=True,
     )
