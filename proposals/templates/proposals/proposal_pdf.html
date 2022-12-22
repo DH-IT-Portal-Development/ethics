@@ -218,7 +218,7 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% endif %}
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th><td>{{ study.has_special_details }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th><td>{{ study.has_special_details|yesno:("ja,nee") }}</td>
             </tr>
             {% if study.has_special_details %}
                 <tr>
