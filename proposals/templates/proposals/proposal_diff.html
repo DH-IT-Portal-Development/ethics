@@ -84,7 +84,9 @@
                         </tr>
                         {% endif %}
                     <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th><td>{{ proposal.student_justification }}</td>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th>
+                        <td>{{ p_proposal.student_justification }}</td>
+                        <td>{{ proposal.student_justification }}</td>
                     </tr>
                     {% endif %}
                     
