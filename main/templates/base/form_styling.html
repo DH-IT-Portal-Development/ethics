@@ -12,11 +12,19 @@ function warning_on_value(a, a_value, b)
     $('input[name=' + a + ']').change();
 }
 
+//checks whether field 'a' has 'a_value', and if so, toggles field 'b'
 function depends_on_value(a, a_value, b)
 {
     $('input[name=' + a + ']').change(function() {
-        var check = $('input[name=' + a + ']:checked').val() === a_value;
+        // clear the checkox values for dependent fields to ensure secondary 
+        // dependencies disappear
+        $('#id_' + b + ' [type=checkbox]').each(function() { 
+                this.checked = false; 
+            });
+        $('#id_' + b + ' [type=checkbox]').trigger('change');
 
+
+        var check = $('input[name=' + a + ']:checked').val() === a_value;
         $('#id_' + b).parents('tr').toggle(check);
     });
     $('input[name=' + a + ']').change();
