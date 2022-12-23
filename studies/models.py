@@ -203,7 +203,7 @@ eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, v
         Trait,
         blank=True,
         verbose_name=_(
-            'Selecteer de bijzondere kenmerken van je proefpersonen'))
+            'Selecteer de medische gegevens van je proefpersonen die worden verzameld'))
     traits_details = models.CharField(
         _('Namelijk'),
         max_length=200,
