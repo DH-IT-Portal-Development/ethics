@@ -2,12 +2,11 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-15 10:47+0100\n"
+"POT-Creation-Date: 2023-01-05 14:55+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -654,33 +653,26 @@ msgstr "FEtC-H Portal"
 msgid "FETC-GW"
 msgstr "FEtC-H"
 
-#: main/templates/error/400.html:9 main/templates/error/500.html:9
+#: main/templates/error/400.html:10 main/templates/error/500.html:9
 msgid "Server error"
 msgstr "Server error"
 
-#: main/templates/error/400.html:12
-msgid ""
-"\n"
-"                Er is een fout opgetreden tijdens het opvragen van deze "
-"pagina.\n"
-"            "
-msgstr ""
-"\n"
-"    We encountered an error while processing your request.\n"
-"     "
+#: main/templates/error/400.html:13 main/templates/error/500.html:12
+msgid "Er is een fout opgetreden tijdens het opvragen van deze pagina."
+msgstr "We encountered an error while processing your request."
 
-#: main/templates/error/400.html:17
+#: main/templates/error/400.html:18 main/templates/error/500.html:17
+msgid "Blijft dit probleem aanhouden?"
+msgstr "If this problem persists; "
+
+#: main/templates/error/400.html:21 main/templates/error/403.html:41
+#: main/templates/error/403_csrf.html:39 main/templates/error/500.html:20
 msgid ""
-"\n"
-"                Blijft dit probleem aanhouden? Neem dan contact op met <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">de FETC-GW "
-"secretaris</a>.\n"
-"            "
+"Neem dan contact op met het technisch beheer van de portal via <a "
+"href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>."
 msgstr ""
-"\n"
-"    Does this problem persist? Please contact <a href=\"https://fetc-gw.wp."
-"hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>.\n"
-"       "
+"Please contact the technical support staff of the portal by email at <a "
+"href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>. "
 
 #: main/templates/error/403.html:9
 msgid "Geen toegang"
@@ -717,13 +709,9 @@ msgid ""
 msgstr ""
 "You are not logged in, please <a href=\"%(login_url)s\"> try to log in</a>."
 
-#: main/templates/error/403.html:38
-msgid ""
-"Denk je dat dit niet klopt? Neem dan contact op met <a href=\"https://fetc-"
-"gw.wp.hum.uu.nl/contact/\" target=\"_blank\">de FETC-GW secretaris</a>."
-msgstr ""
-"Do you believe this to be in error? Please contact <a href=\"https://fetc-gw."
-"wp.hum.uu.nl/en/contact/\" target=\"_blank\">the FEtC-H secretary</a>."
+#: main/templates/error/403.html:38 main/templates/error/403_csrf.html:36
+msgid "Denk je dat dit niet klopt?"
+msgstr "Do you think this is in error?"
 
 #: main/templates/error/403_csrf.html:6
 msgid "Verificatie Fout"
@@ -762,14 +750,6 @@ msgstr "For Edge: ctrl + F5"
 msgid "Voor Safari: option + cmnd + E"
 msgstr "For Safari: option + cmnd + E"
 
-#: main/templates/error/403_csrf.html:36
-msgid ""
-"Denk je dat dit niet klopt? Neem dan contact op met <a href=\"mailto:"
-"portaldev.gw@uu.nl\" target=\"_blank\">het FETC-GW IT team</a>."
-msgstr ""
-"Do you believe this to be in error? Please contact <a href=\"mailto:"
-"portaldev.gw@uu.nl\" target=\"_blank\">the FEtC-H IT team</a>."
-
 #: main/templates/error/404.html:9
 msgid "Pagina niet gevonden"
 msgstr "Page not found"
@@ -792,28 +772,13 @@ msgstr ""
 "fetc-gw.wp.hum.uu.nl/contact/\" target=\"_blank\">contacting our secretary</"
 "a>. We will try to solve the problem as soon as possible."
 
-#: main/templates/error/500.html:12
+#: main/templates/error/500.html:23
 msgid ""
-"\n"
-"                    Er is een fout opgetreden tijdens het opvragen van deze "
-"pagina.\n"
-"                "
+"Maak hierbij zo veel mogelijk duidelijk wat je aan het doen was, en op welke "
+"pagina."
 msgstr ""
-"\n"
-"    We encountered an error while processing your request.\n"
-"     "
-
-#: main/templates/error/500.html:17
-msgid ""
-"Blijft dit probleem aanhouden? Neem dan contact op met het technisch beheer "
-"van de portal via <a href=\"mailto:portaldev.gw@uu.nl\" "
-"target=\"_blank\">portaldev.gw@uu.nl</a>. Maak hierbij zo veel mogelijk "
-"duidelijk wat je aan het doen was, en op welke pagina."
-msgstr ""
-"If this problem persists, please contact the technical support staff of the "
-"portal by email at <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</"
-"a>. Try to explain what you were doing and note the page that you were on, "
-"if you can.     "
+"Try to explain what you were doing and note the page that you were on, if "
+"you can."
 
 #: main/templates/main/index.html:37
 msgid ""
@@ -844,11 +809,12 @@ msgstr ""
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met  "
-"<a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>."
+"<a href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>."
 msgstr ""
 "If you find some text to be confusing, come across a poor translation, or "
 "have any other feedback on the Portal, please don't hesitate to send an "
-"email to <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>."
+"email to <a href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</"
+"a>."
 
 #: main/templates/main/index.html:59
 #: proposals/templates/proposals/proposal_start.html:16
@@ -893,14 +859,15 @@ msgid ""
 "over privacy zaken: <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
 "</li> <li>Voor vragen over de procedure: <a href=\"mailto:fetc-gw@uu."
 "nl\">Desiree Capel</a>.</li> <li>Voor vragen over de portal zelf: <a "
-"href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>.</li>"
+"href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>.</li>"
 msgstr ""
 "<li>For advice on data management: <a href=\"mailto:datamanagement.gw@uu."
 "nl\">datamanagement.gw@uu.nl</a>.</li> <li>For issues concerning privacy: <a "
 "href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>.</li> <li>For "
 "questions on FEtC-H procedure: <a href=\"mailto:fetc-gw@uu.nl\">Desiree "
 "Capel</a>.</li> <li>For questions about the functioning of the portal "
-"itself: <a href=\"mailto:portaldev.gw@uu.nl\">portaldev.gw@uu.nl</a>.</li>"
+"itself: <a href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>."
+"</li>"
 
 #: main/templates/main/index.html:88
 msgid "In deze portal kan je het volgende doen:"
@@ -2984,6 +2951,7 @@ msgstr ""
 "regulations</a>."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:32
+#, python-format
 msgid ""
 "Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht "
 "niet mee bekend is. Raadpleeg bij vragen eerst het <a "
@@ -2993,9 +2961,9 @@ msgid ""
 msgstr ""
 "When filling in the forms please avoid using abbreviations the FEtC-H might "
 "not be familiar with. If you have questions, first consult the <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" "
-"target=\"_blank\">regulations</a> and if necessary contact the secretary "
-"(%(secretary_name)s, <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
+"href=\"%(reg_url)s\" target=\"_blank\">regulations</a> and if necessary "
+"contact the secretary (%(secretary_name)s, <a href=\"mailto:fetc-gw@uu."
+"nl\">fetc-gw@uu.nl</a>)."
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:7
 msgid "Toetsing voor subsidieaanvraag"
@@ -5530,4 +5498,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
