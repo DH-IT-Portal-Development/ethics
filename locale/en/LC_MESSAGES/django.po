@@ -2,12 +2,11 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-17 14:52+0100\n"
+"POT-Creation-Date: 2023-01-05 14:53+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -844,7 +843,7 @@ msgstr ""
 #: main/templates/main/index.html:75
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-"documenten-ethische-toetsingscommissie-gw\" "
+"documenten-ethische-toetsingscommissiep-gw\" "
 "target=\"blank\">voorbeelddocumenten</a> voor de <em>informed consent</em>. "
 "(de laatstse versie is van <u>december 2021</u>)</li>"
 msgstr ""
@@ -2952,6 +2951,7 @@ msgstr ""
 "regulations</a>."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:32
+#, python-format
 msgid ""
 "Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht "
 "niet mee bekend is. Raadpleeg bij vragen eerst het <a "
@@ -2961,9 +2961,9 @@ msgid ""
 msgstr ""
 "When filling in the forms please avoid using abbreviations the FEtC-H might "
 "not be familiar with. If you have questions, first consult the <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" "
-"target=\"_blank\">regulations</a> and if necessary contact the secretary "
-"(%(secretary_name)s, <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
+"href=\"%(reg_url)s\" target=\"_blank\">regulations</a> and if necessary "
+"contact the secretary (%(secretary_name)s, <a href=\"mailto:fetc-gw@uu."
+"nl\">fetc-gw@uu.nl</a>)."
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:7
 msgid "Toetsing voor subsidieaanvraag"
@@ -5498,4 +5498,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
