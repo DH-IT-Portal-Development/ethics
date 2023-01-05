@@ -2,6 +2,7 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -5497,3 +5498,4 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
