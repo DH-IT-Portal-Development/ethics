@@ -32,8 +32,8 @@
         {% counter extra_form_counter increment 1 %}
       {% else %}
 
-        {% if not form.instance.needs_additional_external_forms %}
-          hide_school_forms("{{form.prefix}}")
+        {% if not form.instance.study.needs_additional_external_forms %}
+          hide_school_forms("{{form.prefix}}");
         {% endif %}
       {% endif %}
     {% endfor %}
