@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
+from cdh.files.db import FileField
+from cdh.files.db.wrappers import FileWrapper
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -22,6 +24,10 @@ PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 DMP_FILENAME = FilenameFactory('DMP')
 METC_DECISION_FILENAME = FilenameFactory('METC_Decision')
 PRE_APPROVAL_FILENAME = FilenameFactory('Pre_Approval')
+
+
+def PROPOSAL_PDF_FILENAME(file_wrapper: FileWrapper):
+    return file_wrapper.field.instance.reference_number
 
 
 class Relation(models.Model):
@@ -270,10 +276,10 @@ Zep software)'),
         default=False,
     )
 
-    pdf = models.FileField(
-        blank = True,
-        upload_to=PROPOSAL_FILENAME,
-        storage=OverwriteStorage(),
+    proposal_pdf = FileField(
+        blank=True,
+        null=True,
+        filename_generator=PROPOSAL_PDF_FILENAME,
     )
 
     # Fields with respect to Studies
