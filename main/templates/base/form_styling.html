@@ -100,17 +100,23 @@ function check_field_required(input_name, field_name, required_input, app_name, 
         let url = "{% url 'main:check_requires' %}";
         let params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
         $.post(url, params, function(data) {
-           r_input.parents('tr').toggle(data.result);
+            r_input.parents('tr').toggle(data.result);
+
+            // If we don't want to show the field, unselect all selected checkboxes of that field (if any)
+            if (data.result === false) {
+                let r_input_checkboxes = r_input.find('[type=checkbox]');
+                r_input_checkboxes.each(function() {
+                    this.checked = false;
+                });
+                r_input_checkboxes.trigger('change');
+            }
+
+            // Remove header if present
             if(header)
             {
                 r_input.parents('tr').prev().toggle(data.result);
             }
         });
-        let r_input_checkboxes = r_input.find('[type=checkbox]');
-        r_input_checkboxes.each(function() {
-            this.checked = false;
-        });
-        r_input_checkboxes.trigger('change');
 
     });
     input.change();
