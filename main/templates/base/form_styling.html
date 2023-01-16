@@ -19,16 +19,19 @@ function depends_on_value(a, a_value, b)
     let input_a = $('input[name=' + a + ']');
     let input_b = $('#id_' + b);
     input_a.change(function() {
-        // clear the checkbox values for dependent fields to ensure secondary
-        // dependencies disappear
-        let b_checkboxes = input_b.find('[type=checkbox]');
-        b_checkboxes.each(function() {
-            this.checked = false;
-        });
-        b_checkboxes.trigger('change');
+        let check = input_a.filter(':checked').val() === a_value;
 
+        // Only if we don't want to show the field
+        if(!check) {
+            // clear the checkbox values for dependent fields to ensure secondary
+            // dependencies disappear
+            let b_checkboxes = input_b.find('[type=checkbox]');
+            b_checkboxes.each(function() {
+                this.checked = false;
+            });
+            b_checkboxes.trigger('change');
+        }
 
-        var check = input_a.filter(':checked').val() === a_value;
         input_b.parents('tr').toggle(check);
     });
     input_a.change();
