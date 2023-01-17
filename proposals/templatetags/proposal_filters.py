@@ -9,21 +9,17 @@ register = template.Library()
 
 @register.filter
 def needs_details(selected_values, field='needs_details'):
-    result = False
     for sv in selected_values:
         if getattr(sv, field):
-            result = True
-            break
-    return result
+            return True
+    return False
 
 @register.filter
 def medical_traits(selected_values, field='medical_traits'):
-    result = False
     for sv in selected_values:
         if getattr(sv, field):
-            result = True
-            break
-    return result
+            return True
+    return False
 
 
 @register.filter
