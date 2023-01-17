@@ -65,7 +65,7 @@
                             <td>{{ proposal.supervisor.get_full_name }}</td>
                         </tr>
                     {% endif %}
-                    {%  if proposal.relation.check_in_course or p_proposal.relation.check_in_course%}
+                    {% if proposal.relation.check_in_course or p_proposal.relation.check_in_course %}
                     <tr>
                         <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th>
                         <td>{{ p_proposal.student_program }}</td>
