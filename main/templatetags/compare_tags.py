@@ -1,6 +1,6 @@
 from django import template
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.utils import get_static_file
 from proposals.models import Proposal
@@ -75,8 +75,8 @@ class CompareLinkNode(template.Node):
         return None
 
     def render(self, context):
-        "This function gets called when the template gets rendered"        
-        
+        "This function gets called when the template gets rendered"
+
         title = _("Toon verschillen")
         img = get_static_file('proposals/images/arrow_divide.png')
         obj = self.obj.resolve(context)
@@ -89,7 +89,7 @@ class CompareLinkNode(template.Node):
                 return ""
 
             url = self._get_documents_url(obj, proposal)
-            
+
         # Observations, possibly unused
         elif self.type == 'observation':
             proposal = obj.study.proposal
@@ -110,7 +110,7 @@ class CompareLinkNode(template.Node):
             ]
 
             url = reverse('proposals:compare_proposal_docs', args=args)
-            
+
         # METC Decision files
         elif self.type == 'wmo':
             if not obj.proposal.parent or not obj.proposal.parent.wmo:
@@ -141,7 +141,7 @@ class CompareLinkNode(template.Node):
 def get_compare_link(parser, token):
     """This function splits up the arguments given inside the tag
     and passes them on to the CompareLinkNode class"""
-    
+
     parts = token.split_contents()
 
     if not (3 <= len(parts) < 5):

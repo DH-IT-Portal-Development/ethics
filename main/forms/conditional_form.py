@@ -1,10 +1,11 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
+from cdh.core.forms import TemplatedModelForm
 from ..utils import is_empty
 
 
-class ConditionalModelForm(forms.ModelForm):
+class ConditionalModelForm(TemplatedModelForm):
     def check_empty(self, cleaned_data, f1, error_message=''):
         is_required = False
         if not error_message:

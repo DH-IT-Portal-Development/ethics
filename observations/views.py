@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from fetc import settings
@@ -23,6 +23,7 @@ class ObservationMixin(object):
         """Setting the Study and progress on the context"""
         context = super(ObservationMixin, self).get_context_data(**kwargs)
         study = self.get_study()
+        context['object'] = study
         context['study'] = study
         context['progress'] = get_study_progress(study) + 5
         return context

@@ -15,7 +15,7 @@ from tasks.forms import TaskStartForm, TaskEndForm, TaskForm
 from ..forms import ProposalForm, WmoForm, StudyStartForm, WmoApplicationForm, ProposalDataManagementForm
 from ..models import Proposal
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy as reverse
 
 

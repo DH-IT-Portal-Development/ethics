@@ -3,6 +3,7 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
+from cdh.core.forms import BootstrapCheckboxSelectMultiple, BootstrapRadioSelect
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
 from .models import Observation
@@ -21,15 +22,15 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
             'registrations', 'registrations_details',
         ]
         widgets = {
-            'setting': forms.CheckboxSelectMultiple(),
-            'supervision': forms.RadioSelect(choices=YES_NO),
-            'leader_has_coc': forms.RadioSelect(choices=YES_NO),
-            'is_anonymous': forms.RadioSelect(choices=YES_NO),
-            'is_in_target_group': forms.RadioSelect(choices=YES_NO),
-            'is_nonpublic_space': forms.RadioSelect(choices=YES_NO),
-            'has_advanced_consent': forms.RadioSelect(choices=YES_NO),
-            'needs_approval': forms.RadioSelect(choices=YES_NO),
-            'registrations': forms.CheckboxSelectMultiple(),
+            'setting': BootstrapCheckboxSelectMultiple(),
+            'supervision': BootstrapRadioSelect(choices=YES_NO),
+            'leader_has_coc': BootstrapRadioSelect(choices=YES_NO),
+            'is_anonymous': BootstrapRadioSelect(choices=YES_NO),
+            'is_in_target_group': BootstrapRadioSelect(choices=YES_NO),
+            'is_nonpublic_space': BootstrapRadioSelect(choices=YES_NO),
+            'has_advanced_consent': BootstrapRadioSelect(choices=YES_NO),
+            'needs_approval': BootstrapRadioSelect(choices=YES_NO),
+            'registrations': BootstrapCheckboxSelectMultiple(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -45,10 +46,11 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
         self.fields['details_why'].label = mark_safe(self.fields['details_why'].label)
         self.fields['details_frequency'].label = mark_safe(self.fields['details_frequency'].label)
 
-
         if not self.study.has_children():
             del self.fields['supervision']
             del self.fields['leader_has_coc']
+
+        self._bound_fields_cache = {}
 
     def get_soft_validation_fields(self):
         # We want soft validation of all fields
@@ -81,8 +83,6 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
         self.check_dependency(cleaned_data, 'is_anonymous', 'is_anonymous_details')
         self.check_dependency(cleaned_data, 'is_in_target_group', 'is_in_target_group_details')
         self.check_dependency(cleaned_data, 'is_nonpublic_space', 'is_nonpublic_space_details')
-
-
 
 
 class ObservationUpdateAttachmentsForm(forms.ModelForm):

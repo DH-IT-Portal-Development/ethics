@@ -1,7 +1,9 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
+{% load proposal_form_components %}
+{% load messages %}
 
 {% block header_title %}
     {% if proposal.is_pre_assessment %}
@@ -14,12 +16,12 @@
     - {{ block.super }}
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=proposal.available_urls active=pagenr %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+{% block uu-content %}
+    {% proposal_hero proposal %}
+    {% display_messages messages %}
+    <div class="uu-container flex-lg-nowrap gap-3 gap-lg-5">
+        {% stepper proposal %}
+        <div class="flex-fill">
             <h2>
                 {% if proposal.is_pre_assessment %}
                     {% trans "Aanvraag voor voortoetsing klaar voor versturen" %}
@@ -29,6 +31,41 @@
                     {% trans "Aanmelding klaar voor versturen" %}
                 {% endif %}
             </h2>
+            {% if troublesome_pages %}
+                <div class="alert alert-warning text-center">
+                    {% blocktrans trimmed %}
+                        Er zijn nog errors gevonden op de volgende pagina's:
+                    {% endblocktrans %}
+                    <ul>
+                        {% for error_page in troublesome_pages %}
+                            <li>
+                                <a href="{{ error_page.url }}">
+                                    {{ error_page.page_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% blocktrans trimmed %}
+                        Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft ingevuld. Je kan je
+                        aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
+                    {% endblocktrans %}
+                </div>
+            {% endif %}
+            {% if start_date_warning %}
+            <div class="alert alert-warning text-center">
+                <p>{% trans "Controleer uw beoogde startdatum" %}</p>
+                <p>
+                    {% blocktrans trimmed %}
+                    Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer daarom bij een revisie altijd of de beoogde startdatum nog klopt.
+                    {% endblocktrans %}
+                    {% url "proposals:update" proposal.pk as first_page_url %}
+                    {% blocktrans trimmed %}
+                    De beoogde startdatum vindt u op
+                    <a href="{{first_page_url}}">deze pagina</a>.
+                    {% endblocktrans %}
+                </p>
+            </div>
+            {% endif %}
             <p>
                 {% if proposal.is_pre_assessment %}
                     {% blocktrans %}
@@ -98,15 +135,13 @@
                 {% endfor %}
             {% endif %}
 
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data" class="uu-form mt-3">
 
             {% if troublesome_pages %}
-            <div class="warning">
-	      <h5>
+                <div class="warning">
                     {% blocktrans trimmed %}
                         Er zijn nog errors gevonden op de volgende pagina's:
                     {% endblocktrans %}
-		    </h5>
                     <ul>
                         {% for error_page in troublesome_pages %}
                             <li>
@@ -121,25 +156,7 @@
                         aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
                     {% endblocktrans %}
                 </div>
-		{% endif %}
-		{% if start_date_warning %}
-		<div class="warning">
-		  <h5>{% trans "Controleer uw beoogde startdatum" %}</h5>
-		  <p>
-		    {% blocktrans trimmed %}
-		    Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer daarom bij een revisie altijd of de beoogde startdatum nog klopt.
-		    {% endblocktrans %}
-		    {% url "proposals:update" proposal.pk as first_page_url %}
-		    {% blocktrans trimmed %}
-		    De beoogde startdatum vindt u op
-		    <a href="{{first_page_url}}">deze pagina</a>.
-		    {% endblocktrans %}
-		  </p>
-		</div>		
-		{% endif %}
-
-
-		{% csrf_token %}
+            {% endif %}{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 {% if is_practice %}
                 <div class="info">

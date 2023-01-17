@@ -4,17 +4,21 @@ from django.contrib.auth.models import Group
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import magic  # whoooooo
 import pdftotext
 from docx2txt import docx2txt
 
+from cdh.core.middleware import get_current_request
+
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 
 
 class AvailableURL(object):
-    def __init__(self, title, url=None, is_title=False, children=None, **kwargs):
+    def __init__(self, title, url=None, is_title=False, children=None,
+                 has_errors=False,
+                 **kwargs):
         if not children:
             children = []
 
@@ -22,8 +26,48 @@ class AvailableURL(object):
         self.children = children
         self.url = url
         self.is_title = is_title
+        self._has_errors = has_errors
         self.kwargs = kwargs
 
+    def is_active_exact(self):
+        request = get_current_request()
+        cur_url = request.get_full_path()
+
+        return cur_url == self.url
+
+    def is_active(self, cur_url=None):
+        if cur_url is None:
+            request = get_current_request()
+            cur_url = request.get_full_path()
+        if cur_url == self.url:
+            return True
+
+        for child in self.children:
+            if child.is_active(cur_url):
+                return True
+
+        return False
+
+    def _get_has_errors(self):
+        if self._has_errors:
+            return True
+
+        for child in self.children:
+            if child.has_errors:
+                return True
+
+        return False
+
+    def _set_has_errors(self, value):
+        self._has_errors = value
+
+    has_errors = property(_get_has_errors, _set_has_errors)
+
+    def has_errors_from_list(self, urls_with_errors):
+        try:
+            self._has_errors = self.url in urls_with_errors
+        except:
+            pass
 
 def get_secretary():
     """

@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/base_proposal_form.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -35,21 +35,8 @@ $(function() {
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=study.proposal.available_urls active=3 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
-            <h2>
-                {% trans "Het observatieonderzoek" %}
-            </h2>
-            {% include "studies/study_title.html" %}
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
-                {% with proposal=observation.study.proposal %}
-                {% include "base/form_buttons.html" %}
-                {% endwith %}
-            </form>
-        </div>
-    </div>
+    <h2>
+        {% trans "Het observatieonderzoek" %}
+    </h2>
+    {% include "studies/study_title.html" %}
 {% endblock %}

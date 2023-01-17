@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load i18n %}
 
@@ -7,11 +7,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-hero">
+        <h2>
+            {% trans 'Verzoek kon niet geverifieerd worden' %}
+        </h2>
+    </div>
+    <div class="uu-container">
         <div class="col-12">
-            <h2>
-                {% trans 'Verzoek kon niet geverifieerd worden' %}
-            </h2>
             <p>
                 {% trans 'Er is iets fout gegaan met het verifiëren van je browser.' %}
             </p>

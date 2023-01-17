@@ -24,10 +24,10 @@ $(function() {
 });
 </script>
 
-<button class="pure-button open-progress show-xs">{% trans "Toon voortgang" %}</button>
+<button class="btn btn-primary d-md-none mt-5 open-progress">{% trans "Toon voortgang" %}</button>
 <br/>
 <div class="progress">
-    <button class="pure-button close-progress">{% trans "Sluiten" %}</button>
+    <button class="btn btn-secondary float-end close-progress">{% trans "Sluiten" %}</button>
     <h2>{% trans "Voortgang" %}</h2>
     <ul>
     {% for item in nav_items %}

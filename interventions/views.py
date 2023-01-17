@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from studies.models import Study
@@ -12,7 +12,7 @@ from .models import Intervention
 ##############################
 # CRUD actions on Intervention
 ##############################
-class InterventionMixin(object):
+class InterventionMixin:
     """Mixin for an Intervention, to use in both InterventionCreate and InterventionUpdate below"""
     model = Intervention
     form_class = InterventionForm
@@ -20,10 +20,11 @@ class InterventionMixin(object):
 
     def get_context_data(self, **kwargs):
         """Setting the Study and progress on the context"""
-        context = super(InterventionMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         study = self.get_study()
         context['study'] = study
         context['progress'] = get_study_progress(study) + 7
+        context['object'] = study
         return context
 
     def get_form_kwargs(self):

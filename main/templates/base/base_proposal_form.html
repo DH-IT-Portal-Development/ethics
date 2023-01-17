@@ -1,0 +1,21 @@
+{% extends 'base/fetc_base.html' %}
+
+{% load proposal_form_components %}
+{% load messages messages %}
+
+{% block uu-content %}
+    {% proposal_hero object %}
+    {% display_messages messages %}
+    <div class="uu-container flex-lg-nowrap gap-3 gap-lg-5">
+        {% stepper object %}
+        <div class="flex-fill">
+            {% block content %}{% endblock %}
+            {% block form %}
+                <form action="" class="uu-form" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    {{ form }}
+                    {% form_buttons object %}
+                </form>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

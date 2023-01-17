@@ -1,8 +1,10 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
-{% load uil_filters %}
+{% load cdh_filters %}
+{% load proposal_form_components %}
+{% load messages %}
 
 {% block header_title %}
     {% trans "Informed consent formulieren" %} - {{ block.super }}
@@ -57,13 +59,12 @@
     </script>
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=proposal.available_urls active=4 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
-
+{% block uu-content %}
+    {% proposal_hero proposal %}
+    {% display_messages messages %}
+    <div class="uu-container flex-lg-nowrap gap-3 gap-lg-5">
+        {% stepper proposal %}
+        <div class="flex-fill">
             <h2>
                 {% trans "Informed consent formulieren" %}
             </h2>
@@ -93,7 +94,7 @@
                 Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
                 {% endblocktrans %}
             </p>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form action="" method="post" class="uu-form" enctype="multipart/form-data">{% csrf_token %}
                 {{ formset.management_form }}
 
                 {# Reset the counter, as we're looping again #}
@@ -128,9 +129,7 @@
                     {% endif %}
 
                         <input type="hidden" name="{{ form.prefix }}-passive_consent" value="{{ form.instance.study.passive_consent  }}">
-                        <table>
-                            {{ form.as_table }}
-                        </table>
+                        {{ form }}
                     </div>
                 {% endfor %}
                 <br/>

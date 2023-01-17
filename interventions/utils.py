@@ -1,10 +1,10 @@
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from main.utils import AvailableURL
 
 
-def intervention_url(study):
+def intervention_url(study, troublesome_urls):
     """
     Returns the available URLs for an Intervention
     """
@@ -14,6 +14,7 @@ def intervention_url(study):
             result.url = reverse('interventions:update', args=(study.intervention.pk,))
         else:
             result.url = reverse('interventions:create', args=(study.pk,))
+        result.has_errors = result.url in troublesome_urls
     return result
 
 
