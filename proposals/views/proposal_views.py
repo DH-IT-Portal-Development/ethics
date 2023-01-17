@@ -371,6 +371,8 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         two weeks of today.
         """
         start_date = self.object.date_start
+        if not start_date:
+            return False
         two_weeks = datetime.timedelta(days=14)
         two_weeks_from_now = datetime.date.today() + two_weeks
         return start_date <= two_weeks_from_now
