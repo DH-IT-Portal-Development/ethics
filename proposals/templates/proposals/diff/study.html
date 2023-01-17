@@ -120,6 +120,18 @@
                 <td>{{ study.compensation_details }}</td>
             </tr>
         {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th>
+            <td>{{ p_study.hierarchy }}</td>
+            <td>{{ study.hierarchy }}</td>
+        </tr>
+        {% if study.hierarchy or p_study.hierarchy %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th>
+            <td>{{ p_study.hierarchy_details }}</td>
+            <td>{{ study.hierarchy_details }}</td>
+        </tr>
+        {% endif %}
     </table>
 
     {% include 'proposals/diff/intervention.html' %}
