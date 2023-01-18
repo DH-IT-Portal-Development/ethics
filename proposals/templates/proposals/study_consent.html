@@ -114,7 +114,7 @@
               {% endwith %}
           {% else %}
               {# If not, we have to do some fancy stuff for the extra forms #}
-              {% if form.instance.informed_consent or form.instance.briefing %}
+              {% if form.instance.informed_consent or form.instance.briefing or form.instance.parents_information or form.instance.director_consent_information or form.instance.director_consent_declaration %}
                 {# We can't check this in Python, so we determine here if the object is empty or used  #}
                 {% set used = 1 %}
               {% else %}
