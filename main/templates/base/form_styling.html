@@ -84,9 +84,11 @@ function intersect(a, b)
     });
 }
 
+var postrequest = undefined; //var to denote if a request is in progress
+
 // Checks whether a field is required given the selected inputs
 function check_field_required(input_name, field_name, required_input, app_name, model_name, header=false)
-{
+{   
     // model_name is the name of the model as it is stored in the database (without punctuation)
     // input_name is the name of the model as it is stored in the form (potentially with punctuation)
     model_name = typeof model_name !== 'undefined' ? model_name : input_name;
@@ -95,14 +97,17 @@ function check_field_required(input_name, field_name, required_input, app_name, 
     let r_input = $('#id_' + required_input);
 
     input.change(function() {
-
+        // if a postrequest is in progress, abort that request
+        if (postrequest !== undefined ) {
+            postrequest.abort();
+        }
         let checked_inputs = input.filter(':checked').map(function() {
             return this.value;
         }).get();
 
         let url = "{% url 'main:check_requires' %}";
         let params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
-        $.post(url, params, function(data) {
+        postrequest = $.post(url, params, function(data) {
             r_input.parents('tr').toggle(data.result);
 
             // If we don't want to show the field, unselect all selected checkboxes of that field (if any)
@@ -119,8 +124,9 @@ function check_field_required(input_name, field_name, required_input, app_name, 
             {
                 r_input.parents('tr').prev().toggle(data.result);
             }
+            //when the request is done, mark it undefined
+            postrequest = undefined;
         });
-
     });
     input.change();
 }
