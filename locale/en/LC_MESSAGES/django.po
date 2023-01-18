@@ -2,12 +2,14 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
+#: proposals/templates/proposals/proposal_diff.html:76
+#: proposals/templates/proposals/proposal_diff.html:77
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-23 12:46+0100\n"
+"POT-Creation-Date: 2023-01-17 13:54+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,6 +19,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
 "#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
+"#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.acc  #-#-#-#-#\n"
 "#-#-#-#-#  manual.po  #-#-#-#-#\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
@@ -40,7 +64,7 @@ msgstr " Regulations Linguistics Chamber (LC) "
 
 #: faqs/menus.py:22 main/templates/base/menu.html:134
 #: main/templates/main/index.html:189
-#: proposals/templates/proposals/proposal_pdf.html:411
+#: proposals/templates/proposals/proposal_pdf.html:425
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/study_consent.html:68
 msgid "Informed consent formulieren"
@@ -105,7 +129,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: feedback/templates/feedback/feedback_form.html:23
 #: observations/templates/observations/observation_update_attachments.html:39
 #: proposals/templates/proposals/proposal_confirmation.html:36
-#: proposals/templates/proposals/proposal_diff.html:243
+#: proposals/templates/proposals/proposal_diff.html:268
 #: reviews/templates/reviews/change_chamber_form.html:19
 #: reviews/templates/reviews/decision_form.html:90
 #: reviews/templates/reviews/review_assign_form.html:44
@@ -235,7 +259,7 @@ msgstr "How many times a week will the intervention session take place?"
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:49
 #: proposals/templates/proposals/diff/intervention.html:4
-#: proposals/templates/proposals/proposal_pdf.html:266
+#: proposals/templates/proposals/proposal_pdf.html:280
 #: proposals/templates/proposals/proposal_pdf_empty.html:186
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
@@ -266,7 +290,7 @@ msgstr ""
 "\" on the previous page to answer the required task questions related to "
 "tasks."
 
-#: interventions/utils.py:11 studies/models.py:144 studies/models.py:262
+#: interventions/utils.py:11 studies/models.py:127 studies/models.py:229
 #: studies/templates/studies/study_end.html:58
 msgid "Interventieonderzoek"
 msgstr "Interventional research"
@@ -278,7 +302,7 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:11 main/forms/conditional_form.py:20
 #: main/forms/conditional_form.py:29 main/forms/conditional_form.py:38
 #: main/forms/conditional_form.py:48 main/forms/mixins.py:83
-#: proposals/forms.py:557 proposals/forms.py:613 studies/forms.py:107
+#: proposals/forms.py:558 proposals/forms.py:614 studies/forms.py:107
 #: studies/forms.py:118 studies/forms.py:124 tasks/forms.py:87
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -314,7 +338,7 @@ msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
 #: main/models.py:67 observations/models.py:129 proposals/models.py:185
-#: studies/models.py:208 studies/models.py:244 tasks/models.py:157
+#: studies/models.py:175 studies/models.py:211 tasks/models.py:157
 #: tasks/models.py:169
 msgid "Namelijk"
 msgstr "Please specify"
@@ -1145,8 +1169,8 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:65 observations/models.py:75
-#: observations/models.py:88 proposals/models.py:589 studies/models.py:172
-#: studies/models.py:228 studies/models.py:376
+#: observations/models.py:88 proposals/models.py:589 studies/models.py:155
+#: studies/models.py:195 studies/models.py:343
 msgid "Licht toe"
 msgstr "Explain"
 
@@ -1230,7 +1254,7 @@ msgstr "How many hours of observation will take place on average per day?"
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:44
 #: proposals/templates/proposals/diff/observation.html:4
-#: proposals/templates/proposals/proposal_pdf.html:278
+#: proposals/templates/proposals/proposal_pdf.html:292
 #: proposals/templates/proposals/proposal_pdf_empty.html:229
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
@@ -1270,7 +1294,7 @@ msgstr ""
 "On this page you can edit the forms related to the proposal "
 "%(title)s(reference number <em>%(ref_number)s</em>), trajectory %(order)s."
 
-#: observations/utils.py:8 studies/models.py:143 studies/models.py:265
+#: observations/utils.py:8 studies/models.py:126 studies/models.py:232
 #: studies/templates/studies/study_end.html:89
 msgid "Observatieonderzoek"
 msgstr "Observational research"
@@ -1304,7 +1328,7 @@ msgstr ""
 "Are there any other researchers involved <strong>outside</strong> the above-"
 "mentioned institutes? "
 
-#: proposals/forms.py:61 proposals/forms.py:267 proposals/validators.py:25
+#: proposals/forms.py:61 proposals/forms.py:268 proposals/validators.py:25
 msgid "Er bestaat al een aanvraag met deze titel."
 msgstr "There is an existing application with this title."
 
@@ -1327,19 +1351,19 @@ msgstr ""
 "This application will not be published in the semipublic archive of the FEtC-"
 "H."
 
-#: proposals/forms.py:186
+#: proposals/forms.py:187
 msgid "Je dient een eindverantwoordelijke op te geven."
 msgstr "You are required to specify the researcher with final responsibility."
 
-#: proposals/forms.py:201
+#: proposals/forms.py:202
 msgid "Je hebt jezelf niet als onderzoekers geselecteerd."
 msgstr "You have not selected yourself."
 
-#: proposals/forms.py:206
+#: proposals/forms.py:207
 msgid "Je hebt geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:216
+#: proposals/forms.py:217
 msgid ""
 "Dit veld is verplicht, maar je kunt later terugkomen om "
 "hem                     verder in te vullen."
@@ -1347,7 +1371,7 @@ msgstr ""
 "This field is required, but you may choose to come back to this page later "
 "to fill it in."
 
-#: proposals/forms.py:226
+#: proposals/forms.py:227
 msgid ""
 "Indien je geen toestemming hebt van een andere ethische commissie, dien je "
 "het normale formulier in te vullen. Ga terug naar de startpagina, en "
@@ -1360,23 +1384,23 @@ msgstr ""
 "page, and select \"Submit a new application that is completely new in this "
 "portal\" or \"from a copy of an old application.\""
 
-#: proposals/forms.py:253
+#: proposals/forms.py:254
 msgid "Ik maak een oefenaanvraag aan"
 msgstr "I am creating a practice application"
 
-#: proposals/forms.py:273 proposals/models.py:443
+#: proposals/forms.py:274 proposals/models.py:443
 msgid "Te kopiëren aanvraag"
 msgstr "Application to be copied"
 
-#: proposals/forms.py:275 proposals/models.py:445
+#: proposals/forms.py:276 proposals/models.py:445
 msgid "Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
-#: proposals/forms.py:315 proposals/forms.py:350
+#: proposals/forms.py:316 proposals/forms.py:351
 msgid "Je kan de titel van je aanvraag nu, indien nodig, wijzigen."
 msgstr "You can, if necessary, change the title of your application here."
 
-#: proposals/forms.py:317 proposals/forms.py:352
+#: proposals/forms.py:318 proposals/forms.py:353
 msgid ""
 "De titel die je hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer "
 "de aanvraag is goedgekeurd, ook voor alle medewerkers die in het archief van "
@@ -1386,11 +1410,11 @@ msgstr ""
 "application is approved, also to employees viewing the archive of this "
 "portal."
 
-#: proposals/forms.py:324
+#: proposals/forms.py:325
 msgid "Te reviseren aanvraag"
 msgstr "Application to be revised"
 
-#: proposals/forms.py:325
+#: proposals/forms.py:326
 msgid ""
 "Dit veld toont enkel ingediende, (nog) niet goedgekeurde aanvragen waar jij "
 "een medeuitvoerende bent."
@@ -1398,69 +1422,69 @@ msgstr ""
 "This field only shows submitted applications that have not been approved "
 "(yet) in which you are involved."
 
-#: proposals/forms.py:359
+#: proposals/forms.py:360
 msgid "Te amenderen aanvraag"
 msgstr "Application to be amended"
 
-#: proposals/forms.py:360
+#: proposals/forms.py:361
 msgid ""
 "Dit veld toont enkel goedgekeurde aanvragen waar je zelf een medeuitvoerende "
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:415 proposals/forms.py:545
+#: proposals/forms.py:416 proposals/forms.py:546
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:423
+#: proposals/forms.py:424
 msgid "Je dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:481
+#: proposals/forms.py:482
 msgid "In dit geval is een beslissing van een METC vereist"
 msgstr "In this case, a decision by a METC is required"
 
-#: proposals/forms.py:489
+#: proposals/forms.py:490
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:491
+#: proposals/forms.py:492
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:493
+#: proposals/forms.py:494
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:495
+#: proposals/forms.py:496
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:497
+#: proposals/forms.py:498
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:499
+#: proposals/forms.py:500
 msgid "Naam traject 6"
 msgstr "Title of trajectory 6"
 
-#: proposals/forms.py:501
+#: proposals/forms.py:502
 msgid "Naam traject 7"
 msgstr "Title of trajectory 7"
 
-#: proposals/forms.py:503
+#: proposals/forms.py:504
 msgid "Naam traject 8"
 msgstr "Title of trajectory 8"
 
-#: proposals/forms.py:505
+#: proposals/forms.py:506
 msgid "Naam traject 9"
 msgstr "Title of trajectory 9"
 
-#: proposals/forms.py:507
+#: proposals/forms.py:508
 msgid "Naam traject 10"
 msgstr "Title of trajectory 10"
 
-#: proposals/forms.py:551
+#: proposals/forms.py:552
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1468,12 +1492,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:621 proposals/forms.py:634 proposals/forms.py:644
+#: proposals/forms.py:622 proposals/forms.py:635 proposals/forms.py:645
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:625 proposals/forms.py:629 proposals/forms.py:638
-#: proposals/forms.py:648
+#: proposals/forms.py:626 proposals/forms.py:630 proposals/forms.py:639
+#: proposals/forms.py:649
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -1596,10 +1620,10 @@ msgstr ""
 #: proposals/models.py:160
 msgid ""
 "Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd "
-"zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?"
+"zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?"
 msgstr ""
 "Are there any other researchers involved affiliated with ICON, OFR, OGK or "
-"UiL OTS?"
+"ILS?"
 
 #: proposals/models.py:174
 msgid "Andere betrokkenen"
@@ -1627,19 +1651,19 @@ msgstr "Space for possible comments"
 #: proposals/models.py:206
 msgid ""
 "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de "
-"faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het "
-"UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte "
-"willen worden gesteld van aankomende onderzoeken. Daarom vragen wij hier "
-"jouw toestemming om delen van deze aanvraag door te sturen naar het lab "
-"supportteam.</p> <p>Vind je het goed dat de volgende delen uit de aanvraag "
-"worden doorgestuurd:</p> - Jouw naam en de namen van de andere betrokkenen "
-"<br/> - De eindverantwoordelijke van het onderzoek <br/> - De titel van het "
+"faciliteiten van het ILS, namelijk de database, Zep software en/of het ILS "
+"lab. Het lab supportteam van het ILS zou graag op de hoogte willen worden "
+"gesteld van aankomende onderzoeken. Daarom vragen wij hier jouw toestemming "
+"om delen van deze aanvraag door te sturen naar het lab supportteam.</p> "
+"<p>Vind je het goed dat de volgende delen uit de aanvraag worden "
+"doorgestuurd:</p> - Jouw naam en de namen van de andere betrokkenen <br/> - "
+"De eindverantwoordelijke van het onderzoek <br/> - De titel van het "
 "onderzoek <br/> - De beoogde startdatum <br/> - Van welke faciliteiten je "
 "gebruik wil maken (database, lab, Zep software)"
 msgstr ""
-"<p>You have indicated that you intend to use one of the UiL OTS facilities, "
-"either the participant database, Zep software and/or UiL OTS lab. The UiL "
-"OTS lab support team would appreciate being updated about upcoming research. "
+"<p>You have indicated that you intend to use one of the ILS facilities, "
+"either the participant database, Zep software and/or ILS lab. The UiL OTS "
+"lab support team would appreciate being updated about upcoming research. "
 "This is why we ask permission here to forward parts of this application to "
 "the lab support team.</p> <p>Do you approve that the following parts of this "
 "application will be forwarded:</p> - Your name and the names of others "
@@ -2014,13 +2038,13 @@ msgstr ""
 #: proposals/templates/proposals/diff/sessions.html:103
 #: proposals/templates/proposals/diff/sessions.html:174
 #: proposals/templates/proposals/diff/study.html:25
-#: proposals/templates/proposals/diff/study.html:139
-#: proposals/templates/proposals/diff/study.html:203
+#: proposals/templates/proposals/diff/study.html:150
+#: proposals/templates/proposals/diff/study.html:214
 #: proposals/templates/proposals/proposal_diff.html:53
-#: proposals/templates/proposals/proposal_diff.html:139
-#: proposals/templates/proposals/proposal_diff.html:172
-#: proposals/templates/proposals/proposal_diff.html:205
-#: proposals/templates/proposals/proposal_diff.html:229
+#: proposals/templates/proposals/proposal_diff.html:164
+#: proposals/templates/proposals/proposal_diff.html:197
+#: proposals/templates/proposals/proposal_diff.html:230
+#: proposals/templates/proposals/proposal_diff.html:254
 msgid "Originele aanvraag"
 msgstr "Original application"
 
@@ -2033,13 +2057,13 @@ msgstr "Original application"
 #: proposals/templates/proposals/diff/sessions.html:104
 #: proposals/templates/proposals/diff/sessions.html:175
 #: proposals/templates/proposals/diff/study.html:26
-#: proposals/templates/proposals/diff/study.html:140
-#: proposals/templates/proposals/diff/study.html:204
+#: proposals/templates/proposals/diff/study.html:151
+#: proposals/templates/proposals/diff/study.html:215
 #: proposals/templates/proposals/proposal_diff.html:54
-#: proposals/templates/proposals/proposal_diff.html:140
-#: proposals/templates/proposals/proposal_diff.html:173
-#: proposals/templates/proposals/proposal_diff.html:206
-#: proposals/templates/proposals/proposal_diff.html:230
+#: proposals/templates/proposals/proposal_diff.html:165
+#: proposals/templates/proposals/proposal_diff.html:198
+#: proposals/templates/proposals/proposal_diff.html:231
+#: proposals/templates/proposals/proposal_diff.html:255
 msgid "Revisie/amendement"
 msgstr "Revision/amendment"
 
@@ -2098,8 +2122,9 @@ msgstr "yes,no,"
 #: proposals/templates/proposals/diff/study.html:48
 #: proposals/templates/proposals/diff/study.html:63
 #: proposals/templates/proposals/diff/study.html:64
-#: proposals/templates/proposals/diff/study.html:238
-#: proposals/templates/proposals/diff/study.html:243
+#: proposals/templates/proposals/diff/study.html:69
+#: proposals/templates/proposals/diff/study.html:249
+#: proposals/templates/proposals/diff/study.html:254
 #: proposals/templates/proposals/pdf/intervention_v1.html:16
 #: proposals/templates/proposals/pdf/intervention_v1.html:20
 #: proposals/templates/proposals/pdf/intervention_v1.html:43
@@ -2122,27 +2147,28 @@ msgstr "yes,no,"
 #: proposals/templates/proposals/pdf/observation_v2.html:50
 #: proposals/templates/proposals/pdf/observation_v2.html:57
 #: proposals/templates/proposals/pdf/observation_v2.html:67
-#: proposals/templates/proposals/proposal_diff.html:70
-#: proposals/templates/proposals/proposal_diff.html:71
-#: proposals/templates/proposals/proposal_diff.html:82
-#: proposals/templates/proposals/proposal_diff.html:83
-#: proposals/templates/proposals/proposal_diff.html:177
-#: proposals/templates/proposals/proposal_diff.html:178
-#: proposals/templates/proposals/proposal_diff.html:182
-#: proposals/templates/proposals/proposal_diff.html:183
-#: proposals/templates/proposals/proposal_diff.html:210
-#: proposals/templates/proposals/proposal_diff.html:211
-#: proposals/templates/proposals/proposal_pdf.html:98
-#: proposals/templates/proposals/proposal_pdf.html:114
-#: proposals/templates/proposals/proposal_pdf.html:171
-#: proposals/templates/proposals/proposal_pdf.html:174
-#: proposals/templates/proposals/proposal_pdf.html:193
-#: proposals/templates/proposals/proposal_pdf.html:212
-#: proposals/templates/proposals/proposal_pdf.html:221
-#: proposals/templates/proposals/proposal_pdf.html:310
-#: proposals/templates/proposals/proposal_pdf.html:314
-#: proposals/templates/proposals/proposal_pdf.html:350
-#: proposals/templates/proposals/proposal_pdf.html:424
+#: proposals/templates/proposals/proposal_diff.html:95
+#: proposals/templates/proposals/proposal_diff.html:96
+#: proposals/templates/proposals/proposal_diff.html:107
+#: proposals/templates/proposals/proposal_diff.html:108
+#: proposals/templates/proposals/proposal_diff.html:202
+#: proposals/templates/proposals/proposal_diff.html:203
+#: proposals/templates/proposals/proposal_diff.html:207
+#: proposals/templates/proposals/proposal_diff.html:208
+#: proposals/templates/proposals/proposal_diff.html:235
+#: proposals/templates/proposals/proposal_diff.html:236
+#: proposals/templates/proposals/proposal_pdf.html:109
+#: proposals/templates/proposals/proposal_pdf.html:125
+#: proposals/templates/proposals/proposal_pdf.html:182
+#: proposals/templates/proposals/proposal_pdf.html:185
+#: proposals/templates/proposals/proposal_pdf.html:204
+#: proposals/templates/proposals/proposal_pdf.html:223
+#: proposals/templates/proposals/proposal_pdf.html:232
+#: proposals/templates/proposals/proposal_pdf.html:269
+#: proposals/templates/proposals/proposal_pdf.html:324
+#: proposals/templates/proposals/proposal_pdf.html:328
+#: proposals/templates/proposals/proposal_pdf.html:364
+#: proposals/templates/proposals/proposal_pdf.html:438
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:92
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:102
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:75
@@ -2179,31 +2205,31 @@ msgstr ""
 
 #: proposals/templates/proposals/diff/observation_v1.html:139
 #: proposals/templates/proposals/diff/observation_v1.html:140
-#: proposals/templates/proposals/diff/study.html:209
-#: proposals/templates/proposals/diff/study.html:215
-#: proposals/templates/proposals/diff/study.html:223
-#: proposals/templates/proposals/diff/study.html:229
+#: proposals/templates/proposals/diff/study.html:220
+#: proposals/templates/proposals/diff/study.html:226
+#: proposals/templates/proposals/diff/study.html:234
+#: proposals/templates/proposals/diff/study.html:240
 #: proposals/templates/proposals/pdf/observation_v1.html:53
-#: proposals/templates/proposals/proposal_diff.html:189
-#: proposals/templates/proposals/proposal_diff.html:193
-#: proposals/templates/proposals/proposal_pdf.html:178
-#: proposals/templates/proposals/proposal_pdf.html:417
-#: proposals/templates/proposals/proposal_pdf.html:420
-#: proposals/templates/proposals/proposal_pdf.html:432
-#: proposals/templates/proposals/proposal_pdf.html:437
-#: proposals/templates/proposals/proposal_pdf.html:442
-#: proposals/templates/proposals/proposal_pdf.html:448
+#: proposals/templates/proposals/proposal_diff.html:214
+#: proposals/templates/proposals/proposal_diff.html:218
+#: proposals/templates/proposals/proposal_pdf.html:189
+#: proposals/templates/proposals/proposal_pdf.html:431
+#: proposals/templates/proposals/proposal_pdf.html:434
+#: proposals/templates/proposals/proposal_pdf.html:446
 #: proposals/templates/proposals/proposal_pdf.html:451
+#: proposals/templates/proposals/proposal_pdf.html:456
+#: proposals/templates/proposals/proposal_pdf.html:462
 #: proposals/templates/proposals/proposal_pdf.html:465
-#: proposals/templates/proposals/proposal_pdf.html:470
-#: proposals/templates/proposals/proposal_pdf.html:486
+#: proposals/templates/proposals/proposal_pdf.html:479
+#: proposals/templates/proposals/proposal_pdf.html:484
+#: proposals/templates/proposals/proposal_pdf.html:500
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:136
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:97
 msgid "Download"
 msgstr "Download"
 
 #: proposals/templates/proposals/diff/sessions.html:7
-#: proposals/templates/proposals/proposal_pdf.html:289
+#: proposals/templates/proposals/proposal_pdf.html:303
 #: proposals/templates/proposals/proposal_pdf_empty.html:279
 #: studies/templates/studies/session_start.html:7
 #: studies/templates/studies/session_start.html:17
@@ -2231,17 +2257,17 @@ msgstr ""
 "application does involve this."
 
 #: proposals/templates/proposals/diff/sessions.html:170
-#: proposals/templates/proposals/proposal_pdf.html:362
+#: proposals/templates/proposals/proposal_pdf.html:376
 #: proposals/templates/proposals/proposal_pdf_empty.html:335
 #: tasks/templates/tasks/task_end.html:7 tasks/templates/tasks/task_end.html:18
 msgid "Overzicht van het takenonderzoek"
 msgstr "Overview of task-based research"
 
 #: proposals/templates/proposals/diff/study.html:9
-#: proposals/templates/proposals/proposal_pdf.html:204
+#: proposals/templates/proposals/proposal_pdf.html:215
 #: proposals/templates/proposals/proposal_pdf_empty.html:145
 #: studies/templates/studies/study_form.html:7
-#: studies/templates/studies/study_form.html:104
+#: studies/templates/studies/study_form.html:105
 msgid "De deelnemers"
 msgstr "Participants"
 
@@ -2253,15 +2279,15 @@ msgstr "This trajectory was added in this revision."
 msgid "Dit traject is weggehaald uit de revisie"
 msgstr "This trajectory was removed in this revision."
 
-#: proposals/templates/proposals/diff/study.html:132
-#: proposals/templates/proposals/proposal_pdf.html:372
+#: proposals/templates/proposals/diff/study.html:143
+#: proposals/templates/proposals/proposal_pdf.html:386
 #: proposals/templates/proposals/proposal_pdf_empty.html:343
 #: studies/templates/studies/study_end.html:7
 #: studies/templates/studies/study_end.html:28
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/templates/proposals/diff/study.html:194
+#: proposals/templates/proposals/diff/study.html:205
 #: proposals/templates/proposals/proposal_pdf_empty.html:372
 msgid "Informed consent formulieren voor het onderzoek"
 msgstr "Informed consent forms for the study"
@@ -2410,7 +2436,7 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
-#: proposals/templates/proposals/proposal_pdf.html:478
+#: proposals/templates/proposals/proposal_pdf.html:492
 #: reviews/templatetags/documents_list.py:244
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
@@ -2569,16 +2595,16 @@ msgstr ""
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
-#: proposals/templates/proposals/proposal_diff.html:94
-#: proposals/templates/proposals/proposal_diff.html:95
-#: proposals/templates/proposals/proposal_pdf.html:122
+#: proposals/templates/proposals/proposal_diff.html:119
+#: proposals/templates/proposals/proposal_diff.html:120
+#: proposals/templates/proposals/proposal_pdf.html:133
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:112
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:91
 msgid "onbekend"
 msgstr "unknown"
 
-#: proposals/templates/proposals/proposal_diff.html:135
-#: proposals/templates/proposals/proposal_pdf.html:148
+#: proposals/templates/proposals/proposal_diff.html:160
+#: proposals/templates/proposals/proposal_pdf.html:159
 #: proposals/templates/proposals/proposal_pdf_empty.html:104
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:102
 #: proposals/templates/proposals/wmo_form.html:7
@@ -2588,16 +2614,16 @@ msgid ""
 msgstr ""
 "Ethical assessment by a Medical Ethical Testing Committee (METC) required?"
 
-#: proposals/templates/proposals/proposal_diff.html:168
-#: proposals/templates/proposals/proposal_pdf.html:168
+#: proposals/templates/proposals/proposal_diff.html:193
+#: proposals/templates/proposals/proposal_pdf.html:179
 #: proposals/templates/proposals/proposal_pdf_empty.html:120
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:27
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
-#: proposals/templates/proposals/proposal_diff.html:201
-#: proposals/templates/proposals/proposal_pdf.html:190
+#: proposals/templates/proposals/proposal_diff.html:226
+#: proposals/templates/proposals/proposal_pdf.html:201
 #: proposals/templates/proposals/proposal_pdf_empty.html:134
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:64
@@ -2605,7 +2631,7 @@ msgstr "Registration with the METC"
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
-#: proposals/templates/proposals/proposal_diff.html:225
+#: proposals/templates/proposals/proposal_diff.html:250
 #: proposals/templates/proposals/proposal_submit.html:157
 msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
@@ -2638,8 +2664,9 @@ msgstr ""
 msgid ""
 "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag "
 "ligt, kan de FETC geen officiële goedkeuring meer geven."
-msgstr "If the intended start data lies within two weeks of submission, the "
-"FEtC-H cannot officially approve the application." 
+msgstr ""
+"If the intended start date lies within two weeks of submission, the FETC-H "
+"will not be able to provide official approval for this proposal."
 
 #: proposals/templates/proposals/proposal_form_pre_approved.html:85
 msgid ""
@@ -2775,16 +2802,16 @@ msgstr "Applicant"
 msgid "Naam"
 msgstr "Name"
 
-#: proposals/templates/proposals/proposal_pdf.html:183
+#: proposals/templates/proposals/proposal_pdf.html:194
 msgid "Niet aangeleverd"
 msgstr "Not provided"
 
-#: proposals/templates/proposals/proposal_pdf.html:460
+#: proposals/templates/proposals/proposal_pdf.html:474
 #: proposals/templates/proposals/study_consent.html:125
 msgid "Extra formulieren"
 msgstr "Additional forms"
 
-#: proposals/templates/proposals/proposal_pdf.html:492
+#: proposals/templates/proposals/proposal_pdf.html:506
 #: proposals/templates/proposals/proposal_pdf_empty.html:389
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:143
 #: proposals/templates/proposals/proposal_submit.html:159
@@ -3204,7 +3231,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_submit.html:127
 msgid "Controleer uw beoogde startdatum"
-msgstr "Check your planned start date"
+msgstr "Check your intended start date"
 
 #: proposals/templates/proposals/proposal_submit.html:129
 msgid ""
@@ -3212,9 +3239,9 @@ msgid ""
 "helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer "
 "daarom bij een revisie altijd of de beoogde startdatum nog klopt."
 msgstr ""
-"Because the planned start date lies within two weeks of today, the FEtC-H "
-"unfortunately cannot officially approve your application. When revising, "
-"always check whether the planned start date is still correct."
+"Because the intended start date of research activities lies within two weeks "
+"of today, the FETC-H will not be able to provide official approval for this "
+"proposal. Please make sure the entered date is still correct."
 
 #: proposals/templates/proposals/proposal_submit.html:133
 #, python-format
@@ -3222,7 +3249,7 @@ msgid ""
 "De beoogde startdatum vindt u op <a href=\"%(first_page_url)s\">deze pagina</"
 "a>."
 msgstr ""
-"You can find the planned start date on <a href=\"%(first_page_url)s\">this "
+"The intended start date can be edited on <a href=\"%(first_page_url)s\">this "
 "page</a>."
 
 #: proposals/templates/proposals/proposal_submit.html:155
@@ -3535,7 +3562,7 @@ msgstr "Application deleted"
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:444
+#: proposals/views/proposal_views.py:446
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -4547,14 +4574,14 @@ msgstr ""
 "If the intended age group is 5-7 year-olds, for example, then you should "
 "fill in 4-5 and 6-11."
 
-#: studies/models.py:161
+#: studies/models.py:144
 msgid ""
 "Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?"
 msgstr ""
 "Does your application contain the use of (adult) participants <u>incapable</"
 "u> of informed consent?"
 
-#: studies/models.py:163
+#: studies/models.py:146
 msgid ""
 "Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag worden "
 "aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname "
@@ -4570,24 +4597,7 @@ msgstr ""
 "express their own opinion). Here informed consent should always be obtained "
 "from a relevant representative."
 
-#: studies/models.py:176
-msgid "Worden er bijzondere persoonsgegevens verzameld?"
-msgstr "Does the study collect special personal details?"
-
-#: studies/models.py:177
-msgid ""
-"zie de <a href='https://intranet.uu.nl/documenten-ethische-"
-"toetsingscommissie-gw'             target='_blank'>Richtlijnen</a>"
-msgstr ""
-"See the <a href=\"https://intranet.uu.nl/"
-"en/documents-ethics-assessment-committee-humanities\" target=\"_blank"
-"\">guidelines</a>."
-
-#: studies/models.py:186
-msgid "Geef aan welke bijzondere persoonsgegevens worden verzameld:"
-msgstr "Select which special details are collected:"
-
-#: studies/models.py:191
+#: studies/models.py:158
 msgid ""
 "Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is "
 "dit in jouw onderzoek bij (een deel van) de deelnemers het geval?"
@@ -5030,9 +5040,9 @@ msgid ""
 "                                <li>vraagt deelnemer deel te nemen aan een "
 "focusgroep.</li>\n"
 "                            </ul><br />\n"
-"                            Onderzoek in het Uil OTS-lab is vanwege de "
-"locatie per definitie altijd taakonderzoek (óók als de deelnemers na "
-"ontvangst alleen maar worden geobserveerd).\n"
+"                            Onderzoek in het ILS-lab is vanwege de locatie "
+"per definitie altijd taakonderzoek (óók als de deelnemers na ontvangst "
+"alleen maar worden geobserveerd).\n"
 "                        "
 msgstr ""
 "\n"
@@ -5046,7 +5056,7 @@ msgstr ""
 "                                <li>asks participants to partake in a focus "
 "group.</li>\n"
 "                            </ul><br />\n"
-"                            Research that takes place at the UiL OTS-labs is "
+"                            Research that takes place at the ILS-labs is "
 "always categorized as task-based research due to the location (even if "
 "participants are only observed after their arrival).\n"
 "                        "

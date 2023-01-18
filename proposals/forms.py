@@ -178,6 +178,7 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'summary')
 
         self.mark_soft_required(cleaned_data, 'relation')
+        self.mark_soft_required(cleaned_data, 'date_start')
 
         relation = cleaned_data.get('relation')
         if relation and relation.needs_supervisor and \

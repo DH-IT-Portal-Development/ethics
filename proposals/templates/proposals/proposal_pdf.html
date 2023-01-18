@@ -93,6 +93,17 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th><td>{{ proposal.student_program }}</td>
             </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th><td>{{ proposal.student_context }}</td>
+            </tr>
+                {% if proposal.student_context.needs_details %}
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th><td>{{ proposal.student_context_details }}</td>
+                </tr>
+                {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th><td>{{ proposal.student_justification }}</td>
+            </tr>
             {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th><td>{{ proposal.other_applicants|yesno:_("ja,nee") }}</td>
@@ -257,6 +268,14 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% if study.compensation.needs_details %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th><td>{{ study.hierarchy|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if study.hierarchy %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th><td>{{ study.hierarchy_details }}</td>
             </tr>
             {% endif %}
         </table>
