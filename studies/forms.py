@@ -89,7 +89,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.check_dependency_multiple(cleaned_data, 'recruitment',
                                        'needs_details', 'recruitment_details')
         self.check_dependency(cleaned_data, 'hierarchy', 'hierarchy_details', True, _('Leg uit wat de hiërarchische relatie is.'))
-
+        
     def necessity_required(self, cleaned_data):
         """
         Check whether necessity_reason was required and if so, if it has been filled out.
