@@ -99,6 +99,13 @@
           Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
         {% endblocktrans %}
       </p>
+      {% if external_permission %}
+        <div class="info">
+          <p>{% blocktrans trimmed %}
+            Omdat er in één of meer trajecten onderzoek wordt uitgevoerd op een externe locatie waar toestemming voor vereist is, vragen we daar om een tweede set Informed Consent formulieren voor het management van de instelling. Dat is bijvoorbeeld de schoolleiding of het departementshoofd van een zorginstelling. Voeg waar nodig ook een informatiebrief voor de ouders/verzorgers toe.
+          {% endblocktrans %}</p>
+        </div>
+      {% endif %}
       <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
         {{ formset.management_form }}
 
