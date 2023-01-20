@@ -3,9 +3,9 @@
     "fields": {
         "is_local": true,
         "needs_details": false,
-        "description": "UiL OTS databestand",
-        "description_en": "UiL OTS database",
-        "description_nl": "UiL OTS databestand",
+        "description": "ILS databestand",
+        "description_en": "ILS database",
+        "description_nl": "ILS databestand",
         "requires_review": false,
         "order": 1
     },

@@ -425,13 +425,13 @@
 <li><strong>date_start</strong> (<em>DateField</em>) – Wat is, indien bekend, de beoogde startdatum van uw studie?</li>
 <li><strong>title</strong> (<em>CharField</em>) – Wat is de titel van uw studie? deze titel zal worden gebruikt in alle formele correspondentie. De titel die u hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer de studie is goedgekeurd, ook voor alle medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een studie die u heeft ingediend.</li>
 <li><strong>summary</strong> (<em>TextField</em>) – Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. gebruik maximaal 200 woorden.</li>
-<li><strong>other_applicants</strong> (<em>BooleanField</em>) – Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten icon, ofr, ogk of uil ots?</li>
+<li><strong>other_applicants</strong> (<em>BooleanField</em>) – Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten icon, ofr, ogk of ILS?</li>
 <li><strong>other_stakeholders</strong> (<em>BooleanField</em>) – Zijn er nog andere onderzoekers bij deze studie betrokken die &lt;strong&gt;niet&lt;/strong&gt; geaffilieerd zijn aan een van de onderzoeksinstituten van de faculteit geestwetenschappen van de uu?</li>
 <li><strong>stakeholders</strong> (<em>TextField</em>) – Andere betrokkenen</li>
 <li><strong>funding_details</strong> (<em>CharField</em>) – Namelijk</li>
 <li><strong>funding_name</strong> (<em>CharField</em>) – Wat is de naam van het gefinancierde project?. De titel die u hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.</li>
 <li><strong>comments</strong> (<em>TextField</em>) – Ruimte voor eventuele opmerkingen</li>
-<li><strong>inform_local_staff</strong> (<em>NullBooleanField</em>) – &lt;p&gt;u hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het uil ots, namelijk de database, zep software en/of het uil ots lab. het lab supportteam van het uil ots zou graag op de hoogte willen worden gesteld van aankomende studies. daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - uw naam en de namen van de andere betrokkenen &lt;br/&gt; - de eindverantwoordelijke van de studie &lt;br/&gt; - de titel van de studie &lt;br/&gt; - de beoogde startdatum &lt;br/&gt; - van welke faciliteiten u gebruik wilt maken (database, lab, zep software)</li>
+<li><strong>inform_local_staff</strong> (<em>NullBooleanField</em>) – &lt;p&gt;u hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het ILS, namelijk de database, zep software en/of het ILS lab. het lab supportteam van het ILS zou graag op de hoogte willen worden gesteld van aankomende studies. daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - uw naam en de namen van de andere betrokkenen &lt;br/&gt; - de eindverantwoordelijke van de studie &lt;br/&gt; - de titel van de studie &lt;br/&gt; - de beoogde startdatum &lt;br/&gt; - van welke faciliteiten u gebruik wilt maken (database, lab, zep software)</li>
 <li><strong>in_archive</strong> (<em>BooleanField</em>) – In archive</li>
 <li><strong>public</strong> (<em>BooleanField</em>) – Public</li>
 <li><strong>is_pre_assessment</strong> (<em>BooleanField</em>) – Is pre assessment</li>
@@ -723,7 +723,7 @@
 <dl class="attribute">
 <dt id="proposals.models.Proposal.inform_local_staff">
 <code class="descname">inform_local_staff</code><a class="headerlink" href="#proposals.models.Proposal.inform_local_staff" title="Permalink to this definition">¶</a></dt>
-<dd><p><strong>Model field:</strong> &lt;p&gt;U hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte willen worden gesteld van aankomende studies. Daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;Vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - Uw naam en de namen van de andere betrokkenen &lt;br/&gt; - De eindverantwoordelijke van de studie &lt;br/&gt; - De titel van de studie &lt;br/&gt; - De beoogde startdatum &lt;br/&gt; - Van welke faciliteiten u gebruik wilt maken (database, lab, Zep software)</p>
+<dd><p><strong>Model field:</strong> &lt;p&gt;U hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het ILS, namelijk de database, Zep software en/of het ILS lab. Het lab supportteam van het ILS zou graag op de hoogte willen worden gesteld van aankomende studies. Daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.&lt;/p&gt; &lt;p&gt;Vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:&lt;/p&gt; - Uw naam en de namen van de andere betrokkenen &lt;br/&gt; - De eindverantwoordelijke van de studie &lt;br/&gt; - De titel van de studie &lt;br/&gt; - De beoogde startdatum &lt;br/&gt; - Van welke faciliteiten u gebruik wilt maken (database, lab, Zep software)</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -787,7 +787,7 @@
 <dl class="attribute">
 <dt id="proposals.models.Proposal.other_applicants">
 <code class="descname">other_applicants</code><a class="headerlink" href="#proposals.models.Proposal.other_applicants" title="Permalink to this definition">¶</a></dt>
-<dd><p><strong>Model field:</strong> Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?</p>
+<dd><p><strong>Model field:</strong> Zijn er nog andere onderzoekers bij deze studie betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?</p>
 </dd></dl>
 
 <dl class="attribute">
