@@ -4912,7 +4912,7 @@ msgid ""
 "de instelling (in .pdf of .doc(x)-format)"
 msgstr ""
 "Please upload the declaration of consent for the management of the school or "
-"premises (in .pdf or .doc(x)-format)"
+"institution (in .pdf or .doc(x)-format)"
 
 #: studies/models.py:464
 msgid ""
@@ -4931,7 +4931,7 @@ msgid ""
 "instelling (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the the information letter for the management of the school or "
-"premises (in .pdf or .doc(x)-format)"
+"institution (in .pdf or .doc(x)-format)"
 
 #: studies/models.py:480
 msgid ""
