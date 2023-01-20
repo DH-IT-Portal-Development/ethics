@@ -491,19 +491,17 @@ class Documents(models.Model):
 
     director_consent_declaration = models.FileField(
         _(
-            'Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
+            'Upload hier de toestemmingsverklaring voor de leiding of het management van de instelling (in .pdf of .doc(x)-format)'),
         blank=True,
         validators=[validate_pdf_or_doc],
-        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
-                   'you can upload the unsigned document and send the document when it is signed to the'
-                   ' secretary of the FEtC-H'),
+        help_text=_('Upload indien mogelijk een ondertekende versie van het document. Upload als deze nog niet bestaat een blanco versie, en stuur de ondertekende versie later op naar de secretaris van de FETC-GW.'),
         upload_to=DEPARTMENT_CONSENT_FILENAME,
         storage=OverwriteStorage(),
     )
 
     director_consent_information = models.FileField(
         _(
-            'Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
+            'Upload hier de informatiebrief voor de leiding of het management van de instelling (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=DEPARTMENT_INFO_FILENAME,
@@ -512,7 +510,7 @@ class Documents(models.Model):
 
     parents_information = models.FileField(
         _(
-            'Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
+            'Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=PARENTAL_INFO_FILENAME,
