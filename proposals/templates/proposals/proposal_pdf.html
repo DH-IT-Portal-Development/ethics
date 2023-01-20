@@ -41,13 +41,13 @@
 
 {% block page_header %}
   <div id="page-header">
-    {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name %}
+    {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name trimmed %}
       FETC-GW - <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
     {% endblocktrans %}
     {% if proposal.is_revision %}
       <br>
       <strong>
-        {% blocktrans with type=proposal.type reference_number=proposal.parent.reference_number %}
+        {% blocktrans with type=proposal.type reference_number=proposal.parent.reference_number trimmed %}
           {{ type }} van referentienummer {{ reference_number }}
         {% endblocktrans %}
       </strong>
@@ -63,7 +63,7 @@
   <div id="content">
     <div class="main">
       <h1>
-        {% blocktrans with reference_number=proposal.reference_number %}
+        {% blocktrans with reference_number=proposal.reference_number trimmed %}
           Referentienummer {{ reference_number }}
         {% endblocktrans %}
       </h1>
