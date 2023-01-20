@@ -62,13 +62,98 @@
 {% block content %}
   <div id="content">
     <div class="main">
-      <h1>
-        {% blocktrans with reference_number=proposal.reference_number trimmed %}
-          Referentienummer {{ reference_number }}
-        {% endblocktrans %}
-      </h1>
-      <p>{% trans 'Huidige staat van de aanvraag' %}: <em>{{proposal.get_status_display}}</em>
-      </p>
+        <h1>
+            {% blocktrans with reference_number=proposal.reference_number trimmed %}
+            Referentienummer {{ reference_number }}
+            {% endblocktrans %}
+        </h1>
+	<p>{% trans 'Huidige staat van de aanvraag' %}: <em>{{proposal.get_status_display}}</em>
+	</p>
+	
+        <h2>{% trans 'Indiener' %}</h2>
+        <table>
+            <tr>
+                <th>{% trans 'Naam' %}</th><td>{{ proposal.created_by.get_full_name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans 'E-mail' %}</th><td>{{ proposal.created_by.email }}</td>
+            </tr>
+        </table>
+        <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
+        <table>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th><td>{{ proposal.relation }}</td>
+            </tr>
+            {% if proposal.relation.needs_supervisor %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th><td>{{ proposal.supervisor.get_full_name }}</td>
+            </tr>
+            {% endif %}
+            {% if proposal.relation.check_in_course %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th><td>{{ proposal.student_program }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th><td>{{ proposal.student_context }}</td>
+            </tr>
+                {% if proposal.student_context.needs_details %}
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th><td>{{ proposal.student_context_details }}</td>
+                </tr>
+                {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th><td>{{ proposal.student_justification }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th><td>{{ proposal.other_applicants|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if proposal.other_applicants %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th><td>
+                <ul>
+                    {% for applicant in proposal.applicants.all %}
+                        <li>
+                        {{ applicant.get_full_name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</th><td>{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if proposal.other_stakeholders %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "stakeholders" %}</th><td>{{ proposal.stakeholders }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th><td>{{ proposal.title }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>
+            </tr>
+            {% if proposal.funding.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td>{{ proposal.funding_details }}</td>
+            </tr>
+            {% endif %}
+            {% if proposal.funding.all|needs_details:"needs_name" %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th><td>{{ proposal.funding_name }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th><td>{{ proposal.self_assessment }}</td>
+            </tr>
+        </table>
+        <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
+        <p>{{ proposal.summary|linebreaks }}</p>
 
       <h2>{% trans 'Indiener' %}</h2>
       <table>
@@ -254,7 +339,15 @@
                 <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
               </tr>
             {% endif %}
-          </table>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th><td>{{ study.hierarchy|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if study.hierarchy %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th><td>{{ study.hierarchy_details }}</td>
+            </tr>
+            {% endif %}
+        </table>
 
           {% if study.has_intervention %}
             {% with intervention=study.intervention %}
