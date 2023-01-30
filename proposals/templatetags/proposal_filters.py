@@ -9,12 +9,17 @@ register = template.Library()
 
 @register.filter
 def needs_details(selected_values, field='needs_details'):
-    result = False
     for sv in selected_values:
         if getattr(sv, field):
-            result = True
-            break
-    return result
+            return True
+    return False
+
+@register.filter
+def medical_traits(selected_values, field='medical_traits'):
+    for sv in selected_values:
+        if getattr(sv, field):
+            return True
+    return False
 
 
 @register.filter
@@ -26,7 +31,7 @@ def has_adults(study):
 @register.filter
 def necessity_required(study):
     age_groups = study.age_groups.values_list('id', flat=True)
-    return check_necessity_required(study.proposal, age_groups, study.has_traits, study.legally_incapable)
+    return check_necessity_required(study.proposal, age_groups, study.legally_incapable)
 
 
 @register.simple_tag

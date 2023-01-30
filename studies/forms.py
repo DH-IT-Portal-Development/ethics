@@ -18,7 +18,8 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         fields = [
             'age_groups', 'passive_consent', 'passive_consent_details',
             'legally_incapable', 'legally_incapable_details',
-            'has_traits', 'traits', 'traits_details',
+            'has_special_details', 'special_details',
+            'traits', 'traits_details',
             'necessity', 'necessity_reason',
             'recruitment', 'recruitment_details',
             'compensation', 'compensation_details',
@@ -28,8 +29,9 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             'age_groups':        forms.CheckboxSelectMultiple(),
             'passive_consent':   forms.RadioSelect(choices=YES_NO),
             'legally_incapable': forms.RadioSelect(choices=YES_NO),
-            'has_traits':        forms.RadioSelect(choices=YES_NO),
+            'has_special_details': forms.RadioSelect(choices=YES_NO),
             'hierarchy':         forms.RadioSelect(choices=YES_NO),
+            'special_details':   forms.CheckboxSelectMultiple(),
             'traits':            forms.CheckboxSelectMultiple(),
             'necessity':         forms.RadioSelect(),
             'recruitment':       forms.CheckboxSelectMultiple(),
@@ -68,8 +70,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         - Check all passive_consent fields are filled in correctly when needed
         - Check that legally_incapable has a value
         - If legally_incapable is set, make sure the details are filled
-        - Check that has_traits has a value
-        - If has_traits is checked, make sure there is at least one trait selected
         - If a trait which needs details has been checked, make sure the details are filled
         - If a compensation which needs details has been checked, make sure the details are filled
         - If a recruitment which needs details has been checked, make sure the details are filled
@@ -82,9 +82,10 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.passive_consent(cleaned_data)
         self.check_dependency(cleaned_data, 'legally_incapable',
                               'legally_incapable_details')
-        self.check_empty(cleaned_data, 'has_traits')
-        self.check_dependency(cleaned_data, 'has_traits', 'traits', _(
-            'Je dient minimaal een bijzonder kenmerk te selecteren.'))
+        self.check_dependency_multiple(cleaned_data, 'special_details',
+            'medical_traits', 'traits', _('Je dient minimaal een bijzonder kenmerk te selecteren.'))
+        self.check_dependency(cleaned_data, 'has_special_details', 'special_details', True, _(
+            'Je dient minimaal één type gegevens te selecteren.'))
         self.check_dependency_multiple(cleaned_data, 'traits', 'needs_details',
                                        'traits_details')
         self.check_dependency_singular(cleaned_data, 'compensation',
@@ -99,9 +100,8 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         """
         age_groups = cleaned_data['age_groups'].values_list('id',
                                                             flat=True) if 'age_groups' in cleaned_data else []
-        has_traits = bool(cleaned_data['has_traits'])
         legally_incapable = bool(cleaned_data['legally_incapable'])
-        if check_necessity_required(self.proposal, age_groups, has_traits,
+        if check_necessity_required(self.proposal, age_groups,
                                     legally_incapable):
             if not cleaned_data['necessity_reason']:
                 error = forms.ValidationError(_('Dit veld is verplicht.'),

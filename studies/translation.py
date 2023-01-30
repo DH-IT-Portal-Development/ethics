@@ -1,6 +1,6 @@
 from modeltranslation.translator import register, TranslationOptions
 
-from .models import AgeGroup, Compensation, Recruitment, Trait
+from .models import AgeGroup, Compensation, Recruitment, SpecialDetail, Trait
 
 
 @register(AgeGroup)
@@ -20,4 +20,8 @@ class RecruitmentTranslationOptions(TranslationOptions):
 
 @register(Trait)
 class TraitTranslationOptions(TranslationOptions):
+    fields = ('description',)
+
+@register(SpecialDetail)
+class SpecialDetailTranslationOptions(TranslationOptions):
     fields = ('description',)
