@@ -1,6 +1,14 @@
 {% extends "mail/base.txt" %}
 
 {% block content_nl %}
+{% if was_revised %}
+Beste collega,
+
+Je gereviseerde aanvraag is door de FETC-GW ontvangen.
+
+Dit houdt in dat je revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen je binnenkort een beoordeling te kunnen sturen.
+
+{% else %}
 Beste collega,
 
 Je aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status 'korte-route onderzoek' gekregen.
@@ -8,9 +16,17 @@ Je aanmelding is door de FETC-GW ontvangen. De automatische screening van de por
 Dit houdt in dat wij ernaar streven om je binnen twee werkweken een eerste beoordeling van de FETC-GW te sturen.
 
 NB: Het is mogelijk dat je aanvraag alsnog als 'lange-route onderzoek' wordt aangemerkt, in welk geval de beoordeling langer kan duren, zie het reglement (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/).
+{% endif %}
 {% endblock %}
 
 {% block content_en %}
+{% if was_revised %}
+Dear colleague,
+
+The FEtC-H has received your revised application.
+
+This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a review soon.
+{% else %}
 Dear colleague,
 
 The FEtC-H has received your application. The automatic screening of the portal has given your study the status of 'short-route research'.
@@ -18,4 +34,5 @@ The FEtC-H has received your application. The automatic screening of the portal 
 This means that we aim to send you an initial assessment of the FETC-GW within two working weeks.
 
 Note: It is possible that your application may still be classified as a 'long-route research', in which case the asssessment procedure may take longer, see the regulations (https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/).
+{% endif %}
 {% endblock %}

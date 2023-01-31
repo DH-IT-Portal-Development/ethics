@@ -1,11 +1,20 @@
 {% extends "mail/base.txt" %}
 
 {% block content_nl %}
+{% if was_revised %}
+Beste collega,
+
+Je gereviseerde aanvraag is door de FETC-GW ontvangen.
+
+Dit houdt in dat je revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen je binnenkort een beoordeling te kunnen sturen.
+
+{% else %}
 Beste collega,
 
 Je aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status 'lange-route onderzoek', zie appendix A van het reglement voor de criteria (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/).
 
 Dit houdt in dat je aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, wanneer je aanvraag tenminste een week voor die vergadering is ingediend. Zie de FETC-GW-agenda (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/) voor een overzicht van de komende vergaderingen. Kort na de vergadering zul je de beoordeling ontvangen.
+{% endif %}
 {% endblock %}
 
 {% block content_en %}
