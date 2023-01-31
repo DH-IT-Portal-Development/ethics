@@ -318,7 +318,6 @@ def auto_review(proposal: Proposal):
         if study.has_traits:
             reasons.append(_('Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
 
-        # auto_review_task establishes 
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
