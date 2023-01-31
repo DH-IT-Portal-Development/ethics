@@ -315,6 +315,12 @@ def auto_review(proposal: Proposal):
         if study.deception in [YES, DOUBT]:
             reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
 
+        if study.hierarchy:
+            reasons.append(_('Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)'))
+
+        if study.has_special_details:
+            reasons.append(_('Het onderzoek verzamelt bijzondere persoonsgegevens.'))
+
         if study.has_traits:
             reasons.append(_('Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
 
