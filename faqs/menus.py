@@ -14,11 +14,6 @@ help_menu = (
         open_in_new_tab=True,
     ),
     MenuItem(
-        _(" Reglement Linguïstiek Kamer (LK) "),
-        "http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/",
-        open_in_new_tab=True,
-    ),
-    MenuItem(
         _("Informed consent formulieren"),
         "https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw",
         open_in_new_tab=True,
