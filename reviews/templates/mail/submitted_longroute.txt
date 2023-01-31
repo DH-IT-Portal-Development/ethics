@@ -18,9 +18,17 @@ Dit houdt in dat je aanvraag op de eerstvolgende vergadering van de FETC-GW zal 
 {% endblock %}
 
 {% block content_en %}
+{% if was_revised %}
+Dear colleague,
+
+The FEtC-H has received your revised application.
+
+This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a review soon.
+{% else %}
 Dear colleague,
 
 The FEtC-H has received your application. The automatic screening of the portal has given your study the status of long-route research, see appendix A in the regulations for the criteria (https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/).
 
 This means that your study will be discussed during the next FEtC-H meeting, if your application was submitted at least one week before that meeting. See the FEtC-H agenda (https://fetc-gw.wp.hum.uu.nl/en/category/agenda-en/) for an overview of upcoming meetings. You will receive the assessment shortly after the meeting.
+{% endif %}
 {% endblock %}
