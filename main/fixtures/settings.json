@@ -3,9 +3,9 @@
     "fields": {
         "is_local": true,
         "needs_details": false,
-        "description": "het UiL OTS lab",
-        "description_en": "the UiL OTS labs",
-        "description_nl": "het UiL OTS lab",
+        "description": "het ILS lab",
+        "description_en": "the ILS labs",
+        "description_nl": "het ILS lab",
         "needs_supervision": false,
         "order": 1
     },

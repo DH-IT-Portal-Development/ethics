@@ -34,7 +34,8 @@ $(function() {
     });
     $('input[name=age_groups]').change();
 
-    depends_on_value('has_traits', 'True', 'traits');
+    depends_on_value('has_special_details', 'True', 'special_details');
+    check_field_required('special_details', 'medical_traits', 'traits', 'studies', 'SpecialDetail');
     check_field_required('traits', 'needs_details', 'traits_details', 'studies', 'Trait');
     check_field_required('compensation', 'needs_details', 'compensation_details', 'studies');
     check_field_required('recruitment', 'needs_details', 'recruitment_details', 'studies');
@@ -42,7 +43,7 @@ $(function() {
 
     add_title('age_groups', "{% trans 'De leeftijdsgroep van je deelnemers' %}");
     add_title('legally_incapable', "{% trans 'Wilsonbekwaamheid' %}");
-    add_title('has_traits', "{% trans 'Bijzondere kenmerken van de deelnemers' %}");
+    add_title('has_special_details', "{% trans 'Bijzondere persoonsgegevens' %}");
     add_title('necessity', "{% trans 'Noodzakelijkheid' %}");
     add_title('recruitment', "{% trans 'Werving' %}");
     add_title('compensation', "{% trans 'Vergoeding' %}");
@@ -70,18 +71,16 @@ $(function() {
     $('input[name=age_groups], input[name=legally_incapable]').change();
 
     // Logic for necessity display
-    $('input[name=age_groups], input[name=legally_incapable], input[name=has_traits]').change(function() {
+    $('input[name=age_groups], input[name=legally_incapable]').change(function() {
         var age_groups = $('input[name=age_groups]:checked').map(function() {
             return this.value;
         }).get();
         var legally_incapable = $('input[name=legally_incapable]:checked').val();
-        var has_traits = $('input[name=has_traits]:checked').val();
 
         var url = "{% url 'studies:check_necessity_required' %}";
         var params = {
             'age_groups': age_groups,
             'legally_incapable': legally_incapable,
-            'has_traits': has_traits,
             'proposal_pk': {{ study.proposal.pk }}
         };
         $.post(url, params, function(data) {
@@ -89,7 +88,7 @@ $(function() {
             $('#id_necessity').parents('tr').prev().toggle(data.result); // Toggles header as well
         });
     });
-    $('input[name=age_groups], input[name=legally_incapable], input[name=has_traits]').change();
+    $('input[name=age_groups], input[name=legally_incapable]').change();
 });
 </script>
 {% endblock %}

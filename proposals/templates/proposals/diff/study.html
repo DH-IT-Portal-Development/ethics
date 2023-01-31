@@ -57,33 +57,34 @@
                 </tr>
             {% endif %}
         {% endif %}
+
         <tr>
-            <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th>
-            <td>
-                {% if p_study %}
-                    {{ p_study.has_traits|yesno:_("ja,nee") }}
-                {% endif %}
-            </td>
-            <td>
-                {% if study %}
-                    {{ study.has_traits|yesno:_("ja,nee") }}
-                {% endif %}
-            </td>
+            <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th>
+            <td>{{ p_study.has_special_details|yesno:_("ja,nee") }}</td>
+            <td>{{ study.has_special_details|yesno:_("ja,nee") }}</td>
         </tr>
-        {% if study.has_traits or p_study.has_traits %}
+        {% if study.has_special_details %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "traits" %}</th>
-                <td>{{ p_study.traits.all|unordered_list }}</td>
-                <td>{{ study.traits.all|unordered_list }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "special_details" %}</th>
+                <td>{{ p_study.special_details.all|unordered_list }}</td>
+                <td>{{ study.special_details.all|unordered_list }}</td>
             </tr>
-            {% if study.traits.all|needs_details or p_study.traits.all|needs_details %}
+            {% if study.special_details.all|medical_traits %}
                 <tr>
-                    <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th>
-                    <td>{{ p_study.traits_details }}</td>
-                    <td>{{ study.traits_details }}</td>
+                    <th>{% get_verbose_field_name "studies" "study" "traits" %}</th>
+                    <td>{{ p_study.traits.all|unordered_list }}</td>
+                    <td>{{ study.traits.all|unordered_list }}</td>
                 </tr>
+                {% if study.traits.all|needs_details %}
+                    <tr>
+                        <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th>
+                        <td>{{ p_study.traits_details }}</td>
+                        <td>{{ study.traits_details }}</td>
+                    </tr>
+                {% endif %}
             {% endif %}
         {% endif %}
+        
         {% if study|necessity_required or p_study|necessity_required %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th>
@@ -119,6 +120,18 @@
                 <td>{{ p_study.compensation_details }}</td>
                 <td>{{ study.compensation_details }}</td>
             </tr>
+        {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th>
+            <td>{{ p_study.hierarchy }}</td>
+            <td>{{ study.hierarchy }}</td>
+        </tr>
+        {% if study.hierarchy or p_study.hierarchy %}
+        <tr>
+            <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th>
+            <td>{{ p_study.hierarchy_details }}</td>
+            <td>{{ study.hierarchy_details }}</td>
+        </tr>
         {% endif %}
     </table>
 

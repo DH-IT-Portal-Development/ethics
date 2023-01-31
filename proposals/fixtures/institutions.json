@@ -4,9 +4,9 @@
       "pk":1,
       "fields":{
          "order":4,
-         "description":"Utrecht instituut voor Linguistiek OTS (UiL OTS)",
-         "description_nl":"Utrecht instituut voor Linguistiek OTS (UiL OTS)",
-         "description_en":"Utrecht Institute of Linguistics OTS (UiL OTS)",
+         "description":"Utrecht instituut voor Linguistiek OTS (ILS)",
+         "description_nl":"Utrecht instituut voor Linguistiek OTS (ILS)",
+         "description_en":"Utrecht Institute of Linguistics OTS (ILS)",
          "reviewing_chamber":1
       }
    },
