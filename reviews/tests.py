@@ -167,26 +167,25 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
-        self.study.has_intervention = True
-        self.study.intervention = Intervention.objects.create(version=2, multiple_sessions=False, duration=2, study=self.study)
+        self.study.legally_incapable = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-        self.study.legally_incapable = True
+        self.study.deception = DOUBT
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 2)
 
-        self.study.passive_consent = True
+        self.study.hierarchy = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 3)
 
-        self.study.deception = DOUBT
+        self.study.has_special_details = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -198,23 +197,17 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 5)
 
-        self.study.sessions_number = 2
+        self.study.stressful = YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
 
-        self.study.stressful = YES
-        self.study.save()
-
-        reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 7)
-
         self.study.risk = YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 8)
+        self.assertEqual(len(reasons), 7)
 
     def test_auto_review_age_groups(self):
         self.study.has_sessions = True
@@ -274,9 +267,3 @@ class AutoReviewTests(BaseReviewTestCase):
 
         reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 1)
-
-        s1_t1.registration_kinds.set(RegistrationKind.objects.filter(requires_review=True))  # psychofysiological measurements / other
-        s1_t1.save()
-
-        reasons = auto_review_task(self.study, s1_t1)
-        self.assertEqual(len(reasons), 2)
