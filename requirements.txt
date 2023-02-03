@@ -47,7 +47,7 @@ cwcwidth==0.1.6
     # via
     #   bpython
     #   curtsies
-django==3.2.14
+django==3.2.17
     # via
     #   -r requirements.in
     #   django-auth-ldap
@@ -94,8 +94,6 @@ html5lib==1.1
 idna==3.3
     # via requests
 imagesize==1.4.1
-    # via sphinx
-importlib-metadata==4.12.0
     # via sphinx
 jinja2==3.1.2
     # via sphinx
@@ -251,8 +249,6 @@ webencodings==0.5.1
     #   tinycss2
 xhtml2pdf==0.2.8
     # via -r requirements.in
-zipp==3.8.0
-    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
