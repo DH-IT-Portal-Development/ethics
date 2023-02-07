@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-23 12:28+0100\n"
+"POT-Creation-Date: 2023-02-07 11:07+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -53,16 +53,19 @@ msgstr ""
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
-#: faqs/menus.py:12 main/templates/base/menu.html:128
-#: main/templates/main/index.html:181
-msgid "Reglement Algemene Kamer (AK)"
-msgstr "Regulations General Chamber (GC)"
+#: faqs/menus.py:8
+msgid "http://fetc-gw.wp.hum.uu.nl/"
+msgstr "https://fetc-gw.wp.hum.uu.nl/en/"
 
-#: faqs/menus.py:17 main/templates/base/menu.html:131
-msgid " Reglement Linguïstiek Kamer (LK) "
-msgstr " Regulations Linguistics Chamber (LC) "
+#: faqs/menus.py:12
+msgid "Reglement FETC-GW"
+msgstr "Regulations FEtC-H"
 
-#: faqs/menus.py:22 main/templates/base/menu.html:134
+#: faqs/menus.py:13
+msgid "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"
+msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
+
+#: faqs/menus.py:17 main/templates/base/menu.html:134
 #: main/templates/main/index.html:189
 #: proposals/templates/proposals/proposal_pdf.html:430
 #: proposals/templates/proposals/study_consent.html:8
@@ -70,17 +73,23 @@ msgstr " Regulations Linguistics Chamber (LC) "
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
-#: faqs/menus.py:27 main/templates/base/menu.html:137
+#: faqs/menus.py:18
+msgid "https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
+msgstr ""
+"https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-"
+"committee-humanities"
+
+#: faqs/menus.py:22 main/templates/base/menu.html:137
 msgid "FAQs"
 msgstr "FAQs"
 
-#: faqs/menus.py:31 feedback/models.py:20
+#: faqs/menus.py:26 feedback/models.py:20
 #: feedback/templates/feedback/feedback_list.html:22
 #: main/templates/base/menu.html:140
 msgid "Feedback"
 msgstr "Feedback"
 
-#: faqs/menus.py:36 main/templates/base/menu.html:122
+#: faqs/menus.py:31 main/templates/base/menu.html:122
 msgid "Help"
 msgstr "Help"
 
@@ -636,6 +645,14 @@ msgstr "All submitted applications"
 #: reviews/mixins.py:130
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
+
+#: main/templates/base/menu.html:128 main/templates/main/index.html:181
+msgid "Reglement Algemene Kamer (AK)"
+msgstr "Regulations General Chamber (GC)"
+
+#: main/templates/base/menu.html:131
+msgid " Reglement Linguïstiek Kamer (LK) "
+msgstr " Regulations Linguistics Chamber (LC) "
 
 #: main/templates/base/menu.html:145
 #: main/templates/registration/logged_out.html:9
@@ -2985,7 +3002,7 @@ msgstr ""
 "an interview, questionnaire, or language test.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:80
-#: proposals/templates/proposals/proposal_start_pre_approved.html:43
+#: proposals/templates/proposals/proposal_start_pre_approved.html:38
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:31
 msgid "Volgende stap >>"
 msgstr "Next step >>"
@@ -3014,43 +3031,31 @@ msgstr ""
 msgid ""
 "Je wilt een nieuwe aanvraag ter toetsing bij de FETC-GW aanmelden, die al "
 "getoetst is door een andere ethische (toetsings) commissie. Het is daarvoor "
-"<em>noodzakelijk</em> dat je goed bekend bent met het FETC-GW reglement. "
-"<br />Deze kan je vinden op de UU-webpagina van de FETC-GW: <a href=\"http://"
-"fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" target=\"_blank\">reglement "
-"Algemene Kamer (AK)</a> en <a href=\"http://fetc-gw.wp.hum.uu.nl/reglement-"
-"linguistiek-kamer/\" target=\"_blank\">reglement Linguïstiek Kamer (LK)</a>. "
-"Je kan jezelf en de commissieleden veel tijd besparen door je eerst goed te "
-"informeren."
+"<em>noodzakelijk</em> dat je goed bekend bent met het <a href=\"https://fetc-"
+"gw.wp.hum.uu.nl/reglement-fetc-gw/\" target=\"_blank\">FETC-GW reglement</"
+"a>. Je kan jezelf en de commissieleden veel tijd besparen door je eerst goed "
+"te informeren."
 msgstr ""
 "You want to register a new application for assessment by the FEtC-H that "
-"has     already been approved by a different ethics committee. It is "
-"therefore <em>necessary</em> to be familiar with the FEtC-H regulations. "
-"Please refer to the FEtC-H website for the regulations of <a href=\"https://"
-"fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/\" "
-"target=\"_blank\">the  General Chamber</a> and <a href=\"https://fetc-gw.wp."
-"hum.uu.nl/en/regulations-linguistics-chamber/\" target=\"_blank\">the "
-"Linguistics Chamber</a>. You can save yourself and the committee members a "
+"has already been approved by a different ethics committee. It is "
+"therefore <em>necessary</em> to be familiar with the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" target=\"_blank\">FEtC-H regulations</a>. "
+" You can save yourself and the committee members a "
 "great deal of time by making sure you are properly informed."
 
-#: proposals/templates/proposals/proposal_start_pre_approved.html:30
+#: proposals/templates/proposals/proposal_start_pre_approved.html:27
 #, python-format
 msgid ""
 "Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht "
-"niet mee bekend is. Raadpleeg bij vragen eerst het reglement van de <a "
-"href=\"http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/\" "
-"target=\"_blank\"> Algemene Kamer (AK)</a> of de <a href=\"http://fetc-gw.wp."
-"hum.uu.nl/reglement-linguistiek-kamer/\" target=\"_blank\">Linguïstiek Kamer "
-"(LK)</a>, en neem eventueel daarna contact op met de secretaris "
-"(%(secretary_name)s, <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
+"niet mee bekend is. Raadpleeg bij vragen eerst het <a href=\"https://fetc-gw."
+"wp.hum.uu.nl/reglement-fetc-gw/\" target=\"_blank\">reglement</a>, en neem "
+"eventueel daarna contact op met de secretaris (%(secretary_name)s, <a "
+"href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
 msgstr ""
-"When filling in the forms please avoid using abbreviations the FEtC-Hmight "
-"not be familiar with.If you have questions, first consult the regulations of "
-"the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-general-chamber-2/"
-"\" target=\"_blank\">General Chamber</a> or the <a href=\"https://fetc-gw.wp."
-"hum.uu.nl/en/regulations-linguistics-chamber/\" "
-"target=\"_blank\">Linguistics Chamber</a>,and if necessary contact the "
-"secretary (%(secretary_name)s,<a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu."
-"nl</a>)."
+"When filling in the forms please avoid using abbreviations the FEtC-H might "
+"not be familiar with. If you have questions, first consult the <a "
+"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" "
+"target=\"_blank\">regulations</a>, and if necessary contact the secretary "
+"(%(secretary_name)s, <a href=\"mailto:fetc-gw@uu.nl\">fetc-gw@uu.nl</a>)."
 
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:7
 msgid "Toetsing voor subsidieaanvraag"
@@ -4382,45 +4387,27 @@ msgstr "FEtC-H {}: new decision added"
 msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
-#: reviews/utils/review_utils.py:320
-msgid "De beoogde startdatum ligt voor de datum van indiening"
-msgstr ""
-"The intended start date is before the date that the study was submitted"
-
-#: reviews/utils/review_utils.py:326
-msgid "De aanvraag bevat een interventiestudie."
-msgstr "The application contains an intervention study."
-
-#: reviews/utils/review_utils.py:330
-#, python-brace-format
-msgid ""
-"De aanvraag heeft een interventiestudie met deelnemers in de volgende "
-"setting: {s}"
-msgstr ""
-"The application contains an intervention study with participants in the "
-"following setting: {s}"
-
-#: reviews/utils/review_utils.py:333
+#: reviews/utils/review_utils.py:313
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:336
-msgid "De aanvraag bevat passieve informed consent."
-msgstr "The study works with passive informed consent."
-
-#: reviews/utils/review_utils.py:342
+#: reviews/utils/review_utils.py:316
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:345
-msgid "De beloning van deelnemers wijkt af van de standaardregeling."
+#: reviews/utils/review_utils.py:319
+msgid ""
+"Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
 msgstr ""
-"The compensation to participants differs from that of the standard "
-"regulations."
+"A hierarchal relationship between researcher(s) and participant(s) exists."
 
-#: reviews/utils/review_utils.py:349
+#: reviews/utils/review_utils.py:322
+msgid "Het onderzoek verzamelt bijzondere persoonsgegevens."
+msgstr "This study collects special or sensitive personal details."
+
+#: reviews/utils/review_utils.py:325
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4428,15 +4415,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:355
-msgid ""
-"Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere "
-"dagen deel (zoals bij longitudinaal onderzoek)."
-msgstr ""
-"The study consists of several sessions, i.e. the participant takes part on "
-"multiple days (as in a longitudinal study)."
-
-#: reviews/utils/review_utils.py:358
+#: reviews/utils/review_utils.py:331
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
 "onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen "
@@ -4446,7 +4425,7 @@ msgstr ""
 "study, in part or in its entirety, is so burdensome that despite acquiring "
 "informed consent it might raise questions."
 
-#: reviews/utils/review_utils.py:362
+#: reviews/utils/review_utils.py:335
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan het onderzoek meer dan "
@@ -4456,13 +4435,7 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:369
-#, python-brace-format
-msgid "Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}"
-msgstr ""
-"The study contains sessions with participants in the following setting: {s}"
-
-#: reviews/utils/review_utils.py:373
+#: reviews/utils/review_utils.py:342
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4473,14 +4446,14 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:390
+#: reviews/utils/review_utils.py:359
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:394
+#: reviews/utils/review_utils.py:363
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4488,7 +4461,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:396
+#: reviews/utils/review_utils.py:365
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4498,11 +4471,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:401 reviews/utils/review_utils.py:427
+#: reviews/utils/review_utils.py:370
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:422
+#: reviews/utils/review_utils.py:391
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
@@ -4608,11 +4581,14 @@ msgid ""
 "zie de <a href='https://intranet.uu.nl/documenten-ethische-"
 "toetsingscommissie-gw'             target='_blank'>Richtlijnen</a>"
 msgstr ""
-"Please view the most recent <a target=\"_blank\" href=\"https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities\">regulations</a>."
+"Please view the most recent <a target=\"_blank\" href=\"https://intranet.uu."
+"nl/en/knowledgebase/documents-ethics-assessment-committee-"
+"humanities\">regulations</a>."
 
 #: studies/models.py:186
 msgid "Geef aan welke bijzondere persoonsgegevens worden verzameld:"
-msgstr "Please select which kinds of special personal details may be collected:"
+msgstr ""
+"Please select which kinds of special personal details may be collected:"
 
 #: studies/models.py:191
 msgid ""
@@ -5665,6 +5641,43 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "De beoogde startdatum ligt voor de datum van indiening"
+#~ msgstr ""
+#~ "The intended start date is before the date that the study was submitted"
+
+#~ msgid "De aanvraag bevat een interventiestudie."
+#~ msgstr "The application contains an intervention study."
+
+#, python-brace-format
+#~ msgid ""
+#~ "De aanvraag heeft een interventiestudie met deelnemers in de volgende "
+#~ "setting: {s}"
+#~ msgstr ""
+#~ "The application contains an intervention study with participants in the "
+#~ "following setting: {s}"
+
+#~ msgid "De aanvraag bevat passieve informed consent."
+#~ msgstr "The study works with passive informed consent."
+
+#~ msgid "De beloning van deelnemers wijkt af van de standaardregeling."
+#~ msgstr ""
+#~ "The compensation to participants differs from that of the standard "
+#~ "regulations."
+
+#~ msgid ""
+#~ "Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op "
+#~ "meerdere dagen deel (zoals bij longitudinaal onderzoek)."
+#~ msgstr ""
+#~ "The study consists of several sessions, i.e. the participant takes part "
+#~ "on multiple days (as in a longitudinal study)."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}"
+#~ msgstr ""
+#~ "The study contains sessions with participants in the following setting: "
+#~ "{s}"
 
 #~ msgid "Bijzondere kenmerken van de deelnemers"
 #~ msgstr "Special characteristics of your participants"
