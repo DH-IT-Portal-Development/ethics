@@ -3,11 +3,15 @@
 {% load static %}
 {% load i18n %}
 
+
+
 {% block header_title %}
     {% trans "Een nieuwe aanvraag aanmelden (die al goedgekeurd is door een andere ethische toetsingscomissie)" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
+
+    {% trans "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/" as reg_url %}
     <div class="uu-inner-container">
         <div class="col-12">
             <h2>
@@ -17,7 +21,7 @@
               {% blocktrans trimmed %}
               Je wilt een nieuwe aanvraag ter toetsing bij de FETC-GW aanmelden, die al getoetst is
               door een andere ethische (toetsings) commissie.
-              Het is daarvoor <em>noodzakelijk</em> dat je goed bekend bent met het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/" target="_blank">FETC-GW
+              Het is daarvoor <em>noodzakelijk</em> dat je goed bekend bent met het <a href="{{reg_url}}" target="_blank">FETC-GW
                 reglement</a>. 
                 Je kan jezelf en de commissieleden veel tijd besparen door je eerst
                 goed te informeren.
@@ -25,13 +29,13 @@
             </p>
             <p>
                 {% blocktrans trimmed with secretary_name=secretary.get_full_name %}
-                Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht
-                niet mee bekend is.
-                Raadpleeg bij vragen eerst het
-                <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/" target="_blank">reglement</a>,
-                en neem eventueel daarna contact op met de secretaris
-                ({{ secretary_name }},
-                <a href="mailto:fetc-gw@uu.nl">fetc-gw@uu.nl</a>).
+                    Gebruik bij het invullen s.v.p. geen afkortingen waar de FETC-GW wellicht
+                    niet mee bekend is.
+                    Raadpleeg bij vragen eerst het
+                    <a href="{{reg_url}}">reglement</a>
+                    en neem eventueel daarna contact op met de secretaris
+                    ({{ secretary_name }},
+                    <a href="mailto:fetc-gw@uu.nl">fetc-gw@uu.nl</a>).
                 {% endblocktrans %}
             </p>
             <a class="button button-colored float-right mb-3" href="{% url 'proposals:create_pre_approved' %}">

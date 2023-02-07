@@ -132,7 +132,8 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
+    template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -144,6 +145,26 @@ class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
         return "{} - {}".format(
             _('Publiek archief'),
             self.committee_display_name
+        )
+
+
+class ProposalsPublicArchiveView(generic.ListView):
+    template_name = "proposals/proposal_public_archive.html"
+    model = Proposal
+
+    def get_queryset(self):
+        """Returns all the Proposals that have been decided positively upon"""
+        two_years_ago = (
+                datetime.date.today() -
+                datetime.timedelta(weeks=104)
+        )
+        return super().get_queryset().filter(
+            status__gte=Proposal.DECISION_MADE,
+            status_review=True,
+            in_archive=True,
+            date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
         )
 
 
@@ -191,7 +212,7 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
 class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
 
     # Note: template_name is auto-generated to proposal_form.html
-    
+
     def get_initial(self):
         """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
