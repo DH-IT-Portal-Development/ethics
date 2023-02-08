@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import AgeGroup, Trait, Compensation, Recruitment
+from .models import AgeGroup, Trait, Compensation, Recruitment, SpecialDetail
 
 
 @admin.register(AgeGroup)
@@ -26,5 +26,11 @@ class CompensationAdmin(admin.ModelAdmin):
 @admin.register(Recruitment)
 class RecruitmentAdmin(admin.ModelAdmin):
     list_display = ('order', 'description', 'is_local', 'needs_details', 'requires_review', )
+    list_display_links = ('description', )
+    ordering = ['order']
+
+@admin.register(SpecialDetail)
+class SpecialDetailAdmin(admin.ModelAdmin):
+    list_display = ('order', 'description', 'medical_traits')
     list_display_links = ('description', )
     ordering = ['order']

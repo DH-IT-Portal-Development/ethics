@@ -5,22 +5,17 @@ from menu import Menu, MenuItem
 help_menu = (
     MenuItem(
         _("FETC-GW website"),
-        "http://fetc-gw.wp.hum.uu.nl/",
+        _("http://fetc-gw.wp.hum.uu.nl/"),
         open_in_new_tab=True,
     ),
     MenuItem(
-        _("Reglement Algemene Kamer (AK)"),
-        "http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/",
-        open_in_new_tab=True,
-    ),
-    MenuItem(
-        _(" Reglement Linguïstiek Kamer (LK) "),
-        "http://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/",
+        _("Reglement FETC-GW"),
+        _("https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"),
         open_in_new_tab=True,
     ),
     MenuItem(
         _("Informed consent formulieren"),
-        "https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw",
+        _("https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"),
         open_in_new_tab=True,
     ),
     MenuItem(

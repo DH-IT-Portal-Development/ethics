@@ -152,13 +152,11 @@ class CloseReview(ReviewAction):
         return _('Deze aanvraag afsluiten')
 
 
-
-
 class DiscontinueReview(ReviewAction):
 
     def is_available(self):
         '''Only allow secretaries to discontinue reviews which have
-        not yet been discontinued'''
+        not yet been discontinued or have been confirmed'''
 
         review = self.review
         user = self.user
@@ -167,7 +165,10 @@ class DiscontinueReview(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
-        if review.continuation == review.DISCONTINUED:
+        if review.continuation in [review.DISCONTINUED,
+                                   review.GO,
+                                   review.GO_POST_HOC,
+                                   ]:
             return False
 
         return True
