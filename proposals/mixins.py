@@ -71,7 +71,7 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
             return self.filename_factory(
                 self.object,
                 self.pdf_filename,
-                )
+            )
 
         return self.pdf_filename
 

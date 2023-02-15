@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from django.utils.functional import lazy
@@ -15,6 +16,7 @@ from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
+from .models import Review
 
 SUMMARY_MAX_WORDS = 200
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
@@ -543,9 +545,10 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         from reviews.models import Review, Decision
 
         if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
-            decisions = Decision.objects.filter(review__proposal=self,
-                                                review__stage=Review.SUPERVISOR).order_by(
-                '-pk')
+            decisions = Decision.objects.filter(
+                review__proposal=self,
+                review__stage=Review.SUPERVISOR
+            ).order_by('-pk')
 
             if decisions:
                 return decisions[0]
@@ -559,6 +562,23 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         from reviews.models import Review
 
         return Review.objects.filter(proposal=self).last()
+
+    def enforce_wmo(self):
+        """Send proposal back to draft phase with WMO enforced."""
+        self.status = self.DRAFT
+        self.save()
+        self.wmo.enforced_by_commission = True
+        self.wmo.save()
+
+    def final_decision(self, continuation):
+        """Finalize a proposal after a decision has been made."""
+        self.status = self.DECISION_MADE
+        self.status_review = continuation in [
+            Review.GO, Review.GO_POST_HOC
+        ]
+        self.date_reviewed = timezone.now()
+        self.generate_pdf()
+        self.save()
 
     def generate_pdf(self):
         """Save a pdf of the proposal for posterity."""
