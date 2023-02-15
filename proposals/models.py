@@ -560,6 +560,11 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
         return Review.objects.filter(proposal=self).last()
 
+    def generate_pdf(self):
+        """Save a pdf of the proposal for posterity."""
+        from proposals.utils import generate_pdf
+        generate_pdf(self)
+
     def __str__(self):
         if self.is_practice():
             return '{} ({}) (Practice)'.format(self.title, self.created_by)
