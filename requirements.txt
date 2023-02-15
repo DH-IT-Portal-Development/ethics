@@ -47,7 +47,7 @@ cwcwidth==0.1.8
     # via
     #   bpython
     #   curtsies
-django==3.2.17
+django==3.2.18
     # via
     #   -r requirements.in
     #   django-auth-ldap
@@ -93,9 +93,7 @@ idna==3.4
 imagesize==1.4.1
     # via sphinx
 importlib-metadata==6.0.0
-    # via
-    #   django-simple-menu
-    #   sphinx
+    # via django-simple-menu
 jinja2==3.1.2
     # via sphinx
 lesscpy==0.15.1
@@ -229,7 +227,6 @@ tinycss2==1.2.1
 typing-extensions==4.4.0
     # via
     #   django-modeltranslation
-    #   pypdf
     #   qrcode
 tzdata==2022.7
     # via pytz-deprecation-shim
