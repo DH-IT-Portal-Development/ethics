@@ -16,7 +16,6 @@ from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
-from .models import Review
 
 SUMMARY_MAX_WORDS = 200
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
@@ -570,13 +569,17 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         self.wmo.enforced_by_commission = True
         self.wmo.save()
 
-    def final_decision(self, continuation):
+    def mark_reviewed(self, continuation, time=None):
         """Finalize a proposal after a decision has been made."""
+        if not time:
+            time = timezone.now()
         self.status = self.DECISION_MADE
+        # Importing here to prevent circular import
+        from .models import Review
         self.status_review = continuation in [
             Review.GO, Review.GO_POST_HOC
         ]
-        self.date_reviewed = timezone.now()
+        self.date_reviewed = time
         self.generate_pdf()
         self.save()
 

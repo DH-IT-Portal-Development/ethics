@@ -360,7 +360,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
                 Review.NO_GO_POST_HOC,
                 Review.REVISION,
         ]:
-            proposal.final_decision(form.instance.continuation)
+            proposal.mark_reviewed(form.instance.continuation)
         elif form.instance.continuation == Review.LONG_ROUTE:
             # Create a new review
             review = Review.objects.create(
