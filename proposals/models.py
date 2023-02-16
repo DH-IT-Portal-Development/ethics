@@ -588,6 +588,13 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         from proposals.utils import generate_pdf
         generate_pdf(self)
 
+    def use_canonical_pdf(self):
+        """Returns False if this proposal should regenerate its PDF
+        on request. Proposals that have already been decided on should
+        rely on a PDF generated at time of review, so that the PDF
+        generation templates can evolve without breaking older proposals."""
+        return self.status_review is not None
+
     def __str__(self):
         if self.is_practice():
             return '{} ({}) (Practice)'.format(self.title, self.created_by)
