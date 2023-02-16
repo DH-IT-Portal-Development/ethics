@@ -69,7 +69,7 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
 
         if self.filename_factory:
             return self.filename_factory(
-                self.object,
+                self.get_object(),
                 self.pdf_filename,
             )
 
@@ -106,7 +106,7 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
             dest = response
 
         # find the template and render it.
-        template = get_template(self.template_name)
+        template = get_template(self.get_template_names()[0])
         html = template.render(context)
 
         # Create PDF with pisa object

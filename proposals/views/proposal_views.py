@@ -10,6 +10,7 @@ from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
+from django.http import FileResponse
 #from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
 
@@ -528,36 +529,52 @@ class ProposalCopyAmendment(ProposalCopy):
         return context
 
 
-class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
-                    generic.DetailView):
+class ProposalAsPdf(
+        LoginRequiredMixin,
+        PDFTemplateResponseMixin,
+        generic.DetailView
+):
     model = Proposal
-    template_name = 'proposals/proposal_pdf.html'
-
     # The PDF mixin generates a filename with this factory
     filename_factory = FilenameFactory('Proposal')
+
+    def get(self, request, *args, **kwargs):
+        # First, check if we should use a pregenerated pdf
+        proposal = self.get_object()
+        if proposal.use_canonical_pdf():
+            print("Boom canonincal")
+            breakpoint()
+            return FileResponse(
+                proposal.pdf,
+                filename=self.get_pdf_filename(),
+                as_attachment=self.pdf_save_as,
+            )
+        # Else, continue with generation
+        return super().get(request, *args, **kwargs)
+
+    def get_template_names(self):
+        proposal = self.get_object()
+        self.template_name = 'proposals/proposal_pdf.html'
+        if proposal.is_pre_approved:
+            self.template_name = 'proposals/proposal_pdf_pre_approved.html'
+        elif proposal.is_pre_assessment:
+            self.template_name = 'proposals/proposal_pdf_pre_assessment.html'
+        return [self.template_name]
 
     def get_context_data(self, **kwargs):
         """Adds 'BASE_URL' to template context"""
         context = super(ProposalAsPdf, self).get_context_data(**kwargs)
         context['BASE_URL'] = settings.BASE_URL
 
-        if self.object.is_pre_approved:
-            self.template_name = 'proposals/proposal_pdf_pre_approved.html'
-        elif self.object.is_pre_assessment:
-            self.template_name = 'proposals/proposal_pdf_pre_assessment.html'
-
         documents = {
             'extra': []
         }
-
         for document in Documents.objects.filter(proposal=self.object).all():
             if document.study:
                 documents[document.study.pk] = document
             else:
                 documents['extra'].append(document)
-
         context['documents'] = documents
-
         return context
 
 
