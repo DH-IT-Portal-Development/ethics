@@ -542,8 +542,6 @@ class ProposalAsPdf(
         # First, check if we should use a pregenerated pdf
         proposal = self.get_object()
         if proposal.use_canonical_pdf():
-            print("Boom canonincal")
-            breakpoint()
             return FileResponse(
                 proposal.pdf,
                 filename=self.get_pdf_filename(),
