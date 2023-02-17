@@ -96,11 +96,13 @@ function check_field_required(input_name, field_name, required_input, app_name, 
     let input = $('input[name=' + input_name + ']');
     let r_input = $('#id_' + required_input);
 
+    let process_identifier = input_name.concat(' ', required_input);
+
     input.change(function() {
         // if a postrequest is in progress, abort that request
-        if (postrequests.has(input_name)) {
-            postrequests.get(input_name).abort();
-            postrequests.delete(input_name);
+        if (postrequests.has(process_identifier)) {
+            postrequests.get(process_identifier).abort();
+            postrequests.delete(process_identifier);
         }
         let checked_inputs = input.filter(':checked').map(function() {
             return this.value;
@@ -126,9 +128,9 @@ function check_field_required(input_name, field_name, required_input, app_name, 
                 r_input.parents('tr').prev().toggle(data.result);
             }
             //when the request is done, mark it undefined
-            postrequests.delete(input_name);
+            postrequests.delete(process_identifier);
         });
-        postrequests.set(input_name, req);
+        postrequests.set(process_identifier, req);
     });
     input.change();
 }
