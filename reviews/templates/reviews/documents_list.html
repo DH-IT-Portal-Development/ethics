@@ -26,10 +26,18 @@
         </a>
         {% if item.comparable %}
         {% simple_compare_link item.object item.field %}
-        {% endif %}
+        {% endif %} 
     </li>
     {% endfor %}
 </ul>
+
+{% if container.dmp_edit_link %}
+    <a href="{{ container.dmp_edit_link }}" class="d-block mb-3">
+        {% trans "Data Management Plan wijzigen" %}
+        <img src="{% static 'proposals/images/pencil.png' %}"
+            title="{% trans 'Data Management Plan wijzigen' %}" />
+    </a>
+{% endif %}
 
 {% if container.edit_link %}
 <a href="{{ container.edit_link }}" class="d-block mb-3">
@@ -39,12 +47,5 @@
 </a>
 {% endif %}
 
-{% if container.dmp_edit_link %}
-<a href="{{ container.dmp_edit_link }}" class="d-block mb-3">
-    {% trans "Data Management Plan wijzigen" %}
-    <img src="{% static 'proposals/images/pencil.png' %}"
-         title="{% trans 'Data Management Plan wijzigen' %}" />
-</a>
-{% endif %}
 
 {% endfor %}
