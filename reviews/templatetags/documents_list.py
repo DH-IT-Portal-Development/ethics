@@ -164,6 +164,7 @@ class Container:
     def __init__(self, header, **kwargs):
 
         self.edit_link = False
+        self.dmp_edit_link = False
         self.header = header
         self.items = []
 
@@ -309,6 +310,7 @@ def documents_list(review, user):
         # Only the secretary gets an edit link
         if is_secretary(user):
             documents_container.edit_link = reverse('studies:attachments', args=[d.pk])
+            documents_container.dmp_edit_link = reverse('proposals:update_data_management', args=[proposal.pk])
 
         containers.append(documents_container)
 
