@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-07 16:47+0100\n"
+"POT-Creation-Date: 2023-02-25 01:32+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -328,7 +328,7 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:11 main/forms/conditional_form.py:20
 #: main/forms/conditional_form.py:29 main/forms/conditional_form.py:38
 #: main/forms/conditional_form.py:48 main/forms/mixins.py:83
-#: proposals/forms.py:558 proposals/forms.py:614 studies/forms.py:107
+#: proposals/forms.py:558 proposals/forms.py:620 studies/forms.py:107
 #: studies/forms.py:118 studies/forms.py:124 tasks/forms.py:87
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -580,27 +580,27 @@ msgid "Maak een amendement van een al goedgekeurde aanvraag"
 msgstr "Create an amendment to an already approved application"
 
 #: main/templates/base/menu.html:32 proposals/menus.py:56
-#: proposals/views/proposal_views.py:73
+#: proposals/views/proposal_views.py:74
 msgid "Mijn conceptaanvragen"
 msgstr "My draft applications"
 
 #: main/templates/base/menu.html:35 proposals/menus.py:60
-#: proposals/views/proposal_views.py:123
+#: proposals/views/proposal_views.py:124
 msgid "Mijn oefenaanvragen"
 msgstr "My practice applications"
 
 #: main/templates/base/menu.html:38 proposals/menus.py:64
-#: proposals/views/proposal_views.py:85
+#: proposals/views/proposal_views.py:86
 msgid "Mijn ingediende aanvragen"
 msgstr "My submitted applications"
 
 #: main/templates/base/menu.html:41 proposals/menus.py:68
-#: proposals/views/proposal_views.py:97
+#: proposals/views/proposal_views.py:98
 msgid "Mijn afgehandelde aanvragen"
 msgstr "My processed applications"
 
 #: main/templates/base/menu.html:44 proposals/menus.py:72
-#: proposals/views/proposal_views.py:109
+#: proposals/views/proposal_views.py:110
 msgid "Mijn aanvragen als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -1476,12 +1476,12 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:622 proposals/forms.py:635 proposals/forms.py:645
+#: proposals/forms.py:628 proposals/forms.py:641 proposals/forms.py:651
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:626 proposals/forms.py:630 proposals/forms.py:639
-#: proposals/forms.py:649
+#: proposals/forms.py:632 proposals/forms.py:636 proposals/forms.py:645
+#: proposals/forms.py:655
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -2421,7 +2421,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_data_management.html:24
 #: proposals/templates/proposals/proposal_pdf.html:497
-#: reviews/templatetags/documents_list.py:244
+#: reviews/templatetags/documents_list.py:245
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -3537,40 +3537,40 @@ msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
 "application."
 
-#: proposals/views/proposal_views.py:40 proposals/views/proposal_views.py:146
+#: proposals/views/proposal_views.py:41 proposals/views/proposal_views.py:147
 msgid "Publiek archief"
 msgstr "Public archive"
 
-#: proposals/views/proposal_views.py:41
+#: proposals/views/proposal_views.py:42
 msgid "Dit overzicht toont alle goedgekeurde aanvragen."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:60
+#: proposals/views/proposal_views.py:61
 msgid "Mijn aanvraag"
 msgstr "My application"
 
-#: proposals/views/proposal_views.py:61
+#: proposals/views/proposal_views.py:62
 msgid "Dit overzicht toont al je aanvragen."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:74
+#: proposals/views/proposal_views.py:75
 msgid "Dit overzicht toont al je nog niet ingediende aanvragen."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:86
+#: proposals/views/proposal_views.py:87
 msgid "Dit overzicht toont al je ingediende aanvragen."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:98
+#: proposals/views/proposal_views.py:99
 msgid "Dit overzicht toont al je beoordeelde aanvragen."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:111
+#: proposals/views/proposal_views.py:112
 msgid ""
 "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:124
+#: proposals/views/proposal_views.py:125
 msgid ""
 "Dit overzicht toont alle oefenaanvragen waar je als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3578,15 +3578,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:255
+#: proposals/views/proposal_views.py:256
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:366
+#: proposals/views/proposal_views.py:380
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:467
+#: proposals/views/proposal_views.py:481
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -4031,6 +4031,11 @@ msgstr "Save decision"
 msgid "Documenten wijzigen"
 msgstr "Edit documents"
 
+#: reviews/templates/reviews/documents_list.html:44
+#: reviews/templates/reviews/documents_list.html:46
+msgid "Data Management Plan wijzigen"
+msgstr "Edit Data Management Plan"
+
 #: reviews/templates/reviews/review_assign_form.html:7
 #: reviews/templates/reviews/review_assign_form.html:32
 msgid "Commissieleden aanstellen"
@@ -4310,47 +4315,47 @@ msgstr "Trajectory {}: <i>{}</i>"
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:212
+#: reviews/templatetags/documents_list.py:213
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:214
+#: reviews/templatetags/documents_list.py:215
 msgid "Aanvraag in PDF-vorm"
 msgstr "Application in PDF format"
 
-#: reviews/templatetags/documents_list.py:227
+#: reviews/templatetags/documents_list.py:228
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:235
+#: reviews/templatetags/documents_list.py:236
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:254
+#: reviews/templatetags/documents_list.py:255
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:279
+#: reviews/templatetags/documents_list.py:280
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:280
+#: reviews/templatetags/documents_list.py:281
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:281
+#: reviews/templatetags/documents_list.py:282
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:283
+#: reviews/templatetags/documents_list.py:284
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:285
+#: reviews/templatetags/documents_list.py:286
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:293
+#: reviews/templatetags/documents_list.py:294
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
