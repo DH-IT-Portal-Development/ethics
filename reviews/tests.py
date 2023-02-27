@@ -185,13 +185,13 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 3)
 
-        self.study.has_traits = True
+        self.study.has_special_details = True
         self.study.save()
- 
+
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 4)
 
-        self.study.stressful = YES
+        self.study.has_traits = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
