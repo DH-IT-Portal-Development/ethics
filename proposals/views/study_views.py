@@ -62,30 +62,35 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
     template_name = 'proposals/study_consent.html'
     form = StudyConsentForm
     extra = 3
-
+    
     def get(self, request, *args, **kwargs):
-        """A bit of a hacky override to ensure only 2 extra document forms apart from the study document forms are presented"""
+        """A bit of a hacky override to ensure only 2 extra document forms
+        apart from the study document forms are presented"""
 
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
 
-        self.extra = (len(proposal.study_set.all()) + self.extra) - len(self.get_queryset().all())
+        self.extra = (len(proposal.study_set.all()) + self.extra) - \
+            len(self.get_queryset().all())
 
         return super(StudyConsent, self).get(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        """Setting the progress on the context"""
-        context = super(StudyConsent, self).get_context_data(**kwargs)
-
+    def get_context_data(self, *args, **kwargs):
+        """Setting the progress on the context"""  # (??)
+        context = super().get_context_data(*args, **kwargs)
+        # The following is used by the progress bar
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        context['proposal'] = proposal # Used by the progress bar
+        context['proposal'] = proposal
 
         initial = []
-
-        for i in range( self.extra ):
+        for i in range(self.extra):
             initial.append({'proposal': proposal.pk})
-
         context['formset'].initial_extra = initial
 
+        # Tell the template if any studies need external forms
+        studies = Study.objects.filter(proposal=proposal)
+        context["external_permission"] = True in [
+            s.needs_additional_external_forms() for s in studies
+        ]
         return context
 
     def get_queryset(self):

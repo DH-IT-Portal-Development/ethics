@@ -268,24 +268,6 @@ cadeautje.'),
         _('Taakonderzoek en interviews'),
         default=False)
 
-    # Fields with respect to informed consent
-    passive_consent = models.BooleanField(
-        _('Maak je gebruik van passieve informed consent?'),
-        help_text=mark_safe_lazy(_('Wanneer je kinderen via een instelling \
-(dus ook school) werft en je de ouders niet laat ondertekenen, maar in \
-plaats daarvan de leiding van die instelling, dan maak je gebruik van \
-passieve informed consent. Je kan de templates vinden op \
-<a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
-target="_blank">de FETC-GW-website</a>.')),
-        null=True,
-        blank=True,
-    )
-    passive_consent_details = models.TextField(
-        _('Licht je antwoord toe. Wij willen je wijzen op het reglement, \
-sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
-toegestaan en draagt niet de voorkeur van de commissie.'),
-        blank=True)
-
     # Fields with respect to Sessions
     sessions_number = models.PositiveIntegerField(
         _('Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
@@ -426,14 +408,7 @@ geschoolde specialisten).')),
 
     def has_missing_forms(self):
         documents = self.get_documents_object()
-        if self.passive_consent:
-            return not documents.director_consent_declaration or not documents.director_consent_information or not documents.parents_information
-        else:
-            has_missing = False
-            if self.needs_additional_external_forms():
-                has_missing = not documents.director_consent_declaration or not documents.director_consent_information
-
-            return not documents.informed_consent or not documents.briefing or has_missing
+        return not documents.informed_consent or not documents.briefing
 
     def has_missing_sessions(self):
         if self.has_intervention and self.intervention.extra_task:
@@ -456,12 +431,10 @@ geschoolde specialisten).')),
         return False
 
     def needs_additional_external_forms(self):
-        """This method checks if the school/other external institution forms are needed when passive consent is false"""
-        if self.passive_consent:
-            return False
+        """This method checks if the school/other external institution forms
+        are needed"""
 
-        return self.research_settings_contains_schools() and not self.has_participants_below_age(
-            16)
+        return self.research_settings_contains_schools()
 
     def get_documents_object(self):
         """Gets the document object for this study"""
@@ -470,6 +443,25 @@ geschoolde specialisten).')),
 
     def __str__(self):
         return _('Study details for proposal %s') % self.proposal.title
+
+    # DEFUNCT: Passive consent has been removed from studies.
+    # These fields are kept for posterity as to not break older proposals.
+    passive_consent = models.BooleanField(
+        _('Maak je gebruik van passieve informed consent?'),
+        help_text=mark_safe_lazy(_('Wanneer je kinderen via een instelling \
+(dus ook school) werft en je de ouders niet laat ondertekenen, maar in \
+plaats daarvan de leiding van die instelling, dan maak je gebruik van \
+passieve informed consent. Je kan de templates vinden op \
+<a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
+target="_blank">de FETC-GW-website</a>.')),
+        null=True,
+        blank=True,
+    )
+    passive_consent_details = models.TextField(
+        _('Licht je antwoord toe. Wij willen je wijzen op het reglement, \
+sectie 3.1 \'d\' en \'e\'. Passive consent is slechts in enkele gevallen \
+toegestaan en draagt niet de voorkeur van de commissie.'),
+        blank=True)
 
 
 class Documents(models.Model):
@@ -499,19 +491,17 @@ class Documents(models.Model):
 
     director_consent_declaration = models.FileField(
         _(
-            'Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
+            'Upload hier de toestemmingsverklaring voor de leiding of het management van de instelling (in .pdf of .doc(x)-format)'),
         blank=True,
         validators=[validate_pdf_or_doc],
-        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
-                   'you can upload the unsigned document and send the document when it is signed to the'
-                   ' secretary of the FEtC-H'),
+        help_text=_('Upload indien mogelijk een ondertekende versie van het document. Upload als deze nog niet bestaat een blanco versie, en stuur de ondertekende versie later op naar de secretaris van de FETC-GW.'),
         upload_to=DEPARTMENT_CONSENT_FILENAME,
         storage=OverwriteStorage(),
     )
 
     director_consent_information = models.FileField(
         _(
-            'Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
+            'Upload hier de informatiebrief voor de leiding of het management van de instelling (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=DEPARTMENT_INFO_FILENAME,
@@ -520,7 +510,7 @@ class Documents(models.Model):
 
     parents_information = models.FileField(
         _(
-            'Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
+            'Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of .doc(x)-formaat)'),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=PARENTAL_INFO_FILENAME,
