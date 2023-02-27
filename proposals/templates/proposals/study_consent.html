@@ -5,138 +5,150 @@
 {% load uil_filters %}
 
 {% block header_title %}
-    {% trans "Informed consent formulieren" %} - {{ block.super }}
+  {% trans "Informed consent formulieren" %} - {{ block.super }}
 {% endblock %}
 
 {% block html_head %}
-    <script>
-        $(function() {
-            {# We use a counter so that in case we need more than 2 extra forms, this piece of code just works without changes #}
-            {% counter extra_form_counter create 1 %}
+  <script>
+    // This function hides school-related extra forms
+    function hide_school_forms(prefix) {
+      $("#id_" + prefix + "-director_consent_information").parents("tr").hide();
+      $("#id_" + prefix + "-parents_information").parents("tr").hide();
+      // We need prev() to also hide the header for DCC
+      $("#id_" + prefix + "-director_consent_declaration").parents("tr").prev().hide();
+      $("#id_" + prefix + "-director_consent_declaration").parents("tr").hide();
+    }
+    $(function() {
+    {# We use a counter so that in case we need more than 2 extra forms, this piece of code just works without changes #}
+    {% counter extra_form_counter create 1 %}
 
-            {% for form in formset %}
-                add_title('{{ form.prefix }}-informed_consent', 'Informed consent participant')
-                add_title('{{ form.prefix }}-director_consent_declaration', '{% trans 'Toestemmingsverklaring van de schoolleider/hoofd van het departement' %}')
-                {% if not form.instance.study.needs_additional_external_forms %}
-                    depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-director_consent_declaration', true);
-                    depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-director_consent_information');
-                {% endif %}
-                depends_on_hidden_value('{{ form.prefix }}-passive_consent', 'True', '{{ form.prefix }}-parents_information');
-                depends_on_hidden_value('{{ form.prefix }}-passive_consent', ['False', '', 'None'], '{{ form.prefix }}-informed_consent', true);
-                depends_on_hidden_value('{{ form.prefix }}-passive_consent', ['False', '', 'None'], '{{ form.prefix }}-briefing');
+    {% for form in formset %}
+      add_title('{{ form.prefix }}-informed_consent', 'Informed consent participant');
+      add_title('{{ form.prefix }}-director_consent_declaration', '{% trans 'Toestemmingsverklaring van de schoolleider/hoofd van het departement' %}');
 
-                {% if not form.instance.study %}
-                    if($("#extra-{% counter extra_form_counter value %}").attr('data-used') == 0)
-                        $("#extra-{% counter extra_form_counter value %}").hide()
+      {% if not form.instance.study %}
+        if($("#extra-{% counter extra_form_counter value %}").attr('data-used') == 0)
+        $("#extra-{% counter extra_form_counter value %}").hide()
+        {% counter extra_form_counter increment 1 %}
+      {% else %}
 
-                    {% counter extra_form_counter increment 1 %}
-                {% endif %}
-            {% endfor %}
+        {% if not form.instance.study.needs_additional_external_forms %}
+          hide_school_forms("{{form.prefix}}");
+        {% endif %}
+      {% endif %}
+    {% endfor %}
 
-            // This code handles showing a new set of forms by clicking the add link
-            $("a.new").click(function ( event ) {
-                // Prevent the link from firing
-                event.preventDefault();
 
-                // Get the form number
-                var self = $(this);
-                var n = parseInt(self.attr('data-n'));
-                // Hide the clicked button
-                self.hide();
+    // This code handles showing a new set of forms by clicking the add link
+    $("a.new").click(function ( event ) {
+    // Prevent the link from firing
+    event.preventDefault();
 
-                // Show the new form, and a new add link (if present, can be run without effect)
-                $("#extra-" + n).show();
-                $("#new-" + (n + 1)).show();
+    // Get the form number
+    var self = $(this);
+    var n = parseInt(self.attr('data-n'));
+    // Hide the clicked button
+    self.hide();
 
-                return false;
-            });
+    // Show the new form, and a new add link (if present, can be run without effect)
+    $("#extra-" + n).show();
+    $("#new-" + (n + 1)).show();
 
-            // Show the first add link
-            $("a.new").first().show();
-        });
-    </script>
+    return false;
+    });
+
+    // Show the first add link
+    $("a.new").first().show();
+    });
+  </script>
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=proposal.available_urls active=4 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+  <div class="uu-inner-container">
+    <div class="col-12">
+      {% with nav_items=proposal.available_urls active=4 %}
+        {% include 'base/navigation.html' %}
+      {% endwith %}
 
-            <h2>
-                {% trans "Informed consent formulieren" %}
-            </h2>
-            <p>
-                {% blocktrans trimmed %}
-                    Hier kan je de Informed consent formulieren uploaden voor de opgegeven traject(en). Optioneel kan je indien nodig maximaal 2
-                    paar extra formulieren uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' onderaan de pagina. Deze velden
-                    kan je weer weg halen door alle formulieren te wissen.
-                {% endblocktrans %}
-            </p>
+      <h2>
+        {% trans "Informed consent formulieren" %}
+      </h2>
+      <p>
+        {% blocktrans trimmed %}
+          Hier kan je de Informed consent formulieren uploaden voor de opgegeven traject(en). Optioneel kan je indien nodig maximaal 2
+          paar extra formulieren uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' onderaan de pagina. Deze velden
+          kan je weer weg halen door alle formulieren te wissen.
+        {% endblocktrans %}
+      </p>
 
-            <p>
-                {% blocktrans trimmed %}
-                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>
-                {% endblocktrans %}
+      <p>
+        {% blocktrans trimmed %}
+          Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>
+        {% endblocktrans %}
 
-                {% blocktrans trimmed %}
-                Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
-                {% endblocktrans %}
-            </p>
+        {% blocktrans trimmed %}
+          Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+        {% endblocktrans %}
+      </p>
 
-            <p>
-                {% blocktrans trimmed %}
-                Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: een aanvraag kan hierom direct voor revisie worden teruggestuurd.
-                {% endblocktrans %}
-		{% blocktrans trimmed %}
-                Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
-                {% endblocktrans %}
-            </p>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                {{ formset.management_form }}
-
-                {# Reset the counter, as we're looping again #}
-                {% counter extra_form_counter create 1 %}
-                {% for form in formset %}
-
-                    {% if form.instance.study %}
-                        {# If it's connected to a study, use the study title and a simple div #}
-                        <div>
-                        {% with study=form.instance.study %}
-                            {% include 'studies/study_title.html' %}
-                        {% endwith %}
-                    {% else %}
-                        {# If not, we have to do some fancy stuff for the extra forms #}
-                        {% if form.instance.informed_consent or form.instance.briefing %}
-                            {# We can't check this in Python, so we determine here if the object is empty or used  #}
-                            {% set used = 1 %}
-                        {% else %}
-                            {% set used = 0 %}
-                            {# We only add the add link if the form is empty, as this simplifies the JS #}
-                            <div style="float:right;">
-                                <a href="#" id="new-{% counter extra_form_counter value %}" class="new" data-n="{% counter extra_form_counter value %}" style="display: none">
-                                    <img src="{% static 'proposals/images/add.png' %}" /> {% trans 'Voeg extra formulieren toe' %}
-                                </a>
-                            </div>
-                        {% endif %}
-
-                        <div id="extra-{% counter extra_form_counter value %}" data-used="{{ used }}">
-                        <h3>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h3>
-                        {% counter extra_form_counter increment 1 %}
-
-                    {% endif %}
-
-                        <input type="hidden" name="{{ form.prefix }}-passive_consent" value="{{ form.instance.study.passive_consent  }}">
-                        <table>
-                            {{ form.as_table }}
-                        </table>
-                    </div>
-                {% endfor %}
-                <br/>
-                {% include "base/form_buttons.html" %}
-            </form>
+      <p>
+        {% blocktrans trimmed %}
+          Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: een aanvraag kan hierom direct voor revisie worden teruggestuurd.
+        {% endblocktrans %}
+	{% blocktrans trimmed %}
+          Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
+        {% endblocktrans %}
+      </p>
+      {% if external_permission %}
+        <div class="info">
+          <p>{% blocktrans trimmed %}
+            Omdat er in één of meer trajecten onderzoek wordt uitgevoerd op een externe locatie waar toestemming voor vereist is, vragen we daar om een tweede set Informed Consent formulieren voor het management van de instelling. Dat is bijvoorbeeld de schoolleiding of het departementshoofd van een zorginstelling. Voeg waar nodig ook een informatiebrief voor de ouders/verzorgers toe.
+          {% endblocktrans %}</p>
         </div>
+      {% endif %}
+      <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ formset.management_form }}
+
+        {# Reset the counter, as we're looping again #}
+        {% counter extra_form_counter create 1 %}
+        {% for form in formset %}
+
+          {% if form.instance.study %}
+            {# If it's connected to a study, use the study title and a simple div #}
+            <div>
+              {% with study=form.instance.study %}
+                {% include 'studies/study_title.html' %}
+              {% endwith %}
+          {% else %}
+              {# If not, we have to do some fancy stuff for the extra forms #}
+              {% if form.instance.informed_consent or form.instance.briefing or form.instance.parents_information or form.instance.director_consent_information or form.instance.director_consent_declaration %}
+                {# We can't check this in Python, so we determine here if the object is empty or used  #}
+                {% set used = 1 %}
+              {% else %}
+                {% set used = 0 %}
+                {# We only add the add link if the form is empty, as this simplifies the JS #}
+                <div style="float:right;">
+                  <a href="#" id="new-{% counter extra_form_counter value %}" class="new" data-n="{% counter extra_form_counter value %}" style="display: none">
+                    <img src="{% static 'proposals/images/add.png' %}" /> {% trans 'Voeg extra formulieren toe' %}
+                  </a>
+                </div>
+              {% endif %}
+
+              <div id="extra-{% counter extra_form_counter value %}" data-used="{{ used }}">
+                <h3>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h3>
+                {% counter extra_form_counter increment 1 %}
+
+          {% endif %}
+
+          <table>
+            {{ form.as_table }}
+          </table>
+              </div>
+        {% endfor %}
+        <br/>
+        {% include "base/form_buttons.html" %}
+      </form>
+            </div>
     </div>
 
 {% endblock %}
