@@ -267,3 +267,15 @@ class AutoReviewTests(BaseReviewTestCase):
 
         reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 1)
+
+
+class ReviewCloseTestCase(BaseReviewTestCase):
+
+    def test_decision_made(self):
+        pass
+
+    def test_long_route(self):
+        pass
+
+    def test_metc(self):
+        pass
