@@ -1,25 +1,34 @@
 {% extends "mail/base.txt" %}
 
 {% block content_nl %}
+{% if was_revised %}
 Beste collega,
 
-Uw aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door u gegeven beschrijving voorlopig de status "niet-standaard onderzoek", zie appendix C van het reglement (http://fetc-gw.wp.hum.uu.nl/reglement/) voor hulp bij het inschatten van wat valt onder niet-standaard onderzoek.
+Je gereviseerde aanvraag is door de FETC-GW ontvangen.
 
-Dit houdt in dat uw aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, zie de FETC-GW-agenda (http://fetc-gw.wp.hum.uu.nl/) voor een overzicht van de komende vergaderingen. Zeer kort na de vergadering zult u de beoordeling ontvangen.
+Dit houdt in dat je revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen je binnenkort een beoordeling te kunnen sturen.
 
-Zoals beschreven in het reglement kan het hier gaan om een goedkeuring, maar ook om een doorverwijzing naar de METC, een tweede beoordelingsronde waarin de FETC-GW nader advies van derden zal inwinnen, of een afkeuring van de aanvraag in huidige vorm.
+{% else %}
+Beste collega,
 
-Houdt u a.u.b. rekening met deze mogelijkheden en hun verschillende tijdspaden.
+Je aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status 'lange-route onderzoek', zie appendix A van het reglement voor de criteria (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/).
+
+Dit houdt in dat je aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, wanneer je aanvraag tenminste een week voor die vergadering is ingediend. Zie de FETC-GW-agenda (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/) voor een overzicht van de komende vergaderingen. Kort na de vergadering zul je de beoordeling ontvangen.
+{% endif %}
 {% endblock %}
 
 {% block content_en %}
+{% if was_revised %}
 Dear colleague,
 
-The FEtC-H has received your application. The automatic screening of the portal has given your study the status of "non-standard research", see appendix C in the regulations (http://fetc-gw.wp.hum.uu.nl/regulations/) for information.
+The FEtC-H has received your revised application.
 
-This means that your study will be discussed during the next FEtC-H meeting, see the FEtC-H agenda (http://fetc-gw.wp.hum.uu.nl/) for an overview of upcoming meetings. Shortly after the meeting you will receive the assessment.
+This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a review soon.
+{% else %}
+Dear colleague,
 
-As stated in the FEtC-H regulations, one possible outcome is that your study will be approved as is; a second possibility is that your study needs to be reviewed by the METC; a third, that a second review will be needed with the help/advise of an internal or external party. Finally, the FEtC-H could decide not to approve the study in its current design.
+The FEtC-H has received your application. The automatic screening of the portal has given your study the status of long-route research, see appendix A in the regulations for the criteria (https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/).
 
-Please be aware of these possibilities and the different time paths involved.
+This means that your study will be discussed during the next FEtC-H meeting, if your application was submitted at least one week before that meeting. See the FEtC-H agenda (https://fetc-gw.wp.hum.uu.nl/en/category/agenda-en/) for an overview of upcoming meetings. You will receive the assessment shortly after the meeting.
+{% endif %}
 {% endblock %}

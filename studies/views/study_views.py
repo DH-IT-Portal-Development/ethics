@@ -187,6 +187,5 @@ def necessity_required(request):
     """
     proposal = Proposal.objects.get(pk=request.POST.get('proposal_pk'))
     age_groups = map(int, request.POST.getlist('age_groups[]'))
-    has_traits = string_to_bool(request.POST.get('has_traits'))
     legally_incapable = string_to_bool(request.POST.get('legally_incapable'))
-    return JsonResponse({'result': check_necessity_required(proposal, age_groups, has_traits, legally_incapable)})
+    return JsonResponse({'result': check_necessity_required(proposal, age_groups, legally_incapable)})
