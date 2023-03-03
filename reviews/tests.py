@@ -66,18 +66,16 @@ class BaseReviewTestCase(TestCase):
         self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret', first_name='Jane', last_name='Roe')
 
         self.secretary.groups.add(Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY))
+        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
         self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
         self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
 
-        self.proposal = Proposal.objects.create(title='p1', reference_number=generate_ref_number(),
-                                                date_start=date.today(),
-                                                created_by=self.user, supervisor=self.supervisor,
-                                                relation=Relation.objects.get(pk=4),
-                                                reviewing_committee=Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER),
-                                                institution_id=1
-                                                )
-        generate_pdf(self.proposal, 'proposals/proposal_pdf.html')
-        self.study = Study.objects.create(proposal=self.proposal, order=1, compensation=Compensation.objects.get(pk=2))
+    def refresh(self):
+        """Refresh objects from DB. This is sometimes necessary if you access
+        attributes you previously read during the test and don't want to
+        receive a cached value."""
+        self.review.refresh_from_db()
+        self.proposal.refresh_from_db()
 
     def check_subject_lines(self, outbox):
         """
