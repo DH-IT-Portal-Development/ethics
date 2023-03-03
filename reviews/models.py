@@ -53,7 +53,11 @@ class Review(models.Model):
         null=True,
         blank=True
     )
-    continuation = models.PositiveIntegerField(_('Afhandeling'), choices=CONTINUATIONS, default=GO)
+    continuation = models.PositiveIntegerField(
+        _('Afhandeling'),
+        choices=CONTINUATIONS,
+        default=GO,
+    )
 
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(blank=True, null=True)
