@@ -302,13 +302,166 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 1)
 
 
-class ReviewCloseTestCase(BaseReviewTestCase):
+class BaseViewTestCase(BaseReviewTestCase):
 
-    def test_decision_made(self):
-        pass
+    # This testcase supports only class-based views
+    view_class = None
+
+    # for example:
+    # "/proposals/update/1/"
+    # NOT a full URL including protocal and domain
+    view_path = None
+
+    allowed_users = []
+    disallowed_users = [AnonymousUser]
+    enforce_csrf = True
+
+    def setUp(self):
+        super().setUp()
+        self.client = Client()
+        self.view = self.view_class.as_view()
+        self.factory = RequestFactory()
+        self.review = start_review(self.proposal)
+
+    def check_access(self, user):
+        request = self.factory.get(
+            self.get_view_path(),
+        )
+        request.user = user
+        response = self.view(request, pk=self.review.pk)
+        return response.status_code == 200
+
+    def post(self, update_dict={}):
+        """Generic function to test form submission"""
+        post_data = {}
+        post_data.update(update_dict)
+        if self.enforce_csrf:
+            csrf_token = self.fetch_csrf_token(
+                user=self.secretary,
+            )
+            post_data["csrfmiddlewaretoken"] = csrf_token
+        response = self.client.post(
+            self.get_view_path(),
+            data=post_data,
+        )
+        return response
+
+    def fetch_csrf_token(self, user=None):
+        if user:
+            self.client.force_login(user)
+        page = self.client.get(
+            self.get_view_path(),
+        )
+        return page.context["csrf_token"]
+
+    def get_view_path(self):
+        return self.view_path
+
+
+class ReviewCloseTestCase(BaseViewTestCase):
+
+    view_class = ReviewCloseView
+
+    def get_view_path(self):
+        pk = self.review.pk
+        return f"/reviews/close/{pk}/"
+
+    def test_access(self):
+        """Check this view is only accessible to secretary users"""
+        self.assertEqual(
+            self.check_access(AnonymousUser()),
+            False,
+        )
+        self.assertEqual(
+            self.check_access(self.user),
+            False,
+        )
+        self.assertEqual(
+            self.check_access(self.secretary),
+            True,
+        )
+
+    def test_open_review(self):
+        """Test the default state of the Review and View"""
+        p = self.proposal
+        self.assertEqual(
+            p.status_review,
+            None,
+        )
+        self.assertGreaterEqual(
+            p.status,
+            p.SUBMITTED_TO_SUPERVISOR,
+        )
+
+    def test_decision(self):
+        """
+        Submit the Close form with a standard continuation
+        and check the results.
+        """
+        previous_review_date = copy(self.proposal.date_reviewed)
+        form_values = {
+            # We choose GO_POST_HOC because GO (0) is already the default
+            "continuation": self.review.GO_POST_HOC,
+        }
+        self.client.force_login(self.secretary)
+        page = self.post(form_values)
+        self.refresh()
+        # Assertions
+        self.assertNotEqual(
+            self.proposal.date_reviewed,
+            previous_review_date,
+        )
+        self.assertEqual(
+            self.proposal.status,
+            self.proposal.DECISION_MADE,
+        )
+        self.assertEqual(
+            self.proposal.status_review,
+            True,
+        )
 
     def test_long_route(self):
-        pass
+        # If the review uses the long route already, the form
+        # won't accept this choice. So we force set it to short.
+        self.review.short_route = True
+        self.review.save()
+        form_values = {
+            "continuation": self.review.LONG_ROUTE,
+        }
+        self.client.force_login(self.secretary)
+        page = self.post(form_values)
+        self.refresh()
+        # Assertions
+        self.assertEqual(
+            self.review.stage,
+            self.review.CLOSED,
+        )
+        # A new review should have been created
+        # with a decision
+        self.assertNotEqual(
+            self.review,
+            Review.objects.last(),
+        )
+        self.assertGreater(
+            Review.objects.last().decision_set.all().count(),
+            0,
+        )
 
     def test_metc(self):
-        pass
+        """When posted with review.METC, check that proposal is turned back
+        into a Draft and its WMO gets flagged."""
+        form_values = {
+            "continuation": self.review.METC,
+        }
+        self.client.force_login(self.secretary)
+        page = self.post(form_values)
+        self.refresh()
+        # Assertions
+        self.assertEqual(
+            self.proposal.status,
+            self.proposal.DRAFT,
+        )
+        self.assertEqual(
+            self.proposal.wmo.enforced_by_commission,
+            True,
+        )
