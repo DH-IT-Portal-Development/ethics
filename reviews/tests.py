@@ -1,29 +1,64 @@
 from datetime import date
+from copy import copy
 
 from django.conf import settings
 from django.core import mail
-from django.contrib.auth.models import User, Group
-from django.test import TestCase
+from django.contrib.auth.models import User, Group, AnonymousUser
+from django.test import TestCase, Client, RequestFactory
 
 from .models import Review, Decision
 from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
-from main.models import YES, DOUBT
-from proposals.models import Proposal, Relation
+from main.models import YES, NO, DOUBT
+from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number, generate_pdf
 from studies.models import Study, Compensation, AgeGroup
 from observations.models import Observation
 from interventions.models import Intervention
 from tasks.models import Session, Task, Registration, RegistrationKind
 
+from .views import ReviewCloseView
 
 class BaseReviewTestCase(TestCase):
+
     fixtures = ['relations', 'compensations', 'registrations',
                 'registrationkinds', 'agegroups', 'groups', 'institutions']
+    relation_pk = 1
 
     def setUp(self):
         """
         Sets up the Users and a default Proposal to use in the tests below.
         """
+        self.setup_users()
+        self.setup_proposal()
+
+    def setup_proposal(self):
+
+        self.proposal = Proposal.objects.create(
+            title='p1', reference_number=generate_ref_number(),
+            date_start=date.today(),
+            created_by=self.user,
+            supervisor=self.supervisor,
+            relation=Relation.objects.get(pk=4),
+            reviewing_committee=Group.objects.get(
+                name=settings.GROUP_LINGUISTICS_CHAMBER
+            ),
+            institution_id=1,
+        )
+        self.proposal.wmo = Wmo.objects.create(
+            proposal=self.proposal,
+            metc=NO,
+        )
+        generate_pdf(self.proposal, 'proposals/proposal_pdf.html')
+        self.study = Study.objects.create(
+            proposal=self.proposal,
+            order=1,
+            compensation=Compensation.objects.get(
+                pk=2,
+            )
+        )
+
+    def setup_users(self):
+
         self.secretary = User.objects.create_user('secretary', 'test@test.com', 'secret', first_name='The', last_name='Secretary')
         self.c1 = User.objects.create_user('c1', 'test@test.com', 'secret')
         self.c2 = User.objects.create_user('c2', 'test@test.com', 'secret')
