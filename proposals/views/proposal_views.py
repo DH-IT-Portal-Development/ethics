@@ -550,6 +550,14 @@ class ProposalAsPdf(
         # Else, continue with generation
         return super().get(request, *args, **kwargs)
 
+    def get_object(self):
+        """If we already have an object set, use that.
+        This can happen if this view is being called from generate_pdf()
+        rather than by Django."""
+        if not hasattr(self, "object"):
+            self.object = super().get_object()
+        return self.object
+
     def get_template_names(self):
         proposal = self.get_object()
         self.template_name = 'proposals/proposal_pdf.html'
