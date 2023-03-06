@@ -531,22 +531,23 @@ class ProposalCopyAmendment(ProposalCopy):
 
 class ProposalAsPdf(
         LoginRequiredMixin,
+        generic.DetailView,
         PDFTemplateResponseMixin,
-        generic.DetailView
 ):
     model = Proposal
     # The PDF mixin generates a filename with this factory
     filename_factory = FilenameFactory('Proposal')
 
     def get(self, request, *args, **kwargs):
-        # First, check if we should use a pregenerated pdf
+        # First, check if we should use a pregenerated pdf, if we have one
         proposal = self.get_object()
         if proposal.use_canonical_pdf():
-            return FileResponse(
-                proposal.pdf,
-                filename=self.get_pdf_filename(),
-                as_attachment=self.pdf_save_as,
-            )
+            if proposal.pdf:
+                return FileResponse(
+                    proposal.pdf,
+                    filename=self.get_pdf_filename(),
+                    as_attachment=self.pdf_save_as,
+                )
         # Else, continue with generation
         return super().get(request, *args, **kwargs)
 
