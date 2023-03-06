@@ -575,7 +575,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
             time = timezone.now()
         self.status = self.DECISION_MADE
         # Importing here to prevent circular import
-        from .models import Review
+        from reviews.models import Review
         self.status_review = continuation in [
             Review.GO, Review.GO_POST_HOC
         ]
