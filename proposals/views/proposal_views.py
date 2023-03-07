@@ -364,7 +364,7 @@ class ProposalUpdateDataManagement(braces.GroupRequiredMixin, generic.UpdateView
     Allows the secretary to change the Data Management Plan on the Proposal level
     """
     model = Proposal
-    template_name = 'studies/study_update_attachments.html'
+    template_name = 'proposals/proposal_update_attachments.html'
     form_class = ProposalUpdateDataManagementForm
     group_required = settings.GROUP_SECRETARY
 
