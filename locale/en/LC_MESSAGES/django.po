@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-25 01:32+0100\n"
+"POT-Creation-Date: 2023-03-07 17:32+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -156,6 +156,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: observations/templates/observations/observation_update_attachments.html:39
 #: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:268
+#: proposals/templates/proposals/proposal_update_attachments.html:26
 #: reviews/templates/reviews/change_chamber_form.html:19
 #: reviews/templates/reviews/decision_form.html:90
 #: reviews/templates/reviews/review_assign_form.html:44
@@ -1261,6 +1262,9 @@ msgstr "Recording behaviour"
 #: observations/templates/observations/observation_update_attachments.html:7
 #: observations/templates/observations/observation_update_attachments.html:27
 #: observations/templates/observations/observation_update_attachments.html:38
+#: proposals/templates/proposals/proposal_update_attachments.html:7
+#: proposals/templates/proposals/proposal_update_attachments.html:14
+#: proposals/templates/proposals/proposal_update_attachments.html:25
 #: studies/templates/studies/study_update_attachments.html:7
 #: studies/templates/studies/study_update_attachments.html:14
 #: studies/templates/studies/study_update_attachments.html:25
@@ -1628,7 +1632,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:201 proposals/models.py:336 reviews/models.py:171
+#: proposals/models.py:201 proposals/models.py:336 reviews/models.py:179
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1838,7 +1842,7 @@ msgid "Amendement"
 msgstr "Amendment"
 
 #: proposals/models.py:531 reviews/api/views.py:39 reviews/api/views.py:328
-#: reviews/templates/reviews/review_detail_sidebar.html:92
+#: reviews/templates/reviews/review_detail_sidebar.html:106
 msgid "Revisie"
 msgstr "Revision"
 
@@ -3311,6 +3315,18 @@ msgstr ""
 "Click <a href=\"%(submitted_url)s\">here</a> to see your submitted "
 "applications."
 
+#: proposals/templates/proposals/proposal_update_attachments.html:17
+#, fuzzy, python-format
+#| msgid ""
+#| "Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag "
+#| "%(title)s (referentienummer <em>%(ref_number)s</em>), traject %(order)s."
+msgid ""
+"Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag "
+"%(title)s (referentienummer <em>%(ref_number)s</em>)."
+msgstr ""
+"On this page you can edit the forms related to the proposal "
+"%(title)s(reference number <em>%(ref_number)s</em>), trajectory %(order)s."
+
 #: proposals/templates/proposals/study_consent.html:19
 msgid "Toestemmingsverklaring van de schoolleider/hoofd van het departement"
 msgstr "Informed consent school director/ head of the institution"
@@ -3476,7 +3492,7 @@ msgid "Trajecten"
 msgstr "Trajectories"
 
 #: proposals/utils/proposal_utils.py:100
-#: reviews/templates/reviews/review_detail_sidebar.html:105
+#: reviews/templates/reviews/review_detail_sidebar.html:119
 msgid "Documenten"
 msgstr "Documents"
 
@@ -3727,7 +3743,7 @@ msgstr "Post hoc negative advice by FETC-H"
 msgid "Niet verder in behandeling genomen"
 msgstr "Not to be assessed further"
 
-#: reviews/models.py:51 reviews/models.py:165
+#: reviews/models.py:51 reviews/models.py:173
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
@@ -3740,15 +3756,15 @@ msgstr "Unknown"
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:159
+#: reviews/models.py:167
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:160
+#: reviews/models.py:168
 msgid "niet goedgekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:161
+#: reviews/models.py:169
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -4028,13 +4044,13 @@ msgstr "Save decision"
 
 #: reviews/templates/reviews/documents_list.html:36
 #: reviews/templates/reviews/documents_list.html:38
-msgid "Documenten wijzigen"
-msgstr "Edit documents"
+msgid "Data Management Plan wijzigen"
+msgstr "Edit Data Management Plan"
 
 #: reviews/templates/reviews/documents_list.html:44
 #: reviews/templates/reviews/documents_list.html:46
-msgid "Data Management Plan wijzigen"
-msgstr "Edit Data Management Plan"
+msgid "Documenten wijzigen"
+msgstr "Edit documents"
 
 #: reviews/templates/reviews/review_assign_form.html:7
 #: reviews/templates/reviews/review_assign_form.html:32
@@ -4137,6 +4153,16 @@ msgstr ""
 "   "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:40
+#, fuzzy
+#| msgid "Aanvrager"
+msgid "Aanvrager(s)"
+msgstr "Applicant"
+
+#: reviews/templates/reviews/review_detail_sidebar.html:50
+msgid "Supervisor"
+msgstr ""
+
+#: reviews/templates/reviews/review_detail_sidebar.html:54
 #, python-format
 msgid ""
 "\n"
@@ -4147,7 +4173,7 @@ msgstr ""
 "    Reviewing round started on %(date_start)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:46
+#: reviews/templates/reviews/review_detail_sidebar.html:60
 #, python-format
 msgid ""
 "\n"
@@ -4158,7 +4184,7 @@ msgstr ""
 "    Reviewing round ended on %(date_end)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:53
+#: reviews/templates/reviews/review_detail_sidebar.html:67
 #, python-format
 msgid ""
 "\n"
@@ -4169,7 +4195,7 @@ msgstr ""
 "        Continuation: %(continuation)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:59
+#: reviews/templates/reviews/review_detail_sidebar.html:73
 #, python-format
 msgid ""
 "\n"
@@ -4180,7 +4206,7 @@ msgstr ""
 "    Confirmation sent on %(date_confirmed)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:63
+#: reviews/templates/reviews/review_detail_sidebar.html:77
 #, python-format
 msgid ""
 "\n"
@@ -4191,7 +4217,7 @@ msgstr ""
 "        Comments: %(comments)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:73
+#: reviews/templates/reviews/review_detail_sidebar.html:87
 msgid ""
 "\n"
 "                        Dit is een aanvraag voor voortoetsing.\n"
@@ -4201,11 +4227,11 @@ msgstr ""
 "    This is an application for preliminary assessment.\n"
 "    "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:82
+#: reviews/templates/reviews/review_detail_sidebar.html:96
 msgid "Dit is een beslissing van een eindverantwoordelijke"
 msgstr "This is a supervisor review"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:93
+#: reviews/templates/reviews/review_detail_sidebar.html:107
 msgid ""
 "\n"
 "                Deze aanvraag heeft een revisie gehad tijdens het "
@@ -4217,7 +4243,7 @@ msgstr ""
 "the FEtC-H .\n"
 "    "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:97
+#: reviews/templates/reviews/review_detail_sidebar.html:111
 msgid ""
 "\n"
 "                    Er zijn de volgende opmerkingen bijgevoegd:<br/>\n"
@@ -4331,31 +4357,31 @@ msgstr "Prior approval"
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:255
+#: reviews/templatetags/documents_list.py:257
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:280
+#: reviews/templatetags/documents_list.py:282
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:281
+#: reviews/templatetags/documents_list.py:283
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:282
+#: reviews/templatetags/documents_list.py:284
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:284
+#: reviews/templatetags/documents_list.py:286
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:286
+#: reviews/templatetags/documents_list.py:288
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:294
+#: reviews/templatetags/documents_list.py:296
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
