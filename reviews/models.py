@@ -143,6 +143,14 @@ class Review(models.Model):
 
     def accountable_user(self):
         return self.proposal.accountable_user()
+    
+    def get_applicant_names_emails(self):
+        names = [user.get_full_name() for user in self.proposal.applicants.all()]
+        emails = [user.email for user in self.proposal.applicants.all()]
+        name_email_string = []
+        for i in range(len(names)):
+            name_email_string.append(",\n".join([names[i], emails[i]]))
+        return name_email_string
 
     def current_reviewers(self):
         return get_user_model().objects.filter(decision__review=self)

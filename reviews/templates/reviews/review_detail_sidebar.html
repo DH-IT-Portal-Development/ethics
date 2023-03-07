@@ -37,7 +37,13 @@ Remember to include it in a with statement if the view does not provide it.
             </li>
         {% endif %}
         <li>
-            {% trans "Aanvrager(s)" %}: {{ review.proposal.created_by}}
+            {% trans "Aanvrager(s)" %}:
+            <ul>
+                {% for name_email in review.get_applicant_names_emails %}
+                    <li>{{ name_email }}</li>
+                {% endfor %}
+            </ul>
+            {{ review.get_applicant_names }}
         </li>
         {% if review.proposal.supervisor %}
             <li>
