@@ -3316,10 +3316,6 @@ msgstr ""
 "applications."
 
 #: proposals/templates/proposals/proposal_update_attachments.html:17
-#, fuzzy, python-format
-#| msgid ""
-#| "Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag "
-#| "%(title)s (referentienummer <em>%(ref_number)s</em>), traject %(order)s."
 msgid ""
 "Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag "
 "%(title)s (referentienummer <em>%(ref_number)s</em>)."
@@ -4153,8 +4149,6 @@ msgstr ""
 "   "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:40
-#, fuzzy
-#| msgid "Aanvrager"
 msgid "Aanvrager(s)"
 msgstr "Applicant"
 
