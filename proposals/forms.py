@@ -622,35 +622,11 @@ class ProposalSubmitForm(forms.ModelForm):
             for study in self.instance.study_set.all():
                 documents = Documents.objects.get(study=study)
 
-                if study.passive_consent:
-                    if not documents.director_consent_declaration:
-                        self.add_error('comments', _(
-                            'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
-                            study.order))
-                    if not documents.director_consent_information:
-                        self.add_error('comments', _(
-                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                            study.order))
-                    if not documents.parents_information:
-                        self.add_error('comments', _(
-                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                            study.order))
-                else:
-                    if not documents.informed_consent:
-                        self.add_error('comments', _(
-                            'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
-                            study.order))
-                    if not documents.briefing:
-                        self.add_error('comments', _(
-                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                            study.order))
-
-                if study.needs_additional_external_forms():
-                    if not documents.director_consent_declaration:
-                        self.add_error('comments', _(
-                            'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
-                            study.order))
-                    if not documents.director_consent_information:
-                        self.add_error('comments', _(
-                            'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                            study.order))
+                if not documents.informed_consent:
+                    self.add_error('comments', _(
+                        'Toestemmingsverklaring voor traject {} nog niet toegevoegd.').format(
+                        study.order))
+                if not documents.briefing:
+                    self.add_error('comments', _(
+                        'Informatiebrief voor traject {} nog niet toegevoegd.').format(
+                        study.order))
