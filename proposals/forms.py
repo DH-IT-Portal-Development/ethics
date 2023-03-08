@@ -565,6 +565,12 @@ class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
 
     _soft_validation_fields = ['avg_understood']
 
+class ProposalUpdateDataManagementForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = [
+            'dmp_file'
+        ]
 
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
