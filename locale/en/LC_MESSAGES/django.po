@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-07 17:32+0100\n"
+"POT-Creation-Date: 2023-03-15 11:07+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -283,8 +283,8 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:11 main/forms/conditional_form.py:20
 #: main/forms/conditional_form.py:29 main/forms/conditional_form.py:38
 #: main/forms/conditional_form.py:48 main/forms/mixins.py:83
-#: proposals/forms.py:558 proposals/forms.py:620 studies/forms.py:107
-#: studies/forms.py:118 studies/forms.py:124 tasks/forms.py:87
+#: proposals/forms.py:558 proposals/forms.py:620 studies/forms.py:104
+#: tasks/forms.py:87
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -1434,12 +1434,11 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:628 proposals/forms.py:641 proposals/forms.py:651
+#: proposals/forms.py:627
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:632 proposals/forms.py:636 proposals/forms.py:645
-#: proposals/forms.py:655
+#: proposals/forms.py:631
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
@@ -1586,7 +1585,7 @@ msgid ""
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:201 proposals/models.py:336 reviews/models.py:179
+#: proposals/models.py:201 proposals/models.py:336 reviews/models.py:180
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -3267,15 +3266,7 @@ msgid ""
 "%(title)s (referentienummer <em>%(ref_number)s</em>)."
 msgstr ""
 "On this page you can edit the forms related to the proposal "
-"%(title)s(reference number <em>%(ref_number)s</em>), trajectory %(order)s."
-
-#: proposals/templates/proposals/proposal_update_attachments.html:17
-msgid ""
-"Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag "
-"%(title)s (referentienummer <em>%(ref_number)s</em>)."
-msgstr ""
-"On this page you can edit the forms related to the proposal "
-"%(title)s(reference number <em>%(ref_number)s</em>), trajectory %(order)s."
+"%(title)s(reference number <em>%(ref_number)s</em>)"
 
 #: proposals/templates/proposals/study_consent.html:27
 msgid "Toestemmingsverklaring van de schoolleider/hoofd van het departement"
@@ -3709,7 +3700,7 @@ msgstr "Post hoc negative advice by FETC-H"
 msgid "Niet verder in behandeling genomen"
 msgstr "Not to be assessed further"
 
-#: reviews/models.py:51 reviews/models.py:173
+#: reviews/models.py:51 reviews/models.py:174
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
@@ -3722,15 +3713,15 @@ msgstr "Unknown"
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:167
+#: reviews/models.py:168
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:168
+#: reviews/models.py:169
 msgid "niet goedgekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:169
+#: reviews/models.py:170
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
