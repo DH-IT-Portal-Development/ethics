@@ -131,6 +131,19 @@
                                 <td v-html="proposal.latest_review.route">
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="2">
+                                    {% trans "Indieners" %}:<br/>
+                                    <span
+                                       v-for="(applicant, index) in proposal.applicants"
+                                   >
+                                        {% verbatim %}
+                                        <span v-if="index != 0">, </span>
+                                        {{ applicant.fullname }}
+                                        {% endverbatim %}
+                                    </span>
+                                </td>
+                            </tr>
                         </tbody>
 
                     </table>
