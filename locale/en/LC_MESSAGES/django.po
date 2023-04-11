@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-11 13:21+0200\n"
+"POT-Creation-Date: 2023-04-11 13:36+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -700,8 +700,8 @@ msgid "Voortgang"
 msgstr "Progress"
 
 #: main/templates/base/site_header.html:2
-msgid "FETC-GW Portal"
-msgstr "FEtC-H Portal"
+msgid "Portal FETC - Geesteswetenschappen"
+msgstr "Portal FEtC – Humanities"
 
 #: main/templates/base/site_title.html:2
 msgid "FETC-GW"
@@ -1758,7 +1758,8 @@ msgid ""
 "kort hoe ga je daarmee omgaat.  Gebruik maximaal 300 woorden."
 msgstr ""
 "What are the most important ethical considerations in this research and "
-"please describe briefly how you will address them. Use a maximum of 300 words."
+"please describe briefly how you will address them. Use a maximum of 300 "
+"words."
 
 #: proposals/models.py:380
 msgid "In welke hoedanigheid ben je betrokken bij dit onderzoek?"
@@ -5659,3 +5660,6 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "FETC-GW Portal"
+#~ msgstr "FEtC-H Portal"
