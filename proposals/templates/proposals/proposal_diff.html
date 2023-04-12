@@ -73,8 +73,8 @@
                     </tr>
                     <tr>
                         <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th>
-                        <td>{{ p_proposal.student_context|default:_("") }}</td>
-                        <td>{{ proposal.student_context|default:_("") }}</td>
+                        <td>{{ p_proposal.student_context|default:"" }}</td>
+                        <td>{{ proposal.student_context|default:"" }}</td>
                     </tr>
                         {% if proposal.student_context.needs_details or p_proposal.student_context.needs_details %}
                         <tr>
@@ -89,7 +89,7 @@
                         <td>{{ proposal.student_justification }}</td>
                     </tr>
                     {% endif %}
-                    
+
                     <tr>
                         <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th>
                         <td>{{ p_proposal.other_applicants|yesno:_("ja,nee") }}</td>

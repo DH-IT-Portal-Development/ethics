@@ -40,7 +40,7 @@ except (ImportError):
 ################
 # Views
 ################
-class HomeView(generic.ListView):
+class HomeView(LoginRequiredMixin, generic.ListView):
     template_name = 'main/index.html'
     model = SystemMessage
 
@@ -175,11 +175,11 @@ def user_search(query, page):
     # Paging-more should be true if there are no LDAP results included in this page, the LDAP is available and
     # the query is not a wildcard
     paging_more = not ldap_results_needed and ldap_connection and query != '*'
-    
+
     # Unbind the ldap connection after we are done with it
     if ldap_connection:
         ldap_connection.unbind()
-    
+
     # Return a formatted dict with the results
     return {
         'results':    users,
