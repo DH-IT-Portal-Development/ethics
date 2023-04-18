@@ -89,7 +89,7 @@
                         <td>{{ proposal.student_justification }}</td>
                     </tr>
                     {% endif %}
-                    
+
                     <tr>
                         <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th>
                         <td>{{ p_proposal.other_applicants|yesno:_("ja,nee") }}</td>

@@ -67,15 +67,27 @@
     });
 
     // Add a running word count to the summary
-    var summary = $("#id_summary");
+    let summary = $("#id_summary");
     if (summary.length) {
-      summary.after("<span id='wordcount' />");
+      summary.after("<div id='wordcount_summary' />");
       summary[0].addEventListener("input", function () {
         var wordCount = 0;
         if (this.value.trim()) {
           wordCount = this.value.match(/\S+/g).length;
         }
-        $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
+        $("#wordcount_summary").text(" {% trans 'Aantal woorden:' %} " + wordCount);
+      }, false);
+    }
+    // Add a running word count to the self assessment
+    let self_assessment = $("#id_self_assessment");
+    if (self_assessment.length) {
+      self_assessment.after("<div id='wordcount_self_assessment' />");
+      self_assessment[0].addEventListener("input", function () {
+        var wordCount = 0;
+        if (this.value.trim()) {
+          wordCount = this.value.match(/\S+/g).length;
+        }
+        $("#wordcount_self_assessment").text(" {% trans 'Aantal woorden:' %} " + wordCount);
       }, false);
     }
   });
