@@ -17,6 +17,7 @@ from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
+SELF_ASSESSMENT_MAX_WORDS = 300
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 DMP_FILENAME = FilenameFactory('DMP')
@@ -36,6 +37,18 @@ class Relation(models.Model):
 
     def __str__(self):
         return self.description
+
+class StudentContext(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
 
 class StudentContext(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -361,9 +374,15 @@ trajecten.'),
     )
 
     self_assessment = models.TextField(
-        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
-        max_length=500,
+        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en '
+          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 300 '
+          'woorden.'),
         blank=True,
+        validators=[
+            MaxWordsValidator(
+                SELF_ASSESSMENT_MAX_WORDS
+            ),
+        ]
     )
 
     # References to other models
