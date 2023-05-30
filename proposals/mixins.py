@@ -2,6 +2,7 @@ from braces.views import UserFormKwargsMixin
 from xhtml2pdf import pisa
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ImproperlyConfigured
 
 from django.views.generic.base import TemplateResponseMixin
 from django.http import HttpResponse
@@ -106,7 +107,17 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
             dest = response
 
         # find the template and render it.
-        template = get_template(self.get_template_names()[0])
+        template_names = get_template(self.get_template_names())
+
+        if not (type(template_names) is tuple or list):
+            raise ImproperlyConfigured(
+                "get_template_names() should return a sequence of templates.",
+            )
+        if len(template_names) == 0:
+            raise ImproperlyConfigured(
+                "get_template_names() returned an empty list.",
+            )
+        template = get_template(template_names[0])
         html = template.render(context)
 
         # Create PDF with pisa object
