@@ -414,7 +414,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         success_url = super(ProposalSubmit, self).form_valid(form)
         if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
-            generate_pdf(proposal, 'proposals/proposal_pdf.html')
+            proposal.generate_pdf()
             if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
                 start_review(proposal)
         return success_url
@@ -636,7 +636,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
         if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
-            generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')
+            proposal.generate_pdf()
             start_review_pre_assessment(proposal)
         return success_url
 
@@ -696,7 +696,7 @@ class ProposalSubmitPreApproved(ProposalSubmit):
         success_url = super(ProposalSubmitPreApproved, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
-            generate_pdf(proposal, 'proposals/proposal_pdf_pre_approved.html')
+            proposal.generate_pdf()
         return success_url
 
     def get_next_url(self):
