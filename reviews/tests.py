@@ -10,7 +10,7 @@ from .models import Review, Decision
 from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
 from main.models import YES, NO, DOUBT
 from proposals.models import Proposal, Relation, Wmo
-from proposals.utils import generate_ref_number, generate_pdf
+from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
 from observations.models import Observation
 from interventions.models import Intervention
@@ -48,7 +48,6 @@ class BaseReviewTestCase(TestCase):
             proposal=self.proposal,
             metc=NO,
         )
-        generate_pdf(self.proposal, 'proposals/proposal_pdf.html')
         self.study = Study.objects.create(
             proposal=self.proposal,
             order=1,
@@ -56,6 +55,7 @@ class BaseReviewTestCase(TestCase):
                 pk=2,
             )
         )
+        self.proposal.generate_pdf()
 
     def setup_users(self):
 
