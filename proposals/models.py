@@ -571,7 +571,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     def mark_reviewed(self, continuation, time=None):
         """Finalize a proposal after a decision has been made."""
-        if not time:
+        if time is None:
             time = timezone.now()
         self.status = self.DECISION_MADE
         # Importing here to prevent circular import
