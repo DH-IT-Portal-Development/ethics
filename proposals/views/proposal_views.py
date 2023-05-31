@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import datetime
+
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
     UserFormKwargsMixin
 from django.conf import settings
@@ -130,7 +132,8 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
+    template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -142,6 +145,26 @@ class ProposalArchiveView(CommitteeMixin, BaseProposalsView):
         return "{} - {}".format(
             _('Publiek archief'),
             self.committee_display_name
+        )
+
+
+class ProposalsPublicArchiveView(generic.ListView):
+    template_name = "proposals/proposal_public_archive.html"
+    model = Proposal
+
+    def get_queryset(self):
+        """Returns all the Proposals that have been decided positively upon"""
+        two_years_ago = (
+                datetime.date.today() -
+                datetime.timedelta(weeks=104)
+        )
+        return super().get_queryset().filter(
+            status__gte=Proposal.DECISION_MADE,
+            status_review=True,
+            in_archive=True,
+            date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
         )
 
 
@@ -187,6 +210,9 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
 ##########################
 
 class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+
+    # Note: template_name is auto-generated to proposal_form.html
+
     def get_initial(self):
         """Sets initial applicant to current User"""
         initial = super(ProposalCreate, self).get_initial()
@@ -356,8 +382,21 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         context['troublesome_pages'] = get_form_errors(self.get_object())
         context['pagenr'] = self._get_page_number()
         context['is_supervisor_edit_phase'] = self.is_supervisor_edit_phase()
+        context['start_date_warning'] = self.check_start_date()
 
         return context
+
+    def check_start_date(self):
+        """
+        Return true if the proposal's intended start date lies within
+        two weeks of today.
+        """
+        start_date = self.object.date_start
+        if not start_date:
+            return False
+        two_weeks = datetime.timedelta(days=14)
+        two_weeks_from_now = datetime.date.today() + two_weeks
+        return start_date <= two_weeks_from_now
 
     def is_supervisor_edit_phase(self):
         if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:

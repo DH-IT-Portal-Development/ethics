@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from xml.dom import HierarchyRequestErr
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q
@@ -60,6 +61,8 @@ class Trait(models.Model):
     A model to store participant traits.
     The model has fields to keep a certain order and a description.
     The 'needs_details' field is used to determine whether the 'necessity' field on Study needs to be filled.
+    This class of traits is now organised as a subquestion of the special_personal_details under the 2022 regulations,
+    but Traits have been recorded before we started recording special_personal_details
     """
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -70,6 +73,21 @@ class Trait(models.Model):
 
     def __str__(self):
         return self.description
+
+class SpecialDetail(models.Model):
+    """"
+    A model to store different 'special details' that are extra sensitive, such as race, sexuality etc.
+    """
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    medical_traits = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
 
 
 class Compensation(models.Model):
@@ -153,9 +171,31 @@ vertegenwoordiger te worden verkregen.'),
     legally_incapable_details = models.TextField(
         _('Licht toe'),
         blank=True)
+
+    has_special_details = models.BooleanField(
+        verbose_name=_('Worden er bijzondere persoonsgegevens verzameld?'),
+        help_text=_("zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' \
+            target='_blank'>Richtlijnen</a>"),
+        null=True,
+        blank=True,
+    )
+
+    special_details = models.ManyToManyField(
+        SpecialDetail,
+        blank=True,
+        verbose_name=_('Geef aan welke bijzondere persoonsgegevens worden verzameld:')
+    )
+
+
     has_traits = models.BooleanField(
         _('Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. \
 Is dit in jouw onderzoek bij (een deel van) de deelnemers het geval?'),
+        help_text =_("In de meeste gevallen kun je dit soort gegevens alleen verzamelen als je \
+daar toestemming voor hebt: zie de \
+<a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming,</a> \
+‘Bijzondere persoonsgegevens’. Is het in de praktijk onmogelijk of \
+disproportioneel moeilijk om om toestemming te vragen, neem dan \
+eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, voordat je je aanvraag indient."),
         null=True,
         blank=True
     )
@@ -163,7 +203,7 @@ Is dit in jouw onderzoek bij (een deel van) de deelnemers het geval?'),
         Trait,
         blank=True,
         verbose_name=_(
-            'Selecteer de bijzondere kenmerken van je proefpersonen'))
+            'Selecteer de medische gegevens van je proefpersonen die worden verzameld'))
     traits_details = models.CharField(
         _('Namelijk'),
         max_length=200,
@@ -186,6 +226,9 @@ te testen?'),
         verbose_name=_('Hoe worden de deelnemers geworven?'))
     recruitment_details = models.TextField(
         _('Licht toe'),
+        help_text=_('Er zijn specifieke voorbeelddocumenten voor het gebruik van \
+            Amazon Mechanical Turk/Prolific op <a href="{link}">deze pagina</a>.').format(
+                link='https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities'),
         blank=True)
     compensation = models.ForeignKey(
         Compensation,
@@ -201,6 +244,18 @@ cadeautje.'),
         _('Namelijk'),
         max_length=200,
         blank=True)
+    
+    hierarchy = models.BooleanField(
+        verbose_name=_('Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?'),
+        null=True,
+        blank=True,
+    )
+
+    hierarchy_details = models.TextField(
+        verbose_name=_('Zo ja, wat is de relatie (bijv. docent-student)?'),
+        max_length=500,
+        blank=True,
+    )
 
     # Fields with respect to experimental design
     has_intervention = models.BooleanField(
@@ -321,12 +376,6 @@ geschoolde specialisten).')),
         _('Licht toe'),
         max_length=200,
         blank=True)
-
-    self_assesment = models.TextField(
-        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
-        max_length=500,
-        blank=True
-    )
 
     # References
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)

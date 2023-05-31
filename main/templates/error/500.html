@@ -9,14 +9,19 @@
                 {% trans 'Server error' %}
             </h2>
             <p>
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     Er is een fout opgetreden tijdens het opvragen van deze pagina.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}
-                    Blijft dit probleem aanhouden? Neem dan contact op met het technisch beheer van de portal via 
-                    <a href="mailto:portaldev.gw@uu.nl" target="_blank">portaldev.gw@uu.nl</a>. Maak hierbij zo veel mogelijk duidelijk wat je aan het doen was, en op welke pagina.
+                    Blijft dit probleem aanhouden?
+                {% endblocktrans %}
+                {% blocktrans trimmed %}
+                    Neem dan contact op met het technisch beheer van de portal via <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
+                {% endblocktrans %}
+                {% blocktrans trimmed %}
+                    Maak hierbij zo veel mogelijk duidelijk wat je aan het doen was, en op welke pagina.
                 {% endblocktrans %}
             </p>
         </div>

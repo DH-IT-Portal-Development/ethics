@@ -38,7 +38,13 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         unique_together = ('study', 'order')
 
     def net_duration(self):
-        return self.task_set.aggregate(models.Sum('duration'))['duration__sum']
+        if duration := self.task_set.aggregate(models.Sum('duration'))[
+            'duration__sum'
+        ]:
+            return duration
+
+        return 0
+
 
     def first_task(self):
         tasks = self.task_set.order_by('order')
@@ -140,7 +146,11 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
 
     registrations = models.ManyToManyField(
         Registration,
-        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?')
+        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'),
+        help_text = _("Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term \
+        ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de \
+        <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf'> \
+        Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>.")
     )
 
     registrations_details = models.CharField(

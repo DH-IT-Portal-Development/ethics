@@ -27,13 +27,14 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         fields = [
             'is_pre_approved',
             'institution',
-            'relation', 'supervisor',
-            'other_applicants', 'applicants',
+            'relation', 'student_program', 'student_context',
+            'student_context_details', 'student_justification',
+            'supervisor', 'other_applicants', 'applicants',
             'other_stakeholders', 'stakeholders',
             'date_start', 'title',
             'summary', 'pre_assessment_pdf',
             'funding', 'funding_details', 'funding_name',
-            'pre_approval_institute', 'pre_approval_pdf'
+            'pre_approval_institute', 'pre_approval_pdf', 'self_assessment',
         ]
         labels = {
             'other_stakeholders': mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze aanvraag betrokken ' \
@@ -45,6 +46,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             'is_pre_approved':    forms.RadioSelect(choices=YES_NO),
             'institution':        forms.RadioSelect(),
             'relation':           forms.RadioSelect(),
+            'student_context':    forms.RadioSelect(),
             'other_applicants':   forms.RadioSelect(choices=YES_NO),
             'other_stakeholders': forms.RadioSelect(choices=YES_NO),
             'summary':            forms.Textarea(attrs={
@@ -71,7 +73,9 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                                'funding_details',
                                'funding_name',
                                'pre_approval_institute',
-                               'pre_approval_pdf']
+                               'pre_approval_pdf',
+                               'self_assessment',
+                               ]
 
     def __init__(self, *args, **kwargs):
         """
@@ -102,6 +106,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         super(ProposalForm, self).__init__(*args, **kwargs)
         self.fields['relation'].empty_label = None
         self.fields['institution'].empty_label = None
+        self.fields['student_context'].empty_label = None
 
         # Only revisions or amendments are allowed to have a title that's not
         # unique.
@@ -173,6 +178,7 @@ van het FETC-GW worden opgenomen.')
             self.mark_soft_required(cleaned_data, 'summary')
 
         self.mark_soft_required(cleaned_data, 'relation')
+        self.mark_soft_required(cleaned_data, 'date_start')
 
         relation = cleaned_data.get('relation')
         if relation and relation.needs_supervisor and \
@@ -181,6 +187,10 @@ van het FETC-GW worden opgenomen.')
                 _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
             self.add_error('supervisor', error)
+
+        if relation.check_in_course:
+            self.mark_soft_required(cleaned_data, 'student_context')
+            self.mark_soft_required(cleaned_data, 'student_justification')
 
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
@@ -197,6 +207,18 @@ van het FETC-GW worden opgenomen.')
                 _('Je hebt geen andere onderzoekers geselecteerd.'),
                 code='required')
             self.add_error('applicants', error)
+
+        # Add an error if self_assessment is missing
+        self_assessment = cleaned_data.get('self_assessment')
+        if self_assessment == '':
+            self.add_error(
+                'self_assessment',
+                forms.ValidationError(
+                    _('Dit veld is verplicht, maar je kunt later terugkomen om hem \
+                    verder in te vullen.'),
+                    code='required',
+                )
+            )
 
         if 'is_pre_approved' in cleaned_data:
             if not cleaned_data['is_pre_approved']:
@@ -219,6 +241,12 @@ van het FETC-GW worden opgenomen.')
                                        'funding_details')
         self.check_dependency_multiple(cleaned_data, 'funding', 'needs_name',
                                        'funding_name')
+        self.check_dependency_singular(cleaned_data, 'relation', 'check_in_course',
+                                       'student_program')
+        self.check_dependency_singular(cleaned_data, 'student_context', 'needs_details',
+                                       'student_context_details')
+        self.check_dependency_singular(cleaned_data, 'relation', 'check_in_course',
+                                       'student_justification')
 
 
 class ProposalStartPracticeForm(forms.Form):

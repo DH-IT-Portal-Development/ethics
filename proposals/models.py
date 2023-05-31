@@ -17,6 +17,7 @@ from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
+SELF_ASSESSMENT_MAX_WORDS = 300
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 DMP_FILENAME = FilenameFactory('DMP')
@@ -30,6 +31,18 @@ class Relation(models.Model):
     needs_supervisor = models.BooleanField(default=True)
     check_in_course = models.BooleanField(default=True)
     check_pre_assessment = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.description
+
+
+class StudentContext(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['order']
@@ -116,6 +129,9 @@ class Proposal(models.Model):
 
     date_start = models.DateField(
         _('Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?'),
+        help_text=_("NB: Voor een aanvraag van een onderzoek dat al gestart is voordat \
+de FETC-GW de aanvraag heeft goedgekeurd kan geen formele goedkeuring meer \
+gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."),
         blank=True,
         null=True,
     )
@@ -143,7 +159,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
 
     other_applicants = models.BooleanField(
         _(
-            'Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?'
+            'Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?'
         ),
         default=False,
     )
@@ -174,7 +190,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     funding_name = models.CharField(
-        _('Wat is de naam van het gefinancierde project?'),
+        _('Wat is de naam van het gefinancierde project en wat is het projectnummer?'),
         max_length=200,
         blank=True,
         help_text=_(
@@ -190,8 +206,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
 
     inform_local_staff = models.BooleanField(
         _('<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één \
-van de faciliteiten van het UiL OTS, namelijk de database, Zep software \
-en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op \
+van de faciliteiten van het ILS, namelijk de database, Zep software \
+en/of het ILS lab. Het lab supportteam van het ILS zou graag op \
 de hoogte willen worden gesteld van aankomende onderzoeken. \
 Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te \
 sturen naar het lab supportteam.</p> \
@@ -256,23 +272,27 @@ Zep software)'),
         default=False,
     )
 
-    pdf = models.FileField(blank = True,
+    pdf = models.FileField(
+        blank = True,
         upload_to=PROPOSAL_FILENAME,
         storage=OverwriteStorage(),
     )
 
     # Fields with respect to Studies
     studies_similar = models.BooleanField(
-        _('Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
+        _('Kan voor alle deelnemersgroepen dezelfde informatiebrief en \
+        toestemmingsverklaring gebruikt worden?'),
         help_text=_('Daar waar de verschillen klein en qua belasting of \
-risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk \
+risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
+voldoet één set documenten voor de informed consent. Denk \
 hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
 een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
 helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
 hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
 dan wel bij de beschrijving van de interventie welke varianten precies \
 gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
-<i>soorten</i> taken krijgen, dan zijn dit verschillende trajecten.'),
+<i>soorten</i> taken krijgen, dan kan dit niet en zijn dit afzonderlijke \
+trajecten.'),
         blank=True,
         null=True,
     )
@@ -342,14 +362,57 @@ gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
         blank=True,
     )
 
+    self_assessment = models.TextField(
+        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en '
+          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 300 '
+          'woorden.'),
+        blank=True,
+        validators=[
+            MaxWordsValidator(
+                SELF_ASSESSMENT_MAX_WORDS
+            ),
+        ]
+    )
+
     # References to other models
     relation = models.ForeignKey(
         Relation,
         verbose_name=_('In welke hoedanigheid ben je betrokken \
 bij dit onderzoek?'),
         on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+    )
+
+    student_program = models.CharField(
+        verbose_name=_('Wat is je studierichting?'),
+        max_length = 200,
+        blank=True,
+    )
+
+    student_context = models.ForeignKey(
+        StudentContext,
+        verbose_name=_("In welke context doe je dit onderzoek?"),
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
+    )
+
+    student_context_details = models.CharField(
+        verbose_name=_('Namelijk:'),
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+
+    student_justification = models.TextField(
+        verbose_name=_('Studenten (die mensgebonden onderzoek uitvoeren binnen hun \
+studieprogramma) hoeven in principe geen aanvraag in te dienen bij de \
+FETC-GW. Bespreek met je begeleider of je daadwerkelijk een aanvraag \
+moet indienen. Als dat niet hoeft kun je nu je aanvraag afbreken. \
+Als dat wel moet, geef dan hier aan wat de reden is:'),
+        max_length=500,
+        blank=True,
     )
 
     created_by = models.ForeignKey(

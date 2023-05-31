@@ -303,56 +303,29 @@ def auto_review(proposal: Proposal):
     """
     Reviews a Proposal machine-wise.
     Based on the regulations on
-    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
+    https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
     """
     reasons = []
 
-    # Use the provided date_submitted if available, otherwise pretend it is
-    # today
-    # (It almost certainly is now, as it's only not set when called in the
-    # submit method)
-    if proposal.date_submitted:
-        date_submitted = proposal.date_submitted.date()
-    else:
-        date_submitted = datetime.date.today()
-
-    if proposal.date_start and proposal.date_start < date_submitted:
-        reasons.append(_("De beoogde startdatum ligt voor de datum van "
-                         "indiening"))
-
     for study in proposal.study_set.all():
-
-        if study.has_intervention:
-            reasons.append(_('De aanvraag bevat een interventiestudie.'))
-
-            for setting in study.intervention.settings_requires_review():
-                reasons.append(
-                    _('De aanvraag heeft een interventiestudie met deelnemers in de volgende setting: {s}').format(s=setting))
 
         if study.legally_incapable:
             reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
 
-        if study.passive_consent:
-            reasons.append(_('De aanvraag bevat passieve informed consent.'))
-
-        if study.has_observation:
-            reasons.extend(auto_review_observation(study.observation))
-
         if study.deception in [YES, DOUBT]:
             reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
 
-        if study.compensation.requires_review:
-            reasons.append(_('De beloning van deelnemers wijkt af van de '
-                             'standaardregeling.'))
+        if study.hierarchy:
+            reasons.append(_('Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)'))
+
+        if study.has_special_details:
+            reasons.append(_('Het onderzoek verzamelt bijzondere persoonsgegevens.'))
 
         if study.has_traits:
             reasons.append(_('Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
 
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
-
-        if study.sessions_number and study.sessions_number > 1:
-            reasons.append(_('Het onderzoek bevat meerdere sessies, d.w.z. de deelnemer neemt op meerdere dagen deel (zoals bij longitudinaal onderzoek).'))
 
         if study.stressful in [YES, DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
@@ -364,10 +337,6 @@ fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn.'))
 
         if study.has_sessions:
             for session in study.session_set.all():
-                for setting in session.settings_requires_review():
-                    reasons.append(
-                        _('Het onderzoek heeft sessies met deelnemers in de volgende setting: {s}').format(s=setting))
-
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
                         reasons.append(_('De totale duur van de taken in sessie {s}, exclusief pauzes \
@@ -381,7 +350,7 @@ def auto_review_observation(observation):
     """
     Reviews an Observation machine-wise.
     Based on the regulations on
-    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
+    https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
     """
     reasons = []
 
@@ -410,7 +379,7 @@ def auto_review_task(study, task):
     """
     Reviews a Task machine-wise.
     Based on the regulations on
-    http://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/.
+    https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
     """
     reasons = []
 
@@ -421,10 +390,6 @@ def auto_review_task(study, task):
                     if age_group.age_max is not None and age_group.age_max < registration.age_min:
                         reasons.append(_('De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar.').format(registration.age_min))
                         break
-
-    for registration_kind in task.registration_kinds.all():
-        if registration_kind.requires_review:
-            reasons.append(_('De aanvraag bevat het gebruik van {}').format(registration_kind.description))
 
     return reasons
 

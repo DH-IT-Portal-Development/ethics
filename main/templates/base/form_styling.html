@@ -4,58 +4,77 @@
 
 function warning_on_value(a, a_value, b)
 {
-    $('input[name=' + a + ']').change(function() {
-        var check = $('input[name=' + a + ']:checked').val() === a_value;
+    let input_a = $('input[name=' + a + ']');
+    input_a.change(function() {
+        var check = input_a.filter(':checked').val() === a_value;
 
         $('#' + b).toggle(check);
     });
-    $('input[name=' + a + ']').change();
+    input_a.change();
 }
 
+//checks whether field 'a' has 'a_value', and if so, toggles field 'b'
 function depends_on_value(a, a_value, b)
 {
-    $('input[name=' + a + ']').change(function() {
-        var check = $('input[name=' + a + ']:checked').val() === a_value;
+    let input_a = $('input[name=' + a + ']');
+    let input_b = $('#id_' + b);
+    input_a.change(function() {
+        let check = input_a.filter(':checked').val() === a_value;
 
-        $('#id_' + b).parents('tr').toggle(check);
+        // Only if we don't want to show the field
+        if(!check) {
+            // clear the checkbox values for dependent fields to ensure secondary
+            // dependencies disappear
+            let b_checkboxes = input_b.find('[type=checkbox]');
+            b_checkboxes.each(function() {
+                this.checked = false;
+            });
+            b_checkboxes.trigger('change');
+        }
+
+        input_b.parents('tr').toggle(check);
     });
-    $('input[name=' + a + ']').change();
+    input_a.change();
 }
 
 function depends_on_hidden_value(a, a_value, b, header=false)
 {
-    $('input[name=' + a + ']').change(function() {
-        var values = a_value;
+    let input_a = $('input[name=' + a + ']');
+    let input_b = $('#id_' + b);
+
+    input_a.change(function() {
+        let values = a_value;
         if(!Array.isArray(values))
         {
             values = [a_value]
         }
-        var check = false
+        let check = false
 
         values.forEach(function (val) {
-            if( $('input[name=' + a + ']').val() === val )
+            if( input_a.val() === val )
                 check = true;
         })
 
         if(header)
         {
-            $('#id_' + b).parents('tr').prev().toggle(check);
+            input_b.parents('tr').prev().toggle(check);
         }
 
-        $('#id_' + b).parents('tr').toggle(check);
+        input_b.parents('tr').toggle(check);
     });
-    $('input[name=' + a + ']').change();
+    input_a.change();
 }
 
 function depends_on_list_value(a, a_value, b)
 {
-    $('input[name=' + a + ']').change(function() {
-        var values = $('input[name=' + a + ']:checked').map(function() {
+    let input_a = $('input[name=' + a + ']');
+    input_a.change(function() {
+        let values = input_a.filter(':checked').map(function() {
             return this.value;
         }).get();
         $('#id_' + b).parent().parent().toggle(intersect(values, a_value).length > 0);
     });
-    $('input[name=' + a + ']').change();
+    input_a.change();
 }
 
 function intersect(a, b)
@@ -65,27 +84,55 @@ function intersect(a, b)
     });
 }
 
+var postrequests = new Map(); //var to denote if a request is in progress
+
 // Checks whether a field is required given the selected inputs
 function check_field_required(input_name, field_name, required_input, app_name, model_name, header=false)
 {
+    // model_name is the name of the model as it is stored in the database (without punctuation)
+    // input_name is the name of the model as it is stored in the form (potentially with punctuation)
     model_name = typeof model_name !== 'undefined' ? model_name : input_name;
 
-    $('input[name=' + input_name + ']').change(function() {
-        var checked_inputs = $('input[name=' + input_name + ']:checked').map(function() {
+    let input = $('input[name=' + input_name + ']');
+    let r_input = $('#id_' + required_input);
+
+    let process_identifier = input_name.concat(' ', required_input);
+
+    input.change(function() {
+        // if a postrequest is in progress, abort that request
+        if (postrequests.has(process_identifier)) {
+            postrequests.get(process_identifier).abort();
+            postrequests.delete(process_identifier);
+        }
+        let checked_inputs = input.filter(':checked').map(function() {
             return this.value;
         }).get();
 
-        var url = "{% url 'main:check_requires' %}";
-        var params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
-        $.post(url, params, function(data) {
-            $('#id_' + required_input).parents('tr').toggle(data.result);
+        let url = "{% url 'main:check_requires' %}";
+        let params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
+        let req = $.post(url, params, function(data) {
+            r_input.parents('tr').toggle(data.result);
+
+            // If we don't want to show the field, unselect all selected checkboxes of that field (if any)
+            if (data.result === false) {
+                let r_input_checkboxes = r_input.find('[type=checkbox]');
+                r_input_checkboxes.each(function() {
+                    this.checked = false;
+                });
+                r_input_checkboxes.trigger('change');
+            }
+
+            // Remove header if present
             if(header)
             {
-                $('#id_' + required_input).parents('tr').prev().toggle(data.result);
+                r_input.parents('tr').prev().toggle(data.result);
             }
+            //when the request is done, mark it undefined
+            postrequests.delete(process_identifier);
         });
+        postrequests.set(process_identifier, req);
     });
-    $('input[name=' + input_name + ']').change();
+    input.change();
 }
 
 // Adds a title row to a form field
@@ -102,7 +149,7 @@ $(function() {
         if (help.html())
         {
             var label = $("th label[for^='" + $(this).attr('id') + "']").first();
-            label.after(' <img src="{% static 'main/images/information.png' %}">');
+            label.after(` <img src="{% static 'main/images/information.png' %}">`);
             label.next().qtip({
                 content: {
                     text: help.html(),

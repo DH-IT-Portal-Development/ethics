@@ -67,6 +67,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             Referentienummer {{ reference_number }}
             {% endblocktrans %}
         </h1>
+	<p>{% trans 'Huidige staat van de aanvraag' %}: <em>{{proposal.get_status_display}}</em>
+	</p>
+	
         <h2>{% trans 'Indiener' %}</h2>
         <table>
             <tr>
@@ -84,6 +87,22 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% if proposal.relation.needs_supervisor %}
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th><td>{{ proposal.supervisor.get_full_name }}</td>
+            </tr>
+            {% endif %}
+            {% if proposal.relation.check_in_course %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th><td>{{ proposal.student_program }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th><td>{{ proposal.student_context }}</td>
+            </tr>
+                {% if proposal.student_context.needs_details %}
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th><td>{{ proposal.student_context_details }}</td>
+                </tr>
+                {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th><td>{{ proposal.student_justification }}</td>
             </tr>
             {% endif %}
             <tr>
@@ -129,6 +148,9 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th><td>{{ proposal.funding_name }}</td>
             </tr>
             {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th><td>{{ proposal.self_assessment }}</td>
+            </tr>
         </table>
         <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
         <p>{{ proposal.summary|linebreaks }}</p>
@@ -207,17 +229,22 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% endif %}
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "studies" "study" "has_traits" %}</th><td>{{ study.has_traits|yesno:_("ja,nee") }}</td>
+                <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th><td>{{ study.has_special_details|yesno:_("ja,nee") }}</td>
             </tr>
-            {% if study.has_traits %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
-            </tr>
-            {% if study.traits.all|needs_details %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
-            </tr>
-            {% endif %}
+            {% if study.has_special_details %}
+                <tr>
+                    <th>{% get_verbose_field_name "studies" "study" "special_details" %}</th><td>{{ study.special_details.all|unordered_list }}</td>
+                </tr>
+                {% if study.special_details.all|medical_traits %}
+                    <tr>
+                        <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
+                    </tr>
+                    {% if study.traits.all|needs_details %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
             {% endif %}
             {% if study|necessity_required %}
             <tr>
@@ -241,6 +268,14 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             {% if study.compensation.needs_details %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th><td>{{ study.hierarchy|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if study.hierarchy %}
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th><td>{{ study.hierarchy_details }}</td>
             </tr>
             {% endif %}
         </table>
@@ -390,10 +425,6 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
                 <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
             </tr>
             {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "studies" "study" "self_assesment" %}</th><td>{{ study.self_assesment }}</td>
-            </tr>
-
         </table>
 
         <h2>{% trans "Informed consent formulieren" %}</h2>

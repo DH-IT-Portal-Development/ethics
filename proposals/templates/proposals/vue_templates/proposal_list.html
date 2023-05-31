@@ -64,24 +64,14 @@
                          title="{% trans 'Verwijderen' %}">
                 </a>
             </template>
-
             <a
+                v-if="proposal.status >= context.proposal.SUBMITTED_TO_SUPERVISOR"
                 :href="$url('proposals:pdf', [proposal.pk])"
                 target="_blank"
-                v-if="proposal.pdf"
             >
                 <img src="{{ img_pdf }}"
                      title="{% trans 'Inzien' %}">
             </a>
-            <a
-                v-else
-                :href="$url('proposals:pdf', [proposal.pk])"
-                target="_blank"
-            >
-                <img src="{{ img_pdf }}"
-                         title="{% trans 'Inzien' %}">
-            </a>
-
             <a
                 :href="$url('proposals:archive_hide', [proposal.pk])"
                 v-if="proposal.in_archive && context.is_secretary"
@@ -100,12 +90,18 @@
                 {% endverbatim %}
             </div>
             <div class="ufl-undertitle-line">
-                <span
-                    v-if="proposal.status >= context.proposal.DECISION_MADE"
-                >
+                <span v-if="proposal.latest_review && proposal.latest_review.continuation == context.review.REVISION">
                     {% trans "Besloten op" %}:
                     {% verbatim %}
                     {{ proposal.date_reviewed | date("DD-MM-YYYY, HH:mm") }}
+                    {% endverbatim %}
+                </span>
+                <span
+                    v-else-if="proposal.date_confirmed"
+                >
+                    {% trans "Besloten op" %}:
+                    {% verbatim %}
+                    {{ proposal.date_confirmed | date("DD-MM-YYYY, HH:mm") }}
                     {% endverbatim %}
                 </span>
                 <span v-else>
