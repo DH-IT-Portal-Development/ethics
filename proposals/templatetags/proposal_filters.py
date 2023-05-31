@@ -63,10 +63,14 @@ class StudyDocumentsNode(template.Node):
         study = self.var_value.resolve(context)
         if study is None:
             context[self.var_name] = None
-        try:
-            context[self.var_name] = apps.get_model("studies", "Documents").objects.get(study=study)
-        except (ObjectDoesNotExist, MultipleObjectsReturned):
-            context[self.var_name] = None
+        else:
+            try:
+                context[self.var_name] = apps.get_model(
+                    "studies",
+                    "Documents",
+                ).objects.get(study=study)
+            except (ObjectDoesNotExist, MultipleObjectsReturned):
+                context[self.var_name] = None
         return u""
 
 
