@@ -33,6 +33,7 @@ The following packages needs to be installed:
 	+ libsasl2-dev
 	+ libssl-dev
 	+ gettext
+	+ libpoppler-cpp-dev
 
 2. Prepare Filesystem & Files
 =============================

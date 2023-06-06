@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-18 16:14+0200\n"
+"POT-Creation-Date: 2023-06-06 13:04+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1105,7 +1105,7 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:65 observations/models.py:75
-#: observations/models.py:88 proposals/models.py:608 studies/models.py:172
+#: observations/models.py:88 proposals/models.py:610 studies/models.py:172
 #: studies/models.py:228 studies/models.py:358
 msgid "Licht toe"
 msgstr "Explain"
@@ -1785,44 +1785,44 @@ msgstr ""
 "Is this application a revision or an amendment of a previously submitted "
 "application?"
 
-#: proposals/models.py:545
-msgid "Normaal"
-msgstr "Normal"
-
-#: proposals/models.py:548
+#: proposals/models.py:543
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:550 reviews/api/views.py:39 reviews/api/views.py:328
+#: proposals/models.py:543 reviews/api/views.py:39 reviews/api/views.py:328
 #: reviews/templates/reviews/review_detail_sidebar.html:106
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:552
+#: proposals/models.py:549
+msgid "Normaal"
+msgstr "Normal"
+
+#: proposals/models.py:554
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:554
+#: proposals/models.py:556
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:556
+#: proposals/models.py:558
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:593
+#: proposals/models.py:595
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:594
+#: proposals/models.py:596
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:595
+#: proposals/models.py:597
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:599
+#: proposals/models.py:601
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1830,11 +1830,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:613
+#: proposals/models.py:615
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:619
+#: proposals/models.py:621
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1842,7 +1842,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:621
+#: proposals/models.py:623
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1863,7 +1863,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:637
+#: proposals/models.py:639
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -1872,15 +1872,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:644
+#: proposals/models.py:646
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:649
+#: proposals/models.py:651
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:687
+#: proposals/models.py:689
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -4097,14 +4097,8 @@ msgstr "Committee"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:30
 #, python-format
-msgid ""
-"\n"
-"                        Revisie/amendement van<br/> %(parent)s\n"
-"                    "
-msgstr ""
-"\n"
-"Revision or amendment of<br/> %(parent)s\n"
-"   "
+msgid "%(r_or_a)s van<br/> %(parent)s"
+msgstr "%(r_or_a)s of<br/> %(parent)s"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:40
 msgid "Aanvrager(s)"
@@ -5653,3 +5647,13 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                        Revisie/amendement van<br/> %(parent)s\n"
+#~ "                    "
+#~ msgstr ""
+#~ "\n"
+#~ "Revision or amendment of<br/> %(parent)s\n"
+#~ "   "
