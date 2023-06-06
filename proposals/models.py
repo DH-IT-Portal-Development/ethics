@@ -537,17 +537,19 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
                 if session.tasks_duration is None:
                     break
         return current_session
+    
+    def amendment_or_revision(self):
+        if self.is_revision and self.parent:
+            return _('Amendement') if self.parent.status_review else _('Revisie')
 
     def type(self):
         """
         Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
         """
         result = _('Normaal')
-        if self.is_revision and self.parent:
-            if self.parent.status_review:
-                result = _('Amendement')
-            else:
-                result = _('Revisie')
+        amendment_or_revision = self.amendment_or_revision()
+        if amendment_or_revision is not None:
+            result = amendment_or_revision
         elif self.is_pre_assessment:
             result = _('Voortoetsing')
         elif self.is_practice():
