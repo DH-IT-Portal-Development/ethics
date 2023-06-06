@@ -27,7 +27,7 @@ Remember to include it in a with statement if the view does not provide it.
         {% if review.proposal.amendment_or_revision %}
             <li>
                 <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
-                    {% blocktrans with parent=review.proposal.parent.reference_number r_or_a=review.proposal.amendment_or_revision %}
+                    {% blocktrans trimmed with parent=review.proposal.parent.reference_number r_or_a=review.proposal.amendment_or_revision %}
                         {{r_or_a}} van<br/> {{ parent }}
                     {% endblocktrans %}
                     <a href="{% url 'proposals:diff' review.proposal.pk %}">
