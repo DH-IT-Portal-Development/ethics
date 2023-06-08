@@ -61,7 +61,7 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
     success_message = _('Consent opgeslagen')
     template_name = 'proposals/study_consent.html'
     form = StudyConsentForm
-    extra = 3
+    extra = 10
     
     def get(self, request, *args, **kwargs):
         """A bit of a hacky override to ensure only 2 extra document forms
