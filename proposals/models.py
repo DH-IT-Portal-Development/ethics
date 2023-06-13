@@ -212,7 +212,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     comments = models.TextField(
-        _('Ruimte voor eventuele opmerkingen'),
+        _('Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden.'),
         validators=[MaxWordsValidator(COMMENTS_MAX_WORDS)],
         blank=True,
     )
@@ -377,7 +377,7 @@ trajecten.'),
 
     self_assessment = models.TextField(
         _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en '
-          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 300 '
+          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 '
           'woorden.'),
         blank=True,
         validators=[
