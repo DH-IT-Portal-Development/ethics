@@ -1,4 +1,4 @@
-function word_counter(element_id) {
+function word_counter(element_id, translated_string) {
     $(function () {    
         // Add a running word count to the textField
         let textField = $(element_id);
@@ -9,7 +9,7 @@ function word_counter(element_id) {
             if (this.value.trim()) {
             wordCount = this.value.match(/\S+/g).length;
             }
-            $("#wordcount_textField").text(" {% trans 'Aantal woorden:' %} " + wordCount);
+            $("#wordcount_textField").text(translated_string + wordCount);
         }, false);
         }
     });
