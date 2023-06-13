@@ -18,6 +18,7 @@ from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
 SELF_ASSESSMENT_MAX_WORDS = 1000
+COMMENTS_MAX_WORDS = 1000
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 DMP_FILENAME = FilenameFactory('DMP')
@@ -212,6 +213,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
 
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
+        validators=[MaxWordsValidator(COMMENTS_MAX_WORDS)],
         blank=True,
     )
 
