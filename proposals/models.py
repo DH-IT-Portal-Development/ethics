@@ -17,7 +17,7 @@ from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
-SELF_ASSESSMENT_MAX_WORDS = 300
+SELF_ASSESSMENT_MAX_WORDS = 1000
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 DMP_FILENAME = FilenameFactory('DMP')
