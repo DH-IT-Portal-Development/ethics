@@ -24,47 +24,16 @@
 {% endblock %}
 
 {% block content %}
-    {# TODO: when migration to SAML, this template needs to become a TemplateView #}
-    <div class="coverimage">
-        <img src="{% static 'main/images/coverimage-winter.jpg' %}" />
-    </div>
     {# Very ugly imitation of uu-hero #}
     <div style="background: #FFCD00; margin: -10px -15px; padding:1rem;">
         <div class="uu-inner-container" style="padding-left: 15px">
             <h2 style="font-weight: 500">
-                {% trans "Startpagina" %}
+                {% trans "Inloggen" %}
             </h2>
         </div>
     </div>
     <div class="uu-inner-container mt-4">
-        <div class="col-12 col-md-8">
-            <p>
-                {% blocktrans trimmed %}
-                    Welkom bij het portal van de Facultaire Ethische Toetsingscommissie Geesteswetenschappen
-                    (FETC-GW).
-                {% endblocktrans %}
-            </p>
-            <p>
-                {% blocktrans trimmed %}
-                    Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
-                {% endblocktrans %}
-            </p>
-            <h4>{% trans 'Contact' %}</h4>
-            <p>
-                <strong>{% trans 'Secretaris FETC-GW' %}</strong><br/>
-                <span class="email" data-email="fetc-gw">
-                    <i>{% trans "Om hier een e-mail adres te zien moet Javascript aan staan" %}</i>
-                </span>
-            </p>
-            <p>
-                <strong>{% trans 'Technische ondersteuning' %}</strong><br/>
-                <span class="email" data-email="portalsupport.gw">
-                    <i>{% trans "Om hier een e-mail adres te zien moet Javascript aan staan" %}</i>
-                </span>
-            </p>
-        </div>
         <div class="col-12 col-md-4">
-            <h3>{% trans "Inloggen" %}</h3>
             {% if form.errors %}
                 <p class="form-errors">
                     {% trans "Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw." %}

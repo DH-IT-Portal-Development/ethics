@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-12 10:42+0200\n"
+"POT-Creation-Date: 2023-06-13 14:54+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -200,11 +200,11 @@ msgstr ""
 msgid "Feedback verstuurd"
 msgstr "Feedback sent"
 
-#: fetc/settings.py:121
+#: fetc/settings.py:122
 msgid "Nederlands"
 msgstr "Dutch"
 
-#: fetc/settings.py:122
+#: fetc/settings.py:123
 msgid "Engels"
 msgstr "English"
 
@@ -332,7 +332,7 @@ msgstr "This field is required."
 
 #: main/menus.py:5 main/templates/base/menu.html:7
 #: main/templates/main/index.html:7 main/templates/main/index.html:24
-#: main/templates/registration/login.html:35
+#: main/templates/main/landing.html:34
 msgid "Startpagina"
 msgstr "Start page"
 
@@ -416,7 +416,6 @@ msgid "Referentienummer"
 msgstr "Reference number"
 
 #: main/templates/auth/user_detail.html:52
-#: proposals/templates/proposals/proposal_public_archive.html:21
 #: reviews/templates/reviews/vue_templates/decision_list.html:105
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:55
 #: reviews/templates/reviews/vue_templates/review_list.html:97
@@ -679,8 +678,9 @@ msgstr "Log out"
 msgid "FETC-GW-website"
 msgstr "FEtC-H website"
 
-#: main/templates/base/menu.html:152 main/templates/registration/login.html:67
-#: main/templates/registration/login.html:79
+#: main/templates/base/menu.html:152 main/templates/main/landing.html:77
+#: main/templates/registration/login.html:31
+#: main/templates/registration/login.html:48
 msgid "Inloggen"
 msgstr "Log in"
 
@@ -1014,28 +1014,7 @@ msgstr "Give feedback on this portal"
 msgid "Bannerfoto door Simona Evsatieva"
 msgstr "Cover image by Simona Evsatieva"
 
-#: main/templates/registration/logged_out.html:12
-msgid "Je bent succesvol uitgelogd."
-msgstr "You have successfully logged out."
-
-#: main/templates/registration/logged_out.html:17
-#, python-format
-msgid ""
-"Klik  <a href=\"%(login_url)s\">hier</a> om opnieuw in te loggen met je "
-"Solis-ID."
-msgstr ""
-"Click <a href=\"%(login_url)s\">here</a> to log in again with your Solis-ID."
-
-#: main/templates/registration/logged_out.html:22
-#: main/templates/registration/login.html:48
-msgid ""
-"Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren naar "
-"de FETC-GW-website."
-msgstr ""
-"Click <a href=\"http://fetc-gw.wp.hum.uu.nl/en/\">here</a> to return to the "
-"FEtC-H website."
-
-#: main/templates/registration/login.html:42
+#: main/templates/main/landing.html:52
 msgid ""
 "Welkom bij het portal van de Facultaire Ethische Toetsingscommissie "
 "Geesteswetenschappen (FETC-GW)."
@@ -1043,37 +1022,68 @@ msgstr ""
 "Welcome to the portal of the Faculty Ethics assessment Committee Humanities "
 "(FEtC-H)"
 
-#: main/templates/registration/login.html:52
+#: main/templates/main/landing.html:58
+#: main/templates/registration/logged_out.html:22
+msgid ""
+"Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren naar "
+"de FETC-GW-website."
+msgstr ""
+"Click <a href=\"http://fetc-gw.wp.hum.uu.nl/en/\">here</a> to return to the "
+"FEtC-H website."
+
+#: main/templates/main/landing.html:62
 msgid "Contact"
 msgstr "Contact"
 
-#: main/templates/registration/login.html:54
+#: main/templates/main/landing.html:64
 msgid "Secretaris FETC-GW"
 msgstr "FEtC-H Secretary"
 
-#: main/templates/registration/login.html:56
-#: main/templates/registration/login.html:62
+#: main/templates/main/landing.html:66 main/templates/main/landing.html:72
 msgid "Om hier een e-mail adres te zien moet Javascript aan staan"
 msgstr "Javascript needs to be enabled to see the email address"
 
-#: main/templates/registration/login.html:60
+#: main/templates/main/landing.html:70
 msgid "Technische ondersteuning"
 msgstr "Technical support"
 
-#: main/templates/registration/login.html:70
+#: main/templates/main/landing.html:79
+msgid ""
+"Om in te loggen heb je een Solis-ID nodig. Heb je geen Solis-ID, neem dan "
+"contact op met de secretaris van de FETC-GW."
+msgstr ""
+"You need a Solis-ID to log in. If you do not have a Solis ID, please contact "
+"the secretary of the FEtC-H."
+
+#: main/templates/main/landing.html:86 main/templates/main/landing.html:91
+msgid "Log in met je Solis-ID"
+msgstr "Log in with your Solis-ID"
+
+#: main/templates/registration/logged_out.html:12
+msgid "Je bent succesvol uitgelogd."
+msgstr "You have successfully logged out."
+
+#: main/templates/registration/logged_out.html:17
+#, python-format
+msgid ""
+"Klik  <a href=\"%(landing_url)s\">hier</a> om naar de startpagina te gaan."
+msgstr ""
+"Click <a href=\"%(landing_url)s\">here</a> to return to the start page."
+
+#: main/templates/registration/login.html:39
 msgid ""
 "Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw."
 msgstr "Username or password incorrect. Please try again."
 
-#: main/templates/registration/login.html:74
+#: main/templates/registration/login.html:43
 msgid "Je kan hier inloggen met je Solis-ID en wachtwoord."
 msgstr "You can log in here with your Solis-ID and password."
 
-#: main/templates/registration/login.html:77
+#: main/templates/registration/login.html:46
 msgid "Gebruikersnaam"
 msgstr "Username"
 
-#: main/templates/registration/login.html:78
+#: main/templates/registration/login.html:47
 msgid "Wachtwoord"
 msgstr "Password"
 
@@ -2889,22 +2899,18 @@ msgid "Titel"
 msgstr "Title"
 
 #: proposals/templates/proposals/proposal_public_archive.html:20
-msgid "Aanvrager"
-msgstr "Applicant"
-
-#: proposals/templates/proposals/proposal_public_archive.html:22
 msgid "Datum goedgekeurd"
 msgstr "Approval date"
 
-#: proposals/templates/proposals/proposal_public_archive.html:23
+#: proposals/templates/proposals/proposal_public_archive.html:21
 msgid "FETC-GW kamer"
 msgstr "FEtC-H chamber"
 
-#: proposals/templates/proposals/proposal_public_archive.html:42
+#: proposals/templates/proposals/proposal_public_archive.html:34
 msgid "AK"
 msgstr "GC"
 
-#: proposals/templates/proposals/proposal_public_archive.html:44
+#: proposals/templates/proposals/proposal_public_archive.html:36
 msgid "LK"
 msgstr "LC"
 
@@ -5657,6 +5663,17 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#, python-format
+#~ msgid ""
+#~ "Klik  <a href=\"%(login_url)s\">hier</a> om opnieuw in te loggen met je "
+#~ "Solis-ID."
+#~ msgstr ""
+#~ "Click <a href=\"%(login_url)s\">here</a> to log in again with your Solis-"
+#~ "ID."
+
+#~ msgid "Aanvrager"
+#~ msgstr "Applicant"
 
 #~ msgid ""
 #~ "\n"

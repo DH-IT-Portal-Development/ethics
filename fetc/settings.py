@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 import os
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,7 +29,7 @@ WSGI_APPLICATION = 'fetc.wsgi.application'
 
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -56,9 +57,9 @@ INSTALLED_APPS = (
 
     'django.contrib.admin',
     'django_user_agents',
-)
+]
 
-MIDDLEWARE = (
+MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -70,7 +71,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
     'impersonate.middleware.ImpersonateMiddleware',
-)
+]
 
 TEMPLATES = [
     {
@@ -171,3 +172,16 @@ try:
     from .ldap_settings import *
 except ImportError:
     print('Proceeding without LDAP settings')
+
+try:
+    from .saml_settings import *
+
+    # Only add stuff to settings if we actually have SAML settings
+    INSTALLED_APPS.append('cdh.federated_auth')
+    INSTALLED_APPS.append('djangosaml2')
+    MIDDLEWARE.append('djangosaml2.middleware.SamlSessionMiddleware')
+
+    LOGIN_URL = reverse_lazy('saml-login')
+
+except ImportError:
+    print('Proceeding without SAML settings')
