@@ -1,4 +1,4 @@
-function word_counter(element_id, translated_string) {
+function word_counter(element_id, translated_string) {    
     $(function () {    
         // Add a running word count to the textField
         let textField = $(element_id);

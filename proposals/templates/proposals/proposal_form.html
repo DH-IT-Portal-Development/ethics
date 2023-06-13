@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
+  <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
     <script>
         $(function () {
             check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
@@ -65,32 +66,11 @@
         cache: true
       }
     });
-
-    // Add a running word count to the summary
-    let summary = $("#id_summary");
-    if (summary.length) {
-      summary.after("<div id='wordcount_summary' />");
-      summary[0].addEventListener("input", function () {
-        var wordCount = 0;
-        if (this.value.trim()) {
-          wordCount = this.value.match(/\S+/g).length;
-        }
-        $("#wordcount_summary").text(" {% trans 'Aantal woorden:' %} " + wordCount);
-      }, false);
-    }
-    // Add a running word count to the self assessment
-    let self_assessment = $("#id_self_assessment");
-    if (self_assessment.length) {
-      self_assessment.after("<div id='wordcount_self_assessment' />");
-      self_assessment[0].addEventListener("input", function () {
-        var wordCount = 0;
-        if (this.value.trim()) {
-          wordCount = this.value.match(/\S+/g).length;
-        }
-        $("#wordcount_self_assessment").text(" {% trans 'Aantal woorden:' %} " + wordCount);
-      }, false);
-    }
   });
+  // adds running wordcounter for the summary and self_assessment text fields
+  let translated_string = " {% trans 'Aantal woorden:' %} "
+  word_counter("#id_summary", translated_string)
+  word_counter("#id_self_assessment", translated_string)
   </script>
 {% endblock %}
 
