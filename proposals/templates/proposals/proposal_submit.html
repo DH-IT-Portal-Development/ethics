@@ -15,8 +15,10 @@
 {% endblock %}
 
 {% block html_head %}
+<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
     <script>
-        $(function () {    
+        word_counter("#id_comments")
+        {% comment %} $(function () {    
             // Add a running word count to the comments
             let comments = $("#id_comments");
             if (comments.length) {
@@ -29,7 +31,7 @@
                 $("#wordcount_comments").text(" {% trans 'Aantal woorden:' %} " + wordCount);
             }, false);
             }
-        });
+        }); {% endcomment %}
   </script>
 {% endblock %}
 
