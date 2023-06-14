@@ -69,8 +69,8 @@
   });
   // adds running wordcounter for the summary and self_assessment text fields
   let translated_string = " {% trans 'Aantal woorden:' %} "
-  word_counter("#id_summary", translated_string)
-  word_counter("#id_self_assessment", translated_string)
+  wordCounter("summary", translated_string)
+  wordCounter("self_assessment", translated_string)
   </script>
 {% endblock %}
 

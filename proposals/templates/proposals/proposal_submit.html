@@ -18,7 +18,7 @@
 <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
 <script>
     let translated_string = " {% trans 'Aantal woorden:' %} "
-    word_counter("#id_comments", translated_string)
+    wordCounter("comments", translated_string)
 </script>
 {% endblock %}
 
