@@ -1,6 +1,5 @@
 function wordCounter(element, translated_string) {    
-    $(function () {  
-          
+    
         // Add a running word count to a textfield
         // The element argument should be the name of the textField in the model
         // The translated string should be a translateable string variable. 
@@ -17,5 +16,4 @@ function wordCounter(element, translated_string) {
             $("#wordcount_" + element).text(translated_string + wordCount);
         }, false);
         }
-    });
 }

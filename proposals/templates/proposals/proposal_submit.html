@@ -17,8 +17,10 @@
 {% block html_head %}
 <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
 <script>
-    let translated_string = " {% trans 'Aantal woorden:' %} "
-    wordCounter("comments", translated_string)
+    $(function() {
+        let translated_string = " {% trans 'Aantal woorden:' %} "
+        wordCounter("comments", translated_string)
+    });
 </script>
 {% endblock %}
 

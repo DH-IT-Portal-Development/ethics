@@ -61,9 +61,11 @@ $(function() {
       }
     });
 });
-// adds running wordcounter for the summary and self_assessment text fields
-let translated_string = " {% trans 'Aantal woorden:' %} "
-wordCounter("summary", translated_string)
+$(function() {
+    // adds running wordcounter for the summary and self_assessment text fields
+    let translated_string = " {% trans 'Aantal woorden:' %} "
+    wordCounter("summary", translated_string)
+});
 </script>
 {% endblock %}
 
