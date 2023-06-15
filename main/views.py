@@ -78,6 +78,9 @@ class LandingView(_SystemMessageView):
             settings.LOGIN_REDIRECT_URL
         )
         context['saml'] = hasattr(settings, 'SAML_CONFIG')
+        context['show_saml'] = settings.SHOW_SAML_LOGIN
+        context['show_django'] = settings.SHOW_DJANGO_LOGIN
+        context['login_descriptors'] = settings.SHOW_LOGIN_DESCRIPTORS
 
         return context
 

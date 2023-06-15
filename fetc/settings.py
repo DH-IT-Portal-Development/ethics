@@ -93,6 +93,16 @@ ROOT_URLCONF = 'fetc.urls'
 
 LOGIN_REDIRECT_URL = '/'
 
+# Determines what login options are displayed on the landing page. NOTE: this
+# does not determine which login screen is actually used as default when using
+# a LoginRequiredMixin or similar.
+# Django login is also used by LDAP auth
+# SHOW_SAML_LOGIN is set to true if saml_settings.py is present and loaded
+SHOW_DJANGO_LOGIN = True
+SHOW_SAML_LOGIN = False
+# Debug option, adds a label to the buttons. Otherwise, the buttons are
+# identical
+SHOW_LOGIN_DESCRIPTORS = True
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -182,6 +192,7 @@ try:
     MIDDLEWARE.append('djangosaml2.middleware.SamlSessionMiddleware')
 
     LOGIN_URL = reverse_lazy('saml-login')
+    SHOW_SAML_LOGIN = True
 
 except ImportError:
     print('Proceeding without SAML settings')

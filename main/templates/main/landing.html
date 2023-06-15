@@ -81,14 +81,16 @@
                     secretaris van de FETC-GW.
                 {% endblocktrans %}
             </p>
-            {% if saml %}
+            {% if show_saml %}
                 <a href="{% url 'saml-login' %}?next={{ next }}" class="button button-colored">
-                    {% trans 'Log in met je Solis-ID' %}{% if debug %} (SAML){% endif %}
+                    {% trans 'Log in met je Solis-ID' %}{% if login_descriptors %} (SAML){% endif %}
                 </a>
             {% endif %}
-            {% if not saml or debug %}
+            {# Unnecessary layout hack #}
+            {% if show_saml and show_django %}<div class="mt-1" />{% endif %}
+            {% if show_django %}
                 <a href="{% url 'login' %}?next={{ next }}" class="button button-colored">
-                    {% trans 'Log in met je Solis-ID' %}{% if debug %} (Non-SAML){% endif %}
+                    {% trans 'Log in met je Solis-ID' %}{% if login_descriptors %} (Non-SAML){% endif %}
                 </a>
             {% endif %}
         </div>
