@@ -55,14 +55,15 @@ if 'debug_toolbar' in settings.INSTALLED_APPS and settings.DEBUG:
 
 # If SAML is enabled, add the required URL patterns for SAML
 if 'cdh.federated_auth' in settings.INSTALLED_APPS:
-    from djangosaml2.views import LoginView, LogoutInitView
+    from djangosaml2.views import LoginView
+    from cdh.federated_auth.saml.views import LogoutInitView
 
     urlpatterns.extend([
-        path('saml/', include('djangosaml2.urls')),
         path('saml/login/', LoginView.as_view(), name='saml-login'),
         # We can only have one logout view. Luckily, the SAML logout view can
         # handle local accounts as well.
         path('saml/logout/', LogoutInitView.as_view(), name='logout'),
+        path('saml/', include('djangosaml2.urls')),
     ])
 else:
     # If not, append the default logout-view
