@@ -19,6 +19,7 @@ class ReviewActions:
                                DecideAction(review, user),
                                ChangeAssignment(review, user),
                                DiscontinueReview(review, user),
+                               HideReview(review, user),
         ]
         self.ufl_actions = []
 
@@ -179,7 +180,7 @@ class DiscontinueReview(ReviewAction):
 
     def description(self):
 
-        return _('Beëindig definitief de afhandeling van deze aanvraag')
+        return _('Beëindig definitief de afhandelin23-001-01g van deze aanvraag')
 
 
 class ChangeAssignment(ReviewAction):
@@ -210,3 +211,45 @@ class ChangeAssignment(ReviewAction):
     def description(self):
 
         return _('Verander aangestelde commissieleden')
+
+'''
+I need to create 2 (or 3?) classes with the ReviewAction parent class:
+    - One for sending a confirmation letter and changing the confirmation date
+    - One for hiding the review from archive
+
+They need to have an is available function, which performs the
+checks to see whether an action should be available. 
+This will be the most important.
+
+I then need to have a function which returns the url and one which returns the
+description. This is pretty straightforward.
+
+'''
+
+class HideReview(ReviewAction):
+
+    def is_available(self):
+
+        user = self.user
+        review = self.review
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+        
+        if review.proposal.in_archive == False:
+            return False
+        
+        if review.proposal.status < Proposal.DECISION_MADE:
+            return False
+
+        return True
+    
+    def action_url(self):
+
+        return reverse('proposals:archive_hide', args=(self.review.pk,))
+
+    def description(self):
+
+        return _('Verberg aanvraag uit het archief.')
+        
