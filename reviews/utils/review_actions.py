@@ -252,4 +252,32 @@ class HideReview(ReviewAction):
     def description(self):
 
         return _('Verberg aanvraag uit het archief.')
+    
+class SendConfirmation(ReviewAction):
+
+    def is_available(self):
+
+        user = self.user
+        review = self.review
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
         
+        if review.stage < review.CLOSED:
+            return False
+        
+        if not review.continuation in [review.GO, review.POST_HOC_GO]:
+            return False
+        
+        return True
+    
+    '''
+    the action url function can be the same for both scenarios, but in the description,
+    It would be nice to have a conditional, which checks for the review.proposal.date_confirmed attribute,
+    to see whether it should be 'send confirmation letter' or 'change date'
+    '''
+        
+# "review.proposal.date_confirmed" = change date
+# see reviews/templates/reviews/vue_templates/review_list.html, line 80
+
