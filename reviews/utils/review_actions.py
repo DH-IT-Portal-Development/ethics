@@ -20,6 +20,7 @@ class ReviewActions:
                                ChangeAssignment(review, user),
                                DiscontinueReview(review, user),
                                HideReview(review, user),
+                               SendConfirmation(review, user),
         ]
         self.ufl_actions = []
 
@@ -251,7 +252,7 @@ class HideReview(ReviewAction):
 
     def description(self):
 
-        return _('Verberg aanvraag uit het archief.')
+        return _('Verberg aanvraag uit het archief')
     
 class SendConfirmation(ReviewAction):
 
@@ -267,10 +268,18 @@ class SendConfirmation(ReviewAction):
         if review.stage < review.CLOSED:
             return False
         
-        if not review.continuation in [review.GO, review.POST_HOC_GO]:
+        if not review.continuation in [review.GO, review.GO_POST_HOC]:
             return False
         
         return True
+    
+    def action_url(self):
+
+        return reverse('proposals:confirmation', args=(self.review.pk,))
+    
+    def description(self):
+
+        return _('Bevestigingsbrief versturen') if self.review.proposal.date_confirmed is None else _('Datum van bevestigingsbrief aanpassen')
     
     '''
     the action url function can be the same for both scenarios, but in the description,
