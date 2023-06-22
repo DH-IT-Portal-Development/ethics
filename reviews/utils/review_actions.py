@@ -181,7 +181,7 @@ class DiscontinueReview(ReviewAction):
 
     def description(self):
 
-        return _('Beëindig definitief de afhandelin23-001-01g van deze aanvraag')
+        return _('Beëindig definitief de afhandeling van deze aanvraag')
 
 
 class ChangeAssignment(ReviewAction):
@@ -278,8 +278,9 @@ class SendConfirmation(ReviewAction):
         return reverse('proposals:confirmation', args=(self.review.pk,))
     
     def description(self):
-
-        return _('Bevestigingsbrief versturen') if self.review.proposal.date_confirmed is None else _('Datum van bevestigingsbrief aanpassen')
+        send_letter = _('Bevestigingsbrief versturen')
+        change_date = _('Datum van bevestigingsbrief aanpassen')
+        return send_letter if self.review.proposal.date_confirmed is None else change_date
     
     '''
     the action url function can be the same for both scenarios, but in the description,
