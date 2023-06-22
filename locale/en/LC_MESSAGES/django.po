@@ -4349,10 +4349,8 @@ msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
 #: reviews/utils/review_actions.py:255
-#, fuzzy
-#| msgid "Voeg deze aanvraag toe aan het archief"
 msgid "Verberg aanvraag uit het archief"
-msgstr "Add this application to the archive"
+msgstr "Remove this application from the archive"
 
 #: reviews/utils/review_actions.py:282
 msgid "Datum van bevestigingsbrief aanpassen"

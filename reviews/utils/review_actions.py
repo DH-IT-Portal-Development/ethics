@@ -238,7 +238,7 @@ class HideReview(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
         
-        if review.proposal.in_archive == False:
+        if review.proposal.public == False:
             return False
         
         if review.proposal.status < Proposal.DECISION_MADE:
@@ -248,7 +248,7 @@ class HideReview(ReviewAction):
     
     def action_url(self):
 
-        return reverse('proposals:archive_hide', args=(self.review.pk,))
+        return reverse('proposals:archive_hide', args=(self.review.proposal.pk,))
 
     def description(self):
 
