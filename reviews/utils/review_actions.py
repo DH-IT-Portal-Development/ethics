@@ -19,8 +19,8 @@ class ReviewActions:
                                DecideAction(review, user),
                                ChangeAssignment(review, user),
                                DiscontinueReview(review, user),
-                               HideReview(review, user),
                                SendConfirmation(review, user),
+                               #HideReview(review, user),
         ]
         self.ufl_actions = []
 
@@ -212,19 +212,41 @@ class ChangeAssignment(ReviewAction):
     def description(self):
 
         return _('Verander aangestelde commissieleden')
+    
+class SendConfirmation(ReviewAction):
 
+    def is_available(self):
+
+        user = self.user
+        review = self.review
+
+        '''Only the secretary is able to send the confirmation letter and/or change the date.
+        The review needs to be closed and have an approved status.'''
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+        
+        if review.stage < review.CLOSED:
+            return False
+        
+        if not review.continuation in [review.GO, review.GO_POST_HOC]:
+            return False
+        
+        return True
+    
+    def action_url(self):
+
+        return reverse('proposals:confirmation', args=(self.review.pk,))
+    
+    def description(self):
+        send_letter = _('Bevestigingsbrief versturen')
+        change_date = _('Datum van bevestigingsbrief aanpassen')
+        return send_letter if self.review.proposal.date_confirmed is None else change_date
+    
 '''
-I need to create 2 (or 3?) classes with the ReviewAction parent class:
-    - One for sending a confirmation letter and changing the confirmation date
-    - One for hiding the review from archive
-
-They need to have an is available function, which performs the
-checks to see whether an action should be available. 
-This will be the most important.
-
-I then need to have a function which returns the url and one which returns the
-description. This is pretty straightforward.
-
+This class should lead to the archive_hide url, but the hide functionality does currently.
+Therefore it is commented out in the ReviewActions class
 '''
 
 class HideReview(ReviewAction):
@@ -253,41 +275,4 @@ class HideReview(ReviewAction):
     def description(self):
 
         return _('Verberg aanvraag uit het archief')
-    
-class SendConfirmation(ReviewAction):
-
-    def is_available(self):
-
-        user = self.user
-        review = self.review
-
-        user_groups = user.groups.values_list("name", flat=True)
-        if not settings.GROUP_SECRETARY in user_groups:
-            return False
-        
-        if review.stage < review.CLOSED:
-            return False
-        
-        if not review.continuation in [review.GO, review.GO_POST_HOC]:
-            return False
-        
-        return True
-    
-    def action_url(self):
-
-        return reverse('proposals:confirmation', args=(self.review.pk,))
-    
-    def description(self):
-        send_letter = _('Bevestigingsbrief versturen')
-        change_date = _('Datum van bevestigingsbrief aanpassen')
-        return send_letter if self.review.proposal.date_confirmed is None else change_date
-    
-    '''
-    the action url function can be the same for both scenarios, but in the description,
-    It would be nice to have a conditional, which checks for the review.proposal.date_confirmed attribute,
-    to see whether it should be 'send confirmation letter' or 'change date'
-    '''
-        
-# "review.proposal.date_confirmed" = change date
-# see reviews/templates/reviews/vue_templates/review_list.html, line 80
 
