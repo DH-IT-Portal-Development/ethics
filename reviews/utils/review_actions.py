@@ -245,8 +245,8 @@ class SendConfirmation(ReviewAction):
         return send_letter if self.review.proposal.date_confirmed is None else change_date
     
 '''
-This class should lead to the archive_hide url, but the hide functionality does currently.
-Therefore it is commented out in the ReviewActions class
+This class should lead to the archive_hide url, but the hide functionality does currently not work properly/ is not in use.
+Therefore it is commented out in the ReviewActions class.
 '''
 
 class HideReview(ReviewAction):
