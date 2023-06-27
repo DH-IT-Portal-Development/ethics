@@ -641,6 +641,10 @@ class TranslatedConsentForms(forms.ModelForm):
             'translated_forms': forms.RadioSelect(choices=YES_NO),
         }
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        breakpoint()
+    
     def clean(self):
         """
         Check for conditional requirements:
@@ -650,13 +654,15 @@ class TranslatedConsentForms(forms.ModelForm):
         """
         cleaned_data = super(TranslatedConsentForms, self).clean()
 
-        if not cleaned_data['translated_forms']:
+        if cleaned_data['translated_forms'] is None:
             self.add_error('translated_forms', _('Dit veld is verplicht om '
                                                 'verder te gaan.'))
             
         elif cleaned_data['translated_forms'] == True and not cleaned_data['translated_forms_languages']:
             self.add_error('translated_forms_languages', _('Vul in in welke talen de formulieren '
                                                 'worden vertaald.'))
+        
+        
 
     
 # Vier dingen
