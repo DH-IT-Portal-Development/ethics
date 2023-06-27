@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Worden de informed consent formulieren vertaad?" %} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            <h2>
+                {% trans "Vertaling informed consent formulieren?" %}
+            </h2>
+
+            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                <div id="metc_status"></div>
+                {% with proposal=wmo.proposal %}
+                    {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

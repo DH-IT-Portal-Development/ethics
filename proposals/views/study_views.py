@@ -7,7 +7,7 @@ from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateVi
 from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
 from studies.utils import create_documents_for_study
-from ..forms import StudyStartForm
+from ..forms import StudyStartForm, TranslatedConsentForms
 from ..models import Proposal
 
 
@@ -119,3 +119,7 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
         return reverse('studies:design_end', args=(proposal.last_study().pk,))
 
+class TranslatedConsentFormsView(UpdateView):
+    model = Proposal
+    form_class = TranslatedConsentForms
+    template_name = 'proposals/translated_consent_forms.html'

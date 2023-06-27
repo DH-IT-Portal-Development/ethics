@@ -630,3 +630,38 @@ class ProposalSubmitForm(forms.ModelForm):
                     self.add_error('comments', _(
                         'Informatiebrief voor traject {} nog niet toegevoegd.').format(
                         study.order))
+    
+
+class TranslatedConsentForms(forms.ModelForm):
+
+    class Meta:
+        model = Proposal
+        fields = ['translated_forms', 'translated_forms_languages']
+        widgets = {
+            'translated_forms': forms.RadioSelect(choices=YES_NO),
+        }
+    
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If studies_similar is not set, add a required error
+        - If studies_similar is set to False, make sure studies_number is set (and higher than 2)
+        - If studies_number is set, make sure the corresponding name fields are filled.
+        """
+        cleaned_data = super(TranslatedConsentForms, self).clean()
+
+        if not cleaned_data['translated_forms']:
+            self.add_error('translated_forms', _('Dit veld is verplicht om '
+                                                'verder te gaan.'))
+            
+        elif cleaned_data['translated_forms'] == True and not cleaned_data['translated_forms_languages']:
+            self.add_error('translated_forms_languages', _('Vul in in welke talen de formulieren '
+                                                'worden vertaald.'))
+
+    
+# Vier dingen
+
+# Zorgen dat de eerste vraag niet standaard ingevuld is
+# De eerste vraag MOET wel ingevuld worden
+# Tweede vraag is alleen verplicht als de eerste ingevuld is met JA
+# Tweede vraag is alleen zichtbaar als er bij de eerste JA is ingevuld
