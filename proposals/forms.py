@@ -643,15 +643,9 @@ class TranslatedConsentForms(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        breakpoint()
+        #breakpoint()
     
     def clean(self):
-        """
-        Check for conditional requirements:
-        - If studies_similar is not set, add a required error
-        - If studies_similar is set to False, make sure studies_number is set (and higher than 2)
-        - If studies_number is set, make sure the corresponding name fields are filled.
-        """
         cleaned_data = super(TranslatedConsentForms, self).clean()
 
         if cleaned_data['translated_forms'] is None:

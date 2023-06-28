@@ -7,6 +7,14 @@
     {% trans "Worden de informed consent formulieren vertaad?" %} - {{ block.super }}
 {% endblock %}
 
+{% block html_head %}
+    <script>
+        $(function () {
+            depends_on_value('translated_forms', 'True', 'translated_forms_languages');
+    });
+  </script>
+{% endblock %}
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
