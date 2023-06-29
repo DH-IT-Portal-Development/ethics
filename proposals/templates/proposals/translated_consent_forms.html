@@ -18,6 +18,9 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
+            {% with nav_items=proposal.available_urls active=pagenr %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}            
             <h2>
                 {% trans "Vertaling informed consent formulieren?" %}
             </h2>
