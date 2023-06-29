@@ -25,12 +25,18 @@
                 {% trans "Vertaling informed consent formulieren?" %}
             </h2>
 
+            <p>
+                {% blocktrans trimmed %}
+                Als de documenten in andere talen dan Nederlands of Engels moeten worden opgesteld, dan hoeven deze niet direct te worden ingediend. 
+                Het is wel noodzakelijk te vermelden dat deze vertaald zullen gaan worden. 
+                Bij goedkeuring moeten de documenten in andere talen wel worden aangeleverd, omdat de portal ook dient als officieel archief van goedgekeurde aanvragen. 
+                Dit kan eventueel na goedkeuring, maar kan ook bij een minimale revisie.
+                {% endblocktrans %}
+            </p>
+
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
-                <div id="metc_status"></div>
-                {% with proposal=wmo.proposal %}
                     {% include "base/form_buttons.html" %}
-                {% endwith %}
             </form>
         </div>
     </div>

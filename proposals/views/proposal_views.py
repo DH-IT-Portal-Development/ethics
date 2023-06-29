@@ -25,7 +25,7 @@ from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm, \
-    ProposalUpdateDataManagementForm
+    ProposalUpdateDataManagementForm, TranslatedConsentForms
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import ProposalMixin, ProposalContextMixin, \
@@ -344,6 +344,19 @@ class ProposalStart(generic.TemplateView):
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context['secretary'] = get_secretary()
         return context
+    
+class TranslatedConsentFormsView(UpdateView):
+    model = Proposal
+    form_class = TranslatedConsentForms
+    template_name = 'proposals/translated_consent_forms.html'
+
+    def get_next_url(self):
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        return reverse('proposals:data_management', args=(proposal.pk,))
+
+    def get_back_url(self):
+        """Return to the consent form overview of the last Study"""
+        return reverse('proposals:consent', args=(self.object.pk,))
 
 from braces import views as braces
 class ProposalDataManagement(UpdateView):
@@ -357,7 +370,7 @@ class ProposalDataManagement(UpdateView):
 
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
-        return reverse('studies:translated', args=(self.object.pk,))
+        return reverse('proposals:translated', args=(self.object.pk,))
     
 class ProposalUpdateDataManagement(braces.GroupRequiredMixin, generic.UpdateView):
     """

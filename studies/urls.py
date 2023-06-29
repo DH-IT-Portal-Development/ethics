@@ -3,7 +3,6 @@ from django.urls import path
 from .views.session_views import SessionStart
 from .views.study_views import StudyUpdate, StudyDesign, StudyUpdateAttachments, StudyEnd, \
     has_adults, necessity_required 
-from proposals.views.study_views import TranslatedConsentFormsView
 
 app_name = 'studies'
 
@@ -22,6 +21,4 @@ urlpatterns = [
     # Checks on conditional fields
     path('check_has_adults/', has_adults, name='check_has_adults'),
     path('check_necessity_required/', necessity_required, name='check_necessity_required'),
-
-    path('translated/<int:pk>/', TranslatedConsentFormsView.as_view(), name='translated')
 ]

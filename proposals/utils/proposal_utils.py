@@ -97,7 +97,7 @@ def available_urls(proposal):
         urls.append(studies_url)
 
 
-        consent_translation_url = AvailableURL(title=_('Vertaling'), url=reverse('studies:translated', args=(proposal.pk,)))
+        consent_translation_url = AvailableURL(title=_('Vertaling'), url=reverse('proposals:translated', args=(proposal.pk,)))
         consent_url = AvailableURL(title=_('Documenten'), children=[consent_translation_url])
 
         data_management_url = AvailableURL(title=_('Datamanagement'))

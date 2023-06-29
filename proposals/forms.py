@@ -643,7 +643,6 @@ class TranslatedConsentForms(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        #breakpoint()
     
     def clean(self):
         cleaned_data = super(TranslatedConsentForms, self).clean()
@@ -655,13 +654,3 @@ class TranslatedConsentForms(forms.ModelForm):
         elif cleaned_data['translated_forms'] == True and not cleaned_data['translated_forms_languages']:
             self.add_error('translated_forms_languages', _('Vul in in welke talen de formulieren '
                                                 'worden vertaald.'))
-        
-        
-
-    
-# Vier dingen
-
-# Zorgen dat de eerste vraag niet standaard ingevuld is
-# De eerste vraag MOET wel ingevuld worden
-# Tweede vraag is alleen verplicht als de eerste ingevuld is met JA
-# Tweede vraag is alleen zichtbaar als er bij de eerste JA is ingevuld
