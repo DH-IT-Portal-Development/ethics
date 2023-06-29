@@ -357,7 +357,7 @@ class ProposalDataManagement(UpdateView):
 
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
-        return reverse('proposals:consent', args=(self.object.pk,))
+        return reverse('studies:translated', args=(self.object.pk,))
     
 class ProposalUpdateDataManagement(braces.GroupRequiredMixin, generic.UpdateView):
     """

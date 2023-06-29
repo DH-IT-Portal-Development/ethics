@@ -112,7 +112,7 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
         Otherwise, go to the data management view.
         """
         proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        return reverse('proposals:data_management', args=(proposal.pk,))
+        return reverse('studies:translated', args=(proposal.pk,))
 
     def get_back_url(self):
         """Return to the Study design view"""
@@ -123,3 +123,18 @@ class TranslatedConsentFormsView(UpdateView):
     model = Proposal
     form_class = TranslatedConsentForms
     template_name = 'proposals/translated_consent_forms.html'
+
+    # def get_context_data(self, *args, **kwargs):
+    #     """Setting the progress on the context"""  # (??)
+    #     context = super().get_context_data(*args, **kwargs)
+    #     # The following is used by the progress bar
+    #     proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+    #     context['proposal'] = proposal
+
+    def get_next_url(self):
+        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        return reverse('proposals:data_management', args=(proposal.pk,))
+
+    def get_back_url(self):
+        """Return to the consent form overview of the last Study"""
+        return reverse('proposals:consent', args=(self.object.pk,))
