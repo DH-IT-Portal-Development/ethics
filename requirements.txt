@@ -95,9 +95,7 @@ idna==3.4
 imagesize==1.4.1
     # via sphinx
 importlib-metadata==6.0.0
-    # via
-    #   django-simple-menu
-    #   sphinx
+    # via django-simple-menu
 jinja2==3.1.2
     # via sphinx
 lesscpy==0.15.1
@@ -148,7 +146,7 @@ pyhanko-certvalidator==0.20.1
     #   xhtml2pdf
 pyjwt==2.6.0
     # via uil-django-core
-pypdf==3.4.1
+pypdf==3.9.0
     # via xhtml2pdf
 pypng==0.20220715.0
     # via qrcode
@@ -233,7 +231,6 @@ tinycss2==1.2.1
 typing-extensions==4.5.0
     # via
     #   django-modeltranslation
-    #   pypdf
     #   qrcode
 tzdata==2022.7
     # via pytz-deprecation-shim
