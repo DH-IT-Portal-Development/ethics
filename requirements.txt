@@ -25,7 +25,7 @@ blessed==1.20.0
     # via curtsies
 bpython==0.24
     # via -r requirements.in
-cdh-django-core @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-2
+cdh-django-core @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-3
     # via -r requirements.in
 certifi==2022.12.7
     # via requests
