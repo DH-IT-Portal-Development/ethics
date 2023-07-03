@@ -216,12 +216,11 @@ class ChangeAssignment(ReviewAction):
 class SendConfirmation(ReviewAction):
 
     def is_available(self):
+        '''Only the secretary is able to send the confirmation letter and/or change the date.
+        The review needs to be closed and have an approved status.'''
 
         user = self.user
         review = self.review
-
-        '''Only the secretary is able to send the confirmation letter and/or change the date.
-        The review needs to be closed and have an approved status.'''
 
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
@@ -237,19 +236,16 @@ class SendConfirmation(ReviewAction):
     
     def action_url(self):
 
-        return reverse('proposals:confirmation', args=(self.review.pk,))
+        return reverse('proposals:confirmation', args=(self.review.proposal.pk,))
     
     def description(self):
         send_letter = _('Bevestigingsbrief versturen')
         change_date = _('Datum van bevestigingsbrief aanpassen')
         return send_letter if self.review.proposal.date_confirmed is None else change_date
-    
-'''
-This class should lead to the archive_hide url, but the hide functionality does currently not work properly/ is not in use.
-Therefore it is commented out in the ReviewActions class.
-'''
 
 class HideReview(ReviewAction):
+    '''This class should lead to the archive_hide url, but the hide functionality does currently not work properly/ is not in use.
+    Therefore it is commented out in the ReviewActions class.'''
 
     def is_available(self):
 
