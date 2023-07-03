@@ -198,7 +198,9 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
 
     translated_forms_languages = models.TextField(
         _('Andere talen:'),
+        default=None,
         blank=True,
+        null=True,
     )
 
     funding = models.ManyToManyField(
