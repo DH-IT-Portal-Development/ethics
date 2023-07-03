@@ -187,9 +187,8 @@ try:
     from .saml_settings import *
 
     # Only add stuff to settings if we actually have SAML settings
-    INSTALLED_APPS.append('cdh.federated_auth')
-    INSTALLED_APPS.append('djangosaml2')
-    MIDDLEWARE.append('djangosaml2.middleware.SamlSessionMiddleware')
+    INSTALLED_APPS += SAML_APPS
+    MIDDLEWARE += SAML_MIDDLEWARE
 
     LOGIN_URL = reverse_lazy('saml-login')
     SHOW_SAML_LOGIN = True
