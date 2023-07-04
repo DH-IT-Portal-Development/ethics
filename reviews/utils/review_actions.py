@@ -20,7 +20,7 @@ class ReviewActions:
                                ChangeAssignment(review, user),
                                DiscontinueReview(review, user),
                                SendConfirmation(review, user),
-                               HideReview(review, user),
+                               #HideReview(review, user),
         ]
         self.ufl_actions = []
 
