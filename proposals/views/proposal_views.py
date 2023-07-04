@@ -202,6 +202,7 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
 
         proposal = Proposal.objects.get(pk=pk)
         proposal.public = False
+        #proposal.in_archive = False
         proposal.save()
 
         committee = proposal.reviewing_committee.name
