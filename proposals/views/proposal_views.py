@@ -351,12 +351,12 @@ class TranslatedConsentFormsView(UpdateView):
     template_name = 'proposals/translated_consent_forms.html'
 
     def get_next_url(self):
-        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        return reverse('proposals:data_management', args=(proposal.pk,))
+        '''Go to the consent form upload page'''
+        return reverse('proposals:consent', args=(self.object.pk,))
 
     def get_back_url(self):
-        """Return to the consent form overview of the last Study"""
-        return reverse('proposals:consent', args=(self.object.pk,))
+        """Return to the overview of the last Study"""
+        return reverse('studies:design_end', args=(self.object.pk,))
 
 from braces import views as braces
 class ProposalDataManagement(UpdateView):
@@ -370,7 +370,7 @@ class ProposalDataManagement(UpdateView):
 
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
-        return reverse('proposals:translated', args=(self.object.pk,))
+        return reverse('proposals:consent', args=(self.object.pk,))
     
 class ProposalUpdateDataManagement(braces.GroupRequiredMixin, generic.UpdateView):
     """
