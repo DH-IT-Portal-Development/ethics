@@ -356,7 +356,7 @@ class TranslatedConsentFormsView(UpdateView):
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
-        return reverse('studies:design_end', args=(self.object.pk,))
+        return reverse('studies:design_end', args=(self.object.last_study().pk,))
 
 from braces import views as braces
 class ProposalDataManagement(UpdateView):

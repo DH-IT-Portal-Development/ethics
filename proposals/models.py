@@ -196,8 +196,9 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
         null=True,
     )
 
-    translated_forms_languages = models.TextField(
+    translated_forms_languages = models.CharField(
         _('Andere talen:'),
+        max_length=255,
         default=None,
         blank=True,
         null=True,
