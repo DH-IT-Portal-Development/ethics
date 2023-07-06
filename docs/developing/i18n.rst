@@ -9,3 +9,67 @@ Translations can be easily created using `python manage.py makemessages` and edi
 
 .. _Anna Asbury: http://www.annaasbury.com/
 .. _Poedit: https://poedit.net/
+
+
+Merging translations
+====================
+
+Once messages have been generated with :code:`python manage.py makemessages -a`, you will often find that many line numbers and other fluff in your PO file have been changed, making any further changes very hard to merge back into the starting branch.
+
+Before continuing, make all your changes to your feature branch and add all your translations. There's no point in merging translations multiple times, just do it once when the branch is ready to be merged.
+
+
+Checking out both files
+------------------
+
+You should still be on the feature branch that you're preparing to merge back into a mainline branch, for this example we'll assume that branch is develop. We'll also assume your shell is in the directory containing django.po.
+
+First, rename your django.po to feature.po::
+
+  mv django.po feature.po
+
+Then, collect the django.po file you wish to merge into and rename it as well::
+
+  git checkout origin/develop -- django.po
+  mv django.po develop.po
+
+The double dash (--) indicates that all arguments that follow are filenames. As such, this will only checkout the django.po file from develop.
+
+
+Using msgcat
+------------
+
+The tool we will be using is called msgcat, which concatenates message files. Install it from your repositories if it's not already on your system.
+
+In its most basic usage, msgcat will combine all messages from the input PO files and print them to standard output::
+
+  msgcat feature.po develop.po
+
+We can redirect the standard output to a new file named django.po as follows::
+
+  msgcat feature.po develop.po > django.po
+
+If you have only added new translations in your feature branch, this should be sufficient, and you now have a django.po which is sufficiently merged.
+
+However, if you have also changed existing translations, you will end up with message sections like the following::
+
+  #: faqs/menus.py:26 feedback/models.py:20
+  #: feedback/templates/feedback/feedback_list.html:22
+  #: main/templates/base/menu.html:140
+  #, fuzzy
+  msgid "Feedback"
+  msgstr ""
+  "#-#-#-#-#  feature.po  #-#-#-#-#\n"
+  "Feedback duplicate\n"
+  "#-#-#-#-#  develop.po  #-#-#-#-#\n"
+  "Feedback"
+
+This happens because the msgstr exists in both PO files but is not an exact match. To resolve such a situation, it is usually easy enough to use the search feature of your IDE to find these conflicts and resolve them manually in the same manner as for fuzzy translations.
+
+Though msgcat can also help us in this situation. If we are careful to specify our feature.po file first, the following option will always choose the translation from feature.po above develop.po::
+
+  msgcat --use-first feature.po develop.po > django.po
+
+This option is of course not possible if there are newer changes to translations in develop. These would be overwritten by the older translations in feature.po from when the feature branch branched off.
+
+In the cases where both PO files contain changes you wish to keep, you can still manually select the correct translation from the output of msgcat. Although skillful use of msgat's :code:`--unique` and :code:`--more-than=1` options can save you the manual labour (see the manpage), the author's experience is that this rarely saves actual time spent on the merge.
