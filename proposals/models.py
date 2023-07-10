@@ -237,6 +237,22 @@ Zep software)'),
         null=True
     )
 
+    embargo = models.BooleanField(
+        _('Als je deelnemers van je onderzoek moeten worden misleid, kan \
+          je ervoor kiezen je applicatie pas later op te laten nemen in het \
+          semi-publieke archief. Wil je dat jouw onderzoek tijdelijk onder \
+          embargo wordt geplaatst?'),
+          default=None,
+          blank=True,
+          null=True
+    )
+
+    embargo_end_date = models.DateField(
+        _('Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?'),
+        blank=True,
+        null=True
+    )
+
     in_archive = models.BooleanField(default=False)
 
     public = models.BooleanField(default=True)
