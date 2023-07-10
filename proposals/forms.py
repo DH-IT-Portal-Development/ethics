@@ -8,6 +8,8 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
+from django.utils import timezone
+from datetime import timedelta
 mark_safe_lazy = lazy(mark_safe, str)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
@@ -631,3 +633,12 @@ class ProposalSubmitForm(forms.ModelForm):
                     self.add_error('comments', _(
                         'Informatiebrief voor traject {} nog niet toegevoegd.').format(
                         study.order))
+            
+            if cleaned_data['embargo'] is None:
+                self.add_error('embargo', _('Dit veld is verplicht.'))
+
+            if cleaned_data['embargo_end_date'] > timezone.now().date() + timezone.timedelta(days=730):
+                self.add_error('embargo_end_date', _('De embargo-periode kan maximaal 2 jaar zijn. \
+                                                     Kies een datum binnen 2 jaar van vandaag.'))
+
+            
