@@ -239,12 +239,18 @@ class SendConfirmation(ReviewAction):
         return reverse('proposals:confirmation', args=(self.review.proposal.pk,))
     
     def description(self):
+        proposal = self.review.proposal
         send_letter = _('Bevestigingsbrief versturen')
         change_date = _('Datum van bevestigingsbrief aanpassen')
-        return send_letter if self.review.proposal.date_confirmed is None else change_date
+
+        if proposal.date_confirmed is None:
+            return send_letter
+        else:
+            return change_date
 
 class HideReview(ReviewAction):
-    '''This class should lead to the archive_hide url, but the hide functionality does currently not work properly/ is not in use.
+    '''This class should lead to the archive_hide url, but the hide 
+    functionality does currently not work properly/ is not in use.
     Therefore it is commented out in the ReviewActions class.'''
 
     def is_available(self):
