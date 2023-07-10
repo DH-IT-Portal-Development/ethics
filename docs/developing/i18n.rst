@@ -3,13 +3,47 @@ Internationalization
 ********************
 
 The main language of this web application is Dutch, as it's aimed towards the mostly avid Dutch-speaking researchers of Utrecht University.
-However, since October 2016, there is a full English translation available, compiled by `Anna Asbury`_.
+However, since October 2016, there is a full English translation available, initially compiled by `Anna Asbury`_.
 Translations in other languages are welcome, of course.
 Translations can be easily created using `python manage.py makemessages` and edited using e.g. `Poedit`_.
 
 .. _Anna Asbury: http://www.annaasbury.com/
 .. _Poedit: https://poedit.net/
 
+Working with translations
+=========================
+
+This portal uses translations in a 'dutch in-template/code, translate to english' model, whichs brings with it some challenges. (Our other apps use a different, translation-key -> [english,dutch], setup to avoid most of them). 
+
+Trimming whitespace
+-------------------
+
+In templates, :code:`{% blocktrans %}` tags are often used to translate larger amounts of texts. However, by default this tag preserves (excessive) whitespace naturally present in the templates. (From indentation, mostly).
+This makes the ``msgid`` in the po files rather hard to read.
+
+Thus, it is preferred to use the trimmed argument: :code:`{% blocktrans trimmed %}`. This will strip out any excessive whitespace.
+
+In general: if you are working in a file that still contains non-trimmed blocktrans tags you should add the trimmed argument ASAP. This will also require you to fix the po file, but often this just boils down to making sure the automatic tools fix it correctly. (See below)
+
+De-fuzzy-fying
+--------------
+
+When a translatable string is added/changed, :code:`python manage.py makemessages -a` (actually gettext under the hood) will try to match it to a similar existing string. In those cases, a ``#, fuzzy`` comment/tag will be added to the string. The same comment/tag will also be added to the metadata at the top of the po file.
+
+If you only change a few strings, this process is likely to be correct. However, it tends to fail with larger changes (and is simply incorrect when adding new strings). 
+
+Thus, it is very important that you do a text search for 'fuzzy' after working with translations. Verify that any translations tagged with fuzzy are correct, correct them if they are not and remove the fuzzy tag after. (If you leave it, weird stuff might happen).
+
+Please also remember to remove the 'fuzzy' in the metadata at the top, it's a good canary-in-the-coal-mine. 
+
+Cleanup on aisle seven
+----------------------
+
+Please remember to remove any unused translations at the bottom of the file; they will be commented out by :code:`python manage.py makemessages -a` if they are indeed unused. 
+
+Their precence does no harm, but it can make the already large file even longer. 
+
+*Header name named after Ty's consistent un-funny joke when seeing this in code-reviews, even though he also often forgets to do this step*
 
 Merging translations
 ====================
