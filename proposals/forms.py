@@ -575,9 +575,10 @@ class ProposalUpdateDataManagementForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['comments', 'inform_local_staff']
+        fields = ['comments', 'inform_local_staff', 'embargo', 'embargo_end_date']
         widgets = {
             'inform_local_staff': forms.RadioSelect(choices=YES_NO),
+            'embargo': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
