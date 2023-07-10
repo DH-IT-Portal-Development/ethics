@@ -36,6 +36,15 @@ Thus, it is very important that you do a text search for 'fuzzy' after working w
 
 Please also remember to remove the 'fuzzy' in the metadata at the top, it's a good canary-in-the-coal-mine. 
 
+(Lazy) translations
+-------------------
+
+In Python code, you sometimes have to use 'lazy translations' over normal ones. Lazy translations are a special kind of translation that are only *evaluated* (read: translated) once some code tries to read it's actual value (if done correctly, only during rendering of a page).
+
+You will have to use lazy translations in cases where code is initially run *outside a request context*; often, this is during app-startup. This includes things like model-labels, form-labels and things like it.
+
+To use lazy translations, use :code:`from django.utils.translation import gettext_lazy as _` instead of from :code:`django.utils.translation import gettext as _`. It is also imperative you do not *modify* a lazy translated string after you defined it, as that will transform the 'lazy translation' into a plain (dutch) string.  
+
 Cleanup on aisle seven
 ----------------------
 
