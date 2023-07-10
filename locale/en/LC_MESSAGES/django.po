@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-22 11:04+0200\n"
+"POT-Creation-Date: 2023-06-21 11:12+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1598,10 +1598,10 @@ msgid ""
 "gebruik wil maken (database, lab, Zep software)"
 msgstr ""
 "<p>You have indicated that you intend to use one of the ILS facilities, "
-"either the participant database, Zep software and/or ILS lab. The UiL OTS "
-"lab support team would appreciate being updated about upcoming research. "
-"This is why we ask permission here to forward parts of this application to "
-"the lab support team.</p> <p>Do you approve that the following parts of this "
+"either the participant database, Zep software and/or ILS lab. The ILS lab "
+"support team would appreciate being updated about upcoming research. This is "
+"why we ask permission here to forward parts of this application to the lab "
+"support team.</p> <p>Do you approve that the following parts of this "
 "application will be forwarded:</p> - Your name and the names of others "
 "involved <br/> - The researcher with final responsibility for the study <br/"
 "> - The title of the study <br/> - The planned starting date <br/> - The "
@@ -3549,15 +3549,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:257
+#: proposals/views/proposal_views.py:257 proposals/views/proposal_views.py:256
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:381
+#: proposals/views/proposal_views.py:381 proposals/views/proposal_views.py:380
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:482
+#: proposals/views/proposal_views.py:482 proposals/views/proposal_views.py:481
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -4332,19 +4332,19 @@ msgstr "Information letter for the parents"
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
-#: reviews/utils/review_actions.py:128
+#: reviews/utils/review_actions.py:128 reviews/utils/review_actions.py:126
 msgid "Geef jouw beslissing en/of commentaar door"
 msgstr "Provide feedback on this proposal"
 
-#: reviews/utils/review_actions.py:154
+#: reviews/utils/review_actions.py:154 reviews/utils/review_actions.py:152
 msgid "Deze aanvraag afsluiten"
 msgstr "Conclude this application"
 
-#: reviews/utils/review_actions.py:184
+#: reviews/utils/review_actions.py:184 reviews/utils/review_actions.py:182
 msgid "Beëindig definitief de afhandeling van deze aanvraag"
 msgstr "Discontinue assessment of this application"
 
-#: reviews/utils/review_actions.py:214
+#: reviews/utils/review_actions.py:214 reviews/utils/review_actions.py:212
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
@@ -5656,6 +5656,10 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#: main/templates/main/index.html:193
+msgid "Bannerfoto door Kim O'leary"
+msgstr "Cover image by Kim O'leary"
 
 #~ msgid "Welkom {}"
 #~ msgstr "Welcome, {}"
