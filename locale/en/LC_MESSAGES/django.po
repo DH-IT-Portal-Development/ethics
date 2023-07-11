@@ -964,8 +964,8 @@ msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
 #: main/templates/main/index.html:193
-msgid "Bannerfoto door Simona Evsatieva"
-msgstr "Cover image by Simona Evsatieva"
+msgid "Bannerfoto door Kim O'leary"
+msgstr "Cover image by Kim O'leary"
 
 #: main/templates/registration/logged_out.html:12
 msgid "Je bent succesvol uitgelogd."
