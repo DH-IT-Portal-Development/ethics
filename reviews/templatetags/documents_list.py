@@ -164,6 +164,7 @@ class Container:
     def __init__(self, header, **kwargs):
 
         self.edit_link = False
+        self.dmp_edit_link = False
         self.header = header
         self.items = []
 
@@ -245,6 +246,8 @@ def documents_list(review, user):
         dmp_file.field = proposal.dmp_file
         dmp_file.comparable = True
         dmp_file.object = proposal
+        if is_secretary(user):
+            pdf_container.dmp_edit_link = reverse('proposals:update_data_management', args=[proposal.pk])
 
         pdf_container.items.append(dmp_file)
 

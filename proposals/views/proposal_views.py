@@ -24,7 +24,8 @@ from studies.models import Documents
 from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
-    ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
+    ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm, \
+    ProposalUpdateDataManagementForm
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import ProposalMixin, ProposalContextMixin, \
@@ -344,7 +345,7 @@ class ProposalStart(generic.TemplateView):
         context['secretary'] = get_secretary()
         return context
 
-
+from braces import views as braces
 class ProposalDataManagement(UpdateView):
     model = Proposal
     form_class = ProposalDataManagementForm
@@ -357,6 +358,19 @@ class ProposalDataManagement(UpdateView):
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
         return reverse('proposals:consent', args=(self.object.pk,))
+    
+class ProposalUpdateDataManagement(braces.GroupRequiredMixin, generic.UpdateView):
+    """
+    Allows the secretary to change the Data Management Plan on the Proposal level
+    """
+    model = Proposal
+    template_name = 'proposals/proposal_update_attachments.html'
+    form_class = ProposalUpdateDataManagementForm
+    group_required = settings.GROUP_SECRETARY
+
+    def get_success_url(self):
+        """Continue to the URL specified in the 'next' POST parameter"""
+        return reverse('reviews:detail', args=[self.object.latest_review().pk])
 
 
 class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView, ):
