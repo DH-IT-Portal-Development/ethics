@@ -5657,10 +5657,6 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
-#: main/templates/main/index.html:193
-msgid "Bannerfoto door Kim O'leary"
-msgstr "Cover image by Kim O'leary"
-
 #~ msgid "Welkom {}"
 #~ msgstr "Welcome, {}"
 
