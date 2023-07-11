@@ -465,6 +465,7 @@ msgstr "Website export text"
 #: proposals/templates/proposals/proposal_confirmation.html:25
 #: reviews/templates/reviews/vue_templates/decision_list.html:95
 #: reviews/templates/reviews/vue_templates/review_list.html:87
+#: reviews/utils/review_actions.py:281
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
@@ -3548,15 +3549,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:256
+#: proposals/views/proposal_views.py:257 proposals/views/proposal_views.py:256
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:380
+#: proposals/views/proposal_views.py:381 proposals/views/proposal_views.py:380
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:481
+#: proposals/views/proposal_views.py:482 proposals/views/proposal_views.py:481
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -4331,21 +4332,29 @@ msgstr "Information letter for the parents"
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
-#: reviews/utils/review_actions.py:126
+#: reviews/utils/review_actions.py:128 reviews/utils/review_actions.py:126
 msgid "Geef jouw beslissing en/of commentaar door"
 msgstr "Provide feedback on this proposal"
 
-#: reviews/utils/review_actions.py:152
+#: reviews/utils/review_actions.py:154 reviews/utils/review_actions.py:152
 msgid "Deze aanvraag afsluiten"
 msgstr "Conclude this application"
 
-#: reviews/utils/review_actions.py:182
+#: reviews/utils/review_actions.py:184 reviews/utils/review_actions.py:182
 msgid "Beëindig definitief de afhandeling van deze aanvraag"
 msgstr "Discontinue assessment of this application"
 
-#: reviews/utils/review_actions.py:212
+#: reviews/utils/review_actions.py:214 reviews/utils/review_actions.py:212
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
+
+#: reviews/utils/review_actions.py:255
+msgid "Verberg aanvraag uit het archief"
+msgstr "Remove this application from the archive"
+
+#: reviews/utils/review_actions.py:282
+msgid "Datum van bevestigingsbrief aanpassen"
+msgstr "Change date of confirmation letter"
 
 #: reviews/utils/review_utils.py:53
 msgid "FETC-GW {}: bevestiging indienen concept-aanmelding"

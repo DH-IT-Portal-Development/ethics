@@ -19,6 +19,8 @@ class ReviewActions:
                                DecideAction(review, user),
                                ChangeAssignment(review, user),
                                DiscontinueReview(review, user),
+                               SendConfirmation(review, user),
+                               #HideReview(review, user),
         ]
         self.ufl_actions = []
 
@@ -210,3 +212,69 @@ class ChangeAssignment(ReviewAction):
     def description(self):
 
         return _('Verander aangestelde commissieleden')
+    
+class SendConfirmation(ReviewAction):
+
+    def is_available(self):
+        '''Only the secretary is able to send the confirmation letter and/or change the date.
+        The review needs to be closed and have an approved status.'''
+
+        user = self.user
+        review = self.review
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+        
+        if review.stage < review.CLOSED:
+            return False
+        
+        if not review.continuation in [review.GO, review.GO_POST_HOC]:
+            return False
+        
+        return True
+    
+    def action_url(self):
+
+        return reverse('proposals:confirmation', args=(self.review.proposal.pk,))
+    
+    def description(self):
+        proposal = self.review.proposal
+        send_letter = _('Bevestigingsbrief versturen')
+        change_date = _('Datum van bevestigingsbrief aanpassen')
+
+        if proposal.date_confirmed is None:
+            return send_letter
+        else:
+            return change_date
+
+class HideReview(ReviewAction):
+    '''This class should lead to the archive_hide url, but the hide 
+    functionality does currently not work properly/ is not in use.
+    Therefore it is commented out in the ReviewActions class.'''
+
+    def is_available(self):
+
+        user = self.user
+        review = self.review
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+        
+        if review.proposal.public == False:
+            return False
+        
+        if review.proposal.status < Proposal.DECISION_MADE:
+            return False
+
+        return True
+    
+    def action_url(self):
+
+        return reverse('proposals:archive_hide', args=(self.review.proposal.pk,))
+
+    def description(self):
+
+        return _('Verberg aanvraag uit het archief')
+
