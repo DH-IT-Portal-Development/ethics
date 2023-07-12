@@ -97,16 +97,20 @@ def available_urls(proposal):
         urls.append(studies_url)
 
 
-        consent_docs_url = AvailableURL(title=_('Uploaden'), url=reverse('proposals:consent', args=(proposal.pk,)))
-        consent_url = AvailableURL(title=_('Formulieren'), children=[consent_docs_url])
+        consent_docs_url = AvailableURL(title=_('Uploaden'), url=reverse('proposals:consent', args=(proposal.pk, )))
+        translated_docs_url = AvailableURL(title=_('Vertaling'), url=reverse('proposals:translated', args=(proposal.pk, )))
+        consent_url = AvailableURL(title=_('Formulieren'), children=[translated_docs_url, consent_docs_url])
 
         data_management_url = AvailableURL(title=_('Datamanagement'))
         submit_url = AvailableURL(title=_('Versturen'))
 
         if proposal.last_study() and proposal.last_study().is_completed():
-            consent_url.url = reverse('proposals:translated', args=(proposal.pk,))
+            consent_url.url = reverse('proposals:translated', args=(proposal.pk, ))
             data_management_url.url = reverse('proposals:data_management', args=(proposal.pk, ))
             submit_url.url = reverse('proposals:submit', args=(proposal.pk,))
+
+        if proposal.translated_forms is not None:
+            consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
 
         urls.append(consent_url)
         urls.append(data_management_url)

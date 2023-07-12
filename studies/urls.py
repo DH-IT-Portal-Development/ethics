@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views.session_views import SessionStart
 from .views.study_views import StudyUpdate, StudyDesign, StudyUpdateAttachments, StudyEnd, \
-    has_adults, necessity_required 
+    has_adults, necessity_required
 
 app_name = 'studies'
 
