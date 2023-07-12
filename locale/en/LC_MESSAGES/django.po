@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-05 12:29+0200\n"
+"POT-Creation-Date: 2023-07-12 14:07+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2372,7 +2372,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils/proposal_utils.py:103
+#: proposals/utils/proposal_utils.py:104
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -3498,18 +3498,22 @@ msgid "Uploaden"
 msgstr "Upload"
 
 #: proposals/utils/proposal_utils.py:101
+msgid "Vertaling"
+msgstr "Translation"
+
+#: proposals/utils/proposal_utils.py:102
 msgid "Formulieren"
 msgstr "Forms"
 
-#: proposals/utils/proposal_utils.py:104
+#: proposals/utils/proposal_utils.py:105
 msgid "Versturen"
 msgstr "Submit"
 
-#: proposals/utils/proposal_utils.py:394
+#: proposals/utils/proposal_utils.py:398
 msgid "FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: A revised application uses lab facilities"
 
-#: proposals/utils/proposal_utils.py:396
+#: proposals/utils/proposal_utils.py:400
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
@@ -5705,9 +5709,6 @@ msgstr "Task deleted"
 
 #~ msgid "Worden de informed consent formulieren vertaald?"
 #~ msgstr "Will the informed consent forms get translated?"
-
-#~ msgid "Vertaling"
-#~ msgstr "Translation"
 
 #~ msgid "Welkom {}"
 #~ msgstr "Welcome, {}"
