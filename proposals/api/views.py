@@ -187,7 +187,7 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
         return Proposal.archived_proposals.filter(
                                        is_pre_assessment=False,
                                        reviewing_committee=self.committee,
-                                       public=True).select_related(
+                                       ).select_related(
             # this optimizes the loading a bit
             'supervisor', 'parent', 'relation',
             'parent__supervisor', 'parent__relation',

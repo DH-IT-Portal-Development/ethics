@@ -133,7 +133,7 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalUsersOnlyArchiveView(CommitteeMixin, BaseProposalsView):
     template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):

@@ -93,56 +93,13 @@ class Institution(models.Model):
 
     def __str__(self):
         return self.description
-
-# class ArchiveQuerySet(models.QuerySet):
-#     def public_archive(self):
-#         two_years_ago = (
-#                 datetime.date.today() -
-#                 datetime.timedelta(weeks=104)
-#         )
-
-#         return self.filter(
-#             status__gte=55,
-#             status_review=True,
-#             in_archive=True,
-#             date_confirmed__gt=two_years_ago,
-#         ).order_by(
-#             "-date_reviewed"
-#         )
-
-#     def users_only_archive(self):
-#         return self.filter(status__gte=Proposal.DECISION_MADE,
-#                                        status_review=True,
-#                                        in_archive=True,
-#                                        is_pre_assessment=False,
-#                                        reviewing_committee=Proposal.reviewing_committee,
-#                                        public=True).select_related(
-#             # this optimizes the loading a bit
-#             'supervisor', 'parent', 'relation',
-#             'parent__supervisor', 'parent__relation',
-#         ).prefetch_related(
-#             'applicants', 'review_set', 'parent__review_set', 'study_set',
-#             'study_set__observation', 'study_set__session_set',
-#             'study_set__intervention', 'study_set__session_set__task_set'
-#         )
-
-# class ArchiveManager_old(models.Manager):
-#     def get_queryset(self):
-#         no_embargo_filter = (models.Q(embargo_end_date__isnull=True) 
-#              | models.Q(embargo_end_date__gte=datetime.date.today()))
-#         return ArchiveQuerySet(self.model, using=self._db).filter(no_embargo_filter)
-
-#     def public_archive(self):
-#         return self.get_queryset().public_archive()
-
-#     def users_only_archive(self):
-#         return self.get_queryset().users_only_archive()
     
 class ArchiveManager(models.Manager):
     '''This custom manager returns a queryset which is used as a starting point
-    for the PublicArchiveView and UserOnlyAchriveView. It returns a subset of
-    proposals that have been reviewed, are in_archive and are no longer or were
-    never under embargo. 
+    for the PublicArchiveView, UserOnlyArchiveView and ProposalsExportView. 
+    It returns a subset of proposals that have been reviewed, are in_archive 
+    and are no longer or were never under embargo. 
+    Note that the status is hardcoded, as I could not pass the proposal model here.
     The specific views build upon these queryset, with further relevant filtering.'''
     def get_queryset(self):
         return super().get_queryset().filter(status__gte=55,
