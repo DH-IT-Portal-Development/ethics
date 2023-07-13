@@ -16,6 +16,8 @@ from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
+import datetime
+
 SUMMARY_MAX_WORDS = 200
 SELF_ASSESSMENT_MAX_WORDS = 1000
 COMMENTS_MAX_WORDS = 1000
@@ -91,6 +93,49 @@ class Institution(models.Model):
     def __str__(self):
         return self.description
 
+class ArchiveQuerySet(models.QuerySet):
+    def public_archive(self):
+        two_years_ago = (
+                datetime.date.today() -
+                datetime.timedelta(weeks=104)
+        )
+
+        return self.filter(
+            status__gte=55,
+            status_review=True,
+            in_archive=True,
+            date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
+        )
+
+    def users_only_archive(self):
+        return self.filter(status__gte=Proposal.DECISION_MADE,
+                                       status_review=True,
+                                       in_archive=True,
+                                       is_pre_assessment=False,
+                                       reviewing_committee=Proposal.reviewing_committee,
+                                       public=True).select_related(
+            # this optimizes the loading a bit
+            'supervisor', 'parent', 'relation',
+            'parent__supervisor', 'parent__relation',
+        ).prefetch_related(
+            'applicants', 'review_set', 'parent__review_set', 'study_set',
+            'study_set__observation', 'study_set__session_set',
+            'study_set__intervention', 'study_set__session_set__task_set'
+        )
+
+class ArchiveManager(models.Manager):
+    def get_queryset(self):
+        no_embargo_filter = (models.Q(embargo_end_date__isnull=True) 
+             | models.Q(embargo_end_date__gte=datetime.date.today()))
+        return ArchiveQuerySet(self.model, using=self._db).filter(no_embargo_filter)
+
+    def public_archive(self):
+        return self.get_queryset().public_archive()
+
+    def users_only_archive(self):
+        return self.get_queryset().users_only_archive()
 
 class Proposal(models.Model):
     DRAFT = 1
@@ -254,6 +299,10 @@ Zep software)'),
     )
 
     in_archive = models.BooleanField(default=False)
+
+    archived_proposals = ArchiveManager()
+
+    objects = models.Manager()
 
     public = models.BooleanField(default=True)
 
@@ -603,7 +652,6 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         if self.is_practice():
             return '{} ({}) (Practice)'.format(self.title, self.created_by)
         return '{} ({})'.format(self.title, self.created_by)
-
 
 class Wmo(models.Model):
     NO_WMO = 0
