@@ -155,16 +155,7 @@ class ProposalsPublicArchiveView(generic.ListView):
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
-        two_years_ago = (
-                datetime.date.today() -
-                datetime.timedelta(weeks=104)
-        )
-        return Proposal.archived_proposals.filter(
-            date_confirmed__gt=two_years_ago,
-        ).order_by(
-            "-date_reviewed"
-        )
-
+        return Proposal.objects.public_archive()
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
@@ -183,9 +174,7 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
         if pk is not None:
             return Proposal.objects.filter(pk=pk)
 
-        return Proposal.archived_proposals.all().order_by(
-            "-date_reviewed"
-        )
+        return Proposal.objects.export()
 
 
 class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
