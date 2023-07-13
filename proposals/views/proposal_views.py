@@ -159,10 +159,7 @@ class ProposalsPublicArchiveView(generic.ListView):
                 datetime.date.today() -
                 datetime.timedelta(weeks=104)
         )
-        return super().get_queryset().filter(
-            status__gte=Proposal.DECISION_MADE,
-            status_review=True,
-            in_archive=True,
+        return Proposal.archived_proposals.filter(
             date_confirmed__gt=two_years_ago,
         ).order_by(
             "-date_reviewed"
@@ -186,9 +183,7 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
         if pk is not None:
             return Proposal.objects.filter(pk=pk)
 
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True).order_by(
+        return Proposal.archived_proposals.all().order_by(
             "-date_reviewed"
         )
 

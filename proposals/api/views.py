@@ -184,9 +184,7 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True,
+        return Proposal.archived_proposals.filter(
                                        is_pre_assessment=False,
                                        reviewing_committee=self.committee,
                                        public=True).select_related(
