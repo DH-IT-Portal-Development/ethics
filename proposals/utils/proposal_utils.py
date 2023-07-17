@@ -96,10 +96,27 @@ def available_urls(proposal):
 
         urls.append(studies_url)
 
-
-        consent_docs_url = AvailableURL(title=_('Uploaden'), url=reverse('proposals:consent', args=(proposal.pk, )))
-        translated_docs_url = AvailableURL(title=_('Vertaling'), url=reverse('proposals:translated', args=(proposal.pk, )))
-        consent_url = AvailableURL(title=_('Formulieren'), children=[translated_docs_url, consent_docs_url])
+        consent_docs_url = AvailableURL(
+            title=_('Uploaden'), 
+            url=reverse(
+                'proposals:consent', 
+                args=(proposal.pk, )
+                )
+            )
+        translated_docs_url = AvailableURL(
+            title=_('Vertaling'), 
+            url=reverse(
+                'proposals:translated', 
+                args=(proposal.pk, )
+                )
+            )
+        consent_url = AvailableURL(
+            title=_('Formulieren'), 
+            children=[
+                translated_docs_url, 
+                consent_docs_url
+                ]
+            )
 
         data_management_url = AvailableURL(title=_('Datamanagement'))
         submit_url = AvailableURL(title=_('Versturen'))
