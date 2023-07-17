@@ -632,7 +632,7 @@ class ProposalSubmitForm(forms.ModelForm):
                         study.order))
     
 
-class TranslatedConsentForms(forms.ModelForm):
+class TranslatedConsentForms(SoftValidationMixin, forms.ModelForm):
 
     class Meta:
         model = Proposal
@@ -640,6 +640,8 @@ class TranslatedConsentForms(forms.ModelForm):
         widgets = {
             'translated_forms': forms.RadioSelect(choices=YES_NO),
         }
+
+    _soft_validation_fields = ['translated_forms', 'translated_forms_languages']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
