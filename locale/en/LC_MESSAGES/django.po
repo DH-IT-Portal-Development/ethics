@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 14:07+0200\n"
+"POT-Creation-Date: 2023-07-17 14:46+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -496,6 +496,10 @@ msgstr "Back to the beginning of the session"
 #: main/templates/base/form_buttons.html:35
 msgid "Opslaan en volgende stap >>"
 msgstr "Save and go to next step >>"
+
+#: main/templates/base/login_header.html:6
+msgid "Welkom {}"
+msgstr "Welcome, {}"
 
 #: main/templates/base/menu.html:11 proposals/menus.py:80
 msgid "Mijn aanvragen"
@@ -1368,7 +1372,7 @@ msgid ""
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:416 proposals/forms.py:546 proposals/forms.py:651
+#: proposals/forms.py:416 proposals/forms.py:546 proposals/forms.py:655
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
@@ -1436,7 +1440,7 @@ msgstr "Declaration of consent for trajectory {} not yet added."
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: proposals/forms.py:655
+#: proposals/forms.py:661
 msgid "Vul in in welke talen de formulieren worden vertaald."
 msgstr ""
 
@@ -2372,7 +2376,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils/proposal_utils.py:104
+#: proposals/utils/proposal_utils.py:121
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -3497,23 +3501,23 @@ msgstr "Trajectories"
 msgid "Uploaden"
 msgstr "Upload"
 
-#: proposals/utils/proposal_utils.py:101
+#: proposals/utils/proposal_utils.py:107
 msgid "Vertaling"
 msgstr "Translation"
 
-#: proposals/utils/proposal_utils.py:102
+#: proposals/utils/proposal_utils.py:114
 msgid "Formulieren"
 msgstr "Forms"
 
-#: proposals/utils/proposal_utils.py:105
+#: proposals/utils/proposal_utils.py:122
 msgid "Versturen"
 msgstr "Submit"
 
-#: proposals/utils/proposal_utils.py:398
+#: proposals/utils/proposal_utils.py:415
 msgid "FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: A revised application uses lab facilities"
 
-#: proposals/utils/proposal_utils.py:400
+#: proposals/utils/proposal_utils.py:417
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
@@ -3552,6 +3556,10 @@ msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
 
 #: proposals/utils/validate_proposal.py:223
+msgid "Vertaling Informed Consent Formulieren"
+msgstr "Translation of informed consent forms"
+
+#: proposals/utils/validate_proposal.py:230
 msgid "AVG en Data Management"
 msgstr "AVG and Data Management"
 
@@ -5709,9 +5717,6 @@ msgstr "Task deleted"
 
 #~ msgid "Worden de informed consent formulieren vertaald?"
 #~ msgstr "Will the informed consent forms get translated?"
-
-#~ msgid "Welkom {}"
-#~ msgstr "Welcome, {}"
 
 #, python-format
 #~ msgid ""
