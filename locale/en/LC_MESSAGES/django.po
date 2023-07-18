@@ -2,26 +2,11 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  feature.po  #-#-#-#-#\n"
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-18 10:27+0200\n"
-"PO-Revision-Date: 2020-10-07 11:22+0200\n"
-"Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
-"Language-Team: \n"
-"Language: en\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  develop.po  #-#-#-#-#\n"
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-21 11:12+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1459,7 +1444,7 @@ msgstr "Information letter for trajectory {} not yet added."
 
 #: proposals/forms.py:661
 msgid "Vul in in welke talen de formulieren worden vertaald."
-msgstr ""
+msgstr "Please fill in the languages"
 
 #: proposals/menus.py:13
 msgid "Nieuwe aanvraag starten op basis van een kopie van een oude aanvraag"
@@ -1621,7 +1606,6 @@ msgid "Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden."
 msgstr "Space for possible comments. Use a maximum of a 1000 words."
 
 #: proposals/models.py:236 proposals/models.py:221
-#, fuzzy
 msgid ""
 "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de "
 "faciliteiten van het ILS, namelijk de database, Zep software en/of het ILS "
@@ -1634,17 +1618,6 @@ msgid ""
 "onderzoek <br/> - De beoogde startdatum <br/> - Van welke faciliteiten je "
 "gebruik wil maken (database, lab, Zep software)"
 msgstr ""
-"#-#-#-#-#  feature.po  #-#-#-#-#\n"
-"<p>You have indicated that you intend to use one of the ILS facilities, "
-"either the participant database, Zep software and/or ILS lab. The UiL OTS "
-"lab support team would appreciate being updated about upcoming research. "
-"This is why we ask permission here to forward parts of this application to "
-"the lab support team.</p> <p>Do you approve that the following parts of this "
-"application will be forwarded:</p> - Your name and the names of others "
-"involved <br/> - The researcher with final responsibility for the study <br/"
-"> - The title of the study <br/> - The planned starting date <br/> - The "
-"facilities you intend to use (database, lab, Zep software)\n"
-"#-#-#-#-#  develop.po  #-#-#-#-#\n"
 "<p>You have indicated that you intend to use one of the ILS facilities, "
 "either the participant database, Zep software and/or ILS lab. The ILS lab "
 "support team would appreciate being updated about upcoming research. This is "
@@ -4227,7 +4200,7 @@ msgstr "Applicant"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:50
 msgid "Supervisor"
-msgstr ""
+msgstr "Supervisor"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:54
 #, python-format
