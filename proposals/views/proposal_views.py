@@ -25,7 +25,7 @@ from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm, \
-    ProposalUpdateDataManagementForm
+    ProposalUpdateDataManagementForm, TranslatedConsentForms
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import ProposalMixin, ProposalContextMixin, \
@@ -186,9 +186,11 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
 
         proposal = Proposal.objects.get(pk=pk)
         proposal.public = False
+        #proposal.in_archive = False
         proposal.save()
 
-        return reverse('proposals:archive')
+        committee = proposal.reviewing_committee.name
+        return reverse('proposals:archive', args=[committee])
 
 ##########################
 # CRUD actions on Proposal
@@ -328,6 +330,19 @@ class ProposalStart(generic.TemplateView):
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context['secretary'] = get_secretary()
         return context
+    
+class TranslatedConsentFormsView(UpdateView):
+    model = Proposal
+    form_class = TranslatedConsentForms
+    template_name = 'proposals/translated_consent_forms.html'
+
+    def get_next_url(self):
+        '''Go to the consent form upload page'''
+        return reverse('proposals:consent', args=(self.object.pk,))
+
+    def get_back_url(self):
+        """Return to the overview of the last Study"""
+        return reverse('studies:design_end', args=(self.object.last_study().pk,))
 
 from braces import views as braces
 class ProposalDataManagement(UpdateView):

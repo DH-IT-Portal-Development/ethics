@@ -240,6 +240,21 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
         blank=True,
     )
 
+    translated_forms = models.BooleanField(
+        mark_safe_lazy(_('Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?')), 
+        default=None,
+        blank=True,
+        null=True,
+    )
+
+    translated_forms_languages = models.CharField(
+        _('Andere talen:'),
+        max_length=255,
+        default=None,
+        blank=True,
+        null=True,
+    )
+
     funding = models.ManyToManyField(
         Funding,
         verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'),

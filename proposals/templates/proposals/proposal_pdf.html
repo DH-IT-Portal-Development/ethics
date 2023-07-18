@@ -431,6 +431,14 @@
           {% include "studies/study_title.html" %}
           {% get_study_documents study_documents study %}
           <table>
+            <tr>
+              <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms" %}</th><td>{{ proposal.translated_forms|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if proposal.translated_forms %}
+              <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms_languages" %}</th><td>{{ proposal.translated_forms_languages }}</td>
+              </tr>
+            {% endif %}
             {% if not proposal.is_practice and study_documents.informed_consent %}
               <tr>
                 <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
