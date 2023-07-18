@@ -503,6 +503,16 @@
           </table>
         {% endif %}
         <h2>{% trans "Aanmelding versturen" %}</h2>
+        <table>
+          <tr>
+            <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th><td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
+          </tr>
+          {%if proposal.embargo %}
+          <tr>
+            <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
+          </tr>
+          {% endif %}
+        </table>
         <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
         <p>
           {{ proposal.comments }}

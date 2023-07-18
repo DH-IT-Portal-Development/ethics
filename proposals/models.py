@@ -289,7 +289,7 @@ Zep software)'),
     )
 
     embargo = models.BooleanField(
-        _('Als je deelnemers van je onderzoek moeten worden misleid, kan \
+        _('Als de deelnemers van je onderzoek moeten worden misleid, kan \
           je ervoor kiezen je applicatie pas later op te laten nemen in het \
           semi-publieke archief. Wil je dat jouw onderzoek tijdelijk onder \
           embargo wordt geplaatst?'),
@@ -305,10 +305,6 @@ Zep software)'),
     )
 
     in_archive = models.BooleanField(default=False)
-
-    # archived_proposals = ArchiveManager()
-
-    # objects = models.Manager()
 
     is_pre_assessment = models.BooleanField(default=False)
 
