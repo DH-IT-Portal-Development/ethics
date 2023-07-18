@@ -630,3 +630,33 @@ class ProposalSubmitForm(forms.ModelForm):
                     self.add_error('comments', _(
                         'Informatiebrief voor traject {} nog niet toegevoegd.').format(
                         study.order))
+    
+
+class TranslatedConsentForms(SoftValidationMixin, forms.ModelForm):
+
+    class Meta:
+        model = Proposal
+        fields = ['translated_forms', 'translated_forms_languages']
+        widgets = {
+            'translated_forms': forms.RadioSelect(choices=YES_NO),
+        }
+
+    _soft_validation_fields = ['translated_forms', 'translated_forms_languages']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+    
+    def clean(self):
+        cleaned_data = super(TranslatedConsentForms, self).clean()
+
+        if cleaned_data['translated_forms'] is None:
+            self.add_error(
+                'translated_forms', 
+                _('Dit veld is verplicht om verder te gaan.')
+            )
+            
+        elif cleaned_data['translated_forms'] == True and not cleaned_data['translated_forms_languages']:
+            self.add_error(
+                'translated_forms_languages', 
+                _('Vul in in welke talen de formulieren worden vertaald.')
+            )

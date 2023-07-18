@@ -15,7 +15,7 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalSubmitPreApproved, ProposalUpdatePreApproved, \
     ProposalPrivateArchiveView, \
     ProposalCopyAmendment, ProposalsPublicArchiveView, \
-    ProposalUpdateDataManagement
+    ProposalUpdateDataManagement, TranslatedConsentFormsView
 
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
@@ -108,6 +108,8 @@ urlpatterns = [
          name='study_start'),
 
     path('consent/<int:pk>/', StudyConsent.as_view(), name='consent'),
+
+    path('translated/<int:pk>/', TranslatedConsentFormsView.as_view(), name='translated'),
 
     path('copy/', include([
         path('', ProposalCopy.as_view(), name='copy'),
