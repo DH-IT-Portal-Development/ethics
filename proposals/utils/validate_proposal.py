@@ -220,7 +220,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
     forms['translated'] = (
         TranslatedConsentForms,
         reverse('proposals:translated', args=[proposal.pk]),
-        _('Vertaling Consent Formulieren'),
+        _('Vertaling informed consent formulieren'),
         proposal,
     )
 

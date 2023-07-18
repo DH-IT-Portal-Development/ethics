@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-17 14:46+0200\n"
+"POT-Creation-Date: 2023-07-18 10:27+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -3379,6 +3379,7 @@ msgstr ""
 "the following pages."
 
 #: proposals/templates/proposals/translated_consent_forms.html:25
+#: proposals/utils/validate_proposal.py:223
 msgid "Vertaling informed consent formulieren"
 msgstr "Translation of informed consent forms"
 
@@ -3554,10 +3555,6 @@ msgstr "Task-based research: session {} task {} (trajectory {})"
 #: proposals/utils/validate_proposal.py:212
 msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
-
-#: proposals/utils/validate_proposal.py:223
-msgid "Vertaling Informed Consent Formulieren"
-msgstr "Translation of informed consent forms"
 
 #: proposals/utils/validate_proposal.py:230
 msgid "AVG en Data Management"
