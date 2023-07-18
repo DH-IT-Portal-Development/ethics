@@ -637,8 +637,12 @@ class ProposalSubmitForm(forms.ModelForm):
             if cleaned_data['embargo'] is None:
                 self.add_error('embargo', _('Dit veld is verplicht.'))
 
-            if cleaned_data['embargo_end_date'] > timezone.now().date() + timezone.timedelta(days=730):
-                self.add_error('embargo_end_date', _('De embargo-periode kan maximaal 2 jaar zijn. \
-                                                     Kies een datum binnen 2 jaar van vandaag.'))
+            embargo_end_date = cleaned_data['embargo_end_date']
+            two_years_from_now = timezone.now().date() + timezone.timedelta(days=730)
+
+            if embargo_end_date is not None and \
+               embargo_end_date > two_years_from_now:
+                self.add_error('embargo_end_date', _(
+                    'De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar van vandaag.'))
 
             
