@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from proposals.models import Proposal
 from reviews.models import Review, Decision
 
+import datetime
 class ReviewActions:
 
 
@@ -262,7 +263,11 @@ class HideReview(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
         
-        if review.proposal.public == False:
+        if review.proposal.in_archive == False:
+            return False
+        #TODO: check if logic is sound
+        if review.proposal.embargo == True and \
+           review.proposal.embargo_end_date < datetime.date.today():
             return False
         
         if review.proposal.status < Proposal.DECISION_MADE:

@@ -185,8 +185,7 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
         pk = kwargs.get('pk')
 
         proposal = Proposal.objects.get(pk=pk)
-        proposal.public = False
-        #proposal.in_archive = False
+        proposal.in_archive = False
         proposal.save()
 
         committee = proposal.reviewing_committee.name

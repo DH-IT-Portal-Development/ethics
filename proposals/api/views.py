@@ -178,10 +178,11 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
     ]
     default_sort = ('date_reviewed', 'desc')
 
-    @method_decorator(cache_page(60 * 60 * 4))
+    #@method_decorator(cache_page(60 * 60 * 4))
     def get(self, *args, **kwargs):
         return super().get(*args, **kwargs)
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
+        #breakpoint()
         return Proposal.objects.users_only_archive(committee=self.committee)
