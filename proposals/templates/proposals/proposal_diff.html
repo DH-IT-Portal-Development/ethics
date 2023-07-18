@@ -255,6 +255,18 @@
                             <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
                         </tr>
                         <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th>
+                            <td>{{ p_proposal.embargo|yesno:_("ja,nee") }}</td>
+                            <td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
+                        </tr>
+                        {% if proposal.embargo or p_proposal.embargo %}
+                            <tr>
+                                <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th>
+                                <td>{{ p_proposal.embargo_end_date }}</td>
+                                <td>{{ proposal.embargo_end_date }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
                             <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th>
                             <td>{{ p_proposal.comments }}</td>
                             <td>{{ proposal.comments }}</td>
