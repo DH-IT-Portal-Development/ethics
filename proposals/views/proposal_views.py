@@ -177,7 +177,7 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
         return Proposal.objects.export()
 
 
-class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
+class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
     group_required = settings.GROUP_SECRETARY
     permanent = False
 
@@ -185,7 +185,7 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
         pk = kwargs.get('pk')
 
         proposal = Proposal.objects.get(pk=pk)
-        proposal.in_archive = False
+        proposal.in_archive = not proposal.in_archive
         proposal.save()
 
         committee = proposal.reviewing_committee.name

@@ -10,7 +10,7 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalUpdatePreAssessment, ProposalStartPreAssessment, \
     ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
-    HideFromArchiveView, ProposalsExportView, ProposalStartPreApproved, \
+    ChangeArchiveStatusView, ProposalsExportView, ProposalStartPreApproved, \
     ProposalCreatePreApproved, ProposalSubmittedPreApproved, \
     ProposalSubmitPreApproved, ProposalUpdatePreApproved, \
     ProposalUsersOnlyArchiveView, \
@@ -33,7 +33,7 @@ urlpatterns = [
         path('export/', ProposalsExportView.as_view(), name='archive_export'),
         path('export/<int:pk>/', ProposalsExportView.as_view(),
             name='archive_export'),
-        path('hide/<int:pk>/', HideFromArchiveView.as_view(),
+        path('hide/<int:pk>/', ChangeArchiveStatusView.as_view(),
             name='archive_hide'),
         # WARNING! This one needs to be LAST in the list. (Django goes
         # through the list and picks the first one that fits, and the regex

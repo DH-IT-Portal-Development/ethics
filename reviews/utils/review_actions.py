@@ -21,7 +21,7 @@ class ReviewActions:
                                ChangeAssignment(review, user),
                                DiscontinueReview(review, user),
                                SendConfirmation(review, user),
-                               #HideReview(review, user),
+                               ChangeArchiveStatus(review, user),
         ]
         self.ufl_actions = []
 
@@ -249,7 +249,7 @@ class SendConfirmation(ReviewAction):
         else:
             return change_date
 
-class HideReview(ReviewAction):
+class ChangeArchiveStatus(ReviewAction):
     '''This class should lead to the archive_hide url, but the hide 
     functionality does currently not work properly/ is not in use.
     Therefore it is commented out in the ReviewActions class.'''
@@ -263,11 +263,8 @@ class HideReview(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
         
-        if review.proposal.in_archive == False:
-            return False
-        #TODO: check if logic is sound
         if review.proposal.embargo == True and \
-           review.proposal.embargo_end_date < datetime.date.today():
+           review.proposal.embargo_end_date > datetime.date.today():
             return False
         
         if review.proposal.status < Proposal.DECISION_MADE:
@@ -280,6 +277,11 @@ class HideReview(ReviewAction):
         return reverse('proposals:archive_hide', args=(self.review.proposal.pk,))
 
     def description(self):
+        
+        proposal = self.review.proposal
 
-        return _('Verberg aanvraag uit het archief')
+        if proposal.in_archive == True:
+            return _('Verberg aanvraag uit het archief')
+        else:
+            return _('Plaats aanvraag in het archief.')
 
