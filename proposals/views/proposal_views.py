@@ -144,7 +144,7 @@ class ProposalUsersOnlyArchiveView(CommitteeMixin, BaseProposalsView):
     @property
     def title(self):
         return "{} - {}".format(
-            _('Publiek archief'),
+            _('Archief'),
             self.committee_display_name
         )
 

@@ -35,6 +35,7 @@
             {% static "proposals/images/delete.png" as img_delete %}
             {% static "main/images/page_white_acrobat.png" as img_pdf %}
             {% static "proposals/images/folder_delete.png" as img_hide %}
+            {% static "proposals/images/folder_add.png" as img_add %}
             {% static 'reviews/images/scale.png' as img_decide %}
             <p>
                 {{ body }}
@@ -81,6 +82,12 @@
                         {% blocktrans trimmed %}
                             Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende aanvraag te verbergen
                             uit het archief.
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans trimmed %}
+                            Klik op <img src="{{ img_add }}" title="Toevoegen"> om een ingediende aanvraag toe te voegen
+                            aan het archief.
                         {% endblocktrans %}
                     </li>
                 {% endif %}

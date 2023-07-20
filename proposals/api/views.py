@@ -178,7 +178,6 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
     ]
     default_sort = ('date_reviewed', 'desc')
 
-    #@method_decorator(cache_page(60 * 60 * 4))
     def get(self, *args, **kwargs):
         return super().get(*args, **kwargs)
 
