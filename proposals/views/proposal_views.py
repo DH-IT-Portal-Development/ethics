@@ -187,7 +187,6 @@ class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
         proposal = Proposal.objects.get(pk=pk)
         proposal.in_archive = not proposal.in_archive
         proposal.save()
-
         committee = proposal.reviewing_committee.name
         return reverse('proposals:archive', args=[committee])
 

@@ -90,7 +90,7 @@
                     </a>
                     <a :href="$url('proposals:archive_hide', [review.proposal.pk])">
                         <img
-                            v-if="review.proposal.in_archive"
+                            v-if="review.proposal.in_archive === true"
                             src="{{ img_hide }}"
                             title="{% trans 'Verberg aanvraag uit het archief' %}"
                         />
