@@ -97,6 +97,7 @@ class Institution(models.Model):
 class ProposalQuerySet(models.QuerySet):
 
     DECISION_MADE = 55
+    TODAY = datetime.date.today()
 
     def archive_pre_filter(self):
         return self.filter(status__gte=self.DECISION_MADE,
@@ -106,12 +107,12 @@ class ProposalQuerySet(models.QuerySet):
     
     def no_embargo(self):
         return self.filter(models.Q(embargo_end_date__isnull=True) 
-             | models.Q(embargo_end_date__lt=datetime.date.today())
+             | models.Q(embargo_end_date__lt=self.TODAY)
              )
     
     def public_archive(self):
         two_years_ago = (
-                datetime.date.today() -
+                self.TODAY -
                 datetime.timedelta(weeks=104)
         )
         return self.archive_pre_filter().no_embargo().filter(
