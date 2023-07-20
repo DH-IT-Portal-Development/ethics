@@ -95,9 +95,7 @@ idna==3.4
 imagesize==1.4.1
     # via sphinx
 importlib-metadata==6.0.0
-    # via
-    #   django-simple-menu
-    #   sphinx
+    # via django-simple-menu
 jinja2==3.1.2
     # via sphinx
 lesscpy==0.15.1
@@ -135,7 +133,7 @@ pyasn1-modules==0.2.8
     # via python-ldap
 pycparser==2.21
     # via cffi
-pygments==2.14.0
+pygments==2.15.0
     # via
     #   -r requirements.in
     #   bpython
@@ -233,7 +231,6 @@ tinycss2==1.2.1
 typing-extensions==4.5.0
     # via
     #   django-modeltranslation
-    #   pypdf
     #   qrcode
 tzdata==2022.7
     # via pytz-deprecation-shim
