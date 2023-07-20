@@ -517,7 +517,8 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
+        verbose_name=_('Uitvoerenden, inclusief uzelf. Let op! De andere onderzoekers moeten \
+        ten minste één keer zijn ingelogd op dit portaal om ze te kunnen selecteren.'),
         related_name='applicants',
     )
 
