@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-18 10:27+0200\n"
+"POT-Creation-Date: 2023-07-20 10:51+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -40,7 +40,6 @@ msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 #: proposals/templates/proposals/proposal_pdf.html:430
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
-#: proposals/templates/proposals/study_consent.html:74
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
@@ -318,9 +317,9 @@ msgstr "uncertain"
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: main/models.py:68 observations/models.py:129 proposals/models.py:214
+#: main/models.py:68 observations/models.py:129 proposals/models.py:265
 #: studies/models.py:208 studies/models.py:244 tasks/models.py:157
-#: tasks/models.py:169 proposals/models.py:199
+#: tasks/models.py:169
 msgid "Namelijk"
 msgstr "Please specify"
 
@@ -376,7 +375,7 @@ msgstr "Reference number"
 #: main/templates/auth/user_detail.html:52
 #: reviews/templates/reviews/vue_templates/decision_list.html:105
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:55
-#: reviews/templates/reviews/vue_templates/review_list.html:97
+#: reviews/templates/reviews/vue_templates/review_list.html:110
 msgid "Eindverantwoordelijke"
 msgstr "Researcher with final responsibility"
 
@@ -396,14 +395,14 @@ msgstr "Phase"
 #: reviews/api/views.py:49 reviews/api/views.py:280 reviews/api/views.py:342
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
-#: reviews/templates/reviews/vue_templates/review_list.html:138
+#: reviews/templates/reviews/vue_templates/review_list.html:151
 msgid "Datum ingediend"
 msgstr "Date submitted"
 
 #: main/templates/auth/user_detail.html:56
 #: reviews/templates/reviews/vue_templates/decision_list.html:163
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:105
-#: reviews/templates/reviews/vue_templates/review_list.html:148
+#: reviews/templates/reviews/vue_templates/review_list.html:161
 msgid "Gewenste einddatum"
 msgstr "Desired end date"
 
@@ -415,7 +414,7 @@ msgstr "My decision"
 #: main/templates/auth/user_detail.html:58 reviews/api/views.py:332
 #: reviews/models.py:56
 #: reviews/templates/reviews/vue_templates/decision_list.html:133
-#: reviews/templates/reviews/vue_templates/review_list.html:118
+#: reviews/templates/reviews/vue_templates/review_list.html:131
 msgid "Afhandeling"
 msgstr "Conclusion"
 
@@ -431,7 +430,7 @@ msgstr ", with revision"
 #: main/templates/auth/user_detail.html:84
 #: reviews/templates/reviews/vue_templates/decision_list.html:47
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:46
-#: reviews/templates/reviews/vue_templates/review_list.html:47
+#: reviews/templates/reviews/vue_templates/review_list.html:48
 msgid "Aanvraag inzien"
 msgstr "Examine application"
 
@@ -439,25 +438,25 @@ msgstr "Examine application"
 #: reviews/templates/reviews/review_detail_sidebar.html:18
 #: reviews/templates/reviews/vue_templates/decision_list.html:50
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:49
-#: reviews/templates/reviews/vue_templates/review_list.html:50
+#: reviews/templates/reviews/vue_templates/review_list.html:51
 msgid "Details"
 msgstr "Details"
 
 #: main/templates/auth/user_detail.html:90
 #: reviews/templates/reviews/vue_templates/decision_list.html:59
-#: reviews/templates/reviews/vue_templates/review_list.html:59
+#: reviews/templates/reviews/vue_templates/review_list.html:60
 msgid "Aanstellen"
 msgstr "Appoint"
 
 #: main/templates/auth/user_detail.html:93
 #: reviews/templates/reviews/vue_templates/decision_list.html:78
-#: reviews/templates/reviews/vue_templates/review_list.html:70
+#: reviews/templates/reviews/vue_templates/review_list.html:71
 msgid "Afsluiten"
 msgstr "Conclude"
 
 #: main/templates/auth/user_detail.html:98
 #: reviews/templates/reviews/vue_templates/decision_list.html:84
-#: reviews/templates/reviews/vue_templates/review_list.html:76
+#: reviews/templates/reviews/vue_templates/review_list.html:77
 msgid "Website export tekst"
 msgstr "Website export text"
 
@@ -465,15 +464,15 @@ msgstr "Website export text"
 #: proposals/templates/proposals/proposal_confirmation.html:7
 #: proposals/templates/proposals/proposal_confirmation.html:25
 #: reviews/templates/reviews/vue_templates/decision_list.html:95
-#: reviews/templates/reviews/vue_templates/review_list.html:87
-#: reviews/utils/review_actions.py:281
+#: reviews/templates/reviews/vue_templates/review_list.html:88
+#: reviews/utils/review_actions.py:244
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
 #: main/templates/auth/user_detail.html:106
 #: proposals/templates/proposals/proposal_confirmation.html:34
 #: reviews/templates/reviews/vue_templates/decision_list.html:90
-#: reviews/templates/reviews/vue_templates/review_list.html:82
+#: reviews/templates/reviews/vue_templates/review_list.html:83
 msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
 
@@ -564,6 +563,7 @@ msgid "Al mijn aanvragen"
 msgstr "All my applications"
 
 #: main/templates/base/menu.html:52 proposals/menus.py:108
+#: proposals/views/proposal_views.py:147
 msgid "Archief"
 msgstr "Archive"
 
@@ -969,8 +969,8 @@ msgid "Feedback op dit portal geven"
 msgstr "Give feedback on this portal"
 
 #: main/templates/main/index.html:193
-msgid "Bannerfoto door Simona Evsatieva"
-msgstr "Cover image by Simona Evsatieva"
+msgid "Bannerfoto door Kim O'leary"
+msgstr "Cover image by Kim O'leary"
 
 #: main/templates/registration/logged_out.html:12
 msgid "Je bent succesvol uitgelogd."
@@ -1040,7 +1040,7 @@ msgstr "Password"
 #: reviews/templates/reviews/review_detail_sidebar.html:34
 #: reviews/templates/reviews/simple_compare_link.html:8
 #: reviews/templates/reviews/vue_templates/decision_list.html:53
-#: reviews/templates/reviews/vue_templates/review_list.html:53
+#: reviews/templates/reviews/vue_templates/review_list.html:54
 msgid "Toon verschillen"
 msgstr "Show differences"
 
@@ -1107,8 +1107,8 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:65 observations/models.py:75
-#: observations/models.py:88 proposals/models.py:627 studies/models.py:172
-#: studies/models.py:228 studies/models.py:358 proposals/models.py:612
+#: observations/models.py:88 proposals/models.py:691 studies/models.py:172
+#: studies/models.py:228 studies/models.py:358
 msgid "Licht toe"
 msgstr "Explain"
 
@@ -1330,11 +1330,11 @@ msgstr ""
 msgid "Ik maak een oefenaanvraag aan"
 msgstr "I am creating a practice application"
 
-#: proposals/forms.py:274 proposals/models.py:479 proposals/models.py:464
+#: proposals/forms.py:276 proposals/models.py:544
 msgid "Te kopiëren aanvraag"
 msgstr "Application to be copied"
 
-#: proposals/forms.py:276 proposals/models.py:481 proposals/models.py:466
+#: proposals/forms.py:278 proposals/models.py:546
 msgid "Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
@@ -1374,7 +1374,7 @@ msgid ""
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:416 proposals/forms.py:546 proposals/forms.py:655
+#: proposals/forms.py:418 proposals/forms.py:548 proposals/forms.py:671
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
@@ -1442,7 +1442,14 @@ msgstr "Declaration of consent for trajectory {} not yet added."
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: proposals/forms.py:661
+#: proposals/forms.py:646
+msgid ""
+"De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar "
+"van vandaag."
+msgstr "The embargo-period can last a maximum of 2 years. Pick a date within "
+"2 years from today."
+
+#: proposals/forms.py:677
 msgid "Vul in in welke talen de formulieren worden vertaald."
 msgstr "Please fill in the languages"
 
@@ -1574,7 +1581,7 @@ msgstr ""
 msgid "Andere betrokkenen"
 msgstr "Other people involved"
 
-#: proposals/models.py:193
+#: proposals/models.py:244
 msgid ""
 "Worden de informed consent formulieren nog vertaald naar een andere taal dan "
 "Nederlands of Engels?"
@@ -1582,30 +1589,30 @@ msgstr ""
 "Will the informed consent forms be translated in a language other than Dutch "
 "or English?"
 
-#: proposals/models.py:200
+#: proposals/models.py:251
 msgid "Andere talen:"
 msgstr "Other languages:"
 
-#: proposals/models.py:209 proposals/models.py:194
+#: proposals/models.py:260
 msgid "Hoe wordt dit onderzoek gefinancierd?"
 msgstr "How is this study funded?"
 
-#: proposals/models.py:220 proposals/models.py:205
+#: proposals/models.py:271
 msgid ""
 "Wat is de naam van het gefinancierde project en wat is het projectnummer?"
 msgstr "What is the name of the funded project and what is the project number?"
 
-#: proposals/models.py:224 proposals/models.py:209
+#: proposals/models.py:275
 msgid ""
 "De titel die je hier opgeeft zal in de formele toestemmingsbrief gebruikt "
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:230 proposals/models.py:215
+#: proposals/models.py:281
 msgid "Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden."
 msgstr "Space for possible comments. Use a maximum of a 1000 words."
 
-#: proposals/models.py:236 proposals/models.py:221
+#: proposals/models.py:287
 msgid ""
 "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de "
 "faciliteiten van het ILS, namelijk de database, Zep software en/of het ILS "
@@ -1628,11 +1635,26 @@ msgstr ""
 "> - The title of the study <br/> - The planned starting date <br/> - The "
 "facilities you intend to use (database, lab, Zep software)"
 
-#: proposals/models.py:262 proposals/models.py:247
+#: proposals/models.py:307
+msgid ""
+"Als de deelnemers van je onderzoek moeten worden misleid, kan           je "
+"ervoor kiezen je applicatie pas later op te laten nemen in het           "
+"semi-publieke archief. Wil je dat jouw onderzoek tijdelijk onder           "
+"embargo wordt geplaatst?"
+msgstr "If the participants of your study need to be misled, you can choose to "
+"temporarily leave your application out of the semi-public archive. Would you like "
+"your application to be placed under a temporary embargo?"
+
+#: proposals/models.py:317
+msgid ""
+"Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?"
+msgstr "From which date may your application be displayed in the archive?"
+
+#: proposals/models.py:327
 msgid "Upload hier je aanvraag (in .pdf of .doc(x)-formaat)"
 msgstr "Upload your application here (in .pdf or .doc(x)-format)"
 
-#: proposals/models.py:270 proposals/models.py:255
+#: proposals/models.py:335
 msgid ""
 "Heb je formele toestemming van een ethische toetsingcommissie, uitgezonderd "
 "deze FETC-GW commissie?"
@@ -1640,11 +1662,11 @@ msgstr ""
 "Do you have formal approval from an ethics committee, other than this FEtC-H "
 "committee?"
 
-#: proposals/models.py:278 proposals/models.py:263
+#: proposals/models.py:343
 msgid "Welk instituut heeft de aanvraag goedgekeurd?"
 msgstr "Which institute approved the application?"
 
-#: proposals/models.py:286 proposals/models.py:271
+#: proposals/models.py:351
 msgid ""
 "Upload hier je formele toestemmingsbrief van dit instituut (in .pdf of ."
 "doc(x)-formaat)"
@@ -1652,22 +1674,22 @@ msgstr ""
 "Please upload the formal approval letter from this institute here (in .pdf "
 "or .doc(x)-format)"
 
-#: proposals/models.py:294 proposals/models.py:279
+#: proposals/models.py:359
 msgid "Ik vul de portal in in het kader van een cursus"
 msgstr "I am using this portal in the context of a course"
 
-#: proposals/models.py:299 proposals/models.py:284
+#: proposals/models.py:364
 msgid "Ik vul de portal in om de portal te exploreren"
 msgstr "I am using this portal to explore the portal"
 
-#: proposals/models.py:311 proposals/models.py:296
+#: proposals/models.py:376
 msgid ""
 "Kan voor alle deelnemersgroepen dezelfde informatiebrief en         "
 "toestemmingsverklaring gebruikt worden?"
 msgstr ""
 "Can the same informed consent documents be used for all participant groups?"
 
-#: proposals/models.py:313 proposals/models.py:298
+#: proposals/models.py:378
 msgid ""
 "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is "
 "sprake van in essentie hetzelfde traject, en voldoet één set documenten voor "
@@ -1691,11 +1713,11 @@ msgstr ""
 "time. However, if separate groups receive different <i>kinds</i> of tasks, "
 "they constitute separate trajectories."
 
-#: proposals/models.py:329 proposals/models.py:314
+#: proposals/models.py:394
 msgid "Hoeveel verschillende trajecten zijn er?"
 msgstr "How many different trajectories are there?"
 
-#: proposals/models.py:347 proposals/models.py:332
+#: proposals/models.py:412
 msgid ""
 "Ik heb kennis genomen van het bovenstaande en begrijp mijn "
 "verantwoordelijkheden ten opzichte van de AVG."
@@ -1703,7 +1725,7 @@ msgstr ""
 "I have read the information above and have considered my responsibilities "
 "with regard to the AVG."
 
-#: proposals/models.py:354 proposals/models.py:339
+#: proposals/models.py:419
 msgid ""
 "Als je een Data Management Plan hebt voor deze aanvraag, kan je kiezen om "
 "deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het "
@@ -1713,23 +1735,23 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:366 reviews/models.py:180 proposals/models.py:351
+#: proposals/models.py:431 reviews/models.py:180
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
-#: proposals/models.py:378 proposals/models.py:363
+#: proposals/models.py:443
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:383 reviews/forms.py:108 proposals/models.py:368
+#: proposals/models.py:448 reviews/forms.py:108
 msgid "Is er een revisie geweest na het indienen van deze aanvraag?"
 msgstr "Has this proposal been amended after it was submitted?"
 
-#: proposals/models.py:388 proposals/models.py:373
+#: proposals/models.py:453
 msgid "Leg uit"
 msgstr "Explain why"
 
-#: proposals/models.py:394 proposals/models.py:379
+#: proposals/models.py:459
 msgid ""
 "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf "
 "kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 woorden."
@@ -1738,23 +1760,23 @@ msgstr ""
 "please describe briefly how you will address them. Use a maximum of a 1000 "
 "words."
 
-#: proposals/models.py:408 proposals/models.py:393
+#: proposals/models.py:473
 msgid "In welke hoedanigheid ben je betrokken bij dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
 
-#: proposals/models.py:416 proposals/models.py:401
+#: proposals/models.py:481
 msgid "Wat is je studierichting?"
 msgstr "What is your course of study?"
 
-#: proposals/models.py:423 proposals/models.py:408
+#: proposals/models.py:488
 msgid "In welke context doe je dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
 
-#: proposals/models.py:430 proposals/models.py:415
+#: proposals/models.py:495
 msgid "Namelijk:"
 msgstr "Please specify:"
 
-#: proposals/models.py:437 proposals/models.py:422
+#: proposals/models.py:502
 msgid ""
 "Studenten (die mensgebonden onderzoek uitvoeren binnen hun studieprogramma) "
 "hoeven in principe geen aanvraag in te dienen bij de FETC-GW. Bespreek met "
@@ -1768,18 +1790,17 @@ msgstr ""
 "do not not, you can terminate your proposal now. If you do, please explain "
 "what the reason is:"
 
-#: proposals/models.py:454 proposals/models.py:439
+#: proposals/models.py:519
 msgid "Uitvoerende(n) (inclusief uzelf)"
 msgstr "Researcher(s) carrying out the study (including yourself)"
 
-#: proposals/models.py:460
+#: proposals/models.py:525
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:115
 #: proposals/templates/proposals/vue_templates/proposal_list.html:166
-#: proposals/models.py:445
 msgid "Eindverantwoordelijke onderzoeker"
 msgstr "Researcher with final responsibility"
 
-#: proposals/models.py:463 proposals/models.py:448
+#: proposals/models.py:528
 msgid ""
 "Aan het einde van de procedure kan je deze aanvraag ter\n"
 "        verificatie naar je eindverantwoordelijke sturen. De\n"
@@ -1801,52 +1822,51 @@ msgstr ""
 "can continue filling in the application while you wait for them to do this, "
 "but remember to come back and fill in this field before submitting."
 
-#: proposals/models.py:488 proposals/models.py:473
+#: proposals/models.py:553
 msgid ""
 "Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?"
 msgstr ""
 "Is this application a revision or an amendment of a previously submitted "
 "application?"
 
-#: proposals/models.py:560 proposals/models.py:545
+#: proposals/models.py:625
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:560 reviews/api/views.py:39 reviews/api/views.py:328
+#: proposals/models.py:625 reviews/api/views.py:39 reviews/api/views.py:328
 #: reviews/templates/reviews/review_detail_sidebar.html:106
-#: proposals/models.py:545
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:566 proposals/models.py:551
+#: proposals/models.py:631
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:571 proposals/models.py:556
+#: proposals/models.py:636
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:573 proposals/models.py:558
+#: proposals/models.py:638
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:575 proposals/models.py:560
+#: proposals/models.py:640
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:612 proposals/models.py:597
+#: proposals/models.py:676
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:613 proposals/models.py:598
+#: proposals/models.py:677
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:614 proposals/models.py:599
+#: proposals/models.py:678
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:618 proposals/models.py:603
+#: proposals/models.py:682
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1854,11 +1874,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:632 proposals/models.py:617
+#: proposals/models.py:696
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:638 proposals/models.py:623
+#: proposals/models.py:702
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1866,7 +1886,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:640 proposals/models.py:625
+#: proposals/models.py:704
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1887,7 +1907,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:656 proposals/models.py:641
+#: proposals/models.py:720
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -1896,15 +1916,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:663 proposals/models.py:648
+#: proposals/models.py:727
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:668 proposals/models.py:653
+#: proposals/models.py:732
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:706 proposals/models.py:691
+#: proposals/models.py:770
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -2138,16 +2158,12 @@ msgstr "yes,no,"
 #: proposals/templates/proposals/proposal_pdf.html:369
 #: proposals/templates/proposals/proposal_pdf.html:435
 #: proposals/templates/proposals/proposal_pdf.html:452
+#: proposals/templates/proposals/proposal_pdf.html:516
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:92
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:109
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:75
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:91
 #: tasks/templates/tasks/task_list.html:21
-#: proposals/templates/proposals/diff/study.html:250
-#: proposals/templates/proposals/diff/study.html:255
-#: proposals/templates/proposals/proposal_pdf.html:444
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:102
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:83
 msgid "ja,nee"
 msgstr "yes,no"
 
@@ -2195,20 +2211,6 @@ msgstr ""
 #: proposals/templates/proposals/proposal_pdf.html:486
 #: proposals/templates/proposals/proposal_pdf.html:491
 #: proposals/templates/proposals/proposal_pdf.html:507
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:143
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:105
-#: proposals/templates/proposals/diff/study.html:221
-#: proposals/templates/proposals/diff/study.html:227
-#: proposals/templates/proposals/diff/study.html:235
-#: proposals/templates/proposals/diff/study.html:241
-#: proposals/templates/proposals/proposal_pdf.html:436
-#: proposals/templates/proposals/proposal_pdf.html:439
-#: proposals/templates/proposals/proposal_pdf.html:454
-#: proposals/templates/proposals/proposal_pdf.html:459
-#: proposals/templates/proposals/proposal_pdf.html:464
-#: proposals/templates/proposals/proposal_pdf.html:478
-#: proposals/templates/proposals/proposal_pdf.html:483
-#: proposals/templates/proposals/proposal_pdf.html:499
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:143
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:105
 msgid "Download"
@@ -2401,7 +2403,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils/proposal_utils.py:121 proposals/utils/proposal_utils.py:101
+#: proposals/utils/proposal_utils.py:121
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -2424,7 +2426,6 @@ msgstr ""
 #: proposals/templates/proposals/proposal_data_management.html:24
 #: proposals/templates/proposals/proposal_pdf.html:499
 #: reviews/templatetags/documents_list.py:245
-#: proposals/templates/proposals/proposal_pdf.html:491
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -2585,10 +2586,9 @@ msgstr "General information about the application"
 #: proposals/templates/proposals/proposal_diff.html:119
 #: proposals/templates/proposals/proposal_diff.html:120
 #: proposals/templates/proposals/proposal_pdf.html:133
+#: proposals/templates/proposals/proposal_pdf.html:520
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:119
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:99
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:112
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:91
 msgid "onbekend"
 msgstr "unknown"
 
@@ -2598,7 +2598,6 @@ msgstr "unknown"
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:110
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:30
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:102
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -2680,14 +2679,14 @@ msgstr ""
 "different committee. If this is not the case, you are required to fill in "
 "the <a href=\"%(proposal_url)s\">full form</a>."
 
-#: proposals/templates/proposals/proposal_list.html:42
-#: proposals/templates/proposals/proposal_private_archive.html:42
-#: reviews/templates/reviews/action_explaination.html:18
+#: proposals/templates/proposals/proposal_list.html:43
+#: proposals/templates/proposals/proposal_private_archive.html:43
+#: reviews/templates/reviews/action_explaination.html:19
 msgid "Uitleg"
 msgstr "Explanation"
 
-#: proposals/templates/proposals/proposal_list.html:46
-#: proposals/templates/proposals/proposal_private_archive.html:46
+#: proposals/templates/proposals/proposal_list.html:47
+#: proposals/templates/proposals/proposal_private_archive.html:47
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_next)s\" title=\"Naar volgende stap\"> om naar de "
@@ -2696,8 +2695,8 @@ msgstr ""
 "Click <img src=\"%(img_next)s\" title=\"To next step\"> to move on to the "
 "next step in the progress."
 
-#: proposals/templates/proposals/proposal_list.html:53
-#: proposals/templates/proposals/proposal_private_archive.html:53
+#: proposals/templates/proposals/proposal_list.html:54
+#: proposals/templates/proposals/proposal_private_archive.html:54
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_diff)s\" title=\"Toon verschillen\"> om de "
@@ -2708,8 +2707,8 @@ msgstr ""
 "differences between a previous version (only available for revisions/"
 "amendments)."
 
-#: proposals/templates/proposals/proposal_list.html:60
-#: proposals/templates/proposals/proposal_private_archive.html:60
+#: proposals/templates/proposals/proposal_list.html:61
+#: proposals/templates/proposals/proposal_private_archive.html:61
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_delete)s\" title=\"Verwijderen\"> om je aanvraag te "
@@ -2718,8 +2717,8 @@ msgstr ""
 "Click <img src=\"%(img_delete)s\" title=\"Delete\"> to delete your "
 "application."
 
-#: proposals/templates/proposals/proposal_list.html:67
-#: proposals/templates/proposals/proposal_private_archive.html:67
+#: proposals/templates/proposals/proposal_list.html:68
+#: proposals/templates/proposals/proposal_private_archive.html:68
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_pdf)s\" title=\"Inzien\"> om een ingediende "
@@ -2728,8 +2727,8 @@ msgstr ""
 "Click <img src=\"%(img_pdf)s\" title=\"Show\"> to view a submitted "
 "application."
 
-#: proposals/templates/proposals/proposal_list.html:74
-#: proposals/templates/proposals/proposal_private_archive.html:74
+#: proposals/templates/proposals/proposal_list.html:75
+#: proposals/templates/proposals/proposal_private_archive.html:75
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_decide)s\" title=\"Beslissen\"> om je beslissing "
@@ -2738,8 +2737,8 @@ msgstr ""
 "Click <img src=\"%(img_decide)s\" title=\"Decide\"> to make your decision "
 "(as a supervisor)."
 
-#: proposals/templates/proposals/proposal_list.html:81
-#: proposals/templates/proposals/proposal_private_archive.html:81
+#: proposals/templates/proposals/proposal_list.html:82
+#: proposals/templates/proposals/proposal_private_archive.html:82
 #, python-format
 msgid ""
 "Klik op <img src=\"%(img_hide)s\" title=\"Verbergen\"> om een ingediende "
@@ -2747,6 +2746,16 @@ msgid ""
 msgstr ""
 "Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted "
 "application from the archive."
+
+#: proposals/templates/proposals/proposal_list.html:88
+#: proposals/templates/proposals/proposal_private_archive.html:88
+#: reviews/templates/reviews/action_explaination.html:56
+msgid ""
+"Klik op <img src=\"%(img_add)s\" title=\"Toevoegen\"> om een ingediende "
+"aanvraag toe te voegen aan het archief."
+msgstr ""
+"Click <img src=\"%(img_add)s\" title=\"add\"> to submit "
+"an application to the archive."
 
 #: proposals/templates/proposals/proposal_pdf.html:44
 #, python-format
@@ -2788,16 +2797,13 @@ msgstr "Not provided"
 
 #: proposals/templates/proposals/proposal_pdf.html:481
 #: proposals/templates/proposals/study_consent.html:138
-#: proposals/templates/proposals/proposal_pdf.html:473
 msgid "Extra formulieren"
 msgstr "Additional forms"
 
 #: proposals/templates/proposals/proposal_pdf.html:513
 #: proposals/templates/proposals/proposal_pdf_empty.html:389
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:150
-#: proposals/templates/proposals/proposal_submit.html:169
-#: proposals/templates/proposals/proposal_pdf.html:505
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:143
+#: proposals/templates/proposals/proposal_submit.html:181
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2876,8 +2882,7 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:130
-#: proposals/templates/proposals/proposal_submit.html:163
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:122
+#: proposals/templates/proposals/proposal_submit.html:175
 msgid "Aanvraag voor voortoetsing versturen"
 msgstr "Submit application for preliminary assessment"
 
@@ -3472,7 +3477,7 @@ msgstr "Route:"
 #: proposals/templates/proposals/vue_templates/proposal_list.html:187
 #: reviews/templates/reviews/vue_templates/decision_list.html:185
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:128
-#: reviews/templates/reviews/vue_templates/review_list.html:171
+#: reviews/templates/reviews/vue_templates/review_list.html:184
 msgid "Indieners"
 msgstr "Applicants"
 
@@ -3493,7 +3498,7 @@ msgstr "Hide"
 #: proposals/templates/proposals/vue_templates/proposal_list.html:139
 #: reviews/templates/reviews/vue_templates/decision_list.html:141
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:83
-#: reviews/templates/reviews/vue_templates/review_list.html:126
+#: reviews/templates/reviews/vue_templates/review_list.html:139
 msgid "Revisie/amendement van"
 msgstr "Revision/amendment of"
 
@@ -3543,15 +3548,15 @@ msgstr "Translation"
 msgid "Formulieren"
 msgstr "Forms"
 
-#: proposals/utils/proposal_utils.py:122 proposals/utils/proposal_utils.py:102
+#: proposals/utils/proposal_utils.py:122
 msgid "Versturen"
 msgstr "Submit"
 
-#: proposals/utils/proposal_utils.py:415 proposals/utils/proposal_utils.py:392
+#: proposals/utils/proposal_utils.py:415
 msgid "FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: A revised application uses lab facilities"
 
-#: proposals/utils/proposal_utils.py:417 proposals/utils/proposal_utils.py:394
+#: proposals/utils/proposal_utils.py:417
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
@@ -3590,7 +3595,6 @@ msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
 
 #: proposals/utils/validate_proposal.py:230
-#: proposals/utils/validate_proposal.py:223
 msgid "AVG en Data Management"
 msgstr "AVG and Data Management"
 
@@ -3601,7 +3605,7 @@ msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
 "application."
 
-#: proposals/views/proposal_views.py:41 proposals/views/proposal_views.py:147
+#: proposals/views/proposal_views.py:41
 msgid "Publiek archief"
 msgstr "Public archive"
 
@@ -3642,17 +3646,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:256 proposals/views/proposal_views.py:257
+#: proposals/views/proposal_views.py:240
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:393 proposals/views/proposal_views.py:381
-#: proposals/views/proposal_views.py:380
+#: proposals/views/proposal_views.py:377
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:494 proposals/views/proposal_views.py:482
-#: proposals/views/proposal_views.py:481
+#: proposals/views/proposal_views.py:478
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -3686,14 +3688,14 @@ msgstr "Your application will require assessment by an METC."
 #: reviews/api/views.py:31 reviews/api/views.py:320
 #: reviews/templates/reviews/vue_templates/decision_list.html:111
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:61
-#: reviews/templates/reviews/vue_templates/review_list.html:103
+#: reviews/templates/reviews/vue_templates/review_list.html:116
 msgid "Stadium"
 msgstr "Stage"
 
 #: reviews/api/views.py:35 reviews/api/views.py:324 reviews/models.py:45
 #: reviews/templates/reviews/vue_templates/decision_list.html:178
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:121
-#: reviews/templates/reviews/vue_templates/review_list.html:164
+#: reviews/templates/reviews/vue_templates/review_list.html:177
 msgid "Route"
 msgstr "Route"
 
@@ -3818,7 +3820,7 @@ msgstr "not endorsed"
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
-#: reviews/templates/reviews/action_explaination.html:21
+#: reviews/templates/reviews/action_explaination.html:22
 #, python-format
 msgid ""
 "\n"
@@ -3831,7 +3833,7 @@ msgstr ""
 "application.\n"
 "        "
 
-#: reviews/templates/reviews/action_explaination.html:26
+#: reviews/templates/reviews/action_explaination.html:27
 #, python-format
 msgid ""
 "\n"
@@ -3847,7 +3849,7 @@ msgstr ""
 "amendments).\n"
 "        "
 
-#: reviews/templates/reviews/action_explaination.html:32
+#: reviews/templates/reviews/action_explaination.html:33
 #, python-format
 msgid ""
 "\n"
@@ -3861,7 +3863,7 @@ msgstr ""
 "details of a submitted application.\n"
 "        "
 
-#: reviews/templates/reviews/action_explaination.html:38
+#: reviews/templates/reviews/action_explaination.html:39
 #, python-format
 msgid ""
 "\n"
@@ -3874,11 +3876,11 @@ msgstr ""
 "decision.\n"
 "        "
 
-#: reviews/templates/reviews/action_explaination.html:45
+#: reviews/templates/reviews/action_explaination.html:46
 msgid "Uitleg secretaris"
 msgstr "Explanation for secretary"
 
-#: reviews/templates/reviews/action_explaination.html:49
+#: reviews/templates/reviews/action_explaination.html:50
 #, python-format
 msgid ""
 "\n"
@@ -3892,7 +3894,7 @@ msgstr ""
 "application from the archive.\n"
 "        "
 
-#: reviews/templates/reviews/action_explaination.html:55
+#: reviews/templates/reviews/action_explaination.html:62
 #, python-format
 msgid ""
 "\n"
@@ -3905,7 +3907,7 @@ msgstr ""
 "reviewers.\n"
 "  "
 
-#: reviews/templates/reviews/action_explaination.html:60
+#: reviews/templates/reviews/action_explaination.html:67
 #, python-format
 msgid ""
 "\n"
@@ -3920,7 +3922,7 @@ msgstr ""
 "                    to a different chamber.\n"
 "                "
 
-#: reviews/templates/reviews/action_explaination.html:66
+#: reviews/templates/reviews/action_explaination.html:73
 #, python-format
 msgid ""
 "\n"
@@ -3933,7 +3935,7 @@ msgstr ""
 "to conclude an application.\n"
 "                "
 
-#: reviews/templates/reviews/action_explaination.html:71
+#: reviews/templates/reviews/action_explaination.html:78
 #, python-format
 msgid ""
 "\n"
@@ -3948,7 +3950,7 @@ msgstr ""
 "                    confirmation letter has been sent.\n"
 "                "
 
-#: reviews/templates/reviews/action_explaination.html:77
+#: reviews/templates/reviews/action_explaination.html:84
 #, python-format
 msgid ""
 "\n"
@@ -4201,8 +4203,8 @@ msgid "Aanvrager(s)"
 msgstr "Applicant"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:50
-msgid "Supervisor"
-msgstr "Supervisor"
+msgid "eindverantwoordelijke"
+msgstr "Researcher with final responsibility"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:54
 #, python-format
@@ -4296,7 +4298,6 @@ msgstr ""
 "        "
 
 #: reviews/templates/reviews/review_detail_sidebar.html:119
-#: proposals/utils/proposal_utils.py:100
 msgid "Documenten"
 msgstr "Documents"
 
@@ -4372,9 +4373,18 @@ msgid "open"
 msgstr "open"
 
 #: reviews/templates/reviews/vue_templates/decision_list.html:63
-#: reviews/templates/reviews/vue_templates/review_list.html:63
+#: reviews/templates/reviews/vue_templates/review_list.html:64
 msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
+
+#: reviews/templates/reviews/vue_templates/review_list.html:95
+#: reviews/utils/review_actions.py:284
+msgid "Verberg aanvraag uit het archief"
+msgstr "Remove this application from the archive"
+
+#: reviews/templates/reviews/vue_templates/review_list.html:100
+msgid "Plaats aanvraag in archief"
+msgstr "Add this application to the archive"
 
 #: reviews/templatetags/documents_list.py:145
 msgid "Hoofdtraject"
@@ -4432,21 +4442,29 @@ msgstr "Information letter for the parents"
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
-#: reviews/utils/review_actions.py:126 reviews/utils/review_actions.py:128
+#: reviews/utils/review_actions.py:129
 msgid "Geef jouw beslissing en/of commentaar door"
 msgstr "Provide feedback on this proposal"
 
-#: reviews/utils/review_actions.py:152 reviews/utils/review_actions.py:154
+#: reviews/utils/review_actions.py:155
 msgid "Deze aanvraag afsluiten"
 msgstr "Conclude this application"
 
-#: reviews/utils/review_actions.py:182 reviews/utils/review_actions.py:184
+#: reviews/utils/review_actions.py:185
 msgid "Beëindig definitief de afhandeling van deze aanvraag"
 msgstr "Discontinue assessment of this application"
 
-#: reviews/utils/review_actions.py:212 reviews/utils/review_actions.py:214
+#: reviews/utils/review_actions.py:215
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
+
+#: reviews/utils/review_actions.py:245
+msgid "Datum van bevestigingsbrief aanpassen"
+msgstr "Change date of confirmation letter"
+
+#: reviews/utils/review_actions.py:286
+msgid "Plaats aanvraag in het archief."
+msgstr "Add this application to the archive"
 
 #: reviews/utils/review_utils.py:53
 msgid "FETC-GW {}: bevestiging indienen concept-aanmelding"
@@ -5749,29 +5767,23 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
-#: main/templates/main/index.html:193
-msgid "Bannerfoto door Kim O'leary"
-msgstr "Cover image by Kim O'leary"
+#~ msgid "Bannerfoto door Simona Evsatieva"
+#~ msgstr "Cover image by Simona Evsatieva"
 
-#: proposals/templates/proposals/study_consent.html:77
-msgid ""
-"Hier kan je de Informed consent formulieren uploaden voor de opgegeven "
-"traject(en). Optioneel kan je indien nodig maximaal 2 paar extra formulieren "
-"uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' onderaan de "
-"pagina. Deze velden kan je weer weg halen door alle formulieren te wissen."
-msgstr ""
-"        You can upload the informed consent forms for your trajectories "
-"here. If needed, you can also upload up to 2 sets of additional forms. <br/"
-">         These extra fields can be removed by clearing all forms in one "
-"section.     "
+#~ msgid "Supervisor"
+#~ msgstr "Supervisor"
 
-#: reviews/utils/review_actions.py:255
-msgid "Verberg aanvraag uit het archief"
-msgstr "Remove this application from the archive"
-
-#: reviews/utils/review_actions.py:282
-msgid "Datum van bevestigingsbrief aanpassen"
-msgstr "Change date of confirmation letter"
+#~ msgid ""
+#~ "Hier kan je de Informed consent formulieren uploaden voor de opgegeven "
+#~ "traject(en). Optioneel kan je indien nodig maximaal 2 paar extra "
+#~ "formulieren uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' "
+#~ "onderaan de pagina. Deze velden kan je weer weg halen door alle "
+#~ "formulieren te wissen."
+#~ msgstr ""
+#~ "        You can upload the informed consent forms for your trajectories "
+#~ "here. If needed, you can also upload up to 2 sets of additional forms. "
+#~ "<br/>         These extra fields can be removed by clearing all forms in "
+#~ "one section.     "
 
 #~ msgid "Worden de informed consent formulieren vertaald?"
 #~ msgstr "Will the informed consent forms get translated?"
