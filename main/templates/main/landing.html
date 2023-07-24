@@ -87,7 +87,7 @@
                 </a>
             {% endif %}
             {# Unnecessary layout hack #}
-            {% if show_saml and show_django %}<div class="mt-1" />{% endif %}
+            {% if show_saml and show_django %}<div class="mt-1"></div>{% endif %}
             {% if show_django %}
                 <a href="{% url 'login' %}?next={{ next }}" class="button button-colored">
                     {% trans 'Log in met je Solis-ID' %}{% if login_descriptors %} (Non-SAML){% endif %}
