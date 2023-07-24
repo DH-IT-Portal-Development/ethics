@@ -14,6 +14,16 @@
     - {{ block.super }}
 {% endblock %}
 
+{% block html_head %}
+<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
+<script>
+    $(function() {
+        let translated_string = " {% trans 'Aantal woorden:' %} "
+        wordCounter("comments", translated_string)
+    });
+</script>
+{% endblock %}
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">

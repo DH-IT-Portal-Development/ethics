@@ -33,6 +33,7 @@
         "description_en": "school/educational institution",
         "description_nl": "school/onderwijsinstelling",
         "needs_supervision": true,
+        "is_school": true,
         "order": 3
     },
     "model": "main.setting",
@@ -46,6 +47,7 @@
         "description_en": "nursery/day care center",
         "description_nl": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
         "needs_supervision": true,
+        "is_school": true,
         "order": 4
     },
     "model": "main.setting",

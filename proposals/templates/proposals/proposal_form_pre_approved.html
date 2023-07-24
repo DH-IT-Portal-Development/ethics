@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
+<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
 <script>
 $(function() {
 
@@ -59,20 +60,11 @@ $(function() {
         cache: true
       }
     });
-
-    // Add a running word count to the summary
-    var summary = $("#id_summary");
-    if (summary.length)
-    {
-        summary.after("<span id='wordcount' />");
-        summary[0].addEventListener("input", function() {
-            var wordCount = 0;
-            if (this.value.trim()) {
-                wordCount = this.value.match(/\S+/g).length;
-            }
-            $("#wordcount").text(" {% trans 'Aantal woorden:' %} " + wordCount);
-        }, false);
-    }
+});
+$(function() {
+    // adds running wordcounter for the summary and self_assessment text fields
+    let translated_string = " {% trans 'Aantal woorden:' %} "
+    wordCounter("summary", translated_string)
 });
 </script>
 {% endblock %}
