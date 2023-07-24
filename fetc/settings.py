@@ -102,7 +102,7 @@ SHOW_DJANGO_LOGIN = True
 SHOW_SAML_LOGIN = False
 # Debug option, adds a label to the buttons. Otherwise, the buttons are
 # identical
-SHOW_LOGIN_DESCRIPTORS = True
+SHOW_LOGIN_DESCRIPTORS = DEBUG
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
