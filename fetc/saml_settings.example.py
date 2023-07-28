@@ -51,6 +51,7 @@ SAML_CONFIG = create_saml_config(
     # This should be the URL of the ethics app (with protocol). Currently
     # localhost, port 8000. Please change if you run the app on a different
     # hostname/port
+    # Note that localhost and 127.0.0.1 are not interchangeable here
     base_url='http://localhost:8000/',
     # The name of the app, does not _really_ matter
     name='FEtC-H Portal',
