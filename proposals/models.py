@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.query import QuerySet
 from django.utils.translation import ugettext_lazy as _
 
 from django.utils.functional import lazy
@@ -15,6 +16,8 @@ from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
+
+from datetime import date, timedelta
 
 SUMMARY_MAX_WORDS = 200
 SELF_ASSESSMENT_MAX_WORDS = 1000
@@ -90,9 +93,57 @@ class Institution(models.Model):
 
     def __str__(self):
         return self.description
+    
+class ProposalQuerySet(models.QuerySet):
+
+    DECISION_MADE = 55
+
+    def archive_pre_filter(self):
+        return self.filter(status__gte=self.DECISION_MADE,
+                                             status_review=True,
+                                             in_archive=True,
+        )
+    
+    def no_embargo(self):
+        return self.filter(models.Q(embargo_end_date__isnull=True) 
+             | models.Q(embargo_end_date__lt=date.today())
+             )
+    
+    def public_archive(self):
+        two_years_ago = (
+                date.today() -
+                timedelta(weeks=104)
+        )
+        return self.archive_pre_filter().no_embargo().filter(
+                                        date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
+        )
+    
+    def export(self):
+        return self.archive_pre_filter().order_by(
+            "-date_reviewed"
+        )
+    
+    def users_only_archive(self, committee):
+        return self.archive_pre_filter().no_embargo().filter(
+                                       is_pre_assessment=False,
+                                       reviewing_committee=committee,
+                                       ).select_related(
+            # this optimizes the loading a bit
+            'supervisor', 'parent', 'relation',
+            'parent__supervisor', 'parent__relation',
+        ).prefetch_related(
+            'applicants', 'review_set', 'parent__review_set', 'study_set',
+            'study_set__observation', 'study_set__session_set',
+            'study_set__intervention', 'study_set__session_set__task_set'
+        )
 
 
 class Proposal(models.Model):
+
+    objects = ProposalQuerySet.as_manager()
+
     DRAFT = 1
     SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
@@ -252,9 +303,24 @@ Zep software)'),
         null=True
     )
 
-    in_archive = models.BooleanField(default=False)
+    embargo = models.BooleanField(
+        _('Als de deelnemers van je onderzoek moeten worden misleid, kan \
+          je ervoor kiezen je applicatie pas later op te laten nemen in het \
+          publieke archief en het archief voor gebruikers \
+          van dit portaal. Wil je dat jouw onderzoek tijdelijk onder \
+          embargo wordt geplaatst?'),
+          default=None,
+          blank=True,
+          null=True
+    )
 
-    public = models.BooleanField(default=True)
+    embargo_end_date = models.DateField(
+        _('Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?'),
+        blank=True,
+        null=True
+    )
+
+    in_archive = models.BooleanField(default=False)
 
     is_pre_assessment = models.BooleanField(default=False)
 
@@ -451,7 +517,8 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
+        verbose_name=_('Uitvoerenden, inclusief uzelf. Let op! De andere onderzoekers moeten \
+        ten minste één keer zijn ingelogd op dit portaal om ze te kunnen selecteren.'),
         related_name='applicants',
     )
 
@@ -602,7 +669,6 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         if self.is_practice():
             return '{} ({}) (Practice)'.format(self.title, self.created_by)
         return '{} ({})'.format(self.title, self.created_by)
-
 
 class Wmo(models.Model):
     NO_WMO = 0

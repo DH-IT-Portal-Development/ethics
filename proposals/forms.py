@@ -8,6 +8,8 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
+from django.utils import timezone
+from datetime import timedelta
 mark_safe_lazy = lazy(mark_safe, str)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
@@ -575,9 +577,10 @@ class ProposalUpdateDataManagementForm(forms.ModelForm):
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['comments', 'inform_local_staff']
+        fields = ['comments', 'inform_local_staff', 'embargo', 'embargo_end_date']
         widgets = {
             'inform_local_staff': forms.RadioSelect(choices=YES_NO),
+            'embargo': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -605,6 +608,7 @@ class ProposalSubmitForm(forms.ModelForm):
         Check if the Proposal is complete:
         - Do all Studies have informed consent/briefing?
         - If the inform_local_staff question is asked, it is required
+        - Was the embargo question answered and, if so, is the end date within two years from now?
         """
         from studies.models import Documents
 
@@ -629,8 +633,21 @@ class ProposalSubmitForm(forms.ModelForm):
                 if not documents.briefing:
                     self.add_error('comments', _(
                         'Informatiebrief voor traject {} nog niet toegevoegd.').format(
-                        study.order))
-    
+                        study.order))                
+
+            if cleaned_data['embargo'] is None:
+                self.add_error('embargo', _('Dit veld is verplicht.'))
+
+            embargo_end_date = cleaned_data['embargo_end_date']
+            two_years_from_now = timezone.now().date() + timezone.timedelta(days=730)
+
+            if embargo_end_date is not None and \
+               embargo_end_date > two_years_from_now:
+                self.add_error('embargo_end_date', _(
+                    'De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar van vandaag.'))
+
+            
+
 
 class TranslatedConsentForms(SoftValidationMixin, forms.ModelForm):
 

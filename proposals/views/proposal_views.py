@@ -133,7 +133,7 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalUsersOnlyArchiveView(CommitteeMixin, BaseProposalsView):
     template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):
@@ -144,7 +144,7 @@ class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
     @property
     def title(self):
         return "{} - {}".format(
-            _('Publiek archief'),
+            _('Archief'),
             self.committee_display_name
         )
 
@@ -155,19 +155,7 @@ class ProposalsPublicArchiveView(generic.ListView):
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
-        two_years_ago = (
-                datetime.date.today() -
-                datetime.timedelta(weeks=104)
-        )
-        return super().get_queryset().filter(
-            status__gte=Proposal.DECISION_MADE,
-            status_review=True,
-            in_archive=True,
-            date_confirmed__gt=two_years_ago,
-        ).order_by(
-            "-date_reviewed"
-        )
-
+        return Proposal.objects.public_archive()
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
@@ -186,14 +174,10 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
         if pk is not None:
             return Proposal.objects.filter(pk=pk)
 
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True).order_by(
-            "-date_reviewed"
-        )
+        return Proposal.objects.export()
 
 
-class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
+class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
     group_required = settings.GROUP_SECRETARY
     permanent = False
 
@@ -201,10 +185,8 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
         pk = kwargs.get('pk')
 
         proposal = Proposal.objects.get(pk=pk)
-        proposal.public = False
-        #proposal.in_archive = False
+        proposal.in_archive = not proposal.in_archive
         proposal.save()
-
         committee = proposal.reviewing_committee.name
         return reverse('proposals:archive', args=[committee])
 

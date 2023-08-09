@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from proposals.models import Proposal
 from reviews.models import Review, Decision
 
+import datetime
 class ReviewActions:
 
 
@@ -20,7 +21,7 @@ class ReviewActions:
                                ChangeAssignment(review, user),
                                DiscontinueReview(review, user),
                                SendConfirmation(review, user),
-                               #HideReview(review, user),
+                               ChangeArchiveStatus(review, user),
         ]
         self.ufl_actions = []
 
@@ -248,10 +249,7 @@ class SendConfirmation(ReviewAction):
         else:
             return change_date
 
-class HideReview(ReviewAction):
-    '''This class should lead to the archive_hide url, but the hide 
-    functionality does currently not work properly/ is not in use.
-    Therefore it is commented out in the ReviewActions class.'''
+class ChangeArchiveStatus(ReviewAction):
 
     def is_available(self):
 
@@ -262,7 +260,8 @@ class HideReview(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
         
-        if review.proposal.public == False:
+        if review.proposal.embargo == True and \
+           review.proposal.embargo_end_date > datetime.date.today():
             return False
         
         if review.proposal.status < Proposal.DECISION_MADE:
@@ -272,9 +271,14 @@ class HideReview(ReviewAction):
     
     def action_url(self):
 
-        return reverse('proposals:archive_hide', args=(self.review.proposal.pk,))
+        return reverse('proposals:archive_status', args=(self.review.proposal.pk,))
 
     def description(self):
+        
+        proposal = self.review.proposal
 
-        return _('Verberg aanvraag uit het archief')
+        if proposal.in_archive == True:
+            return _('Verberg aanvraag uit het archief')
+        else:
+            return _('Plaats aanvraag in het archief.')
 

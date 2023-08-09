@@ -10,10 +10,10 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalUpdatePreAssessment, ProposalStartPreAssessment, \
     ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
-    HideFromArchiveView, ProposalsExportView, ProposalStartPreApproved, \
+    ChangeArchiveStatusView, ProposalsExportView, ProposalStartPreApproved, \
     ProposalCreatePreApproved, ProposalSubmittedPreApproved, \
     ProposalSubmitPreApproved, ProposalUpdatePreApproved, \
-    ProposalPrivateArchiveView, \
+    ProposalUsersOnlyArchiveView, \
     ProposalCopyAmendment, ProposalsPublicArchiveView, \
     ProposalUpdateDataManagement, TranslatedConsentFormsView
 
@@ -33,13 +33,13 @@ urlpatterns = [
         path('export/', ProposalsExportView.as_view(), name='archive_export'),
         path('export/<int:pk>/', ProposalsExportView.as_view(),
             name='archive_export'),
-        path('hide/<int:pk>/', HideFromArchiveView.as_view(),
-            name='archive_hide'),
+        path('archive_status/<int:pk>/', ChangeArchiveStatusView.as_view(),
+            name='archive_status'),
         # WARNING! This one needs to be LAST in the list. (Django goes
         # through the list and picks the first one that fits, and the regex
         # will always fit for the other 2 URL's, effectively superseding them
         # if it's above them).
-        path('<str:committee>/', ProposalPrivateArchiveView.as_view(),
+        path('<str:committee>/', ProposalUsersOnlyArchiveView.as_view(),
              name='archive'),
     ])),
 
