@@ -33,8 +33,8 @@ urlpatterns = [
         path('export/', ProposalsExportView.as_view(), name='archive_export'),
         path('export/<int:pk>/', ProposalsExportView.as_view(),
             name='archive_export'),
-        path('hide/<int:pk>/', ChangeArchiveStatusView.as_view(),
-            name='archive_hide'),
+        path('archive_status/<int:pk>/', ChangeArchiveStatusView.as_view(),
+            name='archive_status'),
         # WARNING! This one needs to be LAST in the list. (Django goes
         # through the list and picks the first one that fits, and the regex
         # will always fit for the other 2 URL's, effectively superseding them

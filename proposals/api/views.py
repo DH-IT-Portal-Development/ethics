@@ -183,5 +183,4 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
-        #breakpoint()
         return Proposal.objects.users_only_archive(committee=self.committee)

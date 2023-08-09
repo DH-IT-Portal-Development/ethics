@@ -17,7 +17,7 @@ from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
-import datetime
+from datetime import date, timedelta
 
 SUMMARY_MAX_WORDS = 200
 SELF_ASSESSMENT_MAX_WORDS = 1000
@@ -97,7 +97,6 @@ class Institution(models.Model):
 class ProposalQuerySet(models.QuerySet):
 
     DECISION_MADE = 55
-    TODAY = datetime.date.today()
 
     def archive_pre_filter(self):
         return self.filter(status__gte=self.DECISION_MADE,
@@ -107,13 +106,13 @@ class ProposalQuerySet(models.QuerySet):
     
     def no_embargo(self):
         return self.filter(models.Q(embargo_end_date__isnull=True) 
-             | models.Q(embargo_end_date__lt=self.TODAY)
+             | models.Q(embargo_end_date__lt=date.today())
              )
     
     def public_archive(self):
         two_years_ago = (
-                self.TODAY -
-                datetime.timedelta(weeks=104)
+                date.today() -
+                timedelta(weeks=104)
         )
         return self.archive_pre_filter().no_embargo().filter(
                                         date_confirmed__gt=two_years_ago,
@@ -307,7 +306,8 @@ Zep software)'),
     embargo = models.BooleanField(
         _('Als de deelnemers van je onderzoek moeten worden misleid, kan \
           je ervoor kiezen je applicatie pas later op te laten nemen in het \
-          semi-publieke archief. Wil je dat jouw onderzoek tijdelijk onder \
+          publieke archief en het archief voor gebruikers \
+          van dit portaal. Wil je dat jouw onderzoek tijdelijk onder \
           embargo wordt geplaatst?'),
           default=None,
           blank=True,

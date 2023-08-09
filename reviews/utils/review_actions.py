@@ -250,9 +250,6 @@ class SendConfirmation(ReviewAction):
             return change_date
 
 class ChangeArchiveStatus(ReviewAction):
-    '''This class should lead to the archive_hide url, but the hide 
-    functionality does currently not work properly/ is not in use.
-    Therefore it is commented out in the ReviewActions class.'''
 
     def is_available(self):
 
@@ -274,7 +271,7 @@ class ChangeArchiveStatus(ReviewAction):
     
     def action_url(self):
 
-        return reverse('proposals:archive_hide', args=(self.review.proposal.pk,))
+        return reverse('proposals:archive_status', args=(self.review.proposal.pk,))
 
     def description(self):
         

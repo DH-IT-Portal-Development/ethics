@@ -608,6 +608,7 @@ class ProposalSubmitForm(forms.ModelForm):
         Check if the Proposal is complete:
         - Do all Studies have informed consent/briefing?
         - If the inform_local_staff question is asked, it is required
+        - Was the embargo question answered and, if so, is the end date within two years from now?
         """
         from studies.models import Documents
 
