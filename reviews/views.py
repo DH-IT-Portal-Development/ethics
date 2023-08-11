@@ -77,7 +77,41 @@ class DecisionOpenView(BaseDecisionListView):
         context['data_url'] = reverse("reviews:api:open", args=[self.committee])
 
         return context
+    
 
+class CommitteeMembersWorkloadView(GroupRequiredMixin, generic.DetailView):
+    #TODO: Look into improving the should_end_date variable. See notes
+    group_required = [
+        settings.GROUP_SECRETARY,
+    ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['decisions'] = self.get_all_open_decisions()
+
+        return context
+
+    def get_all_open_decisions(self):
+        '''Returns a queryset with all relevant'''
+        committee = self.kwargs['committee']
+
+        objects = Decision.objects.filter(
+            # This fetches all Decisions which are not approved or need revision
+            go__in = 'N?',
+            review__proposal__committee = committee,
+            ).select_related(
+            #prefetches all the relevant data
+            'reviewer__first_name',
+            'reviewer__last_name',
+            'review__date_start', 
+            'review__should_end_date', 
+            'review__short_route', 
+            'review__proposal__reference_number',
+            'review__proposal__is_revision'
+            )
+
+        return objects
 
 class SupervisorDecisionOpenView(BaseDecisionListView):
     """

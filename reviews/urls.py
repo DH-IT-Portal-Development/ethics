@@ -9,7 +9,7 @@ from .views import \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, ReviewDiscontinueView, \
     DecisionUpdateView, ToConcludeProposalView, ChangeChamberView, \
-    CreateDecisionRedirectView
+    CreateDecisionRedirectView, CommitteeMembersWorkloadView
 
 app_name = 'reviews'
 
@@ -34,6 +34,7 @@ urlpatterns = [
     path('show/<int:pk>/', ReviewDetailView.as_view(), name='detail'),
 
     path('assign/<int:pk>/', ReviewAssignView.as_view(), name='assign'),
+    path('workload/<str:committee>', CommitteeMembersWorkloadView.as_view(), name='workload'),
     path('change_chamber/<int:pk>/', ChangeChamberView.as_view(),
          name='change_chamber'),
     path('close/<int:pk>/', ReviewCloseView.as_view(), name='close'),
