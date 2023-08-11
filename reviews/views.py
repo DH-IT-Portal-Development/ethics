@@ -79,7 +79,7 @@ class DecisionOpenView(BaseDecisionListView):
         return context
     
 
-class CommitteeMembersWorkloadView(GroupRequiredMixin, generic.DetailView):
+class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.DetailView):
     #TODO: Look into improving the should_end_date variable. See notes
     group_required = [
         settings.GROUP_SECRETARY,
@@ -89,17 +89,19 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
 
         context['decisions'] = self.get_all_open_decisions()
+        #There's probably a more elegant solution  possible here ...
+        context['committee'] = self.kwargs['committee']
 
         return context
 
-    def get_all_open_decisions(self):
+    def get_queryset(self):
         '''Returns a queryset with all relevant'''
         committee = self.kwargs['committee']
 
         objects = Decision.objects.filter(
             # This fetches all Decisions which are not approved or need revision
             go__in = 'N?',
-            review__proposal__committee = committee,
+            review__proposal__reviewing_committee = committee,
             ).select_related(
             #prefetches all the relevant data
             'reviewer__first_name',
