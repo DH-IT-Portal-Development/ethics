@@ -117,15 +117,6 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
             'review',
             'review__proposal',
             )
-            # #prefetches all the relevant data
-            # 'reviewer__first_name',
-            # 'reviewer__last_name',
-            # 'review__date_start', 
-            # 'review__should_end_date', 
-            # 'review__short_route', 
-            # 'review__proposal__reference_number',
-            # 'review__proposal__is_revision'
-            # )
 
         return objects
 
