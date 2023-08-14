@@ -79,12 +79,23 @@ class DecisionOpenView(BaseDecisionListView):
         return context
     
 
-class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.DetailView):
+class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
     #TODO: Look into improving the should_end_date variable. See notes
-    group_required = [
-        settings.GROUP_SECRETARY,
-    ]
 
+    template_name = 'reviews/committee_members_workload.html'
+
+    def get_group_required(self):
+        # Depending on committee kwarg we test for the correct group
+
+        group_required = [settings.GROUP_SECRETARY]
+
+        if self.committee.name == 'AK':
+            group_required += [ settings.GROUP_GENERAL_CHAMBER ]
+        if self.committee.name == 'LK':
+            group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
+
+        return group_required
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -94,24 +105,27 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.D
 
         return context
 
-    def get_queryset(self):
+    def get_all_open_decisions(self):
         '''Returns a queryset with all relevant'''
-        committee = self.kwargs['committee']
 
         objects = Decision.objects.filter(
             # This fetches all Decisions which are not approved or need revision
             go__in = 'N?',
-            review__proposal__reviewing_committee = committee,
+            review__proposal__reviewing_committee = self.committee,
             ).select_related(
-            #prefetches all the relevant data
-            'reviewer__first_name',
-            'reviewer__last_name',
-            'review__date_start', 
-            'review__should_end_date', 
-            'review__short_route', 
-            'review__proposal__reference_number',
-            'review__proposal__is_revision'
+            'reviewer',
+            'review',
+            'review__proposal',
             )
+            # #prefetches all the relevant data
+            # 'reviewer__first_name',
+            # 'reviewer__last_name',
+            # 'review__date_start', 
+            # 'review__should_end_date', 
+            # 'review__short_route', 
+            # 'review__proposal__reference_number',
+            # 'review__proposal__is_revision'
+            # )
 
         return objects
 

@@ -8,14 +8,14 @@
 
 {% block header_title %}
     {% blocktranslate %}
-        {{ committee }} werkverdeling overzicht - {{ block.super }}
+        {{ committee }} werkverdeling overzicht {{ block.super }}
     {% endblocktranslate%}
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h3>{% trans 'lopende reviews' %}</h3>
+            <h3>{% trans 'lopende reviews' %} {{ committee }} </h3>
 
             <table class="dt" data-language="{% datatables_lang %}">
                 <thead>
@@ -30,20 +30,20 @@
                 <tbody>
                 {% for decision in decisions %}
                     <tr>
-                        <td>{{ reviewer.first_name }} {{ reviewer.last_name }}</td>
+                        <td>{{ decision.reviewer.first_name }} {{ decision.reviewer.last_name }}</td>
                         <td>
-                            {% if review.short_route == True %}
+                            {% if decision.review.short_route == True %}
                                 {% trans 'Korte route' %}
-                            {% elif review.proposal.is_revision == True %}
+                            {% elif decision.review.proposal.is_revision == True %}
                                 {% trans 'Revisie' %}
                             {% else %}
                                 {% trans 'Lange route' %}
+                            {% endif %}
                         </td>
                         <!--TODO: Add link to proposal detail page-->
-                        <td>{{ review.proposal.reference_number }}</td>
-                        <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_start|date:"j M Y" }}</td>
-                        <td data-order="{{ review.date_start|date:'c' }}">{{ review.date_should_end|date:"j M Y" }}</td>
-                        <td>{{ decision.get_go_display|default:"" }}</td>
+                        <td>{{ decision.review.proposal.reference_number }}</td>
+                        <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_start|date:"j M Y" }}</td>
+                        <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_should_end|date:"j M Y" }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
