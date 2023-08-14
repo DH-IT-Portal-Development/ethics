@@ -40,7 +40,7 @@
                                 {% trans 'Lange route' %}
                             {% endif %}
                         </td>
-                        <td> <a href="{% url 'reviews:detail' pk=decision.review.proposal.pk %}"> {{ decision.review.proposal.reference_number }} </a></td>
+                        <td> <a style="color:blue;" href="{% url 'reviews:detail' pk=decision.review.pk %}"> {{ decision.review.proposal.reference_number }} </a></td>
                         <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_start|date:"j M Y" }}</td>
                         <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_should_end|date:"j M Y" }}</td>
                     </tr>

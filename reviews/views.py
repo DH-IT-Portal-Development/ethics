@@ -110,7 +110,7 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
 
         objects = Decision.objects.filter(
             # This fetches all Decisions which are not approved or need revision
-            go__in = 'N?',
+            go__exact = '',
             review__proposal__reviewing_committee = self.committee,
             ).select_related(
             'reviewer',
