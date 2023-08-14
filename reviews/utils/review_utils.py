@@ -431,6 +431,7 @@ def assign_reviewers(review, list_of_users, route):
     elif review.proposal.is_revision and review.date_should_end is None:
         #It seems desiree wants the should end date to be within one week
         #if a proposal is a revision
+        #NOTE: This does not work, as it will only check this condition if above is false, which is not always the case... 
         #TODO: discuss with Ty
         review.date_should_end = timezone.now() + \
             timezone.timedelta(
