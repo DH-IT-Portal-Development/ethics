@@ -123,7 +123,7 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
         one_year_ago = date.today() - timedelta(days=365)
 
         decisions_last_year = Decision.objects.filter(
-        review__date_start__lt = one_year_ago,
+        review__date_start__gt = one_year_ago,
         ).select_related(
         'review',
         'reviewer',
@@ -151,11 +151,10 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
                 )
 
             revision_counts, short_route_counts = len(all_revisions), len(all_short_routes)
+            long_route_counts = all_decisions_count - revision_counts - short_route_counts
 
-            dict[reviewer_full_name]['revision'] = revision_counts
-            dict[reviewer_full_name]['short_route'] = short_route_counts
-            dict[reviewer_full_name]['long_routes'] = all_decisions_count - revision_counts - short_route_counts
-        
+            dict[reviewer_full_name] = [short_route_counts, long_route_counts, revision_counts]
+
         return dict
 
 

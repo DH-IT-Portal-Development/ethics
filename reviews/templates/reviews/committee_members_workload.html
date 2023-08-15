@@ -61,6 +61,27 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <h3>{% trans 'Alle reviews van afgelopen jaar per reviewer' %} </h3>
+            <table class="dt" data-language="{% datatables_lang %}">
+                <thead>
+                <tr>
+                    <th>{% trans "Reviewer" %}</th>
+                    <th>{% trans "Korte route" %}</th>
+                    <th>{% trans "Lange Route" %}</th>
+                    <th>{% trans "Revisie" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in counts_dict.items %}
+                        <tr>
+                            <th scope="row" style="text-align:center">{{ key }}</th>
+                            <td style="text-align:center">{{ value.0 }}</td>
+                            <td style="text-align:center">{{ value.1 }}</td>
+                            <td style="text-align:center">{{ value.2 }}</td>                       
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
