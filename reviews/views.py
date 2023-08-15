@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
@@ -36,8 +37,7 @@ class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateV
         context['list_template'] = "reviews/vue_templates/decision_list.html"
 
         return context
-
-
+    
 class DecisionListView(BaseDecisionListView):
 
     def get_context_data(self, **kwargs):
@@ -83,18 +83,7 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
     #TODO: Look into improving the should_end_date variable. See notes
 
     template_name = 'reviews/committee_members_workload.html'
-
-    def get_group_required(self):
-        # Depending on committee kwarg we test for the correct group
-
-        group_required = [settings.GROUP_SECRETARY]
-
-        if self.committee.name == 'AK':
-            group_required += [ settings.GROUP_GENERAL_CHAMBER ]
-        if self.committee.name == 'LK':
-            group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
-
-        return group_required
+    group_required = [settings.GROUP_SECRETARY]
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -103,11 +92,12 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
         #There's probably a more elegant solution  possible here ...
         context['committee'] = self.kwargs['committee']
         context['today'] = date.today()
+        context['counts_dict'] = self.get_review_counts_last_year
 
         return context
 
     def get_all_open_decisions(self):
-        '''Returns a queryset with all relevant'''
+        '''Returns a queryset with all open decisions'''
 
         objects = Decision.objects.filter(
             # This fetches all Decisions which are not approved or need revision
@@ -123,6 +113,51 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
             )
 
         return objects
+    
+    def get_review_counts_last_year(self):
+        '''This method creates a dictionary with an overview of all reviews of
+        the past year for each reviewer, by trajectory type (short route,
+        long route, or revision).'''
+
+        dict={}
+        one_year_ago = date.today() - timedelta(days=365)
+
+        decisions_last_year = Decision.objects.filter(
+        review__date_start__lt = one_year_ago,
+        ).select_related(
+        'review',
+        'reviewer',
+        'review__proposal',
+        )
+
+        reviewers = User.objects.exclude(groups=None)
+
+        for reviewer in reviewers:
+            reviewer_full_name = f'{reviewer.first_name} {reviewer.last_name}'
+            decisions_per_reviewer = decisions_last_year.filter(
+            reviewer=reviewer
+            )
+
+            all_decisions_count = len(decisions_per_reviewer)
+
+            all_revisions = decisions_per_reviewer.filter(
+                review__proposal__is_revision = True
+                )
+
+            all_short_routes = decisions_per_reviewer.exclude(
+                review__proposal__is_revision = True
+                ).filter(
+                review__short_route = True
+                )
+
+            revision_counts, short_route_counts = len(all_revisions), len(all_short_routes)
+
+            dict[reviewer_full_name]['revision'] = revision_counts
+            dict[reviewer_full_name]['short_route'] = short_route_counts
+            dict[reviewer_full_name]['long_routes'] = all_decisions_count - revision_counts - short_route_counts
+        
+        return dict
+
 
 class SupervisorDecisionOpenView(BaseDecisionListView):
     """
