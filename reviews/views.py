@@ -102,6 +102,7 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
         context['decisions'] = self.get_all_open_decisions()
         #There's probably a more elegant solution  possible here ...
         context['committee'] = self.kwargs['committee']
+        context['today'] = date.today()
 
         return context
 
@@ -116,6 +117,9 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
             'reviewer',
             'review',
             'review__proposal',
+            ).order_by(
+            "reviewer",
+            "review__date_start"
             )
 
         return objects
