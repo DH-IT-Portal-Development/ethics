@@ -32,15 +32,17 @@
                     <tr>
                         <td>{{ decision.reviewer.first_name }} {{ decision.reviewer.last_name }}</td>
                         <td>
-                            {% if decision.review.short_route == True %}
-                                {% trans 'Korte route' %}
-                            {% elif decision.review.proposal.is_revision == True %}
+                            {% if decision.review.proposal.is_revision == True %}
                                 {% trans 'Revisie' %}
+                            {% elif decision.review.short_route == True %}
+                                {% trans 'Korte route' %}
                             {% else %}
                                 {% trans 'Lange route' %}
                             {% endif %}
                         </td>
-                        <td> <a style="color:blue;" href="{% url 'reviews:detail' pk=decision.review.pk %}"> {{ decision.review.proposal.reference_number }} </a></td>
+                        <td> <a style="color:blue;" href="{% url 'reviews:detail' pk=decision.review.pk %}">
+                             {{ decision.review.proposal.reference_number }} </a> - {{decision.review.proposal.title}}
+                        </td>
                         <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_start|date:"j M Y" }}</td>
                         <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_should_end|date:"j M Y" }}</td>
                     </tr>
