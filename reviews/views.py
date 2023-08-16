@@ -89,8 +89,6 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
         context = super().get_context_data(**kwargs)
 
         context['decisions'] = self.get_all_open_decisions()
-        #There's probably a more elegant solution  possible here ...
-        context['committee'] = self.kwargs['committee']
         context['today'] = date.today()
         context['counts_dict'] = self.get_review_counts_last_year
 

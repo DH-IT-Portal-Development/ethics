@@ -423,20 +423,20 @@ def assign_reviewers(review, list_of_users, route):
 
     # Set the proper end date
     # It should be 2 weeks for short_routes
-    if review.proposal.is_revision and review.date_should_end is None:
+    if review.proposal.is_revision:
+    #It seems desiree wants the should end date to be within one week
+    #if a proposal is a revision
+    #TODO: discuss with Ty
         review.date_should_end = timezone.now() + \
             timezone.timedelta(
                 weeks=1
             )
-    elif review.short_route and review.date_should_end is None:
-        #It seems desiree wants the should end date to be within one week
-        #if a proposal is a revision
-        #TODO: discuss with Ty
+    elif route == True:
         review.date_should_end = timezone.now() + \
             timezone.timedelta(
                 weeks=settings.SHORT_ROUTE_WEEKS
             )
-    elif review.date_should_end is not None:
+    elif route == False:
         # We have no desired end date for long track reviews
         review.date_should_end = None
 
