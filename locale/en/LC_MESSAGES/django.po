@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-17 13:30+0200\n"
+"POT-Creation-Date: 2023-08-17 14:38+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1846,7 +1846,7 @@ msgstr "Amendment"
 
 #: proposals/models.py:627 reviews/api/views.py:39 reviews/api/views.py:328
 #: reviews/templates/reviews/committee_members_workload.html:36
-#: reviews/templates/reviews/committee_members_workload.html:71
+#: reviews/templates/reviews/committee_members_workload.html:72
 #: reviews/templates/reviews/review_detail_sidebar.html:109
 msgid "Revisie"
 msgstr "Revision"
@@ -2311,7 +2311,7 @@ msgid "Verwijderen"
 msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:21
-#: proposals/templates/proposals/proposal_copy.html:85
+#: proposals/templates/proposals/proposal_copy.html:99
 #: tasks/templates/tasks/session_confirm_delete.html:19
 #: tasks/templates/tasks/task_confirm_delete.html:18
 msgid "Annuleren"
@@ -2365,7 +2365,17 @@ msgstr ""
 "original application. (If you can't, ask your supervisor if they have "
 "correctly marked your study as 'revision necessary') "
 
-#: proposals/templates/proposals/proposal_copy.html:51
+#: proposals/templates/proposals/proposal_copy.html:50
+msgid ""
+"Let op! Er kan maar één revisie tegelijk bestaan. Mocht je jouw aanvraag "
+"hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
+"tussen je concept aanvragen staat."
+msgstr "Take note! It is only possible for one revision to exist at a time. "
+"If you do not find your application in the list of options on this page, "
+"please check if your application is not already in the your list of "
+"draft applications."
+
+#: proposals/templates/proposals/proposal_copy.html:58
 msgid ""
 "Je kan hier op basis van een reeds goedgekeurde aanvraag een amendement "
 "indienen. Je studie moet eerst goedgekeurd en afgehandeld zijn voordat die "
@@ -2375,14 +2385,24 @@ msgstr ""
 "been approved. Your application must have been approved by the committee "
 "before it can be selected here. "
 
-#: proposals/templates/proposals/proposal_copy.html:60
+#: proposals/templates/proposals/proposal_copy.html:64
+msgid ""
+"Let op! Er kan maar één amendement tegelijk bestaan. Mocht je jouw aanvraag "
+"hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
+"tussen je concept aanvragen staat."
+msgstr "Take note! It is only possible for one amendment to exist at a time. "
+"If you do not find your application in the list of options on this page, "
+"please check if your application is not already in the your list of "
+"draft applications."
+
+#: proposals/templates/proposals/proposal_copy.html:74
 msgid ""
 "Je kan hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren "
 "aangepast worden."
 msgstr ""
 "Here you can copy an application. All fields can be edited after copying."
 
-#: proposals/templates/proposals/proposal_copy.html:63
+#: proposals/templates/proposals/proposal_copy.html:77
 msgid ""
 "Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe aanvraag "
 "gaat doen op basis van een eerder uitgevoerde aanvraag. Aanvragen t.b.v. "
@@ -2391,7 +2411,7 @@ msgstr ""
 "This page is only intended for creating an entirely new application based on "
 "a previous application. Applications for grant applications cannot be copied."
 
-#: proposals/templates/proposals/proposal_copy.html:69
+#: proposals/templates/proposals/proposal_copy.html:83
 #, python-format
 msgid ""
 "Als je gevraagd is om een revisie te maken van een eerder ingediende "
@@ -2400,7 +2420,7 @@ msgstr ""
 "If you have been asked to revise a previously submitted application, you can "
 "do so <a href=\"%(revision_url)s\">here</a>. "
 
-#: proposals/templates/proposals/proposal_copy.html:75
+#: proposals/templates/proposals/proposal_copy.html:89
 #, python-format
 msgid ""
 "Indien je wijzigingen hebt in een al goedgekeurde aanvraag die daarom "
@@ -2411,7 +2431,7 @@ msgstr ""
 "to be re-reviewed, please make an amendment <a "
 "href=\"%(amendment_url)s\">here</a>."
 
-#: proposals/templates/proposals/proposal_copy.html:87
+#: proposals/templates/proposals/proposal_copy.html:101
 msgid "Kopiëren"
 msgstr "Copy"
 
@@ -4028,25 +4048,28 @@ msgid "Lopende reviews"
 msgstr "Ongoing reviews"
 
 #: reviews/templates/reviews/committee_members_workload.html:23
-#: reviews/templates/reviews/committee_members_workload.html:68
+#: reviews/templates/reviews/committee_members_workload.html:69
 #: reviews/templates/reviews/review_table.html:8
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:68
 msgid "Reviewer"
 msgstr "Reviewer"
 
 #: reviews/templates/reviews/committee_members_workload.html:38
-#: reviews/templates/reviews/committee_members_workload.html:69
+#: reviews/templates/reviews/committee_members_workload.html:70
 msgid "Korte route"
 msgstr "Short route"
 
 #: reviews/templates/reviews/committee_members_workload.html:40
-#: reviews/templates/reviews/committee_members_workload.html:70
 msgid "Lange route"
 msgstr "Long route"
 
-#: reviews/templates/reviews/committee_members_workload.html:64
+#: reviews/templates/reviews/committee_members_workload.html:65
 msgid "Werkverdeling overzicht van afgelopen jaar"
 msgstr "Workload overview of past year"
+
+#: reviews/templates/reviews/committee_members_workload.html:71
+msgid "Lange Route"
+msgstr "Long route"
 
 #: reviews/templates/reviews/decision_form.html:7
 #: reviews/templates/reviews/decision_form.html:17
