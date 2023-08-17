@@ -422,14 +422,13 @@ def assign_reviewers(review, list_of_users, route):
     obsolete_reviewers = current_reviewers - list_of_users
 
     if review.proposal.is_revision:
-    #It seems desiree wants the should end date to be within one week
-    #if a proposal is a revision
-    #TODO: discuss with Ty
+        #Revisions should end in one week.
         review.date_should_end = timezone.now() + \
             timezone.timedelta(
                 weeks=1
             )
     elif route == True:
+        #The short route reviews should take two weeks.
         review.date_should_end = timezone.now() + \
             timezone.timedelta(
                 weeks=settings.SHORT_ROUTE_WEEKS
