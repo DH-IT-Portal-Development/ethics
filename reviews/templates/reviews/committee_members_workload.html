@@ -8,7 +8,7 @@
 
 {% block header_title %}
     {% blocktranslate %}
-        {{ committee }} werkverdeling overzicht {{ block.super }}
+        {{ committee }} werkverdeling overzicht
     {% endblocktranslate%}
 {% endblock %}
 
@@ -61,6 +61,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <br />
             <h3 style="margin-bottom: 20px;">{% trans 'Werkverdeling overzicht van afgelopen jaar' %} </h3>
             <table class="dt" data-language="{% datatables_lang %}">
                 <thead>
