@@ -421,8 +421,6 @@ def assign_reviewers(review, list_of_users, route):
     new_reviewers = list_of_users - current_reviewers
     obsolete_reviewers = current_reviewers - list_of_users
 
-    # Set the proper end date
-    # It should be 2 weeks for short_routes
     if review.proposal.is_revision:
     #It seems desiree wants the should end date to be within one week
     #if a proposal is a revision

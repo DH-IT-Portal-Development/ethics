@@ -15,7 +15,7 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h3>{% trans 'Lopende reviews' %} {{ committee }} </h3>
+            <h3 style="margin-bottom: 20px;">{% trans 'Lopende reviews' %} {{ committee }} </h3>
 
             <table class="dt" data-language="{% datatables_lang %}">
                 <thead>
@@ -61,7 +61,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <h3>{% trans 'Alle reviews van afgelopen jaar per reviewer' %} </h3>
+            <h3 style="margin-bottom: 20px;">{% trans 'Alle reviews van afgelopen jaar per reviewer' %} </h3>
             <table class="dt" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
