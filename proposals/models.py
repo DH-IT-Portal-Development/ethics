@@ -51,18 +51,6 @@ class StudentContext(models.Model):
         return self.description
 
 
-class StudentContext(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['order']
-
-    def __str__(self):
-        return self.description
-
-
 class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
