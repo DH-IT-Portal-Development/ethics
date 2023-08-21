@@ -7,17 +7,17 @@
 {% load datatables %}
 
 {% block header_title %}
-    {% blocktranslate %}
+    {% blocktranslate trimmed %}
         {{ committee }} werkverdeling overzicht
-    {% endblocktranslate%}
+    {% endblocktranslate %}
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h3 style="margin-bottom: 20px;">{% trans 'Lopende reviews' %} {{ committee }} </h3>
+            <h3 class="mb-3">{% trans 'Lopende reviews' %} {{ committee }} </h3>
 
-            <table class="dt" data-language="{% datatables_lang %}">
+            <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
                     <th>{% trans "Reviewer" %}</th>
@@ -41,16 +41,14 @@
                             {% endif %}
                         </td>
                         <td> 
-                            <a style="color:blue;" href="{% url 'reviews:detail' pk=decision.review.pk %}">
+                            <a href="{% url 'reviews:detail' pk=decision.review.pk %}">
                                 {{ decision.review.proposal.reference_number }} 
                             </a> - {{decision.review.proposal.title}}
                         </td>
                         <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_start|date:"j M Y" }}</td>
                         {% if decision.review.date_should_end < today %}
-                            <td data-order="{{ decision.review.date_should_end|date:'c' }}"> 
-                                <font color='red'> 
+                            <td data-order="{{ decision.review.date_should_end|date:'c' }}" class="text-danger"> 
                                     {{ decision.review.date_should_end|date:"j M Y" }} 
-                                </font> 
                             </td>
                         {% else %}
                             <td data-order="{{ decision.review.date_should_end|date:'c' }}">
@@ -62,8 +60,8 @@
                 </tbody>
             </table>
             <br />
-            <h3 style="margin-bottom: 20px;">{% trans 'Werkverdeling overzicht van afgelopen jaar' %} </h3>
-            <table class="dt" data-language="{% datatables_lang %}">
+            <h3 class="mb-3">{% trans 'Werkverdeling overzicht van afgelopen jaar' %} </h3>
+            <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
                     <th>{% trans "Reviewer" %}</th>
@@ -75,10 +73,10 @@
                 <tbody>
                     {% for key, value in counts_dict.items %}
                         <tr>
-                            <th scope="row" style="text-align:center">{{ key }}</th>
-                            <td style="text-align:center">{{ value.0 }}</td>
-                            <td style="text-align:center">{{ value.1 }}</td>
-                            <td style="text-align:center">{{ value.2 }}</td>                       
+                            <th scope="row" >{{ key }}</th>
+                            <td >{{ value.0 }}</td>
+                            <td >{{ value.1 }}</td>
+                            <td >{{ value.2 }}</td>                       
                         </tr>
                     {% endfor %}
                 </tbody>

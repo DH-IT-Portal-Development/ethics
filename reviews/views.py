@@ -8,7 +8,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
@@ -80,8 +81,7 @@ class DecisionOpenView(BaseDecisionListView):
     
 
 class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
-    #TODO: Look into improving the should_end_date variable. See notes
-
+    
     template_name = 'reviews/committee_members_workload.html'
     group_required = [settings.GROUP_SECRETARY]
     
@@ -90,7 +90,7 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
 
         context['decisions'] = self.get_all_open_decisions()
         context['today'] = date.today()
-        context['counts_dict'] = self.get_review_counts_last_year
+        context['counts_dict'] = self.get_review_counts_last_year()
 
         return context
 
@@ -122,13 +122,18 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
 
         decisions_last_year = Decision.objects.filter(
         review__date_start__gt = one_year_ago,
+        review__proposal__reviewing_committee = self.committee,
         ).select_related(
         'review',
         'reviewer',
         'review__proposal',
         )
 
-        reviewers = User.objects.exclude(groups=None)
+        User = get_user_model()
+        '''Are the secreteries always part of a chamber? In that case
+        this queryset can be simplified greatly.'''
+        reviewers = User.objects.filter(Q(groups__name = self.committee) |
+                                        Q(groups__id__gte = 3))
 
         for reviewer in reviewers:
             reviewer_full_name = f'{reviewer.first_name} {reviewer.last_name}'
