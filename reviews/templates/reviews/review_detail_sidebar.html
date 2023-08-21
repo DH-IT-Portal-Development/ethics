@@ -24,9 +24,6 @@ Remember to include it in a with statement if the view does not provide it.
         <li>
             {% trans "Commissie" %}: {{review.proposal.reviewing_committee}}
         </li>
-        <li>
-            <a href="{% url 'reviews:workload' committee=review.proposal.reviewing_committee %}"> {% trans "werkverdeling" %} {{ review.proposal.reviewing_committee }} </a>
-        </li>
         {% if review.proposal.amendment_or_revision %}
             <li>
                 <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
