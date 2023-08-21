@@ -30,7 +30,7 @@
                 <tbody>
                 {% for decision in decisions %}
                     <tr>
-                        <th scope="row">{{ decision.reviewer.first_name }} {{ decision.reviewer.last_name }}</th>
+                        <th scope="row">{{ decision.reviewer.get_full_name }} </th>
                         <td>
                             {% if decision.review.proposal.is_revision == True %}
                                 {% trans 'Revisie' %}
@@ -74,9 +74,7 @@
                 <tbody>
                     {% for reviewer in reviewers %}
                         <tr>
-                            <th scope="row" >
-                                {{ reviewer.first_name }} {{reviewer.last_name}}
-                            </th>
+                            <th scope="row" > {{ reviewer.get_full_name }} </th>
                             <td >{{ reviewer.total }}</td>
                             <td >{{ reviewer.num_short_route }}</td>
                             <td >{{ reviewer.num_long_route }}</td>
