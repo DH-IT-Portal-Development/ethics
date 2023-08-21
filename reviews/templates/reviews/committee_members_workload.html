@@ -65,18 +65,22 @@
                 <thead>
                 <tr>
                     <th>{% trans "Reviewer" %}</th>
+                    <th>{% trans "Totaal" %}</th>
                     <th>{% trans "Korte route" %}</th>
                     <th>{% trans "Lange Route" %}</th>
                     <th>{% trans "Revisie" %}</th>
                 </tr>
                 </thead>
                 <tbody>
-                    {% for key, value in counts_dict.items %}
+                    {% for reviewer in reviewers %}
                         <tr>
-                            <th scope="row" >{{ key }}</th>
-                            <td >{{ value.0 }}</td>
-                            <td >{{ value.1 }}</td>
-                            <td >{{ value.2 }}</td>                       
+                            <th scope="row" >
+                                {{ reviewer.first_name }} {{reviewer.last_name}}
+                            </th>
+                            <td >{{ reviewer.total }}</td>
+                            <td >{{ reviewer.num_short_route }}</td>
+                            <td >{{ reviewer.num_long_route }}</td>
+                            <td >{{ reviewer.num_revision }}</td>                       
                         </tr>
                     {% endfor %}
                 </tbody>

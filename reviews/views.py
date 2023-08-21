@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
-from django.db.models import Q
+from django.db.models import Q, Count
 
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
@@ -90,7 +90,7 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
 
         context['decisions'] = self.get_all_open_decisions()
         context['today'] = date.today()
-        context['counts_dict'] = self.get_review_counts_last_year()
+        context['reviewers'] = self.get_review_counts_last_year()
 
         return context
 
@@ -113,52 +113,31 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
         return objects
     
     def get_review_counts_last_year(self):
-        '''This method creates a dictionary with an overview of all reviews of
-        the past year for each reviewer, by trajectory type (short route,
-        long route, or revision).'''
-
-        dict={}
-        one_year_ago = date.today() - timedelta(days=365)
-
-        decisions_last_year = Decision.objects.filter(
-        review__date_start__gt = one_year_ago,
-        review__proposal__reviewing_committee = self.committee,
-        ).select_related(
-        'review',
-        'reviewer',
-        'review__proposal',
-        )
-
+        '''This function returns an annoted queryset, with counts
+        for specific review types, per reviewer.'''
         User = get_user_model()
-        '''Are the secreteries always part of a chamber? In that case
-        this queryset can be simplified greatly.'''
-        reviewers = User.objects.filter(Q(groups__name = self.committee) |
+        reviewers = User.objects.filter(Q(groups = self.committee) |
                                         Q(groups__id__gte = 3))
-
-        for reviewer in reviewers:
-            reviewer_full_name = f'{reviewer.first_name} {reviewer.last_name}'
-            decisions_per_reviewer = decisions_last_year.filter(
-            reviewer=reviewer
-            )
-
-            all_decisions_count = len(decisions_per_reviewer)
-
-            all_revisions = decisions_per_reviewer.filter(
-                review__proposal__is_revision = True
-                )
-
-            all_short_routes = decisions_per_reviewer.exclude(
-                review__proposal__is_revision = True
-                ).filter(
-                review__short_route = True
-                )
-
-            revision_counts, short_route_counts = len(all_revisions), len(all_short_routes)
-            long_route_counts = all_decisions_count - revision_counts - short_route_counts
-
-            dict[reviewer_full_name] = [short_route_counts, long_route_counts, revision_counts]
-
-        return dict
+        one_year_ago = timezone.now() - timedelta(days=365)
+        base_filter = Q(
+            decision__review__date_start__gt=one_year_ago,
+            decision__review__stage__gt=Review.SUPERVISOR,
+        )
+        return reviewers.annotate(
+            total=Count("decision", filter=base_filter),
+            num_short_route=Count("decision", filter=base_filter & Q(
+                decision__review__proposal__is_revision=False,
+                decision__review__short_route=True
+            )),
+            num_long_route=Count("decision", filter=base_filter & Q(
+                decision__review__proposal__is_revision=False,
+                decision__review__short_route=False
+            )),
+            num_revision=Count("decision", filter=base_filter & Q(
+                decision__review__date_start__gt=one_year_ago,
+                decision__review__proposal__is_revision=True
+            )),
+        )
 
 
 class SupervisorDecisionOpenView(BaseDecisionListView):
