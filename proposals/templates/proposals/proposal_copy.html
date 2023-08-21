@@ -46,11 +46,25 @@
                         'revisie noodzakelijk'.)
                     {% endblocktrans %}
                 </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        Let op! Er kan maar één revisie tegelijk bestaan. Mocht je jouw aanvraag hier niet zien
+                        als optie om te reviseren, bekijk dan of je aanvraag niet al tussen je concept aanvragen 
+                        staat.
+                    {% endblocktrans %}
+                </p>
             {% elif is_amendment %}
                 <p>
                     {% blocktrans trimmed %}
                         Je kan hier op basis van een reeds goedgekeurde aanvraag een amendement indienen. Je studie moet
                         eerst goedgekeurd en afgehandeld zijn voordat die hier gekozen kan worden.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        Let op! Er kan maar één amendement tegelijk bestaan. Mocht je jouw aanvraag hier niet zien
+                        als optie om te reviseren, bekijk dan of je aanvraag niet al tussen je concept aanvragen 
+                        staat.
                     {% endblocktrans %}
                 </p>
             {% else %}

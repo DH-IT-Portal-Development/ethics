@@ -48,6 +48,11 @@ def create_committee_menu(commitee: str) -> List[MenuItem]:
             reverse("reviews:archive", args=[commitee]),
             check=lambda x: is_secretary(x.user),
         ),
+        MenuItem(
+            _("Overzicht werkverdeling commissieleden"),
+            reverse("reviews:workload", args=[commitee]),
+            check=lambda x: is_secretary(x.user),
+        ),
     ]
 
 

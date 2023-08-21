@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-09 11:24+0200\n"
+"POT-Creation-Date: 2023-08-21 14:16+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -112,7 +112,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_update_attachments.html:26
 #: reviews/templates/reviews/change_chamber_form.html:19
 #: reviews/templates/reviews/decision_form.html:90
-#: reviews/templates/reviews/review_assign_form.html:44
+#: reviews/templates/reviews/review_assign_form.html:46
 #: reviews/templates/reviews/review_close_form.html:41
 #: reviews/templates/reviews/review_discontinue_form.html:72
 #: studies/templates/studies/study_update_attachments.html:26
@@ -369,6 +369,7 @@ msgstr "My submitted applications;"
 
 #: main/templates/auth/user_detail.html:51 reviews/api/views.py:45
 #: reviews/api/views.py:276 reviews/api/views.py:338
+#: reviews/templates/reviews/committee_members_workload.html:25
 msgid "Referentienummer"
 msgstr "Reference number"
 
@@ -393,6 +394,7 @@ msgstr "Phase"
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:102
 #: proposals/templates/proposals/vue_templates/proposal_list.html:153
 #: reviews/api/views.py:49 reviews/api/views.py:280 reviews/api/views.py:342
+#: reviews/templates/reviews/committee_members_workload.html:26
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
 #: reviews/templates/reviews/vue_templates/review_list.html:151
@@ -400,6 +402,7 @@ msgid "Datum ingediend"
 msgstr "Date submitted"
 
 #: main/templates/auth/user_detail.html:56
+#: reviews/templates/reviews/committee_members_workload.html:27
 #: reviews/templates/reviews/vue_templates/decision_list.html:163
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:105
 #: reviews/templates/reviews/vue_templates/review_list.html:161
@@ -580,13 +583,13 @@ msgstr ""
 msgid "Site-export"
 msgstr "Site-export"
 
-#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:55
+#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:60
 #: reviews/mixins.py:127
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
 #: main/templates/base/menu.html:72 main/templates/base/menu.html:99
-#: reviews/menus.py:14 reviews/views.py:60
+#: reviews/menus.py:14 reviews/views.py:61
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
@@ -606,16 +609,16 @@ msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
 #: main/templates/base/menu.html:85 main/templates/base/menu.html:112
-#: reviews/menus.py:32 reviews/views.py:121
+#: reviews/menus.py:32 reviews/views.py:182
 msgid "Nog af te handelen aanvragen"
 msgstr "Applications waiting for conclusion"
 
 #: main/templates/base/menu.html:88 main/templates/base/menu.html:115
-#: reviews/menus.py:47 reviews/views.py:177
+#: reviews/menus.py:47 reviews/views.py:238
 msgid "Alle ingezonden aanvragen"
 msgstr "All submitted applications"
 
-#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:62
+#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:67
 #: reviews/mixins.py:130
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
@@ -1645,8 +1648,8 @@ msgid ""
 msgstr ""
 "If the participants of your study need to be misled, you can choose to "
 "temporarily leave your application out of the public archive and the archive "
-"for users of this portal. Would you "
-"like your application to be placed under a temporary embargo?"
+"for users of this portal. Would you like your application to be placed under "
+"a temporary embargo?"
 
 #: proposals/models.py:318
 msgid ""
@@ -1842,6 +1845,8 @@ msgid "Amendement"
 msgstr "Amendment"
 
 #: proposals/models.py:627 reviews/api/views.py:39 reviews/api/views.py:328
+#: reviews/templates/reviews/committee_members_workload.html:36
+#: reviews/templates/reviews/committee_members_workload.html:71
 #: reviews/templates/reviews/review_detail_sidebar.html:106
 msgid "Revisie"
 msgstr "Revision"
@@ -2306,7 +2311,7 @@ msgid "Verwijderen"
 msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:21
-#: proposals/templates/proposals/proposal_copy.html:85
+#: proposals/templates/proposals/proposal_copy.html:99
 #: tasks/templates/tasks/session_confirm_delete.html:19
 #: tasks/templates/tasks/task_confirm_delete.html:18
 msgid "Annuleren"
@@ -2360,7 +2365,17 @@ msgstr ""
 "original application. (If you can't, ask your supervisor if they have "
 "correctly marked your study as 'revision necessary') "
 
-#: proposals/templates/proposals/proposal_copy.html:51
+#: proposals/templates/proposals/proposal_copy.html:50
+msgid ""
+"Let op! Er kan maar één revisie tegelijk bestaan. Mocht je jouw aanvraag "
+"hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
+"tussen je concept aanvragen staat."
+msgstr ""
+"NB! Only one (open) revision may exist at any time. If you do not find your "
+"application in the list of options on this page, please check if your "
+"application is not already in your list of draft applications."
+
+#: proposals/templates/proposals/proposal_copy.html:58
 msgid ""
 "Je kan hier op basis van een reeds goedgekeurde aanvraag een amendement "
 "indienen. Je studie moet eerst goedgekeurd en afgehandeld zijn voordat die "
@@ -2370,14 +2385,25 @@ msgstr ""
 "been approved. Your application must have been approved by the committee "
 "before it can be selected here. "
 
-#: proposals/templates/proposals/proposal_copy.html:60
+#: proposals/templates/proposals/proposal_copy.html:64
+msgid ""
+"Let op! Er kan maar één amendement tegelijk bestaan. Mocht je jouw aanvraag "
+"hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
+"tussen je concept aanvragen staat."
+msgstr ""
+"Take note! It is only possible for one amendment to exist at a time. If you "
+"do not find your application in the list of options on this page, please "
+"check if your application is not already in the your list of draft "
+"applications."
+
+#: proposals/templates/proposals/proposal_copy.html:74
 msgid ""
 "Je kan hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren "
 "aangepast worden."
 msgstr ""
 "Here you can copy an application. All fields can be edited after copying."
 
-#: proposals/templates/proposals/proposal_copy.html:63
+#: proposals/templates/proposals/proposal_copy.html:77
 msgid ""
 "Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe aanvraag "
 "gaat doen op basis van een eerder uitgevoerde aanvraag. Aanvragen t.b.v. "
@@ -2386,7 +2412,7 @@ msgstr ""
 "This page is only intended for creating an entirely new application based on "
 "a previous application. Applications for grant applications cannot be copied."
 
-#: proposals/templates/proposals/proposal_copy.html:69
+#: proposals/templates/proposals/proposal_copy.html:83
 #, python-format
 msgid ""
 "Als je gevraagd is om een revisie te maken van een eerder ingediende "
@@ -2395,7 +2421,7 @@ msgstr ""
 "If you have been asked to revise a previously submitted application, you can "
 "do so <a href=\"%(revision_url)s\">here</a>. "
 
-#: proposals/templates/proposals/proposal_copy.html:75
+#: proposals/templates/proposals/proposal_copy.html:89
 #, python-format
 msgid ""
 "Indien je wijzigingen hebt in een al goedgekeurde aanvraag die daarom "
@@ -2406,7 +2432,7 @@ msgstr ""
 "to be re-reviewed, please make an amendment <a "
 "href=\"%(amendment_url)s\">here</a>."
 
-#: proposals/templates/proposals/proposal_copy.html:87
+#: proposals/templates/proposals/proposal_copy.html:101
 msgid "Kopiëren"
 msgstr "Copy"
 
@@ -2982,6 +3008,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start.html:53
 #: proposals/templates/proposals/proposal_start_practice.html:55
 #: proposals/templates/proposals/study_start.html:73
+#: reviews/templates/reviews/committee_members_workload.html:24
 msgid "Traject"
 msgstr "Trajectory"
 
@@ -3744,13 +3771,17 @@ msgstr "Comments about this revision"
 msgid "Bevestig beëindiging"
 msgstr "Confirm termination of this review"
 
-#: reviews/menus.py:37 reviews/views.py:137
+#: reviews/menus.py:37 reviews/views.py:198
 msgid "Aanvragen in revisie"
 msgstr "Applications in revision"
 
-#: reviews/menus.py:42 reviews/views.py:151
+#: reviews/menus.py:42 reviews/views.py:212
 msgid "Alle lopende aanvragen"
 msgstr "All running applications"
+
+#: reviews/menus.py:52
+msgid "Overzicht werkverdeling commissieleden"
+msgstr "Overview workload committee members"
 
 #: reviews/models.py:17
 msgid "Beoordeling door eindverantwoordelijke"
@@ -4001,10 +4032,47 @@ msgid "Beoordelende kamer wijzigen"
 msgstr "Change reviewing chamber"
 
 #: reviews/templates/reviews/change_chamber_form.html:18
-#: reviews/templates/reviews/review_assign_form.html:46
+#: reviews/templates/reviews/review_assign_form.html:48
 #: reviews/templates/reviews/review_discontinue_form.html:74
 msgid "OK"
 msgstr "OK"
+
+#: reviews/templates/reviews/committee_members_workload.html:10
+#, python-format
+msgid "%(committee)s werkverdeling overzicht"
+msgstr "%(committee)s workload overview"
+
+#: reviews/templates/reviews/committee_members_workload.html:18
+msgid "Lopende reviews"
+msgstr "Ongoing reviews"
+
+#: reviews/templates/reviews/committee_members_workload.html:23
+#: reviews/templates/reviews/committee_members_workload.html:67
+#: reviews/templates/reviews/review_table.html:8
+#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:68
+msgid "Reviewer"
+msgstr "Reviewer"
+
+#: reviews/templates/reviews/committee_members_workload.html:38
+#: reviews/templates/reviews/committee_members_workload.html:69
+msgid "Korte route"
+msgstr "Short route"
+
+#: reviews/templates/reviews/committee_members_workload.html:40
+msgid "Lange route"
+msgstr "Long route"
+
+#: reviews/templates/reviews/committee_members_workload.html:63
+msgid "Werkverdeling overzicht van afgelopen jaar"
+msgstr "Workload overview of past year"
+
+#: reviews/templates/reviews/committee_members_workload.html:68
+msgid "Totaal"
+msgstr "Total"
+
+#: reviews/templates/reviews/committee_members_workload.html:70
+msgid "Lange Route"
+msgstr "Long route"
 
 #: reviews/templates/reviews/decision_form.html:7
 #: reviews/templates/reviews/decision_form.html:17
@@ -4021,8 +4089,7 @@ msgstr ""
 "    You can now give a go or no-go for the application <em>%(title)s</em>, "
 "%(refnum)s in %(chamber)s.\n"
 "    You can see the details of this application <a href=\"%(pdf_url)s\" "
-"target=\"_blank\">here</a> (downloads as PDF).\n"
-"    "
+"target=\"_blank\">here</a> (downloads as PDF)."
 
 #: reviews/templates/reviews/decision_form.html:32
 #, python-format
@@ -4119,17 +4186,14 @@ msgid "Commissieleden aanstellen"
 msgstr "Appoint committee members"
 
 #: reviews/templates/reviews/review_assign_form.html:36
-#, python-format
 msgid ""
-"\n"
-"                    Kies hier de geschikte route en commissieleden voor de "
-"aanvraag <em>%(title)s</em>.\n"
-"                "
+"<p> Kies hier de geschikte route en commissieleden voor de aanvraag "
+"<em>%(title)s</em>. klik <a href=\"%(workload_url)s\">hier</a> voor een "
+"overzicht van de werkverdeling van deze commissie. <p\\>"
 msgstr ""
-"\n"
-"    Choose the appropriate route and committee members for the application "
-"<em>%(title)s</em> here.\n"
-"    "
+"<p> Choose the appropriate route and committee members for the application "
+"<em>%(title)s</em> here. Click <a href=\"%(workload_url)s\">here</a> to see an "
+"overview of the workload for each committee member. <p\\>"
 
 #: reviews/templates/reviews/review_close_form.html:7
 #: reviews/templates/reviews/review_close_form.html:25
@@ -4363,11 +4427,6 @@ msgstr "Application"
 #, python-format
 msgid "<em>%(title)s</em> door %(author)s"
 msgstr "<em>%(title)s</em> by %(author)s"
-
-#: reviews/templates/reviews/review_table.html:8
-#: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:68
-msgid "Reviewer"
-msgstr "Reviewer"
 
 #: reviews/templates/reviews/review_table.html:10
 msgid "Genomen op"
@@ -4604,15 +4663,15 @@ msgstr ""
 "The application contains psychophysiological measurements on children under "
 "{} year(s) old."
 
-#: reviews/views.py:46
+#: reviews/views.py:47
 msgid "Mijn besluiten"
 msgstr "My results"
 
-#: reviews/views.py:75
+#: reviews/views.py:76
 msgid "Openstaande besluiten commissieleden"
 msgstr "Pending decisions committee members"
 
-#: reviews/views.py:91
+#: reviews/views.py:152
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
@@ -5775,6 +5834,9 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "werkverdeling"
+#~ msgstr "workload"
 
 #~ msgid "Uitvoerende(n) (inclusief uzelf)"
 #~ msgstr "Researcher(s) carrying out the study (including yourself)"
