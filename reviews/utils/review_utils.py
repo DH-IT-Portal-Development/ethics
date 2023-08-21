@@ -427,6 +427,10 @@ def assign_reviewers(review, list_of_users, route):
             timezone.timedelta(
                 weeks=1
             )
+    elif review.date_should_end is not None:
+        #if the date_end_variable gets assigned through auto review
+        #the review keeps this date
+        pass
     elif route == True:
         #The short route reviews should take two weeks.
         review.date_should_end = timezone.now() + \
