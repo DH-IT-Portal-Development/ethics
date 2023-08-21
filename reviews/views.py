@@ -115,8 +115,8 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
     def get_review_counts_last_year(self):
         '''This function returns an annoted queryset, with counts
         for specific review types, per reviewer.'''
-        User = get_user_model()
-        reviewers = User.objects.filter(Q(groups = self.committee) |
+
+        reviewers = get_user_model().objects.filter(Q(groups = self.committee) |
                                         Q(groups__id__gte = 3))
         one_year_ago = timezone.now() - timedelta(days=365)
         base_filter = Q(

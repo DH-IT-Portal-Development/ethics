@@ -30,7 +30,7 @@
                 <tbody>
                 {% for decision in decisions %}
                     <tr>
-                        <td>{{ decision.reviewer.first_name }} {{ decision.reviewer.last_name }}</td>
+                        <th scope="row">{{ decision.reviewer.first_name }} {{ decision.reviewer.last_name }}</th>
                         <td>
                             {% if decision.review.proposal.is_revision == True %}
                                 {% trans 'Revisie' %}
