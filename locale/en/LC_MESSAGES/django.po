@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-17 14:38+0200\n"
+"POT-Creation-Date: 2023-08-21 14:16+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -112,7 +112,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_update_attachments.html:26
 #: reviews/templates/reviews/change_chamber_form.html:19
 #: reviews/templates/reviews/decision_form.html:90
-#: reviews/templates/reviews/review_assign_form.html:44
+#: reviews/templates/reviews/review_assign_form.html:46
 #: reviews/templates/reviews/review_close_form.html:41
 #: reviews/templates/reviews/review_discontinue_form.html:72
 #: studies/templates/studies/study_update_attachments.html:26
@@ -583,13 +583,13 @@ msgstr ""
 msgid "Site-export"
 msgstr "Site-export"
 
-#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:55
+#: main/templates/base/menu.html:69 reviews/forms.py:29 reviews/menus.py:60
 #: reviews/mixins.py:127
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
 #: main/templates/base/menu.html:72 main/templates/base/menu.html:99
-#: reviews/menus.py:14 reviews/views.py:60
+#: reviews/menus.py:14 reviews/views.py:61
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
@@ -609,16 +609,16 @@ msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
 #: main/templates/base/menu.html:85 main/templates/base/menu.html:112
-#: reviews/menus.py:32 reviews/views.py:198
+#: reviews/menus.py:32 reviews/views.py:182
 msgid "Nog af te handelen aanvragen"
 msgstr "Applications waiting for conclusion"
 
 #: main/templates/base/menu.html:88 main/templates/base/menu.html:115
-#: reviews/menus.py:47 reviews/views.py:254
+#: reviews/menus.py:47 reviews/views.py:238
 msgid "Alle ingezonden aanvragen"
 msgstr "All submitted applications"
 
-#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:62
+#: main/templates/base/menu.html:96 reviews/forms.py:30 reviews/menus.py:67
 #: reviews/mixins.py:130
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
@@ -1040,7 +1040,7 @@ msgstr "Password"
 
 #: main/templatetags/compare_tags.py:80
 #: proposals/templates/proposals/vue_templates/proposal_list.html:49
-#: reviews/templates/reviews/review_detail_sidebar.html:37
+#: reviews/templates/reviews/review_detail_sidebar.html:34
 #: reviews/templates/reviews/simple_compare_link.html:8
 #: reviews/templates/reviews/vue_templates/decision_list.html:53
 #: reviews/templates/reviews/vue_templates/review_list.html:54
@@ -1846,8 +1846,8 @@ msgstr "Amendment"
 
 #: proposals/models.py:627 reviews/api/views.py:39 reviews/api/views.py:328
 #: reviews/templates/reviews/committee_members_workload.html:36
-#: reviews/templates/reviews/committee_members_workload.html:72
-#: reviews/templates/reviews/review_detail_sidebar.html:109
+#: reviews/templates/reviews/committee_members_workload.html:71
+#: reviews/templates/reviews/review_detail_sidebar.html:106
 msgid "Revisie"
 msgstr "Revision"
 
@@ -2370,10 +2370,10 @@ msgid ""
 "Let op! Er kan maar één revisie tegelijk bestaan. Mocht je jouw aanvraag "
 "hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
 "tussen je concept aanvragen staat."
-msgstr "Take note! It is only possible for one revision to exist at a time. "
-"If you do not find your application in the list of options on this page, "
-"please check if your application is not already in the your list of "
-"draft applications."
+msgstr ""
+"NB! Only one (open) revision may exist at any time. If you do not find your "
+"application in the list of options on this page, please check if your "
+"application is not already in your list of draft applications."
 
 #: proposals/templates/proposals/proposal_copy.html:58
 msgid ""
@@ -2390,10 +2390,11 @@ msgid ""
 "Let op! Er kan maar één amendement tegelijk bestaan. Mocht je jouw aanvraag "
 "hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
 "tussen je concept aanvragen staat."
-msgstr "Take note! It is only possible for one amendment to exist at a time. "
-"If you do not find your application in the list of options on this page, "
-"please check if your application is not already in the your list of "
-"draft applications."
+msgstr ""
+"Take note! It is only possible for one amendment to exist at a time. If you "
+"do not find your application in the list of options on this page, please "
+"check if your application is not already in the your list of draft "
+"applications."
 
 #: proposals/templates/proposals/proposal_copy.html:74
 msgid ""
@@ -3770,13 +3771,17 @@ msgstr "Comments about this revision"
 msgid "Bevestig beëindiging"
 msgstr "Confirm termination of this review"
 
-#: reviews/menus.py:37 reviews/views.py:214
+#: reviews/menus.py:37 reviews/views.py:198
 msgid "Aanvragen in revisie"
 msgstr "Applications in revision"
 
-#: reviews/menus.py:42 reviews/views.py:228
+#: reviews/menus.py:42 reviews/views.py:212
 msgid "Alle lopende aanvragen"
 msgstr "All running applications"
+
+#: reviews/menus.py:52
+msgid "Overzicht werkverdeling commissieleden"
+msgstr "Overview workload committee members"
 
 #: reviews/models.py:17
 msgid "Beoordeling door eindverantwoordelijke"
@@ -4027,35 +4032,29 @@ msgid "Beoordelende kamer wijzigen"
 msgstr "Change reviewing chamber"
 
 #: reviews/templates/reviews/change_chamber_form.html:18
-#: reviews/templates/reviews/review_assign_form.html:46
+#: reviews/templates/reviews/review_assign_form.html:48
 #: reviews/templates/reviews/review_discontinue_form.html:74
 msgid "OK"
 msgstr "OK"
 
 #: reviews/templates/reviews/committee_members_workload.html:10
 #, python-format
-msgid ""
-"\n"
-"        %(committee)s werkverdeling overzicht\n"
-"    "
-msgstr ""
-"\n"
-"        %(committee)s workload overview\n"
-"    "
+msgid "%(committee)s werkverdeling overzicht"
+msgstr "%(committee)s workload overview"
 
 #: reviews/templates/reviews/committee_members_workload.html:18
 msgid "Lopende reviews"
 msgstr "Ongoing reviews"
 
 #: reviews/templates/reviews/committee_members_workload.html:23
-#: reviews/templates/reviews/committee_members_workload.html:69
+#: reviews/templates/reviews/committee_members_workload.html:67
 #: reviews/templates/reviews/review_table.html:8
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:68
 msgid "Reviewer"
 msgstr "Reviewer"
 
 #: reviews/templates/reviews/committee_members_workload.html:38
-#: reviews/templates/reviews/committee_members_workload.html:70
+#: reviews/templates/reviews/committee_members_workload.html:69
 msgid "Korte route"
 msgstr "Short route"
 
@@ -4063,11 +4062,15 @@ msgstr "Short route"
 msgid "Lange route"
 msgstr "Long route"
 
-#: reviews/templates/reviews/committee_members_workload.html:65
+#: reviews/templates/reviews/committee_members_workload.html:63
 msgid "Werkverdeling overzicht van afgelopen jaar"
 msgstr "Workload overview of past year"
 
-#: reviews/templates/reviews/committee_members_workload.html:71
+#: reviews/templates/reviews/committee_members_workload.html:68
+msgid "Totaal"
+msgstr "Total"
+
+#: reviews/templates/reviews/committee_members_workload.html:70
 msgid "Lange Route"
 msgstr "Long route"
 
@@ -4086,8 +4089,7 @@ msgstr ""
 "    You can now give a go or no-go for the application <em>%(title)s</em>, "
 "%(refnum)s in %(chamber)s.\n"
 "    You can see the details of this application <a href=\"%(pdf_url)s\" "
-"target=\"_blank\">here</a> (downloads as PDF).\n"
-"    "
+"target=\"_blank\">here</a> (downloads as PDF)."
 
 #: reviews/templates/reviews/decision_form.html:32
 #, python-format
@@ -4184,17 +4186,14 @@ msgid "Commissieleden aanstellen"
 msgstr "Appoint committee members"
 
 #: reviews/templates/reviews/review_assign_form.html:36
-#, python-format
 msgid ""
-"\n"
-"                    Kies hier de geschikte route en commissieleden voor de "
-"aanvraag <em>%(title)s</em>.\n"
-"                "
+"<p> Kies hier de geschikte route en commissieleden voor de aanvraag "
+"<em>%(title)s</em>. klik <a href=\"%(workload_url)s\">hier</a> voor een "
+"overzicht van de werkverdeling van deze commissie. <p\\>"
 msgstr ""
-"\n"
-"    Choose the appropriate route and committee members for the application "
-"<em>%(title)s</em> here.\n"
-"    "
+"<p> Choose the appropriate route and committee members for the application "
+"<em>%(title)s</em> here. Click <a href=\"%(workload_url)s\">here</a> to see an "
+"overview of the workload for each committee member. <p\\>"
 
 #: reviews/templates/reviews/review_close_form.html:7
 #: reviews/templates/reviews/review_close_form.html:25
@@ -4267,24 +4266,20 @@ msgstr "Reference"
 msgid "Commissie"
 msgstr "Committee"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:28
-msgid "werkverdeling"
-msgstr "workload"
-
-#: reviews/templates/reviews/review_detail_sidebar.html:33
+#: reviews/templates/reviews/review_detail_sidebar.html:30
 #, python-format
 msgid "%(r_or_a)s van<br/> %(parent)s"
 msgstr "%(r_or_a)s of<br/> %(parent)s"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:43
+#: reviews/templates/reviews/review_detail_sidebar.html:40
 msgid "Aanvrager(s)"
 msgstr "Applicant"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:53
+#: reviews/templates/reviews/review_detail_sidebar.html:50
 msgid "eindverantwoordelijke"
 msgstr "Researcher with final responsibility"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:57
+#: reviews/templates/reviews/review_detail_sidebar.html:54
 #, python-format
 msgid ""
 "\n"
@@ -4295,7 +4290,7 @@ msgstr ""
 "    Reviewing round started on %(date_start)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:63
+#: reviews/templates/reviews/review_detail_sidebar.html:60
 #, python-format
 msgid ""
 "\n"
@@ -4306,7 +4301,7 @@ msgstr ""
 "    Reviewing round ended on %(date_end)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:70
+#: reviews/templates/reviews/review_detail_sidebar.html:67
 #, python-format
 msgid ""
 "\n"
@@ -4317,7 +4312,7 @@ msgstr ""
 "        Continuation: %(continuation)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:76
+#: reviews/templates/reviews/review_detail_sidebar.html:73
 #, python-format
 msgid ""
 "\n"
@@ -4328,7 +4323,7 @@ msgstr ""
 "    Confirmation sent on %(date_confirmed)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:80
+#: reviews/templates/reviews/review_detail_sidebar.html:77
 #, python-format
 msgid ""
 "\n"
@@ -4339,7 +4334,7 @@ msgstr ""
 "        Comments: %(comments)s.\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:90
+#: reviews/templates/reviews/review_detail_sidebar.html:87
 msgid ""
 "\n"
 "                        Dit is een aanvraag voor voortoetsing.\n"
@@ -4349,11 +4344,11 @@ msgstr ""
 "    This is an application for preliminary assessment.\n"
 "    "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:99
+#: reviews/templates/reviews/review_detail_sidebar.html:96
 msgid "Dit is een beslissing van een eindverantwoordelijke"
 msgstr "This is a supervisor review"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:110
+#: reviews/templates/reviews/review_detail_sidebar.html:107
 msgid ""
 "\n"
 "                Deze aanvraag heeft een revisie gehad tijdens het "
@@ -4365,7 +4360,7 @@ msgstr ""
 "the FEtC-H .\n"
 "    "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:114
+#: reviews/templates/reviews/review_detail_sidebar.html:111
 msgid ""
 "\n"
 "                    Er zijn de volgende opmerkingen bijgevoegd:<br/>\n"
@@ -4375,7 +4370,7 @@ msgstr ""
 "            The following comments have been provided:<br/>\n"
 "        "
 
-#: reviews/templates/reviews/review_detail_sidebar.html:122
+#: reviews/templates/reviews/review_detail_sidebar.html:119
 msgid "Documenten"
 msgstr "Documents"
 
@@ -4668,15 +4663,15 @@ msgstr ""
 "The application contains psychophysiological measurements on children under "
 "{} year(s) old."
 
-#: reviews/views.py:46
+#: reviews/views.py:47
 msgid "Mijn besluiten"
 msgstr "My results"
 
-#: reviews/views.py:75
+#: reviews/views.py:76
 msgid "Openstaande besluiten commissieleden"
 msgstr "Pending decisions committee members"
 
-#: reviews/views.py:168
+#: reviews/views.py:152
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
@@ -5839,6 +5834,9 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "werkverdeling"
+#~ msgstr "workload"
 
 #~ msgid "Uitvoerende(n) (inclusief uzelf)"
 #~ msgstr "Researcher(s) carrying out the study (including yourself)"

@@ -33,12 +33,12 @@
             </h2>
 
             {% url 'reviews:workload' review.proposal.reviewing_committee as workload_url %}
-            <p>
-                {% blocktrans with title=review.proposal.title %}
+            {% blocktrans trimmed with title=review.proposal.title %}
+                <p>
                     Kies hier de geschikte route en commissieleden voor de aanvraag <em>{{ title }}</em>.
                     klik <a href="{{ workload_url }}">hier</a> voor een overzicht van de werkverdeling van deze commissie.
-                {% endblocktrans %}
-            </p>
+                <p\>
+            {% endblocktrans %}
             <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 <div class="float-right">
