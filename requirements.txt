@@ -25,7 +25,7 @@ blessed==1.20.0
     # via curtsies
 bpython==0.24
     # via -r requirements.in
-certifi==2023.5.7
+certifi==2023.7.22
     # via requests
 cffi==1.15.1
     # via cryptography
@@ -93,8 +93,6 @@ html5lib==1.1
 idna==3.4
     # via requests
 imagesize==1.4.1
-    # via sphinx
-importlib-metadata==6.8.0
     # via sphinx
 jinja2==3.1.2
     # via sphinx
@@ -227,9 +225,7 @@ tinycss2==1.2.1
     #   svglib
 typing-extensions==4.7.1
     # via
-    #   asgiref
     #   django-modeltranslation
-    #   pypdf
     #   qrcode
 tzlocal==5.0.1
     # via pyhanko
@@ -252,5 +248,3 @@ webencodings==0.5.1
     #   tinycss2
 xhtml2pdf==0.2.11
     # via -r requirements.in
-zipp==3.16.0
-    # via importlib-metadata
