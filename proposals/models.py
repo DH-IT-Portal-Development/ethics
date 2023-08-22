@@ -54,18 +54,6 @@ class StudentContext(models.Model):
         return self.description
 
 
-class StudentContext(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ['order']
-
-    def __str__(self):
-        return self.description
-
-
 class Funding(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -93,7 +81,7 @@ class Institution(models.Model):
 
     def __str__(self):
         return self.description
-    
+
 class ProposalQuerySet(models.QuerySet):
 
     DECISION_MADE = 55
@@ -103,12 +91,12 @@ class ProposalQuerySet(models.QuerySet):
                                              status_review=True,
                                              in_archive=True,
         )
-    
+
     def no_embargo(self):
-        return self.filter(models.Q(embargo_end_date__isnull=True) 
+        return self.filter(models.Q(embargo_end_date__isnull=True)
              | models.Q(embargo_end_date__lt=date.today())
              )
-    
+
     def public_archive(self):
         two_years_ago = (
                 date.today() -
@@ -119,12 +107,12 @@ class ProposalQuerySet(models.QuerySet):
         ).order_by(
             "-date_reviewed"
         )
-    
+
     def export(self):
         return self.archive_pre_filter().order_by(
             "-date_reviewed"
         )
-    
+
     def users_only_archive(self, committee):
         return self.archive_pre_filter().no_embargo().filter(
                                        is_pre_assessment=False,
@@ -241,7 +229,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     translated_forms = models.BooleanField(
-        mark_safe_lazy(_('Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?')), 
+        mark_safe_lazy(_('Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?')),
         default=None,
         blank=True,
         null=True,
@@ -621,7 +609,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
                 if session.tasks_duration is None:
                     break
         return current_session
-    
+
     def amendment_or_revision(self):
         if self.is_revision and self.parent:
             return _('Amendement') if self.parent.status_review else _('Revisie')
@@ -669,6 +657,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         if self.is_practice():
             return '{} ({}) (Practice)'.format(self.title, self.created_by)
         return '{} ({})'.format(self.title, self.created_by)
+
 
 class Wmo(models.Model):
     NO_WMO = 0

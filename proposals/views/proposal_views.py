@@ -4,6 +4,7 @@ import datetime
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
     UserFormKwargsMixin
+
 from django.conf import settings
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
@@ -342,7 +343,7 @@ class TranslatedConsentFormsView(UpdateView):
         """Return to the overview of the last Study"""
         return reverse('studies:design_end', args=(self.object.last_study().pk,))
 
-from braces import views as braces
+
 class ProposalDataManagement(UpdateView):
     model = Proposal
     form_class = ProposalDataManagementForm
@@ -355,8 +356,9 @@ class ProposalDataManagement(UpdateView):
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
         return reverse('proposals:consent', args=(self.object.pk,))
-    
-class ProposalUpdateDataManagement(braces.GroupRequiredMixin, generic.UpdateView):
+
+
+class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     """
     Allows the secretary to change the Data Management Plan on the Proposal level
     """

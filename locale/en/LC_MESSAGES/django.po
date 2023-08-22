@@ -14,6 +14,50 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
+"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
+"#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
+"#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.acc  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.acc  #-#-#-#-#\n"
+"#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  django.po.acc  #-#-#-#-#\n"
+"#-#-#-#-#  manual.po  #-#-#-#-#\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"#-#-#-#-#  github.po  #-#-#-#-#\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
@@ -39,6 +83,7 @@ msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 #: main/templates/main/index.html:177
 #: proposals/templates/proposals/proposal_pdf.html:430
 #: proposals/templates/proposals/study_consent.html:8
+#: proposals/templates/proposals/study_consent.html:74
 #: proposals/templates/proposals/translated_consent_forms.html:7
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
@@ -500,10 +545,6 @@ msgstr "Back to the beginning of the session"
 #: main/templates/base/form_buttons.html:35
 msgid "Opslaan en volgende stap >>"
 msgstr "Save and go to next step >>"
-
-#: main/templates/base/login_header.html:6
-msgid "Welkom {}"
-msgstr "Welcome, {}"
 
 #: main/templates/base/menu.html:11 proposals/menus.py:80
 msgid "Mijn aanvragen"
@@ -1601,18 +1642,18 @@ msgstr "Other languages:"
 msgid "Hoe wordt dit onderzoek gefinancierd?"
 msgstr "How is this study funded?"
 
-#: proposals/models.py:271
+#: proposals/models.py:193
 msgid ""
 "Wat is de naam van het gefinancierde project en wat is het projectnummer?"
 msgstr "What is the name of the funded project and what is the project number?"
 
-#: proposals/models.py:275
+#: proposals/models.py:197
 msgid ""
 "De titel die je hier opgeeft zal in de formele toestemmingsbrief gebruikt "
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:281
+#: proposals/models.py:215
 msgid "Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden."
 msgstr "Space for possible comments. Use a maximum of a 1000 words."
 
@@ -1805,7 +1846,7 @@ msgstr ""
 "researchers need to have logged into this portal at least once, in order to "
 "be selectable here."
 
-#: proposals/models.py:527
+#: proposals/models.py:445
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:115
 #: proposals/templates/proposals/vue_templates/proposal_list.html:166
 msgid "Eindverantwoordelijke onderzoeker"
@@ -5834,40 +5875,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "werkverdeling"
-#~ msgstr "workload"
-
-#~ msgid "Uitvoerende(n) (inclusief uzelf)"
-#~ msgstr "Researcher(s) carrying out the study (including yourself)"
-
-#~ msgid "Bannerfoto door Simona Evsatieva"
-#~ msgstr "Cover image by Simona Evsatieva"
-
-#~ msgid "Supervisor"
-#~ msgstr "Supervisor"
-
-#~ msgid ""
-#~ "Hier kan je de Informed consent formulieren uploaden voor de opgegeven "
-#~ "traject(en). Optioneel kan je indien nodig maximaal 2 paar extra "
-#~ "formulieren uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' "
-#~ "onderaan de pagina. Deze velden kan je weer weg halen door alle "
-#~ "formulieren te wissen."
-#~ msgstr ""
-#~ "        You can upload the informed consent forms for your trajectories "
-#~ "here. If needed, you can also upload up to 2 sets of additional forms. "
-#~ "<br/>         These extra fields can be removed by clearing all forms in "
-#~ "one section.     "
-
-#~ msgid "Worden de informed consent formulieren vertaald?"
-#~ msgstr "Will the informed consent forms get translated?"
-
-#, python-format
-#~ msgid ""
-#~ "\n"
-#~ "                        Revisie/amendement van<br/> %(parent)s\n"
-#~ "                    "
-#~ msgstr ""
-#~ "\n"
-#~ "Revision or amendment of<br/> %(parent)s\n"
-#~ "   "

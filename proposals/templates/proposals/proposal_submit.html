@@ -17,16 +17,16 @@
 {% block html_head %}
 <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
 <script>
-        $(function () {
-            depends_on_value('embargo', 'True', 'embargo_end_date');
+    $(function () {
+        depends_on_value('embargo', 'True', 'embargo_end_date');
 
-    // Add datepicker for date_start, set locale to current language
-    $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
+        // Add datepicker for date_start, set locale to current language
+        $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
-            var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'yy-mm-dd';
-            $("#id_embargo_end_date").datepicker({
-                dateFormat: date_format,
-            })
+        var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'yy-mm-dd';
+        $("#id_embargo_end_date").datepicker({
+            dateFormat: date_format,
+        })
     });
 
     $(function() {
