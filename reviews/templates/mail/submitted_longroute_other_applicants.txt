@@ -1,0 +1,34 @@
+{% extends "mail/base.txt" %}
+
+{% block content_nl %}
+{% if was_revised %}
+Beste collega,
+
+Uw collega {{ creator }} heeft een gereviseerde aanvraag ingediend voor een onderzoek, waar u aan meewerkt, bij de ethische commissie. De aanvraag is door de FETC-GW ontvangen.
+
+Dit houdt in dat de revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen uw collega, {{ creator }}, binnenkort een beoordeling te kunnen sturen.
+
+{% else %}
+Beste collega,
+
+Uw collega {{ creator }} heeft een aanvraag ingediend voor een onderzoek, waar u aan meewerkt, bij de ethische commissie. De aanvraag is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status 'lange-route onderzoek', zie appendix A van het reglement voor de criteria (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/).
+
+Dit houdt in dat je aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, wanneer je aanvraag tenminste een week voor die vergadering is ingediend. Zie de FETC-GW-agenda (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/) voor een overzicht van de komende vergaderingen. Kort na de vergadering zal {{ creator }} de beoordeling ontvangen.
+{% endif %}
+{% endblock %}
+
+{% block content_en %}
+{% if was_revised %}
+Dear colleague,
+
+Your colleague {{ creator }} has submitted a revised application for a study, in which you are participating. The FEtC-H has received your application.
+
+This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send your colleague {{ creator }} a review soon.
+{% else %}
+Dear colleague,
+
+Your colleague {{ creator }} has submitted an application for a study, in which you are participating. The FEtC-H has received your application. The automatic screening of the portal has given your study the status of long-route research, see appendix A in the regulations for the criteria (https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/).
+
+This means that your study will be discussed during the next FEtC-H meeting, if your application was submitted at least one week before that meeting. See the FEtC-H agenda (https://fetc-gw.wp.hum.uu.nl/en/category/agenda-en/) for an overview of upcoming meetings. {{ creator }} will receive the assessment shortly after the meeting.
+{% endif %}
+{% endblock %}
