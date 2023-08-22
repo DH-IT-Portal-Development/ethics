@@ -98,8 +98,22 @@
                     {% if proposal.other_applicants or p_proposal.other_applicants %}
                         <tr>
                             <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th>
-                            <td>{{ p_proposal.applicants.all|unordered_list }}</td>
-                            <td>{{ proposal.applicants.all|unordered_list }}</td>
+                            <td>
+                                <ul style="padding:0">
+                                {% for applicant in p_proposal.applicants.all %}
+                                <li>{{ applicant.get_full_name }}</li>
+                                {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul style="padding:0">
+                                {% for applicant in proposal.applicants.all %}
+                                <li>
+                                    {{ applicant.get_full_name }}
+                                </li>
+                                {% endfor %}
+                                </ul>
+                            </td>
                         </tr>
                     {% endif %}
                     <tr>
