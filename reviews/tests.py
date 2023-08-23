@@ -30,6 +30,7 @@ class BaseReviewTestCase(TestCase):
         """
         self.setup_users()
         self.setup_proposal()
+        super().setUp()
 
     def setup_proposal(self):
 
@@ -302,7 +303,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 1)
 
 
-class BaseViewTestCase(BaseReviewTestCase):
+class BaseViewTestCase():
 
     # This testcase supports only class-based views
     view_class = None
@@ -317,11 +318,10 @@ class BaseViewTestCase(BaseReviewTestCase):
     enforce_csrf = True
 
     def setUp(self):
-        super().setUp()
         self.client = Client()
         self.view = self.view_class.as_view()
         self.factory = RequestFactory()
-        self.review = start_review(self.proposal)
+        super().setUp()
 
     def check_access(self, user):
         request = self.factory.get(
@@ -358,9 +358,16 @@ class BaseViewTestCase(BaseReviewTestCase):
         return self.view_path
 
 
-class ReviewCloseTestCase(BaseViewTestCase):
+class ReviewCloseTestCase(
+        BaseViewTestCase,
+        BaseReviewTestCase,
+):
 
     view_class = ReviewCloseView
+
+    def setUp(self):
+        super().setUp()
+        self.review = start_review(self.proposal)
 
     def get_view_path(self):
         pk = self.review.pk
@@ -454,7 +461,7 @@ class ReviewCloseTestCase(BaseViewTestCase):
             "continuation": self.review.METC,
         }
         self.client.force_login(self.secretary)
-        page = self.post(form_values)
+        self.post(form_values)
         self.refresh()
         # Assertions
         self.assertEqual(
