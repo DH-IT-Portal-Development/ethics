@@ -216,6 +216,18 @@
             <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
         </tr>
         <tr>
+            <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms" %}</th>
+            <td>{{ p_proposal.translated_forms|yesno:_("ja,nee") }}</td>
+            <td>{{ proposal.translated_forms|yesno:_("ja,nee") }}</td>
+        </tr>
+        {% if proposal.translated_forms or p_proposal.translated_forms %}
+            <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms_languages" %}</th>
+                <td>{{ p_proposal.translated_forms_languages }}</td>
+                <td>{{ proposal.translated_forms_languages }}</td>
+            </tr>
+        {% endif %}
+        <tr>
             <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th>
             {% if p_documents.informed_consent %}
                 <td><a href="{{ p_documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>

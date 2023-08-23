@@ -4,6 +4,7 @@ import datetime
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
     UserFormKwargsMixin
+
 from django.conf import settings
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
@@ -25,7 +26,8 @@ from studies.models import Documents
 from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
-    ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm
+    ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm, \
+    ProposalUpdateDataManagementForm, TranslatedConsentForms
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import ProposalMixin, ProposalContextMixin, \
@@ -133,7 +135,7 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalUsersOnlyArchiveView(CommitteeMixin, BaseProposalsView):
     template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):
@@ -144,7 +146,7 @@ class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
     @property
     def title(self):
         return "{} - {}".format(
-            _('Publiek archief'),
+            _('Archief'),
             self.committee_display_name
         )
 
@@ -155,19 +157,7 @@ class ProposalsPublicArchiveView(generic.ListView):
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
-        two_years_ago = (
-                datetime.date.today() -
-                datetime.timedelta(weeks=104)
-        )
-        return super().get_queryset().filter(
-            status__gte=Proposal.DECISION_MADE,
-            status_review=True,
-            in_archive=True,
-            date_confirmed__gt=two_years_ago,
-        ).order_by(
-            "-date_reviewed"
-        )
-
+        return Proposal.objects.public_archive()
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
@@ -186,14 +176,10 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
         if pk is not None:
             return Proposal.objects.filter(pk=pk)
 
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True).order_by(
-            "-date_reviewed"
-        )
+        return Proposal.objects.export()
 
 
-class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
+class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
     group_required = settings.GROUP_SECRETARY
     permanent = False
 
@@ -201,10 +187,10 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
         pk = kwargs.get('pk')
 
         proposal = Proposal.objects.get(pk=pk)
-        proposal.public = False
+        proposal.in_archive = not proposal.in_archive
         proposal.save()
-
-        return reverse('proposals:archive')
+        committee = proposal.reviewing_committee.name
+        return reverse('proposals:archive', args=[committee])
 
 ##########################
 # CRUD actions on Proposal
@@ -344,6 +330,19 @@ class ProposalStart(generic.TemplateView):
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context['secretary'] = get_secretary()
         return context
+    
+class TranslatedConsentFormsView(UpdateView):
+    model = Proposal
+    form_class = TranslatedConsentForms
+    template_name = 'proposals/translated_consent_forms.html'
+
+    def get_next_url(self):
+        '''Go to the consent form upload page'''
+        return reverse('proposals:consent', args=(self.object.pk,))
+
+    def get_back_url(self):
+        """Return to the overview of the last Study"""
+        return reverse('studies:design_end', args=(self.object.last_study().pk,))
 
 
 class ProposalDataManagement(UpdateView):
@@ -358,6 +357,20 @@ class ProposalDataManagement(UpdateView):
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
         return reverse('proposals:consent', args=(self.object.pk,))
+
+
+class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
+    """
+    Allows the secretary to change the Data Management Plan on the Proposal level
+    """
+    model = Proposal
+    template_name = 'proposals/proposal_update_attachments.html'
+    form_class = ProposalUpdateDataManagementForm
+    group_required = settings.GROUP_SECRETARY
+
+    def get_success_url(self):
+        """Continue to the URL specified in the 'next' POST parameter"""
+        return reverse('reviews:detail', args=[self.object.latest_review().pk])
 
 
 class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView, ):

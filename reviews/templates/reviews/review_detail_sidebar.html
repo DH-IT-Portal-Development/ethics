@@ -24,16 +24,30 @@ Remember to include it in a with statement if the view does not provide it.
         <li>
             {% trans "Commissie" %}: {{review.proposal.reviewing_committee}}
         </li>
-        {% if review.proposal.parent and review.proposal.parent.latest_review %}
+        {% if review.proposal.amendment_or_revision %}
             <li>
                 <a href="{% url 'reviews:detail' review.proposal.parent.latest_review.pk %}">
-                    {% blocktrans with parent=review.proposal.parent.reference_number %}
-                        Revisie/amendement van<br/> {{ parent }}
+                    {% blocktrans trimmed with parent=review.proposal.parent.reference_number r_or_a=review.proposal.amendment_or_revision %}
+                        {{r_or_a}} van<br/> {{ parent }}
                     {% endblocktrans %}
                     <a href="{% url 'proposals:diff' review.proposal.pk %}">
                         <img src="{% static 'proposals/images/arrow_divide.png' %}" title="{% trans 'Toon verschillen' %}">
                     </a>
                 </a>
+            </li>
+        {% endif %}
+        <li>
+            {% trans "Aanvrager(s)" %}:
+            <ul>
+                {% for name_email in review.get_applicant_names_emails %}
+                    <li>{{ name_email }}</li>
+                {% endfor %}
+            </ul>
+            {{ review.get_applicant_names }}
+        </li>
+        {% if review.proposal.supervisor %}
+            <li>
+                {% trans "Supervisor" %}: {{ review.proposal.supervisor }}
             </li>
         {% endif %}
         <li>

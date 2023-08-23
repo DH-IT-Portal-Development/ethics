@@ -1,7 +1,7 @@
 from django import template
 from django.apps import apps
 from django.utils.safestring import mark_safe
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from studies.utils import check_has_adults, check_necessity_required
 
@@ -61,10 +61,16 @@ class StudyDocumentsNode(template.Node):
 
     def render(self, context):
         study = self.var_value.resolve(context)
-        try:
-            context[self.var_name] = apps.get_model("studies", "Documents").objects.get(study=study)
-        except ObjectDoesNotExist: 
+        if study is None:
             context[self.var_name] = None
+        else:
+            try:
+                context[self.var_name] = apps.get_model(
+                    "studies",
+                    "Documents",
+                ).objects.get(study=study)
+            except (ObjectDoesNotExist, MultipleObjectsReturned):
+                context[self.var_name] = None
         return u""
 
 

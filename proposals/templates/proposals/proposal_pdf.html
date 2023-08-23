@@ -7,36 +7,36 @@
 {% load uil_filters %}
 
 {% block extra_style %}
-  <style type="text/css">
-  #content table {
-    border-top-width: .5px;
-    border-top-style: solid;
-    border-top-color: #cbcbcb;
-    border-right-width: .5px;
-    border-right-style: solid;
-    border-right-color: #cbcbcb;
-    border-bottom-width: .5px;
-    border-bottom-style: solid;
-    border-bottom-color: #cbcbcb;
-    border-left-width: .5px;
-    border-left-style: solid;
-    border-left-color: #cbcbcb;
-  }
+    <style type="text/css">
+        #content table {
+            border-top-width: .5px;
+            border-top-style: solid;
+            border-top-color: #cbcbcb;
+            border-right-width: .5px;
+            border-right-style: solid;
+            border-right-color: #cbcbcb;
+            border-bottom-width: .5px;
+            border-bottom-style: solid;
+            border-bottom-color: #cbcbcb;
+            border-left-width: .5px;
+            border-left-style: solid;
+            border-left-color: #cbcbcb;
+        }
 
-  #content th, td {
-    width: 500px;
-    font-weight: normal;
-    text-align: left;
-    padding-top: 3px;
-    padding-right: 3px;
-    padding-bottom: 3px;
-    padding-left: 3px;
-  }
+        #content th, td {
+            width: 500px;
+            font-weight: normal;
+            text-align: left;
+            padding-top: 3px;
+            padding-right: 3px;
+            padding-bottom: 3px;
+            padding-left: 3px;
+        }
 
-  #content li {
-    line-height: 10px;
-  }
-  </style>
+        #content li {
+            line-height: 10px;
+        }
+    </style>
 {% endblock %}
 
 {% block page_header %}
@@ -431,6 +431,14 @@
           {% include "studies/study_title.html" %}
           {% get_study_documents study_documents study %}
           <table>
+            <tr>
+              <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms" %}</th><td>{{ proposal.translated_forms|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if proposal.translated_forms %}
+              <tr>
+                <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms_languages" %}</th><td>{{ proposal.translated_forms_languages }}</td>
+              </tr>
+            {% endif %}
             {% if not proposal.is_practice and study_documents.informed_consent %}
               <tr>
                 <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
@@ -503,6 +511,16 @@
           </table>
         {% endif %}
         <h2>{% trans "Aanmelding versturen" %}</h2>
+        <table>
+          <tr>
+            <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th><td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
+          </tr>
+          {%if proposal.embargo %}
+          <tr>
+            <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
+          </tr>
+          {% endif %}
+        </table>
         <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
         <p>
           {{ proposal.comments }}

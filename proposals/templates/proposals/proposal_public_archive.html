@@ -17,8 +17,6 @@
                     <tr>
                         <th>{% trans 'Referentie nummer' %}</th>
                         <th>{% trans 'Titel' %}</th>
-                        <th>{% trans 'Aanvrager' %}</th>
-                        <th>{% trans 'Eindverantwoordelijke' %}</th>
                         <th>{% trans 'Datum goedgekeurd' %}</th>
                         <th>{% trans 'FETC-GW kamer' %}</th>
                     </tr>
@@ -28,12 +26,6 @@
                         <tr>
                             <td>{{ proposal.reference_number }}</td>
                             <td>{{ proposal.title }}</td>
-                            <td>{{ proposal.created_by.get_full_name }}</td>
-                            <td>
-                                {% if proposal.supervisor %}
-                                    {{ proposal.supervisor.get_full_name }}
-                                {% endif %}
-                            </td>
                             <td>
                                 {{ proposal.date_confirmed|date:"d M Y" }}
                             </td>

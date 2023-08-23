@@ -42,6 +42,8 @@ def copy_proposal(original_proposal, is_revision, created_by_user):
     copy_proposal.is_exploration = False
     copy_proposal.in_course = False
     copy_proposal.is_revision = is_revision
+    copy_proposal.has_minor_revision = False
+    copy_proposal.minor_revision_description = None
     copy_proposal.save()
 
     # Copy references

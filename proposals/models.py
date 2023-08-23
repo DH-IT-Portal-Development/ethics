@@ -17,7 +17,11 @@ from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
+from datetime import date, timedelta
+
 SUMMARY_MAX_WORDS = 200
+SELF_ASSESSMENT_MAX_WORDS = 1000
+COMMENTS_MAX_WORDS = 1000
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 DMP_FILENAME = FilenameFactory('DMP')
@@ -78,8 +82,56 @@ class Institution(models.Model):
     def __str__(self):
         return self.description
 
+class ProposalQuerySet(models.QuerySet):
+
+    DECISION_MADE = 55
+
+    def archive_pre_filter(self):
+        return self.filter(status__gte=self.DECISION_MADE,
+                                             status_review=True,
+                                             in_archive=True,
+        )
+
+    def no_embargo(self):
+        return self.filter(models.Q(embargo_end_date__isnull=True)
+             | models.Q(embargo_end_date__lt=date.today())
+             )
+
+    def public_archive(self):
+        two_years_ago = (
+                date.today() -
+                timedelta(weeks=104)
+        )
+        return self.archive_pre_filter().no_embargo().filter(
+                                        date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
+        )
+
+    def export(self):
+        return self.archive_pre_filter().order_by(
+            "-date_reviewed"
+        )
+
+    def users_only_archive(self, committee):
+        return self.archive_pre_filter().no_embargo().filter(
+                                       is_pre_assessment=False,
+                                       reviewing_committee=committee,
+                                       ).select_related(
+            # this optimizes the loading a bit
+            'supervisor', 'parent', 'relation',
+            'parent__supervisor', 'parent__relation',
+        ).prefetch_related(
+            'applicants', 'review_set', 'parent__review_set', 'study_set',
+            'study_set__observation', 'study_set__session_set',
+            'study_set__intervention', 'study_set__session_set__task_set'
+        )
+
 
 class Proposal(models.Model):
+
+    objects = ProposalQuerySet.as_manager()
+
     DRAFT = 1
     SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
@@ -176,6 +228,21 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
         blank=True,
     )
 
+    translated_forms = models.BooleanField(
+        mark_safe_lazy(_('Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?')),
+        default=None,
+        blank=True,
+        null=True,
+    )
+
+    translated_forms_languages = models.CharField(
+        _('Andere talen:'),
+        max_length=255,
+        default=None,
+        blank=True,
+        null=True,
+    )
+
     funding = models.ManyToManyField(
         Funding,
         verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'),
@@ -199,7 +266,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     comments = models.TextField(
-        _('Ruimte voor eventuele opmerkingen'),
+        _('Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden.'),
+        validators=[MaxWordsValidator(COMMENTS_MAX_WORDS)],
         blank=True,
     )
 
@@ -223,9 +291,24 @@ Zep software)'),
         null=True
     )
 
-    in_archive = models.BooleanField(default=False)
+    embargo = models.BooleanField(
+        _('Als de deelnemers van je onderzoek moeten worden misleid, kan \
+          je ervoor kiezen je applicatie pas later op te laten nemen in het \
+          publieke archief en het archief voor gebruikers \
+          van dit portaal. Wil je dat jouw onderzoek tijdelijk onder \
+          embargo wordt geplaatst?'),
+          default=None,
+          blank=True,
+          null=True
+    )
 
-    public = models.BooleanField(default=True)
+    embargo_end_date = models.DateField(
+        _('Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?'),
+        blank=True,
+        null=True
+    )
+
+    in_archive = models.BooleanField(default=False)
 
     is_pre_assessment = models.BooleanField(default=False)
 
@@ -362,9 +445,15 @@ trajecten.'),
     )
 
     self_assessment = models.TextField(
-        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
-        max_length=500,
+        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en '
+          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 '
+          'woorden.'),
         blank=True,
+        validators=[
+            MaxWordsValidator(
+                SELF_ASSESSMENT_MAX_WORDS
+            ),
+        ]
     )
 
     # References to other models
@@ -416,7 +505,8 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
+        verbose_name=_('Uitvoerenden, inclusief uzelf. Let op! De andere onderzoekers moeten \
+        ten minste één keer zijn ingelogd op dit portaal om ze te kunnen selecteren.'),
         related_name='applicants',
     )
 
@@ -520,16 +610,18 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
                     break
         return current_session
 
+    def amendment_or_revision(self):
+        if self.is_revision and self.parent:
+            return _('Amendement') if self.parent.status_review else _('Revisie')
+
     def type(self):
         """
         Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
         """
         result = _('Normaal')
-        if self.is_revision and self.parent:
-            if self.parent.status_review:
-                result = _('Amendement')
-            else:
-                result = _('Revisie')
+        amendment_or_revision = self.amendment_or_revision()
+        if amendment_or_revision is not None:
+            result = amendment_or_revision
         elif self.is_pre_assessment:
             result = _('Voortoetsing')
         elif self.is_practice():

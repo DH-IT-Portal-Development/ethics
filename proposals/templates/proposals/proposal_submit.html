@@ -14,6 +14,28 @@
     - {{ block.super }}
 {% endblock %}
 
+{% block html_head %}
+<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
+<script>
+    $(function () {
+        depends_on_value('embargo', 'True', 'embargo_end_date');
+
+        // Add datepicker for date_start, set locale to current language
+        $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
+
+        var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'yy-mm-dd';
+        $("#id_embargo_end_date").datepicker({
+            dateFormat: date_format,
+        })
+    });
+
+    $(function() {
+        let translated_string = " {% trans 'Aantal woorden:' %} "
+        wordCounter("comments", translated_string)
+    });
+</script>
+{% endblock %}
+
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
