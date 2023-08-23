@@ -576,10 +576,7 @@ class ProposalAsPdf(
         """Determine the correct PDf template for given proposal"""
         self.template_name = 'proposals/proposal_pdf.html'
         proposal = self.get_object()
-        if proposal.is_pre_approved:
-            self.template_name = 'proposals/proposal_pdf_pre_approved.html'
-        elif proposal.is_pre_assessment:
-            self.template_name = 'proposals/proposal_pdf_pre_assessment.html'
+        self.template_name = proposal.pdf_template_name
         return [self.template_name]
 
     def get_context_data(self, **kwargs):
