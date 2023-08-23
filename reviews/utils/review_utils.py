@@ -66,14 +66,15 @@ def start_supervisor_phase(proposal):
         params['creator'] = proposal.created_by.get_full_name()
         msg_plain = render_to_string('mail/concept_other_applicants.txt', params)
         msg_html = render_to_string('mail/concept_other_applicants.html', params)
-        other_applicants_emails = [applicant.email for applicant in proposal.applicants]
+        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all()]
+        other_applicants_emails.remove(proposal.created_by.email)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     subject = _('FETC-GW {}: beoordelen als eindverantwoordelijke'.format(reference))
     params = {
         'proposal': proposal,
         'creator': proposal.created_by.get_full_name(),
-        'proposal_url': settings.BASE_URL + reverse('reviews:de[proposal.created_by.email]cide', args=(decision.pk,)),
+        'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
         'secretary': get_secretary().get_full_name(),
         'revision': proposal.is_revision,
         'revision_type': proposal.type(),
@@ -136,7 +137,8 @@ def start_assignment_phase(proposal):
         recipients.append(proposal.supervisor.email)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
 
-    if proposal.supervisor is not None and proposal.other_applicants:
+    #TODO: testing!!
+    if proposal.supervisor is None and proposal.other_applicants:
         params['creator'] = proposal.created_by.get_full_name()
         if review.short_route:
             msg_plain = render_to_string('mail/submitted_shortroute_other_applicants.txt', params)
@@ -144,7 +146,10 @@ def start_assignment_phase(proposal):
         else:
             msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
             msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
-        other_applicants_emails = [applicant.email for applicant in proposal.applicants]
+        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all()]
+        breakpoint()
+        other_applicants_emails.remove(proposal.created_by.email)
+        breakpoint()
         send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     if proposal.inform_local_staff:
