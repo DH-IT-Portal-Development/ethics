@@ -147,9 +147,7 @@ def start_assignment_phase(proposal):
             msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
             msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
         other_applicants_emails = [applicant.email for applicant in proposal.applicants.all()]
-        breakpoint()
         other_applicants_emails.remove(proposal.created_by.email)
-        breakpoint()
         send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     if proposal.inform_local_staff:
