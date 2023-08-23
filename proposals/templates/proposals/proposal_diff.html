@@ -99,14 +99,14 @@
                         <tr>
                             <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th>
                             <td>
-                                <ul style="padding:0">
+                                <ul class="p-0">
                                 {% for applicant in p_proposal.applicants.all %}
                                 <li>{{ applicant.get_full_name }}</li>
                                 {% endfor %}
                                 </ul>
                             </td>
                             <td>
-                                <ul style="padding:0">
+                                <ul class="p-0">
                                 {% for applicant in proposal.applicants.all %}
                                 <li>
                                     {{ applicant.get_full_name }}
