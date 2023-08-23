@@ -107,7 +107,7 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
             dest = response
 
         # find the template and render it.
-        template_names = get_template(self.get_template_names())
+        template_names = self.get_template_names()
 
         if not (type(template_names) is tuple or list):
             raise ImproperlyConfigured(
