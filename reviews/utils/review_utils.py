@@ -139,7 +139,6 @@ def start_assignment_phase(proposal):
         recipients.append(proposal.supervisor.email)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
 
-    #TODO: testing!!
     if proposal.supervisor is None and proposal.other_applicants:
         params['creator'] = proposal.created_by.get_full_name()
         if review.short_route:
