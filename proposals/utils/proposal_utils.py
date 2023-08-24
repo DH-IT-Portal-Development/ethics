@@ -304,8 +304,13 @@ def _get_next_proposal_number(current_year) -> int:
 
 
 def generate_pdf(proposal,):
-    """Grandfathered function for pdf saving. The template arg currently
-    only exists for backwards compatibility."""
+    """
+    Returns a PDF of a proposal using the ProposalAsPdf view
+    and the proposal's own recommended PDF template.
+
+    This function does not save the generated PDF. For that
+    functionality, call the generate_pdf method on the model.
+    """
 
     from proposals.views.proposal_views import ProposalAsPdf
 
@@ -320,7 +325,6 @@ def generate_pdf(proposal,):
             dest=f,
         )
         pdf = ContentFile(f.getvalue())
-    proposal.pdf.save(view.get_pdf_filename(), pdf)
 
     return pdf
 

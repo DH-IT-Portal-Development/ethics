@@ -676,7 +676,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         self.save()
 
     def generate_pdf(self):
-        """Generate AND SAVE a pdf of the proposal for posterity.
+        """Generate _and save_ a pdf of the proposal for posterity.
         The currently existing PDF will be overwritten."""
         from proposals.utils import generate_pdf
         pdf = generate_pdf(self)
@@ -684,7 +684,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
             PROPOSAL_FILENAME(self, "document.pdf"),
             pdf,
         )
-        return pdf
+        self.save()
 
     @property
     def pdf_template_name(self):
