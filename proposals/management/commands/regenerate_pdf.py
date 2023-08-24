@@ -22,6 +22,7 @@ class Command(BaseCommand):
         return proposals
 
     def handle(self, *args, **options):
+        self.options = options
         for proposal in self.get_proposals():
             print(f"Generating PDF for {proposal.reference_number}...", end=" ")
             proposal.generate_pdf()
