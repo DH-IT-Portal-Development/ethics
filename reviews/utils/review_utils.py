@@ -147,7 +147,7 @@ def start_assignment_phase(proposal):
         else:
             msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
             msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by, proposal.supervisor]
+        applicants_to_remove = [proposal.created_by]
         other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
 
         send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
