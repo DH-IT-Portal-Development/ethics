@@ -3,21 +3,21 @@
 {% block content_nl %}
 Beste collega,<br />
 <br />
-Uw collega {{ creator }} heeft een concept-aanmelding ingediend bij de ethische commissie voor een onderzoek, waar u aan meewerkt.<br />
-Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze aanvraag gecontroleerd.
+Uw collega {{ creator }} heeft een concept-aanmelding ingediend bij de ethische commissie voor het onderzoek {{ title }}, waar u aan meewerkt.<br />
+De aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze aanvraag gecontroleerd.
 Zodra deze de concept-aanmelding, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijgt uw collega {{ creator }} van ons bericht.<br />
 Indien de concept-aanmelding nog aanzienlijke wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker zelf contact met uw collega opnemen.<br />
-U kunt uw ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br />
+U kunt de ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br />
 <br />
 {% endblock %}
 
 {% block content_en %}
 Dear colleague,<br />
 <br />
-Your colleague {{ creator }} has submitted a draft application to the ethics commision for a study, in which you are participating.<b />
-Your draft application will be checked by the study's supervisor {{ supervisor }}, the researcher who has the final responsibility of this study.<br />
+Your colleague {{ creator }} has submitted a draft application to the ethics commision for the study {{ title }}, in which you are participating.<b />
+The application will be checked by the study's supervisor {{ supervisor }}, the researcher who has the final responsibility of this study.<br />
 Your colleague {{ creator }} will receive a notification as soon as {{ supervisor }} has approved and formally submitted your draft application, possibly after making some minor revisions.<br />
 In case {{ supervisor }} finds it necessary for you to make more substantial revisions in the application, he/she will notify your colleague about this, and meanwhile formally disapprove the study in order for you to be able to revise and resubmit it.<br />
-You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.
+You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.<br/>
 <br />
 {% endblock %}

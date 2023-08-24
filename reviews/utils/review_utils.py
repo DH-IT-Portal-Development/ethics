@@ -54,6 +54,7 @@ def start_supervisor_phase(proposal):
     subject = _('FETC-GW {}: bevestiging indienen concept-aanmelding'.format(reference))
     params = {
         'proposal': proposal,
+        'title': proposal.title,
         'supervisor': proposal.supervisor.get_full_name(),
         'secretary': get_secretary().get_full_name(),
         'pdf_url': settings.BASE_URL + proposal.pdf.url,
@@ -125,6 +126,7 @@ def start_assignment_phase(proposal):
         'secretary': secretary.get_full_name(),
         'review_date': review.date_should_end,
         'pdf_url': settings.BASE_URL + proposal.pdf.url,
+        'title': proposal.title,
     }
     if review.short_route:
         msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
