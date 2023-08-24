@@ -18,6 +18,63 @@ from tasks.models import Session, Task, Registration, RegistrationKind
 
 from .views import ReviewCloseView
 
+
+class BaseViewTestCase():
+
+    # This testcase supports only class-based views
+    view_class = None
+
+    # for example:
+    # "/proposals/update/1/"
+    # NOT a full URL including protocal and domain
+    view_path = None
+
+    allowed_users = []
+    disallowed_users = [AnonymousUser]
+    enforce_csrf = True
+
+    def setUp(self):
+        self.client = Client()
+        self.view = self.view_class.as_view()
+        self.factory = RequestFactory()
+        super().setUp()
+
+    def check_access(self, user):
+        request = self.factory.get(
+            self.get_view_path(),
+        )
+        request.user = user
+        response = self.view(request, pk=self.review.pk)
+        return response.status_code == 200
+
+    def post(self, update_dict={}):
+        """Generic function to test form submission"""
+        post_data = {}
+        post_data.update(update_dict)
+        if self.enforce_csrf:
+            csrf_token = self.fetch_csrf_token(
+                user=self.secretary,
+            )
+            post_data["csrfmiddlewaretoken"] = csrf_token
+        response = self.client.post(
+            self.get_view_path(),
+            data=post_data,
+        )
+        return response
+
+    def fetch_csrf_token(self, user=None):
+        if user:
+            self.client.force_login(user)
+        page = self.client.get(
+            self.get_view_path(),
+        )
+        return page.context["csrf_token"]
+
+    def get_view_path(self):
+        return self.view_path
+
+
+
 class BaseReviewTestCase(TestCase):
 
     fixtures = ['relations', 'compensations', 'registrations',
@@ -301,61 +358,6 @@ class AutoReviewTests(BaseReviewTestCase):
 
         reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 1)
-
-
-class BaseViewTestCase():
-
-    # This testcase supports only class-based views
-    view_class = None
-
-    # for example:
-    # "/proposals/update/1/"
-    # NOT a full URL including protocal and domain
-    view_path = None
-
-    allowed_users = []
-    disallowed_users = [AnonymousUser]
-    enforce_csrf = True
-
-    def setUp(self):
-        self.client = Client()
-        self.view = self.view_class.as_view()
-        self.factory = RequestFactory()
-        super().setUp()
-
-    def check_access(self, user):
-        request = self.factory.get(
-            self.get_view_path(),
-        )
-        request.user = user
-        response = self.view(request, pk=self.review.pk)
-        return response.status_code == 200
-
-    def post(self, update_dict={}):
-        """Generic function to test form submission"""
-        post_data = {}
-        post_data.update(update_dict)
-        if self.enforce_csrf:
-            csrf_token = self.fetch_csrf_token(
-                user=self.secretary,
-            )
-            post_data["csrfmiddlewaretoken"] = csrf_token
-        response = self.client.post(
-            self.get_view_path(),
-            data=post_data,
-        )
-        return response
-
-    def fetch_csrf_token(self, user=None):
-        if user:
-            self.client.force_login(user)
-        page = self.client.get(
-            self.get_view_path(),
-        )
-        return page.context["csrf_token"]
-
-    def get_view_path(self):
-        return self.view_path
 
 
 class ReviewCloseTestCase(

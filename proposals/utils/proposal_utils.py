@@ -303,8 +303,7 @@ def _get_next_proposal_number(current_year) -> int:
         return 1
 
 
-
-def generate_pdf(proposal, template=False):
+def generate_pdf(proposal,):
     """Grandfathered function for pdf saving. The template arg currently
     only exists for backwards compatibility."""
 
@@ -313,8 +312,6 @@ def generate_pdf(proposal, template=False):
     view = ProposalAsPdf()
     view.object = proposal
 
-    # Note, this is where the _view_ decides what kind of proposal it is
-    # and chooses the appropriate template.
     context = view.get_context_data()
 
     with BytesIO() as f:
@@ -325,7 +322,7 @@ def generate_pdf(proposal, template=False):
         pdf = ContentFile(f.getvalue())
     proposal.pdf.save(view.get_pdf_filename(), pdf)
 
-    return proposal.pdf
+    return pdf
 
 
 def pdf_link_callback(uri, rel):
