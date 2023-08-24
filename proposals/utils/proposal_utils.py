@@ -302,7 +302,34 @@ def _get_next_proposal_number(current_year) -> int:
     except Proposal.DoesNotExist:
         return 1
 
+def generate_relevant_data_pdf(proposal):
+    empty_dict = {}
 
+    empty_dict[_('Algemene informatie over de aanvraag')] = {}
+    empty_dict[_('Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?')] = {}
+
+    if proposal.wmo.status != proposal.wmo.NO_WMO:
+        empty_dict[_("Aanmelding bij de METC")] = {}
+
+    empty_dict[_('Eén of meerdere trajecten?')] = {}
+
+    '''Note to self: this will be a huge pain of nesting ... only scratch surface for now ...'''
+    if proposal.wmo.status == proposal.wmo.NO_WMO:
+        for study in proposal.study_set.all():
+            if proposal.studies_number > 1:
+                empty_dict['studies'] = {}
+                if study.name:
+                    empty_dict['studies'][_(f'traject { study.order } { study.name }')] = {}
+                else:
+                    empty_dict['studies'][_(f'traject { study.order }')] = {}
+            else:
+                empty_dict['study'] = {}
+    
+    empty_dict['extra documents'] = []
+
+    empty_dict['Aanmelding versturen'] = {}
+
+    return empty_dict
 
 def generate_pdf(proposal, template=False):
     """Grandfathered function for pdf saving. The template arg currently
