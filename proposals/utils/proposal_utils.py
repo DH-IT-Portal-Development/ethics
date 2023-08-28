@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from datetime import datetime
 from io import BytesIO
 import os
@@ -306,6 +306,20 @@ def generate_relevant_data_pdf(proposal):
     empty_dict = {}
 
     empty_dict[_('Algemene informatie over de aanvraag')] = {}
+    empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('relation').verbose_name] = proposal.relation
+    if proposal.relation.needs_supervisor:
+        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('supervisor').verbose_name] = proposal.supervisor.get_full_name
+    if proposal.relation.check_in_course:
+        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_program').verbose_name] = proposal.student_program
+        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_context').verbose_name] = proposal.student_context
+        if proposal.student_context.needs_detail:
+            empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_context_detail').verbose_name] = proposal.student_context_details
+        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_justification').verbose_name] = proposal.student_justification
+    #I am not quite sure how to add translation to the boolean value resulting here ...
+    empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('other_applicants').verbose_name] = proposal.other_applicants
+    if proposal.other_applicants:
+        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('applicants').verbose_name] = [applicant.get_full_name for applicant in proposal.applicants]
+
     empty_dict[_('Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?')] = {}
 
     if proposal.wmo.status != proposal.wmo.NO_WMO:
@@ -331,6 +345,97 @@ def generate_relevant_data_pdf(proposal):
 
     return empty_dict
 
+class PDFSection:
+    
+    section_title = None
+    row_fields = None
+
+    def __init__(self, object):
+        self.object = object
+        # Create a copy of the class level row_fields, such that we can safely manipulate it without changing the class value
+        self._row_fields = self.row_fields
+    
+    def get_rows(self):
+        rows = OrderedDict()
+        for row_field in self._row_fields:
+            rows[row_field] = {
+               'label': self.object._meta.get_field(row_field).verbose_name,
+               'value': RowValueClass(self.object, row_field)
+            }
+        return rows
+
+    def render(self, context):
+        template = get_template("proposals/pdf/table_with_header.html")
+        context.update(
+            {
+                "section_title": self.section_title,
+                "rows": self.get_rows(),
+            }
+        )
+        return template.render(context)
+
+class GeneralSection(PDFSection):
+    # This class inherits from the above
+
+    section_title = _("Algemene informatie over de aanvraag")
+    row_fields = ['metc', 'metc_details', 'metc_institution']
+    
+    def get_rows(self):
+        # Remove the metc_details if no METC review is needed
+        if not self.object.metc:
+            del self._row_fields['metc_details']
+            del self._row_fields['metc_institution']
+        # Use the get_rows from PDFSection to get the actual rows, the code above should have filtered out everything we don't need
+        return super().get_rows()
+    
+class RowValueClass:
+
+        def __init__(self, object, field):
+
+            self.object = object
+            self.field = field
+
+        def render(self, context):
+
+            value = getattr(self.object, self.field)
+
+            if type(value) in (str, int, datetime.date):
+                return value
+            elif type(value) == bool:
+                return _('Ja') if value else _('Nee')
+            elif type(value) == User:
+                return self.handle_user(value)
+            elif value.__class__.__name__ == 'ManyRelatedManager':
+                if value.all().model == User:
+                    return self.get_applicants_names(value)
+                elif value.all().model == Funding:
+                    return self.get_funding_list()
+            elif callable(value):
+                return value()
+            
+        def handle_user(self, user):
+            return user.get_full_name()
+        
+        def get_applicants_names(self, applicants):
+            applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
+            return self.create_unordered_html_list(applicant_names)
+        
+        def get_funding_list(self, funding):
+            list_of_funds = [fund for fund in funding.all()]
+            return self.create_unordered_html_list(list_of_funds)
+        
+        def create_unordered_html_list(list):
+            html_output = '<ul>'
+
+            for item in list:
+                html_output += f'<li>{item}</li>'
+            
+            html_output += '</ul>'
+
+            return html_output
+
+
+
 def generate_pdf(proposal, template=False):
     """Grandfathered function for pdf saving. The template arg currently
     only exists for backwards compatibility."""
@@ -353,6 +458,7 @@ def generate_pdf(proposal, template=False):
     proposal.pdf.save(view.get_pdf_filename(), pdf)
 
     return proposal.pdf
+
 
 
 def pdf_link_callback(uri, rel):
