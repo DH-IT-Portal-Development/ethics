@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+
 from braces.views import UserFormKwargsMixin
 from xhtml2pdf import pisa
 from django.urls import reverse
@@ -109,7 +111,7 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         # find the template and render it.
         template_names = self.get_template_names()
 
-        if not (type(template_names) is tuple or list):
+        if not isinstance(template_names, Iterable):
             raise ImproperlyConfigured(
                 "get_template_names() should return a sequence of templates.",
             )
