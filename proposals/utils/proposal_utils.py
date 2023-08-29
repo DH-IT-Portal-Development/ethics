@@ -19,6 +19,8 @@ from django.utils.deconstruct import deconstructible
 from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
+from proposals.templatetags.proposal_filters import needs_details
+
 
 __all__ = ['available_urls', 'generate_ref_number',
            'generate_revision_ref_number', 'generate_pdf',
@@ -360,7 +362,7 @@ class PDFSection:
         for row_field in self._row_fields:
             rows[row_field] = {
                'label': self.object._meta.get_field(row_field).verbose_name,
-               'value': RowValueClass(self.object, row_field)
+               'value': RowValueClass(self.object, row_field).render()
             }
         return rows
 
@@ -375,16 +377,48 @@ class PDFSection:
         return template.render(context)
 
 class GeneralSection(PDFSection):
-    # This class inherits from the above
+    '''This class generates the data for the general section of 
+    the PDF page.'''
 
     section_title = _("Algemene informatie over de aanvraag")
-    row_fields = ['metc', 'metc_details', 'metc_institution']
+    row_fields = [
+        'relation',
+        'supervisor',
+        'student program',
+        'student_context',
+        'student_context_details',
+        'student_justification',
+        'other_applicants',
+        'applicants',
+        'other_stakeholders',
+        'stakeholders',
+        'date_start',
+        'title',
+        'funding'
+        'funding_details',
+        'funding_name',
+        'self_assessment'
+    ]
     
     def get_rows(self):
-        # Remove the metc_details if no METC review is needed
-        if not self.object.metc:
-            del self._row_fields['metc_details']
-            del self._row_fields['metc_institution']
+        obj = self.object
+        rows = self._row_fields
+        if not obj.needs_supervisor:
+            del rows['supervisor']
+        if not obj.check_in_course:
+            del rows['student_program']
+            del rows['student_context']
+            if not obj.student_context.needs_details:
+                del rows['student_context_details']
+            del rows['student_justification']
+        if not obj.other_applicants:
+            del rows['applicants']
+        if not obj.other_stakeholders:
+            del rows['stakeholders']
+        if not needs_details(obj.funding.all()):
+            del rows['funding_details']
+        if not needs_details(obj.funding.all(), 'needs_name'):
+            del rows['funding_name']
         # Use the get_rows from PDFSection to get the actual rows, the code above should have filtered out everything we don't need
         return super().get_rows()
     
@@ -395,7 +429,7 @@ class RowValueClass:
             self.object = object
             self.field = field
 
-        def render(self, context):
+        def render(self):
 
             value = getattr(self.object, self.field)
 

@@ -1,0 +1,8 @@
+<h2> {{ section_title }} </h2>
+<table>
+{% for key, value rows.items() %}
+<tr>
+<th>{{value.label}}</th><td>{{ value.value }}</td>
+</tr>
+{% endfor %}
+</table>
