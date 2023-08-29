@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
+import logging
 
 from django.conf import settings
 from django.contrib.auth.models import Group
@@ -16,8 +17,9 @@ from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
-
 from datetime import date, timedelta
+
+logger = logging.getLogger(__name__)
 
 SUMMARY_MAX_WORDS = 200
 SELF_ASSESSMENT_MAX_WORDS = 1000
@@ -675,16 +677,24 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         self.generate_pdf()
         self.save()
 
-    def generate_pdf(self):
+    def generate_pdf(self, force_overwrite=False):
         """Generate _and save_ a pdf of the proposal for posterity.
-        The currently existing PDF will be overwritten."""
+        The currently existing PDF will not be overwritten unless the
+        force_overwrite keyword is True."""
         from proposals.utils import generate_pdf
         pdf = generate_pdf(self)
-        self.pdf.save(
-            PROPOSAL_FILENAME(self, "document.pdf"),
-            pdf,
-        )
-        self.save()
+        if (force_overwrite is True
+            or not self.use_canonical_pdf
+            or not self.pdf
+            ):
+            self.pdf.save(
+                PROPOSAL_FILENAME(self, "document.pdf"),
+                pdf,
+            )
+            self.save()
+        else:
+            logger.warn("Not saving PDF to preserve canonical PDF.")
+        return pdf
 
     @property
     def pdf_template_name(self):
