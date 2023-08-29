@@ -1,0 +1,18 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load proposal_filters %}
+{% load fetc_filters %}
+{% load i18n %}
+{% load compare_tags %}
+{% load uil_filters %}
+
+{% block header_title %}
+    New PDF test
+{% endblock %}
+
+{% block content %}
+
+    {% include test %}
+
+{% endblock %}

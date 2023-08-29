@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from collections import defaultdict, OrderedDict
-from datetime import datetime
+from datetime import datetime, date
 from io import BytesIO
 import os
 
@@ -347,23 +347,36 @@ def generate_relevant_data_pdf(proposal):
 
     return empty_dict
 
+from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
+from django.utils.html import format_html
+from copy import copy
 class PDFSection:
     
     section_title = None
     row_fields = None
+    verbose_name_diff_field_dict = {
+        'get_metc_display': ('wmo', 'metc')
+        'get_is_medical_display': ('wmo','is_medical')
+
+    }
 
     def __init__(self, object):
         self.object = object
         # Create a copy of the class level row_fields, such that we can safely manipulate it without changing the class value
-        self._row_fields = self.row_fields
+        self._row_fields = copy(self.row_fields)
     
     def get_rows(self):
         rows = OrderedDict()
         for row_field in self._row_fields:
-            rows[row_field] = {
-               'label': self.object._meta.get_field(row_field).verbose_name,
-               'value': RowValueClass(self.object, row_field).render()
-            }
+            if type(row_field) == str:
+                rows[row_field] = {
+                'label': self.object._meta.get_field(row_field).verbose_name,
+                'value': RowValueClass(self.object, row_field).render()
+                }
+            #TODO: finish this
+            if type(row_field) == tuple:
+                
         return rows
 
     def render(self, context):
@@ -374,7 +387,7 @@ class PDFSection:
                 "rows": self.get_rows(),
             }
         )
-        return template.render(context)
+        return template.render(context.flatten())
 
 class GeneralSection(PDFSection):
     '''This class generates the data for the general section of 
@@ -384,7 +397,7 @@ class GeneralSection(PDFSection):
     row_fields = [
         'relation',
         'supervisor',
-        'student program',
+        'student_program',
         'student_context',
         'student_context_details',
         'student_justification',
@@ -394,79 +407,128 @@ class GeneralSection(PDFSection):
         'stakeholders',
         'date_start',
         'title',
-        'funding'
+        'funding',
         'funding_details',
         'funding_name',
-        'self_assessment'
+        'self_assessment',
     ]
     
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
-        if not obj.needs_supervisor:
-            del rows['supervisor']
-        if not obj.check_in_course:
-            del rows['student_program']
-            del rows['student_context']
-            if not obj.student_context.needs_details:
-                del rows['student_context_details']
-            del rows['student_justification']
+        if not obj.relation.needs_supervisor:
+            rows.remove('supervisor')
+        if not obj.relation.check_in_course:
+            rows.remove('student_program')
+            rows.remove('student_context')
+            if obj.student_context is not None:
+                if not obj.student_context.needs_details:
+                    rows.remove('student_context_details')
+            else:
+                rows.remove('student_context_details')
+            rows.remove('student_justification')
         if not obj.other_applicants:
-            del rows['applicants']
+            rows.remove('applicants')
         if not obj.other_stakeholders:
-            del rows['stakeholders']
+            rows.remove('stakeholders')
         if not needs_details(obj.funding.all()):
-            del rows['funding_details']
+            rows.remove('funding_details')
         if not needs_details(obj.funding.all(), 'needs_name'):
-            del rows['funding_name']
+            rows.remove('funding_name')
         # Use the get_rows from PDFSection to get the actual rows, the code above should have filtered out everything we don't need
         return super().get_rows()
     
+class WMOSection(PDFSection):
+
+    section_title = _("Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?")
+    row_fields = [
+        'get_metc_display',
+        'metc_details',
+        'metc_institution',
+        'get_is_medical_display'        
+    ]
+
+    def __init__(self, object):
+        super().__init__(self, object)
+        self.object = self.object.wmo
+    
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+        if not obj.metc == 'Y':
+            rows.remove('metc_details')
+            rows.remove('metc_institution')
+        else:
+            rows.remove('get_is_medical')
+    
+
+    
 class RowValueClass:
 
-        def __init__(self, object, field):
+    def __init__(self, object, field):
 
-            self.object = object
-            self.field = field
+        self.object = object
+        self.field = field
 
-        def render(self):
+    def render(self):
+        from ..models import Funding, Relation
 
+        if type(self.field) == str:
             value = getattr(self.object, self.field)
+        '''A workaround for accessing subclasses:
+        For a subclass provide a tuple like so:
+        ('wmo', 'metc')'''
+        if type(self.field) == tuple:
+        #TODO: create a separate method for this!
+            obj = self.object
+            for item in self.field:
+                value = getattr(obj, item)
+                obj = value
 
-            if type(value) in (str, int, datetime.date):
-                return value
-            elif type(value) == bool:
-                return _('Ja') if value else _('Nee')
-            elif type(value) == User:
-                return self.handle_user(value)
-            elif value.__class__.__name__ == 'ManyRelatedManager':
-                if value.all().model == User:
-                    return self.get_applicants_names(value)
-                elif value.all().model == Funding:
-                    return self.get_funding_list()
-            elif callable(value):
-                return value()
-            
-        def handle_user(self, user):
-            return user.get_full_name()
-        
-        def get_applicants_names(self, applicants):
-            applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
-            return self.create_unordered_html_list(applicant_names)
-        
-        def get_funding_list(self, funding):
-            list_of_funds = [fund for fund in funding.all()]
-            return self.create_unordered_html_list(list_of_funds)
-        
-        def create_unordered_html_list(list):
-            html_output = '<ul>'
+        User = get_user_model()
 
-            for item in list:
-                html_output += f'<li>{item}</li>'
-            
-            html_output += '</ul>'
+        if type(value) in (str, int, date):
+            return value
+        if value is None:
+            return _('Onbekend')
+        elif type(value) == bool:
+            return _('Ja') if value else _('Nee')
+        elif type(value) == User:
+            return self.handle_user(value)
+        elif type(value) == Relation:
+            return value.description
+        elif value.__class__.__name__ == 'ManyRelatedManager':
+            if value.all().model == User:
+                return self.get_applicants_names(value)
+            elif value.all().model == Funding:
+                return self.get_funding_list(value)
+        elif callable(value):
+            return value()
+        
+    def handle_user(self, user):
+        return user.get_full_name()
+    
+    def get_applicants_names(self, applicants):
+        applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
+        return self.create_unordered_html_list(applicant_names)
+    
+    def get_funding_list(self, funding):
+        list_of_funds = [fund for fund in funding.all()]
+        return self.create_unordered_html_list(list_of_funds)
+    
+    def create_unordered_html_list(self, list):
+        html_output = mark_safe('<ul class="p-0">')
 
-            return html_output
+        for item in list:
+            html_output += format_html('{}{}{}',
+                mark_safe('<li>'),
+                item,
+                mark_safe('</li>')                
+            )
+        
+        html_output += mark_safe('</ul>')
+
+        return html_output
 
 
 

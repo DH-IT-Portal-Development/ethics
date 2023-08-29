@@ -445,7 +445,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
 
     def get_back_url(self):
         """Return to the data management view"""
-        return reverse('proposals:data_management', args=(self.object.pk,))
+        return reverse('proposals:data_management', aPdfrgs=(self.object.pk,))
 
     def _get_page_number(self):
         if self.object.is_pre_assessment:
@@ -577,6 +577,19 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_diff.html'
+
+from proposals.utils.proposal_utils import GeneralSection
+class NewPDFViewTest(generic.TemplateView):
+
+    template_name = 'proposals/pdf/new_pdf_test.html'
+
+    def get_context_data(self, **kwargs):
+        model = Proposal.objects.last()
+        test = GeneralSection(model)
+        context = super().get_context_data(**kwargs)
+        context['test'] = test
+        return context
+
 
 
 ########################
