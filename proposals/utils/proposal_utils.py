@@ -354,18 +354,13 @@ from copy import copy
 
 '''('created_by', 'email')'''
 
-# def access_foreignkey_getattr(object, field_tuple):
-    
-
-#     return value, verbose_name
 class PDFSection:
     
     section_title = None
     row_fields = None
     verbose_name_diff_field_dict = {
-        'get_metc_display': ('wmo', 'metc'),
-        'get_is_medical_display': ('wmo','is_medical')
-
+        ('wmo', 'get_metc_display'): ('wmo', 'metc'),
+        ('wmo', 'get_is_medical_display'): ('wmo','is_medical')
     }
 
     def __init__(self, object):
@@ -376,16 +371,42 @@ class PDFSection:
     def get_rows(self):
         rows = OrderedDict()
         for row_field in self._row_fields:
-            if type(row_field) == str:
-                rows[row_field] = {
-                'label': self.object._meta.get_field(row_field).verbose_name,
-                'value': RowValueClass(self.object, row_field).render()
-                }
-            elif type(row_field) == tuple:
-                rows[row_field[-1]] = {
-                'label': self.get_nested_verbose_name(self.object, row_field),
-                'value': RowValueClass(self.object, row_field).render()
-                }                
+            if row_field in self.verbose_name_diff_field_dict:
+                verbose_name = self.verbose_name_diff_field_dict[row_field]
+                '''This sequence checks for all combinations of tuples and strings
+                in the dict. Might not be neccessary, but is nice to account
+                for all possibilities'''
+                if type(row_field) == str and type(verbose_name) == str:
+                    rows[row_field] = {
+                    'label': self.object._meta.get_field(verbose_name).verbose_name,
+                    'value': RowValueClass(self.object, row_field).render()
+                    }
+                elif type(row_field) == tuple and type(verbose_name) == str:
+                    rows[row_field[-1]] = {
+                    'label': self.object._meta.get_field(verbose_name).verbose_name,
+                    'value': RowValueClass(self.object, row_field).render()
+                    }  
+                elif type(row_field) == str and type(verbose_name) == tuple:
+                    rows[row_field] = {
+                    'label': self.get_nested_verbose_name(self.object, verbose_name),
+                    'value': RowValueClass(self.object, row_field).render()
+                    }
+                else:
+                    rows[row_field[-1]] = {
+                    'label': self.get_nested_verbose_name(self.object, verbose_name),
+                    'value': RowValueClass(self.object, row_field).render()
+                    }  
+            else:
+                if type(row_field) == str:
+                    rows[row_field] = {
+                    'label': self.object._meta.get_field(row_field).verbose_name,
+                    'value': RowValueClass(self.object, row_field).render()
+                    }
+                elif type(row_field) == tuple:
+                    rows[row_field[-1]] = {
+                    'label': self.get_nested_verbose_name(self.object, row_field),
+                    'value': RowValueClass(self.object, row_field).render()
+                    }                
         return rows
 
     def render(self, context):
@@ -398,10 +419,10 @@ class PDFSection:
         )
         return template.render(context.flatten())
     
-    def get_nested_verbose_name(object, tuple_field):
+    def get_nested_verbose_name(self, object, tuple_field):
         for item in tuple_field:
             if item == tuple_field[-1]:
-                verbose_name = object._meta_get_field(item).verbose_name 
+                verbose_name = object._meta.get_field(item).verbose_name 
                 break
             new_object = getattr(object, item)
             object = new_object
@@ -460,24 +481,25 @@ class WMOSection(PDFSection):
 
     section_title = _("Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?")
     row_fields = [
-        'get_metc_display',
-        'metc_details',
-        'metc_institution',
-        'get_is_medical_display',      
+        ('wmo', 'get_metc_display'),
+        ('wmo', 'metc_details'),
+        ('wmo', 'metc_institution'),
+        ('wmo', 'get_is_medical_display'),      
     ]
 
-    def __init__(self, object):
-        super().__init__(self, object)
-        self.object = self.object.wmo
+    # def __init__(self, object):
+    #     super().__init__(self, object)
+    #     self.object = self.object.wmo
     
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
-        if not obj.metc == 'Y':
-            rows.remove('metc_details')
-            rows.remove('metc_institution')
+        if not obj.wmo.metc == 'Y':
+            rows.remove(('wmo', 'metc_details'))
+            rows.remove(('wmo', 'metc_institution'))
         else:
-            rows.remove('get_is_medical')
+            rows.remove(('wmo', 'get_is_medical_display'))
+        return super().get_rows()
     
 
     

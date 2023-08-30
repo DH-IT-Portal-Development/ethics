@@ -15,7 +15,8 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalSubmitPreApproved, ProposalUpdatePreApproved, \
     ProposalUsersOnlyArchiveView, \
     ProposalCopyAmendment, ProposalsPublicArchiveView, \
-    ProposalUpdateDataManagement, TranslatedConsentFormsView
+    ProposalUpdateDataManagement, TranslatedConsentFormsView, \
+    NewPDFViewTest
 
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
@@ -121,6 +122,7 @@ urlpatterns = [
     path('diff/<int:pk>/', ProposalDifference.as_view(), name='diff'),
 
     path('pdf/<int:pk>/', ProposalAsPdf.as_view(), name='pdf'),
+    path('new_pdf/', NewPDFViewTest.as_view(), name='new_pdf'),
 
     # WMO
     path('wmo/create/<int:pk>/', include([
