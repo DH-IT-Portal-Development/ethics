@@ -351,12 +351,19 @@ from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 from copy import copy
+
+'''('created_by', 'email')'''
+
+# def access_foreignkey_getattr(object, field_tuple):
+    
+
+#     return value, verbose_name
 class PDFSection:
     
     section_title = None
     row_fields = None
     verbose_name_diff_field_dict = {
-        'get_metc_display': ('wmo', 'metc')
+        'get_metc_display': ('wmo', 'metc'),
         'get_is_medical_display': ('wmo','is_medical')
 
     }
@@ -374,9 +381,11 @@ class PDFSection:
                 'label': self.object._meta.get_field(row_field).verbose_name,
                 'value': RowValueClass(self.object, row_field).render()
                 }
-            #TODO: finish this
-            if type(row_field) == tuple:
-                
+            elif type(row_field) == tuple:
+                rows[row_field[-1]] = {
+                'label': self.get_nested_verbose_name(self.object, row_field),
+                'value': RowValueClass(self.object, row_field).render()
+                }                
         return rows
 
     def render(self, context):
@@ -388,6 +397,15 @@ class PDFSection:
             }
         )
         return template.render(context.flatten())
+    
+    def get_nested_verbose_name(object, tuple_field):
+        for item in tuple_field:
+            if item == tuple_field[-1]:
+                verbose_name = object._meta_get_field(item).verbose_name 
+                break
+            new_object = getattr(object, item)
+            object = new_object
+        return verbose_name   
 
 class GeneralSection(PDFSection):
     '''This class generates the data for the general section of 
@@ -445,7 +463,7 @@ class WMOSection(PDFSection):
         'get_metc_display',
         'metc_details',
         'metc_institution',
-        'get_is_medical_display'        
+        'get_is_medical_display',      
     ]
 
     def __init__(self, object):
@@ -479,11 +497,10 @@ class RowValueClass:
         For a subclass provide a tuple like so:
         ('wmo', 'metc')'''
         if type(self.field) == tuple:
-        #TODO: create a separate method for this!
-            obj = self.object
+            object = self.object
             for item in self.field:
-                value = getattr(obj, item)
-                obj = value
+                value = getattr(object, item)
+                object = value
 
         User = get_user_model()
 
