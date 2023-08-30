@@ -351,6 +351,7 @@ from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 from copy import copy
+from django.conf import settings
 
 '''('created_by', 'email')'''
 
@@ -484,12 +485,8 @@ class WMOSection(PDFSection):
         ('wmo', 'get_metc_display'),
         ('wmo', 'metc_details'),
         ('wmo', 'metc_institution'),
-        ('wmo', 'get_is_medical_display'),      
+        ('wmo', 'get_is_medical_display'),  
     ]
-
-    # def __init__(self, object):
-    #     super().__init__(self, object)
-    #     self.object = self.object.wmo
     
     def get_rows(self):
         obj = self.object
@@ -501,8 +498,16 @@ class WMOSection(PDFSection):
             rows.remove(('wmo', 'get_is_medical_display'))
         return super().get_rows()
     
+class METCSection(PDFSection):
 
+    section_title = _("Aanmelding bij de METC")
     
+    row_fields = [
+        ('wmo', 'metc_application'),
+        ('wmo', 'metc_decision'),
+        ('wmo', 'metc_decision_pdf')
+    ]
+
 class RowValueClass:
 
     def __init__(self, object, field):
@@ -541,6 +546,8 @@ class RowValueClass:
                 return self.get_applicants_names(value)
             elif value.all().model == Funding:
                 return self.get_funding_list(value)
+        elif value.__class__.__name__ == 'FieldFile':
+            return self.handle_field_file(value, self.object)
         elif callable(value):
             return value()
         
@@ -568,8 +575,19 @@ class RowValueClass:
         html_output += mark_safe('</ul>')
 
         return html_output
-
-
+    
+    def handle_field_file(self, field_file, object):
+        if object.wmo.metc_decision_pdf and not object.is_practice():
+            output = format_html('{}{}{}{}{}',
+                                mark_safe('<a href="'),
+                                f'{settings.BASE_URL}{field_file.url}',
+                                mark_safe('" target="_blank">'),
+                                _('Download'),
+                                mark_safe('</a>')
+                                )
+        else:
+            output = _('Niet aangeleverd')
+        return output
 
 def generate_pdf(proposal, template=False):
     """Grandfathered function for pdf saving. The template arg currently
