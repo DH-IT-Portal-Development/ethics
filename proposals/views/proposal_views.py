@@ -578,7 +578,7 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_diff.html'
 
-from proposals.utils.proposal_utils import GeneralSection, WMOSection
+from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection
 class NewPDFViewTest(generic.TemplateView):
 
     template_name = 'proposals/pdf/new_pdf_test.html'
@@ -590,6 +590,9 @@ class NewPDFViewTest(generic.TemplateView):
         context = super().get_context_data(**kwargs)
         context['test'] = test
         context['wmo_test'] = wmo_test
+        if model.wmo.status != model.wmo.NO_WMO:
+            metc_test = METCSection(model)
+            context['metc_test'] = metc_test
         return context
 
 
