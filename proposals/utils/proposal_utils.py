@@ -19,8 +19,6 @@ from django.utils.deconstruct import deconstructible
 from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
-from proposals.templatetags.proposal_filters import needs_details
-
 
 __all__ = ['available_urls', 'generate_ref_number',
            'generate_revision_ref_number', 'generate_pdf',
@@ -304,64 +302,26 @@ def _get_next_proposal_number(current_year) -> int:
     except Proposal.DoesNotExist:
         return 1
 
-def generate_relevant_data_pdf(proposal):
-    empty_dict = {}
-
-    empty_dict[_('Algemene informatie over de aanvraag')] = {}
-    empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('relation').verbose_name] = proposal.relation
-    if proposal.relation.needs_supervisor:
-        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('supervisor').verbose_name] = proposal.supervisor.get_full_name
-    if proposal.relation.check_in_course:
-        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_program').verbose_name] = proposal.student_program
-        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_context').verbose_name] = proposal.student_context
-        if proposal.student_context.needs_detail:
-            empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_context_detail').verbose_name] = proposal.student_context_details
-        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('student_justification').verbose_name] = proposal.student_justification
-    #I am not quite sure how to add translation to the boolean value resulting here ...
-    empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('other_applicants').verbose_name] = proposal.other_applicants
-    if proposal.other_applicants:
-        empty_dict[_('Algemene informatie over de aanvraag')][proposal._meta.get_field('applicants').verbose_name] = [applicant.get_full_name for applicant in proposal.applicants]
-
-    empty_dict[_('Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?')] = {}
-
-    if proposal.wmo.status != proposal.wmo.NO_WMO:
-        empty_dict[_("Aanmelding bij de METC")] = {}
-
-    empty_dict[_('Eén of meerdere trajecten?')] = {}
-
-    '''Note to self: this will be a huge pain of nesting ... only scratch surface for now ...'''
-    if proposal.wmo.status == proposal.wmo.NO_WMO:
-        for study in proposal.study_set.all():
-            if proposal.studies_number > 1:
-                empty_dict['studies'] = {}
-                if study.name:
-                    empty_dict['studies'][_(f'traject { study.order } { study.name }')] = {}
-                else:
-                    empty_dict['studies'][_(f'traject { study.order }')] = {}
-            else:
-                empty_dict['study'] = {}
-    
-    empty_dict['extra documents'] = []
-
-    empty_dict['Aanmelding versturen'] = {}
-
-    return empty_dict
-
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 from copy import copy
 from django.conf import settings
+from proposals.templatetags.proposal_filters import needs_details, medical_traits, \
+necessity_required, has_adults
 
-'''('created_by', 'email')'''
+'''NOTE TO SELF:
+Might not  have to have the whole tuple system ...
+Would streamline code a lot.'''
 
 class PDFSection:
     
     section_title = None
+    study_title = None
     row_fields = None
     verbose_name_diff_field_dict = {
-        ('wmo', 'get_metc_display'): ('wmo', 'metc'),
-        ('wmo', 'get_is_medical_display'): ('wmo','is_medical')
+        'get_metc_display': 'metc',
+        'get_is_medical_display': 'is_medical'
     }
 
     def __init__(self, object):
@@ -479,34 +439,143 @@ class GeneralSection(PDFSection):
         return super().get_rows()
     
 class WMOSection(PDFSection):
-
+    '''Object for this section is proposal.wmo'''
     section_title = _("Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?")
     row_fields = [
-        ('wmo', 'get_metc_display'),
-        ('wmo', 'metc_details'),
-        ('wmo', 'metc_institution'),
-        ('wmo', 'get_is_medical_display'),  
+        'get_metc_display',
+        'metc_details',
+        'metc_institution',
+        'get_is_medical_display',  
     ]
     
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
         if not obj.wmo.metc == 'Y':
-            rows.remove(('wmo', 'metc_details'))
-            rows.remove(('wmo', 'metc_institution'))
+            rows.remove('metc_details')
+            rows.remove('metc_institution')
         else:
-            rows.remove(('wmo', 'get_is_medical_display'))
+            rows.remove('get_is_medical_display')
         return super().get_rows()
     
 class METCSection(PDFSection):
-
+    '''Object for this section is proposal.wmo'''
     section_title = _("Aanmelding bij de METC")
     
     row_fields = [
-        ('wmo', 'metc_application'),
-        ('wmo', 'metc_decision'),
-        ('wmo', 'metc_decision_pdf')
+        'metc_application',
+        'metc_decision',
+        'metc_decision_pdf'
     ]
+    
+class TrajectoriesSection(PDFSection):
+
+    section_title = _("Eén of meerdere trajecten?")
+
+    row_fields = [
+        'studies_similar',
+        'studies_number'
+    ]
+    
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+        if obj.studies_similar:
+            rows.remove('studies_number')
+        return super().get_rows()
+    
+class StudySection(PDFSection):
+    '''object for this study is proposal.study'''
+    section_title = _('De Deelnemers')
+    row_fields = [
+        'age_groups',
+        'legally_incapable',
+        'legally_incapable_details',
+        'has_special_details',
+        'special_details',
+        'traits',
+        'traits_details',
+        'necessity',
+        'necessity_reason',
+        'recruitment',
+        'recruitment_details',
+        'compensation',
+        'compensation_details',
+        'hierarchy',
+        'hierarchy_details',
+    ]
+
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+        if not has_adults(obj):
+            rows.remove('legally_incapable')
+            rows.remove('legally_incapable_details')
+        elif not obj.legally_incapable:
+            rows.remove('legally_incapable_details')
+        if not obj.has_special_details:
+            rows.remove('special_details')
+            rows.remove('traits')
+            rows.remove('traits_details')
+        elif not medical_traits(obj.special_details.all()):
+            rows.remove('traits')
+            rows.remove('traits_details')
+        elif not needs_details(obj.traits.all()):
+            rows.remove('traits_details')
+        if not necessity_required(obj):
+            rows.remove('necessity')
+            rows.remove('necessity_reason')
+        if not needs_details(obj.recruitment.all()):
+            rows.remove('recruitment_details')
+        if not obj.compensation.needs_details:
+            rows.remove('compensation_details')
+        if not obj.hierarchy:
+            rows.remove('hierarchy_details')
+        return super().get_rows()
+
+    def get_study_title(study):
+        if study.name:
+            study_title = format_html('{}{}{}{}{}',
+                                      _('Traject'),
+                                      study.order,
+                                      mark_safe('<em>'),
+                                      study.name,
+                                      mark_safe('</em>')
+            )
+        else:
+            study_title = format_html('{}{}',
+                                      _('Traject'),
+                                      {study.order}
+            )
+        return study_title
+        
+    def render(self, context):
+        template = get_template("proposals/pdf/table_with_header.html")
+        context.update(
+            {
+                "section_title": self.section_title,
+                '''Will this work? I dont know ...'''
+                "rows": self.get_rows(),
+            }
+        )
+        if self.object.proposal.studies_number > 1:
+            context.update(
+                {
+                    'study_title': self.get_study_title(self.object)
+                }
+            )
+        return template.render(context.flatten())
+    
+class TasksSection(PDFSection):
+    
+    row_fields = [
+        'setting',
+        'setting_details',
+        'supervision',
+        'leader_has_coc',
+        'tasks_number',       
+    ]
+
 
 class RowValueClass:
 
@@ -544,8 +613,8 @@ class RowValueClass:
         elif value.__class__.__name__ == 'ManyRelatedManager':
             if value.all().model == User:
                 return self.get_applicants_names(value)
-            elif value.all().model == Funding:
-                return self.get_funding_list(value)
+            else:
+                return self.get_object_list(value)
         elif value.__class__.__name__ == 'FieldFile':
             return self.handle_field_file(value, self.object)
         elif callable(value):
@@ -558,9 +627,9 @@ class RowValueClass:
         applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
         return self.create_unordered_html_list(applicant_names)
     
-    def get_funding_list(self, funding):
-        list_of_funds = [fund for fund in funding.all()]
-        return self.create_unordered_html_list(list_of_funds)
+    def get_object_list(self, object):
+        list_of_objects = [obj for obj in object.all()]
+        return self.create_unordered_html_list(list_of_objects)
     
     def create_unordered_html_list(self, list):
         html_output = mark_safe('<ul class="p-0">')
@@ -580,7 +649,7 @@ class RowValueClass:
         if object.wmo.metc_decision_pdf and not object.is_practice():
             output = format_html('{}{}{}{}{}',
                                 mark_safe('<a href="'),
-                                f'{settings.BASE_URL}{field_file.url}',
+                                f'{settings.BASE_URL}{field_file.url()}',
                                 mark_safe('" target="_blank">'),
                                 _('Download'),
                                 mark_safe('</a>')

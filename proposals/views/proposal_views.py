@@ -578,7 +578,8 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_diff.html'
 
-from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection
+from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection, \
+TrajectoriesSection, StudySection
 class NewPDFViewTest(generic.TemplateView):
 
     template_name = 'proposals/pdf/new_pdf_test.html'
@@ -586,13 +587,18 @@ class NewPDFViewTest(generic.TemplateView):
     def get_context_data(self, **kwargs):
         model = Proposal.objects.last()
         test = GeneralSection(model)
-        wmo_test = WMOSection(model)
+        wmo_test = WMOSection(model.wmo)
+        trajectories_test = TrajectoriesSection(model)
         context = super().get_context_data(**kwargs)
         context['test'] = test
         context['wmo_test'] = wmo_test
         if model.wmo.status != model.wmo.NO_WMO:
-            metc_test = METCSection(model)
+            metc_test = METCSection(model.wmo)
             context['metc_test'] = metc_test
+        if model.wmo.status == model.wmo.NO_WMO:
+            for study in model.study_set.all():
+                study_test = StudySection(study)
+        context['trajectories_test'] = trajectories_test
         return context
 
 
