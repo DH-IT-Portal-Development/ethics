@@ -14,10 +14,20 @@
 {% block content %}
 
     {% include test %}
-    {% include wmo_test %}studies_similar
+    {% include wmo_test %}
+
     {% if metc_test %}
         {% include metc_test %}
     {% endif %}
+
     {% include trajectories_test  %}
+
+    {% if studies %}
+        {% for study in studies %}
+            {% for study_section in study %}
+                {% include study_section %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}

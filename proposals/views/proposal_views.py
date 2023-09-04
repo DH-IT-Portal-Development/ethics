@@ -579,7 +579,7 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     template_name = 'proposals/proposal_diff.html'
 
 from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection, \
-TrajectoriesSection, StudySection
+TrajectoriesSection, StudySection, InterventionSection, ObservationSection
 class NewPDFViewTest(generic.TemplateView):
 
     template_name = 'proposals/pdf/new_pdf_test.html'
@@ -595,10 +595,17 @@ class NewPDFViewTest(generic.TemplateView):
         if model.wmo.status != model.wmo.NO_WMO:
             metc_test = METCSection(model.wmo)
             context['metc_test'] = metc_test
-        if model.wmo.status == model.wmo.NO_WMO:
-            for study in model.study_set.all():
-                study_test = StudySection(study)
         context['trajectories_test'] = trajectories_test
+        if model.wmo.status == model.wmo.NO_WMO:
+            context['studies'] = []
+            for study in model.study_set.all():
+                study_sections = []
+                study_sections.append(StudySection(study))
+                if study.has_intervention:
+                    study_sections.append(InterventionSection(study.intervention))
+                if study.has_observation:
+                    study_sections.append(ObservationSection(study.observation))
+                context['studies'].append(study_sections)
         return context
 
 

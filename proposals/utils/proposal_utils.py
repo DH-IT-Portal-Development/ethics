@@ -314,6 +314,8 @@ necessity_required, has_adults
 Might not  have to have the whole tuple system ...
 Would streamline code a lot.'''
 
+'''TODO: Test multiple studies proposal'''
+
 class PDFSection:
     
     section_title = None
@@ -378,6 +380,7 @@ class PDFSection:
                 "rows": self.get_rows(),
             }
         )
+
         return template.render(context.flatten())
     
     def get_nested_verbose_name(self, object, tuple_field):
@@ -451,7 +454,7 @@ class WMOSection(PDFSection):
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
-        if not obj.wmo.metc == 'Y':
+        if not obj.metc == 'Y':
             rows.remove('metc_details')
             rows.remove('metc_institution')
         else:
@@ -533,7 +536,7 @@ class StudySection(PDFSection):
             rows.remove('hierarchy_details')
         return super().get_rows()
 
-    def get_study_title(study):
+    def get_study_title(self, study):
         if study.name:
             study_title = format_html('{}{}{}{}{}',
                                       _('Traject'),
@@ -550,23 +553,162 @@ class StudySection(PDFSection):
         return study_title
         
     def render(self, context):
-        template = get_template("proposals/pdf/table_with_header.html")
-        context.update(
-            {
-                "section_title": self.section_title,
-                '''Will this work? I dont know ...'''
-                "rows": self.get_rows(),
-            }
-        )
         if self.object.proposal.studies_number > 1:
             context.update(
                 {
                     'study_title': self.get_study_title(self.object)
                 }
             )
-        return template.render(context.flatten())
+        return super().render(context)
+
+class InterventionSection(StudySection):
+    '''This class will receive a study object'''
+    section_title = _('Het interventieonderzoek')
+    row_fields = [
+        'setting',
+        'setting_details',
+        'supervision',
+        'leader_has_coc',
+        'period',
+        'multiple_sessions', 
+        'session_frequency',
+        'amount_per_week',
+        'duration',
+        'measurement',
+        'experimenter',
+        'description',
+        'has_controls',
+        'controls_description',
+        'extra_task'
+    ]
+
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+
+        if obj.version == 1:
+            fields_to_remove = ['multiple_sessions',
+                                'session_frequency',
+                                'extra_task']
+            rows = [field for field in rows if field not in fields_to_remove]
+        else:
+            rows.remove('amount_per_week')
+            if not obj.multiple_sessions:
+                rows.remove('session_frequency')
+            if obj.settings_contains_schools:
+                rows.remove('extra_task')
+        
+        if not needs_details(obj.setting.all()):
+            rows.remove('setting_details')
+        if not obj.study.has_children() or \
+        not needs_details(obj.setting.all(), 'needs_supervision'):
+            rows.remove('supervision')
+            rows.remove('leader_has_coc')
+        elif obj.supervision:
+            rows.remove('leader_has_coc')
+        if not obj.has_controls:
+            rows.remove('controls_description')          
+
+        return super(StudySection, self).get_rows()
     
-class TasksSection(PDFSection):
+    def render(self, context):
+        if self.object.study.proposal.studies_number > 1:
+            context.update(
+                {
+                    'sub_study_title': super().get_study_title(self.object.study)
+                }
+            )
+        return super(StudySection, self).render(context)
+    
+class ObservationSection(StudySection):
+    '''Gets passed an observation object'''
+    section_title = _('Het observatieonderzoek')
+    row_fields = [
+        'setting',
+        'setting_details',
+        'supervision',
+        'leader_has_coc',
+        'days',
+        'mean_hours',
+        'details_who',
+        'details_why',
+        'details_frequency',
+        'is_anonymous',
+        'is_anonymous_details',
+        'is_in_target_group',
+        'is_in_target_group_details',
+        'is_nonpublic_space',
+        'is_nonpublic_space_details',
+        'has_advanced_consent',
+        'has_advanced_consent_details',
+        'needs_approval',
+        'approval_institution',
+        'approval_document',
+        'registrations',
+        'registrations_details'        
+    ]
+
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+
+        if obj.version == 1:
+            to_remove_if_v1 = ['details_who',
+                            'details_why',
+                            'is_anonymous_details', 
+                            'is_in_target_group_details',
+                            'is_nonpublic_space_details',
+                            'has_advanced_consent_details'
+                            ]
+            rows = [field for field in rows if field not in to_remove_if_v1]
+            if not obj.is_nonpublic_space:
+                rows.remove('has_advanced_consent')
+            if not obj.needs_approval:
+                rows.remove('approval_institution')
+                rows.remove('approval_document')
+            elif obj.study.proposal.is_practice():
+                rows.remove('approval_document')
+        else:
+            to_remove_if_v2 = ['days', 'mean_hours', 'approval_document']
+            rows = [field for field in rows if field not in to_remove_if_v2]
+
+            if not obj.is_anonymous:
+                rows.remove('is_anonymous_details')
+            if not obj.is_in_target_group:
+                rows.remove('is_in_target_group_details')
+            if not obj.is_nonpublic_space:
+                rows.remove('is_nonpublic_space_details')
+                rows.remove('has_advanced_consent')
+                rows.remove('has_advanced_consent_details')
+            elif obj.has_advanced_consent:
+                rows.remove('has_advanced_consent_details')
+            if not needs_details(obj.setting.all(), 'is_school'):
+                rows.remove('needs_approval')
+            if not obj.needs_approval:
+                rows.remove('approval_institution')
+
+        if not needs_details(obj.setting.all()):
+            rows.remove('setting_details')
+        if not obj.study.has_children() or \
+        not needs_details(obj.setting.all(), 'needs_supervision'):
+            rows.remove('supervision')
+            rows.remove('leader_has_coc')
+        elif obj.supervision:
+            rows.remove('leader_has_coc')
+        if not needs_details(obj.registrations.all()):
+            rows.remove('registrations_details')
+        return super(StudySection, self).get_rows()
+    
+    def render(self, context):
+        if self.object.study.proposal.studies_number > 1:
+            context.update(
+                {
+                    'sub_study_title': super().get_study_title(self.object.study)
+                }
+            )
+        return super(StudySection, self).render(context)
+
+class SessionSection(PDFSection):
     
     row_fields = [
         'setting',
@@ -575,6 +717,7 @@ class TasksSection(PDFSection):
         'leader_has_coc',
         'tasks_number',       
     ]
+
 
 
 class RowValueClass:
@@ -646,16 +789,27 @@ class RowValueClass:
         return html_output
     
     def handle_field_file(self, field_file, object):
-        if object.wmo.metc_decision_pdf and not object.is_practice():
-            output = format_html('{}{}{}{}{}',
-                                mark_safe('<a href="'),
-                                f'{settings.BASE_URL}{field_file.url()}',
-                                mark_safe('" target="_blank">'),
-                                _('Download'),
-                                mark_safe('</a>')
-                                )
+        from ..models import Proposal
+        if type(object) == Proposal:
+            if object.wmo.metc_decision_pdf and not object.is_practice():
+                output = format_html('{}{}{}{}{}',
+                                    mark_safe('<a href="'),
+                                    f'{settings.BASE_URL}{field_file.url()}',
+                                    mark_safe('" target="_blank">'),
+                                    _('Download'),
+                                    mark_safe('</a>')
+                                    )
+            else:
+                output = _('Niet aangeleverd')
         else:
-            output = _('Niet aangeleverd')
+            #if obj == Observation
+            output = format_html('{}{}{}{}{}',
+                                    mark_safe('<a href="'),
+                                    f'{settings.BASE_URL}{field_file.url()}',
+                                    mark_safe('" target="_blank">'),
+                                    _('Download'),
+                                    mark_safe('</a>')
+                                    )
         return output
 
 def generate_pdf(proposal, template=False):
