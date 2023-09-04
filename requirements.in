@@ -7,6 +7,7 @@ django-impersonate
 django-simple-menu
 django-debug-toolbar
 djangorestframework
+djangosaml2<1.7  # 1.7 adds a logout bug...
 mysqlclient<2
 xhtml2pdf
 sphinx
