@@ -92,7 +92,7 @@ djangorestframework==3.14.0
     # via
     #   -r requirements.in
     #   uil-django-core
-djangosaml2==1.7.0
+djangosaml2==1.6.0
     # via cdh-django-core
 docutils==0.18.1
     # via
