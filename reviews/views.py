@@ -414,14 +414,13 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         proposal = form.instance.proposal
 
         if form.instance.continuation in [
-                Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
+                Review.GO,
+                Review.NO_GO,
+                Review.GO_POST_HOC,
+                Review.NO_GO_POST_HOC,
+                Review.REVISION,
         ]:
-            proposal.status = Proposal.DECISION_MADE
-            proposal.status_review = form.instance.continuation in [
-                Review.GO, Review.GO_POST_HOC
-            ]
-            proposal.date_reviewed = timezone.now()
-            proposal.save()
+            proposal.mark_reviewed(form.instance.continuation)
         elif form.instance.continuation == Review.LONG_ROUTE:
             # Create a new review
             review = Review.objects.create(
@@ -434,10 +433,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
             # Start the long review route
             start_review_route(review, get_reviewers(), False)
         elif form.instance.continuation == Review.METC:
-            proposal.status = Proposal.DRAFT
-            proposal.save()
-            proposal.wmo.enforced_by_commission = True
-            proposal.wmo.save()
+            proposal.enforce_wmo()
 
         proposal.in_archive = form.cleaned_data['in_archive']
         proposal.has_minor_revision = form.cleaned_data['has_minor_revision']

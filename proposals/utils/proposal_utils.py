@@ -303,18 +303,20 @@ def _get_next_proposal_number(current_year) -> int:
         return 1
 
 
+def generate_pdf(proposal,):
+    """
+    Returns a PDF of a proposal using the ProposalAsPdf view
+    and the proposal's own recommended PDF template.
 
-def generate_pdf(proposal, template=False):
-    """Grandfathered function for pdf saving. The template arg currently
-    only exists for backwards compatibility."""
+    This function does not save the generated PDF. For that
+    functionality, call the generate_pdf method on the model.
+    """
 
     from proposals.views.proposal_views import ProposalAsPdf
 
     view = ProposalAsPdf()
     view.object = proposal
 
-    # Note, this is where the _view_ decides what kind of proposal it is
-    # and chooses the appropriate template.
     context = view.get_context_data()
 
     with BytesIO() as f:
@@ -323,9 +325,8 @@ def generate_pdf(proposal, template=False):
             dest=f,
         )
         pdf = ContentFile(f.getvalue())
-    proposal.pdf.save(view.get_pdf_filename(), pdf)
 
-    return proposal.pdf
+    return pdf
 
 
 def pdf_link_callback(uri, rel):

@@ -1,11 +1,12 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
+import logging
 
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from django.db.models.query import QuerySet
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from django.utils.functional import lazy
@@ -16,8 +17,9 @@ from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
-
 from datetime import date, timedelta
+
+logger = logging.getLogger(__name__)
 
 SUMMARY_MAX_WORDS = 200
 SELF_ASSESSMENT_MAX_WORDS = 1000
@@ -636,9 +638,10 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         from reviews.models import Review, Decision
 
         if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
-            decisions = Decision.objects.filter(review__proposal=self,
-                                                review__stage=Review.SUPERVISOR).order_by(
-                '-pk')
+            decisions = Decision.objects.filter(
+                review__proposal=self,
+                review__stage=Review.SUPERVISOR
+            ).order_by('-pk')
 
             if decisions:
                 return decisions[0]
@@ -652,6 +655,66 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         from reviews.models import Review
 
         return Review.objects.filter(proposal=self).last()
+
+    def enforce_wmo(self):
+        """Send proposal back to draft phase with WMO enforced."""
+        self.status = self.DRAFT
+        self.save()
+        self.wmo.enforced_by_commission = True
+        self.wmo.save()
+
+    def mark_reviewed(self, continuation, time=None):
+        """Finalize a proposal after a decision has been made."""
+        if time is None:
+            time = timezone.now()
+        self.status = self.DECISION_MADE
+        # Importing here to prevent circular import
+        from reviews.models import Review
+        self.status_review = continuation in [
+            Review.GO, Review.GO_POST_HOC
+        ]
+        self.date_reviewed = time
+        self.generate_pdf()
+        self.save()
+
+    def generate_pdf(self, force_overwrite=False):
+        """Generate _and save_ a pdf of the proposal for posterity.
+        The currently existing PDF will not be overwritten unless the
+        force_overwrite keyword is True."""
+        from proposals.utils import generate_pdf
+        pdf = generate_pdf(self)
+        if (force_overwrite is True
+            or not self.use_canonical_pdf
+            or not self.pdf
+            ):
+            self.pdf.save(
+                PROPOSAL_FILENAME(self, "document.pdf"),
+                pdf,
+            )
+            self.save()
+        else:
+            logger.warn(
+                f"Not saving PDF of {self.reference_number} "
+                "to preserve canonical PDF.",
+            )
+        return pdf
+
+    @property
+    def pdf_template_name(self):
+        """Determine the correct PDf template for this proposal."""
+        template_name = 'proposals/proposal_pdf.html'
+        if self.is_pre_approved:
+            template_name = 'proposals/proposal_pdf_pre_approved.html'
+        elif self.is_pre_assessment:
+            template_name = 'proposals/proposal_pdf_pre_assessment.html'
+        return template_name
+
+    def use_canonical_pdf(self):
+        """Returns False if this proposal should regenerate its PDF
+        on request. Proposals that have already been decided on should
+        rely on a PDF generated at time of review, so that the PDF
+        generation templates can evolve without breaking older proposals."""
+        return self.status_review is not None
 
     def __str__(self):
         if self.is_practice():
