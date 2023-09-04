@@ -17,7 +17,8 @@ from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 
 SUMMARY_MAX_WORDS = 200
-SELF_ASSESSMENT_MAX_WORDS = 300
+SELF_ASSESSMENT_MAX_WORDS = 1000
+COMMENTS_MAX_WORDS = 1000
 PROPOSAL_FILENAME = FilenameFactory('Proposal')
 PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
 DMP_FILENAME = FilenameFactory('DMP')
@@ -37,7 +38,6 @@ class Relation(models.Model):
 
     def __str__(self):
         return self.description
-
 
 class StudentContext(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -200,7 +200,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
     )
 
     comments = models.TextField(
-        _('Ruimte voor eventuele opmerkingen'),
+        _('Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden.'),
+        validators=[MaxWordsValidator(COMMENTS_MAX_WORDS)],
         blank=True,
     )
 
@@ -364,7 +365,7 @@ trajecten.'),
 
     self_assessment = models.TextField(
         _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en '
-          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 300 '
+          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 '
           'woorden.'),
         blank=True,
         validators=[
@@ -526,17 +527,19 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
                 if session.tasks_duration is None:
                     break
         return current_session
+    
+    def amendment_or_revision(self):
+        if self.is_revision and self.parent:
+            return _('Amendement') if self.parent.status_review else _('Revisie')
 
     def type(self):
         """
         Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
         """
         result = _('Normaal')
-        if self.is_revision and self.parent:
-            if self.parent.status_review:
-                result = _('Amendement')
-            else:
-                result = _('Revisie')
+        amendment_or_revision = self.amendment_or_revision()
+        if amendment_or_revision is not None:
+            result = amendment_or_revision
         elif self.is_pre_assessment:
             result = _('Voortoetsing')
         elif self.is_practice():

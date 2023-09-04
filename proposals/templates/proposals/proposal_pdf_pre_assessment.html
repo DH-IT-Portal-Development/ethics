@@ -76,9 +76,17 @@ Page <pdf:pagenumber /> of <pdf:pagecount />
             </tr>
             {% if proposal.other_applicants %}
             <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th><td>{{ proposal.applicants.all|unordered_list }}</td>
+              <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th><td>
+                <ul>
+                  {% for applicant in proposal.applicants.all %}
+                    <li>
+                      {{ applicant.get_full_name }}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </td>
             </tr>
-            {% endif %}
+          {% endif %}
             <tr>
                 <th>{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</th><td>{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
             </tr>

@@ -10,28 +10,6 @@
 {% block html_head %}
 <script>
 $(function() {
-    depends_on_value('passive_consent', 'True', 'passive_consent_details');
-
-    // Logic for passive_consent
-    $('input[name=age_groups]').change(function() {
-        var age_groups = $('input[name=age_groups]:checked').map(function() {
-            return this.value;
-        }).get();
-
-        if(age_groups.length == 0)
-        {
-            $('#id_passive_consent').parents('tr').hide();
-            return;
-        }
-
-        var url = "{% url 'studies:check_has_adults' %}";
-        var params = {
-            'age_groups': age_groups
-        };
-        $.post(url, params, function(data) {
-            $('#id_passive_consent').parents('tr').toggle(!data.result);
-        });
-    });
     $('input[name=age_groups]').change();
 
     depends_on_value('has_special_details', 'True', 'special_details');

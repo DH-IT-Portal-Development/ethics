@@ -1,5 +1,6 @@
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 from menu import Menu, MenuItem
 
 Menu.add_item("home", MenuItem(_('Startpagina'),
@@ -8,7 +9,7 @@ Menu.add_item("home", MenuItem(_('Startpagina'),
                                ))
 
 Menu.add_item("footer", MenuItem(_('Log in'),
-                                 reverse('login'),
+                                 settings.LOGIN_URL,
                                  check=lambda x: not x.user.is_authenticated
                                  ))
 
