@@ -693,7 +693,10 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
             )
             self.save()
         else:
-            logger.warn("Not saving PDF to preserve canonical PDF.")
+            logger.warn(
+                f"Not saving PDF of {self.reference_number} "
+                "to preserve canonical PDF.",
+            )
         return pdf
 
     @property
