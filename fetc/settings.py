@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 import os
 
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,7 +29,7 @@ WSGI_APPLICATION = 'fetc.wsgi.application'
 
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -56,9 +57,9 @@ INSTALLED_APPS = (
 
     'django.contrib.admin',
     'django_user_agents',
-)
+]
 
-MIDDLEWARE = (
+MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -70,7 +71,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
     'impersonate.middleware.ImpersonateMiddleware',
-)
+]
 
 TEMPLATES = [
     {
@@ -92,6 +93,16 @@ ROOT_URLCONF = 'fetc.urls'
 
 LOGIN_REDIRECT_URL = '/'
 
+# Determines what login options are displayed on the landing page. NOTE: this
+# does not determine which login screen is actually used as default when using
+# a LoginRequiredMixin or similar.
+# Django login is also used by LDAP auth
+# SHOW_SAML_LOGIN is set to true if saml_settings.py is present and loaded
+SHOW_DJANGO_LOGIN = True
+SHOW_SAML_LOGIN = False
+# Debug option, adds a label to the buttons. Otherwise, the buttons are
+# identical
+SHOW_LOGIN_DESCRIPTORS = DEBUG
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -171,3 +182,16 @@ try:
     from .ldap_settings import *
 except ImportError:
     print('Proceeding without LDAP settings')
+
+try:
+    from .saml_settings import *
+
+    # Only add stuff to settings if we actually have SAML settings
+    INSTALLED_APPS += SAML_APPS
+    MIDDLEWARE += SAML_MIDDLEWARE
+
+    LOGIN_URL = reverse_lazy('saml-login')
+    SHOW_SAML_LOGIN = True
+
+except ImportError:
+    print('Proceeding without SAML settings')

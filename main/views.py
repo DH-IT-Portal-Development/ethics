@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from urllib.parse import urlparse, urlunparse
+
 import ldap
 import os
 
@@ -13,7 +15,7 @@ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import Q
 from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect, JsonResponse, FileResponse, \
-    Http404
+    Http404, QueryDict
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -40,8 +42,7 @@ except (ImportError):
 ################
 # Views
 ################
-class HomeView(LoginRequiredMixin, generic.ListView):
-    template_name = 'main/index.html'
+class _SystemMessageView(generic.ListView):
     model = SystemMessage
 
     def get_queryset(self):
@@ -50,6 +51,38 @@ class HomeView(LoginRequiredMixin, generic.ListView):
             not_after__gt=now,
             not_before__lt=now
         )
+
+
+class HomeView(LoginRequiredMixin, _SystemMessageView):
+    template_name = 'main/index.html'
+
+    def no_permissions_fail(self, request=None):
+        """
+        Overrides normal permission fail to redirect to landing instead of
+        directly to login
+        """
+        resolved_url = reverse('main:landing')
+
+        return HttpResponseRedirect(f"{resolved_url}?next=/")
+
+
+class LandingView(_SystemMessageView):
+    template_name = 'main/landing.html'
+    model = SystemMessage
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['next'] = self.request.GET.get(
+            'next',
+            settings.LOGIN_REDIRECT_URL
+        )
+        context['saml'] = hasattr(settings, 'SAML_CONFIG')
+        context['show_saml'] = settings.SHOW_SAML_LOGIN
+        context['show_django'] = settings.SHOW_DJANGO_LOGIN
+        context['login_descriptors'] = settings.SHOW_LOGIN_DESCRIPTORS
+
+        return context
 
 
 class UserDetailView(GroupRequiredMixin, generic.DetailView):
