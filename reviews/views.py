@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth import get_user_model
+from django.db.models import Q, Count
 
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
@@ -36,8 +38,7 @@ class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateV
         context['list_template'] = "reviews/vue_templates/decision_list.html"
 
         return context
-
-
+    
 class DecisionListView(BaseDecisionListView):
 
     def get_context_data(self, **kwargs):
@@ -77,6 +78,65 @@ class DecisionOpenView(BaseDecisionListView):
         context['data_url'] = reverse("reviews:api:open", args=[self.committee])
 
         return context
+    
+
+class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
+    
+    template_name = 'reviews/committee_members_workload.html'
+    group_required = [settings.GROUP_SECRETARY]
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['decisions'] = self.get_all_open_decisions()
+        context['today'] = date.today()
+        context['reviewers'] = self.get_review_counts_last_year()
+
+        return context
+
+    def get_all_open_decisions(self):
+        '''Returns a queryset with all open decisions'''
+
+        objects = Decision.objects.filter(
+            # This fetches all Decisions which are not approved or need revision
+            go__exact = '',
+            review__proposal__reviewing_committee = self.committee,
+            ).select_related(
+            'reviewer',
+            'review',
+            'review__proposal',
+            ).order_by(
+            "reviewer",
+            "review__date_start"
+            )
+
+        return objects
+    
+    def get_review_counts_last_year(self):
+        '''This function returns an annoted queryset, with counts
+        for specific review types, per reviewer.'''
+
+        reviewers = get_user_model().objects.filter(groups = self.committee)
+        one_year_ago = timezone.now() - timedelta(days=365)
+        base_filter = Q(
+            decision__review__date_start__gt=one_year_ago,
+            decision__review__stage__gt=Review.SUPERVISOR,
+        )
+        return reviewers.annotate(
+            total=Count("decision", filter=base_filter),
+            num_short_route=Count("decision", filter=base_filter & Q(
+                decision__review__proposal__is_revision=False,
+                decision__review__short_route=True
+            )),
+            num_long_route=Count("decision", filter=base_filter & Q(
+                decision__review__proposal__is_revision=False,
+                decision__review__short_route=False
+            )),
+            num_revision=Count("decision", filter=base_filter & Q(
+                decision__review__date_start__gt=one_year_ago,
+                decision__review__proposal__is_revision=True
+            )),
+        )
 
 
 class SupervisorDecisionOpenView(BaseDecisionListView):
@@ -354,14 +414,13 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         proposal = form.instance.proposal
 
         if form.instance.continuation in [
-                Review.GO, Review.NO_GO, Review.GO_POST_HOC, Review.NO_GO_POST_HOC, Review.REVISION
+                Review.GO,
+                Review.NO_GO,
+                Review.GO_POST_HOC,
+                Review.NO_GO_POST_HOC,
+                Review.REVISION,
         ]:
-            proposal.status = Proposal.DECISION_MADE
-            proposal.status_review = form.instance.continuation in [
-                Review.GO, Review.GO_POST_HOC
-            ]
-            proposal.date_reviewed = timezone.now()
-            proposal.save()
+            proposal.mark_reviewed(form.instance.continuation)
         elif form.instance.continuation == Review.LONG_ROUTE:
             # Create a new review
             review = Review.objects.create(
@@ -374,10 +433,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
             # Start the long review route
             start_review_route(review, get_reviewers(), False)
         elif form.instance.continuation == Review.METC:
-            proposal.status = Proposal.DRAFT
-            proposal.save()
-            proposal.wmo.enforced_by_commission = True
-            proposal.wmo.save()
+            proposal.enforce_wmo()
 
         proposal.in_archive = form.cleaned_data['in_archive']
         proposal.has_minor_revision = form.cleaned_data['has_minor_revision']

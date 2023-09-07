@@ -10,12 +10,12 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalUpdatePreAssessment, ProposalStartPreAssessment, \
     ProposalSubmitPreAssessment, ProposalSubmittedPreAssessment, \
     ProposalCreatePractice, ProposalUpdatePractice, ProposalStartPractice, \
-    HideFromArchiveView, ProposalsExportView, ProposalStartPreApproved, \
+    ChangeArchiveStatusView, ProposalsExportView, ProposalStartPreApproved, \
     ProposalCreatePreApproved, ProposalSubmittedPreApproved, \
     ProposalSubmitPreApproved, ProposalUpdatePreApproved, \
-    ProposalPrivateArchiveView, \
+    ProposalUsersOnlyArchiveView, \
     ProposalCopyAmendment, ProposalsPublicArchiveView, \
-    ProposalUpdateDataManagement
+    ProposalUpdateDataManagement, TranslatedConsentFormsView
 
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
@@ -33,13 +33,13 @@ urlpatterns = [
         path('export/', ProposalsExportView.as_view(), name='archive_export'),
         path('export/<int:pk>/', ProposalsExportView.as_view(),
             name='archive_export'),
-        path('hide/<int:pk>/', HideFromArchiveView.as_view(),
-            name='archive_hide'),
+        path('archive_status/<int:pk>/', ChangeArchiveStatusView.as_view(),
+            name='archive_status'),
         # WARNING! This one needs to be LAST in the list. (Django goes
         # through the list and picks the first one that fits, and the regex
         # will always fit for the other 2 URL's, effectively superseding them
         # if it's above them).
-        path('<str:committee>/', ProposalPrivateArchiveView.as_view(),
+        path('<str:committee>/', ProposalUsersOnlyArchiveView.as_view(),
              name='archive'),
     ])),
 
@@ -108,6 +108,8 @@ urlpatterns = [
          name='study_start'),
 
     path('consent/<int:pk>/', StudyConsent.as_view(), name='consent'),
+
+    path('translated/<int:pk>/', TranslatedConsentFormsView.as_view(), name='translated'),
 
     path('copy/', include([
         path('', ProposalCopy.as_view(), name='copy'),

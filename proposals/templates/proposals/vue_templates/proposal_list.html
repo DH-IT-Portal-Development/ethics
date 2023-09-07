@@ -73,7 +73,7 @@
                      title="{% trans 'Inzien' %}">
             </a>
             <a
-                :href="$url('proposals:archive_hide', [proposal.pk])"
+                :href="$url('proposals:archive_status', [proposal.pk])"
                 v-if="proposal.in_archive && context.is_secretary"
             >
                 <img src="{{ img_hide }}"

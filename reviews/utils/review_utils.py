@@ -38,6 +38,7 @@ def start_supervisor_phase(proposal):
     - Create a Decision for the supervisor
     - Send an e-mail to the creator
     - Send an e-mail to the supervisor
+    - send an e-mail to other applicants
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.SUPERVISOR
@@ -53,6 +54,7 @@ def start_supervisor_phase(proposal):
     subject = _('FETC-GW {}: bevestiging indienen concept-aanmelding'.format(reference))
     params = {
         'proposal': proposal,
+        'title': proposal.title,
         'supervisor': proposal.supervisor.get_full_name(),
         'secretary': get_secretary().get_full_name(),
         'pdf_url': settings.BASE_URL + proposal.pdf.url,
@@ -60,6 +62,14 @@ def start_supervisor_phase(proposal):
     msg_plain = render_to_string('mail/concept_creator.txt', params)
     msg_html = render_to_string('mail/concept_creator.html', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email], html_message=msg_html)
+
+    if proposal.other_applicants:
+        params['creator'] = proposal.created_by.get_full_name()
+        msg_plain = render_to_string('mail/concept_other_applicants.txt', params)
+        msg_html = render_to_string('mail/concept_other_applicants.html', params)
+        applicants_to_remove = [proposal.created_by, proposal.supervisor]
+        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     subject = _('FETC-GW {}: beoordelen als eindverantwoordelijke'.format(reference))
     params = {
@@ -87,6 +97,7 @@ def start_assignment_phase(proposal):
     - Create a Decision for all Users in the 'Secretaris' Group
     - Send an e-mail to these Users
     - Send an e-mail to the creator and supervisor
+    - send an e-mail to other applicants, if there was no supervisor
     - Send an e-mail to the local staff
     :param proposal: the current Proposal
     """
@@ -115,6 +126,7 @@ def start_assignment_phase(proposal):
         'secretary': secretary.get_full_name(),
         'review_date': review.date_should_end,
         'pdf_url': settings.BASE_URL + proposal.pdf.url,
+        'title': proposal.title,
     }
     if review.short_route:
         msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
@@ -126,6 +138,19 @@ def start_assignment_phase(proposal):
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
+
+    if proposal.supervisor is None and proposal.other_applicants:
+        params['creator'] = proposal.created_by.get_full_name()
+        if review.short_route:
+            msg_plain = render_to_string('mail/submitted_shortroute_other_applicants.txt', params)
+            msg_html = render_to_string('mail/submitted_shortroute_other_applicants.html', params)
+        else:
+            msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
+            msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
+        applicants_to_remove = [proposal.created_by]
+        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
+
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -421,14 +446,23 @@ def assign_reviewers(review, list_of_users, route):
     new_reviewers = list_of_users - current_reviewers
     obsolete_reviewers = current_reviewers - list_of_users
 
-    # Set the proper end date
-    # It should be 2 weeks for short_routes
-    if review.short_route and review.date_should_end is None:
+    if review.proposal.is_revision:
+        #Revisions should end in one week.
+        review.date_should_end = timezone.now() + \
+            timezone.timedelta(
+                weeks=1
+            )
+    elif review.date_should_end is not None:
+        #if the date_end_variable gets assigned through auto review
+        #the review keeps this date
+        pass
+    elif route == True:
+        #The short route reviews should take two weeks.
         review.date_should_end = timezone.now() + \
             timezone.timedelta(
                 weeks=settings.SHORT_ROUTE_WEEKS
             )
-    elif review.date_should_end is not None:
+    elif route == False:
         # We have no desired end date for long track reviews
         review.date_should_end = None
 

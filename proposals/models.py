@@ -1,10 +1,12 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
+import logging
 
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from django.utils.functional import lazy
@@ -15,6 +17,9 @@ from main.models import YES, YES_NO_DOUBT
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .validators import AVGUnderstoodValidator
 from .utils import available_urls, FilenameFactory, OverwriteStorage
+from datetime import date, timedelta
+
+logger = logging.getLogger(__name__)
 
 SUMMARY_MAX_WORDS = 200
 SELF_ASSESSMENT_MAX_WORDS = 1000
@@ -79,8 +84,56 @@ class Institution(models.Model):
     def __str__(self):
         return self.description
 
+class ProposalQuerySet(models.QuerySet):
+
+    DECISION_MADE = 55
+
+    def archive_pre_filter(self):
+        return self.filter(status__gte=self.DECISION_MADE,
+                                             status_review=True,
+                                             in_archive=True,
+        )
+
+    def no_embargo(self):
+        return self.filter(models.Q(embargo_end_date__isnull=True)
+             | models.Q(embargo_end_date__lt=date.today())
+             )
+
+    def public_archive(self):
+        two_years_ago = (
+                date.today() -
+                timedelta(weeks=104)
+        )
+        return self.archive_pre_filter().no_embargo().filter(
+                                        date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
+        )
+
+    def export(self):
+        return self.archive_pre_filter().order_by(
+            "-date_reviewed"
+        )
+
+    def users_only_archive(self, committee):
+        return self.archive_pre_filter().no_embargo().filter(
+                                       is_pre_assessment=False,
+                                       reviewing_committee=committee,
+                                       ).select_related(
+            # this optimizes the loading a bit
+            'supervisor', 'parent', 'relation',
+            'parent__supervisor', 'parent__relation',
+        ).prefetch_related(
+            'applicants', 'review_set', 'parent__review_set', 'study_set',
+            'study_set__observation', 'study_set__session_set',
+            'study_set__intervention', 'study_set__session_set__task_set'
+        )
+
 
 class Proposal(models.Model):
+
+    objects = ProposalQuerySet.as_manager()
+
     DRAFT = 1
     SUBMITTED_TO_SUPERVISOR = 40
     SUBMITTED = 50
@@ -177,6 +230,21 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
         blank=True,
     )
 
+    translated_forms = models.BooleanField(
+        mark_safe_lazy(_('Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?')),
+        default=None,
+        blank=True,
+        null=True,
+    )
+
+    translated_forms_languages = models.CharField(
+        _('Andere talen:'),
+        max_length=255,
+        default=None,
+        blank=True,
+        null=True,
+    )
+
     funding = models.ManyToManyField(
         Funding,
         verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'),
@@ -225,9 +293,24 @@ Zep software)'),
         null=True
     )
 
-    in_archive = models.BooleanField(default=False)
+    embargo = models.BooleanField(
+        _('Als de deelnemers van je onderzoek moeten worden misleid, kan \
+          je ervoor kiezen je applicatie pas later op te laten nemen in het \
+          publieke archief en het archief voor gebruikers \
+          van dit portaal. Wil je dat jouw onderzoek tijdelijk onder \
+          embargo wordt geplaatst?'),
+          default=None,
+          blank=True,
+          null=True
+    )
 
-    public = models.BooleanField(default=True)
+    embargo_end_date = models.DateField(
+        _('Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?'),
+        blank=True,
+        null=True
+    )
+
+    in_archive = models.BooleanField(default=False)
 
     is_pre_assessment = models.BooleanField(default=False)
 
@@ -424,7 +507,8 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     applicants = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('Uitvoerende(n) (inclusief uzelf)'),
+        verbose_name=_('Uitvoerenden, inclusief uzelf. Let op! De andere onderzoekers moeten \
+        ten minste één keer zijn ingelogd op dit portaal om ze te kunnen selecteren.'),
         related_name='applicants',
     )
 
@@ -527,7 +611,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
                 if session.tasks_duration is None:
                     break
         return current_session
-    
+
     def amendment_or_revision(self):
         if self.is_revision and self.parent:
             return _('Amendement') if self.parent.status_review else _('Revisie')
@@ -554,9 +638,10 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         from reviews.models import Review, Decision
 
         if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
-            decisions = Decision.objects.filter(review__proposal=self,
-                                                review__stage=Review.SUPERVISOR).order_by(
-                '-pk')
+            decisions = Decision.objects.filter(
+                review__proposal=self,
+                review__stage=Review.SUPERVISOR
+            ).order_by('-pk')
 
             if decisions:
                 return decisions[0]
@@ -570,6 +655,66 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         from reviews.models import Review
 
         return Review.objects.filter(proposal=self).last()
+
+    def enforce_wmo(self):
+        """Send proposal back to draft phase with WMO enforced."""
+        self.status = self.DRAFT
+        self.save()
+        self.wmo.enforced_by_commission = True
+        self.wmo.save()
+
+    def mark_reviewed(self, continuation, time=None):
+        """Finalize a proposal after a decision has been made."""
+        if time is None:
+            time = timezone.now()
+        self.status = self.DECISION_MADE
+        # Importing here to prevent circular import
+        from reviews.models import Review
+        self.status_review = continuation in [
+            Review.GO, Review.GO_POST_HOC
+        ]
+        self.date_reviewed = time
+        self.generate_pdf()
+        self.save()
+
+    def generate_pdf(self, force_overwrite=False):
+        """Generate _and save_ a pdf of the proposal for posterity.
+        The currently existing PDF will not be overwritten unless the
+        force_overwrite keyword is True."""
+        from proposals.utils import generate_pdf
+        pdf = generate_pdf(self)
+        if (force_overwrite is True
+            or not self.use_canonical_pdf
+            or not self.pdf
+            ):
+            self.pdf.save(
+                PROPOSAL_FILENAME(self, "document.pdf"),
+                pdf,
+            )
+            self.save()
+        else:
+            logger.warn(
+                f"Not saving PDF of {self.reference_number} "
+                "to preserve canonical PDF.",
+            )
+        return pdf
+
+    @property
+    def pdf_template_name(self):
+        """Determine the correct PDf template for this proposal."""
+        template_name = 'proposals/proposal_pdf.html'
+        if self.is_pre_approved:
+            template_name = 'proposals/proposal_pdf_pre_approved.html'
+        elif self.is_pre_assessment:
+            template_name = 'proposals/proposal_pdf_pre_assessment.html'
+        return template_name
+
+    def use_canonical_pdf(self):
+        """Returns False if this proposal should regenerate its PDF
+        on request. Proposals that have already been decided on should
+        rely on a PDF generated at time of review, so that the PDF
+        generation templates can evolve without breaking older proposals."""
+        return self.status_review is not None
 
     def __str__(self):
         if self.is_practice():

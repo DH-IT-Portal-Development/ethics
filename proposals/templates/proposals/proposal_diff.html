@@ -98,8 +98,22 @@
                     {% if proposal.other_applicants or p_proposal.other_applicants %}
                         <tr>
                             <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th>
-                            <td>{{ p_proposal.applicants.all|unordered_list }}</td>
-                            <td>{{ proposal.applicants.all|unordered_list }}</td>
+                            <td>
+                                <ul class="p-0">
+                                {% for applicant in p_proposal.applicants.all %}
+                                <li>{{ applicant.get_full_name }}</li>
+                                {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="p-0">
+                                {% for applicant in proposal.applicants.all %}
+                                <li>
+                                    {{ applicant.get_full_name }}
+                                </li>
+                                {% endfor %}
+                                </ul>
+                            </td>
                         </tr>
                     {% endif %}
                     <tr>
@@ -254,6 +268,18 @@
                             <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
                             <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
                         </tr>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th>
+                            <td>{{ p_proposal.embargo|yesno:_("ja,nee") }}</td>
+                            <td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
+                        </tr>
+                        {% if proposal.embargo or p_proposal.embargo %}
+                            <tr>
+                                <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th>
+                                <td>{{ p_proposal.embargo_end_date }}</td>
+                                <td>{{ proposal.embargo_end_date }}</td>
+                            </tr>
+                        {% endif %}
                         <tr>
                             <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th>
                             <td>{{ p_proposal.comments }}</td>
