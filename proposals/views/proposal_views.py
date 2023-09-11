@@ -579,7 +579,9 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     template_name = 'proposals/proposal_diff.html'
 
 from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection, \
-TrajectoriesSection, StudySection, InterventionSection, ObservationSection
+TrajectoriesSection, StudySection, InterventionSection, ObservationSection, SessionsSection, \
+SessionSection, TaskSection
+
 class NewPDFViewTest(generic.TemplateView):
 
     template_name = 'proposals/pdf/new_pdf_test.html'
@@ -605,6 +607,16 @@ class NewPDFViewTest(generic.TemplateView):
                     study_sections.append(InterventionSection(study.intervention))
                 if study.has_observation:
                     study_sections.append(ObservationSection(study.observation))
+                if study.has_sessions:
+                    study_sections.append(SessionsSection(study))
+                    sessions = []
+                    for session in study.session_set.all():
+                        sessions.append(SessionSection(session))
+                        tasks = []
+                        for task in session.task_set.all():
+                            tasks.append(TaskSection(task))
+                        sessions.append(tasks)
+                    study_sections.append(sessions)
                 context['studies'].append(study_sections)
         return context
 

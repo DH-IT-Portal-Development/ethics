@@ -1,9 +1,8 @@
+{% if section_title is not None %}
+    <h2> {{ section_title }} </h2>
+{% endif %}
 {% if study_title %}
     <h3> {{ study_title }} </h3>
-{% endif %}
-<h2> {{ section_title }} </h2>
-{% if sub_study_title %}
-    <h3> {{ sub_study_title }} </h3>
 {% endif %}
 <table>
 {% for label, value in rows.items %}

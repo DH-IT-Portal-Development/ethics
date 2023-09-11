@@ -369,7 +369,7 @@ class PDFSection:
                     rows[row_field[-1]] = {
                     'label': self.get_nested_verbose_name(self.object, row_field),
                     'value': RowValueClass(self.object, row_field).render()
-                    }                
+                    }
         return rows
 
     def render(self, context):
@@ -390,7 +390,83 @@ class PDFSection:
                 break
             new_object = getattr(object, item)
             object = new_object
-        return verbose_name   
+        return verbose_name
+    
+    def get_study_title(self, study):
+        if study.name:
+            study_title = format_html('{}{}{}{}{}',
+                                      _('Traject '),
+                                      study.order,
+                                      mark_safe(' <em>'),
+                                      study.name,
+                                      mark_safe(' </em>')
+            )
+        else:
+            study_title = format_html('{}{}',
+                                      _('Traject'),
+                                      {study.order}
+            )
+        return study_title
+    
+    def get_session_title(self, session):
+
+        order = session.order 
+        study_order = session.study.order 
+        study_name = session.study.name 
+        studies_number = session.study.proposal.studies_number 
+        sessions_number = session.study.sessions_number
+
+        if studies_number > 1 and sessions_number > 1:
+            session_title = format_html('{}{}{}{}{}{}{}',
+                                      _('Traject '),
+                                      study_order,
+                                      mark_safe(' <em>'),
+                                      study_name,
+                                      mark_safe(' </em>, '),
+                                      _('sessie '),
+                                      order
+            )
+        elif studies_number > 1:
+            session_title = format_html('{}{}{}{}{}',
+                                      _('Traject '),
+                                      study_order,
+                                      mark_safe(' <em>'),
+                                      study_name,
+                                      mark_safe(' </em>')
+            )
+        elif sessions_number >= 1:
+            session_title = format_html('{}{}',
+                                        _('Sessie '),
+                                        order
+            )
+        return session_title
+    
+    def get_task_title(task):
+        order=task.order 
+        session_order=task.session.order 
+        study_order=task.session.study.order 
+        study_name=task.session.study.name 
+        studies_number=task.session.study.proposal.studies_number
+        if studies_number > 1:
+            task_title = format_html('{}{}{}{}{}{}{}{}{}',
+                                      _('Traject '),
+                                      study_order,
+                                      mark_safe(' <em>'),
+                                      study_name,
+                                      mark_safe(' </em>, '),
+                                      _('sessie '),
+                                      session_order,
+                                      _(', taak '),
+                                      order
+            )
+        else:
+            task_title = format_html('{}{}{}{}',
+                                     _('Sessie '),
+                                     session_order,
+                                     _(', taak '),
+                                     order
+                                     )
+        return task_title
 
 class GeneralSection(PDFSection):
     '''This class generates the data for the general section of 
@@ -535,34 +611,18 @@ class StudySection(PDFSection):
         if not obj.hierarchy:
             rows.remove('hierarchy_details')
         return super().get_rows()
-
-    def get_study_title(self, study):
-        if study.name:
-            study_title = format_html('{}{}{}{}{}',
-                                      _('Traject'),
-                                      study.order,
-                                      mark_safe('<em>'),
-                                      study.name,
-                                      mark_safe('</em>')
-            )
-        else:
-            study_title = format_html('{}{}',
-                                      _('Traject'),
-                                      {study.order}
-            )
-        return study_title
         
     def render(self, context):
         if self.object.proposal.studies_number > 1:
             context.update(
                 {
-                    'study_title': self.get_study_title(self.object)
+                    'study_title': super().get_study_title(self.object)
                 }
             )
         return super().render(context)
 
-class InterventionSection(StudySection):
-    '''This class will receive a study object'''
+class InterventionSection(PDFSection):
+    '''This class will receive a intervention object'''
     section_title = _('Het interventieonderzoek')
     row_fields = [
         'setting',
@@ -590,7 +650,8 @@ class InterventionSection(StudySection):
             fields_to_remove = ['multiple_sessions',
                                 'session_frequency',
                                 'extra_task']
-            rows = [field for field in rows if field not in fields_to_remove]
+            for field in fields_to_remove:
+                rows.remove(field)
         else:
             rows.remove('amount_per_week')
             if not obj.multiple_sessions:
@@ -609,18 +670,18 @@ class InterventionSection(StudySection):
         if not obj.has_controls:
             rows.remove('controls_description')          
 
-        return super(StudySection, self).get_rows()
+        return super().get_rows()
     
     def render(self, context):
         if self.object.study.proposal.studies_number > 1:
             context.update(
                 {
-                    'sub_study_title': super().get_study_title(self.object.study)
+                    'study_title': super().get_study_title(self.object.study)
                 }
             )
-        return super(StudySection, self).render(context)
+        return super().render(context)
     
-class ObservationSection(StudySection):
+class ObservationSection(InterventionSection):
     '''Gets passed an observation object'''
     section_title = _('Het observatieonderzoek')
     row_fields = [
@@ -660,7 +721,9 @@ class ObservationSection(StudySection):
                             'is_nonpublic_space_details',
                             'has_advanced_consent_details'
                             ]
-            rows = [field for field in rows if field not in to_remove_if_v1]
+            for field in to_remove_if_v1:
+                rows.remove(field)
+
             if not obj.is_nonpublic_space:
                 rows.remove('has_advanced_consent')
             if not obj.needs_approval:
@@ -670,7 +733,8 @@ class ObservationSection(StudySection):
                 rows.remove('approval_document')
         else:
             to_remove_if_v2 = ['days', 'mean_hours', 'approval_document']
-            rows = [field for field in rows if field not in to_remove_if_v2]
+            for field in to_remove_if_v2:
+                rows.remove(field)
 
             if not obj.is_anonymous:
                 rows.remove('is_anonymous_details')
@@ -697,18 +761,19 @@ class ObservationSection(StudySection):
             rows.remove('leader_has_coc')
         if not needs_details(obj.registrations.all()):
             rows.remove('registrations_details')
+
+        return super(InterventionSection, self).get_rows()
+
+class SessionsSection(StudySection):
+    '''Gets passed a study object'''
+    section_title = _("Het takenonderzoek en interviews")
+    row_fields = ['sessions_number']
+
+    def get_rows(self):
         return super(StudySection, self).get_rows()
-    
-    def render(self, context):
-        if self.object.study.proposal.studies_number > 1:
-            context.update(
-                {
-                    'sub_study_title': super().get_study_title(self.object.study)
-                }
-            )
-        return super(StudySection, self).render(context)
 
 class SessionSection(PDFSection):
+    '''Gets passed a session object'''
     
     row_fields = [
         'setting',
@@ -717,6 +782,51 @@ class SessionSection(PDFSection):
         'leader_has_coc',
         'tasks_number',       
     ]
+
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+
+        if not needs_details(obj.setting.all()):
+            rows.remove('setting_details')
+        if not obj.study.has_children() or \
+        not needs_details(obj.setting.all(), 'needs_supervision'):
+            rows.remove('supervision')
+            rows.remove('leader_has_coc')
+        elif obj.supervision:
+            rows.remove('leader_has_coc')
+
+        return super().get_rows()
+    
+    def render(self, context):
+        context.update(
+            {
+                'study_title': super().get_session_title(self.object)
+            }
+        )
+        return super().render(context)
+    
+class TaskSection(PDFSection):
+    '''Gets passed a task object'''
+    
+    row_fields = [
+    
+    ]
+
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+
+        return super().get_rows()
+    
+    def render(self, context):
+        context.update(
+            {
+                'study_title': super().get_task_title(self.object)
+            }
+        )
+        return super().render(context)
+
 
 
 

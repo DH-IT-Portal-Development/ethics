@@ -33,6 +33,9 @@ def necessity_required(study):
     age_groups = study.age_groups.values_list('id', flat=True)
     return check_necessity_required(study.proposal, age_groups, study.legally_incapable)
 
+@register.filter
+def get_type(value):
+    return type(value)
 
 @register.simple_tag
 def show_yesno(doubt=False):

@@ -20,12 +20,22 @@
         {% include metc_test %}
     {% endif %}
 
-    {% include trajectories_test  %}
+    {% include trajectories_test %}
 
     {% if studies %}
         {% for study in studies %}
             {% for study_section in study %}
-                {% include study_section %}
+                {% if study_section | get_type == 'list' %}
+                    {% for session in study_section %}
+                        {% if session | get_type == 'list' %}
+                            {% for task in session %}
+                                {% include task %}
+                        {% else %}
+                            {% include session %}
+                    {% endfor %}
+                {% else %}
+                    {% include study_section %}
+                {% endif %}
             {% endfor %}
         {% endfor %}
     {% endif %}
