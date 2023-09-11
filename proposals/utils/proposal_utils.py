@@ -314,7 +314,6 @@ necessity_required, has_adults
 Might not  have to have the whole tuple system ...
 Would streamline code a lot.'''
 
-'''TODO: Test multiple studies proposal'''
 
 class PDFSection:
     
@@ -441,7 +440,7 @@ class PDFSection:
             )
         return session_title
     
-    def get_task_title(task):
+    def get_task_title(self, task):
         order=task.order 
         session_order=task.session.order 
         study_order=task.session.study.order 
@@ -810,12 +809,31 @@ class TaskSection(PDFSection):
     '''Gets passed a task object'''
     
     row_fields = [
-    
+        'name',
+        'durations',
+        'registrations',
+        'registrations_details',
+        'registration_kinds',
+        'registration_kinds_details',
+        'feedback',
+        'feedback_details',
+        'desctiption'
     ]
 
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
+
+        if not needs_details(obj.registrations.all()):
+            rows.remove['registrations_details']
+        if not needs_details(obj.registrations.all(), 'needs_kind') or \
+        not needs_details(obj.registration_kinds.all()):
+            rows.remove('registration_kinds')
+            rows.remove('registration_kinds_details')
+        elif not needs_details(obj.registration_kinds.all()):
+            rows.remove('registration_kinds_details')
+        if not obj.feedback:
+            rows.remove['feedback_details']    
 
         return super().get_rows()
     
@@ -826,9 +844,24 @@ class TaskSection(PDFSection):
             }
         )
         return super().render(context)
+    
+class TasksOverviewSection(PDFSection):
+    '''Gets passed a session object'''
+    '''TODO: how to pass the net_duration to the verbose name?'''
 
+    row_fields = [
+        'tasks_duration'
+    ]
 
-
+    def render(self, context):
+        '''Here I am just overriding the render function, to get the correct formatting
+        The naming is a bit confusing, might fix later'''
+        context.update(
+            {
+                'study_title': _('Overzicht van het takenonderzoek')
+            }
+        )
+        return super().render(context)
 
 class RowValueClass:
 
