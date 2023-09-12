@@ -360,15 +360,6 @@ class PDFSection:
     def get_rows(self):
         raise Exception('You forgot to define the get_rows function for your subclass!')
     
-    def get_nested_verbose_name(self, object, tuple_field):
-        for item in tuple_field:
-            if item == tuple_field[-1]:
-                verbose_name = object._meta.get_field(item).verbose_name 
-                break
-            new_object = getattr(object, item)
-            object = new_object
-        return verbose_name
-    
     def get_study_title(self, study):
         if study.name:
             study_title = format_html('{}{}{}{}{}',
@@ -855,16 +846,8 @@ class RowValueClass:
     def render(self):
         from ..models import Funding, Relation
 
-        if type(self.field) == str:
-            value = getattr(self.object, self.field)
-        '''A workaround for accessing subclasses:
-        For a subclass provide a tuple like so:
-        ('wmo', 'metc')'''
-        if type(self.field) == tuple:
-            object = self.object
-            for item in self.field:
-                value = getattr(object, item)
-                object = value
+
+        value = getattr(self.object, self.field)
 
         User = get_user_model()
 
