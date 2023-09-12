@@ -330,9 +330,9 @@ class PDFSection:
         # Create a copy of the class level row_fields, such that we can safely manipulate it without changing the class value
         self._row_fields = copy(self.row_fields)
     
-    def get_rows(self):
+    def make_rows(self):
         rows = OrderedDict()
-        for row_field in self._row_fields:
+        for row_field in self.get_rows():
             if row_field in self.verbose_name_diff_field_dict:
                 verbose_name = self.verbose_name_diff_field_dict[row_field]
                 '''This sequence checks for all combinations of tuples and strings
@@ -376,11 +376,14 @@ class PDFSection:
         context.update(
             {
                 "section_title": self.section_title,
-                "rows": self.get_rows(),
+                "rows": self.make_rows(),
             }
         )
 
         return template.render(context.flatten())
+    
+    def get_rows(self):
+        raise Exception('You forgot to define the get_rows function for your subclass!')
     
     def get_nested_verbose_name(self, object, tuple_field):
         for item in tuple_field:
@@ -513,8 +516,7 @@ class GeneralSection(PDFSection):
             rows.remove('funding_details')
         if not needs_details(obj.funding.all(), 'needs_name'):
             rows.remove('funding_name')
-        # Use the get_rows from PDFSection to get the actual rows, the code above should have filtered out everything we don't need
-        return super().get_rows()
+        return rows
     
 class WMOSection(PDFSection):
     '''Object for this section is proposal.wmo'''
@@ -534,10 +536,12 @@ class WMOSection(PDFSection):
             rows.remove('metc_institution')
         else:
             rows.remove('get_is_medical_display')
-        return super().get_rows()
+        return rows
     
 class METCSection(PDFSection):
-    '''Object for this section is proposal.wmo'''
+    '''Object for this section is proposal.wmo
+    This class exists because the RowValueClass does some
+    funky things for working with the metc_decision_pdf field'''
     section_title = _("Aanmelding bij de METC")
     
     row_fields = [
@@ -545,6 +549,9 @@ class METCSection(PDFSection):
         'metc_decision',
         'metc_decision_pdf'
     ]
+
+    def get_rows(self):
+        return self._row_fields
     
 class TrajectoriesSection(PDFSection):
 
@@ -560,7 +567,7 @@ class TrajectoriesSection(PDFSection):
         rows = self._row_fields
         if obj.studies_similar:
             rows.remove('studies_number')
-        return super().get_rows()
+        return rows
     
 class StudySection(PDFSection):
     '''object for this study is proposal.study'''
@@ -609,7 +616,7 @@ class StudySection(PDFSection):
             rows.remove('compensation_details')
         if not obj.hierarchy:
             rows.remove('hierarchy_details')
-        return super().get_rows()
+        return rows
         
     def render(self, context):
         if self.object.proposal.studies_number > 1:
@@ -669,7 +676,7 @@ class InterventionSection(PDFSection):
         if not obj.has_controls:
             rows.remove('controls_description')          
 
-        return super().get_rows()
+        return rows
     
     def render(self, context):
         if self.object.study.proposal.studies_number > 1:
@@ -761,7 +768,7 @@ class ObservationSection(InterventionSection):
         if not needs_details(obj.registrations.all()):
             rows.remove('registrations_details')
 
-        return super(InterventionSection, self).get_rows()
+        return rows
 
 class SessionsSection(StudySection):
     '''Gets passed a study object'''
@@ -769,7 +776,7 @@ class SessionsSection(StudySection):
     row_fields = ['sessions_number']
 
     def get_rows(self):
-        return super(StudySection, self).get_rows()
+        return self._row_fields
 
 class SessionSection(PDFSection):
     '''Gets passed a session object'''
@@ -795,7 +802,7 @@ class SessionSection(PDFSection):
         elif obj.supervision:
             rows.remove('leader_has_coc')
 
-        return super().get_rows()
+        return rows
     
     def render(self, context):
         context.update(
@@ -810,14 +817,14 @@ class TaskSection(PDFSection):
     
     row_fields = [
         'name',
-        'durations',
+        'duration',
         'registrations',
         'registrations_details',
         'registration_kinds',
         'registration_kinds_details',
         'feedback',
         'feedback_details',
-        'desctiption'
+        'description'
     ]
 
     def get_rows(self):
@@ -825,7 +832,7 @@ class TaskSection(PDFSection):
         rows = self._row_fields
 
         if not needs_details(obj.registrations.all()):
-            rows.remove['registrations_details']
+            rows.remove('registrations_details')
         if not needs_details(obj.registrations.all(), 'needs_kind') or \
         not needs_details(obj.registration_kinds.all()):
             rows.remove('registration_kinds')
@@ -833,9 +840,9 @@ class TaskSection(PDFSection):
         elif not needs_details(obj.registration_kinds.all()):
             rows.remove('registration_kinds_details')
         if not obj.feedback:
-            rows.remove['feedback_details']    
+            rows.remove('feedback_details')
 
-        return super().get_rows()
+        return rows
     
     def render(self, context):
         context.update(

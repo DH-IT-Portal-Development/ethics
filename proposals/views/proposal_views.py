@@ -611,8 +611,8 @@ class NewPDFViewTest(generic.TemplateView):
                     study_sections.append(SessionsSection(study))
                     for session in study.session_set.all():
                         study_sections.append(SessionSection(session))
-                        # for task in session.task_set.all():
-                        #     study_sections.append(TaskSection(task))
+                        for task in session.task_set.all():
+                            study_sections.append(TaskSection(task))
                 context['studies'].append(study_sections)
 
         return context
