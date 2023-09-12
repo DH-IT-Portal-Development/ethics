@@ -335,40 +335,15 @@ class PDFSection:
         for row_field in self.get_rows():
             if row_field in self.verbose_name_diff_field_dict:
                 verbose_name = self.verbose_name_diff_field_dict[row_field]
-                '''This sequence checks for all combinations of tuples and strings
-                in the dict. Might not be neccessary, but is nice to account
-                for all possibilities'''
-                if type(row_field) == str and type(verbose_name) == str:
-                    rows[row_field] = {
-                    'label': self.object._meta.get_field(verbose_name).verbose_name,
-                    'value': RowValueClass(self.object, row_field).render()
-                    }
-                elif type(row_field) == tuple and type(verbose_name) == str:
-                    rows[row_field[-1]] = {
-                    'label': self.object._meta.get_field(verbose_name).verbose_name,
-                    'value': RowValueClass(self.object, row_field).render()
-                    }  
-                elif type(row_field) == str and type(verbose_name) == tuple:
-                    rows[row_field] = {
-                    'label': self.get_nested_verbose_name(self.object, verbose_name),
-                    'value': RowValueClass(self.object, row_field).render()
-                    }
-                else:
-                    rows[row_field[-1]] = {
-                    'label': self.get_nested_verbose_name(self.object, verbose_name),
-                    'value': RowValueClass(self.object, row_field).render()
-                    }  
+                rows[row_field] = {
+                'label': mark_safe(self.object._meta.get_field(verbose_name).verbose_name),
+                'value': RowValueClass(self.object, row_field).render()
+                }
             else:
-                if type(row_field) == str:
-                    rows[row_field] = {
-                    'label': self.object._meta.get_field(row_field).verbose_name,
-                    'value': RowValueClass(self.object, row_field).render()
-                    }
-                elif type(row_field) == tuple:
-                    rows[row_field[-1]] = {
-                    'label': self.get_nested_verbose_name(self.object, row_field),
-                    'value': RowValueClass(self.object, row_field).render()
-                    }
+                rows[row_field] = {
+                'label': mark_safe(self.object._meta.get_field(row_field).verbose_name),
+                'value': RowValueClass(self.object, row_field).render()
+                }
         return rows
 
     def render(self, context):
