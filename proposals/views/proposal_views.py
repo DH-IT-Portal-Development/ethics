@@ -580,7 +580,7 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
 
 from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection, \
 TrajectoriesSection, StudySection, InterventionSection, ObservationSection, SessionsSection, \
-SessionSection, TaskSection
+SessionSection, TaskSection, TasksOverviewSection, StudyOverviewSection
 
 class NewPDFViewTest(generic.TemplateView):
 
@@ -613,6 +613,8 @@ class NewPDFViewTest(generic.TemplateView):
                         study_sections.append(SessionSection(session))
                         for task in session.task_set.all():
                             study_sections.append(TaskSection(task))
+                    study_sections.append(TasksOverviewSection(session))
+                study_sections.append(StudyOverviewSection(study))
                 context['studies'].append(study_sections)
 
         return context

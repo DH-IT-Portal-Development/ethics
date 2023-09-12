@@ -329,29 +329,13 @@ class PDFSection:
         self.object = object
         # Create a copy of the class level row_fields, such that we can safely manipulate it without changing the class value
         self._row_fields = copy(self.row_fields)
-    
-    def make_rows(self):
-        rows = OrderedDict()
-        for row_field in self.get_rows():
-            if row_field in self.verbose_name_diff_field_dict:
-                verbose_name = self.verbose_name_diff_field_dict[row_field]
-                rows[row_field] = {
-                'label': mark_safe(self.object._meta.get_field(verbose_name).verbose_name),
-                'value': RowValueClass(self.object, row_field).render()
-                }
-            else:
-                rows[row_field] = {
-                'label': mark_safe(self.object._meta.get_field(row_field).verbose_name),
-                'value': RowValueClass(self.object, row_field).render()
-                }
-        return rows
 
     def render(self, context):
         template = get_template("proposals/pdf/table_with_header.html")
         context.update(
             {
                 "section_title": self.section_title,
-                "rows": self.make_rows(),
+                "rows": self.get_rows(),
             }
         )
 
@@ -463,6 +447,7 @@ class GeneralSection(PDFSection):
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
+
         if not obj.relation.needs_supervisor:
             rows.remove('supervisor')
         if not obj.relation.check_in_course:
@@ -482,6 +467,9 @@ class GeneralSection(PDFSection):
             rows.remove('funding_details')
         if not needs_details(obj.funding.all(), 'needs_name'):
             rows.remove('funding_name')
+
+        rows = [RowClass(obj, field) for field in rows]
+
         return rows
     
 class WMOSection(PDFSection):
@@ -497,11 +485,15 @@ class WMOSection(PDFSection):
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
+
         if not obj.metc == 'Y':
             rows.remove('metc_details')
             rows.remove('metc_institution')
         else:
             rows.remove('get_is_medical_display')
+
+        rows = [RowClass(obj, field) for field in rows]
+
         return rows
     
 class METCSection(PDFSection):
@@ -517,7 +509,10 @@ class METCSection(PDFSection):
     ]
 
     def get_rows(self):
-        return self._row_fields
+
+        rows = [RowClass(self.object, field) for field in self._row_fields]
+
+        return rows
     
 class TrajectoriesSection(PDFSection):
 
@@ -531,8 +526,12 @@ class TrajectoriesSection(PDFSection):
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
+
         if obj.studies_similar:
             rows.remove('studies_number')
+
+        rows = [RowClass(obj, field) for field in rows]
+
         return rows
     
 class StudySection(PDFSection):
@@ -559,6 +558,7 @@ class StudySection(PDFSection):
     def get_rows(self):
         obj = self.object
         rows = self._row_fields
+
         if not has_adults(obj):
             rows.remove('legally_incapable')
             rows.remove('legally_incapable_details')
@@ -582,6 +582,9 @@ class StudySection(PDFSection):
             rows.remove('compensation_details')
         if not obj.hierarchy:
             rows.remove('hierarchy_details')
+
+        rows = [RowClass(obj, field) for field in rows]
+
         return rows
         
     def render(self, context):
@@ -640,7 +643,9 @@ class InterventionSection(PDFSection):
         elif obj.supervision:
             rows.remove('leader_has_coc')
         if not obj.has_controls:
-            rows.remove('controls_description')          
+            rows.remove('controls_description')   
+
+        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -733,17 +738,22 @@ class ObservationSection(InterventionSection):
             rows.remove('leader_has_coc')
         if not needs_details(obj.registrations.all()):
             rows.remove('registrations_details')
+        
+        rows = [RowClass(obj, field) for field in rows]
 
         return rows
 
 class SessionsSection(StudySection):
-    '''Gets passed a study object'''
+    '''Gets passed a study object
+    This Section looks maybe a bit unnecessary, but it does remove some logic, plus
+    the study_title.html from the template.'''
     section_title = _("Het takenonderzoek en interviews")
-    row_fields = ['sessions_number']
 
     def get_rows(self):
-        return self._row_fields
 
+        rows = [RowValueClass(self.object, 'sessions_number')]
+
+        return rows
 class SessionSection(PDFSection):
     '''Gets passed a session object'''
     
@@ -767,6 +777,8 @@ class SessionSection(PDFSection):
             rows.remove('leader_has_coc')
         elif obj.supervision:
             rows.remove('leader_has_coc')
+        
+        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -807,6 +819,8 @@ class TaskSection(PDFSection):
             rows.remove('registration_kinds_details')
         if not obj.feedback:
             rows.remove('feedback_details')
+        
+        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -819,12 +833,20 @@ class TaskSection(PDFSection):
         return super().render(context)
     
 class TasksOverviewSection(PDFSection):
-    '''Gets passed a session object'''
-    '''TODO: how to pass the net_duration to the verbose name?'''
+    '''Gets passed a session object
+    This might be unecessary ... Maybe just use the existing template language ...
+    Because the verbose name of this field is formatted, the method for retrieving
+    the verbose name in the RowClass is quite convoluded.'''
 
     row_fields = [
         'tasks_duration'
     ]
+
+    def get_rows(self):
+
+        rows = [RowClass(self.object, field) for field in self._row_fields]
+
+        return rows
 
     def render(self, context):
         '''Here I am just overriding the render function, to get the correct formatting
@@ -835,6 +857,78 @@ class TasksOverviewSection(PDFSection):
             }
         )
         return super().render(context)
+    
+class StudyOverviewSection(StudySection):
+    '''Receives a Study object'''
+
+    section_title = _('Overzicht en eigen beoordeling van het gehele onderzoek')
+    row_fields = [
+        'deception',
+        'deception_details',
+        'negativity',
+        'negativity_details',
+        'stressful',
+        'stressful_details',
+        'risk',
+        'risk_details'
+    ]
+
+    def get_rows(self):
+        obj = self.object
+        rows = self._row_fields
+
+        rows_to_remove = []
+        for x in range(0, 7, 2):
+            if getattr(obj, rows[x]) == 'N':
+                rows_to_remove.append(rows[x+1])
+        rows = [row for row in rows if row not in rows_to_remove]
+
+        if not obj.has_sessions and not obj.deception == 'N':
+            rows.remove('deception')
+            rows.remove('deception_details')
+        elif not obj.has_sessions:
+            rows.remove('deception')
+        
+        rows = [RowClass(obj, field) for field in rows]
+
+        return rows
+    
+class InformedConsentFormsSection(StudySection):
+    '''Receives a Documents object'''
+
+    section_title = _('Informed consent formulieren')
+
+    def get_rows(self):
+        rows = []
+        rows.append(RowClass(obj, field))
+
+class RowClass:
+
+    verbose_name_diff_field_dict = {
+        'get_metc_display': 'metc',
+        'get_is_medical_display': 'is_medical'
+    }
+
+    def __init__(self, object, field):
+        self.object = object
+        self.field = field
+    
+    def verbose_name(self):
+        if self.field in self.verbose_name_diff_field_dict:
+            verbose_name_field = self.verbose_name_diff_field_dict[self.field]
+            verbose_name = self.get_verbose_name(verbose_name_field),
+        else:
+            verbose_name= self.get_verbose_name(self.field)
+        return verbose_name   
+    
+    def value(self):
+        return RowValueClass(self.object, self.field).render()
+    
+    def get_verbose_name(self, field):
+        if field != 'tasks_duration':
+            return mark_safe(self.object._meta.get_field(field).verbose_name)
+        else:
+            return mark_safe(self.object._meta.get_field(field).verbose_name % self.object.net_duration())
 
 class RowValueClass:
 
@@ -851,9 +945,11 @@ class RowValueClass:
 
         User = get_user_model()
 
+        if value in ('Y', 'N', '?'):
+            return self.yes_no_doubt(value)
         if type(value) in (str, int, date):
             return value
-        if value is None:
+        elif value is None:
             return _('Onbekend')
         elif type(value) == bool:
             return _('Ja') if value else _('Nee')
@@ -910,7 +1006,6 @@ class RowValueClass:
             else:
                 output = _('Niet aangeleverd')
         else:
-            #if obj == Observation
             output = format_html('{}{}{}{}{}',
                                     mark_safe('<a href="'),
                                     f'{settings.BASE_URL}{field_file.url()}',
@@ -919,6 +1014,11 @@ class RowValueClass:
                                     mark_safe('</a>')
                                     )
         return output
+    
+    def yes_no_doubt(self, value):
+        from main.models import YES_NO_DOUBT
+        d = dict(YES_NO_DOUBT)
+        return d[value]
 
 def generate_pdf(proposal, template=False):
     """Grandfathered function for pdf saving. The template arg currently

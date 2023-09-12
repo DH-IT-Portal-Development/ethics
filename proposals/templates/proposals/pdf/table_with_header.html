@@ -5,9 +5,9 @@
     <h3> {{ study_title }} </h3>
 {% endif %}
 <table>
-{% for label, value in rows.items %}
+{% for row in rows %}
 <tr>
-<th>{{ value.label }}</th><td>{{ value.value }}</td>
+<th>{{ row.verbose_name }}</th><td>{{ row.value }}</td>
 </tr>
 {% endfor %}
 </table>
