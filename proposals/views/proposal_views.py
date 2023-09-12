@@ -580,7 +580,8 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
 
 from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection, \
 TrajectoriesSection, StudySection, InterventionSection, ObservationSection, SessionsSection, \
-SessionSection, TaskSection, TasksOverviewSection, StudyOverviewSection
+SessionSection, TaskSection, TasksOverviewSection, StudyOverviewSection, \
+InformedConsentFormsSection
 
 class NewPDFViewTest(generic.TemplateView):
 
@@ -615,6 +616,7 @@ class NewPDFViewTest(generic.TemplateView):
                             study_sections.append(TaskSection(task))
                     study_sections.append(TasksOverviewSection(session))
                 study_sections.append(StudyOverviewSection(study))
+                study_sections.append(InformedConsentFormsSection(study.documents))
                 context['studies'].append(study_sections)
 
         return context

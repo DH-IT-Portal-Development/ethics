@@ -893,15 +893,33 @@ class StudyOverviewSection(StudySection):
 
         return rows
     
-class InformedConsentFormsSection(StudySection):
+class InformedConsentFormsSection(InterventionSection):
     '''Receives a Documents object'''
 
     section_title = _('Informed consent formulieren')
 
+    '''TODO: Debug'''
     def get_rows(self):
+        obj = self.object
         rows = []
-        rows.append(RowClass(obj, field))
-
+        rows.append(RowClass(obj.proposal, 'translated_forms'))
+        if obj.proposal.translated_forms:
+            rows.append(RowClass(obj.proposal, 'translated_forms_languages'))
+        if not obj.proposal.is_practice and obj.informed_consent:
+            rows.append(RowClass(obj, 'informed_consent'))
+            rows.append(RowClass(obj, 'briefing'))
+        if obj.study.passive_consent is not None:
+            rows.append(RowClass(obj.study, 'passive_consent'))
+        if obj.study.passive_consent:
+            rows.append(RowClass(obj.study, 'passive_consent_details'))
+        if obj.director_consent_declaration:
+            rows.append(RowClass(obj, 'director_consent_declaration'))
+        if obj.director_consent_information:
+            rows.append(RowClass(obj, 'director_consent_information')) 
+        if obj.parents_information:
+            rows.append(RowClass(obj, 'parents_information'))
+        breakpoint()
+        return rows
 class RowClass:
 
     verbose_name_diff_field_dict = {
