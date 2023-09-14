@@ -40,7 +40,9 @@
         {% include dmp_file %}
     {% endif %}
 
-    {% include embargo %}
+    {% if embargo %}
+        {% include embargo %}
+    {% endif %}
 
     {% comment %} Code to copy into pdf file
 
