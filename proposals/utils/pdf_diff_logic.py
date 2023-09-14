@@ -12,32 +12,53 @@ from django.utils.translation import ugettext as _
 from proposals.templatetags.proposal_filters import needs_details, medical_traits, \
 necessity_required, has_adults
 
+from ..models import Relation
+
+'''NOTE: The current implementation does not account for page break formatting, present 
+in the previous pdf template'''
+
 class PDFSection:
     
     section_title = None
     row_fields = None
 
-    def __init__(self, object):
+    def __init__(self, object, object_2 = None):
         self.object = object
-        # Create a copy of the class level row_fields, such that we can safely manipulate it without changing the class value
-        self._row_fields = copy(self.row_fields)
+        self.object_2 = object_2
 
     def render(self, context):
         context = context.flatten()
-        template = get_template("proposals/pdf/table_with_header.html")
+        if self.object_2:
+            template = get_template("proposals/pdf/diff_table_with_header.html")
+        else:
+            template = get_template("proposals/pdf/table_with_header.html")
         context.update(
             {
                 "section_title": self.section_title,
-                "rows": self.get_rows(),
+                "rows": self.make_rows(),
             }
         )
         return template.render(context)
-    
-    def get_rows(self):
 
-        rows = [RowClass(self.object, field) for field in self._row_fields]
+    def make_rows(self):
+        if self.object_2:
+            row_fields_1 = self.get_row_fields(self.object)
+            row_fields_2 = self.get_row_fields(self.object_2)
 
+            row_fields_both = list(set(row_fields_1) | set(row_fields_2))
+
+            #The merging above messes with the order, so I reorder it here
+            ordered_row_fields = [row for row in self.row_fields if row in row_fields_both]
+
+            rows = [RowClass(self.object, field, self.object_2) for field in ordered_row_fields]
+        else:
+            row_fields = self.get_row_fields(self.object)
+
+            rows = [RowClass(self.object, field) for field in row_fields]
         return rows
+    
+    def get_row_fields(self):
+        return self.row_fields
         
     def get_study_title(self, study):
         if study.name:
@@ -115,6 +136,125 @@ class PDFSection:
                                      )
         return task_title
 
+class RowClass:
+
+    verbose_name_diff_field_dict = {
+        'get_metc_display': 'metc',
+        'get_is_medical_display': 'is_medical'
+    }
+
+    def __init__(self, object, field, object_2 = None):
+        self.object = object
+        self.object_2 = object_2
+        self.field = field
+    
+    def verbose_name(self):
+        if self.field in self.verbose_name_diff_field_dict:
+            verbose_name_field = self.verbose_name_diff_field_dict[self.field]
+            verbose_name = self.get_verbose_name(verbose_name_field)
+        else:
+            verbose_name= self.get_verbose_name(self.field)
+        return verbose_name   
+    
+    def value(self):
+        return RowValueClass(self.object, self.field).render()
+    
+    def value_2(self):
+        return RowValueClass(self.object_2, self.field).render()
+    
+    def get_verbose_name(self, field):
+        if field != 'tasks_duration':
+            return mark_safe(self.object._meta.get_field(field).verbose_name)
+        else:
+            return mark_safe(self.object._meta.get_field(field).verbose_name % self.object.net_duration())
+
+class RowValueClass:
+
+    def __init__(self, object, field):
+
+        self.object = object
+        self.field = field
+
+    def render(self):
+
+        value = getattr(self.object, self.field)
+
+        User = get_user_model()
+
+        if value in ('Y', 'N', '?'):
+            return self.yes_no_doubt(value)
+        if type(value) in (str, int, date):
+            return value
+        elif value is None:
+            return _('Onbekend')
+        elif type(value) == bool:
+            return _('Ja') if value else _('Nee')
+        elif type(value) == User:
+            return self.handle_user(value)
+        elif type(value) == Relation:
+            return value.description
+        elif value.__class__.__name__ == 'ManyRelatedManager':
+            if value.all().model == User:
+                return self.get_applicants_names(value)
+            else:
+                return self.get_object_list(value)
+        elif value.__class__.__name__ == 'FieldFile':
+            return self.handle_field_file(value, self.object)
+        elif callable(value):
+            return value()
+        
+    def handle_user(self, user):
+        return user.get_full_name()
+    
+    def get_applicants_names(self, applicants):
+        applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
+        return self.create_unordered_html_list(applicant_names)
+    
+    def get_object_list(self, object):
+        list_of_objects = [obj for obj in object.all()]
+        return self.create_unordered_html_list(list_of_objects)
+    
+    def create_unordered_html_list(self, list):
+        html_output = mark_safe('<ul class="p-0">')
+
+        for item in list:
+            html_output += format_html('{}{}{}',
+                mark_safe('<li>'),
+                item,
+                mark_safe('</li>')                
+            )
+        
+        html_output += mark_safe('</ul>')
+
+        return html_output
+    
+    def handle_field_file(self, field_file, object):
+        from ..models import Proposal
+        if object == Proposal and field_file == object.wmo.metc_decision_pdf:
+            if object.wmo.metc_decision_pdf and not object.is_practice():
+                output = format_html('{}{}{}{}{}',
+                                    mark_safe('<a href="'),
+                                    f'{settings.BASE_URL}{field_file.url}',
+                                    mark_safe('" target="_blank">'),
+                                    _('Download'),
+                                    mark_safe('</a>')
+                                    )
+            else:
+                output = _('Niet aangeleverd')
+        else:
+            output = format_html('{}{}{}{}{}',
+                                    mark_safe('<a href="'),
+                                    f'{settings.BASE_URL}{field_file.url}',
+                                    mark_safe('" target="_blank">'),
+                                    _('Download'),
+                                    mark_safe('</a>')
+                                    )
+        return output
+    
+    def yes_no_doubt(self, value):
+        from main.models import YES_NO_DOUBT
+        d = dict(YES_NO_DOUBT)
+        return d[value]
 class GeneralSection(PDFSection):
     '''This class generates the data for the general section of 
     the PDF page.'''
@@ -139,9 +279,9 @@ class GeneralSection(PDFSection):
         'self_assessment',
     ]
     
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, object):
+        obj = object
+        rows = copy(self.row_fields)
 
         if not obj.relation.needs_supervisor:
             rows.remove('supervisor')
@@ -162,8 +302,6 @@ class GeneralSection(PDFSection):
             rows.remove('funding_details')
         if not needs_details(obj.funding.all(), 'needs_name'):
             rows.remove('funding_name')
-
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -660,120 +798,3 @@ class EmbargoSection(PDFSection):
 
         return rows
 
-class RowClass:
-
-    verbose_name_diff_field_dict = {
-        'get_metc_display': 'metc',
-        'get_is_medical_display': 'is_medical'
-    }
-
-    def __init__(self, object, field):
-        self.object = object
-        self.field = field
-    
-    def verbose_name(self):
-        if self.field in self.verbose_name_diff_field_dict:
-            verbose_name_field = self.verbose_name_diff_field_dict[self.field]
-            verbose_name = self.get_verbose_name(verbose_name_field)
-        else:
-            verbose_name= self.get_verbose_name(self.field)
-        return verbose_name   
-    
-    def value(self):
-        return RowValueClass(self.object, self.field).render()
-    
-    def get_verbose_name(self, field):
-        if field != 'tasks_duration':
-            return mark_safe(self.object._meta.get_field(field).verbose_name)
-        else:
-            return mark_safe(self.object._meta.get_field(field).verbose_name % self.object.net_duration())
-
-class RowValueClass:
-
-    def __init__(self, object, field):
-
-        self.object = object
-        self.field = field
-
-    def render(self):
-        from ..models import Funding, Relation
-
-
-        value = getattr(self.object, self.field)
-
-        User = get_user_model()
-
-        if value in ('Y', 'N', '?'):
-            return self.yes_no_doubt(value)
-        if type(value) in (str, int, date):
-            return value
-        elif value is None:
-            return _('Onbekend')
-        elif type(value) == bool:
-            return _('Ja') if value else _('Nee')
-        elif type(value) == User:
-            return self.handle_user(value)
-        elif type(value) == Relation:
-            return value.description
-        elif value.__class__.__name__ == 'ManyRelatedManager':
-            if value.all().model == User:
-                return self.get_applicants_names(value)
-            else:
-                return self.get_object_list(value)
-        elif value.__class__.__name__ == 'FieldFile':
-            return self.handle_field_file(value, self.object)
-        elif callable(value):
-            return value()
-        
-    def handle_user(self, user):
-        return user.get_full_name()
-    
-    def get_applicants_names(self, applicants):
-        applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
-        return self.create_unordered_html_list(applicant_names)
-    
-    def get_object_list(self, object):
-        list_of_objects = [obj for obj in object.all()]
-        return self.create_unordered_html_list(list_of_objects)
-    
-    def create_unordered_html_list(self, list):
-        html_output = mark_safe('<ul class="p-0">')
-
-        for item in list:
-            html_output += format_html('{}{}{}',
-                mark_safe('<li>'),
-                item,
-                mark_safe('</li>')                
-            )
-        
-        html_output += mark_safe('</ul>')
-
-        return html_output
-    
-    def handle_field_file(self, field_file, object):
-        from ..models import Proposal
-        if object == Proposal and field_file == object.wmo.metc_decision_pdf:
-            if object.wmo.metc_decision_pdf and not object.is_practice():
-                output = format_html('{}{}{}{}{}',
-                                    mark_safe('<a href="'),
-                                    f'{settings.BASE_URL}{field_file.url}',
-                                    mark_safe('" target="_blank">'),
-                                    _('Download'),
-                                    mark_safe('</a>')
-                                    )
-            else:
-                output = _('Niet aangeleverd')
-        else:
-            output = format_html('{}{}{}{}{}',
-                                    mark_safe('<a href="'),
-                                    f'{settings.BASE_URL}{field_file.url}',
-                                    mark_safe('" target="_blank">'),
-                                    _('Download'),
-                                    mark_safe('</a>')
-                                    )
-        return output
-    
-    def yes_no_doubt(self, value):
-        from main.models import YES_NO_DOUBT
-        d = dict(YES_NO_DOUBT)
-        return d[value]

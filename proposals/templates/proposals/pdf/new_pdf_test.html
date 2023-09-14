@@ -13,14 +13,14 @@
 
 {% block content %}
 
-    {% include test %}
-    {% include wmo_test %}
+    {% include general %}
+    {% comment %} {% include wmo %}
 
-    {% if metc_test %}
-        {% include metc_test %}
+    {% if metc %}
+        {% include metc %}
     {% endif %}
 
-    {% include trajectories_test %}
+    {% include trajectories %}
 
     {% if studies %}
         {% for study in studies %}
@@ -41,5 +41,43 @@
     {% endif %}
 
     {% include embargo %}
+
+    {% include general %} {% endcomment %}
+
+    {% comment %} Code to copy into pdf file
+
+    <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
+    <p>{{ proposal.summary|linebreaks }}</p>
+
+    {% include wmo %}
+
+    {% if metc %}
+      {% include metc %}
+    {% endif %}
+
+    {% include trajectories %}
+
+    {% if studies %}
+      {% for study in studies %}
+        {% for study_section in study %}
+          {% include study_section %}
+        {% endfor %}
+      {% endfor %}    
+    {% endif %}
+
+    {% if dmp_file %}
+      {% include dmp_file %}
+    {% endif %}
+
+    {% if dmp_file %}
+      {% include dmp_file %}
+    {% endif %}
+
+    {% include embargo %}
+
+    <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
+      <p>
+        {{ proposal.comments }}
+      </p> {% endcomment %}
 
 {% endblock %}

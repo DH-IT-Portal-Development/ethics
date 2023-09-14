@@ -12,13 +12,14 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 #from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
-from typing import Tuple, Union
+from typing import Any, Tuple, Union
 
 from main.utils import get_document_contents, get_secretary, is_secretary
 from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     UpdateView, UserAllowedMixin
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
+from proposals.utils.pdf_diff_logic import *
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
@@ -552,36 +553,54 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
     def get_context_data(self, **kwargs):
         """Adds 'BASE_URL' to template context"""
         context = super(ProposalAsPdf, self).get_context_data(**kwargs)
-        context['BASE_URL'] = settings.BASE_URL
 
-        if self.object.is_pre_approved:
-            self.template_name = 'proposals/proposal_pdf_pre_approved.html'
-        elif self.object.is_pre_assessment:
-            self.template_name = 'proposals/proposal_pdf_pre_assessment.html'
-
-        documents = {
-            'extra': []
-        }
-
-        for document in Documents.objects.filter(proposal=self.object).all():
-            if document.study:
-                documents[document.study.pk] = document
-            else:
-                documents['extra'].append(document)
-
-        context['documents'] = documents
+        context['general'] = GeneralSection(self.object)
+        context['wmo'] = WMOSection(self.object.wmo)
+        if self.object.wmo.status != self.object.wmo.NO_WMO:
+            context['metc'] = METCSection(self.object.wmo)
+        context['trajectories'] = TrajectoriesSection(self.object)
+        if self.object.wmo.status == self.object.wmo.NO_WMO:
+            context['studies'] = []
+            for study in self.object.study_set.all():
+                study_sections = []
+                study_sections.append(StudySection(study))
+                if study.has_intervention:
+                    study_sections.append(InterventionSection(study.intervention))
+                if study.has_observation:
+                    study_sections.append(ObservationSection(study.observation))
+                if study.has_sessions:
+                    study_sections.append(SessionsSection(study))
+                    for session in study.session_set.all():
+                        study_sections.append(SessionSection(session))
+                        for task in session.task_set.all():
+                            study_sections.append(TaskSection(task))
+                    study_sections.append(TasksOverviewSection(session))
+                study_sections.append(StudyOverviewSection(study))
+                study_sections.append(InformedConsentFormsSection(study.documents))
+                context['studies'].append(study_sections)
+        extra_documents = []
+        for count, document in enumerate(Documents.objects.filter(
+            proposal = self.object,
+            study__isnull = True
+        )):
+            extra_documents.append(ExtraDocumentsSection(document, count+1))
+        if extra_documents:
+            context['extra_documents'] = extra_documents
+        if self.object.dmp_file:
+            context['dmp_file'] = DMPFileSection(self.object)
+        context['embargo'] = EmbargoSection(self.object)
 
         return context
 
 
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
-    template_name = 'proposals/proposal_diff.html'
+    template_name = 'proposals/new_proposal_diff.html'
 
-from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection, \
-TrajectoriesSection, StudySection, InterventionSection, ObservationSection, SessionsSection, \
-SessionSection, TaskSection, TasksOverviewSection, StudyOverviewSection, \
-InformedConsentFormsSection, ExtraDocumentsSection, DMPFileSection, EmbargoSection \
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['general'] = GeneralSection(self.object.parent, self.object)
+        return context
 
 class NewPDFViewTest(generic.TemplateView):
 
@@ -589,16 +608,12 @@ class NewPDFViewTest(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         model = Proposal.objects.last()
-        test = GeneralSection(model)
-        wmo_test = WMOSection(model.wmo)
-        trajectories_test = TrajectoriesSection(model)
         context = super().get_context_data(**kwargs)
-        context['test'] = test
-        context['wmo_test'] = wmo_test
+        context['general'] = GeneralSection(model)
+        context['wmo'] = WMOSection(model.wmo)
         if model.wmo.status != model.wmo.NO_WMO:
-            metc_test = METCSection(model.wmo)
-            context['metc_test'] = metc_test
-        context['trajectories_test'] = trajectories_test
+            context['metc'] = METCSection(model.wmo)
+        context['trajectories'] = TrajectoriesSection(model)
         if model.wmo.status == model.wmo.NO_WMO:
             context['studies'] = []
             for study in model.study_set.all():
