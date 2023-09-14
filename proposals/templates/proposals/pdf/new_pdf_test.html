@@ -14,7 +14,7 @@
 {% block content %}
 
     {% include general %}
-    {% comment %} {% include wmo %}
+    {% include wmo %}
 
     {% if metc %}
         {% include metc %}
@@ -41,8 +41,6 @@
     {% endif %}
 
     {% include embargo %}
-
-    {% include general %} {% endcomment %}
 
     {% comment %} Code to copy into pdf file
 

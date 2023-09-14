@@ -12,8 +12,6 @@ from django.utils.translation import ugettext as _
 from proposals.templatetags.proposal_filters import needs_details, medical_traits, \
 necessity_required, has_adults
 
-from ..models import Relation
-
 '''NOTE: The current implementation does not account for page break formatting, present 
 in the previous pdf template'''
 
@@ -22,9 +20,13 @@ class PDFSection:
     section_title = None
     row_fields = None
 
-    def __init__(self, object, object_2 = None):
-        self.object = object
-        self.object_2 = object_2
+    def __init__(self, object):
+        if type(object) == list:
+            self.object = object[0]
+            self.object_2 = object[1]
+        else:
+            self.object = object
+            self.object_2 = None
 
     def render(self, context):
         context = context.flatten()
@@ -57,7 +59,7 @@ class PDFSection:
             rows = [RowClass(self.object, field) for field in row_fields]
         return rows
     
-    def get_row_fields(self):
+    def get_row_fields(self, obj):
         return self.row_fields
         
     def get_study_title(self, study):
@@ -176,6 +178,7 @@ class RowValueClass:
         self.field = field
 
     def render(self):
+        from ..models import Relation
 
         value = getattr(self.object, self.field)
 
@@ -255,6 +258,7 @@ class RowValueClass:
         from main.models import YES_NO_DOUBT
         d = dict(YES_NO_DOUBT)
         return d[value]
+    
 class GeneralSection(PDFSection):
     '''This class generates the data for the general section of 
     the PDF page.'''
@@ -279,8 +283,7 @@ class GeneralSection(PDFSection):
         'self_assessment',
     ]
     
-    def get_row_fields(self, object):
-        obj = object
+    def get_row_fields(self, obj):
         rows = copy(self.row_fields)
 
         if not obj.relation.needs_supervisor:
@@ -315,17 +318,14 @@ class WMOSection(PDFSection):
         'get_is_medical_display',  
     ]
     
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if not obj.metc == 'Y':
             rows.remove('metc_details')
             rows.remove('metc_institution')
         else:
             rows.remove('get_is_medical_display')
-
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -350,14 +350,11 @@ class TrajectoriesSection(PDFSection):
         'studies_number'
     ]
     
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if obj.studies_similar:
             rows.remove('studies_number')
-
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -382,9 +379,8 @@ class StudySection(PDFSection):
         'hierarchy_details',
     ]
 
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if not has_adults(obj):
             rows.remove('legally_incapable')
@@ -409,8 +405,6 @@ class StudySection(PDFSection):
             rows.remove('compensation_details')
         if not obj.hierarchy:
             rows.remove('hierarchy_details')
-
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
         
@@ -444,9 +438,8 @@ class InterventionSection(PDFSection):
         'extra_task'
     ]
 
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if obj.version == 1:
             fields_to_remove = ['multiple_sessions',
@@ -471,8 +464,6 @@ class InterventionSection(PDFSection):
             rows.remove('leader_has_coc')
         if not obj.has_controls:
             rows.remove('controls_description')   
-
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -513,9 +504,8 @@ class ObservationSection(InterventionSection):
         'registrations_details'        
     ]
 
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if obj.version == 1:
             to_remove_if_v1 = ['details_who',
@@ -565,8 +555,6 @@ class ObservationSection(InterventionSection):
             rows.remove('leader_has_coc')
         if not needs_details(obj.registrations.all()):
             rows.remove('registrations_details')
-        
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
 
@@ -577,11 +565,10 @@ class SessionsSection(StudySection):
 
     section_title = _("Het takenonderzoek en interviews")
 
-    def get_rows(self):
+    row_fields = ['sessions_number']
 
-        rows = [RowValueClass(self.object, 'sessions_number')]
-
-        return rows
+    def get_row_fields(self, obj):
+        return self.row_fields
     
 class SessionSection(PDFSection):
     '''Gets passed a session object'''
@@ -594,9 +581,8 @@ class SessionSection(PDFSection):
         'tasks_number',       
     ]
 
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if not needs_details(obj.setting.all()):
             rows.remove('setting_details')
@@ -606,8 +592,6 @@ class SessionSection(PDFSection):
             rows.remove('leader_has_coc')
         elif obj.supervision:
             rows.remove('leader_has_coc')
-        
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -634,9 +618,8 @@ class TaskSection(PDFSection):
         'description'
     ]
 
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if not needs_details(obj.registrations.all()):
             rows.remove('registrations_details')
@@ -648,8 +631,6 @@ class TaskSection(PDFSection):
             rows.remove('registration_kinds_details')
         if not obj.feedback:
             rows.remove('feedback_details')
-        
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -696,9 +677,8 @@ class StudyOverviewSection(StudySection):
         'risk_details'
     ]
 
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         rows_to_remove = []
         for x in range(0, 7, 2):
@@ -711,8 +691,6 @@ class StudyOverviewSection(StudySection):
             rows.remove('deception_details')
         elif not obj.has_sessions:
             rows.remove('deception')
-        
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
@@ -721,27 +699,75 @@ class InformedConsentFormsSection(InterventionSection):
 
     section_title = _('Informed consent formulieren')
 
-    def get_rows(self):
-        obj = self.object
+    row_fields = [
+        'translated_forms',
+        'translated_forms_languages',
+        'informed_consent',
+        'briefing',
+        'passive_consent',
+        'passive_consent_details',
+        'director_consent_declaration',
+        'director_consent_information',
+        'parents_information'
+    ]
 
-        rows = []
+    def make_rows(self):
+        '''A few fields here need to access different objects, therefore this complex
+        overriding of the make_rows function ... :( '''
 
-        rows.append(RowClass(obj.proposal, 'translated_forms'))
-        if obj.proposal.translated_forms:
-            rows.append(RowClass(obj.proposal, 'translated_forms_languages'))
-        if not obj.proposal.is_practice() and obj.informed_consent:
-            rows.append(RowClass(obj, 'informed_consent'))
-            rows.append(RowClass(obj, 'briefing'))
-        if obj.study.passive_consent is not None:
-            rows.append(RowClass(obj.study, 'passive_consent'))
-        if obj.study.passive_consent:
-            rows.append(RowClass(obj.study, 'passive_consent_details'))
-        if obj.director_consent_declaration:
-            rows.append(RowClass(obj, 'director_consent_declaration'))
-        if obj.director_consent_information:
-            rows.append(RowClass(obj, 'director_consent_information')) 
-        if obj.parents_information:
-            rows.append(RowClass(obj, 'parents_information'))
+        proposal_list = ['translated_forms', 'translated_forms_languages']
+        study_list = ['passive_consent', 'passive_consent_details']
+        if self.object_2:
+            row_fields_1 = self.get_row_fields(self.object)
+            row_fields_2 = self.get_row_fields(self.object_2)
+
+            row_fields_both = list(set(row_fields_1) | set(row_fields_2))
+
+            ordered_row_fields = [row for row in self.row_fields if row in row_fields_both]
+
+            rows = []
+
+            for field in ordered_row_fields:
+                if field in proposal_list:
+                    rows.append(RowClass(self.object.proposal, field, self.object_2.proposal))
+                if field in study_list:
+                    rows.append(RowClass(self.object.study, field, self.object_2.study))
+                else:
+                    rows.append(RowClass(self.object, field, self.object_2))
+                    
+        else:
+            row_fields = self.get_row_fields(self.object)
+
+            rows = []
+
+            for field in row_fields:
+                if field in proposal_list:
+                    rows.append(RowClass(self.object.proposal, field))
+                elif field in study_list:
+                    rows.append(RowClass(self.object.study, field))
+                else:
+                    rows.append(RowClass(self.object, field))
+    
+        return rows
+    
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
+
+        if not obj.proposal.translated_forms:
+            rows.remove('translated_forms_languages')
+        if obj.proposal.is_practice() or not obj.informed_consent:
+            rows.remove('informed_consent')
+            rows.remove('briefing')
+        if obj.study.passive_consent is None:
+            rows.remove('passive_consent')
+        if not obj.study.passive_consent:
+            rows.remove('passive_consent_details')
+        if not obj.director_consent_declaration:
+            rows.remove('director_consent_declaration')
+        if not obj.director_consent_information:
+            rows.remove('director_consent_information')
+        if not obj.parents_information:
+            rows.remove('parents_information')
 
         return rows
     
@@ -757,21 +783,19 @@ class ExtraDocumentsSection(PDFSection):
         super().__init__(object)
         self.section_title = _('Extra formulieren ') + str(count)
     
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if not obj.informed_consent:
             rows.remove('informed_consent')
         if not obj.briefing:
             rows.remove('briefing')
-        
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
     
 class DMPFileSection(PDFSection):
-    '''Gets passed a proposal object.'''
+    '''Gets passed a proposal object.
+    Also unnecessary I suppose. But I though why not ...'''
 
     section_title = _('Data Management Plan')
     
@@ -787,14 +811,53 @@ class EmbargoSection(PDFSection):
         'embargo_end_date'
     ]
 
-    def get_rows(self):
-        obj = self.object
-        rows = self._row_fields
+    def get_row_fields(self, obj):
+        rows = copy(self.row_fields)
 
         if not obj.embargo:
             rows.remove('embargo_end_date')
-        
-        rows = [RowClass(obj, field) for field in rows]
 
         return rows
+
+def create_context_pdf_diff(context, model):
+    from studies.models import Documents
+
+    context['general'] = GeneralSection(model)
+    context['wmo'] = WMOSection(model.wmo)
+    if model.wmo.status != model.wmo.NO_WMO:
+        context['metc'] = METCSection(model.wmo)
+    context['trajectories'] = TrajectoriesSection(model)
+    if model.wmo.status == model.wmo.NO_WMO:
+        context['studies'] = []
+        for study in model.study_set.all():
+            study_sections = []
+            study_sections.append(StudySection(study))
+            if study.has_intervention:
+                study_sections.append(InterventionSection(study.intervention))
+            if study.has_observation:
+                study_sections.append(ObservationSection(study.observation))
+            if study.has_sessions:
+                study_sections.append(SessionsSection(study))
+                for session in study.session_set.all():
+                    study_sections.append(SessionSection(session))
+                    for task in session.task_set.all():
+                        study_sections.append(TaskSection(task))
+                study_sections.append(TasksOverviewSection(session))
+            study_sections.append(StudyOverviewSection(study))
+            study_sections.append(InformedConsentFormsSection(study.documents))
+            context['studies'].append(study_sections)
+        extra_documents = []
+        for count, document in enumerate(Documents.objects.filter(
+            proposal = model,
+            study__isnull = True
+        )):
+            extra_documents.append(ExtraDocumentsSection(document, count+1))
+        if extra_documents:
+            context['extra_documents'] = extra_documents
+        if model.dmp_file:
+            context['dmp_file'] = DMPFileSection(model)
+        context['embargo'] = EmbargoSection(model)
+    
+    return context
+    
 
