@@ -581,7 +581,7 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
 from proposals.utils.proposal_utils import GeneralSection, WMOSection, METCSection, \
 TrajectoriesSection, StudySection, InterventionSection, ObservationSection, SessionsSection, \
 SessionSection, TaskSection, TasksOverviewSection, StudyOverviewSection, \
-InformedConsentFormsSection
+InformedConsentFormsSection, ExtraDocumentsSection, DMPFileSection, EmbargoSection \
 
 class NewPDFViewTest(generic.TemplateView):
 
@@ -618,7 +618,18 @@ class NewPDFViewTest(generic.TemplateView):
                 study_sections.append(StudyOverviewSection(study))
                 study_sections.append(InformedConsentFormsSection(study.documents))
                 context['studies'].append(study_sections)
-
+        extra_documents = []
+        for count, document in enumerate(Documents.objects.filter(
+            proposal = model,
+            study__isnull = True
+        )):
+            extra_documents.append(ExtraDocumentsSection(document, count+1))
+        if extra_documents:
+            context['extra_documents'] = extra_documents
+        if model.dmp_file:
+            context['dmp_file'] = DMPFileSection(model)
+        context['embargo'] = EmbargoSection(model)
+               
         return context
 
 

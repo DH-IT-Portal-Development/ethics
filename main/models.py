@@ -5,9 +5,9 @@ YES = 'Y'
 NO = 'N'
 DOUBT = '?'
 YES_NO_DOUBT = (
-    (YES, _('ja')),
-    (NO, _('nee')),
-    (DOUBT, _('twijfel')),
+    (YES, _('Ja')),
+    (NO, _('Nee')),
+    (DOUBT, _('Twijfel')),
 )
 
 
