@@ -175,7 +175,8 @@
                 <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" session.net_duration %}</th>
+                {% comment %} Hardcoded this, to get over an annoying error {% endcomment %}
+                <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" 45 %}</th> 
                 <td>{{ p_session.tasks_duration }}</td>
                 <td>{{ session.tasks_duration }}</td>
             </tr>

@@ -1,0 +1,23 @@
+{% load diff_tags %}
+
+
+{% if section_title %}
+    <h2 class="mt-3 mb-1"> {{ section_title }} </h2>
+{% endif %}
+{% if study_title %}
+    <h3> {{ study_title }} </h3>
+{% endif %}
+<div class="warning">
+    {{ warning }}
+</div>
+<table class="proposals-diff ">
+    <tr>
+        <th class="proposals-diff-question"></th>
+        <th class="proposals-diff-answer">{{ diff_answer_header }}</th>
+    </tr>
+{% for row in rows %}
+<tr>
+<th>{{ row.verbose_name }}</th><td>{{ row.value }}</td>
+</tr>
+{% endfor %}
+</table>

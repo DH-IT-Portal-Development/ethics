@@ -21,7 +21,7 @@ class PDFSection:
     row_fields = None
 
     def __init__(self, object):
-        if type(object) == list:
+        if type(object) == tuple:
             self.object = object[0]
             self.object_2 = object[1]
         else:
@@ -50,9 +50,10 @@ class PDFSection:
             row_fields_both = list(set(row_fields_1) | set(row_fields_2))
 
             #The merging above messes with the order, so I reorder it here
-            ordered_row_fields = [row for row in self.row_fields if row in row_fields_both]
+            row_fields = [row for row in self.row_fields if row in row_fields_both]
 
-            rows = [RowClass(self.object, field, self.object_2) for field in ordered_row_fields]
+
+            rows = [RowClass(self.object, field, self.object_2) for field in row_fields]
         else:
             row_fields = self.get_row_fields(self.object)
 
@@ -416,6 +417,59 @@ class StudySection(PDFSection):
                 }
             )
         return super().render(context)
+    
+class DiffSectionPossibleMissingObjects(PDFSection):
+    '''This exists for instances of tables in the diff, where it is possible
+    for objects to be entirely missing from one version or the other.
+    Mostly used for studies and sub-sections of studies'''
+
+    def __init__(self, objects_list):
+        '''The None object always needs to become object_2.'''
+        if objects_list[0] is None:
+            self.warning = _(
+                "Dit onderdeel is nieuw in de revisie en bestond niet in de originele aanvraag."
+                )
+            self.missing_object = 0
+        elif objects_list[1] is None:
+            self.warning = _(
+                "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
+            )
+            self.missing_object = 1
+        else:
+            self.warning = None
+            self.missing_object = None
+        self.object = objects_list[0]
+        self.object_2 = objects_list[1]
+    
+    def render(self, context):
+        context = context.flatten()
+        template = get_template("proposals/pdf/diff_table_with_header.html")
+
+        if self.warning and self.missing_object:
+            context.update(
+                {
+                    "warning": self.warning,
+                    "missing_object": self.missing_object
+                }
+            )
+        context.update(
+            {
+                "section_title": self.section_title,
+                "rows": self.make_rows(),
+            }
+        )
+        return template.render(context)
+    
+class StudySectionDiff(DiffSectionPossibleMissingObjects, StudySection):
+
+    def render(self,context):
+        if self.object.proposal.studies_number > 1:
+            context.update(
+                {
+                    'study_title': super().get_study_title(self.object)
+                }
+            )
+        return super().render(context)
 
 class InterventionSection(PDFSection):
     '''This class will receive a intervention object'''
@@ -467,6 +521,17 @@ class InterventionSection(PDFSection):
 
         return rows
     
+    def render(self, context):
+        if self.object.study.proposal.studies_number > 1:
+            context.update(
+                {
+                    'study_title': super().get_study_title(self.object.study)
+                }
+            )
+        return super().render(context)
+    
+class InterventionSectionDiff(DiffSectionPossibleMissingObjects, InterventionSection):
+
     def render(self, context):
         if self.object.study.proposal.studies_number > 1:
             context.update(
@@ -557,8 +622,11 @@ class ObservationSection(InterventionSection):
             rows.remove('registrations_details')
 
         return rows
+    
+class ObservationSectionDiff(InterventionSectionDiff, ObservationSection):
+    pass
 
-class SessionsSection(StudySection):
+class SessionsOverviewSection(StudySection):
     '''Gets passed a study object
     This Section looks maybe a bit unnecessary, but it does remove some logic, plus
     the study_title.html from the template.'''
@@ -567,9 +635,11 @@ class SessionsSection(StudySection):
 
     row_fields = ['sessions_number']
 
+class SessionsSectionDiff(StudySectionDiff, SessionsOverviewSection):
+    
     def get_row_fields(self, obj):
         return self.row_fields
-    
+
 class SessionSection(PDFSection):
     '''Gets passed a session object'''
     
@@ -595,6 +665,16 @@ class SessionSection(PDFSection):
 
         return rows
     
+    def render(self, context):
+        context.update(
+            {
+                'study_title': super().get_session_title(self.object)
+            }
+        )
+        return super().render(context)
+
+class SessionSectionDiff(DiffSectionPossibleMissingObjects, SessionSection):
+
     def render(self, context):
         context.update(
             {
@@ -642,6 +722,16 @@ class TaskSection(PDFSection):
         )
         return super().render(context)
     
+class TaskSectionDiff(DiffSectionPossibleMissingObjects, TaskSection):
+
+    def render(self, context):
+        context.update(
+            {
+                'study_title': super().get_task_title(self.object)
+            }
+        )
+        return super().render(context)
+    
 class TasksOverviewSection(PDFSection):
     '''Gets passed a session object
     This might be unecessary ... Maybe just use the existing template language ...
@@ -653,8 +743,16 @@ class TasksOverviewSection(PDFSection):
     ]
 
     def render(self, context):
-        '''Here I am just overriding the render function, to get the correct formatting
-        The naming is a bit confusing, might fix later'''
+        context.update(
+            {
+                'study_title': _('Overzicht van het takenonderzoek')
+            }
+        )
+        return super().render(context)
+    
+class TasksOverviewSectionDiff(DiffSectionPossibleMissingObjects, TaskSection):
+
+    def render(self, context):
         context.update(
             {
                 'study_title': _('Overzicht van het takenonderzoek')
@@ -693,6 +791,9 @@ class StudyOverviewSection(StudySection):
             rows.remove('deception')
 
         return rows
+
+class StudyOverviewSectionDiff(StudySectionDiff, StudyOverviewSection):
+    pass
     
 class InformedConsentFormsSection(InterventionSection):
     '''Receives a Documents object'''
@@ -714,7 +815,6 @@ class InformedConsentFormsSection(InterventionSection):
     def make_rows(self):
         '''A few fields here need to access different objects, therefore this complex
         overriding of the make_rows function ... :( '''
-
         proposal_list = ['translated_forms', 'translated_forms_languages']
         study_list = ['passive_consent', 'passive_consent_details']
         if self.object_2:
@@ -730,7 +830,7 @@ class InformedConsentFormsSection(InterventionSection):
             for field in ordered_row_fields:
                 if field in proposal_list:
                     rows.append(RowClass(self.object.proposal, field, self.object_2.proposal))
-                if field in study_list:
+                elif field in study_list:
                     rows.append(RowClass(self.object.study, field, self.object_2.study))
                 else:
                     rows.append(RowClass(self.object, field, self.object_2))
@@ -770,6 +870,9 @@ class InformedConsentFormsSection(InterventionSection):
             rows.remove('parents_information')
 
         return rows
+    
+class InformedConsentSectionDiff(InterventionSectionDiff, InformedConsentFormsSection):
+    pass
     
 class ExtraDocumentsSection(PDFSection):
     '''gets a documents object'''
@@ -818,17 +921,25 @@ class EmbargoSection(PDFSection):
             rows.remove('embargo_end_date')
 
         return rows
-
-def create_context_pdf_diff(context, model):
+    
+def get_extra_documents(object):
+    pass
+    
+def create_context_pdf(context, model):
     from studies.models import Documents
 
     context['general'] = GeneralSection(model)
     context['wmo'] = WMOSection(model.wmo)
+
     if model.wmo.status != model.wmo.NO_WMO:
         context['metc'] = METCSection(model.wmo)
+    
     context['trajectories'] = TrajectoriesSection(model)
+
     if model.wmo.status == model.wmo.NO_WMO:
+
         context['studies'] = []
+
         for study in model.study_set.all():
             study_sections = []
             study_sections.append(StudySection(study))
@@ -837,7 +948,7 @@ def create_context_pdf_diff(context, model):
             if study.has_observation:
                 study_sections.append(ObservationSection(study.observation))
             if study.has_sessions:
-                study_sections.append(SessionsSection(study))
+                study_sections.append(SessionsOverviewSection(study))
                 for session in study.session_set.all():
                     study_sections.append(SessionSection(session))
                     for task in session.task_set.all():
@@ -846,18 +957,97 @@ def create_context_pdf_diff(context, model):
             study_sections.append(StudyOverviewSection(study))
             study_sections.append(InformedConsentFormsSection(study.documents))
             context['studies'].append(study_sections)
+
         extra_documents = []
+
         for count, document in enumerate(Documents.objects.filter(
             proposal = model,
             study__isnull = True
         )):
             extra_documents.append(ExtraDocumentsSection(document, count+1))
+
         if extra_documents:
             context['extra_documents'] = extra_documents
         if model.dmp_file:
             context['dmp_file'] = DMPFileSection(model)
+            
         context['embargo'] = EmbargoSection(model)
     
     return context
+
+from proposals.templatetags.diff_tags import zip_equalize_lists
+
+def create_context_diff(context, models):
     
+
+    p_proposal = models[0]
+    proposal = models[1]
+
+    context['general'] = GeneralSection(models)
+    context['wmo'] = WMOSection((p_proposal.wmo, proposal.wmo))
+
+    if proposal.wmo.status != proposal.wmo.NO_WMO or p_proposal.wmo.status != p_proposal.wmo.NO_WMO:
+        context['metc'] = METCSection((p_proposal.wmo, proposal.wmo))
+    
+    context['trajectories'] = TrajectoriesSection(models)
+
+    if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED:
+
+        context['studies'] = []
+
+        for diff_studies in zip_equalize_lists(p_proposal.study_set.all(), proposal.study_set.all()):
+
+            p_study = diff_studies[0]
+            study = diff_studies[1]
+
+            study_sections = []
+            study_sections.append(StudySectionDiff((diff_studies)))
+
+            if p_study is not None and p_study.has_intervention or \
+                study is not None and study.has_intervention:
+                interventions = tuple((study.intervention if study is not None \
+                                       else study for study in diff_studies))
+                study_sections.append(InterventionSectionDiff(interventions))
+            if p_study is not None and p_study.has_observation or \
+                study is not None and study.has_observation:
+                observations = tuple((study.observation if study is not None \
+                                       else study for study in diff_studies))
+                study_sections.append(ObservationSectionDiff(observations))
+            if p_study is not None and p_study.has_sessions or \
+                study is not None and study.has_sessions:
+                study_sections.append(SessionsSectionDiff(diff_studies))
+                p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
+                                       else study for study in diff_studies))
+                for diff_sessions in zip_equalize_lists(p_sessions_set, sessions_set):
+                    p_sessions = diff_sessions[0]
+                    sessions = diff_sessions[1]
+                    study_sections.append(SessionSectionDiff(diff_sessions))
+                    p_tasks_set, tasks_set = tuple((session.task_set.all() if session is not None \
+                                       else session for session in diff_sessions))
+                    for diff_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
+                        study_sections.append(TaskSectionDiff(diff_tasks))
+                study_sections.append(TasksOverviewSection(diff_sessions))
+            study_sections.append(StudyOverviewSectionDiff(diff_studies))
+            documents = tuple(study.documents if study is not None \
+                              else study for study in diff_studies)
+            study_sections.append(InformedConsentSectionDiff(documents))
+            context['studies'].append(study_sections)
+
+        extra_documents = []
+
+        # for count, document in enumerate(Documents.objects.filter(
+        #     proposal = models,
+        #     study__isnull = True
+        # )):
+        #     extra_documents.append(ExtraDocumentsSection(document, count+1))
+
+        # if extra_documents:
+        #     context['extra_documents'] = extra_documents
+        if p_proposal.dmp_file or proposal.dmp_file:
+            context['dmp_file'] = DMPFileSection(models)
+            
+        context['embargo'] = EmbargoSection(models)
+
+    return context
+
 

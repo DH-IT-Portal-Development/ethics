@@ -552,43 +552,9 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
 
     def get_context_data(self, **kwargs):
         """Adds 'BASE_URL' to template context"""
-        context = super(ProposalAsPdf, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
-        context['general'] = GeneralSection(self.object)
-        context['wmo'] = WMOSection(self.object.wmo)
-        if self.object.wmo.status != self.object.wmo.NO_WMO:
-            context['metc'] = METCSection(self.object.wmo)
-        context['trajectories'] = TrajectoriesSection(self.object)
-        if self.object.wmo.status == self.object.wmo.NO_WMO:
-            context['studies'] = []
-            for study in self.object.study_set.all():
-                study_sections = []
-                study_sections.append(StudySection(study))
-                if study.has_intervention:
-                    study_sections.append(InterventionSection(study.intervention))
-                if study.has_observation:
-                    study_sections.append(ObservationSection(study.observation))
-                if study.has_sessions:
-                    study_sections.append(SessionsSection(study))
-                    for session in study.session_set.all():
-                        study_sections.append(SessionSection(session))
-                        for task in session.task_set.all():
-                            study_sections.append(TaskSection(task))
-                    study_sections.append(TasksOverviewSection(session))
-                study_sections.append(StudyOverviewSection(study))
-                study_sections.append(InformedConsentFormsSection(study.documents))
-                context['studies'].append(study_sections)
-        extra_documents = []
-        for count, document in enumerate(Documents.objects.filter(
-            proposal = self.object,
-            study__isnull = True
-        )):
-            extra_documents.append(ExtraDocumentsSection(document, count+1))
-        if extra_documents:
-            context['extra_documents'] = extra_documents
-        if self.object.dmp_file:
-            context['dmp_file'] = DMPFileSection(self.object)
-        context['embargo'] = EmbargoSection(self.object)
+        context = create_context_pdf(context, self.object)
 
         return context
 
@@ -599,8 +565,17 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['general'] = GeneralSection(self.object.parent, self.object)
+
+        context = create_context_diff(context, (self.object.parent, self.object))
+
         return context
+       
+
+# class ProposalDifference(LoginRequiredMixin, generic.DetailView):
+#     model = Proposal
+#     template_name = 'proposals/proposal_diff.html'
+
+
 
 class NewPDFViewTest(generic.TemplateView):
 
@@ -610,7 +585,7 @@ class NewPDFViewTest(generic.TemplateView):
         model = Proposal.objects.last()
         context = super().get_context_data(**kwargs)
 
-        context = create_context_pdf_diff(context, model)
+        context = create_context_pdf(context, model)
                
         return context
 
