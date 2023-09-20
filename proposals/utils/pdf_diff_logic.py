@@ -198,14 +198,15 @@ class RowValueClass:
 
     def get_field_value(self):
         from ..models import Relation
-
+        from studies.models import Compensation
+        
         value = getattr(self.object, self.field)
 
         User = get_user_model()
 
         if value in ('Y', 'N', '?'):
             return self.yes_no_doubt(value)
-        if type(value) in (str, int, date):
+        elif type(value) in (str, int, date):
             return value
         elif value is None:
             return _('Onbekend')
@@ -213,7 +214,7 @@ class RowValueClass:
             return _('Ja') if value else _('Nee')
         elif type(value) == User:
             return self.handle_user(value)
-        elif type(value) == Relation:
+        elif type(value) == Relation or type(value) == Compensation:
             return value.description
         elif value.__class__.__name__ == 'ManyRelatedManager':
             if value.all().model == User:
@@ -425,7 +426,7 @@ class TrajectoriesSection(PDFSection):
             rows.remove('studies_number')
 
         return rows
-    
+
 class StudySection(PDFSection):
     '''This class receives a proposal.study object.'''
     section_title = _('De Deelnemers')
