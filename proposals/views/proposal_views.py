@@ -558,7 +558,6 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
 
         return context
 
-
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/new_proposal_diff.html'
@@ -569,27 +568,6 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
         context = create_context_diff(context, (self.object.parent, self.object))
 
         return context
-       
-
-# class ProposalDifference(LoginRequiredMixin, generic.DetailView):
-#     model = Proposal
-#     template_name = 'proposals/proposal_diff.html'
-
-
-
-class NewPDFViewTest(generic.TemplateView):
-
-    template_name = 'proposals/pdf/new_pdf_test.html'
-
-    def get_context_data(self, **kwargs):
-        model = Proposal.objects.last()
-        context = super().get_context_data(**kwargs)
-
-        context = create_context_pdf(context, model)
-               
-        return context
-
-
 
 ########################
 # Preliminary assessment
