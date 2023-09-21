@@ -551,7 +551,6 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
     filename_factory = FilenameFactory('Proposal')
 
     def get_context_data(self, **kwargs):
-        """Adds 'BASE_URL' to template context"""
         context = super().get_context_data(**kwargs)
 
         context = create_context_pdf(context, self.object)
@@ -560,7 +559,7 @@ class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
 
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
-    template_name = 'proposals/new_proposal_diff.html'
+    template_name = 'proposals/proposal_diff.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

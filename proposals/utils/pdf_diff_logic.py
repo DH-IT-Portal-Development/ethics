@@ -40,7 +40,7 @@ class PDFSection:
     def render(self, context):
         context = context.flatten()
         if self.object_2:
-            template = get_template("proposals/diff_table_with_header.html")
+            template = get_template("proposals/table_with_header_diff.html")
         else:
             template = get_template("proposals/table_with_header.html")
         context.update(
@@ -283,7 +283,7 @@ class DiffSection(PDFSection):
     '''The DiffSection class overrides the __init__ and render methods of the PDFSection.
     This exists for instances of tables in the diff, where it is possible
     for objects to be entirely missing from one version or the other, such as studies.
-    If Neccesary, it provides an object is missing warning and some info for formatting the
+    If neccesary, it provides an object is missing warning and some info for formatting the
     diff table. (self.missing_object)
     The resulting diff section class inherit from this class, plus their own section class.
 
@@ -308,7 +308,7 @@ class DiffSection(PDFSection):
     
     def render(self, context):
         context = context.flatten()
-        template = get_template("proposals/pdf/diff_table_with_header.html")
+        template = get_template("proposals/table_with_header_diff.html")
 
         if self.warning is not None:
             context.update(

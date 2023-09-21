@@ -14,6 +14,10 @@
 {% block html_head %}
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
     <script>
+        // The new implementation causes some issues with the js, 
+        // - The loading icon does not go away sometimes.
+        // - The colors appear for the first instance of a missing section warning,
+        //   which is kindoff ugly.
         $(function () {
             // Color changes between proposals
             $('td:nth-child(2)').each(function () {
@@ -45,209 +49,38 @@
             <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
                 <img src="{% static 'main/images/loading.gif' %}"/>
             </div>
-            {% with p_proposal=proposal.parent %}
-                <h2 class="mt-3 mb-1">{% trans "Algemene informatie over de aanvraag" %}</h2>
-                <table class="proposals-diff ">
-                    <tr>
-                        <th class="proposals-diff-question"></th>
-                        <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
-                        <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th>
-                        <td>{{ p_proposal.relation }}</td>
-                        <td>{{ proposal.relation }}</td>
-                    </tr>
-                    {% if proposal.relation.needs_supervisor or p_proposal.relation.needs_supervisor %}
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th>
-                            <td>{{ p_proposal.supervisor.get_full_name }}</td>
-                            <td>{{ proposal.supervisor.get_full_name }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if proposal.relation.check_in_course or p_proposal.relation.check_in_course %}
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th>
-                        <td>{{ p_proposal.student_program }}</td>
-                        <td>{{ proposal.student_program }}</td>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th>
-                        <td>{{ p_proposal.student_context|default:"" }}</td>
-                        <td>{{ proposal.student_context|default:"" }}</td>
-                    </tr>
-                        {% if proposal.student_context.needs_details or p_proposal.student_context.needs_details %}
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th>
-                            <td>{{ p_proposal.student_context_details }}</td>
-                            <td>{{ proposal.student_context_details }}</td>
-                        </tr>
-                        {% endif %}
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th>
-                        <td>{{ p_proposal.student_justification }}</td>
-                        <td>{{ proposal.student_justification }}</td>
-                    </tr>
+
+                {% include general %}
+
+                {% include wmo %}
+
+                {% if metc %}
+                  {% include metc %}
+                {% endif %}
+          
+                {% include trajectories %}
+
+                {% if studies %}
+                    {% for study in studies %}
+                        {% for study_section in study %}
+                            {% include study_section %}
+                        {% endfor %}
+                    {% endfor %}
+
+                    {% if extra_documents %}
+                        {% for document in extra_documents %}
+                            {% include document %}
+                        {% endfor %}
                     {% endif %}
 
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th>
-                        <td>{{ p_proposal.other_applicants|yesno:_("ja,nee") }}</td>
-                        <td>{{ proposal.other_applicants|yesno:_("ja,nee") }}</td>
-                    </tr>
-                    {% if proposal.other_applicants or p_proposal.other_applicants %}
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th>
-                            <td>{{ p_proposal.applicants.all|unordered_list }}</td>
-                            <td>{{ proposal.applicants.all|unordered_list }}</td>
-                        </tr>
+                    {% if dmp_file %}
+                        {% include dmp_file %}
                     {% endif %}
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</th>
-                        <td>{{ p_proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
-                        <td>{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
-                    </tr>
-                    {% if proposal.other_stakeholders or p_proposal.other_stakeholders %}
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "stakeholders" %}</th>
-                            <td>{{ p_proposal.stakeholders }}</td>
-                            <td>{{ proposal.stakeholders }}</td>
-                        </tr>
-                    {% endif %}
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th>
-                        <td>{{ p_proposal.date_start|default:_("onbekend") }}</td>
-                        <td>{{ proposal.date_start|default:_("onbekend") }}</td>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th>
-                        <td>{{ p_proposal.title }}</td>
-                        <td>{{ proposal.title }}</td>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "summary" %}</th>
-                        <td>{{ p_proposal.summary }}</td>
-                        <td>{{ proposal.summary }}</td>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th>
-                        <td>{{ p_proposal.funding.all|unordered_list }}</td>
-                        <td>{{ proposal.funding.all|unordered_list }}</td>
-                    </tr>
-                    {% if proposal.funding.all|needs_details or p_proposal.funding.all|needs_details %}
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th>
-                            <td>{{ p_proposal.funding_details }}</td>
-                            <td>{{ proposal.funding_details }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if proposal.funding.all|needs_details:"needs_name" or p_proposal.funding.all|needs_details:"needs_name" %}
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th>
-                            <td>{{ p_proposal.funding_name }}</td>
-                            <td>{{ proposal.funding_name }}</td>
-                        </tr>
-                    {% endif %}
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th>
-                        <td>{{ p_proposal.self_assessment }}</td>
-                        <td>{{ proposal.self_assessment }}</td>
-                    </tr>
-                </table>
 
-                {% with wmo=proposal.wmo %}
-                    {% with p_wmo=p_proposal.wmo %}
-                        <h2 class="mt-5 mb-1">{% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}</h2>
-                        <table class="proposals-diff ">
-                            <tr>
-                                <th class="proposals-diff-question"></th>
-                                <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
-                                <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-                            </tr>
-                            <tr>
-                                <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th>
-                                <td>{{ p_wmo.get_metc_display }}</td>
-                                <td>{{ wmo.get_metc_display }}</td>
-                            </tr>
-                            {% if wmo.metc == 'Y' or p_wmo.metc == 'Y' %}
-                                <tr>
-                                    <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th>
-                                    <td>{{ p_wmo.metc_details }}</td>
-                                    <td>{{ wmo.metc_details }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</th>
-                                    <td>{{ p_wmo.metc_institution }}</td>
-                                    <td>{{ wmo.metc_institution }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <th>{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</th>
-                                    <td>{{ p_wmo.get_is_medical_display }}</td>
-                                    <td>{{ wmo.get_is_medical_display }}</td>
-                                </tr>
-                            {% endif %}
-                        </table>
+                    {% include embargo %}
 
-                        {% if wmo.status != wmo.NO_WMO or p_wmo.status != p_wmo.NO_WMO %}
-                            <h2 class="mt-5 mb-1">{% trans "Aanmelding bij de METC" %}</h2>
-                            <table class="proposals-diff ">
-                                <tr>
-                                    <th class="proposals-diff-question"></th>
-                                    <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
-                                    <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-                                </tr>
-                                <tr>
-                                    <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th>
-                                    <td>{{ p_wmo.metc_application|yesno:_("ja,nee") }}</td>
-                                    <td>{{ wmo.metc_application|yesno:_("ja,nee") }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</th>
-                                    <td>{{ p_wmo.metc_decision|yesno:_("ja,nee") }}</td>
-                                    <td>{{ wmo.metc_decision|yesno:_("ja,nee") }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th>
-                                    {% if p_wmo.metc_decision_pdf %}
-                                        <td><a href="{{ p_wmo.metc_decision_pdf.url }}"
-                                               target="_blank">{% trans "Download" %}</a></td>
-                                    {% endif %}
-                                    {% if wmo.metc_decision_pdf %}
-                                        <td><a href="{{ wmo.metc_decision_pdf.url }}"
-                                               target="_blank">{% trans "Download" %}</a></td>
-                                    {% endif %}
-                                </tr>
-                            </table>
-                        {% endif %}
-                    {% endwith %}
-                {% endwith %}
-
-                <h2 class="mt-5 mb-1">{% trans "Eén of meerdere trajecten?" %}</h2>
-                <table class="proposals-diff ">
-                    <tr>
-                        <th class="proposals-diff-question"></th>
-                        <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
-                        <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "studies_similar" %}</th>
-                        <td>{{ p_proposal.studies_similar|yesno:_("ja,nee") }}</td>
-                        <td>{{ proposal.studies_similar|yesno:_("ja,nee") }}</td>
-                    </tr>
-                    {% if not proposal.studies_similar or not p_proposal.studies_similar %}
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th>
-                            <td>{{ p_proposal.studies_number }}</td>
-                            <td>{{ proposal.studies_number }}</td>
-                        </tr>
-                    {% endif %}
-                </table>
-
-                {% if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED %}
-                    {% include 'proposals/diff/study.html' %}
-
-                    <h2 class="mt-5 mb-1">{% trans "Concept-aanmelding versturen" %}</h2>
+                    
+                    <h2 class="mt-5 mb-1">{% trans "Eventuele opmerkingen" %}</h2>
                     <table class="proposals-diff ">
                         <tr>
                             <th class="proposals-diff-question"></th>
@@ -255,25 +88,12 @@
                             <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
                         </tr>
                         <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th>
-                            <td>{{ p_proposal.embargo|yesno:_("ja,nee") }}</td>
-                            <td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
-                        </tr>
-                        {% if proposal.embargo or p_proposal.embargo %}
-                            <tr>
-                                <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th>
-                                <td>{{ p_proposal.embargo_end_date }}</td>
-                                <td>{{ proposal.embargo_end_date }}</td>
-                            </tr>
-                        {% endif %}
-                        <tr>
                             <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th>
                             <td>{{ p_proposal.comments }}</td>
                             <td>{{ proposal.comments }}</td>
                         </tr>
                     </table>
                 {% endif %}
-            {% endwith %}
 
             <p class="mt-5 float-right">
                 <button class="button" onclick="window.history.back();">
