@@ -25,7 +25,7 @@ blessed==1.20.0
     # via curtsies
 bpython==0.24
     # via -r requirements.in
-cdh-django-core @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-4
+cdh-django-core[federated-auth] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-4
     # via -r requirements.in
 certifi==2023.7.22
     # via requests
@@ -37,7 +37,7 @@ click==8.1.6
     # via pyhanko
 closure==20191111
     # via uil-django-core
-cryptography==41.0.2
+cryptography==41.0.4
     # via
     #   pyhanko
     #   pyhanko-certvalidator
@@ -93,7 +93,9 @@ djangorestframework==3.14.0
     #   -r requirements.in
     #   uil-django-core
 djangosaml2==1.6.0
-    # via cdh-django-core
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 docutils==0.18.1
     # via
     #   sphinx
@@ -109,8 +111,6 @@ html5lib==1.1
 idna==3.4
     # via requests
 imagesize==1.4.1
-    # via sphinx
-importlib-metadata==6.8.0
     # via sphinx
 jinja2==3.1.2
     # via sphinx
@@ -252,9 +252,7 @@ tinycss2==1.2.1
     #   svglib
 typing-extensions==4.7.1
     # via
-    #   asgiref
     #   django-modeltranslation
-    #   pypdf
     #   qrcode
 tzlocal==5.0.1
     # via pyhanko
@@ -281,5 +279,3 @@ xhtml2pdf==0.2.11
     # via -r requirements.in
 xmlschema==2.3.1
     # via pysaml2
-zipp==3.16.2
-    # via importlib-metadata
