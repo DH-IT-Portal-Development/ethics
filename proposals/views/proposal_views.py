@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 #from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
-from typing import Any, Tuple, Union
+from typing import Tuple, Union
 
 from main.utils import get_document_contents, get_secretary, is_secretary
 from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \

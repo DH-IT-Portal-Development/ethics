@@ -211,7 +211,7 @@ class RowValueClass:
         elif value is None:
             return _('Onbekend')
         elif type(value) == bool:
-            return _('Ja') if value else _('Nee')
+            return _('ja') if value else _('nee')
         elif type(value) == User:
             return self.handle_user(value)
         elif type(value) == Relation or type(value) == Compensation:
@@ -429,7 +429,7 @@ class TrajectoriesSection(PDFSection):
 
 class StudySection(PDFSection):
     '''This class receives a proposal.study object.'''
-    section_title = _('De Deelnemers')
+    section_title = _('De deelnemers')
     row_fields = [
         'age_groups',
         'legally_incapable',
@@ -963,7 +963,7 @@ class DMPFileSection(PDFSection):
 class EmbargoSection(PDFSection):
     '''Gets passed a proposal object'''
 
-    section_title = _('Aanmelding Versturen')
+    section_title = _('Aanmelding versturen')
 
     row_fields = [
         'embargo',
