@@ -1,6 +1,8 @@
 {% load i18n %}
 
-{% if section_title %}
+{% if page_break %}
+    <h2 style="page-break-before: always"> {% trans section_title %} </h2>
+{% elif section_title %}
     <h2> {% trans section_title %} </h2>
 {% endif %}
 {% if study_title %}

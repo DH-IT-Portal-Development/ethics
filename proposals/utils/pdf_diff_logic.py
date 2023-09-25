@@ -18,38 +18,10 @@ in the previous pdf template
 NOTE: As of now, the diff has no workaround for when observations or interventions are of a
 different version, in the different proposals.'''
 
-class PDFSection:
-    '''This is the main class, from which most classes are constructed.
-    It can take one object or two objects in a tuple, and produce html tables accordingly.
-    The most important methods are render and make_rows. Make rows makes use of get_row_field,
-    which is mostly overwritten for specific sections.
-    If this class is used in the diff, object should be the parent object and object_2 the 
-    revision/amendment.'''
-    
+class BaseSection:
+
     section_title = None
     row_fields = None
-
-    def __init__(self, object):
-        if type(object) == tuple:
-            self.object = object[0]
-            self.object_2 = object[1]
-        else:
-            self.object = object
-            self.object_2 = None
-
-    def render(self, context):
-        context = context.flatten()
-        if self.object_2:
-            template = get_template("proposals/table_with_header_diff.html")
-        else:
-            template = get_template("proposals/table_with_header.html")
-        context.update(
-            {
-                "section_title": self.section_title,
-                "rows": self.make_rows(),
-            }
-        )
-        return template.render(context)
 
     def make_rows(self):
         if self.object and self.object_2:
@@ -75,82 +47,82 @@ class PDFSection:
     
     def get_row_fields(self, obj):
         return self.row_fields
-        
-    def get_study_title(self, study):
-        if study.name:
-            study_title = format_html('{}{}{}{}{}',
-                                      _('Traject '),
-                                      study.order,
-                                      mark_safe(' <em>'),
-                                      study.name,
-                                      mark_safe(' </em>')
-            )
-        else:
-            study_title = format_html('{}{}',
-                                      _('Traject'),
-                                      {study.order}
-            )
-        return study_title
-    
-    def get_session_title(self, session):
-        order = session.order 
-        study_order = session.study.order 
-        study_name = session.study.name 
-        studies_number = session.study.proposal.studies_number 
-        sessions_number = session.study.sessions_number
 
-        if studies_number > 1 and sessions_number > 1:
-            session_title = format_html('{}{}{}{}{}{}{}',
-                                      _('Traject '),
-                                      study_order,
-                                      mark_safe(' <em>'),
-                                      study_name,
-                                      mark_safe(' </em>, '),
-                                      _('sessie '),
-                                      order
-            )
-        elif studies_number > 1:
-            session_title = format_html('{}{}{}{}{}',
-                                      _('Traject '),
-                                      study_order,
-                                      mark_safe(' <em>'),
-                                      study_name,
-                                      mark_safe(' </em>')
-            )
-        elif sessions_number >= 1:
-            session_title = format_html('{}{}',
-                                        _('Sessie '),
-                                        order
-            )
-        return session_title
+class PDFDiffSection(BaseSection):
+    '''This is the main class, from which most classes are constructed.
+    It can take one object or two objects in a tuple, and produce html tables accordingly.
+    The most important methods are render and make_rows. Make rows makes use of get_row_field,
+    which is mostly overwritten for specific sections.
+    If this class is used in the diff, object should be the parent object and object_2 the 
+    revision/amendment.'''
     
-    def get_task_title(self, task):
-        order=task.order 
-        session_order=task.session.order 
-        study_order=task.session.study.order 
-        study_name=task.session.study.name 
-        studies_number=task.session.study.proposal.studies_number
-        if studies_number > 1:
-            task_title = format_html('{}{}{}{}{}{}{}{}{}',
-                                      _('Traject '),
-                                      study_order,
-                                      mark_safe(' <em>'),
-                                      study_name,
-                                      mark_safe(' </em>, '),
-                                      _('sessie '),
-                                      session_order,
-                                      _(', taak '),
-                                      order
-            )
+    def __init__(self, object):
+        if isinstance(object, tuple):
+            self.object = object[0]
+            self.object_2 = object[1]
         else:
-            task_title = format_html('{}{}{}{}',
-                                     _('Sessie '),
-                                     session_order,
-                                     _(', taak '),
-                                     order
-                                     )
-        return task_title
+            self.object = object
+            self.object_2 = None
 
+    def render(self, context):
+        context = context.flatten()
+        if self.object_2:
+            template = get_template("proposals/table_with_header_diff.html")
+        else:
+            template = get_template("proposals/table_with_header.html")
+        context.update(
+            {
+                "section_title": self.section_title,
+                "rows": self.make_rows(),
+            }
+        )
+        return template.render(context)
+
+class DiffSectionMissingObjects(BaseSection):
+    '''The DiffSectionMissingObjects class overrides the __init__ and render methods of the PDFDiffSection.
+    This exists for instances of tables in the diff, where it is possible
+    for objects to be entirely missing from one version or the other, such as studies.
+    If neccesary, it provides an object is missing warning and some info for formatting the
+    diff table. (self.missing_object)
+    The resulting diff section class inherit from this class, plus their own section class.
+
+    eg. class StudySectionDiff(DiffSectionMissingObjects, StudySection)'''
+
+    def __init__(self, objects_tuple):
+        if objects_tuple[0] is None:
+            self.warning = _(
+                "Dit onderdeel is nieuw in de revisie en bestond niet in de originele aanvraag."
+                )
+            self.missing_object = 0
+        elif objects_tuple[1] is None:
+            self.warning = _(
+                "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
+            )
+            self.missing_object = 1
+        else:
+            self.warning = None
+            self.missing_object = None
+        self.object = objects_tuple[0]
+        self.object_2 = objects_tuple[1]
+    
+    def render(self, context):
+        context = context.flatten()
+        template = get_template("proposals/table_with_header_diff.html")
+
+        if self.warning is not None:
+            context.update(
+                {
+                    "warning": self.warning,
+                    "missing_object": self.missing_object
+                }
+            )
+        context.update(
+            {
+                "section_title": self.section_title,
+                "rows": self.make_rows(),
+            }
+        )
+        return template.render(context)
 class RowClass:
     '''This class creates rows for either one or two objects, and gets initated
     in the make_rows method of Section classes. The classmethods of Rowclass
@@ -206,15 +178,15 @@ class RowValueClass:
 
         if value in ('Y', 'N', '?'):
             return self.yes_no_doubt(value)
-        elif type(value) in (str, int, date):
+        elif isinstance(value, (str, int, date)):
             return value
         elif value is None:
             return _('Onbekend')
-        elif type(value) == bool:
+        elif isinstance(value, bool):
             return _('ja') if value else _('nee')
-        elif type(value) == User:
+        elif isinstance(value, User):
             return self.handle_user(value)
-        elif type(value) == Relation or type(value) == Compensation:
+        elif isinstance(value, Relation) or isinstance(value, Compensation):
             return value.description
         elif value.__class__.__name__ == 'ManyRelatedManager':
             if value.all().model == User:
@@ -222,7 +194,7 @@ class RowValueClass:
             else:
                 return self.get_object_list(value)
         elif value.__class__.__name__ == 'FieldFile':
-            return self.handle_field_file(value, self.object)
+            return self.handle_field_file(value)
         elif callable(value):
             return value()
         
@@ -241,91 +213,192 @@ class RowValueClass:
         html_output = mark_safe('<ul class="p-0">')
 
         for item in list:
-            html_output += format_html('{}{}{}',
-                mark_safe('<li>'),
-                item,
-                mark_safe('</li>')                
+            html_output += format_html('<li>{}</li>',
+                item
             )
         
         html_output += mark_safe('</ul>')
 
         return html_output
     
-    def handle_field_file(self, field_file, object):
-        from ..models import Proposal
-        if object == Proposal and field_file == object.wmo.metc_decision_pdf:
-            if object.wmo.metc_decision_pdf and not object.is_practice():
-                output = format_html('{}{}{}{}{}',
-                                    mark_safe('<a href="'),
-                                    f'{settings.BASE_URL}{field_file.url}',
-                                    mark_safe('" target="_blank">'),
-                                    _('Download'),
-                                    mark_safe('</a>')
-                                    )
-            else:
-                output = _('Niet aangeleverd')
+    def handle_field_file(self, field_file):
+        if field_file:
+            output = format_html('<a href={}>{}</a>',
+                f'{settings.BASE_URL}{field_file.url}',
+                _('Download')
+            )
         else:
-            output = format_html('{}{}{}{}{}',
-                                    mark_safe('<a href="'),
-                                    f'{settings.BASE_URL}{field_file.url}',
-                                    mark_safe('" target="_blank">'),
-                                    _('Download'),
-                                    mark_safe('</a>')
-                                    )
+            output = _('Niet aangeleverd')
+
         return output
     
     def yes_no_doubt(self, value):
         from main.models import YES_NO_DOUBT
         d = dict(YES_NO_DOUBT)
         return d[value]
-    
-class DiffSection(PDFSection):
-    '''The DiffSection class overrides the __init__ and render methods of the PDFSection.
-    This exists for instances of tables in the diff, where it is possible
-    for objects to be entirely missing from one version or the other, such as studies.
-    If neccesary, it provides an object is missing warning and some info for formatting the
-    diff table. (self.missing_object)
-    The resulting diff section class inherit from this class, plus their own section class.
 
-    eg. class StudySectionDiff(DiffSection, StudySection)'''
+#NOTE: This is currently not working
+class StudyTitleMixin(PDFDiffSection, DiffSectionMissingObjects):
 
-    def __init__(self, objects_tuple):
-        if objects_tuple[0] is None:
-            self.warning = _(
-                "Dit onderdeel is nieuw in de revisie en bestond niet in de originele aanvraag."
-                )
-            self.missing_object = 0
-        elif objects_tuple[1] is None:
-            self.warning = _(
-                "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
+    def get_study_title(self, study):
+        if study.name:
+            study_title = format_html('{}{} <em>{} </em>',
+                                      _('Traject '),
+                                      study.order,
+                                      study.name
             )
-            self.missing_object = 1
         else:
-            self.warning = None
-            self.missing_object = None
-        self.object = objects_tuple[0]
-        self.object_2 = objects_tuple[1]
-    
-    def render(self, context):
-        context = context.flatten()
-        template = get_template("proposals/table_with_header_diff.html")
-
-        if self.warning is not None:
-            context.update(
-                {
-                    "warning": self.warning,
-                    "missing_object": self.missing_object
-                }
+            study_title = format_html('{}{}',
+                                      _('Traject'),
+                                      {study.order}
             )
-        context.update(
-            {
-                "section_title": self.section_title,
-                "rows": self.make_rows(),
-            }
-        )
+        return study_title
+    
+    def get_session_title(self, session):
+        if session is None:
+            return ''
+        else:
+            order = session.order 
+            study_order = session.study.order 
+            study_name = session.study.name 
+            studies_number = session.study.proposal.studies_number 
+            sessions_number = session.study.sessions_number
 
-        return template.render(context)
-class GeneralSection(PDFSection):
+            if studies_number > 1 and sessions_number > 1:
+                session_title = format_html('{}{} <em>{} </em> {}{}',
+                                        _('Traject '),
+                                        study_order,
+                                        study_name,
+                                        _('sessie '),
+                                        order
+                )
+            elif studies_number > 1:
+                session_title = format_html('{}{} <em>{} </em>',
+                                        _('Traject '),
+                                        study_order,
+                                        study_name,
+                )
+            elif sessions_number >= 1:
+                session_title = format_html('{}{}',
+                                            _('Sessie '),
+                                            order
+                )
+            return session_title
+    
+    def get_task_title(self, task):
+        if task is None:
+            return ''
+        else:
+            order=task.order 
+            session_order=task.session.order 
+            study_order=task.session.study.order 
+            study_name=task.session.study.name 
+            studies_number=task.session.study.proposal.studies_number
+            if studies_number > 1:
+                task_title = format_html('{}{} <em>{} </em>, {}{}{}{}',
+                                        _('Traject '),
+                                        study_order,
+                                        study_name,
+                                        _('sessie '),
+                                        session_order,
+                                        _(', taak '),
+                                        order
+                )
+            else:
+                task_title = format_html('{}{}{}{}',
+                                        _('Sessie '),
+                                        session_order,
+                                        _(', taak '),
+                                        order
+                                        )
+            return task_title
+        
+def get_render_mixin(base, section):
+
+    if section == 'study':
+
+        class RenderStudyTitle(StudyTitleMixin, base):
+            def render(self, context):
+                '''Overriding the render function to pass study_title to the context.'''
+                if self.object.proposal.studies_number > 1:
+                    context.update(
+                        {
+                            'study_title': super().get_study_title(self.object)
+                        }
+                    )
+                return super().render(context)
+            
+        return RenderStudyTitle
+    
+    elif section == 'intervention_observation':
+        class RenderStudyTitle(StudyTitleMixin, base):
+
+            def render(self, context):
+                '''Overriding the render function to pass study_title to the context.'''
+                if self.object.study.proposal.studies_number > 1:
+                    context.update(
+                        {
+                            'study_title': super().get_study_title(self.object.study)
+                        }
+                    )
+                return super().render(context)
+            
+        return RenderStudyTitle
+    
+    elif section == 'session':
+        class RenderStudyTitle(StudyTitleMixin, base):
+
+            def render(self, context):
+                context.update(
+                    {
+                        'study_title': super().get_session_title(self.object)
+                    }
+                )
+                return super().render(context)
+            
+        return RenderStudyTitle
+    
+    elif section == 'task':
+        class RenderStudyTitle(StudyTitleMixin, base):
+
+            def render(self, context):
+                context.update(
+                    {
+                        'study_title': super().get_task_title(self.object)
+                    }
+                )
+                return super().render(context)
+            
+        return RenderStudyTitle
+    
+    elif section == 'task_overview':
+        class RenderStudyTitle(StudyTitleMixin, base):
+
+            def render(self, context):
+                context.update(
+                    {
+                        'study_title': _('Overzicht van het takenonderzoek')
+                    }
+                )
+                return super().render(context)
+                    
+        return RenderStudyTitle
+    
+#NOTE: Diff has a bug when an object in the revision is missing. 
+#MAybe it gets passed the wrong template somewhere??
+
+study_title = get_render_mixin(PDFDiffSection, 'study')
+study_title_diff = get_render_mixin(DiffSectionMissingObjects, 'study')
+intervention_observation_title = get_render_mixin(PDFDiffSection, 'intervention_observation')
+intervention_observation_title_diff = get_render_mixin(DiffSectionMissingObjects, 'intervention_observation')
+session_title = get_render_mixin(PDFDiffSection, 'session')
+session_title_diff = get_render_mixin(DiffSectionMissingObjects, 'session')
+task_title = get_render_mixin(PDFDiffSection, 'task')
+task_title_diff = get_render_mixin(DiffSectionMissingObjects, 'task')
+task_overview_title = get_render_mixin(PDFDiffSection, 'task_overview')
+task_overview_title_diff = get_render_mixin(DiffSectionMissingObjects, 'task_overview')
+
+class GeneralSection(PDFDiffSection):
     '''This class generates the data for the general section of a proposal and showcases
     the general workflow for creating sections. All possible row fields are provided, and
     removed according to the logic in the get_row_fields method.
@@ -376,7 +449,18 @@ class GeneralSection(PDFSection):
 
         return rows
     
-class WMOSection(PDFSection):
+class PageBreakMixin(PDFDiffSection):
+
+    def render(self, context):
+        context.update(
+            {
+                'page_break': True
+            }
+        )
+        return super().render(context)
+
+    
+class WMOSection(PageBreakMixin, PDFDiffSection):
     '''This class receives a proposal.wmo object.'''
     section_title = _("Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?")
     row_fields = [
@@ -397,7 +481,7 @@ class WMOSection(PDFSection):
 
         return rows
     
-class METCSection(PDFSection):
+class METCSection(PageBreakMixin, PDFDiffSection):
     '''This class receives a proposal.wmo object.
     This class exists because the RowValueClass does some
     funky things for working with the metc_decision_pdf field'''
@@ -409,7 +493,7 @@ class METCSection(PDFSection):
         'metc_decision_pdf'
     ]
     
-class TrajectoriesSection(PDFSection):
+class TrajectoriesSection(PageBreakMixin, PDFDiffSection):
     '''This class receives a proposal object.'''
 
     section_title = _("Eén of meerdere trajecten?")
@@ -427,7 +511,7 @@ class TrajectoriesSection(PDFSection):
 
         return rows
 
-class StudySection(PDFSection):
+class StudySection(study_title):
     '''This class receives a proposal.study object.'''
     section_title = _('De deelnemers')
     row_fields = [
@@ -476,32 +560,14 @@ class StudySection(PDFSection):
             rows.remove('hierarchy_details')
 
         return rows
-        
-    def render(self, context):
-        '''Overriding the render function to pass study_title to the context.'''
-        if self.object.proposal.studies_number > 1:
-            context.update(
-                {
-                    'study_title': super().get_study_title(self.object)
-                }
-            )
-        return super().render(context)
     
     
-class StudySectionDiff(DiffSection, StudySection):
-    '''An example of a DiffSection. Unfortunately I found myself having to repeat the overriding
+class StudySectionDiff(study_title_diff, StudySection):
+    '''An example of a DiffSectionMissingObjects. Unfortunately I found myself having to repeat the overriding
     of the render function from the studySection, due to the mro.'''
+    pass
 
-    def render(self,context):
-        if self.object.proposal.studies_number > 1:
-            context.update(
-                {
-                    'study_title': super().get_study_title(self.object)
-                }
-            )
-        return super().render(context)
-
-class InterventionSection(PDFSection):
+class InterventionSection(intervention_observation_title):
     '''This class receives an intervention object'''
     section_title = _('Het interventieonderzoek')
     row_fields = [
@@ -551,27 +617,10 @@ class InterventionSection(PDFSection):
 
         return rows
     
-    def render(self, context):
-        if self.object.study.proposal.studies_number > 1:
-            context.update(
-                {
-                    'study_title': super().get_study_title(self.object.study)
-                }
-            )
-        return super().render(context)
+class InterventionSectionDiff(intervention_observation_title_diff, InterventionSection):
+    pass
     
-class InterventionSectionDiff(DiffSection, InterventionSection):
-
-    def render(self, context):
-        if self.object.study.proposal.studies_number > 1:
-            context.update(
-                {
-                    'study_title': super().get_study_title(self.object.study)
-                }
-            )
-        return super().render(context)
-    
-class ObservationSection(InterventionSection):
+class ObservationSection(intervention_observation_title):
     '''This class receives an observation object
     It inherits from the InterventionSection, as it can repurpose the same overridden
     render method.'''
@@ -655,20 +704,20 @@ class ObservationSection(InterventionSection):
 
         return rows
     
-class ObservationSectionDiff(InterventionSectionDiff, ObservationSection):
+class ObservationSectionDiff(intervention_observation_title_diff, ObservationSection):
     '''Note that the diff sections follow a similar pattern of inheritance as 
     the regular sections, due to repurposing overriden methods, when applicable, 
     eg.:
 
-    class InterventionSection(PDFSection)
-    class InterventionSectionDiff(DiffSection, InterventionSection)
+    class InterventionSection(PDFDiffSection)
+    class InterventionSectionDiff(DiffSectionMissingObjects, InterventionSection)
 
     class ObservationSection(InterventionSection)
     class ObservationSectionDiff(InterventionSectionDiff, ObservationSection)
     '''
     pass
 
-class SessionsOverviewSection(StudySection):
+class SessionsOverviewSection(study_title):
     '''This class receives an study object
     This Section looks maybe a bit unnecessary, but it does remove some logic, plus
     the study_title.html from the template.'''
@@ -677,17 +726,12 @@ class SessionsOverviewSection(StudySection):
 
     row_fields = ['sessions_number']
 
-    def get_row_fields(self, obj):
-        return self.row_fields
 
-
-class SessionsSectionDiff(StudySectionDiff, SessionsOverviewSection):
+class SessionsOverviewSectionDiff(study_title_diff, SessionsOverviewSection):
     '''Needed to override get_row_fields, due to mro issue'''
-    
-    def get_row_fields(self, obj):
-        return self.row_fields
+    pass
 
-class SessionSection(PDFSection):
+class SessionSection(session_title):
     '''This class receives a session object'''
     
     row_fields = [
@@ -711,26 +755,11 @@ class SessionSection(PDFSection):
             rows.remove('leader_has_coc')
 
         return rows
-    
-    def render(self, context):
-        context.update(
-            {
-                'study_title': super().get_session_title(self.object)
-            }
-        )
-        return super().render(context)
 
-class SessionSectionDiff(DiffSection, SessionSection):
-
-    def render(self, context):
-        context.update(
-            {
-                'study_title': super().get_session_title(self.object)
-            }
-        )
-        return super().render(context)
+class SessionSectionDiff(session_title_diff, SessionSection):
+    pass
     
-class TaskSection(PDFSection):
+class TaskSection(task_title):
     '''This class receives an task object'''
     
     row_fields = [
@@ -761,25 +790,10 @@ class TaskSection(PDFSection):
 
         return rows
     
-    def render(self, context):
-        context.update(
-            {
-                'study_title': super().get_task_title(self.object)
-            }
-        )
-        return super().render(context)
+class TaskSectionDiff(task_title_diff, TaskSection):
+    pass
     
-class TaskSectionDiff(DiffSection, TaskSection):
-
-    def render(self, context):
-        context.update(
-            {
-                'study_title': super().get_task_title(self.object)
-            }
-        )
-        return super().render(context)
-    
-class TasksOverviewSection(PDFSection):
+class TasksOverviewSection(task_overview_title):
     '''Gets passed a session object
     This might be unecessary ... Maybe just use the existing template language ...
     Because the verbose name of this field is formatted, the method for retrieving
@@ -788,26 +802,11 @@ class TasksOverviewSection(PDFSection):
     row_fields = [
         'tasks_duration'
     ]
-
-    def render(self, context):
-        context.update(
-            {
-                'study_title': _('Overzicht van het takenonderzoek')
-            }
-        )
-        return super().render(context)
     
-class TasksOverviewSectionDiff(DiffSection, TaskSection):
-
-    def render(self, context):
-        context.update(
-            {
-                'study_title': _('Overzicht van het takenonderzoek')
-            }
-        )
-        return super().render(context)
+class TasksOverviewSectionDiff(task_overview_title_diff, TaskSection):
+    pass
     
-class StudyOverviewSection(StudySection):
+class StudyOverviewSection(study_title):
     '''This class receives a Study object.'''
 
     section_title = _('Overzicht en eigen beoordeling van het gehele onderzoek')
@@ -839,10 +838,10 @@ class StudyOverviewSection(StudySection):
 
         return rows
 
-class StudyOverviewSectionDiff(StudySectionDiff, StudyOverviewSection):
+class StudyOverviewSectionDiff(study_title_diff, StudyOverviewSection):
     pass
     
-class InformedConsentFormsSection(InterventionSection):
+class InformedConsentFormsSection(intervention_observation_title):
     '''This class receives a Documents object'''
 
     section_title = _('Informed consent formulieren')
@@ -920,10 +919,10 @@ class InformedConsentFormsSection(InterventionSection):
 
         return rows
     
-class InformedConsentSectionDiff(InterventionSectionDiff, InformedConsentFormsSection):
+class InformedConsentSectionDiff(intervention_observation_title_diff, InformedConsentFormsSection):
     pass
     
-class ExtraDocumentsSection(PDFSection):
+class ExtraDocumentsSection(PDFDiffSection):
     '''This class receives an Documents object.
     Overrides the __init__ to create a formatted section title'''
 
@@ -946,13 +945,13 @@ class ExtraDocumentsSection(PDFSection):
 
         return rows
     
-class ExtraDocumentsSectionDiff(DiffSection, ExtraDocumentsSection):
+class ExtraDocumentsSectionDiff(DiffSectionMissingObjects, ExtraDocumentsSection):
 
     def __init__(self, objects_tuple, count):
         super().__init__(objects_tuple)
         self.section_title = _('Extra formulieren ') + str(count+1)     
     
-class DMPFileSection(PDFSection):
+class DMPFileSection(PDFDiffSection):
     '''This class receives a proposal object
     Also unnecessary I suppose. But I though why not ...'''
 
@@ -960,7 +959,7 @@ class DMPFileSection(PDFSection):
     
     row_fields = ['dmp_file']
 
-class EmbargoSection(PDFSection):
+class EmbargoSection(PDFDiffSection):
     '''Gets passed a proposal object'''
 
     section_title = _('Aanmelding versturen')
@@ -1023,7 +1022,7 @@ def create_context_pdf(context, model):
                 study_sections.append(TasksOverviewSection(session))
             study_sections.append(StudyOverviewSection(study))
             study_sections.append(InformedConsentFormsSection(study.documents))
-            context['studies'].append(study_sections)
+        context['studies'].append(study_sections)
 
         extra_documents = get_extra_documents(model)
 
@@ -1085,7 +1084,7 @@ def create_context_diff(context, models):
             if p_study is not None and p_study.has_sessions or \
                 study is not None and study.has_sessions:
 
-                study_sections.append(SessionsSectionDiff(diff_studies))
+                study_sections.append(SessionsOverviewSectionDiff(diff_studies))
 
                 p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
                                        else study for study in diff_studies))

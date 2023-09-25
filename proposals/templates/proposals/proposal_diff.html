@@ -20,7 +20,7 @@
         //   which is kindoff ugly.
         $(function () {
             // Color changes between proposals
-            $('td:nth-child(2)').each(function () {
+            $('tr:not(.diff-ignore) td:nth-child(2)').each(function () {
                 let old_el = $(this);
                 let new_el = old_el.next();
                 let before = html_to_tokens(old_el.html());

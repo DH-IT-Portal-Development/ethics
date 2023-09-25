@@ -2,10 +2,10 @@
 {% load i18n %}
 
 {% if section_title %}
-    <h2 class="mt-3 mb-1"> {% trans section_title %} </h2>
+    <h2 class="mt-5 mb-1"> {% trans section_title %} </h2>
 {% endif %}
 {% if study_title %}
-    <h3> {{ study_title }} </h3>
+    <h3 class='mt-3'> {{ study_title }} </h3>
 {% endif %}
 <table class="proposals-diff ">
     <tr>
@@ -13,34 +13,30 @@
         <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
         <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
     </tr>
-{% if warning and missing_object == 0 %}
-    <tr>
+{% if warning %}
+    <tr class="diff-ignore">
         <th>{{ rows.0.verbose_name }}</th>
-        <td rowspan='{{rows|length}}'>
-            <div class='warning'>
-                {{ warning }}
-            </div>
-        </td>
-        <td>{{rows.0.value}}</td>
+        {# If the first object is missing, place a warning on the first TD #}
+        {% if missing_object == 0 %}
+            <td rowspan='{{rows|length}}'>
+                <div class='warning'>
+                    {{ warning }}
+                </div>
+            </td>
+            <td>{{rows.0.value}}</td>
+        {# Otherwise, we're missing the second one, thus we place the warning on the second #}
+        {% elif missing_object == 1 %}
+            <td>{{rows.0.value}}</td>
+            <td rowspan='{{rows|length}}'>
+                <div class='warning'>
+                    {{ warning }}
+                </div>
+            </td>
+        {% endif %}
     </tr>
     {%for row in rows|slice:"1:"%}
-    <tr>
-        <th>{{row.verbose_name}}</th><td>{{row.value}}
-    </tr>
-    {% endfor %}
-{% elif warning and missing_object == 1 %}
-    <tr>
-        <th>{{ rows.0.verbose_name }}</th>
-        <td>{{rows.0.value}}</td>
-        <td rowspan='{{rows|length}}'>
-            <div class='warning'>
-                {{ warning }}
-            </div>
-        </td>
-    </tr>
-    {%for row in rows|slice:"1:"%}
-    <tr>
-        <th>{{row.verbose_name}}</th><td>{{row.value}}
+    <tr class="diff-ignore">
+        <th>{{row.verbose_name}}</th><td>{{row.value}}</td>
     </tr>
     {% endfor %}
 {% else %}
