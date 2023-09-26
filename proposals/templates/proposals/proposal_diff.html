@@ -50,50 +50,23 @@
                 <img src="{% static 'main/images/loading.gif' %}"/>
             </div>
 
-                {% include general %}
-
-                {% include wmo %}
-
-                {% if metc %}
-                  {% include metc %}
-                {% endif %}
-          
-                {% include trajectories %}
-
-                {% if studies %}
-                    {% for study in studies %}
-                        {% for study_section in study %}
-                            {% include study_section %}
-                        {% endfor %}
-                    {% endfor %}
-
-                    {% if extra_documents %}
-                        {% for document in extra_documents %}
-                            {% include document %}
-                        {% endfor %}
-                    {% endif %}
-
-                    {% if dmp_file %}
-                        {% include dmp_file %}
-                    {% endif %}
-
-                    {% include embargo %}
-
+                {% for section in sections %}
+                    {% include section %}
+                {% endfor %}
                     
-                    <h2 class="mt-5 mb-1">{% trans "Ruimte voor eventuele opmerkingen" %}</h2>
-                    <table class="proposals-diff ">
-                        <tr>
-                            <th class="proposals-diff-question"></th>
-                            <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
-                            <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-                        </tr>
-                        <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th>
-                            <td>{{ p_proposal.comments }}</td>
-                            <td>{{ proposal.comments }}</td>
-                        </tr>
-                    </table>
-                {% endif %}
+                <h2 class="mt-5 mb-1">{% trans "Ruimte voor eventuele opmerkingen" %}</h2>
+                <table class="proposals-diff ">
+                    <tr>
+                        <th class="proposals-diff-question"></th>
+                        <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
+                        <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
+                    </tr>
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th>
+                        <td>{{ p_proposal.comments }}</td>
+                        <td>{{ proposal.comments }}</td>
+                    </tr>
+                </table>
 
             <p class="mt-5 float-right">
                 <button class="button" onclick="window.history.back();">

@@ -446,7 +446,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
 
     def get_back_url(self):
         """Return to the data management view"""
-        return reverse('proposals:data_management', aPdfrgs=(self.object.pk,))
+        return reverse('proposals:data_management', args=(self.object.pk,))
 
     def _get_page_number(self):
         if self.object.is_pre_assessment:
@@ -564,7 +564,7 @@ class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context = create_context_diff(context, (self.object.parent, self.object))
+        context = create_context_diff(context, self.object.parent, self.object)
 
         return context
 

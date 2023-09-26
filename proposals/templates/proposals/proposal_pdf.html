@@ -80,44 +80,15 @@
         </tr>
       </table>
 
-      {% include general %}
-
-      <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
-      <p>{{ proposal.summary|linebreaks }}</p>
-
-      {% include wmo %}
-
-      {% if metc %}
-        {% include metc %}
-      {% endif %}
-
-      {% include trajectories %}
-
-      {% if studies %}
-        {% for study in studies %}
-          {% for study_section in study %}
-            {% include study_section %}
-          {% endfor %}
+        {% for section in sections %}
+          {% include section %}
         {% endfor %}
-
-        {% if extra_documents %}
-          {% for document in extra_documents %}
-            {% include document %}
-          {% endfor %}
-        {% endif %}
-
-        {% if dmp_file %}
-          {% include dmp_file %}
-        {% endif %}
-
-        {% include embargo %}
 
         <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
         <p>
           {{ proposal.comments }}
         </p>
 
-      {% endif %}
     </div>
   </div>
 {% endblock %}
