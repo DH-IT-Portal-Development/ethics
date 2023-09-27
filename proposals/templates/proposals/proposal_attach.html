@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+{% load uil_filters %}
+
+{% block header_title %}
+{% trans "Informed consent formulieren" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+<script>
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="uu-inner-container">
+  <div class="col-12">
+    {% with nav_items=proposal.available_urls active=4 %}
+    {% include 'base/navigation.html' %}
+    {% endwith %}
+
+    <h2>
+      {% trans "Bestanden toevoegen" %}
+    </h2>
+    <p>
+      {% blocktrans trimmed %}
+      Hier kan je de Informed consent formulieren uploaden voor de opgegeven traject(en). Optioneel kan je indien nodig maximaal 10
+      paar extra formulieren uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' onderaan de pagina. Deze velden
+      kan je weer weg halen door alle formulieren te wissen.
+      {% endblocktrans %}
+    </p>
+
+    <p>
+      {% blocktrans trimmed %}
+      Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>
+      {% endblocktrans %}
+
+      {% blocktrans trimmed %}
+      Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+      {% endblocktrans %}
+    </p>
+
+    <p>
+      {% blocktrans trimmed %}
+      Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: een aanvraag kan hierom direct voor revisie worden teruggestuurd.
+      {% endblocktrans %}
+      {% blocktrans trimmed %}
+      Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
+      {% endblocktrans %}
+    </p>
+    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+      
+      <div>
+          <table>
+            {{ form.as_table }}
+          </table>
+        </div>
+
+        <br/>
+        {% include "base/form_buttons.html" %}
+    </form>
+      </div>
+  </div>
+
+  {% endblock %}

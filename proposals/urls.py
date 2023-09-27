@@ -1,5 +1,8 @@
 from django.urls import path, include
 
+from attachments.views import AttachmentCreateView
+from .models import Proposal
+
 from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     MyPracticeView, \
     MySubmittedView, MyCompletedView, MySupervisedView, MyProposalsView, \
@@ -107,9 +110,19 @@ urlpatterns = [
     path('study_start/<int:pk>/', StudyStart.as_view(),
          name='study_start'),
 
+    # Documents and attachments
+
     path('consent/<int:pk>/', StudyConsent.as_view(), name='consent'),
 
     path('translated/<int:pk>/', TranslatedConsentFormsView.as_view(), name='translated'),
+
+    path("<int:other_pk>/attach/",
+         AttachmentCreateView.as_view(
+             other_model=Proposal,
+             template_name="proposals/proposal_attach.html",
+         ),
+         name="attach_file",
+         ),
 
     path('copy/', include([
         path('', ProposalCopy.as_view(), name='copy'),
