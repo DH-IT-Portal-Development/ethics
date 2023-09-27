@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'reviews',
     'feedback',
     'faqs',
+    'attachments',
 
     'modeltranslation',
     'impersonate',
