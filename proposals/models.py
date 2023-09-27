@@ -547,6 +547,11 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         default=False,
     )
 
+    attachments = models.ManyToManyField(
+        "attachments.Attachment",
+        blank=True,
+    )
+
     def is_practice(self):
         return self.in_course or self.is_exploration
 
