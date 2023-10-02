@@ -36,7 +36,7 @@ class BaseSection:
 
     def make_rows(self):   
 
-        rows = [RowClass(self.object, field) for field in self.processed_row_fields]
+        rows = [RowClass(self.object, field) for field in self.get_row_fields()]
         rows = {row.verbose_name: row.value for row in rows}
 
         return rows
@@ -68,7 +68,6 @@ class DiffSection:
 
     def __init__(self, objects):
         self.objects = objects
-        self.rows = self.make_diff_rows()
         if None in self.objects:
             if self.objects[0] is None:
                 self.warning = _(
@@ -86,6 +85,7 @@ class DiffSection:
             self.warning = None
             self.missing_object = None
             self.study_title = self.objects[0].study_title
+        self.rows = self.make_diff_rows()
 
     def make_diff_rows(self):
             
@@ -97,7 +97,7 @@ class DiffSection:
             initial_rows_dicts = [object.make_rows() for object in self.objects]
 
             #creating a list containing all fields in all objects
-            all_fields = initial_rows_dicts[0].keys()
+            all_fields = list(initial_rows_dicts[0].keys())
             for rows_dict in initial_rows_dicts[1:]:
                 all_fields.extend(field for field in rows_dict.keys() if field not in all_fields)
 
@@ -345,7 +345,7 @@ class StudyTitleClass:
                                         order
                                         )
             return task_title
-class GeneralSection(PDFDiffSection):
+class GeneralSection(BaseSection):
     '''This class generates the data for the general section of a proposal and showcases
     the general workflow for creating sections. All possible row fields are provided, and
     removed according to the logic in the get_row_fields method.
@@ -372,8 +372,9 @@ class GeneralSection(PDFDiffSection):
         'summary'
     ]
     
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not obj.relation.needs_supervisor:
             rows.remove('supervisor')
@@ -397,7 +398,7 @@ class GeneralSection(PDFDiffSection):
 
         return rows
     
-class PageBreakMixin(PDFDiffSection):
+class PageBreakMixin(BaseSection):
 
     def render(self, context):
         context.update(
@@ -408,7 +409,7 @@ class PageBreakMixin(PDFDiffSection):
         return super().render(context)
 
     
-class WMOSection(PageBreakMixin, PDFDiffSection):
+class WMOSection(PageBreakMixin, BaseSection):
     '''This class receives a proposal.wmo object.'''
     section_title = _("Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?")
     row_fields = [
@@ -418,8 +419,9 @@ class WMOSection(PageBreakMixin, PDFDiffSection):
         'get_is_medical_display',  
     ]
     
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not obj.metc == 'Y':
             rows.remove('metc_details')
@@ -429,7 +431,7 @@ class WMOSection(PageBreakMixin, PDFDiffSection):
 
         return rows
     
-class METCSection(PageBreakMixin, PDFDiffSection):
+class METCSection(PageBreakMixin, BaseSection):
     '''This class receives a proposal.wmo object.
     This class exists because the RowValueClass does some
     funky things for working with the metc_decision_pdf field'''
@@ -441,7 +443,7 @@ class METCSection(PageBreakMixin, PDFDiffSection):
         'metc_decision_pdf'
     ]
     
-class TrajectoriesSection(PageBreakMixin, PDFDiffSection):
+class TrajectoriesSection(PageBreakMixin, BaseSection):
     '''This class receives a proposal object.'''
 
     section_title = _("Eén of meerdere trajecten?")
@@ -451,15 +453,16 @@ class TrajectoriesSection(PageBreakMixin, PDFDiffSection):
         'studies_number'
     ]
     
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if obj.studies_similar:
             rows.remove('studies_number')
 
         return rows
 
-class StudySection(study_title):
+class StudySection(BaseSection):
     '''This class receives a proposal.study object.'''
     section_title = _('De deelnemers')
     row_fields = [
@@ -480,8 +483,9 @@ class StudySection(study_title):
         'hierarchy_details',
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not has_adults(obj):
             rows.remove('legally_incapable')
@@ -508,14 +512,11 @@ class StudySection(study_title):
             rows.remove('hierarchy_details')
 
         return rows
-    
-    
-class StudySectionDiff(study_title_diff, StudySection):
-    '''An example of a DiffSectionMissingObjects. Unfortunately I found myself having to repeat the overriding
-    of the render function from the studySection, due to the mro.'''
-    pass
 
-class BaseInterventionSection(sub_study_title):
+#NOTE: When implementing the v1 and v2 versions I found that I preferred the old method
+#for dealing with the different versions. 
+'''
+class BaseInterventionSection:
 
     section_title = _('Het interventieonderzoek')
     row_fields = [
@@ -532,9 +533,10 @@ class BaseInterventionSection(sub_study_title):
         'controls_description'
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
-        
+        obj = self.object
+
         if not needs_details(obj.setting.all()):
             rows.remove('setting_details')
         if not obj.study.has_children() or \
@@ -548,9 +550,6 @@ class BaseInterventionSection(sub_study_title):
 
         return rows
 
-class BaseInterventionSectionDiff(sub_study_title_diff, BaseInterventionSection):
-    pass
-
 class InterventionSectionV1(BaseInterventionSection):
 
     def __init__(self, object):
@@ -559,10 +558,17 @@ class InterventionSectionV1(BaseInterventionSection):
         self.row_fields[5:5] = ['multiple_sessions', 'session_frequency']
         self.row_fields.append('extra_task')
     
-class InterventionSectionV1Diff(BaseInterventionSectionDiff, InterventionSectionV1):
-    pass
+class InterventionSectionV2(BaseInterventionSection):
 
-class InterventionSection(sub_study_title):
+    def __init__(self, object):
+        super().__init__(object)
+        self.row_fields = super().get_row_fields(object)
+        self.row_fields[5:5] = ['multiple_sessions', 'session_frequency']
+        self.row_fields.append('extra_task')
+'''
+
+
+class InterventionSection(BaseSection):
     '''This class receives an intervention object'''
     section_title = _('Het interventieonderzoek')
     row_fields = [
@@ -583,8 +589,9 @@ class InterventionSection(sub_study_title):
         'extra_task'
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if obj.version == 1:
             fields_to_remove = ['multiple_sessions',
@@ -611,11 +618,8 @@ class InterventionSection(sub_study_title):
             rows.remove('controls_description')   
 
         return rows
-    
-class InterventionSectionDiff(sub_study_title_diff, InterventionSection):
-    pass
-    
-class ObservationSection(sub_study_title):
+
+class ObservationSection(BaseSection):
     '''This class receives an observation object
     It inherits from the InterventionSection, as it can repurpose the same overridden
     render method.'''
@@ -645,8 +649,9 @@ class ObservationSection(sub_study_title):
         'registrations_details'        
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if obj.version == 1:
             to_remove_if_v1 = ['details_who',
@@ -698,21 +703,8 @@ class ObservationSection(sub_study_title):
             rows.remove('registrations_details')
 
         return rows
-    
-class ObservationSectionDiff(sub_study_title_diff, ObservationSection):
-    '''Note that the diff sections follow a similar pattern of inheritance as 
-    the regular sections, due to repurposing overriden methods, when applicable, 
-    eg.:
 
-    class InterventionSection(PDFDiffSection)
-    class InterventionSectionDiff(DiffSectionMissingObjects, InterventionSection)
-
-    class ObservationSection(InterventionSection)
-    class ObservationSectionDiff(InterventionSectionDiff, ObservationSection)
-    '''
-    pass
-
-class SessionsOverviewSection(study_title):
+class SessionsOverviewSection(BaseSection):
     '''This class receives an study object
     This Section looks maybe a bit unnecessary, but it does remove some logic, plus
     the study_title.html from the template.'''
@@ -721,12 +713,7 @@ class SessionsOverviewSection(study_title):
 
     row_fields = ['sessions_number']
 
-
-class SessionsOverviewSectionDiff(study_title_diff, SessionsOverviewSection):
-    '''Needed to override get_row_fields, due to mro issue'''
-    pass
-
-class SessionSection(session_title):
+class SessionSection(BaseSection):
     '''This class receives a session object'''
     
     row_fields = [
@@ -737,8 +724,9 @@ class SessionSection(session_title):
         'tasks_number',       
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not needs_details(obj.setting.all()):
             rows.remove('setting_details')
@@ -750,11 +738,8 @@ class SessionSection(session_title):
             rows.remove('leader_has_coc')
 
         return rows
-
-class SessionSectionDiff(session_title_diff, SessionSection):
-    pass
     
-class TaskSection(task_title):
+class TaskSection(BaseSection):
     '''This class receives an task object'''
     
     row_fields = [
@@ -769,8 +754,9 @@ class TaskSection(task_title):
         'description'
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not needs_details(obj.registrations.all()):
             rows.remove('registrations_details')
@@ -785,10 +771,7 @@ class TaskSection(task_title):
 
         return rows
     
-class TaskSectionDiff(task_title_diff, TaskSection):
-    pass
-    
-class TasksOverviewSection(task_overview_title):
+class TasksOverviewSection(BaseSection):
     '''Gets passed a session object
     This might be unecessary ... Maybe just use the existing template language ...
     Because the verbose name of this field is formatted, the method for retrieving
@@ -798,10 +781,7 @@ class TasksOverviewSection(task_overview_title):
         'tasks_duration'
     ]
     
-class TasksOverviewSectionDiff(task_overview_title_diff, TasksOverviewSection):
-    pass
-    
-class StudyOverviewSection(study_title):
+class StudyOverviewSection(BaseSection):
     '''This class receives a Study object.'''
 
     section_title = _('Overzicht en eigen beoordeling van het gehele onderzoek')
@@ -816,8 +796,9 @@ class StudyOverviewSection(study_title):
         'risk_details'
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         rows_to_remove = []
         for x in range(0, 7, 2):
@@ -832,11 +813,8 @@ class StudyOverviewSection(study_title):
             rows.remove('deception')
 
         return rows
-
-class StudyOverviewSectionDiff(study_title_diff, StudyOverviewSection):
-    pass
     
-class InformedConsentFormsSection(sub_study_title):
+class InformedConsentFormsSection(BaseSection):
     '''This class receives a Documents object'''
 
     section_title = _('Informed consent formulieren')
@@ -861,7 +839,7 @@ class InformedConsentFormsSection(sub_study_title):
         proposal_list = ['translated_forms', 'translated_forms_languages']
         study_list = ['passive_consent', 'passive_consent_details']
 
-        row_fields = self.get_row_fields(self.object)
+        row_fields = self.get_row_fields()
 
         rows = []
 
@@ -877,8 +855,9 @@ class InformedConsentFormsSection(sub_study_title):
     
         return rows
     
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not obj.proposal.translated_forms:
             rows.remove('translated_forms_languages')
@@ -898,10 +877,7 @@ class InformedConsentFormsSection(sub_study_title):
 
         return rows
     
-class InformedConsentSectionDiff(sub_study_title_diff, InformedConsentFormsSection):
-    pass
-    
-class ExtraDocumentsSection(PDFDiffSection):
+class ExtraDocumentsSection(BaseSection):
     '''This class receives an Documents object.
     Overrides the __init__ to create a formatted section title'''
 
@@ -914,23 +890,18 @@ class ExtraDocumentsSection(PDFDiffSection):
         super().__init__(object)
         self.section_title = _('Extra formulieren ') + str(count + 1)
     
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not obj.informed_consent:
             rows.remove('informed_consent')
         if not obj.briefing:
             rows.remove('briefing')
 
-        return rows
+        return rows   
     
-class ExtraDocumentsSectionDiff(DiffSectionMissingObjects, ExtraDocumentsSection):
-
-    def __init__(self, objects_tuple, count):
-        super().__init__(objects_tuple)
-        self.section_title = _('Extra formulieren ') + str(count+1)     
-    
-class DMPFileSection(PDFDiffSection):
+class DMPFileSection(BaseSection):
     '''This class receives a proposal object
     Also unnecessary I suppose. But I though why not ...'''
 
@@ -938,7 +909,7 @@ class DMPFileSection(PDFDiffSection):
     
     row_fields = ['dmp_file']
 
-class EmbargoSection(PDFDiffSection):
+class EmbargoSection(BaseSection):
     '''Gets passed a proposal object'''
 
     section_title = _('Aanmelding versturen')
@@ -948,8 +919,9 @@ class EmbargoSection(PDFDiffSection):
         'embargo_end_date'
     ]
 
-    def get_row_fields(self, obj):
+    def get_row_fields(self):
         rows = copy(self.row_fields)
+        obj = self.object
 
         if not obj.embargo:
             rows.remove('embargo_end_date')
@@ -986,19 +958,19 @@ def create_context_pdf(context, model):
     if model.wmo.status == model.wmo.NO_WMO:
 
         for study in model.study_set.all():
-            sections.append(StudySection(study))
+            sections.append(StudySection(study, 'study'))
             if study.has_intervention:
-                sections.append(InterventionSection(study.intervention))
+                sections.append(InterventionSection(study.intervention, 'study'))
             if study.has_observation:
-                sections.append(ObservationSection(study.observation))
+                sections.append(ObservationSection(study.observation, 'study'))
             if study.has_sessions:
                 sections.append(SessionsOverviewSection(study))
                 for session in study.session_set.all():
-                    sections.append(SessionSection(session))
+                    sections.append(SessionSection(session, 'session'))
                     for task in session.task_set.all():
-                        sections.append(TaskSection(task))
-                sections.append(TasksOverviewSection(session))
-            sections.append(StudyOverviewSection(study))
+                        sections.append(TaskSection(task, 'task'))
+                sections.append(TasksOverviewSection(session, 'task_overview'))
+            sections.append(StudyOverviewSection(study, 'study'))
             sections.append(InformedConsentFormsSection(study.documents))
 
         extra_documents = get_extra_documents(model)
@@ -1015,91 +987,97 @@ def create_context_pdf(context, model):
     
     return context
 
-def create_context_diff(context, p_proposal, proposal):
-    '''A function to create the context for the diff page.'''
+# def create_context_diff(context, p_proposal, proposal):
+#     '''A function to create the context for the diff page.'''
 
-    both_proposals = (p_proposal, proposal)
+#     both_proposals = (p_proposal, proposal)
 
-    sections = []
+#     sections = []
 
-    sections.append(GeneralSection(both_proposals))
-    sections.append(WMOSection((p_proposal.wmo, proposal.wmo)))
+#     sections.append(GeneralSection(both_proposals))
+#     sections.append(WMOSection((p_proposal.wmo, proposal.wmo)))
 
-    if proposal.wmo.status != proposal.wmo.NO_WMO or p_proposal.wmo.status != p_proposal.wmo.NO_WMO:
-        sections.append(METCSection((p_proposal.wmo, proposal.wmo)))
+#     if proposal.wmo.status != proposal.wmo.NO_WMO or p_proposal.wmo.status != p_proposal.wmo.NO_WMO:
+#         sections.append(METCSection((p_proposal.wmo, proposal.wmo)))
     
-    sections.append(TrajectoriesSection(both_proposals))
+#     sections.append(TrajectoriesSection(both_proposals))
 
-    if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED:
+#     if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED:
 
-        for p_study, study in zip_equalize_lists(p_proposal.study_set.all(), proposal.study_set.all()):
+#         for p_study, study in zip_equalize_lists(p_proposal.study_set.all(), proposal.study_set.all()):
 
-            diff_studies = (p_study, study)
+#             diff_studies = (p_study, study)
 
-            sections.append(StudySectionDiff((diff_studies)))
+#             sections.append(StudySectionDiff((diff_studies)))
 
-            if p_study is not None and p_study.has_intervention or \
-                study is not None and study.has_intervention:
+#             if p_study is not None and p_study.has_intervention or \
+#                 study is not None and study.has_intervention:
 
 
-                interventions = tuple((study.intervention if study is not None \
-                                       else study for study in diff_studies))
+#                 interventions = tuple((study.intervention if study is not None \
+#                                        else study for study in diff_studies))
                 
-                sections.append(InterventionSectionDiff(interventions))
+#                 sections.append(InterventionSectionDiff(interventions))
 
-            if p_study is not None and p_study.has_observation or \
-                study is not None and study.has_observation:
+#             if p_study is not None and p_study.has_observation or \
+#                 study is not None and study.has_observation:
 
-                observations = tuple((study.observation if study is not None \
-                                       else study for study in diff_studies))
+#                 observations = tuple((study.observation if study is not None \
+#                                        else study for study in diff_studies))
                 
-                sections.append(ObservationSectionDiff(observations))
+#                 sections.append(ObservationSectionDiff(observations))
 
-            if p_study is not None and p_study.has_sessions or \
-                study is not None and study.has_sessions:
+#             if p_study is not None and p_study.has_sessions or \
+#                 study is not None and study.has_sessions:
 
-                sections.append(SessionsOverviewSectionDiff(diff_studies))
+#                 sections.append(SessionsOverviewSectionDiff(diff_studies))
 
-                p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
-                                       else study for study in diff_studies))
+#                 p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
+#                                        else study for study in diff_studies))
                 
-                for diff_sessions in zip_equalize_lists(p_sessions_set, sessions_set):
+#                 for diff_sessions in zip_equalize_lists(p_sessions_set, sessions_set):
 
-                    sections.append(SessionSectionDiff(diff_sessions))
+#                     sections.append(SessionSectionDiff(diff_sessions))
 
-                    p_tasks_set, tasks_set = tuple((session.task_set.all() if session is not None \
-                                       else session for session in diff_sessions))
+#                     p_tasks_set, tasks_set = tuple((session.task_set.all() if session is not None \
+#                                        else session for session in diff_sessions))
                     
-                    for diff_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
+#                     for diff_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
 
-                        sections.append(TaskSectionDiff(diff_tasks))
+#                         sections.append(TaskSectionDiff(diff_tasks))
 
-                sections.append(TasksOverviewSectionDiff(diff_sessions))
+#                 sections.append(TasksOverviewSectionDiff(diff_sessions))
 
-            sections.append(StudyOverviewSectionDiff(diff_studies))
+#             sections.append(StudyOverviewSectionDiff(diff_studies))
 
-            documents = tuple(study.documents if study is not None \
-                              else study for study in diff_studies)
+#             documents = tuple(study.documents if study is not None \
+#                               else study for study in diff_studies)
             
-            sections.append(InformedConsentSectionDiff(documents))
+#             sections.append(InformedConsentSectionDiff(documents))
 
-        p_extra_docs = get_extra_documents(p_proposal)
-        extra_docs = get_extra_documents(proposal)
+#         p_extra_docs = get_extra_documents(p_proposal)
+#         extra_docs = get_extra_documents(proposal)
 
-        if p_extra_docs or extra_docs:
-            for count, zipped_extra_docs in enumerate(zip_equalize_lists(p_extra_docs, extra_docs)):
-                sections.append(ExtraDocumentsSectionDiff(zipped_extra_docs, count))
+#         if p_extra_docs or extra_docs:
+#             for count, zipped_extra_docs in enumerate(zip_equalize_lists(p_extra_docs, extra_docs)):
+#                 sections.append(ExtraDocumentsSectionDiff(zipped_extra_docs, count))
 
-        if p_proposal.dmp_file or proposal.dmp_file:
-            sections.append(DMPFileSection(both_proposals))
+#         if p_proposal.dmp_file or proposal.dmp_file:
+#             sections.append(DMPFileSection(both_proposals))
             
-        sections.append(EmbargoSection(both_proposals))
+#         sections.append(EmbargoSection(both_proposals))
 
-    context['sections'] = sections
+#     context['sections'] = sections
 
-    return context
+#     return context
 
-def create_context_diff_alt(context, p_p, p):
+def two_sections(section_type, list_of_objects, study_title_type = None):
+    if study_title_type is None:
+        return [section_type(obj) if obj is not None else obj for obj in list_of_objects]
+    else:
+        return [section_type(obj, study_title_type) if obj is not None else obj for obj in list_of_objects]
+
+def create_context_diff(context, p_p, p):
     '''A function to create the context for the diff page.'''
     '''I am using 'p' as a shorthand for proposal and 'p_p' for parent proposal
     to cut down on the verbosity here ...'''
@@ -1122,7 +1100,7 @@ def create_context_diff_alt(context, p_p, p):
 
             both_studies = (p_study, study)
 
-            sections.append(DiffSection([StudySectionDiff(s) for s in both_studies]))
+            sections.append(DiffSection([StudySection(s) for s in both_studies]))
 
             if p_study is not None and p_study.has_intervention or \
                 study is not None and study.has_intervention:
@@ -1157,8 +1135,9 @@ def create_context_diff_alt(context, p_p, p):
                                        else session for session in both_sessions))
                     
                     for both_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
+                        breakpoint()
 
-                        sections.append(DiffSection([TaskSectionDiff(t) for t in both_tasks]))
+                        sections.append(DiffSection([TaskSection(t) for t in both_tasks]))
 
                 sections.append(DiffSection([TasksOverviewSection(s) for s in both_sessions]))
 
@@ -1184,4 +1163,6 @@ def create_context_diff_alt(context, p_p, p):
     context['sections'] = sections
 
     return context
+
+
 
