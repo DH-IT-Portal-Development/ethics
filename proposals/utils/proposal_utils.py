@@ -96,15 +96,38 @@ def available_urls(proposal):
 
         urls.append(studies_url)
 
+        consent_docs_url = AvailableURL(
+            title=_('Uploaden'), 
+            url=reverse(
+                'proposals:consent', 
+                args=(proposal.pk, )
+                )
+            )
+        translated_docs_url = AvailableURL(
+            title=_('Vertaling'), 
+            url=reverse(
+                'proposals:translated', 
+                args=(proposal.pk, )
+                )
+            )
+        consent_url = AvailableURL(
+            title=_('Formulieren'), 
+            children=[
+                translated_docs_url, 
+                consent_docs_url
+                ]
+            )
 
-        consent_url = AvailableURL(title=_('Documenten'))
         data_management_url = AvailableURL(title=_('Datamanagement'))
         submit_url = AvailableURL(title=_('Versturen'))
 
         if proposal.last_study() and proposal.last_study().is_completed():
-            consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
+            consent_url.url = reverse('proposals:translated', args=(proposal.pk, ))
             data_management_url.url = reverse('proposals:data_management', args=(proposal.pk, ))
             submit_url.url = reverse('proposals:submit', args=(proposal.pk,))
+
+        if proposal.translated_forms is not None:
+            consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
 
         urls.append(consent_url)
         urls.append(data_management_url)
@@ -280,18 +303,20 @@ def _get_next_proposal_number(current_year) -> int:
         return 1
 
 
+def generate_pdf(proposal,):
+    """
+    Returns a PDF of a proposal using the ProposalAsPdf view
+    and the proposal's own recommended PDF template.
 
-def generate_pdf(proposal, template=False):
-    """Grandfathered function for pdf saving. The template arg currently
-    only exists for backwards compatibility."""
+    This function does not save the generated PDF. For that
+    functionality, call the generate_pdf method on the model.
+    """
 
     from proposals.views.proposal_views import ProposalAsPdf
 
     view = ProposalAsPdf()
     view.object = proposal
 
-    # Note, this is where the _view_ decides what kind of proposal it is
-    # and chooses the appropriate template.
     context = view.get_context_data()
 
     with BytesIO() as f:
@@ -300,9 +325,8 @@ def generate_pdf(proposal, template=False):
             dest=f,
         )
         pdf = ContentFile(f.getvalue())
-    proposal.pdf.save(view.get_pdf_filename(), pdf)
 
-    return proposal.pdf
+    return pdf
 
 
 def pdf_link_callback(uri, rel):

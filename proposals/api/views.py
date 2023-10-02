@@ -178,23 +178,9 @@ class ProposalArchiveApiView(CommitteeMixin, BaseProposalsApiView):
     ]
     default_sort = ('date_reviewed', 'desc')
 
-    @method_decorator(cache_page(60 * 60 * 4))
     def get(self, *args, **kwargs):
         return super().get(*args, **kwargs)
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True,
-                                       is_pre_assessment=False,
-                                       reviewing_committee=self.committee,
-                                       public=True).select_related(
-            # this optimizes the loading a bit
-            'supervisor', 'parent', 'relation',
-            'parent__supervisor', 'parent__relation',
-        ).prefetch_related(
-            'applicants', 'review_set', 'parent__review_set', 'study_set',
-            'study_set__observation', 'study_set__session_set',
-            'study_set__intervention', 'study_set__session_set__task_set'
-        )
+        return Proposal.objects.users_only_archive(committee=self.committee)

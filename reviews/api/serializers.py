@@ -10,7 +10,7 @@ class InlineReviewProposalSerializer(serializers.ModelSerializer):
         model = Proposal
         fields = ['pk', 'reference_number', 'title', 'is_revision',
                   'date_confirmed', 'date_submitted', 'latest_review',
-                  'applicants', 'pdf', 'date_submitted_supervisor']
+                  'applicants', 'pdf', 'date_submitted_supervisor', 'in_archive']
         read_only_fields = fields
 
     latest_review = serializers.SerializerMethodField()
@@ -43,7 +43,7 @@ class ReviewProposalSerializer(InlineReviewProposalSerializer):
         model = Proposal
         fields = ['pk', 'reference_number', 'title', 'is_revision',
                   'date_confirmed', 'date_submitted', 'parent', 'latest_review',
-                  'applicants', 'pdf', 'date_submitted_supervisor']
+                  'applicants', 'pdf', 'date_submitted_supervisor', 'in_archive']
         read_only_fields = fields
 
     parent = serializers.SerializerMethodField()

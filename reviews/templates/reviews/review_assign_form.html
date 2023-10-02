@@ -32,11 +32,13 @@
                 {% trans "Commissieleden aanstellen" %}
             </h2>
 
-            <p>
-                {% blocktrans with title=review.proposal.title %}
+            {% url 'reviews:workload' review.proposal.reviewing_committee as workload_url %}
+            {% blocktrans trimmed with title=review.proposal.title %}
+                <p>
                     Kies hier de geschikte route en commissieleden voor de aanvraag <em>{{ title }}</em>.
-                {% endblocktrans %}
-            </p>
+                    klik <a href="{{ workload_url }}">hier</a> voor een overzicht van de werkverdeling van deze commissie.
+                <p\>
+            {% endblocktrans %}
             <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 <div class="float-right">

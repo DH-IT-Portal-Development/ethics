@@ -4,12 +4,14 @@ import datetime
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, \
     UserFormKwargsMixin
+
 from django.conf import settings
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
+from django.http import FileResponse
 #from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
 
@@ -25,7 +27,7 @@ from ..copy import copy_proposal
 from ..forms import ProposalConfirmationForm, ProposalCopyForm, \
     ProposalDataManagementForm, ProposalForm, ProposalStartPracticeForm, \
     ProposalSubmitForm, RevisionProposalCopyForm, AmendmentProposalCopyForm, \
-    ProposalUpdateDataManagementForm
+    ProposalUpdateDataManagementForm, TranslatedConsentForms
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import ProposalMixin, ProposalContextMixin, \
@@ -133,7 +135,7 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalUsersOnlyArchiveView(CommitteeMixin, BaseProposalsView):
     template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):
@@ -144,7 +146,7 @@ class ProposalPrivateArchiveView(CommitteeMixin, BaseProposalsView):
     @property
     def title(self):
         return "{} - {}".format(
-            _('Publiek archief'),
+            _('Archief'),
             self.committee_display_name
         )
 
@@ -155,19 +157,7 @@ class ProposalsPublicArchiveView(generic.ListView):
 
     def get_queryset(self):
         """Returns all the Proposals that have been decided positively upon"""
-        two_years_ago = (
-                datetime.date.today() -
-                datetime.timedelta(weeks=104)
-        )
-        return super().get_queryset().filter(
-            status__gte=Proposal.DECISION_MADE,
-            status_review=True,
-            in_archive=True,
-            date_confirmed__gt=two_years_ago,
-        ).order_by(
-            "-date_reviewed"
-        )
-
+        return Proposal.objects.public_archive()
 
 class ProposalsExportView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'proposals'
@@ -186,14 +176,10 @@ class ProposalsExportView(GroupRequiredMixin, generic.ListView):
         if pk is not None:
             return Proposal.objects.filter(pk=pk)
 
-        return Proposal.objects.filter(status__gte=Proposal.DECISION_MADE,
-                                       status_review=True,
-                                       in_archive=True).order_by(
-            "-date_reviewed"
-        )
+        return Proposal.objects.export()
 
 
-class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
+class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
     group_required = settings.GROUP_SECRETARY
     permanent = False
 
@@ -201,10 +187,10 @@ class HideFromArchiveView(GroupRequiredMixin, generic.RedirectView):
         pk = kwargs.get('pk')
 
         proposal = Proposal.objects.get(pk=pk)
-        proposal.public = False
+        proposal.in_archive = not proposal.in_archive
         proposal.save()
-
-        return reverse('proposals:archive')
+        committee = proposal.reviewing_committee.name
+        return reverse('proposals:archive', args=[committee])
 
 ##########################
 # CRUD actions on Proposal
@@ -344,8 +330,21 @@ class ProposalStart(generic.TemplateView):
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context['secretary'] = get_secretary()
         return context
+    
+class TranslatedConsentFormsView(UpdateView):
+    model = Proposal
+    form_class = TranslatedConsentForms
+    template_name = 'proposals/translated_consent_forms.html'
 
-from braces import views as braces
+    def get_next_url(self):
+        '''Go to the consent form upload page'''
+        return reverse('proposals:consent', args=(self.object.pk,))
+
+    def get_back_url(self):
+        """Return to the overview of the last Study"""
+        return reverse('studies:design_end', args=(self.object.last_study().pk,))
+
+
 class ProposalDataManagement(UpdateView):
     model = Proposal
     form_class = ProposalDataManagementForm
@@ -358,8 +357,9 @@ class ProposalDataManagement(UpdateView):
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
         return reverse('proposals:consent', args=(self.object.pk,))
-    
-class ProposalUpdateDataManagement(braces.GroupRequiredMixin, generic.UpdateView):
+
+
+class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     """
     Allows the secretary to change the Data Management Plan on the Proposal level
     """
@@ -427,7 +427,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         success_url = super(ProposalSubmit, self).form_valid(form)
         if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
-            generate_pdf(proposal, 'proposals/proposal_pdf.html')
+            proposal.generate_pdf()
             if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
                 start_review(proposal)
         return success_url
@@ -542,36 +542,56 @@ class ProposalCopyAmendment(ProposalCopy):
         return context
 
 
-class ProposalAsPdf(LoginRequiredMixin, PDFTemplateResponseMixin,
-                    generic.DetailView):
+class ProposalAsPdf(
+        LoginRequiredMixin,
+        generic.DetailView,
+        PDFTemplateResponseMixin,
+):
     model = Proposal
-    template_name = 'proposals/proposal_pdf.html'
-
     # The PDF mixin generates a filename with this factory
     filename_factory = FilenameFactory('Proposal')
+
+    def get(self, request, *args, **kwargs):
+        # First, check if we should use a pregenerated pdf, if we have one
+        proposal = self.get_object()
+        if proposal.use_canonical_pdf():
+            if proposal.pdf:
+                return FileResponse(
+                    proposal.pdf,
+                    filename=self.get_pdf_filename(),
+                    as_attachment=self.pdf_save_as,
+                )
+        # Else, continue with generation
+        return super().get(request, *args, **kwargs)
+
+    def get_object(self, *args, **kwargs):
+        """If we already have an object set, use that.
+        This can happen if this view is being called from generate_pdf()
+        rather than by Django."""
+        if not hasattr(self, "object"):
+            self.object = super().get_object(*args, **kwargs)
+        return self.object
+
+    def get_template_names(self):
+        """Determine the correct PDf template for given proposal"""
+        proposal = self.get_object()
+        self.template_name = proposal.pdf_template_name
+        return [self.template_name]
 
     def get_context_data(self, **kwargs):
         """Adds 'BASE_URL' to template context"""
         context = super(ProposalAsPdf, self).get_context_data(**kwargs)
         context['BASE_URL'] = settings.BASE_URL
 
-        if self.object.is_pre_approved:
-            self.template_name = 'proposals/proposal_pdf_pre_approved.html'
-        elif self.object.is_pre_assessment:
-            self.template_name = 'proposals/proposal_pdf_pre_assessment.html'
-
         documents = {
             'extra': []
         }
-
         for document in Documents.objects.filter(proposal=self.object).all():
             if document.study:
                 documents[document.study.pk] = document
             else:
                 documents['extra'].append(document)
-
         context['documents'] = documents
-
         return context
 
 
@@ -625,7 +645,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
         if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
-            generate_pdf(proposal, 'proposals/proposal_pdf_pre_assessment.html')
+            proposal.generate_pdf()
             start_review_pre_assessment(proposal)
         return success_url
 
@@ -685,7 +705,7 @@ class ProposalSubmitPreApproved(ProposalSubmit):
         success_url = super(ProposalSubmitPreApproved, self).form_valid(form)
         if 'save_back' not in self.request.POST:
             proposal = self.get_object()
-            generate_pdf(proposal, 'proposals/proposal_pdf_pre_approved.html')
+            proposal.generate_pdf()
         return success_url
 
     def get_next_url(self):

@@ -4,6 +4,7 @@
 {% static "proposals/images/arrow_divide.png" as img_diff %}
 {% static "main/images/page_white_acrobat.png" as img_pdf %}
 {% static "proposals/images/folder_delete.png" as img_hide %}
+{% static "proposals/images/folder_add.png" as img_add %}
 {% static 'main/images/zoom.png' as img_details %}
 {% static 'reviews/images/user_add.png' as img_add_reviewers %}
 {% static 'reviews/images/folder_edit.png' as img_change_chamber %}
@@ -85,6 +86,18 @@
                             v-else
                             src="{{ img_confirm }}"
                             title="{% trans 'Bevestigingsbrief versturen' %}"
+                        />
+                    </a>
+                    <a :href="$url('proposals:archive_status', [review.proposal.pk])">
+                        <img
+                            v-if="review.proposal.in_archive === true"
+                            src="{{ img_hide }}"
+                            title="{% trans 'Verberg aanvraag uit het archief' %}"
+                        />
+                        <img
+                            v-else
+                            src="{{ img_add }}"
+                            title="{% trans 'Plaats aanvraag in archief' %}"
                         />
                     </a>
                 </template>

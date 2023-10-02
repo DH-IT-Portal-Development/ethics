@@ -14,6 +14,7 @@ $(function() {
 
     // Default for proposals
     check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
+    check_field_required('student_context', 'needs_details', 'student_context_details', 'proposals', 'studentcontext');
     depends_on_value('other_applicants', 'True', 'applicants');
     depends_on_value('other_stakeholders', 'True', 'stakeholders');
     check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
