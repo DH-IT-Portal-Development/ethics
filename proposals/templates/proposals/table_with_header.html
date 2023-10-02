@@ -9,9 +9,9 @@
     <h3> {{ study_title }} </h3>
 {% endif %}
 <table>
-{% for row in rows %}
+{% for verbose_name, value in rows.items %}
 <tr>
-<th>{{ row.verbose_name }}</th><td>{{ row.value }}</td>
+<th>{{ verbose_name }}</th><td>{{ value }}</td>
 </tr>
 {% endfor %}
 </table>

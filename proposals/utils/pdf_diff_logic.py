@@ -33,11 +33,11 @@ class BaseSection:
             self.study_title = None
         else:
             self.study_title = self.get_study_title(self.object, study_title_type)
-        self.processed_row_fields = self.get_row_fields()
 
     def make_rows(self):   
 
         rows = [RowClass(self.object, field) for field in self.processed_row_fields]
+        rows = {row.verbose_name: row.value for row in rows}
 
         return rows
     
@@ -65,36 +65,56 @@ class BaseSection:
         return StudyTitleClass(object, study_title_type).study_title
 
 class DiffSection:
-    '''Receives a list of BaseSection objects'''
 
     def __init__(self, objects):
         self.objects = objects
+        self.rows = self.make_diff_rows()
+        if None in self.objects:
+            if self.objects[0] is None:
+                self.warning = _(
+                "Dit onderdeel is nieuw in de revisie en bestond niet in de originele aanvraag."
+                )
+                self.missing_object = 0
+                self.study_title = self.objects[1].study_title
+            else:
+                self.warning = _(
+                "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
+            )
+                self.missing_object = 1
+                self.study_title = self.objects[0].study_title
+        else:
+            self.warning = None
+            self.missing_object = None
+            self.study_title = self.objects[0].study_title
 
-    def make_diff_rows(self, objects):
+    def make_diff_rows(self):
+            
+        if self.missing_object == 0:
+            diff_dict = self.objects[1].make_rows()
+        if self.missing_object == 1:
+            diff_dict = self.object[0].make_rows()
+        else:
+            initial_rows_dicts = [object.make_rows() for object in self.objects]
 
-        diff_dict = {}
+            #creating a list containing all fields in all objects
+            all_fields = initial_rows_dicts[0].keys()
+            for rows_dict in initial_rows_dicts[1:]:
+                all_fields.extend(field for field in rows_dict.keys() if field not in all_fields)
 
-        for row_field in object[0].row_fields:
-            diff_dict[row_field] = []
+            diff_dict = {}
 
-        for object in objects:
-            for row in object.make_rows():
-                if row.field in object.processed_row_fields:
-                    if not diff_dict[row.field]:
-                        diff_dict[row_field] += [row.verbose_name, row.value]
+            for field in all_fields:
+                diff_dict[field] = []
+
+            for rows_dict in initial_rows_dicts:
+                for field in all_fields:
+                    if field in rows_dict:
+                        diff_dict[field].append(rows_dict[field])
                     else:
-                        diff_dict[row.field] += [row.value]
-                else:
-                    diff_dict[row.fields] += ['']
-        
-        for row_field, row in diff_dict:
-            #Check if a certain row is empty
-            if all('' == s or s.isspace() for s in row):
-                diff_dict.pop(row_field)
-        
+                        diff_dict[field].append('')
+
         return diff_dict
 
-    
     def render(self, context):
         context = context.flatten()
         template = get_template("proposals/table_with_header_diff.html")
@@ -106,13 +126,21 @@ class DiffSection:
                     "missing_object": self.missing_object
                 }
             )
+        if self.study_title is not None:
+            context.update(
+                {
+                    "study_title": self.study_title,
+                }
+            )
         context.update(
             {
-                "section_title": self.section_title,
-                "rows": self.make_rows(),
+                "section_title": self.objects[0].section_title,
+                "rows": self.rows,
+                "rows_keys_list": list(self.rows)
             }
         )
         return template.render(context)
+    
 class RowClass:
     '''This class creates rows for either one or two objects, and gets initated
     in the make_rows method of Section classes. The classmethods of Rowclass
@@ -137,9 +165,6 @@ class RowClass:
     
     def value(self):
         return RowValueClass(self.object, self.field).get_field_value()
-    
-    def value_2(self):
-        return RowValueClass(self.object_2, self.field).get_field_value()
     
     def get_verbose_name(self, field):
         if field != 'tasks_duration':
@@ -835,36 +860,20 @@ class InformedConsentFormsSection(sub_study_title):
 
         proposal_list = ['translated_forms', 'translated_forms_languages']
         study_list = ['passive_consent', 'passive_consent_details']
-        if self.object_2:
-            row_fields_1 = self.get_row_fields(self.object)
-            row_fields_2 = self.get_row_fields(self.object_2)
 
-            row_fields_both = list(set(row_fields_1) | set(row_fields_2))
+        row_fields = self.get_row_fields(self.object)
 
-            ordered_row_fields = [row for row in self.row_fields if row in row_fields_both]
+        rows = []
 
-            rows = []
+        for field in row_fields:
+            if field in proposal_list:
+                rows.append(RowClass(self.object.proposal, field))
+            elif field in study_list:
+                rows.append(RowClass(self.object.study, field))
+            else:
+                rows.append(RowClass(self.object, field))
 
-            for field in ordered_row_fields:
-                if field in proposal_list:
-                    rows.append(RowClass(self.object.proposal, field, self.object_2.proposal))
-                elif field in study_list:
-                    rows.append(RowClass(self.object.study, field, self.object_2.study))
-                else:
-                    rows.append(RowClass(self.object, field, self.object_2))
-                    
-        else:
-            row_fields = self.get_row_fields(self.object)
-
-            rows = []
-
-            for field in row_fields:
-                if field in proposal_list:
-                    rows.append(RowClass(self.object.proposal, field))
-                elif field in study_list:
-                    rows.append(RowClass(self.object.study, field))
-                else:
-                    rows.append(RowClass(self.object, field))
+        rows = {row.verbose_name: row.value for row in rows}
     
         return rows
     
@@ -1090,4 +1099,89 @@ def create_context_diff(context, p_proposal, proposal):
 
     return context
 
+def create_context_diff_alt(context, p_p, p):
+    '''A function to create the context for the diff page.'''
+    '''I am using 'p' as a shorthand for proposal and 'p_p' for parent proposal
+    to cut down on the verbosity here ...'''
+
+    both_ps = (p_p, p)
+
+    sections = []
+
+    sections.append(DiffSection([GeneralSection(p) for p in both_ps]))
+    sections.append(DiffSection([WMOSection(p.wmo) for p in both_ps]))
+
+    if p.wmo.status != p.wmo.NO_WMO or p_p.wmo.status != p_p.wmo.NO_WMO:
+        sections.append(DiffSection([METCSection(p.wmo) for p in both_ps]))
+    
+    sections.append(DiffSection([TrajectoriesSection(p) for p in both_ps]))
+
+    if p.wmo.status == p.wmo.NO_WMO or p.wmo.status == p.wmo.JUDGED:
+
+        for p_study, study in zip_equalize_lists(p_p.study_set.all(), p.study_set.all()):
+
+            both_studies = (p_study, study)
+
+            sections.append(DiffSection([StudySectionDiff(s) for s in both_studies]))
+
+            if p_study is not None and p_study.has_intervention or \
+                study is not None and study.has_intervention:
+
+
+                interventions = tuple((study.intervention if study is not None \
+                                       else study for study in both_studies))
+                
+                sections.append(DiffSection([InterventionSection(i) for i in interventions]))
+
+            if p_study is not None and p_study.has_observation or \
+                study is not None and study.has_observation:
+
+                observations = tuple((study.observation if study is not None \
+                                       else study for study in both_studies))
+                
+                sections.append(DiffSection([ObservationSection(o) for o in observations]))
+
+            if p_study is not None and p_study.has_sessions or \
+                study is not None and study.has_sessions:
+
+                sections.append(DiffSection([SessionsOverviewSection(s) for s in both_studies]))
+
+                p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
+                                       else study for study in both_studies))
+                
+                for both_sessions in zip_equalize_lists(p_sessions_set, sessions_set):
+
+                    sections.append(DiffSection([SessionSection(s) for s in both_sessions]))
+
+                    p_tasks_set, tasks_set = tuple((session.task_set.all() if session is not None \
+                                       else session for session in both_sessions))
+                    
+                    for both_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
+
+                        sections.append(DiffSection([TaskSectionDiff(t) for t in both_tasks]))
+
+                sections.append(DiffSection([TasksOverviewSection(s) for s in both_sessions]))
+
+            sections.append(DiffSection([StudyOverviewSection(s) for s in both_studies]))
+
+            both_documents = tuple(study.documents if study is not None \
+                              else study for study in both_studies)
+            
+            sections.append(DiffSection([InformedConsentFormsSection(d) for d in both_documents]))
+
+        p_extra_docs = get_extra_documents(p_p)
+        extra_docs = get_extra_documents(p)
+
+        if p_extra_docs or extra_docs:
+            for count, zipped_extra_docs in enumerate(zip_equalize_lists(p_extra_docs, extra_docs)):
+                sections.append(DiffSection([ExtraDocumentsSection(extra_doc, count) for extra_doc in zipped_extra_docs]))
+
+        if p_p.dmp_file or p.dmp_file:
+            sections.append(DiffSection([DMPFileSection(p) for p in both_ps]))
+            
+        sections.append(DiffSection([EmbargoSection(p) for p in both_ps]))
+
+    context['sections'] = sections
+
+    return context
 
