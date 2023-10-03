@@ -74,16 +74,20 @@ class DiffSection:
                 )
                 self.missing_object = 0
                 self.study_title = self.objects[1].study_title
+                self.section_title = self.objects[1].section_title
             else:
                 self.warning = _(
                 "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
             )
                 self.missing_object = 1
                 self.study_title = self.objects[0].study_title
+                self.section_title = self.objects[0].section_title
+
         else:
             self.warning = None
             self.missing_object = None
             self.study_title = self.objects[0].study_title
+            self.section_title = self.objects[0].section_title
         self.rows = self.make_diff_rows()
 
     def make_diff_rows(self):
@@ -134,9 +138,10 @@ class DiffSection:
                     "study_title": self.study_title,
                 }
             )
+
         context.update(
             {
-                "section_title": self.objects[0].section_title,
+                "section_title": self.section_title,
                 "rows": self.rows
             }
         )
