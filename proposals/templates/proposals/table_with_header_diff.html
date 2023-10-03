@@ -14,8 +14,9 @@
         <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
     </tr>
 {% if warning %}
+    {% for row in rows|slice:":1"%}
     <tr class="diff-ignore">
-        <th>{{ rows_keys_list.0 }}</th>
+        <th>{{ row.verbose_name }}</th>
         {# If the first object is missing, place a warning on the first TD #}
         {% if missing_object == 0 %}
             <td rowspan='{{rows|length}}'>
@@ -23,10 +24,10 @@
                     {{ warning }}
                 </div>
             </td>
-            <td>{{rows.rows_keys_list.0 }}</td>
+            <td>{{ row.value }}</td>
         {# Otherwise, we're missing the second one, thus we place the warning on the second #}
         {% elif missing_object == 1 %}
-            <td>{{rows.rows_keys_list.0 }}</td>
+            <td>{{ row.value }}</td>
             <td rowspan='{{rows|length}}'>
                 <div class='warning'>
                     {{ warning }}
@@ -34,15 +35,16 @@
             </td>
         {% endif %}
     </tr>
-    {%for row_key in rows_keys_list|slice:"1:"%}
+    {% endfor %}
+    {%for row in rows|slice:"1:"%}
     <tr class="diff-ignore">
-        <th>{{row_key}}</th><td>{{rows.row_key}}</td>
+        <th>{{row.verbose_name}}</th><td>{{row.value}}</td>
     </tr>
     {% endfor %}
 {% else %}
-    {% for verbose_name, values in rows.items %}
+    {% for row in rows %}
         <tr>
-            <th>{{ verbose_name }}</th><td>{{ values.0 }}</td><td>{{ values.1 }}</td>
+            <th>{{ row.0 }}</th><td>{{ row.1 }}</td><td>{{ row.2 }}</td>
         </tr>
     {% endfor %}
 {% endif %}

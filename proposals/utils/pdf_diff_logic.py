@@ -37,7 +37,6 @@ class BaseSection:
     def make_rows(self):   
 
         rows = [RowClass(self.object, field) for field in self.get_row_fields()]
-        rows = {row.verbose_name: row.value for row in rows}
 
         return rows
     
@@ -88,32 +87,35 @@ class DiffSection:
         self.rows = self.make_diff_rows()
 
     def make_diff_rows(self):
+        '''This function generates a nested list, where each sublist contains:
+        [verbose_name, value_1, value_2]'''
             
-        if self.missing_object == 0:
-            diff_dict = self.objects[1].make_rows()
-        if self.missing_object == 1:
-            diff_dict = self.object[0].make_rows()
+        if self.warning is not None:            
+            if self.missing_object == 0:
+                diff_dict = self.objects[1].make_rows()
+            else:
+                diff_dict = self.objects[0].make_rows()
+            return diff_dict
         else:
-            initial_rows_dicts = [object.make_rows() for object in self.objects]
+            initial_rows_dicts = [{row.verbose_name(): row.value() for row in object.make_rows()}  
+                                  for object in self.objects]
+
 
             #creating a list containing all fields in all objects
             all_fields = list(initial_rows_dicts[0].keys())
             for rows_dict in initial_rows_dicts[1:]:
                 all_fields.extend(field for field in rows_dict.keys() if field not in all_fields)
 
-            diff_dict = {}
-
-            for field in all_fields:
-                diff_dict[field] = []
+            diff_list = [[field] for field in all_fields]
 
             for rows_dict in initial_rows_dicts:
-                for field in all_fields:
-                    if field in rows_dict:
-                        diff_dict[field].append(rows_dict[field])
+                for field in diff_list:
+                    if field[0] in rows_dict:
+                        field.append(rows_dict[field[0]])
                     else:
-                        diff_dict[field].append('')
+                        field.append('')
 
-        return diff_dict
+        return diff_list
 
     def render(self, context):
         context = context.flatten()
@@ -135,8 +137,7 @@ class DiffSection:
         context.update(
             {
                 "section_title": self.objects[0].section_title,
-                "rows": self.rows,
-                "rows_keys_list": list(self.rows)
+                "rows": self.rows
             }
         )
         return template.render(context)
@@ -261,9 +262,9 @@ class StudyTitleClass:
         elif study_title_type == 'task':
             self.study_title = self.get_task_title(object)
         elif study_title_type == 'task_overview':
-            self.study_title == _('Overzicht van het takenonderzoek')
+            self.study_title = _('Overzicht van het takenonderzoek')
         else:
-            self.study_title == None
+            self.study_title = None
         
     def get_study_title(self, study):
 
@@ -850,8 +851,6 @@ class InformedConsentFormsSection(BaseSection):
                 rows.append(RowClass(self.object.study, field))
             else:
                 rows.append(RowClass(self.object, field))
-
-        rows = {row.verbose_name: row.value for row in rows}
     
         return rows
     
@@ -987,91 +986,7 @@ def create_context_pdf(context, model):
     
     return context
 
-# def create_context_diff(context, p_proposal, proposal):
-#     '''A function to create the context for the diff page.'''
-
-#     both_proposals = (p_proposal, proposal)
-
-#     sections = []
-
-#     sections.append(GeneralSection(both_proposals))
-#     sections.append(WMOSection((p_proposal.wmo, proposal.wmo)))
-
-#     if proposal.wmo.status != proposal.wmo.NO_WMO or p_proposal.wmo.status != p_proposal.wmo.NO_WMO:
-#         sections.append(METCSection((p_proposal.wmo, proposal.wmo)))
-    
-#     sections.append(TrajectoriesSection(both_proposals))
-
-#     if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED:
-
-#         for p_study, study in zip_equalize_lists(p_proposal.study_set.all(), proposal.study_set.all()):
-
-#             diff_studies = (p_study, study)
-
-#             sections.append(StudySectionDiff((diff_studies)))
-
-#             if p_study is not None and p_study.has_intervention or \
-#                 study is not None and study.has_intervention:
-
-
-#                 interventions = tuple((study.intervention if study is not None \
-#                                        else study for study in diff_studies))
-                
-#                 sections.append(InterventionSectionDiff(interventions))
-
-#             if p_study is not None and p_study.has_observation or \
-#                 study is not None and study.has_observation:
-
-#                 observations = tuple((study.observation if study is not None \
-#                                        else study for study in diff_studies))
-                
-#                 sections.append(ObservationSectionDiff(observations))
-
-#             if p_study is not None and p_study.has_sessions or \
-#                 study is not None and study.has_sessions:
-
-#                 sections.append(SessionsOverviewSectionDiff(diff_studies))
-
-#                 p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
-#                                        else study for study in diff_studies))
-                
-#                 for diff_sessions in zip_equalize_lists(p_sessions_set, sessions_set):
-
-#                     sections.append(SessionSectionDiff(diff_sessions))
-
-#                     p_tasks_set, tasks_set = tuple((session.task_set.all() if session is not None \
-#                                        else session for session in diff_sessions))
-                    
-#                     for diff_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
-
-#                         sections.append(TaskSectionDiff(diff_tasks))
-
-#                 sections.append(TasksOverviewSectionDiff(diff_sessions))
-
-#             sections.append(StudyOverviewSectionDiff(diff_studies))
-
-#             documents = tuple(study.documents if study is not None \
-#                               else study for study in diff_studies)
-            
-#             sections.append(InformedConsentSectionDiff(documents))
-
-#         p_extra_docs = get_extra_documents(p_proposal)
-#         extra_docs = get_extra_documents(proposal)
-
-#         if p_extra_docs or extra_docs:
-#             for count, zipped_extra_docs in enumerate(zip_equalize_lists(p_extra_docs, extra_docs)):
-#                 sections.append(ExtraDocumentsSectionDiff(zipped_extra_docs, count))
-
-#         if p_proposal.dmp_file or proposal.dmp_file:
-#             sections.append(DMPFileSection(both_proposals))
-            
-#         sections.append(EmbargoSection(both_proposals))
-
-#     context['sections'] = sections
-
-#     return context
-
-def two_sections(section_type, list_of_objects, study_title_type = None):
+def multi_sections_missing_objects(section_type, list_of_objects, study_title_type = None):
     if study_title_type is None:
         return [section_type(obj) if obj is not None else obj for obj in list_of_objects]
     else:
@@ -1100,16 +1015,20 @@ def create_context_diff(context, p_p, p):
 
             both_studies = (p_study, study)
 
-            sections.append(DiffSection([StudySection(s) for s in both_studies]))
+            sections.append(DiffSection(multi_sections_missing_objects(StudySection, 
+                                                                       both_studies,
+                                                                       'study'
+                                                                       )))
 
             if p_study is not None and p_study.has_intervention or \
                 study is not None and study.has_intervention:
 
-
                 interventions = tuple((study.intervention if study is not None \
                                        else study for study in both_studies))
                 
-                sections.append(DiffSection([InterventionSection(i) for i in interventions]))
+                sections.append(DiffSection(multi_sections_missing_objects(InterventionSection,
+                                                                           interventions,
+                                                                           'study')))
 
             if p_study is not None and p_study.has_observation or \
                 study is not None and study.has_observation:
@@ -1117,46 +1036,60 @@ def create_context_diff(context, p_p, p):
                 observations = tuple((study.observation if study is not None \
                                        else study for study in both_studies))
                 
-                sections.append(DiffSection([ObservationSection(o) for o in observations]))
+                sections.append(DiffSection(multi_sections_missing_objects(ObservationSection,
+                                                                           observations,
+                                                                           'study')))
 
             if p_study is not None and p_study.has_sessions or \
                 study is not None and study.has_sessions:
 
-                sections.append(DiffSection([SessionsOverviewSection(s) for s in both_studies]))
+                sections.append(DiffSection(multi_sections_missing_objects(SessionsOverviewSection,
+                                                                           both_studies)))
 
                 p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
                                        else study for study in both_studies))
                 
                 for both_sessions in zip_equalize_lists(p_sessions_set, sessions_set):
 
-                    sections.append(DiffSection([SessionSection(s) for s in both_sessions]))
+                    sections.append(DiffSection(multi_sections_missing_objects(SessionSection,
+                                                                               both_sessions,
+                                                                               'session')))
 
                     p_tasks_set, tasks_set = tuple((session.task_set.all() if session is not None \
                                        else session for session in both_sessions))
                     
                     for both_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
-                        breakpoint()
 
-                        sections.append(DiffSection([TaskSection(t) for t in both_tasks]))
+                        sections.append(DiffSection(multi_sections_missing_objects(TaskSection,
+                                                                                   both_tasks,
+                                                                                   'task')))
 
-                sections.append(DiffSection([TasksOverviewSection(s) for s in both_sessions]))
+                sections.append(DiffSection(multi_sections_missing_objects(TasksOverviewSection,
+                                                                           both_sessions,
+                                                                           'task_overview')))
 
-            sections.append(DiffSection([StudyOverviewSection(s) for s in both_studies]))
+            sections.append(DiffSection(multi_sections_missing_objects(StudyOverviewSection,
+                                                                       both_studies,
+                                                                       'study')))
 
             both_documents = tuple(study.documents if study is not None \
                               else study for study in both_studies)
             
-            sections.append(DiffSection([InformedConsentFormsSection(d) for d in both_documents]))
+            sections.append(DiffSection(multi_sections_missing_objects(InformedConsentFormsSection,
+                                                                       both_documents)))
 
         p_extra_docs = get_extra_documents(p_p)
         extra_docs = get_extra_documents(p)
 
         if p_extra_docs or extra_docs:
             for count, zipped_extra_docs in enumerate(zip_equalize_lists(p_extra_docs, extra_docs)):
-                sections.append(DiffSection([ExtraDocumentsSection(extra_doc, count) for extra_doc in zipped_extra_docs]))
+                sections.append(DiffSection(multi_sections_missing_objects(ExtraDocumentsSection,
+                                                                           zipped_extra_docs,
+                                                                           count)))
 
         if p_p.dmp_file or p.dmp_file:
-            sections.append(DiffSection([DMPFileSection(p) for p in both_ps]))
+            sections.append(DiffSection(multi_sections_missing_objects(DMPFileSection,
+                                                                       both_ps)))
             
         sections.append(DiffSection([EmbargoSection(p) for p in both_ps]))
 
