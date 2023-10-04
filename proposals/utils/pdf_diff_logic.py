@@ -13,26 +13,28 @@ from proposals.templatetags.proposal_filters import needs_details, medical_trait
 necessity_required, has_adults
 from proposals.templatetags.diff_tags import zip_equalize_lists
 
-'''NOTE: As of now, the diff has no workaround for when observations or interventions are of a
-different version, in the different proposals.'''
-
 class BaseSection:
-    '''This is the main class, from which most classes are constructed.
-    It can take one object or two objects in a tuple, and produce html tables accordingly.
+    '''This is the main class, from which sections are constructed.
+    It receives one object, such as a proposal or sub-objects of proposals.
     The most important methods are render and make_rows. Make rows makes use of get_row_field,
-    which is mostly overwritten for specific sections.
-    If this class is used in the diff, object should be the parent object and object_2 the 
-    revision/amendment.'''
+    which gets overwritten for specific sections, if logic is involved.
+    For certain sections, there can be a sub-title, such as for studies or other cases.
+    These are produced in the get_sub_title method and require a specific string, based on
+    the type of sub-title required. The options are:
+    - 'study'
+    - 'session'
+    - 'task'
+    -'task_overview'
+
+    These arguments are passed in overwritten __init__() methods, when applicable.
+    '''
     
     section_title = None
     row_fields = None
 
-    def __init__(self, object, study_title_type = None):
+    def __init__(self, object):
         self.object = object
-        if study_title_type is None:
-            self.study_title = None
-        else:
-            self.study_title = self.get_study_title(self.object, study_title_type)
+        self.sub_title = None
 
     def make_rows(self):   
 
@@ -45,11 +47,11 @@ class BaseSection:
 
     def render(self, context):
         context = context.flatten()
-        template = get_template("proposals/table_with_header.html")
-        if self.study_title is not None:
+        template = get_template('proposals/table_with_header.html')
+        if self.sub_title is not None:
             context.update(
                 {
-                    "study_title": self.study_title
+                    "sub_title": self.sub_title
                 }
             )
         context.update(
@@ -60,10 +62,19 @@ class BaseSection:
         )
         return template.render(context)
     
-    def get_study_title(self, object, study_title_type):
-        return StudyTitleClass(object, study_title_type).study_title
+    def get_sub_title(self, object, sub_title_type):
+        return StudyTitleClass(object, sub_title_type).sub_title
 
 class DiffSection:
+    '''For the diff page, sections are constructed by comparing two section objects.
+    The DiffSection thus received an iterable containing two versions of a specific section,
+    for instance [GeneralSection(proposal), GeneralSection(p_proposal)]
+    It mostly uses the make_rows methods, but also some other class variables from these objects.
+    If a section is missing from a revision or an original proposal, this will be reperesented by
+    None, and a warning and some formatting info get passed to the template as well.
+    
+    Some parts of this were written with the idea of allowing more than two objects to be compared,
+    however, I did not end up pursuing this idea until the end.'''
 
     def __init__(self, objects):
         self.objects = objects
@@ -73,53 +84,56 @@ class DiffSection:
                 "Dit onderdeel is nieuw in de revisie en bestond niet in de originele aanvraag."
                 )
                 self.missing_object = 0
-                self.study_title = self.objects[1].study_title
+                self.sub_title = self.objects[1].sub_title
                 self.section_title = self.objects[1].section_title
             else:
                 self.warning = _(
                 "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
             )
                 self.missing_object = 1
-                self.study_title = self.objects[0].study_title
+                self.sub_title = self.objects[0].sub_title
                 self.section_title = self.objects[0].section_title
 
         else:
             self.warning = None
             self.missing_object = None
-            self.study_title = self.objects[0].study_title
+            self.sub_title = self.objects[0].sub_title
             self.section_title = self.objects[0].section_title
         self.rows = self.make_diff_rows()
 
     def make_diff_rows(self):
         '''This function generates a nested list, where each sublist contains:
-        [verbose_name, value_1, value_2]'''
+        [verbose_name, value_1, value_2] if both objects are present.'''
             
-        if self.warning is not None:            
+        if self.warning is not None:
+            '''If there is a missing object, the template can just use the make_rows function
+            of the object that is not missing.'''         
             if self.missing_object == 0:
-                diff_dict = self.objects[1].make_rows()
+                rows = self.objects[1].make_rows()
             else:
-                diff_dict = self.objects[0].make_rows()
-            return diff_dict
+                rows = self.objects[0].make_rows()
+            return rows
         else:
+            '''This is a bit clunky and could probably be improved. I designed it to be able to
+            process more than two objects, however, the rest of this class is not designed as such'''
             initial_rows_dicts = [{row.verbose_name(): row.value() for row in object.make_rows()}  
                                   for object in self.objects]
-
 
             #creating a list containing all fields in all objects
             all_fields = list(initial_rows_dicts[0].keys())
             for rows_dict in initial_rows_dicts[1:]:
                 all_fields.extend(field for field in rows_dict.keys() if field not in all_fields)
 
-            diff_list = [[field] for field in all_fields]
+            rows = [[field] for field in all_fields]
 
             for rows_dict in initial_rows_dicts:
-                for field in diff_list:
+                for field in rows:
                     if field[0] in rows_dict:
                         field.append(rows_dict[field[0]])
                     else:
                         field.append('')
 
-        return diff_list
+        return rows
 
     def render(self, context):
         context = context.flatten()
@@ -132,10 +146,10 @@ class DiffSection:
                     "missing_object": self.missing_object
                 }
             )
-        if self.study_title is not None:
+        if self.sub_title is not None:
             context.update(
                 {
-                    "study_title": self.study_title,
+                    "sub_title": self.sub_title,
                 }
             )
 
@@ -148,9 +162,10 @@ class DiffSection:
         return template.render(context)
     
 class RowClass:
-    '''This class creates rows for either one or two objects, and gets initated
+    '''This class creates rows for one objects, and gets initated
     in the make_rows method of Section classes. The classmethods of Rowclass
-    are called in the templates of the render method of the PDF class.'''
+    are called in the templates of the render method of the PDF class, as well as in 
+    the make_diff_rows() method of the DiffSectionClass'''
 
     verbose_name_diff_field_dict = {
         'get_metc_display': 'metc',
@@ -180,7 +195,7 @@ class RowClass:
 
 class RowValueClass:
     '''The RowValueClass manages the values of fields and correctly retrieves and/or formats
-    the right values per field. This class get initiated in the value and value_2 methods
+    the right values per field. This class get initiated in the value method
     of the RowClass. It returns mostly strings, but sometimes some html as well.'''
 
     def __init__(self, object, field):
@@ -258,18 +273,21 @@ class RowValueClass:
         return d[value]
     
 class StudyTitleClass:
+    '''This class can return a study title to the base section class,
+    according to the argument with which it is initiated. This argument gets passed
+    in overwritten __init__ methods of for instance, the StudySection class.'''
 
-    def __init__(self, object, study_title_type):
-        if study_title_type == 'study':
-            self.study_title = self.get_study_title(object)
-        elif study_title_type == 'session':
-            self.study_title = self.get_session_title(object)
-        elif study_title_type == 'task':
-            self.study_title = self.get_task_title(object)
-        elif study_title_type == 'task_overview':
-            self.study_title = _('Overzicht van het takenonderzoek')
+    def __init__(self, object, sub_title_type):
+        if sub_title_type == 'study':
+            self.sub_title = self.get_study_title(object)
+        elif sub_title_type == 'session':
+            self.sub_title = self.get_session_title(object)
+        elif sub_title_type == 'task':
+            self.sub_title = self.get_task_title(object)
+        elif sub_title_type == 'task_overview':
+            self.sub_title = _('Overzicht van het takenonderzoek')
         else:
-            self.study_title = None
+            self.sub_title = None
         
     def get_study_title(self, study):
 
@@ -355,7 +373,12 @@ class GeneralSection(BaseSection):
     '''This class generates the data for the general section of a proposal and showcases
     the general workflow for creating sections. All possible row fields are provided, and
     removed according to the logic in the get_row_fields method.
-    This class receives a proposal object.'''
+    This class receives a proposal object.
+    
+    This is one of two SectionClasses (the other being the CommentsSection) which overrides
+    the render method of the BaseSection class to allow for formatting certain values outside of 
+    a <table> element and in a <p> element. The implementation of this is slightly clunkily 
+    hardcoded as of now ... See the slicing in the render method.'''
 
     section_title = _("Algemene informatie over de aanvraag")
     row_fields = [
@@ -404,7 +427,22 @@ class GeneralSection(BaseSection):
 
         return rows
     
+    def render(self, context):
+        '''Note the special template for dealing with these cases.'''
+
+        context = context.flatten()
+        template = get_template('proposals/table_and_text_with_header.html')
+        rows = self.make_rows()
+        context.update(
+            {
+                "section_title": self.section_title,
+                "rows": rows[:-2],
+                "paragraph_rows": rows[-2:],
+            }
+        )
+        return template.render(context)    
 class PageBreakMixin(BaseSection):
+    '''A Mixin for adding page break formatting to a section.'''
 
     def render(self, context):
         context.update(
@@ -413,10 +451,10 @@ class PageBreakMixin(BaseSection):
             }
         )
         return super().render(context)
-
     
 class WMOSection(PageBreakMixin, BaseSection):
     '''This class receives a proposal.wmo object.'''
+
     section_title = _("Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?")
     row_fields = [
         'get_metc_display',
@@ -438,9 +476,8 @@ class WMOSection(PageBreakMixin, BaseSection):
         return rows
     
 class METCSection(PageBreakMixin, BaseSection):
-    '''This class receives a proposal.wmo object.
-    This class exists because the RowValueClass does some
-    funky things for working with the metc_decision_pdf field'''
+    '''This class receives a proposal.wmo object.'''
+
     section_title = _("Aanmelding bij de METC")
     
     row_fields = [
@@ -469,7 +506,9 @@ class TrajectoriesSection(PageBreakMixin, BaseSection):
         return rows
 
 class StudySection(BaseSection):
-    '''This class receives a proposal.study object.'''
+    '''This class receives a proposal.study object
+    Note the overwritten __init__ method for adding a sub_title.'''
+
     section_title = _('De deelnemers')
     row_fields = [
         'age_groups',
@@ -488,6 +527,10 @@ class StudySection(BaseSection):
         'hierarchy',
         'hierarchy_details',
     ]
+
+    def __init__(self, object):
+        super().__init__(object)
+        self.sub_title = self.get_sub_title(self.object, 'study')
 
     def get_row_fields(self):
         rows = copy(self.row_fields)
@@ -519,63 +562,9 @@ class StudySection(BaseSection):
 
         return rows
 
-#NOTE: When implementing the v1 and v2 versions I found that I preferred the old method
-#for dealing with the different versions. 
-'''
-class BaseInterventionSection:
-
-    section_title = _('Het interventieonderzoek')
-    row_fields = [
-        'setting',
-        'setting_details',
-        'supervision',
-        'leader_has_coc',
-        'period',
-        'duration',
-        'measurement',
-        'experimenter',
-        'description',
-        'has_controls',
-        'controls_description'
-    ]
-
-    def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.object
-
-        if not needs_details(obj.setting.all()):
-            rows.remove('setting_details')
-        if not obj.study.has_children() or \
-        not needs_details(obj.setting.all(), 'needs_supervision'):
-            rows.remove('supervision')
-            rows.remove('leader_has_coc')
-        elif obj.supervision:
-            rows.remove('leader_has_coc')
-        if not obj.has_controls:
-            rows.remove('controls_description')   
-
-        return rows
-
-class InterventionSectionV1(BaseInterventionSection):
-
-    def __init__(self, object):
-        super().__init__(object)
-        self.row_fields = super().get_row_fields(object)
-        self.row_fields[5:5] = ['multiple_sessions', 'session_frequency']
-        self.row_fields.append('extra_task')
-    
-class InterventionSectionV2(BaseInterventionSection):
-
-    def __init__(self, object):
-        super().__init__(object)
-        self.row_fields = super().get_row_fields(object)
-        self.row_fields[5:5] = ['multiple_sessions', 'session_frequency']
-        self.row_fields.append('extra_task')
-'''
-
-
 class InterventionSection(BaseSection):
     '''This class receives an intervention object'''
+
     section_title = _('Het interventieonderzoek')
     row_fields = [
         'setting',
@@ -594,6 +583,10 @@ class InterventionSection(BaseSection):
         'controls_description',
         'extra_task'
     ]
+
+    def __init__(self, object):
+        super().__init__(object)
+        self.sub_title = self.get_sub_title(self.object, 'study')
 
     def get_row_fields(self):
         rows = copy(self.row_fields)
@@ -626,9 +619,8 @@ class InterventionSection(BaseSection):
         return rows
 
 class ObservationSection(BaseSection):
-    '''This class receives an observation object
-    It inherits from the InterventionSection, as it can repurpose the same overridden
-    render method.'''
+    '''This class receives an observation object'''
+
     section_title = _('Het observatieonderzoek')
     row_fields = [
         'setting',
@@ -654,6 +646,10 @@ class ObservationSection(BaseSection):
         'registrations',
         'registrations_details'        
     ]
+
+    def __init__(self, object):
+        super().__init__(object)
+        self.sub_title = self.get_sub_title(self.object, 'study')
 
     def get_row_fields(self):
         rows = copy(self.row_fields)
@@ -711,9 +707,7 @@ class ObservationSection(BaseSection):
         return rows
 
 class SessionsOverviewSection(BaseSection):
-    '''This class receives an study object
-    This Section looks maybe a bit unnecessary, but it does remove some logic, plus
-    the study_title.html from the template.'''
+    '''This class receives an study object'''
 
     section_title = _("Het takenonderzoek en interviews")
 
@@ -729,6 +723,10 @@ class SessionSection(BaseSection):
         'leader_has_coc',
         'tasks_number',       
     ]
+
+    def __init__(self, object):
+        super().__init__(object)
+        self.sub_title = self.get_sub_title(self.object, 'session')
 
     def get_row_fields(self):
         rows = copy(self.row_fields)
@@ -746,7 +744,7 @@ class SessionSection(BaseSection):
         return rows
     
 class TaskSection(BaseSection):
-    '''This class receives an task object'''
+    '''This class receives a task object'''
     
     row_fields = [
         'name',
@@ -759,6 +757,10 @@ class TaskSection(BaseSection):
         'feedback_details',
         'description'
     ]
+
+    def __init__(self, object):
+        super().__init__(object)
+        self.sub_title = self.get_sub_title(self.object, 'task')
 
     def get_row_fields(self):
         rows = copy(self.row_fields)
@@ -778,14 +780,15 @@ class TaskSection(BaseSection):
         return rows
     
 class TasksOverviewSection(BaseSection):
-    '''Gets passed a session object
-    This might be unecessary ... Maybe just use the existing template language ...
-    Because the verbose name of this field is formatted, the method for retrieving
-    the verbose name in the RowClass is quite convoluded.'''
+    '''Gets passed a session object'''
 
     row_fields = [
         'tasks_duration'
     ]
+
+    def __init__(self, object):
+        super().__init__(object)
+        self.sub_title = self.get_sub_title(self.object, 'task_overview')
     
 class StudyOverviewSection(BaseSection):
     '''This class receives a Study object.'''
@@ -801,6 +804,10 @@ class StudyOverviewSection(BaseSection):
         'risk',
         'risk_details'
     ]
+
+    def __init__(self, object):
+        super().__init__(object)
+        self.sub_title = self.get_sub_title(self.object, 'study')
 
     def get_row_fields(self):
         rows = copy(self.row_fields)
@@ -931,7 +938,29 @@ class EmbargoSection(BaseSection):
             rows.remove('embargo_end_date')
 
         return rows
-    
+
+class CommentsSection(BaseSection):
+    '''Gets passed a proposal object.'''
+
+    section_title = _('Ruimte voor eventuele opmerkingen')
+
+    row_fields = [
+        'comments'
+    ]
+
+    def render(self, context):
+        context = context.flatten()
+        template = get_template('proposals/table_and_text_with_header.html')
+        rows = self.make_rows()
+        context.update(
+            {
+                "section_title": self.section_title,
+                "rows": [],
+                "paragraph_rows": rows,
+            }
+        )
+        return template.render(context)    
+
 def get_extra_documents(object):
     '''A function to retrieve all extra documents for a specific proposal.'''
     from studies.models import Documents
@@ -947,7 +976,7 @@ def get_extra_documents(object):
     return extra_documents
     
 def create_context_pdf(context, model):
-    '''A function to create the context for the PDF.'''
+    '''A function to create the context for the PDF, which gets called in the ProposalAsPdf view.'''
 
     sections = []
 
@@ -962,19 +991,19 @@ def create_context_pdf(context, model):
     if model.wmo.status == model.wmo.NO_WMO:
 
         for study in model.study_set.all():
-            sections.append(StudySection(study, 'study'))
+            sections.append(StudySection(study))
             if study.has_intervention:
-                sections.append(InterventionSection(study.intervention, 'study'))
+                sections.append(InterventionSection(study.intervention))
             if study.has_observation:
-                sections.append(ObservationSection(study.observation, 'study'))
+                sections.append(ObservationSection(study.observation))
             if study.has_sessions:
                 sections.append(SessionsOverviewSection(study))
                 for session in study.session_set.all():
-                    sections.append(SessionSection(session, 'session'))
+                    sections.append(SessionSection(session))
                     for task in session.task_set.all():
-                        sections.append(TaskSection(task, 'task'))
-                sections.append(TasksOverviewSection(session, 'task_overview'))
-            sections.append(StudyOverviewSection(study, 'study'))
+                        sections.append(TaskSection(task))
+                sections.append(TasksOverviewSection(session))
+            sections.append(StudyOverviewSection(study))
             sections.append(InformedConsentFormsSection(study.documents))
 
         extra_documents = get_extra_documents(model)
@@ -986,23 +1015,29 @@ def create_context_pdf(context, model):
             sections.append(DMPFileSection(model))
             
         sections.append(EmbargoSection(model))
+        sections.append(CommentsSection(model))
 
     context['sections'] = sections
     
     return context
 
-def multi_sections_missing_objects(section_type, list_of_objects, study_title_type = None):
-    if study_title_type is None:
+def multi_sections_missing_objects(section_type, list_of_objects, count = None):
+    '''A function that creates a list of sections of a specified type, from a list of
+    objects, where it is possible for an object, such as a study, to be missing.
+    Gets called in the create context diff.'''
+    if count is None:
         return [section_type(obj) if obj is not None else obj for obj in list_of_objects]
     else:
-        return [section_type(obj, study_title_type) if obj is not None else obj for obj in list_of_objects]
+        return [section_type(obj, count) if obj is not None else obj for obj in list_of_objects]
 
 def create_context_diff(context, p_p, p):
-    '''A function to create the context for the diff page.'''
-    '''I am using 'p' as a shorthand for proposal and 'p_p' for parent proposal
+    '''A function to create the context for the diff page which gets 
+    called in the ProposalDifference view.
+    It gets a little crazy with the list comprehensions, but it works, i guess ...
+    I am using 'p' as a shorthand for proposal and 'p_p' for parent proposal
     to cut down on the verbosity here ...'''
 
-    both_ps = (p_p, p)
+    both_ps = [p_p, p]
 
     sections = []
 
@@ -1018,32 +1053,28 @@ def create_context_diff(context, p_p, p):
 
         for p_study, study in zip_equalize_lists(p_p.study_set.all(), p.study_set.all()):
 
-            both_studies = (p_study, study)
+            both_studies = [p_study, study]
 
             sections.append(DiffSection(multi_sections_missing_objects(StudySection, 
-                                                                       both_studies,
-                                                                       'study'
-                                                                       )))
+                                                                       both_studies)))
 
             if p_study is not None and p_study.has_intervention or \
                 study is not None and study.has_intervention:
 
-                interventions = tuple((study.intervention if study is not None \
-                                       else study for study in both_studies))
+                interventions = [study.intervention if study is not None
+                                 else study for study in both_studies]
                 
                 sections.append(DiffSection(multi_sections_missing_objects(InterventionSection,
-                                                                           interventions,
-                                                                           'study')))
+                                                                           interventions)))
 
             if p_study is not None and p_study.has_observation or \
                 study is not None and study.has_observation:
 
-                observations = tuple((study.observation if study is not None \
-                                       else study for study in both_studies))
+                observations = [study.observation if study is not None
+                                 else study for study in both_studies]
                 
                 sections.append(DiffSection(multi_sections_missing_objects(ObservationSection,
-                                                                           observations,
-                                                                           'study')))
+                                                                           observations)))
 
             if p_study is not None and p_study.has_sessions or \
                 study is not None and study.has_sessions:
@@ -1051,34 +1082,30 @@ def create_context_diff(context, p_p, p):
                 sections.append(DiffSection(multi_sections_missing_objects(SessionsOverviewSection,
                                                                            both_studies)))
 
-                p_sessions_set, sessions_set = tuple((study.session_set.all() if study is not None \
-                                       else study for study in both_studies))
+                p_sessions_set, sessions_set = [study.session_set.all() if study is not None
+                                                else study for study in both_studies]
                 
                 for both_sessions in zip_equalize_lists(p_sessions_set, sessions_set):
 
                     sections.append(DiffSection(multi_sections_missing_objects(SessionSection,
-                                                                               both_sessions,
-                                                                               'session')))
+                                                                               both_sessions)))
 
-                    p_tasks_set, tasks_set = tuple((session.task_set.all() if session is not None \
-                                       else session for session in both_sessions))
+                    p_tasks_set, tasks_set = [session.task_set.all() if session is not None
+                                              else session for session in both_sessions]
                     
                     for both_tasks in zip_equalize_lists(p_tasks_set, tasks_set):
 
                         sections.append(DiffSection(multi_sections_missing_objects(TaskSection,
-                                                                                   both_tasks,
-                                                                                   'task')))
+                                                                                   both_tasks)))
 
                 sections.append(DiffSection(multi_sections_missing_objects(TasksOverviewSection,
-                                                                           both_sessions,
-                                                                           'task_overview')))
+                                                                           both_sessions)))
 
             sections.append(DiffSection(multi_sections_missing_objects(StudyOverviewSection,
-                                                                       both_studies,
-                                                                       'study')))
+                                                                       both_studies)))
 
-            both_documents = tuple(study.documents if study is not None \
-                              else study for study in both_studies)
+            both_documents = [study.documents if study is not None 
+                              else study for study in both_studies]
             
             sections.append(DiffSection(multi_sections_missing_objects(InformedConsentFormsSection,
                                                                        both_documents)))
@@ -1097,6 +1124,7 @@ def create_context_diff(context, p_p, p):
                                                                        both_ps)))
             
         sections.append(DiffSection([EmbargoSection(p) for p in both_ps]))
+        sections.append(DiffSection([CommentsSection(p) for p in both_ps]))
 
     context['sections'] = sections
 

@@ -53,20 +53,6 @@
                 {% for section in sections %}
                     {% include section %}
                 {% endfor %}
-                    
-                <h2 class="mt-5 mb-1">{% trans "Ruimte voor eventuele opmerkingen" %}</h2>
-                <table class="proposals-diff ">
-                    <tr>
-                        <th class="proposals-diff-question"></th>
-                        <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
-                        <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "comments" %}</th>
-                        <td>{{ p_proposal.comments }}</td>
-                        <td>{{ proposal.comments }}</td>
-                    </tr>
-                </table>
 
             <p class="mt-5 float-right">
                 <button class="button" onclick="window.history.back();">

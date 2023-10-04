@@ -15,3 +15,6 @@
 </tr>
 {% endfor %}
 </table>
+{% for row in paragraph_rows %}
+<h3>{{ row.verbose_name }}</h3><p>{{ row.value }}</p>
+{% endfor%}
