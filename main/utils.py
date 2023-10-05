@@ -149,3 +149,11 @@ def get_document_contents(file: FieldFile) -> str:
             return docx2txt.process(f)
 
     return "No text found"
+
+
+def is_member_of_faculty(user, faculty):
+    return user.faculties.filter(saml_name=faculty).exists()
+
+
+def is_member_of_humanities(user):
+    return is_member_of_faculty(user, settings.FACULTY_HUMANITIES)

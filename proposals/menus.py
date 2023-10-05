@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from menu import Menu, MenuItem
 
-from main.utils import is_secretary
+from main.utils import is_member_of_humanities, is_secretary
 
 new_proposal_menu = (
     MenuItem(
@@ -89,10 +89,12 @@ archive_menu = (
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Algemene Kamer"),
         reverse("proposals:archive", args=['AK']),
+        check=lambda x: is_member_of_humanities(x.user),
     ),
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Linguïstiek Kamer"),
         reverse("proposals:archive", args=['LK']),
+        check=lambda x: is_member_of_humanities(x.user),
     ),
     MenuItem(
         _("Site-export"),
@@ -109,6 +111,6 @@ Menu.add_item(
         "#",
         slug='archive',  # needed for sub-menu!
         children=archive_menu,
-        check=lambda x: x.user.is_authenticated,
+        check=lambda x: x.user.is_authenticated and is_member_of_humanities(x.user),
     )
 )

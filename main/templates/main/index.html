@@ -11,6 +11,38 @@
     <div class="coverimage">
         <img src="{% static 'main/images/coverimage-summer_Kim_Oleary.jpg' %}" />
     </div>
+    {% if not is_humanities %}
+        <div class="uu-inner-container mt-1">
+            <div class="col-12 alert alert-warning text-body">
+                <p>
+                    {% blocktrans trimmed %}
+                        Deze portal is bedoeld voor medewerkers (en studenten) van de Faculteit Geesteswetenschappen.
+                    {% endblocktrans %}
+
+                    {% if user.faculties.all %}
+                        {# Filters do not like blocktrans, so that value is just outside... #}
+                        {% blocktrans trimmed %}
+                            Volgens onze gegevens werk/studeer je bij de
+                        {% endblocktrans %}
+                        {{ user.faculties.all|join:',' }}.
+                    {% else %}
+                        {% blocktrans trimmed %}
+                            Volgens onze gegevens werk/studeer je bij een andere faculteit of dienst.
+                        {% endblocktrans %}
+                    {% endif %}
+
+                    {% blocktrans trimmed %}
+                        Controleer of je inderdaad een aanvraag wilt indienen bij de Facultaire Ethische Toetsingscommissie van Geesteswetenschappen.
+                    {% endblocktrans %}
+                </p>
+                <p class="mb-0">
+                    {% blocktrans trimmed %}
+                        Als je vermoed dat dit incorrect is, neem dan contact op met <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
+                    {% endblocktrans %}
+                </p>
+            </div>
+        </div>
+    {% endif %}
     <div class="uu-inner-container mt-1">
         <div class="col-12">
             {% for message in systemmessage_list %}

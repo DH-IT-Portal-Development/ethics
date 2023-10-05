@@ -1,3 +1,5 @@
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -98,3 +100,61 @@ van de leraar of een ander persoon die bevoegd is?'),
     def settings_requires_review(self):
         """If the current settings contain any that requires review"""
         return self.setting.filter(requires_review=True)
+
+
+class Faculty(models.Model):
+
+    name = models.CharField(max_length=255)
+
+    # This should be the same as the Dutch name, but we store it separately
+    # to allow us to edit `name` freely
+    saml_name = models.CharField(
+        max_length=255,
+    )
+
+    users = models.ManyToManyField(
+        get_user_model(),
+        related_name='faculties'
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class SamlUserProxy(User):
+    """This special proxy model is used to process attributes from SAML
+    It's not a replacement User model. It may be used elsewhere in code, but
+    why would you?
+    """
+    class Meta:
+        proxy = True
+
+    def process_faculties(self, faculties):
+        """Receives a list of faculties of the user and couples them to the
+        relevant Faculty. Also creates a new Faculty for not-yet-know
+        faculties.
+        """
+        for faculty in faculties:
+            # Ignore empty values
+            if not faculty:
+                continue
+
+            # We should manually maintain some ourselves, but this allows
+            # some auto-population
+            if not Faculty.objects.filter(saml_name=faculty).exists():
+                Faculty.objects.create(
+                    saml_name=faculty,
+                    name_nl=faculty,  # SAML gives us the Dutch names
+                )
+
+            try:
+                faculty_obj = Faculty.objects.get(saml_name=faculty)
+
+                # Don't re-add.
+                if faculty_obj.users.filter(pk=self.pk).exists():
+                    continue
+
+                faculty_obj.users.add(self)
+            except:
+                # Just ignore any errors...
+                continue

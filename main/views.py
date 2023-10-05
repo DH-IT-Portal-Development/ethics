@@ -25,7 +25,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 
 from interventions.models import Intervention
-from main.models import SystemMessage
+from main.models import Faculty, SystemMessage
+from main.utils import is_member_of_humanities
 from observations.models import Observation
 from proposals.models import Proposal
 from reviews.models import Review
@@ -65,6 +66,12 @@ class HomeView(LoginRequiredMixin, _SystemMessageView):
 
         return HttpResponseRedirect(f"{resolved_url}?next=/")
 
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['is_humanities'] = is_member_of_humanities(self.request.user)
+
+        return context
 
 class LandingView(_SystemMessageView):
     template_name = 'main/landing.html'
@@ -284,6 +291,50 @@ class AllowErrorsOnBackbuttonMixin(object):
             return HttpResponseRedirect(self.get_back_url())
         else:
             return super(AllowErrorsOnBackbuttonMixin, self).form_invalid(form)
+
+
+class FacultyRequiredMixin:
+    """A clone of GroupRequiredMixin, but checking faculties instead"""
+    faculty_required = None
+
+    def get_faculty_required(self):
+        if self.faculty_required is None or (
+            not isinstance(self.faculty_required, (list, tuple, str))
+        ):
+
+            raise ImproperlyConfigured(
+                '{0} requires the "faculty_required" attribute to be set and be '
+                "one of the following types: string, unicode, list or "
+                "tuple".format(self.__class__.__name__)
+            )
+        if not isinstance(self.faculty_required, (list, tuple)):
+            self.faculty_required = (self.faculty_required,)
+        return self.faculty_required
+
+    def check_membership(self, faculty):
+        """Check required faculty(ies)"""
+        user_faculties = self.request.user.faculties.values_list(
+            "saml_name",
+            flat=True
+        )
+        return set(faculty).intersection(set(user_faculties))
+
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        in_faculty = False
+        if request.user.is_authenticated:
+            in_faculty = self.check_membership(self.get_faculty_required())
+
+        if not in_faculty:
+            return self.handle_no_permission(request)
+
+        return super().dispatch(
+            request, *args, **kwargs
+        )
+
+
+class HumanitiesRequiredMixin(FacultyRequiredMixin):
+    faculty_required = settings.FACULTY_HUMANITIES
 
 
 class UserAllowedMixin(SingleObjectMixin):

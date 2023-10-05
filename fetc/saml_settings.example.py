@@ -36,8 +36,7 @@ SAML_ATTRIBUTE_MAPPING = {
     'mail':     ('email',),
     'givenName': ('first_name',),
     'uuPrefixedSn':  ('last_name',),
-    # TODO: create an attribute on the user model to store this value
-    # 'uuLegacyDepartment':  (),
+    'uuLegacyDepartment':  ('process_faculty', ),
 }
 
 # Controls which mechanism is used to exchange SAML data with the IdP
