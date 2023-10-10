@@ -18,7 +18,7 @@
     <tr class="diff-ignore">
         <th>{{ row.verbose_name }}</th>
         {# If the first object is missing, place a warning on the first TD #}
-        {% if missing_object == 0 %}
+        {% if missing_object == 'old' %}
             <td rowspan='{{rows|length}}'>
                 <div class='warning'>
                     {{ warning }}
@@ -26,7 +26,7 @@
             </td>
             <td>{{ row.value }}</td>
         {# Otherwise, we're missing the second one, thus we place the warning on the second #}
-        {% elif missing_object == 1 %}
+        {% elif missing_object == 'new' %}
             <td>{{ row.value }}</td>
             <td rowspan='{{rows|length}}'>
                 <div class='warning'>
@@ -44,7 +44,7 @@
 {% else %}
     {% for row in rows %}
         <tr>
-            <th>{{ row.0 }}</th><td>{{ row.1 }}</td><td>{{ row.2 }}</td>
+            <th>{{ row.verbose_name }}</th><td>{{ row.value.0 }}</td><td>{{ row.value.1 }}</td>
         </tr>
     {% endfor %}
 {% endif %}

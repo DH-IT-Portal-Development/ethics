@@ -14,10 +14,6 @@
 {% block html_head %}
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
     <script>
-        // The new implementation causes some issues with the js, 
-        // - The loading icon does not go away sometimes.
-        // - The colors appear for the first instance of a missing section warning,
-        //   which is kindoff ugly.
         $(function () {
             // Color changes between proposals
             $('tr:not(.diff-ignore) td:nth-child(2)').each(function () {
