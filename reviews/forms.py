@@ -6,6 +6,9 @@ from main.forms import ConditionalModelForm
 from main.utils import YES_NO, get_reviewers_from_groups, is_secretary
 from proposals.models import Proposal
 from .models import Review, Decision
+from datetime import date, timedelta
+
+from cdh.core.forms import DateField
 
 from django.core.exceptions import ValidationError
 
@@ -145,3 +148,8 @@ class DecisionForm(forms.ModelForm):
         self.fields['go'].empty_label = None
         self.fields['go'].choices = Decision.APPROVAL
         self.fields['go'].required = True
+
+class StartEndDateForm(forms.Form):
+    
+    start_date = DateField(label=_('Start datum'), initial=date.today() - timedelta(days=365))
+

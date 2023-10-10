@@ -14,7 +14,7 @@ from django.db.models import Q, Count
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
 from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
-                    ChangeChamberForm, ReviewDiscontinueForm)
+                    ChangeChamberForm, ReviewDiscontinueForm, StartEndDateForm)
 from .mixins import (AutoReviewMixin, UserAllowedMixin,
                      CommitteeMixin,
                      UsersOrGroupsAllowedMixin)
@@ -80,10 +80,29 @@ class DecisionOpenView(BaseDecisionListView):
         return context
     
 
-class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
+class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.FormView):
     
     template_name = 'reviews/committee_members_workload.html'
     group_required = [settings.GROUP_SECRETARY]
+    form_class = StartEndDateForm
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.default_start_date = date.today()
+        self.start_date = self.get_initial()['start_date']
+
+    def get_initial(self):
+        """
+        Returns the initial data to use for forms on this view.
+        """
+        initial = super().get_initial()
+
+        if hasattr(self, 'request'):
+            initial['start_date'] = self.request.GET.get('start_date')
+        else:
+            initial['start_date'] = self.default_start_date
+
+        return initial
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -94,32 +113,45 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
 
         return context
 
-    def get_all_open_decisions(self):
-        '''Returns a queryset with all open decisions'''
+    def get_committee_decisions(self):
 
-        objects = Decision.objects.filter(
-            # This fetches all Decisions which are not approved or need revision
-            go__exact = '',
-            review__proposal__reviewing_committee = self.committee,
-            ).select_related(
+        decisions = Decision.objects.filter(
+            review__proposal__reviewing_committee = self.committee
+        ).select_related(
             'reviewer',
             'review',
             'review__proposal',
+        )
+        return decisions
+
+    def get_all_open_decisions(self):
+        '''Returns a queryset with all open decisions'''
+
+        open_decisions = self.get_committee_decisions().filter(
+            review__stage = Review.COMMISSION,
             ).order_by(
             "reviewer",
             "review__date_start"
             )
 
-        return objects
+        return open_decisions
+    
+    def get_start_date(self):
+        if 'start_date' in self.request.GET.keys():
+            return self.request.GET.get('start_date')
+        else:
+            return self.start_date
     
     def get_review_counts_last_year(self):
         '''This function returns an annoted queryset, with counts
         for specific review types, per reviewer.'''
 
-        reviewers = get_user_model().objects.filter(groups = self.committee)
-        one_year_ago = timezone.now() - timedelta(days=365)
+        decisions = self.get_committee_decisions()
+
+        reviewers = get_user_model().objects.filter(decision__in = decisions)    
+
         base_filter = Q(
-            decision__review__date_start__gt=one_year_ago,
+            decision__review__date_start__gt=self.get_start_date(),
             decision__review__stage__gt=Review.SUPERVISOR,
         )
         return reviewers.annotate(
@@ -133,7 +165,6 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.T
                 decision__review__short_route=False
             )),
             num_revision=Count("decision", filter=base_filter & Q(
-                decision__review__date_start__gt=one_year_ago,
                 decision__review__proposal__is_revision=True
             )),
         )

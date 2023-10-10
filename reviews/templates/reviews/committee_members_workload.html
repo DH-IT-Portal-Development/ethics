@@ -60,7 +60,16 @@
                 </tbody>
             </table>
             <br />
-            <h3 class="mb-3">{% trans 'Werkverdeling overzicht van afgelopen jaar' %} </h3>
+            <h3 class="mb-3">{% trans 'Werkverdeling overzicht van afgelopen periode' %} </h3>
+            <p>
+                {% trans 'Vul hieronder een start- en einddatum in voor dit overzicht.'%}
+            </p>
+            <form action="" method="get">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit">
+            </form>
+            
             <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>
