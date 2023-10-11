@@ -27,7 +27,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from interventions.models import Intervention
 from main.models import Faculty, SystemMessage
-from main.utils import is_member_of_humanities
+from main.utils import is_member_of_humanities, in_privileged_faculty
 from observations.models import Observation
 from proposals.models import Proposal
 from reviews.models import Review
@@ -70,7 +70,7 @@ class HomeView(LoginRequiredMixin, _SystemMessageView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
 
-        context['is_humanities'] = is_member_of_humanities(self.request.user)
+        context['is_privileged'] = in_privileged_faculty(self.request.user)
 
         return context
 

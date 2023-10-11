@@ -17,7 +17,8 @@ from typing import Tuple, Union
 
 from main.utils import get_document_contents, get_secretary, is_secretary
 from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
-    HumanitiesRequiredMixin, UpdateView, UserAllowedMixin
+    HumanitiesRequiredMixin, UpdateView, UserAllowedMixin, \
+    PrivilegedFacultyRequiredMixin
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
@@ -136,7 +137,7 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
 
 
 class ProposalUsersOnlyArchiveView(
-    HumanitiesRequiredMixin,
+    PrivilegedFacultyRequiredMixin,
     CommitteeMixin,
     BaseProposalsView
 ):
