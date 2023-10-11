@@ -9,6 +9,7 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
@@ -335,6 +336,12 @@ class FacultyRequiredMixin:
 
 class HumanitiesRequiredMixin(FacultyRequiredMixin):
     faculty_required = settings.FACULTY_HUMANITIES
+
+class PrivilegedFacultyRequiredMixin(UserPassesTestMixin):
+    """Only allow faculties with the privileged flag set to access
+    this view."""
+    def test_func(self):
+        return in_privileged_faculty(self.request.user)
 
 
 class UserAllowedMixin(SingleObjectMixin):

@@ -45,6 +45,17 @@ def is_secretary(user):
     """
     return Group.objects.get(name=settings.GROUP_SECRETARY) in user.groups.all()
 
+def in_privileged_faculty(user):
+    """
+    Check whether the current user is in a privileged faculty.
+    """
+    if hasattr(user, "faculties"):
+        # This excludes AnonymousUser, and other possible exceptions
+        for faculty in user.faculties.all():
+            if faculty.is_privileged:
+                return True
+    return False
+
 def get_reviewers():
     return get_user_model().objects.filter(
         Q(groups__name=settings.GROUP_GENERAL_CHAMBER) |
