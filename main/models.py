@@ -106,6 +106,10 @@ class Faculty(models.Model):
 
     name = models.CharField(max_length=255)
 
+    is_privileged = models.BooleanField(
+        default=False,
+    )
+
     # This should be the same as the Dutch name, but we store it separately
     # to allow us to edit `name` freely
     saml_name = models.CharField(

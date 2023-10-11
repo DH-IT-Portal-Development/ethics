@@ -6,7 +6,8 @@
     "name": "Faculteit Geesteswetenschappen",
     "name_nl": "Faculteit Geesteswetenschappen",
     "name_en": "Faculty of Humanities",
-    "saml_name": "Faculteit Geesteswetenschappen"
+    "saml_name": "Faculteit Geesteswetenschappen",
+    "is_privileged": true
   }
 },
 {
