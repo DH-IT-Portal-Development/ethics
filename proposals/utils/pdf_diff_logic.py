@@ -120,8 +120,13 @@ class DiffSection:
             new_fields = self.new_object.get_row_fields()
 
             # creating a list containing all fields in all objects
-            all_fields = set(old_fields)
-            all_fields.update(new_fields)
+            all_fields_set = set(old_fields)
+            all_fields_set.update(new_fields)
+
+            # reordering the fields according to the row_fields class variable
+            all_fields = [
+                field for field in self.old_object.row_fields if field in all_fields_set
+            ]
 
             rows = [
                 DiffRow(field, self.old_object.obj, self.new_object.obj)
@@ -406,12 +411,18 @@ class SubTitle:
                 )
             return task_title
 
+
 class PageBreakMixin(BaseSection):
     """A Mixin for adding page break formatting to a section."""
 
     def render(self, context):
-        context.update({"page_break": True})
+        context.update(
+            {
+                "page_break": True,
+            }
+        )
         return super().render(context)
+
 
 class GeneralSection(BaseSection):
     """This class generates the data for the general section of a proposal and showcases
@@ -588,7 +599,7 @@ class StudySection(BaseSection):
             rows.remove("necessity_reason")
         if not needs_details(obj.recruitment.all()):
             rows.remove("recruitment_details")
-        if not obj.compensation.needs_details:
+        if not obj.compensation or obj.compensation.needs_details:
             rows.remove("compensation_details")
         if not obj.hierarchy:
             rows.remove("hierarchy_details")
@@ -931,7 +942,7 @@ class InformedConsentFormsSection(BaseSection):
 
 
 class InformedConsentFormsSectionDiff(DiffSection):
-    """As the regular Informed Consent section, the diff version needed its own version of an 
+    """As the regular Informed Consent section, the diff version needed its own version of an
     overwritten make_rows method ... :("""
 
     def make_diff_rows(self):
@@ -963,7 +974,7 @@ class InformedConsentFormsSectionDiff(DiffSection):
                         DiffRow(
                             field,
                             self.old_object.obj.proposal,
-                            self.new_object.obj.proposal
+                            self.new_object.obj.proposal,
                         )
                     )
                 elif field in study_list:
@@ -983,7 +994,13 @@ class ExtraDocumentsSection(BaseSection):
     """This class receives an Documents object.
     Overrides the __init__ to create a formatted section title"""
 
-    row_fields = ["informed_consent", "briefing"]
+    row_fields = [
+        "informed_consent",
+        "briefing",
+        "director_consent_declaration",
+        "director_consent_information",
+        "parents_information",
+    ]
 
     def __init__(self, obj, num):
         super().__init__(obj)
@@ -997,6 +1014,12 @@ class ExtraDocumentsSection(BaseSection):
             rows.remove("informed_consent")
         if not obj.briefing:
             rows.remove("briefing")
+        if not obj.director_consent_declaration:
+            rows.remove("director_consent_declaration")
+        if not obj.director_consent_information:
+            rows.remove("director_consent_information")
+        if not obj.parents_information:
+            rows.remove("parents_information")
 
         return rows
 
