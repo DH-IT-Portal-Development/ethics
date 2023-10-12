@@ -62,14 +62,16 @@
             <br />
             <h3 class="mb-3">{% trans 'Werkverdeling overzicht van afgelopen periode' %} </h3>
             <p>
-                {% trans 'Vul hieronder een start- en einddatum in voor dit overzicht.'%}
+                {% trans 'Vul hieronder een start- en einddatum in voor de periode van dit overzicht.'%}
             </p>
             <form action="" method="get">
                 {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Submit">
+                <table>
+                {{ form.as_table }}
+                </table>
+                <input type="submit" value="{% trans 'Periode toepassen'%}">
             </form>
-            
+            <br />
             <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
                 <tr>

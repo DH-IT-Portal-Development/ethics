@@ -6,7 +6,6 @@ from main.forms import ConditionalModelForm
 from main.utils import YES_NO, get_reviewers_from_groups, is_secretary
 from proposals.models import Proposal
 from .models import Review, Decision
-from datetime import date, timedelta
 
 from cdh.core.forms import DateField
 
@@ -151,5 +150,6 @@ class DecisionForm(forms.ModelForm):
 
 class StartEndDateForm(forms.Form):
     
-    start_date = DateField(label=_('Start datum'), initial=date.today() - timedelta(days=365))
+    start_date = DateField(label=_('Start datum periode:'))
+    end_date = DateField(label=_('Eind datum periode:'))
 

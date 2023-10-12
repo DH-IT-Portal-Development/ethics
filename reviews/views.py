@@ -88,19 +88,18 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.F
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.default_start_date = date.today()
-        self.start_date = self.get_initial()['start_date']
+        self.default_end_date = date.today()
+        self.default_start_date = self.default_end_date - timedelta(days=365)
 
     def get_initial(self):
-        """
-        Returns the initial data to use for forms on this view.
-        """
         initial = super().get_initial()
 
-        if hasattr(self, 'request'):
+        if 'start_date' in self.request.GET and 'end_date' in self.request.GET:
             initial['start_date'] = self.request.GET.get('start_date')
+            initial['end_date'] = self.request.GET.get('end_date')            
         else:
             initial['start_date'] = self.default_start_date
+            initial['end_date'] = self.default_end_date
 
         return initial
     
@@ -135,23 +134,18 @@ class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.F
             )
 
         return open_decisions
-    
-    def get_start_date(self):
-        if 'start_date' in self.request.GET.keys():
-            return self.request.GET.get('start_date')
-        else:
-            return self.start_date
-    
+   
     def get_review_counts_last_year(self):
         '''This function returns an annoted queryset, with counts
         for specific review types, per reviewer.'''
 
         decisions = self.get_committee_decisions()
+        dates = self.get_initial()
 
-        reviewers = get_user_model().objects.filter(decision__in = decisions)    
-
+        reviewers = get_user_model().objects.filter(decision__in = decisions) 
         base_filter = Q(
-            decision__review__date_start__gt=self.get_start_date(),
+            decision__review__date_start__gt=dates['start_date'],
+            decision__review__date_start__lt=dates['end_date'],
             decision__review__stage__gt=Review.SUPERVISOR,
         )
         return reviewers.annotate(
