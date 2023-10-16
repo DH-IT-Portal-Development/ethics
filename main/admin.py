@@ -25,6 +25,7 @@ class GenericGroup(GroupAdmin):
 class FacultyAdmin(admin.ModelAdmin):
     list_display = ('saml_name', 'name', 'name_nl', 'name_en', 'internal_name',)
     list_display_links = ('saml_name',)
+    filter_horizontal = ('users',)
 
 
 @admin.register(Setting)
