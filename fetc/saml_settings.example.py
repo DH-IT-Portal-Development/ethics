@@ -36,7 +36,7 @@ SAML_ATTRIBUTE_MAPPING = {
     'mail':     ('email',),
     'givenName': ('first_name',),
     'uuPrefixedSn':  ('last_name',),
-    'uuLegacyDepartment':  ('process_faculty', ),
+    'uuLegacyDepartment':  ('process_faculties', ),
 }
 
 # Controls which mechanism is used to exchange SAML data with the IdP
