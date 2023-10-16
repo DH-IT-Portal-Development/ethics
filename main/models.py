@@ -103,6 +103,9 @@ van de leraar of een ander persoon die bevoegd is?'),
 
 
 class Faculty(models.Model):
+    class InternalNames(models.TextChoices):
+        HUMANITIES = "humanities"
+        OTHER = "other"
 
     name = models.CharField(max_length=255)
 
@@ -115,6 +118,12 @@ class Faculty(models.Model):
     users = models.ManyToManyField(
         get_user_model(),
         related_name='faculties'
+    )
+
+    internal_name = models.CharField(
+        max_length=50,
+        choices=InternalNames.choices,
+        default=InternalNames.OTHER,
     )
 
     def __str__(self):

@@ -10,6 +10,8 @@ import magic  # whoooooo
 import pdftotext
 from docx2txt import docx2txt
 
+from main.models import Faculty
+
 YES_NO = [(True, _('ja')), (False, _('nee'))]
 
 
@@ -152,8 +154,8 @@ def get_document_contents(file: FieldFile) -> str:
 
 
 def is_member_of_faculty(user, faculty):
-    return user.faculties.filter(saml_name=faculty).exists()
+    return user.faculties.filter(internal_name=faculty).exists()
 
 
 def is_member_of_humanities(user):
-    return is_member_of_faculty(user, settings.FACULTY_HUMANITIES)
+    return is_member_of_faculty(user, Faculty.InternalNames.HUMANITIES)

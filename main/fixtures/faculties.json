@@ -6,7 +6,8 @@
     "name": "Faculteit Geesteswetenschappen",
     "name_nl": "Faculteit Geesteswetenschappen",
     "name_en": "Faculty of Humanities",
-    "saml_name": "Faculteit Geesteswetenschappen"
+    "saml_name": "Faculteit Geesteswetenschappen",
+    "internal_name": "humanities"
   }
 },
 {
@@ -16,7 +17,8 @@
     "name": "Faculteit Sociale Wetenschappen",
     "name_nl": "Faculteit Sociale Wetenschappen",
     "name_en": "Faculty of Social and Behavioural Sciences",
-    "saml_name": "Faculteit Sociale Wetenschappen"
+    "saml_name": "Faculteit Sociale Wetenschappen",
+    "internal_name": "other"
   }
 }
 ]

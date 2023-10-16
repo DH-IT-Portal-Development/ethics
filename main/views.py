@@ -314,7 +314,7 @@ class FacultyRequiredMixin:
     def check_membership(self, faculty):
         """Check required faculty(ies)"""
         user_faculties = self.request.user.faculties.values_list(
-            "saml_name",
+            "internal_name",
             flat=True
         )
         return set(faculty).intersection(set(user_faculties))
@@ -334,7 +334,7 @@ class FacultyRequiredMixin:
 
 
 class HumanitiesRequiredMixin(FacultyRequiredMixin):
-    faculty_required = settings.FACULTY_HUMANITIES
+    faculty_required = Faculty.InternalNames.HUMANITIES
 
 
 class UserAllowedMixin(SingleObjectMixin):
