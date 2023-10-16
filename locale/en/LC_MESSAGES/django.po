@@ -864,7 +864,7 @@ msgstr ""
 
 #: main/templates/main/index.html:39
 msgid ""
-"Als je vermoed dat dit incorrect is, neem dan contact op met <a "
+"Als je vermoedt dat dit incorrect is, neem dan contact op met <a "
 "href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>."
 msgstr ""
 "If you suspect this is incorrect, please contact support at <a href=\"mailto:"
