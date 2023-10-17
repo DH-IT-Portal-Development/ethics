@@ -40,19 +40,34 @@
             border-left-color: #cbcbcb;
         }
 
-        #content th, td {
-            width: 500px;
+        .row {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .th, .td {
+            display: block;
+            width: 500px !important;
             font-weight: normal;
             text-align: left;
-            padding-top: 3px;
-            padding-right: 3px;
-            padding-bottom: 3px;
-            padding-left: 3px;
+        }
+
+        .th {
+            font-weight: 700;
+        }
+
+        .td {
+            margin-bottom: 15px;
+            border-color: #ccc;
+            border-style: solid;
+            border-width: .5px;
+            padding: 3px;
         }
 
         #content li {
             line-height: 10px;
         }
+        
     </style>
 {% endblock %}
 
@@ -88,46 +103,46 @@
       </p>
 
       <h2>{% trans 'Indiener' %}</h2>
-      <table>
-        <tr>
-          <th>{% trans 'Naam' %}</th><td>{{ proposal.created_by.get_full_name }}</td>
-        </tr>
-        <tr>
-          <th>{% trans 'E-mail' %}</th><td>{{ proposal.created_by.email }}</td>
-        </tr>
-      </table>
+      <div class="table">
+        <div class="row">
+          <div class="th">{% trans 'Naam' %}</div><div class="td">{{ proposal.created_by.get_full_name }}</div>
+        </div>
+        <div class="row">
+          <div class="th">{% trans 'E-mail' %}</div><div class="td">{{ proposal.created_by.email }}</div>
+        </div>
+      </div>
       <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
-      <table>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th><td>{{ proposal.relation }}</td>
-        </tr>
+      <div class="table">
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "relation" %}</div><div class="td">{{ proposal.relation }}</div>
+        </div>
         {% if proposal.relation.needs_supervisor %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th><td>{{ proposal.supervisor.get_full_name }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</div><div class="td">{{ proposal.supervisor.get_full_name }}</div>
+          </div>
         {% endif %}
         {% if proposal.relation.check_in_course %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th><td>{{ proposal.student_program }}</td>
-          </tr>
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th><td>{{ proposal.student_context }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "student_program" %}</div><div class="td">{{ proposal.student_program }}</div>
+          </div>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "student_context" %}</div><div class="td">{{ proposal.student_context }}</div>
+          </div>
           {% if proposal.student_context.needs_details %}
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th><td>{{ proposal.student_context_details }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</div><div class="td">{{ proposal.student_context_details }}</div>
+            </div>
           {% endif %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th><td>{{ proposal.student_justification }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</div><div class="td">{{ proposal.student_justification }}</div>
+          </div>
         {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th><td>{{ proposal.other_applicants|yesno:_("ja,nee") }}</td>
-        </tr>
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</div><div class="td">{{ proposal.other_applicants|yesno:_("ja,nee") }}</div>
+        </div>
         {% if proposal.other_applicants %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th><td>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "applicants" %}</div><div class="td">
               <ul>
                 {% for applicant in proposal.applicants.all %}
                   <li>
@@ -135,167 +150,167 @@
                   </li>
                 {% endfor %}
               </ul>
-            </td>
-          </tr>
+            </div>
+          </div>
         {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</th><td>{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
-        </tr>
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</div><div class="td">{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</div>
+        </div>
         {% if proposal.other_stakeholders %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "stakeholders" %}</th><td>{{ proposal.stakeholders }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "stakeholders" %}</div><div class="td">{{ proposal.stakeholders }}</div>
+          </div>
         {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
-        </tr>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th><td>{{ proposal.title }}</td>
-        </tr>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>
-        </tr>
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "date_start" %}</div><div class="td">{{ proposal.date_start|default:_("onbekend") }}</div>
+        </div>
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "title" %}</div><div class="td">{{ proposal.title }}</div>
+        </div>
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "funding" %}</div><div class="td">{{ proposal.funding.all|unordered_list }}</div>
+        </div>
         {% if proposal.funding.all|needs_details %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td>{{ proposal.funding_details }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</div><div class="td">{{ proposal.funding_details }}</div>
+          </div>
         {% endif %}
         {% if proposal.funding.all|needs_details:"needs_name" %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th><td>{{ proposal.funding_name }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</div><div class="td">{{ proposal.funding_name }}</div>
+          </div>
         {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th><td>{{ proposal.self_assessment }}</td>
-        </tr>
-      </table>
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</div><div class="td">{{ proposal.self_assessment }}</div>
+        </div>
+      </div>
       <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
       <p>{{ proposal.summary|linebreaks }}</p>
 
       {% with wmo=proposal.wmo %}
         <h2 style="page-break-before: always">{% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}</h2>
-        <table>
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{{ wmo.get_metc_display }}</td>
-          </tr>
+        <div class="table">
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "wmo" "metc" %}</div><div class="td">{{ wmo.get_metc_display }}</div>
+          </div>
           {% if wmo.metc == 'Y' %}
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th><td>{{ wmo.metc_details }}</td>
-            </tr>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</th><td>{{ wmo.metc_institution }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</div><div class="td">{{ wmo.metc_details }}</div>
+            </div>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</div><div class="td">{{ wmo.metc_institution }}</div>
+            </div>
           {% else %}
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</th><td>{{ wmo.get_is_medical_display }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</div><div class="td">{{ wmo.get_is_medical_display }}</div>
+            </div>
           {% endif %}
-        </table>
+        </div>
 
         {% if wmo.status != wmo.NO_WMO %}
           <h2 style="page-break-before: always">{% trans "Aanmelding bij de METC" %}</h2>
-          <table>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th><td>{{ wmo.metc_application|yesno:_("ja,nee") }}</td>
-            </tr>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</th><td>{{ wmo.metc_decision|yesno:_("ja,nee") }}</td>
-            </tr>
+          <div class="table">
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</div><div class="td">{{ wmo.metc_application|yesno:_("ja,nee") }}</div>
+            </div>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</div><div class="td">{{ wmo.metc_decision|yesno:_("ja,nee") }}</div>
+            </div>
             {% if wmo.metc_decision_pdf and not proposal.is_practice %}
-              <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th><td><a href="{{ BASE_URL }}{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</div><div class="td"><a href="{{ BASE_URL }}{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a></div>
+              </div>
             {% else %}
-              <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th>
-                <td>{% trans "Niet aangeleverd" %}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</div>
+                <div class="td">{% trans "Niet aangeleverd" %}</div>
+              </div>
             {% endif %}
-          </table>
+          </div>
         {% endif %}
       {% endwith %}
 
       <h2 style="page-break-before: always">{% trans "Eén of meerdere trajecten?" %}</h2>
-      <table>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "studies_similar" %}</th><td>{{ proposal.studies_similar|yesno:_("ja,nee") }}</td>
-        </tr>
+      <div class="table">
+        <div class="row">
+          <div class="th">{% get_verbose_field_name "proposals" "proposal" "studies_similar" %}</div><div class="td">{{ proposal.studies_similar|yesno:_("ja,nee") }}</div>
+        </div>
         {% if not proposal.studies_similar %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th><td>{{ proposal.studies_number }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</div><div class="td">{{ proposal.studies_number }}</div>
+          </div>
         {% endif %}
-      </table>
+      </div>
 
       {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
         {% for study in proposal.study_set.all %}
           <h2>{% trans "De deelnemers" %}</h2>
           {% include "studies/study_title.html" %}
-          <table>
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
-            </tr>
+          <div class="table">
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "age_groups" %}</div><div class="td">{{ study.age_groups.all|unordered_list }}</div>
+            </div>
             {% if study|has_adults %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th><td>{{ study.legally_incapable|yesno:_("ja,nee") }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "legally_incapable" %}</div><div class="td">{{ study.legally_incapable|yesno:_("ja,nee") }}</div>
+              </div>
               {% if study.legally_incapable %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "legally_incapable_details" %}</th><td>{{ study.legally_incapable_details }}</td>
-                </tr>
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "studies" "study" "legally_incapable_details" %}</div><div class="td">{{ study.legally_incapable_details }}</div>
+                </div>
               {% endif %}
             {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th><td>{{ study.has_special_details|yesno:_("ja,nee") }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "has_special_details" %}</div><div class="td">{{ study.has_special_details|yesno:_("ja,nee") }}</div>
+            </div>
             {% if study.has_special_details %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "special_details" %}</th><td>{{ study.special_details.all|unordered_list }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "special_details" %}</div><div class="td">{{ study.special_details.all|unordered_list }}</div>
+              </div>
               {% if study.special_details.all|medical_traits %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
-                </tr>
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "studies" "study" "traits" %}</div><div class="td">{{ study.traits.all|unordered_list }}</div>
+                </div>
                 {% if study.traits.all|needs_details %}
-                  <tr>
-                    <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
-                  </tr>
+                  <div class="row">
+                    <div class="th">{% get_verbose_field_name "studies" "study" "traits_details" %}</div><div class="td">{{ study.traits_details }}</div>
+                  </div>
                 {% endif %}
               {% endif %}
             {% endif %}
             {% if study|necessity_required %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th><td>{{ study.get_necessity_display }}</td>
-              </tr>
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "necessity_reason" %}</th><td>{{ study.necessity_reason }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "necessity" %}</div><div class="td">{{ study.get_necessity_display }}</div>
+              </div>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "necessity_reason" %}</div><div class="td">{{ study.necessity_reason }}</div>
+              </div>
             {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "recruitment" %}</th><td>{{ study.recruitment.all|unordered_list }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "recruitment" %}</div><div class="td">{{ study.recruitment.all|unordered_list }}</div>
+            </div>
             {% if study.recruitment.all|needs_details %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "recruitment_details" %}</div><div class="td">{{ study.recruitment_details }}</div>
+              </div>
             {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th><td>{{ study.compensation }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "compensation" %}</div><div class="td">{{ study.compensation }}</div>
+            </div>
             {% if study.compensation.needs_details %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "compensation_details" %}</div><div class="td">{{ study.compensation_details }}</div>
+              </div>
             {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th><td>{{ study.hierarchy|yesno:_("ja,nee") }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "hierarchy" %}</div><div class="td">{{ study.hierarchy|yesno:_("ja,nee") }}</div>
+            </div>
             {% if study.hierarchy %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th><td>{{ study.hierarchy_details }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</div><div class="td">{{ study.hierarchy_details }}</div>
+              </div>
             {% endif %}
-          </table>
+          </div>
 
           {% if study.has_intervention %}
             {% with intervention=study.intervention %}
@@ -324,172 +339,172 @@
           {% if study.has_sessions %}
             <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
             {% include "studies/study_title.html" %}
-            <table>
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "sessions_number" %}</th><td>{{ study.sessions_number }}</td>
-              </tr>
-            </table>
+            <div class="table">
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "sessions_number" %}</div><div class="td">{{ study.sessions_number }}</div>
+              </div>
+            </div>
 
             {% for session in study.session_set.all %}
               {% include "tasks/session_title.html" %}
-              <table>
-                <tr>
-                  <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th><td>{{ session.setting.all|unordered_list }}</td>
-                </tr>
+              <div class="table">
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "tasks" "session" "setting" %}</div><div class="td">{{ session.setting.all|unordered_list }}</div>
+                </div>
                 {% if session.setting.all|needs_details %}
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "session" "setting_details" %}</th><td>{{ session.setting_details }}</td>
-                  </tr>
+                  <div class="row">
+                    <div class="th">{% get_verbose_field_name "tasks" "session" "setting_details" %}</div><div class="td">{{ session.setting_details }}</div>
+                  </div>
                 {% endif %}
                 {% if study.has_children and session.setting.all|needs_details:"needs_supervision" %}
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th><td>{{ session.supervision|yesno:_("ja,nee") }}</td>
-                  </tr>
+                  <div class="row">
+                    <div class="th">{% get_verbose_field_name "tasks" "session" "supervision" %}</div><div class="td">{{ session.supervision|yesno:_("ja,nee") }}</div>
+                  </div>
                   {% if not session.supervision %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "session" "leader_has_coc" %}</th><td>{{ session.leader_has_coc|yesno:_("ja,nee") }}</td>
-                    </tr>
+                    <div class="row">
+                      <div class="th">{% get_verbose_field_name "tasks" "session" "leader_has_coc" %}</div><div class="td">{{ session.leader_has_coc|yesno:_("ja,nee") }}</div>
+                    </div>
                   {% endif %}
                 {% endif %}
-                <tr>
-                  <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td>{{ session.tasks_number }}</td>
-                </tr>
-              </table>
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "tasks" "session" "tasks_number" %}</div><div class="td">{{ session.tasks_number }}</div>
+                </div>
+              </div>
               {% for task in session.task_set.all %}
                 {% include "tasks/task_title.html" %}
-                <table>
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "name" %}</th><td>{{ task.name }}</td>
-                  </tr>
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "duration" %}</th><td>{{ task.duration }}</td>
-                  </tr>
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "registrations" %}</th><td>{{ task.registrations.all|unordered_list }}</td>
-                  </tr>
+                <div class="table">
+                  <div class="row">
+                    <div class="th">{% get_verbose_field_name "tasks" "task" "name" %}</div><div class="td">{{ task.name }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="th">{% get_verbose_field_name "tasks" "task" "duration" %}</div><div class="td">{{ task.duration }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="th">{% get_verbose_field_name "tasks" "task" "registrations" %}</div><div class="td">{{ task.registrations.all|unordered_list }}</div>
+                  </div>
                   {% if task.registrations.all|needs_details %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "task" "registrations_details" %}</th><td>{{ task.registrations_details }}</td>
-                    </tr>
+                    <div class="row">
+                      <div class="th">{% get_verbose_field_name "tasks" "task" "registrations_details" %}</div><div class="td">{{ task.registrations_details }}</div>
+                    </div>
                   {% endif %}
                   {% if task.registrations.all|needs_details:"needs_kind" %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "task" "registration_kinds" %}</th><td>{{ task.registration_kinds.all|unordered_list }}</td>
-                    </tr>
+                    <div class="row">
+                      <div class="th">{% get_verbose_field_name "tasks" "task" "registration_kinds" %}</div><div class="td">{{ task.registration_kinds.all|unordered_list }}</div>
+                    </div>
                     {% if task.registration_kinds.all|needs_details %}
-                      <tr>
-                        <th>{% get_verbose_field_name "tasks" "task" "registration_kinds_details" %}</th><td>{{ task.registration_kinds_details }}</td>
-                      </tr>
+                      <div class="row">
+                        <div class="th">{% get_verbose_field_name "tasks" "task" "registration_kinds_details" %}</div><div class="td">{{ task.registration_kinds_details }}</div>
+                      </div>
                     {% endif %}
                   {% endif %}
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "feedback" %}</th><td>{{ task.feedback|yesno:_("ja,nee") }}</td>
-                  </tr>
+                  <div class="row">
+                    <div class="th">{% get_verbose_field_name "tasks" "task" "feedback" %}</div><div class="td">{{ task.feedback|yesno:_("ja,nee") }}</div>
+                  </div>
                   {% if task.feedback %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "task" "feedback_details" %}</th><td>{{ task.feedback_details }}</td>
-                    </tr>
+                    <div class="row">
+                      <div class="th">{% get_verbose_field_name "tasks" "task" "feedback_details" %}</div><div class="td">{{ task.feedback_details }}</div>
+                    </div>
                   {% endif %}
-                </table>
+                </div>
                 <h3>{% get_verbose_field_name "tasks" "task" "description" %}</h3>
                 <p>{{ task.description|linebreaks }}</p>
               {% endfor %}
 
               <h3>{% trans "Overzicht van het takenonderzoek" %}</h3>
-              <table>
-                <tr>
-                  <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" session.net_duration %}</th><td>{{ session.tasks_duration }}</td>
-                </tr>
-              </table>
+              <div class="table">
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "tasks" "session" "tasks_duration" session.net_duration %}</div><div class="td">{{ session.tasks_duration }}</div>
+                </div>
+              </div>
 
             {% endfor %}
           {% endif %}
 
           <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
           {% include "studies/study_title.html" %}
-          <table>
+          <div class="table">
             {% if study.has_sessions %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.get_deception_display }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "deception" %}</div><div class="td">{{ study.get_deception_display }}</div>
+              </div>
               {% if study.deception == 'Y' or study.deception == '?' %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th><td>{{ study.deception_details }}</td>
-                </tr>
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "studies" "study" "deception_details" %}</div><div class="td">{{ study.deception_details }}</div>
+                </div>
               {% endif %}
             {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "negativity" %}</th><td>{{ study.get_negativity_display }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "negativity" %}</div><div class="td">{{ study.get_negativity_display }}</div>
+            </div>
             {% if study.negativity == 'Y' or study.negativity == '?' %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "negativity_details" %}</th><td>{{ study.negativity_details }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "negativity_details" %}</div><div class="td">{{ study.negativity_details }}</div>
+              </div>
             {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.get_stressful_display }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "stressful" %}</div><div class="td">{{ study.get_stressful_display }}</div>
+            </div>
             {% if study.stressful == 'Y' or study.stressful == '?' %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "stressful_details" %}</th><td>{{ study.stressful_details }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "stressful_details" %}</div><div class="td">{{ study.stressful_details }}</div>
+              </div>
             {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "risk" %}</th><td>{{ study.get_risk_display }}</td>
-            </tr>
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "studies" "study" "risk" %}</div><div class="td">{{ study.get_risk_display }}</div>
+            </div>
             {% if study.risk == 'Y' or study.risk == '?' %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "risk_details" %}</div><div class="td">{{ study.risk_details }}</div>
+              </div>
             {% endif %}
-          </table>
+          </div>
 
           <h2>{% trans "Informed consent formulieren" %}</h2>
           {% include "studies/study_title.html" %}
           {% get_study_documents study_documents study %}
-          <table>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms" %}</th><td>{{ proposal.translated_forms|yesno:_("ja,nee") }}</td>
-            </tr>
+          <div class="table">
+            <div class="row">
+              <div class="th">{% get_verbose_field_name "proposals" "proposal" "translated_forms" %}</div><div class="td">{{ proposal.translated_forms|yesno:_("ja,nee") }}</div>
+            </div>
             {% if proposal.translated_forms %}
-              <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms_languages" %}</th><td>{{ proposal.translated_forms_languages }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "proposals" "proposal" "translated_forms_languages" %}</div><div class="td">{{ proposal.translated_forms_languages }}</div>
+              </div>
             {% endif %}
             {% if not proposal.is_practice and study_documents.informed_consent %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
-              </tr>
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.briefing.url }}">{% trans "Download" %}</a></td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "documents" "informed_consent" %}</div><div class="td"><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></div>
+              </div>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "documents" "briefing" %}</div><div class="td"><a href="{{ BASE_URL }}{{ study_documents.briefing.url }}">{% trans "Download" %}</a></div>
+              </div>
             {% endif %}
             {% if study.passive_consent is not None %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:_("ja,nee") }}</td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "study" "passive_consent" %}</div><div class="td">{{ study.passive_consent|yesno:_("ja,nee") }}</div>
+              </div>
               {% if study.passive_consent %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th><td>{{ study.passive_consent_details }}</td>
-                </tr>
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</div><div class="td">{{ study.passive_consent_details }}</div>
+                </div>
               {% endif %}
             {% endif %}
             {% if study_documents.director_consent_declaration %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "documents" "director_consent_declaration" %}</div><div class="td"><a href="{{ BASE_URL }}{{ study_documents.director_consent_declaration.url }}">{% trans "Download" %}</a></div>
+              </div>
             {% endif %}
             {% if study_documents.director_consent_information %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_information.url }}">{% trans "Download" %}</a></td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "documents" "director_consent_information" %}</div><div class="td"><a href="{{ BASE_URL }}{{ study_documents.director_consent_information.url }}">{% trans "Download" %}</a></div>
+              </div>
             {% endif %}
             {% if study_documents.parents_information %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "parents_information" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.parents_information.url }}">{% trans "Download" %}</a></td>
-              </tr>
+              <div class="row">
+                <div class="th">{% get_verbose_field_name "studies" "documents" "parents_information" %}</div><div class="td"><a href="{{ BASE_URL }}{{ study_documents.parents_information.url }}">{% trans "Download" %}</a></div>
+              </div>
             {% endif %}
-          </table>
+          </div>
         {% endfor %}
 
         {% if documents.extra %}
@@ -497,47 +512,47 @@
           {% for extra_documents in documents.extra %}
             <h2>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h2>
             {% counter extra_form_counter increment 1 %}
-            <table>
+            <div class="table">
               {% if extra_documents.informed_consent %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ extra_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
-                </tr>
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "studies" "documents" "informed_consent" %}</div><div class="td"><a href="{{ BASE_URL }}{{ extra_documents.informed_consent.url }}">{% trans "Download" %}</a></div>
+                </div>
               {% endif %}
               {% if extra_documents.briefing %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ extra_documents.briefing.url }}">{% trans "Download" %}</a></td>
-                </tr>
+                <div class="row">
+                  <div class="th">{% get_verbose_field_name "studies" "documents" "briefing" %}</div><div class="td"><a href="{{ BASE_URL }}{{ extra_documents.briefing.url }}">{% trans "Download" %}</a></div>
+                </div>
               {% endif %}
-            </table>
+            </div>
             {{ extra_form_counter.increment }}
           {% endfor %}
         {% endif %}
         {% if proposal.dmp_file %}
           <h2>{% trans "Data Management Plan" %}</h2>
-          <table>
-            <tr>
-              <th>
+          <div class="table">
+            <div class="row">
+              <div class="th">
                 {% get_verbose_field_name "proposals" "proposal" "dmp_file" %}
-              </th>
-              <td>
+              </div>
+              <div class="td">
                 <a href="{{ BASE_URL }}{{ proposal.dmp_file.url }}">
                   {% trans "Download" %}
                 </a>
-              </td>
-            </tr>
-          </table>
+              </div>
+            </div>
+          </div>
         {% endif %}
         <h2>{% trans "Aanmelding versturen" %}</h2>
-        <table>
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th><td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
-          </tr>
+        <div class="table">
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "embargo" %}</div><div class="td">{{ proposal.embargo|yesno:_("ja,nee") }}</div>
+          </div>
           {%if proposal.embargo %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
-          </tr>
+          <div class="row">
+            <div class="th">{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</div><div class="td">{{ proposal.date_start|default:_("onbekend") }}</div>
+          </div>
           {% endif %}
-        </table>
+        </div>
         <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
         <p>
           {{ proposal.comments }}
