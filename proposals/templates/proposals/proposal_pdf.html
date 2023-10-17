@@ -8,6 +8,23 @@
 
 {% block extra_style %}
     <style type="text/css">
+
+        @font-face {
+            font-family: "Open Sans";
+            src: url('proposals/static/proposals/pdf_font/OpenSans-Regular.ttf');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: "Open Sans";
+            src: url('proposals/static/proposals/pdf_font/OpenSans-Bold.ttf');
+            font-weight: 700;
+        }
+
+        body {
+            font-family: "Open Sans";
+        }
+
         #content table {
             border-top-width: .5px;
             border-top-style: solid;
