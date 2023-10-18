@@ -64,6 +64,11 @@
             padding: 3px;
         }
 
+        h2 {
+            margin-top: 3rem;
+            font-size: 150%;
+        }
+
         #content li {
             line-height: 10px;
         }
@@ -230,7 +235,7 @@
         {% endif %}
       {% endwith %}
 
-      <h2 style="page-break-before: always">{% trans "Eén of meerdere trajecten?" %}</h2>
+      <h2>{% trans "Eén of meerdere trajecten?" %}</h2>
       <div class="table">
         <div class="row">
           <div class="th">{% get_verbose_field_name "proposals" "proposal" "studies_similar" %}</div><div class="td">{{ proposal.studies_similar|yesno:_("ja,nee") }}</div>
@@ -244,7 +249,7 @@
 
       {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
         {% for study in proposal.study_set.all %}
-          <h2>{% trans "De deelnemers" %}</h2>
+          <h2 style="page-break-before: always">{% trans "De deelnemers" %}</h2>
           {% include "studies/study_title.html" %}
           <div class="table">
             <div class="row">
@@ -314,7 +319,7 @@
 
           {% if study.has_intervention %}
             {% with intervention=study.intervention %}
-              <h2>{% trans "Het interventieonderzoek" %}</h2>
+              <h2 style="page-break-before: always">{% trans "Het interventieonderzoek" %}</h2>
               {% include "studies/study_title.html" %}
               {% if intervention.version == 1 %}
                 {% include 'proposals/pdf/intervention_v1.html' %}
@@ -326,7 +331,7 @@
 
           {% if study.has_observation %}
             {% with observation=study.observation %}
-              <h2>{% trans "Het observatieonderzoek" %}</h2>
+              <h2 style="page-break-before: always">{% trans "Het observatieonderzoek" %}</h2>
               {% include "studies/study_title.html" %}
               {% if observation.version == 1 %}
                 {% include 'proposals/pdf/observation_v1.html' %}
@@ -337,7 +342,7 @@
           {% endif %}
 
           {% if study.has_sessions %}
-            <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
+            <h2 style="page-break-before: always">{% trans "Het takenonderzoek en interviews" %}</h2>
             {% include "studies/study_title.html" %}
             <div class="table">
               <div class="row">
@@ -420,7 +425,7 @@
             {% endfor %}
           {% endif %}
 
-          <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
+          <h2 style="page-break-before: always">{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
           {% include "studies/study_title.html" %}
           <div class="table">
             {% if study.has_sessions %}
@@ -528,7 +533,7 @@
           {% endfor %}
         {% endif %}
         {% if proposal.dmp_file %}
-          <h2>{% trans "Data Management Plan" %}</h2>
+          <h2 style="page-break-before: always">{% trans "Data Management Plan" %}</h2>
           <div class="table">
             <div class="row">
               <div class="th">
