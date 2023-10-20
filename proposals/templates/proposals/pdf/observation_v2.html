@@ -2,82 +2,82 @@
 {% load proposal_filters %}
 {% load get_field_name %}
 
-<table>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th><td>{{ observation.setting.all|unordered_list }}</td>
-    </tr>
+<div class="table">
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "setting" %}</div><div class="td">{{ observation.setting.all|unordered_list }}</div>
+    </div>
     {% if observation.setting.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th><td>{{ observation.setting_details }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "setting_details" %}</div><div class="td">{{ observation.setting_details }}</div>
+    </div>
     {% endif %}
     {% if study.has_children and observation.setting.all|needs_details:"needs_supervision" %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{{ observation.supervision|yesno:_("ja,nee") }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "supervision" %}</div><div class="td">{{ observation.supervision|yesno:_("ja,nee") }}</div>
+    </div>
     {% if not observation.supervision %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</th><td>{{ observation.leader_has_coc|yesno:_("ja,nee") }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</div><div class="td">{{ observation.leader_has_coc|yesno:_("ja,nee") }}</div>
+    </div>
     {% endif %}
     {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "details_who"|safe %}</th><td>{{ observation.details_who }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "details_why"|safe %}</th><td>{{ observation.details_why }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "details_frequency"|safe %}</th><td>{{ observation.details_frequency }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_anonymous" %}</th><td>{{ observation.is_anonymous|yesno:_("ja,nee") }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "details_who"|safe %}</div><div class="td">{{ observation.details_who }}</div>
+    </div>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "details_why"|safe %}</div><div class="td">{{ observation.details_why }}</div>
+    </div>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "details_frequency"|safe %}</div><div class="td">{{ observation.details_frequency }}</div>
+    </div>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "is_anonymous" %}</div><div class="td">{{ observation.is_anonymous|yesno:_("ja,nee") }}</div>
+    </div>
     {% if observation.is_anonymous %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_anonymous_details" %}</th><td>{{ observation.is_anonymous_details }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "is_anonymous_details" %}</div><div class="td">{{ observation.is_anonymous_details }}</div>
+    </div>
     {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_in_target_group" %}</th><td>{{ observation.is_in_target_group|yesno:_("ja,nee") }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "is_in_target_group" %}</div><div class="td">{{ observation.is_in_target_group|yesno:_("ja,nee") }}</div>
+    </div>
     {% if observation.is_in_target_group %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_in_target_group_details" %}</th><td>{{ observation.is_in_target_group_details }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "is_in_target_group_details" %}</div><div class="td">{{ observation.is_in_target_group_details }}</div>
+    </div>
     {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_nonpublic_space" %}</th><td>{{ observation.is_nonpublic_space|yesno:_("ja,nee") }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "is_nonpublic_space" %}</div><div class="td">{{ observation.is_nonpublic_space|yesno:_("ja,nee") }}</div>
+    </div>
     {% if observation.is_nonpublic_space %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "is_nonpublic_space_details" %}</th><td>{{ observation.is_nonpublic_space_details }}</td>
-    </tr>
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th><td>{{ observation.has_advanced_consent|yesno:_("ja,nee") }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "is_nonpublic_space_details" %}</div><div class="td">{{ observation.is_nonpublic_space_details }}</div>
+    </div>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</div><div class="td">{{ observation.has_advanced_consent|yesno:_("ja,nee") }}</div>
+    </div>
         {% if not observation.has_advanced_consent %}
-        <tr>
-            <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent_details" %}</th><td>{{ observation.has_advanced_consent_details }}</td>
-        </tr>
+        <div class="row">
+            <div class="th">{% get_verbose_field_name "observations" "observation" "has_advanced_consent_details" %}</div><div class="td">{{ observation.has_advanced_consent_details }}</div>
+        </div>
         {% endif %}
     {% endif %}
     {% if observation.setting.all|needs_details:"is_school" %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "needs_approval" %}</th><td>{{ observation.needs_approval|yesno:_("ja,nee") }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "needs_approval" %}</div><div class="td">{{ observation.needs_approval|yesno:_("ja,nee") }}</div>
+    </div>
     {% endif %}
     {% if observation.needs_approval %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th><td>{{ observation.approval_institution }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "approval_institution" %}</div><div class="td">{{ observation.approval_institution }}</div>
+    </div>
     {% endif %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "registrations" %}</th><td>{{ observation.registrations.all|unordered_list }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "registrations" %}</div><div class="td">{{ observation.registrations.all|unordered_list }}</div>
+    </div>
     {% if observation.registrations.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "registrations_details" %}</th><td>{{ observation.registrations_details }}</td>
-    </tr>
+    <div class="row">
+        <div class="th">{% get_verbose_field_name "observations" "observation" "registrations_details" %}</div><div class="td">{{ observation.registrations_details }}</div>
+    </div>
     {% endif %}
-</table>
+</div>
