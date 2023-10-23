@@ -112,7 +112,7 @@ class CommitteeMembersWorkloadView(
     def get_initial(self):
         initial = super().get_initial()
 
-        # You don't actually have to cast these to strings btw, DateField can handle date(time)s
+        # The string casting here is a workaround for a bug in the DSC.
         initial["start_date"] = self.start_date.strftime("%Y-%m-%d")
         initial["end_date"] = self.end_date.strftime("%Y-%m-%d")
 
