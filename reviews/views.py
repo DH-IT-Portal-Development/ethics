@@ -96,17 +96,25 @@ class CommitteeMembersWorkloadView(
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.today = date.today()
-        self.one_year_ago = self.today - timedelta(days=365)
+        self.start_date = self.today - timedelta(days=365)
+        self.end_date = self.today
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            self.start_date = form.cleaned_data['start_date']
+            self.end_date = form.cleaned_data['end_date']
+        else:
+            return self.form_invalid(form)
+
+        return self.get(request, *args, **kwargs)
 
     def get_initial(self):
         initial = super().get_initial()
 
-        if "start_date" in self.request.GET and "end_date" in self.request.GET:
-            initial["start_date"] = self.request.GET.get("start_date")
-            initial["end_date"] = self.request.GET.get("end_date")
-        else:
-            initial["start_date"] = self.one_year_ago.strftime("%Y-%m-%d")
-            initial["end_date"] = self.today.strftime("%Y-%m-%d")
+        # You don't actually have to cast these to strings btw, DateField can handle date(time)s
+        initial["start_date"] = self.start_date.strftime("%Y-%m-%d")
+        initial["end_date"] = self.end_date.strftime("%Y-%m-%d")
 
         return initial
 
@@ -147,12 +155,11 @@ class CommitteeMembersWorkloadView(
         for specific review types, per reviewer."""
 
         decisions = self.get_committee_decisions()
-        dates = self.get_initial()
 
         reviewers = get_user_model().objects.filter(decision__in=decisions)
         base_filter = Q(
-            decision__review__date_start__gt=dates["start_date"],
-            decision__review__date_start__lt=dates["end_date"],
+            decision__review__date_start__gt=self.start_date,
+            decision__review__date_start__lt=self.end_date,
             decision__review__stage__gt=Review.SUPERVISOR,
         )
         return reviewers.annotate(

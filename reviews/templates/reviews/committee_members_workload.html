@@ -64,7 +64,7 @@
             <p>
                 {% trans 'Vul hieronder een start- en einddatum in voor de periode van dit overzicht.'%}
             </p>
-            <form action="" method="get">
+            <form action="" method="post">
                 {% csrf_token %}
                 <table>
                 {{ form.as_table }}
