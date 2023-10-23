@@ -8,7 +8,24 @@
 
 {% block extra_style %}
     <style type="text/css">
-        #content table {
+
+        @font-face {
+            font-family: "Open Sans";
+            src: url('proposals/static/proposals/pdf_font/OpenSans-Regular.ttf');
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: "Open Sans";
+            src: url('proposals/static/proposals/pdf_font/OpenSans-Bold.ttf');
+            font-weight: 700;
+        }
+
+        body {
+            font-family: "Open Sans";
+        }
+
+        #content section {
             border-top-width: .5px;
             border-top-style: solid;
             border-top-color: #cbcbcb;
@@ -23,19 +40,34 @@
             border-left-color: #cbcbcb;
         }
 
-        #content th, td {
-            width: 500px;
+        .question, .answer {
+            display: block;
+            width: 500px !important;
             font-weight: normal;
             text-align: left;
-            padding-top: 3px;
-            padding-right: 3px;
-            padding-bottom: 3px;
-            padding-left: 3px;
+        }
+
+        .question {
+            font-weight: 700;
+        }
+
+        .answer {
+            margin-bottom: 15px;
+            border-color: #ccc;
+            border-style: solid;
+            border-width: .5px;
+            padding: 3px;
+        }
+
+        h2 {
+            margin-top: 3rem;
+            font-size: 150%;
         }
 
         #content li {
             line-height: 10px;
         }
+        
     </style>
 {% endblock %}
 
@@ -71,14 +103,10 @@
       </p>
 
       <h2>{% trans 'Indiener' %}</h2>
-      <table>
-        <tr>
-          <th>{% trans 'Naam' %}</th><td>{{ proposal.created_by.get_full_name }}</td>
-        </tr>
-        <tr>
-          <th>{% trans 'E-mail' %}</th><td>{{ proposal.created_by.email }}</td>
-        </tr>
-      </table>
+      <div class="table">
+          <div class="question">{% trans 'Naam' %}</div><div class="answer">{{ proposal.created_by.get_full_name }}</div>
+          <div class="question">{% trans 'E-mail' %}</div><div class="answer">{{ proposal.created_by.email }}</div>
+      </div>
 
         {% for section in sections %}
           {% include section %}

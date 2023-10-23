@@ -1,17 +1,16 @@
 {% load i18n %}
 
 {% if page_break %}
-    <h2 style="page-break-before: always"> {% trans section_title %} </h2>
+  <h2 style="page-break-before: always"> {% trans section_title %} </h2>
 {% elif section_title %}
-    <h2> {% trans section_title %} </h2>
+  <h2> {% trans section_title %} </h2>
 {% endif %}
 {% if sub_title %}
-    <h3> {{ sub_title }} </h3>
+  <h3> {{ sub_title }} </h3>
 {% endif %}
-<table>
+<div class="table">
 {% for row in rows %}
-<tr>
-<th>{{ row.verbose_name }}</th><td>{{ row.value }}</td>
-</tr>
+  <div class="question">{{ row.verbose_name }}</div>
+  <div class="answer">{{ row.value }}</div>
 {% endfor %}
-</table>
+</div>

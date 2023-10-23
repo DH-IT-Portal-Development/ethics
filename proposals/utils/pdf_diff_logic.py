@@ -434,11 +434,7 @@ class GeneralSection(BaseSection):
     the general workflow for creating sections. All possible row fields are provided, and
     removed according to the logic in the get_row_fields method.
     This class receives a proposal object.
-
-    This is one of two Sections (the other being the CommentsSection) which overrides
-    the render method of the BaseSection class to allow for formatting certain values outside of
-    a <table> element and in a <p> element. The implementation of this is slightly clunkily
-    hardcoded as of now ... See the slicing in the render method."""
+    """
 
     section_title = _("Algemene informatie over de aanvraag")
     row_fields = [
@@ -486,21 +482,6 @@ class GeneralSection(BaseSection):
             rows.remove("funding_name")
 
         return rows
-
-    def render(self, context):
-        """NOTE the special template for dealing with these cases."""
-
-        context = context.flatten()
-        template = get_template("proposals/table_and_text_with_header.html")
-        rows = self.make_rows()
-        context.update(
-            {
-                "section_title": self.section_title,
-                "rows": rows[:-2],
-                "paragraph_rows": rows[-2:],
-            }
-        )
-        return template.render(context)
 
 
 class WMOSection(PageBreakMixin, BaseSection):
@@ -1056,25 +1037,12 @@ class EmbargoSection(BaseSection):
 
 
 class CommentsSection(BaseSection):
-    """Gets passed a proposal object. Again has a pretty funky overwritten render method
-    to account for formatting in <p> elements, similar to the GeneralSection."""
+    """Gets passed a proposal object. 
+    """
 
     section_title = _("Ruimte voor eventuele opmerkingen")
 
     row_fields = ["comments"]
-
-    def render(self, context):
-        context = context.flatten()
-        template = get_template("proposals/table_and_text_with_header.html")
-        rows = self.make_rows()
-        context.update(
-            {
-                "section_title": self.section_title,
-                "rows": [],
-                "paragraph_rows": rows,
-            }
-        )
-        return template.render(context)
 
 
 def get_extra_documents(obj):
