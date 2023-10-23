@@ -118,6 +118,8 @@ class DiffSection:
         else:
             old_fields = self.old_object.get_row_fields()
             new_fields = self.new_object.get_row_fields()
+            
+            irrelevant_fields = [field for field in old_fields if field not in new_fields]
 
             # creating a list containing all fields in all objects
             all_fields_set = set(old_fields)
@@ -128,10 +130,13 @@ class DiffSection:
                 field for field in self.old_object.row_fields if field in all_fields_set
             ]
 
-            rows = [
-                DiffRow(field, self.old_object.obj, self.new_object.obj)
-                for field in all_fields
-            ]
+            rows = []
+
+            for field in all_fields:
+                if field in irrelevant_fields:
+                    rows.append(DiffRow(field, self.old_object.obj, None))
+                else:
+                    rows.append(DiffRow(field, self.old_object.obj, self.new_object.obj))
 
             return rows
 
@@ -184,7 +189,7 @@ class FieldVerboseNameMixin:
         else:
             return mark_safe(
                 self._get_object()._meta.get_field(field).verbose_name
-                % self.obj.net_duration()
+                % self._get_object().net_duration()
             )
 
 
