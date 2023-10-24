@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 import os
 
+from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
@@ -162,21 +163,16 @@ EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
 MENU_SELECT_PARENTS = True
 MENU_HIDE_EMPTY = False
 
-# Group names
-GROUP_SECRETARY = 'Secretaris'
-GROUP_PRIMARY_SECRETARY = 'Primaire secretaris'
-GROUP_LINGUISTICS_CHAMBER = 'LK'
-GROUP_GENERAL_CHAMBER = 'AK'
-
-# Route durations
-PREASSESSMENT_ROUTE_WEEKS = 1
-SHORT_ROUTE_WEEKS = 2
-
 # Base URL
 BASE_URL = '127.0.0.1:8000'
 
 # CSRF Setting
 CSRF_FAILURE_VIEW = 'main.error_views.csrf_failure'
+
+try:
+    from .constants import *
+except ImportError:
+    raise ImproperlyConfigured("constants.py is missing!")
 
 try:
     from .ldap_settings import *
@@ -192,6 +188,9 @@ try:
 
     LOGIN_URL = reverse_lazy('saml-login')
     SHOW_SAML_LOGIN = True
+
+    # Custom proxy model for SAML attribute processing
+    SAML_USER_MODEL = 'main.SamlUserProxy'
 
 except ImportError:
     print('Proceeding without SAML settings')
