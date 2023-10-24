@@ -17,7 +17,7 @@ from typing import Tuple, Union
 
 from main.utils import get_document_contents, get_secretary, is_secretary
 from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
-    UpdateView, UserAllowedMixin
+    HumanitiesRequiredMixin, UpdateView, UserAllowedMixin
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
@@ -135,7 +135,11 @@ onderzoeker of eindverantwoordelijke bij betrokken bent.')
         return context
 
 
-class ProposalUsersOnlyArchiveView(CommitteeMixin, BaseProposalsView):
+class ProposalUsersOnlyArchiveView(
+    HumanitiesRequiredMixin,
+    CommitteeMixin,
+    BaseProposalsView
+):
     template_name = 'proposals/proposal_private_archive.html'
 
     def get_context_data(self, **kwargs):

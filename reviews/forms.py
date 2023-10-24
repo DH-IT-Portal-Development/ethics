@@ -7,6 +7,8 @@ from main.utils import YES_NO, get_reviewers_from_groups, is_secretary
 from proposals.models import Proposal
 from .models import Review, Decision
 
+from cdh.core.forms import DateField
+
 from django.core.exceptions import ValidationError
 
 SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')),
@@ -145,3 +147,9 @@ class DecisionForm(forms.ModelForm):
         self.fields['go'].empty_label = None
         self.fields['go'].choices = Decision.APPROVAL
         self.fields['go'].required = True
+
+class StartEndDateForm(forms.Form):
+    
+    start_date = DateField(label=_('Start datum periode:'))
+    end_date = DateField(label=_('Eind datum periode:'))
+

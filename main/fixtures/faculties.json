@@ -1,0 +1,24 @@
+[
+{
+  "model": "main.faculty",
+  "pk": 1,
+  "fields": {
+    "name": "Faculteit Geesteswetenschappen",
+    "name_nl": "Faculteit Geesteswetenschappen",
+    "name_en": "Faculty of Humanities",
+    "saml_name": "Faculteit Geesteswetenschappen",
+    "internal_name": "humanities"
+  }
+},
+{
+  "model": "main.faculty",
+  "pk": 2,
+  "fields": {
+    "name": "Faculteit Sociale Wetenschappen",
+    "name_nl": "Faculteit Sociale Wetenschappen",
+    "name_en": "Faculty of Social and Behavioural Sciences",
+    "saml_name": "Faculteit Sociale Wetenschappen",
+    "internal_name": "other"
+  }
+}
+]
