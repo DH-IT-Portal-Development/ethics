@@ -65,7 +65,6 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         }
 
     _soft_validation_fields = ['relation',
-                               'supervisor',
                                'other_applicants',
                                'other_stakeholders',
                                'stakeholders',
@@ -183,8 +182,17 @@ van het FETC-GW worden opgenomen.')
         self.mark_soft_required(cleaned_data, 'date_start')
 
         relation = cleaned_data.get('relation')
+        supervisor = cleaned_data.get('supervisor')
+
         if relation and relation.needs_supervisor and \
-           not cleaned_data.get('supervisor'):
+            supervisor == self.user:
+            error = forms.ValidationError(
+                _('De eindverantwoordelijke onderzoeker moet iemand anders zijn dan jijzelf.')
+            )
+            self.add_error('supervisor', error)
+            
+        if relation and relation.needs_supervisor and \
+           not supervisor:
             error = forms.ValidationError(
                 _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
@@ -196,7 +204,6 @@ van het FETC-GW worden opgenomen.')
 
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
-        supervisor = cleaned_data.get('supervisor')
 
         # Always make sure the applicant is actually in the applicants list
         if self.user not in applicants and self.user != supervisor:
