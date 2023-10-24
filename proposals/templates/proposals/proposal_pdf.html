@@ -49,6 +49,7 @@
 
         .question {
             font-weight: 700;
+            margin-bottom: 5px;
         }
 
         .answer {
@@ -60,14 +61,10 @@
         }
 
         h2 {
-            margin-top: 3rem;
+            margin-top: 2rem;
             font-size: 150%;
         }
 
-        #content li {
-            line-height: 10px;
-        }
-        
     </style>
 {% endblock %}
 
@@ -104,8 +101,8 @@
 
       <h2>{% trans 'Indiener' %}</h2>
       <div class="table">
-          <div class="question">{% trans 'Naam' %}</div><div class="answer">{{ proposal.created_by.get_full_name }}</div>
-          <div class="question">{% trans 'E-mail' %}</div><div class="answer">{{ proposal.created_by.email }}</div>
+        <div class="question">{% trans 'Naam' %}</div><div class="answer">{{ proposal.created_by.get_full_name }}</div>
+        <div class="question">{% trans 'E-mail' %}</div><div class="answer">{{ proposal.created_by.email }}</div>
       </div>
 
         {% for section in sections %}

@@ -283,13 +283,15 @@ class RowValue:
         list_of_objects = [obj for obj in object.all()]
         return self.create_unordered_html_list(list_of_objects)
 
-    def create_unordered_html_list(self, list):
-        html_output = mark_safe('<ul class="p-0">')
+    def create_unordered_html_list(self, lst):
+        html_output = mark_safe('<p class="p-0">')
 
-        for item in list:
-            html_output += format_html("<li>{}</li>", item)
+        for index, item in enumerate(lst):
+            html_output += format_html("- {}", item)
+            if index != len(lst) - 1:
+                html_output += mark_safe('<br/>')
 
-        html_output += mark_safe("</ul>")
+        html_output += mark_safe("</p>")
 
         return html_output
 
