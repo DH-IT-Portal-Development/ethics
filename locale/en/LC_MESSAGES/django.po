@@ -4132,8 +4132,7 @@ msgstr "Workload overview of past period"
 #: reviews/templates/reviews/committee_members_workload.html:65
 msgid ""
 "Vul hieronder een start- en einddatum in voor de periode van dit overzicht."
-msgstr ""
-"Select a start- and enddate for the period of the overview below."
+msgstr "Select a start- and enddate for the period of the overview below."
 
 #: reviews/templates/reviews/committee_members_workload.html:72
 msgid "Periode toepassen"
