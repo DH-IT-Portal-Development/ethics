@@ -165,6 +165,7 @@ van het FETC-GW worden opgenomen.')
         """
         Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor is set
+        - If relation needs supervisor, make sure supervisor is a different person
         - If other_applicants is checked, make sure applicants are set
         - If other_stakeholders is checked, make sure stakeholders is not empty
         - Maximum number of words for summary
@@ -183,19 +184,19 @@ van het FETC-GW worden opgenomen.')
 
         relation = cleaned_data.get('relation')
         supervisor = cleaned_data.get('supervisor')
-
-        if relation and relation.needs_supervisor and \
-            supervisor == self.user:
-            error = forms.ValidationError(
-                _('De eindverantwoordelijke onderzoeker moet iemand anders zijn dan jijzelf.')
-            )
-            self.add_error('supervisor', error)
             
         if relation and relation.needs_supervisor and \
            not supervisor:
             error = forms.ValidationError(
                 _('Je dient een eindverantwoordelijke op te geven.'),
                 code='required')
+            self.add_error('supervisor', error)
+
+        if relation and relation.needs_supervisor and \
+            supervisor == self.user:
+            error = forms.ValidationError(
+                _('Je kunt niet jezelf als eindverantwoordelijke opgeven.')
+            )
             self.add_error('supervisor', error)
 
         if relation.check_in_course:

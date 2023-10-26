@@ -156,16 +156,14 @@ class CommitteeMembersWorkloadView(
 
         decisions = self.get_committee_decisions()
 
-        reviewers = set([d.reviewer.id for d in decisions if not d.reviewer == d.review.proposal.supervisor])
-
-        reviewers_no_supervisor = get_user_model().objects.filter(id__in=reviewers)
+        reviewers = get_user_model().objects.filter(decision__in=decisions)
 
         base_filter = Q(
             decision__review__date_start__gt=self.start_date,
             decision__review__date_start__lt=self.end_date,
             decision__review__stage__gt=Review.SUPERVISOR,
         )
-        return reviewers_no_supervisor.annotate(
+        return reviewers.annotate(
             total=Count("decision", filter=base_filter),
             num_short_route=Count(
                 "decision",
