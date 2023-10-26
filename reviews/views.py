@@ -184,7 +184,7 @@ class CommitteeMembersWorkloadView(
                 "decision",
                 filter=base_filter & Q(decision__review__proposal__is_revision=True),
             ),
-        )
+        ).exclude(total=0)
 
 
 class SupervisorDecisionOpenView(BaseDecisionListView):
