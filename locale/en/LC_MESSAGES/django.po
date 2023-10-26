@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-21 10:45+0200\n"
+"POT-Creation-Date: 2023-10-26 16:38+0200\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -83,7 +83,7 @@ msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 #: main/templates/main/index.html:177
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
-#: proposals/utils/pdf_diff_logic.py:848
+#: proposals/utils/pdf_diff_logic.py:874
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
@@ -152,7 +152,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: feedback/templates/feedback/feedback_form.html:23
 #: observations/templates/observations/observation_update_attachments.html:39
 #: proposals/templates/proposals/proposal_confirmation.html:36
-#: proposals/templates/proposals/proposal_diff.html:100
+#: proposals/templates/proposals/proposal_diff.html:58
 #: proposals/templates/proposals/proposal_update_attachments.html:26
 #: reviews/templates/reviews/change_chamber_form.html:19
 #: reviews/templates/reviews/decision_form.html:90
@@ -283,7 +283,7 @@ msgstr "How many times a week will the intervention session take place?"
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:49
 #: proposals/templates/proposals/proposal_pdf_empty.html:186
-#: proposals/utils/pdf_diff_logic.py:506
+#: proposals/utils/pdf_diff_logic.py:601
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
@@ -344,11 +344,11 @@ msgstr "Log in"
 msgid "Log uit"
 msgstr "Log out"
 
-#: main/models.py:8 main/utils.py:13 proposals/utils/pdf_diff_logic.py:214
+#: main/models.py:8 main/utils.py:13 proposals/utils/pdf_diff_logic.py:256
 msgid "ja"
 msgstr "yes"
 
-#: main/models.py:9 main/utils.py:13 proposals/utils/pdf_diff_logic.py:214
+#: main/models.py:9 main/utils.py:13 proposals/utils/pdf_diff_logic.py:256
 msgid "nee"
 msgstr "no"
 
@@ -401,7 +401,7 @@ msgid "Gebruiksersnaam"
 msgstr "Username"
 
 #: main/templates/auth/user_detail.html:30
-#: proposals/templates/proposals/proposal_pdf.html:79
+#: proposals/templates/proposals/proposal_pdf.html:105
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:66
 msgid "E-mail"
 msgstr "E-mail"
@@ -1238,7 +1238,7 @@ msgstr "How many hours of observation will take place on average per day?"
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:44
 #: proposals/templates/proposals/proposal_pdf_empty.html:229
-#: proposals/utils/pdf_diff_logic.py:578
+#: proposals/utils/pdf_diff_logic.py:657
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
@@ -1783,7 +1783,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:420 proposals/templates/proposals/proposal_diff.html:83
+#: proposals/models.py:420 proposals/utils/pdf_diff_logic.py:1045
 #: reviews/models.py:180
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
@@ -2209,7 +2209,7 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
-#: proposals/utils/pdf_diff_logic.py:959
+#: proposals/utils/pdf_diff_logic.py:1019
 #: reviews/templatetags/documents_list.py:245
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
@@ -2339,27 +2339,20 @@ msgstr ""
 "gw@uu.nl</a>."
 
 #: proposals/templates/proposals/proposal_diff.html:11
-#: proposals/templates/proposals/proposal_diff.html:41
 msgid "Overzicht van wijzigingen"
 msgstr "Summary of changes"
 
-#: proposals/templates/proposals/proposal_diff.html:43
+#: proposals/templates/proposals/proposal_diff.html:38
+msgid "Overzicht van wijzigingen bij aanmelding "
+msgstr "Summary of changes of application "
+
+#: proposals/templates/proposals/proposal_diff.html:42
 msgid ""
 "Dit overzicht toont de gemaakte wijzigingen in de revisie/het amendement ten "
 "opzichte van de originele aanvraag."
 msgstr ""
 "This overview shows the changes made in the revision/amendment with respect "
 "to the original application."
-
-#: proposals/templates/proposals/proposal_diff.html:87
-#: proposals/templates/proposals/table_with_header_diff.html:13
-msgid "Originele aanvraag"
-msgstr "Original application"
-
-#: proposals/templates/proposals/proposal_diff.html:88
-#: proposals/templates/proposals/table_with_header_diff.html:14
-msgid "Revisie/amendement"
-msgstr "Revision/amendment"
 
 #: proposals/templates/proposals/proposal_form.html:7
 #: proposals/templates/proposals/proposal_form.html:92
@@ -2368,7 +2361,7 @@ msgstr "Revision/amendment"
 #: proposals/templates/proposals/proposal_pdf_empty.html:60
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:69
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:59
-#: proposals/utils/pdf_diff_logic.py:334 proposals/utils/proposal_utils.py:40
+#: proposals/utils/pdf_diff_logic.py:441 proposals/utils/proposal_utils.py:40
 #: proposals/utils/proposal_utils.py:55 proposals/utils/validate_proposal.py:33
 #: proposals/utils/validate_proposal.py:43
 #: proposals/utils/validate_proposal.py:50
@@ -2509,7 +2502,7 @@ msgstr ""
 "Click <img src=\"%(img_add)s\" title=\"add\"> to submit an application to "
 "the archive."
 
-#: proposals/templates/proposals/proposal_pdf.html:44
+#: proposals/templates/proposals/proposal_pdf.html:73
 #, python-format
 msgid ""
 "FETC-GW - <em>%(title)s</em> (referentienummer %(reference_number)s, "
@@ -2518,26 +2511,26 @@ msgstr ""
 "FEtC-H - <em>%(title)s</em> (reference number %(reference_number)s, "
 "submitted by %(submitter)s)"
 
-#: proposals/templates/proposals/proposal_pdf.html:50
+#: proposals/templates/proposals/proposal_pdf.html:79
 #, python-format
 msgid "%(type)s van referentienummer %(reference_number)s"
 msgstr "%(type)s of reference number %(reference_number)s"
 
-#: proposals/templates/proposals/proposal_pdf.html:66
+#: proposals/templates/proposals/proposal_pdf.html:95
 #, python-format
 msgid "Referentienummer %(reference_number)s"
 msgstr "Reference number %(reference_number)s"
 
-#: proposals/templates/proposals/proposal_pdf.html:70
+#: proposals/templates/proposals/proposal_pdf.html:99
 msgid "Huidige staat van de aanvraag"
 msgstr "Current state of the application"
 
-#: proposals/templates/proposals/proposal_pdf.html:73
+#: proposals/templates/proposals/proposal_pdf.html:102
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:60
 msgid "Indiener"
 msgstr "Applicant"
 
-#: proposals/templates/proposals/proposal_pdf.html:76
+#: proposals/templates/proposals/proposal_pdf.html:104
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:63
 #: tasks/templates/tasks/task_list.html:7
 msgid "Naam"
@@ -2569,7 +2562,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:110
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:30
-#: proposals/utils/pdf_diff_logic.py:381
+#: proposals/utils/pdf_diff_logic.py:493
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -2578,27 +2571,27 @@ msgstr ""
 #: proposals/templates/proposals/proposal_pdf_empty.html:120
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:27
-#: proposals/utils/pdf_diff_logic.py:404
+#: proposals/utils/pdf_diff_logic.py:518
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:134
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:64
-#: proposals/utils/pdf_diff_logic.py:415
+#: proposals/utils/pdf_diff_logic.py:526
 #: proposals/utils/validate_proposal.py:87
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:145
-#: proposals/utils/pdf_diff_logic.py:432
+#: proposals/utils/pdf_diff_logic.py:544
 #: studies/templates/studies/study_form.html:7
 #: studies/templates/studies/study_form.html:82
 msgid "De deelnemers"
 msgstr "Participants"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:279
-#: proposals/utils/pdf_diff_logic.py:676
+#: proposals/utils/pdf_diff_logic.py:748
 #: studies/templates/studies/session_start.html:7
 #: studies/templates/studies/session_start.html:17
 #: tasks/templates/tasks/task_form.html:7
@@ -2623,13 +2616,13 @@ msgid "Taak"
 msgstr "Task"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:335
-#: proposals/utils/pdf_diff_logic.py:795 proposals/utils/pdf_diff_logic.py:805
-#: tasks/templates/tasks/task_end.html:7 tasks/templates/tasks/task_end.html:18
+#: proposals/utils/pdf_diff_logic.py:330 tasks/templates/tasks/task_end.html:7
+#: tasks/templates/tasks/task_end.html:18
 msgid "Overzicht van het takenonderzoek"
 msgstr "Overview of task-based research"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:343
-#: proposals/utils/pdf_diff_logic.py:813
+#: proposals/utils/pdf_diff_logic.py:836
 #: studies/templates/studies/study_end.html:7
 #: studies/templates/studies/study_end.html:28
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
@@ -2642,7 +2635,7 @@ msgstr "Informed consent forms for the study"
 #: proposals/templates/proposals/proposal_pdf_empty.html:389
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:150
 #: proposals/templates/proposals/proposal_submit.html:181
-#: proposals/utils/pdf_diff_logic.py:966
+#: proposals/utils/pdf_diff_logic.py:1027
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2686,7 +2679,7 @@ msgstr "unknown"
 
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:143
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:105
-#: proposals/utils/pdf_diff_logic.py:262 proposals/utils/pdf_diff_logic.py:272
+#: proposals/utils/pdf_diff_logic.py:303
 msgid "Download"
 msgstr "Download"
 
@@ -2795,7 +2788,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start.html:53
 #: proposals/templates/proposals/proposal_start_practice.html:55
 #: proposals/templates/proposals/study_start.html:73
-#: proposals/utils/pdf_diff_logic.py:90
+#: proposals/utils/pdf_diff_logic.py:350
 #: reviews/templates/reviews/committee_members_workload.html:24
 msgid "Traject"
 msgstr "Trajectory"
@@ -3248,6 +3241,14 @@ msgstr ""
 "You can now describe the nature of <em>each trajectory</em> of the study on "
 "the following pages."
 
+#: proposals/templates/proposals/table_with_header_diff.html:13
+msgid "Originele aanvraag"
+msgstr "Original application"
+
+#: proposals/templates/proposals/table_with_header_diff.html:14
+msgid "Revisie/amendement"
+msgstr "Revision/amendment"
+
 #: proposals/templates/proposals/translated_consent_forms.html:25
 #: proposals/utils/validate_proposal.py:223
 msgid "Vertaling informed consent formulieren"
@@ -3351,32 +3352,7 @@ msgstr "WMO check"
 msgid "Opnieuw beginnen"
 msgstr "Start again"
 
-#: proposals/utils/pdf_diff_logic.py:82 proposals/utils/pdf_diff_logic.py:104
-#: proposals/utils/pdf_diff_logic.py:114 proposals/utils/pdf_diff_logic.py:135
-msgid "Traject "
-msgstr "Trajectory "
-
-#: proposals/utils/pdf_diff_logic.py:109 proposals/utils/pdf_diff_logic.py:140
-msgid "sessie "
-msgstr "session "
-
-#: proposals/utils/pdf_diff_logic.py:122 proposals/utils/pdf_diff_logic.py:147
-msgid "Sessie "
-msgstr "Session "
-
-#: proposals/utils/pdf_diff_logic.py:142 proposals/utils/pdf_diff_logic.py:149
-msgid ", taak "
-msgstr ", task "
-
-#: proposals/utils/pdf_diff_logic.py:212 reviews/models.py:122
-msgid "Onbekend"
-msgstr "Unknown"
-
-#: proposals/utils/pdf_diff_logic.py:266
-msgid "Niet aangeleverd"
-msgstr "Not provided"
-
-#: proposals/utils/pdf_diff_logic.py:295
+#: proposals/utils/pdf_diff_logic.py:88
 msgid ""
 "Dit onderdeel is nieuw in de revisie en bestond niet in de originele "
 "aanvraag."
@@ -3384,14 +3360,39 @@ msgstr ""
 "This section was added in the revision, and did not feature in the original "
 "application."
 
-#: proposals/utils/pdf_diff_logic.py:300
+#: proposals/utils/pdf_diff_logic.py:95
 msgid ""
 "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
 msgstr ""
 "This section was present in the original application, but was removed for "
 "the revision."
 
-#: proposals/utils/pdf_diff_logic.py:937 proposals/utils/pdf_diff_logic.py:953
+#: proposals/utils/pdf_diff_logic.py:260 reviews/models.py:122
+msgid "Onbekend"
+msgstr "Unknown"
+
+#: proposals/utils/pdf_diff_logic.py:306
+msgid "Niet aangeleverd"
+msgstr "Not provided"
+
+#: proposals/utils/pdf_diff_logic.py:343 proposals/utils/pdf_diff_logic.py:370
+#: proposals/utils/pdf_diff_logic.py:379 proposals/utils/pdf_diff_logic.py:403
+msgid "Traject "
+msgstr "Trajectory "
+
+#: proposals/utils/pdf_diff_logic.py:373 proposals/utils/pdf_diff_logic.py:406
+msgid "sessie "
+msgstr "session "
+
+#: proposals/utils/pdf_diff_logic.py:386 proposals/utils/pdf_diff_logic.py:414
+msgid "Sessie "
+msgstr "Session "
+
+#: proposals/utils/pdf_diff_logic.py:408 proposals/utils/pdf_diff_logic.py:416
+msgid ", taak "
+msgstr ", task "
+
+#: proposals/utils/pdf_diff_logic.py:995
 msgid "Extra formulieren "
 msgstr "Additional forms "
 
