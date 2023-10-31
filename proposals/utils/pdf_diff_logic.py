@@ -587,7 +587,7 @@ class StudySection(BaseSection):
             rows.remove("necessity_reason")
         if not needs_details(obj.recruitment.all()):
             rows.remove("recruitment_details")
-        if not obj.compensation or obj.compensation.needs_details:
+        if not obj.compensation or not obj.compensation.needs_details:
             rows.remove("compensation_details")
         if not obj.hierarchy:
             rows.remove("hierarchy_details")
@@ -1065,7 +1065,9 @@ def create_context_pdf(context, model):
     sections = []
 
     sections.append(GeneralSection(model))
-    sections.append(WMOSection(model.wmo))
+
+    if model.wmo:
+        sections.append(WMOSection(model.wmo))
 
     if model.wmo.status != model.wmo.NO_WMO:
         sections.append(METCSection(model.wmo))
@@ -1140,8 +1142,13 @@ def create_context_diff(context, old_proposal, new_proposal):
     sections.append(
         DiffSection(GeneralSection(old_proposal), GeneralSection(new_proposal))
     )
-    sections.append(
-        DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
+
+    if (
+        new_proposal.wmo
+        or old_proposal.wmo
+    ):
+        sections.append(
+            DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
     )
 
     if (

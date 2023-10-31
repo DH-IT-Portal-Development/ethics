@@ -11,8 +11,8 @@ def zip_equalize_lists(a, b):
     smallest list, but will append None's to the smaller list to fill the gap
     """
 
-    a = [None] if a is None else list(a)
-    b = [None] if b is None else list(b)
+    a = [] if a is None else list(a)
+    b = [] if b is None else list(b)
     
     a_len = len(a)
     b_len = len(b)
