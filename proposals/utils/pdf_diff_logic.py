@@ -40,9 +40,14 @@ class BaseSection:
         self.sub_title = None
 
     def make_rows(self):
-        rows = [Row(self.obj, field) for field in self.get_row_fields()]
-
+        rows = [self.make_row_for_field(field) for field in self.get_row_fields()]
         return rows
+    
+    def make_row_for_field(self, field):
+        if field in self.get_row_fields():
+            return Row(self.obj, field)
+        else:
+            return None
 
     def get_row_fields(self):
         return self.row_fields
@@ -80,28 +85,28 @@ class DiffSection:
     Some parts of this were written with the idea of allowing more than two objects to be compared,
     however, I did not end up pursuing this idea until the end."""
 
-    def __init__(self, old_object, new_object):
-        self.old_object = old_object
-        self.new_object = new_object
-        if self.old_object is None:
+    def __init__(self, old_section, new_section):
+        self.old_section = old_section
+        self.new_section = new_section
+        if self.old_section is None:
             self.warning = _(
                 "Dit onderdeel is nieuw in de revisie en bestond niet in de originele aanvraag."
             )
             self.missing_object = "old"
-            self.sub_title = self.new_object.sub_title
-            self.section_title = self.new_object.section_title
-        elif self.new_object is None:
+            self.sub_title = self.new_section.sub_title
+            self.section_title = self.new_section.section_title
+        elif self.new_section is None:
             self.warning = _(
                 "Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
             )
             self.missing_object = "new"
-            self.sub_title = self.old_object.sub_title
-            self.section_title = self.old_object.section_title
+            self.sub_title = self.old_section.sub_title
+            self.section_title = self.old_section.section_title
         else:
             self.warning = None
             self.missing_object = None
-            self.sub_title = self.old_object.sub_title
-            self.section_title = self.old_object.section_title
+            self.sub_title = self.old_section.sub_title
+            self.section_title = self.old_section.section_title
         self.rows = self.make_diff_rows()
 
     def make_diff_rows(self):
@@ -111,33 +116,38 @@ class DiffSection:
             # If there is a missing object, the template can just use the make_rows function
             # of the object that is not missing.
             if self.missing_object == "old":
-                rows = self.new_object.make_rows()
+                rows = self.new_section.make_rows()
             else:
-                rows = self.old_object.make_rows()
+                rows = self.old_section.make_rows()
             return rows
         else:
-            old_fields = self.old_object.get_row_fields()
-            new_fields = self.new_object.get_row_fields()
-            
-            irrelevant_fields = [field for field in old_fields if field not in new_fields]
-
-            # creating a list containing all fields in all objects
-            all_fields_set = set(old_fields)
-            all_fields_set.update(new_fields)
-
-            # reordering the fields according to the row_fields class variable
-            all_fields = [
-                field for field in self.old_object.row_fields if field in all_fields_set
-            ]
+            all_fields = self.old_section.row_fields
 
             rows = []
 
-            for field in all_fields:
-                if field in irrelevant_fields:
-                    rows.append(DiffRow(field, self.old_object.obj, None))
-                else:
-                    rows.append(DiffRow(field, self.old_object.obj, self.new_object.obj))
+            old_rows = self.old_section.make_rows()
+            new_rows = self.new_section.make_rows()
 
+            old_section_dict = {row.field: row for row in old_rows}
+            new_section_dict = {row.field: row for row in new_rows}
+
+            for field in all_fields:
+                if field in old_section_dict and field in new_section_dict:
+                    rows.append({'verbose_name':old_section_dict[field].verbose_name,
+                                 'old_value': old_section_dict[field].value, 
+                                 'new_value': new_section_dict[field].value}
+                    )
+                elif field in old_section_dict and not field in new_section_dict:
+                    rows.append({'verbose_name':old_section_dict[field].verbose_name,
+                                 'old_value': old_section_dict[field].value, 
+                                 'new_value': ''}
+                    )  
+                elif field in new_section_dict and not field in old_section_dict:
+                    rows.append({'verbose_name':new_section_dict[field].verbose_name,
+                                 'old_value': '', 
+                                 'new_value': new_section_dict[field].value}
+                    )
+                                    
             return rows
 
     def render(self, context):
@@ -165,16 +175,24 @@ class DiffSection:
         )
         return template.render(context)
 
+class Row:
+    """This class creates rows for one objects, and gets initated
+    in the make_rows method of Section classes. The classmethods of Rowclass
+    are called in the templates of the render method of the PDF class, as well as in
+    the make_diff_rows() method of the DiffSection"""
 
-class FieldVerboseNameMixin:
     verbose_name_diff_field_dict = {
         "get_metc_display": "metc",
         "get_is_medical_display": "is_medical",
     }
 
-    def _get_object(self):
-        return self.obj
+    def __init__(self, obj, field):
+        self.obj = obj
+        self.field = field
 
+    def value(self):
+        return RowValue(self.obj, self.field).get_field_value()
+    
     def verbose_name(self):
         if self.field in self.verbose_name_diff_field_dict:
             verbose_name_field = self.verbose_name_diff_field_dict[self.field]
@@ -185,53 +203,12 @@ class FieldVerboseNameMixin:
 
     def get_verbose_name(self, field):
         if field != "tasks_duration":
-            return mark_safe(self._get_object()._meta.get_field(field).verbose_name)
+            return mark_safe(self.obj._meta.get_field(field).verbose_name)
         else:
             return mark_safe(
-                self._get_object()._meta.get_field(field).verbose_name
-                % self._get_object().net_duration()
-            )
-
-
-class Row(FieldVerboseNameMixin):
-    """This class creates rows for one objects, and gets initated
-    in the make_rows method of Section classes. The classmethods of Rowclass
-    are called in the templates of the render method of the PDF class, as well as in
-    the make_diff_rows() method of the DiffSection"""
-
-    def __init__(self, obj, field):
-        self.obj = obj
-        self.field = field
-
-    def value(self):
-        return RowValue(self.obj, self.field).get_field_value()
-
-
-class DiffRow(FieldVerboseNameMixin):
-    def __init__(self, field, old_object, new_object):
-        self.old_object = old_object
-        self.new_object = new_object
-        self.field = field
-
-    def _get_object(self):
-        if self.old_object:
-            return self.old_object
-
-        # Note: when both are not present this will fail.
-        # Should not happen
-        return self.new_object
-
-    def value(self):
-        old_value = ""
-        if self.old_object:
-            old_value = RowValue(self.old_object, self.field).get_field_value()
-
-        new_value = ""
-        if self.new_object:
-            new_value = RowValue(self.new_object, self.field).get_field_value()
-
-        return old_value, new_value
-
+                self.obj._meta.get_field(field).verbose_name
+                % self.obj.net_duration()
+            )    
 
 class RowValue:
     """The RowValue class manages the values of fields and correctly retrieves and/or formats
@@ -928,56 +905,6 @@ class InformedConsentFormsSection(BaseSection):
 
         return rows
 
-
-class InformedConsentFormsSectionDiff(DiffSection):
-    """As the regular Informed Consent section, the diff version needed its own version of an
-    overwritten make_rows method ... :("""
-
-    def make_diff_rows(self):
-        if self.missing_object is not None:
-            # If there is a missing object, the template can just use the make_rows function
-            # of the object that is not missing.
-            if self.missing_object == "old":
-                rows = self.new_object.make_rows()
-            else:
-                rows = self.old_object.make_rows()
-            return rows
-        else:
-            # Note: This uses the 2 new variables replacing 'objects' I proposed earlier
-            old_fields = self.old_object.get_row_fields()
-            new_fields = self.new_object.get_row_fields()
-
-            proposal_list = ["translated_forms", "translated_forms_languages"]
-            study_list = ["passive_consent", "passive_consent_details"]
-
-            # creating a list containing all fields in all objects
-            all_fields = set(old_fields)
-            all_fields.update(new_fields)
-
-            rows = []
-
-            for field in all_fields:
-                if field in proposal_list:
-                    rows.append(
-                        DiffRow(
-                            field,
-                            self.old_object.obj.proposal,
-                            self.new_object.obj.proposal,
-                        )
-                    )
-                elif field in study_list:
-                    rows.append(
-                        DiffRow(
-                            field, self.old_object.obj.study, self.new_object.obj.study
-                        )
-                    )
-                else:
-                    rows.append(
-                        DiffRow(field, self.old_object.obj, self.new_object.obj)
-                    )
-            return rows
-
-
 class ExtraDocumentsSection(BaseSection):
     """This class receives an Documents object.
     Overrides the __init__ to create a formatted section title"""
@@ -1241,7 +1168,7 @@ def create_context_diff(context, old_proposal, new_proposal):
             both_documents = get_all_related(both_studies, "documents")
 
             sections.append(
-                InformedConsentFormsSectionDiff(
+                DiffSection(
                     *multi_sections(InformedConsentFormsSection, both_documents)
                 )
             )

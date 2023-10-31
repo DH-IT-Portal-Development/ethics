@@ -44,7 +44,7 @@
 {% else %}
     {% for row in rows %}
         <tr>
-            <th>{{ row.verbose_name }}</th><td>{{ row.value.0 }}</td><td>{{ row.value.1 }}</td>
+            <th>{{ row.verbose_name }}</th><td>{{ row.old_value }}</td><td>{{ row.new_value }}</td>
         </tr>
     {% endfor %}
 {% endif %}
