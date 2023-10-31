@@ -25,7 +25,7 @@ blessed==1.20.0
     # via curtsies
 bpython==0.24
     # via -r requirements.in
-cdh-django-core @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-4
+cdh-django-core[federated-auth] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-4
     # via -r requirements.in
 certifi==2023.7.22
     # via requests
@@ -93,7 +93,9 @@ djangorestframework==3.14.0
     #   -r requirements.in
     #   uil-django-core
 djangosaml2==1.6.0
-    # via cdh-django-core
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 docutils==0.18.1
     # via
     #   sphinx
@@ -164,7 +166,7 @@ pyjwt==2.8.0
     # via uil-django-core
 pyopenssl==23.2.0
     # via pysaml2
-pypdf==3.13.0
+pypdf==3.17.0
     # via xhtml2pdf
 pypng==0.20220715.0
     # via qrcode
