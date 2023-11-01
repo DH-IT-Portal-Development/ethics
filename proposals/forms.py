@@ -56,7 +56,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             }),
             'funding':            forms.CheckboxSelectMultiple(),
             'applicants':         SelectMultipleUser(),
-            'supervisor':         SelectUser(),
+            'supervisor':         forms.Select(),
         }
         error_messages = {
             'title': {
@@ -131,6 +131,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
 
         self.fields['supervisor'].choices = [(None, _(
             'Selecteer...'))] + get_users_as_list(supervisors)
+        
         self.fields['applicants'].choices = get_users_as_list(applicants)
 
         if in_course:
