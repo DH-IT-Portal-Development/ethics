@@ -10,12 +10,12 @@
 {% block html_head %}
     <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
     <script>
-    $(function() {
-        check_metc_required("{% url 'proposals:check_wmo' %}");
+        $(function() {
+            check_metc_required("{% url 'proposals:check_wmo' %}");
 
-        depends_on_value('metc', 'Y', 'metc_details');
-        depends_on_value('metc', 'Y', 'metc_institution');
-    });
+            depends_on_value('metc', 'Y', 'metc_details');
+            depends_on_value('metc', 'Y', 'metc_institution');
+        });
     </script>
 {% endblock %}
 

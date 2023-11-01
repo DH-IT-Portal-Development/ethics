@@ -23,9 +23,9 @@
 {% block content %}
     <div class="uu-inner-container">
 
-    {% with review=review %}
-        {% include "reviews/review_detail_sidebar.html" %}
-    {% endwith %}
+        {% with review=review %}
+            {% include "reviews/review_detail_sidebar.html" %}
+        {% endwith %}
 
         <div class="col-12 col-md-9">
             <h2>
@@ -34,47 +34,47 @@
 
             <p>
                 {% blocktrans trimmed %}
-                Als een aanvraag definitief niet meer door de FETC-GW
-                afgehandeld gaat worden, en deze in de weg staat,
-                kan er voor gekozen worden deze te beëindigen.
+                    Als een aanvraag definitief niet meer door de FETC-GW
+                    afgehandeld gaat worden, en deze in de weg staat,
+                    kan er voor gekozen worden deze te beëindigen.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}
-                Een beëindigde aanvraag verschijnt niet meer in de pagina's
-                van de secretaris en beoordelaars. Deze
-                aanvraag kan ook niet meer gereviseerd worden,
-                maar nog wel gekopieerd. De aanvraag is nog wel zichtbaar
-                in de lijst met "alle ingediende aanvragen".
+                    Een beëindigde aanvraag verschijnt niet meer in de pagina's
+                    van de secretaris en beoordelaars. Deze
+                    aanvraag kan ook niet meer gereviseerd worden,
+                    maar nog wel gekopieerd. De aanvraag is nog wel zichtbaar
+                    in de lijst met "alle ingediende aanvragen".
                 {% endblocktrans %}
             </p>
             {% if review.stage == review.CLOSED %}
-            <p>
-                <strong>
-                    {% trans "Attentie" %}
-                </strong>:
-                {% blocktrans trimmed %}
-                Deze aanvraag heeft op dit moment geen lopende beoordeling. Om deze aanvraag definitief te
-                beëindigen, moeten we de uitkomst van laatste beoordeling (zie linker balk) veranderen.
-                Dit kan verwarring veroorzaken bij de indiener, dus houd hier rekening mee.
-                {% endblocktrans %}
-            </p>
+                <p>
+                    <strong>
+                        {% trans "Attentie" %}
+                    </strong>:
+                    {% blocktrans trimmed %}
+                        Deze aanvraag heeft op dit moment geen lopende beoordeling. Om deze aanvraag definitief te
+                        beëindigen, moeten we de uitkomst van laatste beoordeling (zie linker balk) veranderen.
+                        Dit kan verwarring veroorzaken bij de indiener, dus houd hier rekening mee.
+                    {% endblocktrans %}
+                </p>
             {% endif %}
             <p>
                 <strong>{% trans "Aanvraag" %}</strong>:
                 {% blocktrans with title=review.proposal.title author=review.proposal.created_by trimmed %}
-                <em>{{title}}</em> door {{author}}
+                    <em>{{title}}</em> door {{author}}
                 {% endblocktrans %}
-            <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
-                <div class="float-right">
-                    <a class="button" href="javascript:history.go(-1);">
-                        {% trans "Terug naar de vorige pagina" %}
-                    </a>
-                    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}"/>
-                </div>
+                <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <table>{{ form.as_table }}</table>
+                    <div class="float-right">
+                        <a class="button" href="javascript:history.go(-1);">
+                            {% trans "Terug naar de vorige pagina" %}
+                        </a>
+                        <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}"/>
+                    </div>
 
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
 {% endblock %}

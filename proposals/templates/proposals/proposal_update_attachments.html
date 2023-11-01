@@ -15,8 +15,8 @@
             </h2>
             <p>
                 {% blocktrans trimmed with title=proposal.title ref_number=proposal.reference_number %}
-                Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag {{ title }}
-                (referentienummer <em>{{ ref_number }}</em>).
+                    Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag {{ title }}
+                    (referentienummer <em>{{ ref_number }}</em>).
                 {% endblocktrans %}
             </p>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}

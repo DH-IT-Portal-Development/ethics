@@ -4,17 +4,17 @@
 <p>
     <div class="{{ auto_review_go|yesno:"success,warning" }}">
         {% if auto_review_go %}
-        {% trans "Volgens de automatische review kan dit voorstel de <em>korte (2-weken) route</em> volgen." %}
+            {% trans "Volgens de automatische review kan dit voorstel de <em>korte (2-weken) route</em> volgen." %}
         {% else %}
-        {% trans "Volgens de automatische review moet dit voorstel nader worden bekeken." %}
+            {% trans "Volgens de automatische review moet dit voorstel nader worden bekeken." %}
         {% endif %}
     </div>
     {% if not auto_review_go %}
-    <h3>{% trans "Redenen" %}</h3>
-    <ul>
-        {% for reason in auto_review_reasons %}
-        <li>{{ reason }}</li>
-        {% endfor %}
-    </ul>
+        <h3>{% trans "Redenen" %}</h3>
+        <ul>
+            {% for reason in auto_review_reasons %}
+                <li>{{ reason }}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
 </p>

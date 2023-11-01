@@ -2,217 +2,217 @@
 
 <script>
 
-function warning_on_value(a, a_value, b)
-{
-    let input_a = $('input[name=' + a + ']');
-    input_a.change(function() {
-        var check = input_a.filter(':checked').val() === a_value;
+    function warning_on_value(a, a_value, b)
+    {
+        let input_a = $('input[name=' + a + ']');
+        input_a.change(function() {
+            var check = input_a.filter(':checked').val() === a_value;
 
-        $('#' + b).toggle(check);
-    });
-    input_a.change();
-}
+            $('#' + b).toggle(check);
+        });
+        input_a.change();
+    }
 
 //checks whether field 'a' has 'a_value', and if so, toggles field 'b'
-function depends_on_value(a, a_value, b)
-{
-    let input_a = $('input[name=' + a + ']');
-    let input_b = $('#id_' + b);
-    input_a.change(function() {
-        let check = input_a.filter(':checked').val() === a_value;
+    function depends_on_value(a, a_value, b)
+    {
+        let input_a = $('input[name=' + a + ']');
+        let input_b = $('#id_' + b);
+        input_a.change(function() {
+            let check = input_a.filter(':checked').val() === a_value;
 
         // Only if we don't want to show the field
-        if(!check) {
+            if(!check) {
             // clear the checkbox values for dependent fields to ensure secondary
             // dependencies disappear
-            let b_checkboxes = input_b.find('[type=checkbox]');
-            b_checkboxes.each(function() {
-                this.checked = false;
-            });
-            b_checkboxes.trigger('change');
-        }
-
-        input_b.parents('tr').toggle(check);
-    });
-    input_a.change();
-}
-
-function depends_on_hidden_value(a, a_value, b, header=false)
-{
-    let input_a = $('input[name=' + a + ']');
-    let input_b = $('#id_' + b);
-
-    input_a.change(function() {
-        let values = a_value;
-        if(!Array.isArray(values))
-        {
-            values = [a_value]
-        }
-        let check = false
-
-        values.forEach(function (val) {
-            if( input_a.val() === val )
-                check = true;
-        })
-
-        if(header)
-        {
-            input_b.parents('tr').prev().toggle(check);
-        }
-
-        input_b.parents('tr').toggle(check);
-    });
-    input_a.change();
-}
-
-function depends_on_list_value(a, a_value, b)
-{
-    let input_a = $('input[name=' + a + ']');
-    input_a.change(function() {
-        let values = input_a.filter(':checked').map(function() {
-            return this.value;
-        }).get();
-        $('#id_' + b).parent().parent().toggle(intersect(values, a_value).length > 0);
-    });
-    input_a.change();
-}
-
-function intersect(a, b)
-{
-    return a.filter(function (e) {
-        if (b.indexOf(e) !== -1) return true;
-    });
-}
-
-var postrequests = new Map(); //var to denote if a request is in progress
-
-// Checks whether a field is required given the selected inputs
-function check_field_required(input_name, field_name, required_input, app_name, model_name, header=false)
-{
-    // model_name is the name of the model as it is stored in the database (without punctuation)
-    // input_name is the name of the model as it is stored in the form (potentially with punctuation)
-    model_name = typeof model_name !== 'undefined' ? model_name : input_name;
-
-    let input = $('input[name=' + input_name + ']');
-    let r_input = $('#id_' + required_input);
-
-    let process_identifier = input_name.concat(' ', required_input);
-
-    input.change(function() {
-        // if a postrequest is in progress, abort that request
-        if (postrequests.has(process_identifier)) {
-            postrequests.get(process_identifier).abort();
-            postrequests.delete(process_identifier);
-        }
-        let checked_inputs = input.filter(':checked').map(function() {
-            return this.value;
-        }).get();
-
-        let url = "{% url 'main:check_requires' %}";
-        let params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
-        let req = $.post(url, params, function(data) {
-            r_input.parents('tr').toggle(data.result);
-
-            // If we don't want to show the field, unselect all selected checkboxes of that field (if any)
-            if (data.result === false) {
-                let r_input_checkboxes = r_input.find('[type=checkbox]');
-                r_input_checkboxes.each(function() {
+                let b_checkboxes = input_b.find('[type=checkbox]');
+                b_checkboxes.each(function() {
                     this.checked = false;
                 });
-                r_input_checkboxes.trigger('change');
+                b_checkboxes.trigger('change');
             }
 
-            // Remove header if present
+            input_b.parents('tr').toggle(check);
+        });
+        input_a.change();
+    }
+
+    function depends_on_hidden_value(a, a_value, b, header=false)
+    {
+        let input_a = $('input[name=' + a + ']');
+        let input_b = $('#id_' + b);
+
+        input_a.change(function() {
+            let values = a_value;
+            if(!Array.isArray(values))
+            {
+                values = [a_value]
+            }
+            let check = false
+
+            values.forEach(function (val) {
+                if( input_a.val() === val )
+                    check = true;
+            })
+
             if(header)
             {
-                r_input.parents('tr').prev().toggle(data.result);
+                input_b.parents('tr').prev().toggle(check);
             }
-            //when the request is done, mark it undefined
-            postrequests.delete(process_identifier);
+
+            input_b.parents('tr').toggle(check);
         });
-        postrequests.set(process_identifier, req);
-    });
-    input.change();
-}
+        input_a.change();
+    }
+
+    function depends_on_list_value(a, a_value, b)
+    {
+        let input_a = $('input[name=' + a + ']');
+        input_a.change(function() {
+            let values = input_a.filter(':checked').map(function() {
+                return this.value;
+            }).get();
+            $('#id_' + b).parent().parent().toggle(intersect(values, a_value).length > 0);
+        });
+        input_a.change();
+    }
+
+    function intersect(a, b)
+    {
+        return a.filter(function (e) {
+            if (b.indexOf(e) !== -1) return true;
+        });
+    }
+
+    var postrequests = new Map(); //var to denote if a request is in progress
+
+// Checks whether a field is required given the selected inputs
+    function check_field_required(input_name, field_name, required_input, app_name, model_name, header=false)
+    {
+    // model_name is the name of the model as it is stored in the database (without punctuation)
+    // input_name is the name of the model as it is stored in the form (potentially with punctuation)
+        model_name = typeof model_name !== 'undefined' ? model_name : input_name;
+
+        let input = $('input[name=' + input_name + ']');
+        let r_input = $('#id_' + required_input);
+
+        let process_identifier = input_name.concat(' ', required_input);
+
+        input.change(function() {
+        // if a postrequest is in progress, abort that request
+            if (postrequests.has(process_identifier)) {
+                postrequests.get(process_identifier).abort();
+                postrequests.delete(process_identifier);
+            }
+            let checked_inputs = input.filter(':checked').map(function() {
+                return this.value;
+            }).get();
+
+            let url = "{% url 'main:check_requires' %}";
+            let params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
+            let req = $.post(url, params, function(data) {
+                r_input.parents('tr').toggle(data.result);
+
+            // If we don't want to show the field, unselect all selected checkboxes of that field (if any)
+                if (data.result === false) {
+                    let r_input_checkboxes = r_input.find('[type=checkbox]');
+                    r_input_checkboxes.each(function() {
+                        this.checked = false;
+                    });
+                    r_input_checkboxes.trigger('change');
+                }
+
+            // Remove header if present
+                if(header)
+                {
+                    r_input.parents('tr').prev().toggle(data.result);
+                }
+            //when the request is done, mark it undefined
+                postrequests.delete(process_identifier);
+            });
+            postrequests.set(process_identifier, req);
+        });
+        input.change();
+    }
 
 // Adds a title row to a form field
-function add_title(field, title)
-{
-    var insert = $('<tr>').append($('<th>').append($('<strong>').text(title))).append($('<td>'));
-    $('#id_' + field).parents('tr').before(insert);
-}
+    function add_title(field, title)
+    {
+        var insert = $('<tr>').append($('<th>').append($('<strong>').text(title))).append($('<td>'));
+        $('#id_' + field).parents('tr').before(insert);
+    }
 
-$(function() {
+    $(function() {
     // Will put help texts as a tooltip on an information image
-    $("[id^=id]").each(function() {
-        var help = $(this).nextAll('.helptext');
-        if (help.html())
-        {
-            var label = $("th label[for^='" + $(this).attr('id') + "']").first();
-            label.after(` <img src="{% static 'main/images/information.png' %}">`);
-            label.next().qtip({
-                content: {
-                    text: help.html(),
-                },
-                hide: {
-                    fixed: true,
-                    delay: 500,
-                },
-            });
-            help.remove();
-        }
-    });
+        $("[id^=id]").each(function() {
+            var help = $(this).nextAll('.helptext');
+            if (help.html())
+            {
+                var label = $("th label[for^='" + $(this).attr('id') + "']").first();
+                label.after(` <img src="{% static 'main/images/information.png' %}">`);
+                label.next().qtip({
+                    content: {
+                        text: help.html(),
+                    },
+                    hide: {
+                        fixed: true,
+                        delay: 500,
+                    },
+                });
+                help.remove();
+            }
+        });
 
     // Will remove labels off table headers for checkbox/radio fields
-    $('input[type="radio"], input[type="checkbox"]').parents('tr').find('th label').contents().unwrap();
+        $('input[type="radio"], input[type="checkbox"]').parents('tr').find('th label').contents().unwrap();
 
     // Will automatically create tabindices
-    $('select[name!=language], input[type!=hidden], textarea, .pure-button').each(function(index) {
-        $(this).attr('tabindex', index + 1)
-    });
+        $('select[name!=language], input[type!=hidden], textarea, .pure-button').each(function(index) {
+            $(this).attr('tabindex', index + 1)
+        });
 
     // Will set a custom width for the language element
-    $('select[name="language"] + .select2-container').width('110px');
+        $('select[name="language"] + .select2-container').width('110px');
 
     // Will make each textarea auto-resize.
     // Copied from: http://stackoverflow.com/a/25621277
-    function h(e) {
-        $(e).css({'height': 'auto', 'overflow-y': 'hidden'}).height(e.scrollHeight);
-    }
-    $('textarea').each(function() {
-        h(this);
-    }).on('input', function() {
-        h(this);
-    });
+        function h(e) {
+            $(e).css({'height': 'auto', 'overflow-y': 'hidden'}).height(e.scrollHeight);
+        }
+        $('textarea').each(function() {
+            h(this);
+        }).on('input', function() {
+            h(this);
+        });
 
     // Prevents the backspace key from navigating back.
     // Copied from: http://stackoverflow.com/a/2768256
-    $(document).unbind('keydown').bind('keydown', function (event) {
-        var doPrevent = false;
-        if (event.keyCode === 8) {
-            var d = event.srcElement || event.target;
-            if ((d.tagName.toUpperCase() === 'INPUT' &&
-                 (
-                     d.type.toUpperCase() === 'TEXT' ||
-                     d.type.toUpperCase() === 'PASSWORD' ||
-                     d.type.toUpperCase() === 'FILE' ||
-                     d.type.toUpperCase() === 'SEARCH' ||
-                     d.type.toUpperCase() === 'EMAIL' ||
-                     d.type.toUpperCase() === 'URL' ||
-                     d.type.toUpperCase() === 'NUMBER' ||
-                     d.type.toUpperCase() === 'DATE' )
-                 ) ||
-                 d.tagName.toUpperCase() === 'TEXTAREA') {
-                doPrevent = d.readOnly || d.disabled;
+        $(document).unbind('keydown').bind('keydown', function (event) {
+            var doPrevent = false;
+            if (event.keyCode === 8) {
+                var d = event.srcElement || event.target;
+                if ((d.tagName.toUpperCase() === 'INPUT' &&
+                    (
+                        d.type.toUpperCase() === 'TEXT' ||
+                        d.type.toUpperCase() === 'PASSWORD' ||
+                        d.type.toUpperCase() === 'FILE' ||
+                        d.type.toUpperCase() === 'SEARCH' ||
+                        d.type.toUpperCase() === 'EMAIL' ||
+                        d.type.toUpperCase() === 'URL' ||
+                        d.type.toUpperCase() === 'NUMBER' ||
+                        d.type.toUpperCase() === 'DATE' )
+                ) ||
+                    d.tagName.toUpperCase() === 'TEXTAREA') {
+                        doPrevent = d.readOnly || d.disabled;
+                    }
+                else {
+                    doPrevent = true;
+                }
             }
-            else {
-                doPrevent = true;
-            }
-        }
 
-        if (doPrevent) {
-            event.preventDefault();
-        }
+            if (doPrevent) {
+                event.preventDefault();
+            }
+        });
     });
-});
 </script>

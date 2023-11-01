@@ -25,12 +25,12 @@
                 </thead>
                 <tbody>
                     {% for feedback in feedback_list %}
-                    <tr>
-                        <td data-order="{{ feedback.date_created|date:'c' }}">{{ feedback.date_created|date:"j M Y, G:i" }}</td>
-                        <td>{{ feedback.url }}</td>
-                        <td>{{ feedback.comment }}</td>
-                        <td>{{ feedback.submitter.get_full_name }}</td>
-                    </tr>
+                        <tr>
+                            <td data-order="{{ feedback.date_created|date:'c' }}">{{ feedback.date_created|date:"j M Y, G:i" }}</td>
+                            <td>{{ feedback.url }}</td>
+                            <td>{{ feedback.comment }}</td>
+                            <td>{{ feedback.submitter.get_full_name }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

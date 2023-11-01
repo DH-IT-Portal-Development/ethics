@@ -11,7 +11,7 @@
 <script type="text/x-template" id="proposalsUFLList">
     <FancyList
             {# It's a long, but standard, list, so we just include the default list #}
-            {% include 'uil.vue/fancy-list-params.txt' %}
+    {% include 'uil.vue/fancy-list-params.txt' %}
     >
         {# General note: the #{slot}="data" defines in which Vue variable all properties are loaded.  #}
         {# FancyList only exposes `item` and `context`, where item is the item from the data for a given row.  #}
@@ -20,135 +20,135 @@
 
         {# Here we do some JS deconstructing to pull the data out in seperate variables. We also rename item #}
         {# to proposal, for clarity. #}
-        <template #title="{ item: proposal, context }">
-            <h4>
+    <template #title="{ item: proposal, context }">
+    <h4>
                 {# Verbatim tags are needed to stop Django from interpreting these braces as Django template code #}
                 {# They are actually vue template code #}
                 {% verbatim %}
                 {{ proposal.reference_number }} -
                 {{ proposal.title }}
                 {% endverbatim %}
-            </h4>
-        </template>
+    </h4>
+    </template>
 
 
-        <template #actions="{ item: proposal, context }">
+    <template #actions="{ item: proposal, context }">
 
-            <a
-                v-if="proposal.status >= context.proposal.SUBMITTED_TO_SUPERVISOR"
-                :href="$url('proposals:pdf', [proposal.pk])"
-                target="_blank"
-            >
-                <img src="{{ img_pdf }}"
-                     title="{% trans 'Inzien' %}">
-            </a>
-        </template>
+    <a
+    v-if="proposal.status >= context.proposal.SUBMITTED_TO_SUPERVISOR"
+    :href="$url('proposals:pdf', [proposal.pk])"
+    target="_blank"
+    >
+    <img src="{{ img_pdf }}"
+    title="{% trans 'Inzien' %}">
+    </a>
+    </template>
 
 
-        <template #undertitle="{ item: proposal, context }">
-            <div class="ufl-undertitle-line">
-                {% trans 'Soort aanvraag' %}:
+    <template #undertitle="{ item: proposal, context }">
+    <div class="ufl-undertitle-line">
+    {% trans 'Soort aanvraag' %}:
                 {% verbatim %}
                 {{ proposal.type }}
                 {% endverbatim %}
-            </div>
-            <div class="ufl-undertitle-line">
-                <span v-if="proposal.latest_review && proposal.latest_review.continuation == context.review.REVISION">
-                    {% trans "Besloten op" %}:
+    </div>
+    <div class="ufl-undertitle-line">
+    <span v-if="proposal.latest_review && proposal.latest_review.continuation == context.review.REVISION">
+    {% trans "Besloten op" %}:
                     {% verbatim %}
                     {{ proposal.date_reviewed | date("DD-MM-YYYY, HH:mm") }}
                     {% endverbatim %}
-                </span>
-                <span
-                    v-else-if="proposal.date_confirmed"
-                >
-                    {% trans "Besloten op" %}:
+    </span>
+    <span
+    v-else-if="proposal.date_confirmed"
+    >
+    {% trans "Besloten op" %}:
                     {% verbatim %}
                     {{ proposal.date_confirmed | date("DD-MM-YYYY, HH:mm") }}
                     {% endverbatim %}
-                </span>
-                <span v-else>
-                    {% trans "Laatst bijgewerkt" %}:
+    </span>
+    <span v-else>
+    {% trans "Laatst bijgewerkt" %}:
                     {% verbatim %}
                     {{ proposal.date_modified | date("DD-MM-YYYY, HH:mm") }}
                     {% endverbatim %}
-                </span>
-            </div>
-            <div class="ufl-undertitle-line">
-                {% trans 'Status' %}:
-                <span
-                    v-if="proposal.status >= context.proposal.DECISION_MADE"
-                >
+    </span>
+    </div>
+    <div class="ufl-undertitle-line">
+    {% trans 'Status' %}:
+        <span
+    v-if="proposal.status >= context.proposal.DECISION_MADE"
+    >
                     {% verbatim %}
                     {{ proposal.latest_review.get_continuation_display }}
                     {% endverbatim %}
-                </span>
-                <span v-else>
+    </span>
+    <span v-else>
                     {% verbatim %}
                     {{ proposal.get_status_display }}
                     {% endverbatim %}
-                </span>
-            </div>
-        </template>
+    </span>
+    </div>
+    </template>
 
 
-        <template #details="{ item: proposal, context }">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    {% trans "Datum ingediend" %}:
-                                </td>
-                                <td v-if="proposal.date_submitted">
+    <template #details="{ item: proposal, context }">
+    <div class="row">
+    <div class="col-12 col-md-6">
+    <table>
+    <tbody>
+    <tr>
+    <td>
+    {% trans "Datum ingediend" %}:
+        </td>
+    <td v-if="proposal.date_submitted">
                                     {% verbatim %}
                                     {{ proposal.date_submitted | date("DD-MM-YYYY, HH:mm") }}
                                     {% endverbatim %}
-                                </td>
-                                <td v-else>
-                                    {% trans 'Nog niet ingediend' %}
-                                </td>
-                            </tr>
-                            <tr v-if="proposal.supervisor">
-                                <td>
-                                    {% trans "Eindverantwoordelijke onderzoeker" %}:
-                                </td>
-                                <td v-html="proposal.supervisor.fullname">
+    </td>
+    <td v-else>
+    {% trans 'Nog niet ingediend' %}
+    </td>
+    </tr>
+    <tr v-if="proposal.supervisor">
+    <td>
+    {% trans "Eindverantwoordelijke onderzoeker" %}:
+        </td>
+    <td v-html="proposal.supervisor.fullname">
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-12 col-md-6">
-                    <table>
-                        <tbody>
-                            <tr v-if="context.wants_route_info && proposal.latest_review">
-                                <td>
-                                    {% trans "Route:" %}
-                                </td>
-                                <td v-html="proposal.latest_review.route">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    {% trans "Indieners" %}:<br/>
-                                    <span
-                                       v-for="(applicant, index) in proposal.applicants"
-                                   >
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="col-12 col-md-6">
+    <table>
+    <tbody>
+    <tr v-if="context.wants_route_info && proposal.latest_review">
+    <td>
+    {% trans "Route:" %}
+    </td>
+    <td v-html="proposal.latest_review.route">
+    </td>
+    </tr>
+    <tr>
+    <td colspan="2">
+    {% trans "Indieners" %}:<br/>
+    <span
+    v-for="(applicant, index) in proposal.applicants"
+    >
                                         {% verbatim %}
                                         <span v-if="index != 0">, </span>
                                         {{ applicant.fullname }}
                                         {% endverbatim %}
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
+    </span>
+    </td>
+    </tr>
+    </tbody>
 
-                    </table>
-                </div>
-            </div>
-        </template>
+    </table>
+    </div>
+    </div>
+    </template>
     </FancyList>
 </script>

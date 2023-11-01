@@ -23,9 +23,9 @@
 {% block content %}
     <div class="uu-inner-container">
 
-    {% with review=review %}
-        {% include "reviews/review_detail_sidebar.html" %}
-    {% endwith %}
+        {% with review=review %}
+            {% include "reviews/review_detail_sidebar.html" %}
+        {% endwith %}
 
         <div class="col-12 col-md-9">
             <h2>
@@ -37,7 +37,7 @@
                 <p>
                     Kies hier de geschikte route en commissieleden voor de aanvraag <em>{{ title }}</em>.
                     klik <a href="{{ workload_url }}">hier</a> voor een overzicht van de werkverdeling van deze commissie.
-                <p\>
+                    <p\>
             {% endblocktrans %}
             <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>

@@ -63,20 +63,20 @@
                             </h4>
                             <table class="mb-3">
                                 <thead>
-                                <tr>
-                                    <th>{% trans "Setting" %}</th>
-                                    <th>{% trans "Aantal sessies (per week)" %}</th>
-                                    <th>{% trans "Duur per sessie (in minuten)" %}</th>
-                                    <th>{% trans "Controlegroep?" %}</th>
-                                </tr>
+                                    <tr>
+                                        <th>{% trans "Setting" %}</th>
+                                        <th>{% trans "Aantal sessies (per week)" %}</th>
+                                        <th>{% trans "Duur per sessie (in minuten)" %}</th>
+                                        <th>{% trans "Controlegroep?" %}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{ intervention.setting.all|unordered_list }}</td>
-                                    <td>{{ intervention.amount_per_week }}</td>
-                                    <td>{{ intervention.duration }}</td>
-                                    <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ intervention.setting.all|unordered_list }}</td>
+                                        <td>{{ intervention.amount_per_week }}</td>
+                                        <td>{{ intervention.duration }}</td>
+                                        <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </li>
@@ -94,34 +94,34 @@
                             </h4>
                             <table class="mb-3">
                                 <thead>
-                                <tr>
-                                    <th>{% trans "Setting" %}</th>
-                                    <th>{% trans "Aantal dagen" %}</th>
-                                    <th>{% trans "Duur per sessie (in uren)" %}</th>
-                                    <th>{% trans "Anoniem?" %}</th>
-                                    <th>{% trans "Doelgroep?" %}</th>
-                                    <th>{% trans "Niet openbaar?" %}</th>
-                                    <th>{% trans "Toestemming nodig?" %}</th>
-                                    {% if observation.needs_approval %}
-                                        <th>{% trans "Instantie" %}</th>
-                                    {% endif %}
-                                    <th>{% trans "Registratie via" %}</th>
-                                </tr>
+                                    <tr>
+                                        <th>{% trans "Setting" %}</th>
+                                        <th>{% trans "Aantal dagen" %}</th>
+                                        <th>{% trans "Duur per sessie (in uren)" %}</th>
+                                        <th>{% trans "Anoniem?" %}</th>
+                                        <th>{% trans "Doelgroep?" %}</th>
+                                        <th>{% trans "Niet openbaar?" %}</th>
+                                        <th>{% trans "Toestemming nodig?" %}</th>
+                                        {% if observation.needs_approval %}
+                                            <th>{% trans "Instantie" %}</th>
+                                        {% endif %}
+                                        <th>{% trans "Registratie via" %}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{ observation.setting.all|unordered_list }}</td>
-                                    <td>{{ observation.days }}</td>
-                                    <td>{{ observation.mean_hours }}</td>
-                                    <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
-                                    <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
-                                    <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
-                                    <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
-                                    {% if observation.needs_approval %}
-                                        <td>{{ observation.approval_institution }}</td>
-                                    {% endif %}
-                                    <td>{{ observation.registrations.all|unordered_list }}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ observation.setting.all|unordered_list }}</td>
+                                        <td>{{ observation.days }}</td>
+                                        <td>{{ observation.mean_hours }}</td>
+                                        <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
+                                        <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
+                                        <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
+                                        <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
+                                        {% if observation.needs_approval %}
+                                            <td>{{ observation.approval_institution }}</td>
+                                        {% endif %}
+                                        <td>{{ observation.registrations.all|unordered_list }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </li>
@@ -138,8 +138,8 @@
                                         minuten)
                                         {% if study.sessions_number > 1 %}
                                             <a href="{% url 'tasks:session_delete' session.pk %}"><img
-                                                    src="{% static 'proposals/images/delete.png' %}"
-                                                    title="{% trans 'Sessie verwijderen' %}"></a>
+                                                src="{% static 'proposals/images/delete.png' %}"
+                                                title="{% trans 'Sessie verwijderen' %}"></a>
                                         {% endif %}
                                     </h5>
                                     <p>

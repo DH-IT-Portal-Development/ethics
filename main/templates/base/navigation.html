@@ -12,10 +12,10 @@
                 <li>
                     {% counter main_counter store %}
                     <div
-                            class="navigation-content
-                            {% if not item.url %}inactive{% endif %}
-                            {% if main_counter == active %}active{% endif %}
-                        "
+                        class="navigation-content
+                               {% if not item.url %}inactive{% endif %}
+                               {% if main_counter == active %}active{% endif %}
+                              "
                     >
                         {% if item.url %}
                             <a class="js-submit-redirect" href="{{ item.url }}">

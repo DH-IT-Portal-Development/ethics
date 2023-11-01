@@ -7,19 +7,19 @@
         <th>{% get_verbose_field_name "observations" "observation" "setting" %}</th><td>{{ observation.setting.all|unordered_list }}</td>
     </tr>
     {% if observation.setting.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th><td>{{ observation.setting_details }}</td>
-    </tr>
+        <tr>
+            <th>{% get_verbose_field_name "observations" "observation" "setting_details" %}</th><td>{{ observation.setting_details }}</td>
+        </tr>
     {% endif %}
     {% if study.has_children and observation.setting.all|needs_details:"needs_supervision" %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{{ observation.supervision|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% if not observation.supervision %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</th><td>{{ observation.leader_has_coc|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th><td>{{ observation.supervision|yesno:_("ja,nee") }}</td>
+        </tr>
+        {% if not observation.supervision %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</th><td>{{ observation.leader_has_coc|yesno:_("ja,nee") }}</td>
+            </tr>
+        {% endif %}
     {% endif %}
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "days" %}</th><td>{{ observation.days }}</td>
@@ -37,29 +37,29 @@
         <th>{% get_verbose_field_name "observations" "observation" "is_nonpublic_space" %}</th><td>{{ observation.is_nonpublic_space|yesno:_("ja,nee") }}</td>
     </tr>
     {% if observation.is_nonpublic_space %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th><td>{{ observation.has_advanced_consent|yesno:_("ja,nee") }}</td>
-    </tr>
+        <tr>
+            <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th><td>{{ observation.has_advanced_consent|yesno:_("ja,nee") }}</td>
+        </tr>
     {% endif %}
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "needs_approval" %}</th><td>{{ observation.needs_approval|yesno:_("ja,nee") }}</td>
     </tr>
     {% if observation.needs_approval %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th><td>{{ observation.approval_institution }}</td>
-    </tr>
-    {% if not proposal.is_practice %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th><td><a href="{{ BASE_URL }}{{ observation.approval_document.url }}" target="_blank">{% trans "Download" %}</a></td>
-    </tr>
-    {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "observations" "observation" "approval_institution" %}</th><td>{{ observation.approval_institution }}</td>
+        </tr>
+        {% if not proposal.is_practice %}
+            <tr>
+                <th>{% get_verbose_field_name "observations" "observation" "approval_document" %}</th><td><a href="{{ BASE_URL }}{{ observation.approval_document.url }}" target="_blank">{% trans "Download" %}</a></td>
+            </tr>
+        {% endif %}
     {% endif %}
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "registrations" %}</th><td>{{ observation.registrations.all|unordered_list }}</td>
     </tr>
     {% if observation.registrations.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "observations" "observation" "registrations_details" %}</th><td>{{ observation.registrations_details }}</td>
-    </tr>
+        <tr>
+            <th>{% get_verbose_field_name "observations" "observation" "registrations_details" %}</th><td>{{ observation.registrations_details }}</td>
+        </tr>
     {% endif %}
 </table>

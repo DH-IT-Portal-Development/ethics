@@ -102,21 +102,21 @@ Remember to include it in a with statement if the view does not provide it.
     </ul>
 
 
-        {% if review.proposal.has_minor_revision %}
-            <h4>{% trans 'Revisie' %}</h4>
+    {% if review.proposal.has_minor_revision %}
+        <h4>{% trans 'Revisie' %}</h4>
+        <p>{% blocktrans %}
+            Deze aanvraag heeft een revisie gehad tijdens het beslisproces.
+        {% endblocktrans %}</p>
+        {% if review.proposal.minor_revision_description %}
             <p>{% blocktrans %}
-                Deze aanvraag heeft een revisie gehad tijdens het beslisproces.
-            {% endblocktrans %}</p>
-            {% if review.proposal.minor_revision_description %}
-                <p>{% blocktrans %}
-                    Er zijn de volgende opmerkingen bijgevoegd:<br/>
-                {% endblocktrans %}
+                Er zijn de volgende opmerkingen bijgevoegd:<br/>
+            {% endblocktrans %}
                 {{ review.proposal.minor_revision_description }}</p>
-            {% endif %}
         {% endif %}
+    {% endif %}
 
 
-                <h3>{% trans "Documenten" %}</h3>
-                {% documents_list review user %}
+    <h3>{% trans "Documenten" %}</h3>
+    {% documents_list review user %}
 
 </div>

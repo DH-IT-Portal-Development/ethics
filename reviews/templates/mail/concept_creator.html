@@ -1,21 +1,21 @@
 {% extends "mail/base.html" %}
 
 {% block content_nl %}
-Beste collega,<br />
-<br />
-Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze aanvraag gecontroleerd.
-Zodra deze de concept-aanmelding, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijgt u van ons bericht.<br />
-Indien de concept-aanmelding nog aanzienlijke wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker zelf contact met u opnemen.<br />
-U kunt uw ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br />
-<br />
+    Beste collega,<br />
+    <br />
+    Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze aanvraag gecontroleerd.
+    Zodra deze de concept-aanmelding, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijgt u van ons bericht.<br />
+    Indien de concept-aanmelding nog aanzienlijke wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker zelf contact met u opnemen.<br />
+    U kunt uw ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br />
+    <br />
 {% endblock %}
 
 {% block content_en %}
-Dear colleague,<br />
-<br />
-Your draft application will be checked by your supervisor {{ supervisor }}, the researcher who has the final responsibility of this study.<br />
-You will receive a notification as soon as {{ supervisor }} has approved and formally submitted your draft application, possibly after making some minor revisions.<br />
-In case {{ supervisor }} finds it necessary for you to make more substantial revisions in the application, he/she will notify you about this, and meanwhile formally disapprove the study in order for you to be able to revise and resubmit it.<br />
-You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.
-<br />
+    Dear colleague,<br />
+    <br />
+    Your draft application will be checked by your supervisor {{ supervisor }}, the researcher who has the final responsibility of this study.<br />
+    You will receive a notification as soon as {{ supervisor }} has approved and formally submitted your draft application, possibly after making some minor revisions.<br />
+    In case {{ supervisor }} finds it necessary for you to make more substantial revisions in the application, he/she will notify you about this, and meanwhile formally disapprove the study in order for you to be able to revise and resubmit it.<br />
+    You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.
+    <br />
 {% endblock %}

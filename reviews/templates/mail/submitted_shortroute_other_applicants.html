@@ -1,39 +1,39 @@
 {% extends "mail/base.html" %}
 
 {% block content_nl %}
-{% if was_revised %}
-Beste collega,<br/>
-<br/>
-Uw collega {{ creator }} heeft een gereviseerde aanvraag ingediend voor het onderzoek {{ title }}, waar u aan meewerkt, bij de ethische commissie. De aanvraag is door de FETC-GW ontvangen.<br/>
-<br/>
-Dit houdt in dat de revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen uw collega, {{ creator }}, binnenkort een beoordeling te kunnen sturen.<br/>
-U kunt de ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br/>
-{% else %}
-Beste collega,<br/>
-<br/>
-Uw collega {{ creator }} heeft een aanvraag ingediend voor het onderzoek {{ title }}, waar u aan meewerkt, bij de ethische commissie. De aanvraag is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status <em>korte-route onderzoek</em> gekregen.<br/>
-<br/>
-Dit houdt in dat wij ernaar streven om uw collega binnen twee werkweken een eerste beoordeling van de FETC-GW te sturen.<br/>
-U kunt de ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br/>
-<br/>
-NB: Het is mogelijk dat je aanvraag alsnog als 'lange-route onderzoek' wordt aangemerkt, in welk geval de beoordeling langer kan duren, zie het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/">reglement</a>. Houdt u hier a.u.b. rekening mee.<br/>
-{% endif %}
+    {% if was_revised %}
+        Beste collega,<br/>
+        <br/>
+        Uw collega {{ creator }} heeft een gereviseerde aanvraag ingediend voor het onderzoek {{ title }}, waar u aan meewerkt, bij de ethische commissie. De aanvraag is door de FETC-GW ontvangen.<br/>
+        <br/>
+        Dit houdt in dat de revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen uw collega, {{ creator }}, binnenkort een beoordeling te kunnen sturen.<br/>
+        U kunt de ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br/>
+    {% else %}
+        Beste collega,<br/>
+        <br/>
+        Uw collega {{ creator }} heeft een aanvraag ingediend voor het onderzoek {{ title }}, waar u aan meewerkt, bij de ethische commissie. De aanvraag is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status <em>korte-route onderzoek</em> gekregen.<br/>
+        <br/>
+        Dit houdt in dat wij ernaar streven om uw collega binnen twee werkweken een eerste beoordeling van de FETC-GW te sturen.<br/>
+        U kunt de ingediende aanmelding <a href="{{ pdf_url }}">hier</a> in PDF vorm bekijken.<br/>
+        <br/>
+        NB: Het is mogelijk dat je aanvraag alsnog als 'lange-route onderzoek' wordt aangemerkt, in welk geval de beoordeling langer kan duren, zie het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/">reglement</a>. Houdt u hier a.u.b. rekening mee.<br/>
+    {% endif %}
 {% endblock %}
 
 {% block content_en %}
-{% if was_revised %}
-Dear colleague,<br/>
-<br/>
-Your colleague {{ creator }} has submitted a revised application for the study {{ title }}, in which you are participating. The FEtC-H has received your revised application.<br/>
-<br/>
-This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a review soon.<br/>
-You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.<br/>
-{% else %}
-Dear colleague,<br/>
-<br/>
-Your colleague {{ creator }} has submitted an application for the study {{ title }}, in which you are participating. The FEtC-H has received your application. The automatic screening of the portal has given your study the status of <em>short-route research</em>. This means that your colleague will receive an assessment within two working weeks.<br/>
-You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.<br/>
-<br/>
-Note: It is possible that your application may still be classified as a 'long-route research', in which case the asssessment procedure may take longer, see the <a href="https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/">regulations</a> for information. If the latter case, see <a href="http://fetc-gw.wp.hum.uu.nl/regulations/">section 2.8, p. 14</a> for the possible time paths.<br/>
-{% endif %}
+    {% if was_revised %}
+        Dear colleague,<br/>
+        <br/>
+        Your colleague {{ creator }} has submitted a revised application for the study {{ title }}, in which you are participating. The FEtC-H has received your revised application.<br/>
+        <br/>
+        This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a review soon.<br/>
+        You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.<br/>
+    {% else %}
+        Dear colleague,<br/>
+        <br/>
+        Your colleague {{ creator }} has submitted an application for the study {{ title }}, in which you are participating. The FEtC-H has received your application. The automatic screening of the portal has given your study the status of <em>short-route research</em>. This means that your colleague will receive an assessment within two working weeks.<br/>
+        You can find a PDF of your submission <a href="{{pdf_url}}">here</a>.<br/>
+        <br/>
+        Note: It is possible that your application may still be classified as a 'long-route research', in which case the asssessment procedure may take longer, see the <a href="https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/">regulations</a> for information. If the latter case, see <a href="http://fetc-gw.wp.hum.uu.nl/regulations/">section 2.8, p. 14</a> for the possible time paths.<br/>
+    {% endif %}
 {% endblock %}

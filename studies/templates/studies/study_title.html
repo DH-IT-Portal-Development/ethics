@@ -1,15 +1,15 @@
 {% load i18n %}
 
 {% if study.proposal.studies_number > 1 %}
-<h3>
-    {% if study.name %}
-    {% blocktrans with order=study.order name=study.name %}
-    Traject {{ order }} (<em>{{ name }}</em>)
-    {% endblocktrans %}
-    {% else %}
-    {% blocktrans with order=study.order %}
-    Traject {{ order }}
-    {% endblocktrans %}
-    {% endif %}
-</h3>
+    <h3>
+        {% if study.name %}
+            {% blocktrans with order=study.order name=study.name %}
+                Traject {{ order }} (<em>{{ name }}</em>)
+            {% endblocktrans %}
+        {% else %}
+            {% blocktrans with order=study.order %}
+                Traject {{ order }}
+            {% endblocktrans %}
+        {% endif %}
+    </h3>
 {% endif %}

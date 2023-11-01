@@ -1,35 +1,35 @@
 {% extends "mail/base.html" %}
 
 {% block content_nl %}
-{% if was_revised %}
-Beste collega,<br/>
-<br/>
-Je gereviseerde aanvraag is door de FETC-GW ontvangen.<br/>
-<br/>
-Dit houdt in dat je revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen je binnenkort een beoordeling te kunnen sturen.<br/>
+    {% if was_revised %}
+        Beste collega,<br/>
+        <br/>
+        Je gereviseerde aanvraag is door de FETC-GW ontvangen.<br/>
+        <br/>
+        Dit houdt in dat je revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen je binnenkort een beoordeling te kunnen sturen.<br/>
 
-{% else %}
-Beste collega,<br/>
-<br/>
-Je aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status <em>lange-route onderzoek</em>, zie <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/">appendix A van het reglement</a> voor de criteria.<br/>
-<br/>
-Dit houdt in dat je aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, wanneer je aanvraag tenminste een week voor die vergadering is ingediend. Zie <a href="https://fetc-gw.wp.hum.uu.nl/category/agenda/">de FETC-GW-agenda</a> voor een overzicht van de komende vergaderingen. Zeer kort na de vergadering zult u de beoordeling ontvangen.<br/>
-{% endif %}
+    {% else %}
+        Beste collega,<br/>
+        <br/>
+        Je aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status <em>lange-route onderzoek</em>, zie <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/">appendix A van het reglement</a> voor de criteria.<br/>
+        <br/>
+        Dit houdt in dat je aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, wanneer je aanvraag tenminste een week voor die vergadering is ingediend. Zie <a href="https://fetc-gw.wp.hum.uu.nl/category/agenda/">de FETC-GW-agenda</a> voor een overzicht van de komende vergaderingen. Zeer kort na de vergadering zult u de beoordeling ontvangen.<br/>
+    {% endif %}
 {% endblock %}
 
 {% block content_en %}
-{% if was_revised %}
-Dear colleague,<br/>
-<br/>
-The FEtC-H has received your revised application.<br/>
-<br/>
-This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a review soon.<br/>
+    {% if was_revised %}
+        Dear colleague,<br/>
+        <br/>
+        The FEtC-H has received your revised application.<br/>
+        <br/>
+        This means that your study will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a review soon.<br/>
 
-{% else %}
-Dear colleague,<br/>
-<br/>
-The FEtC-H has received your application. The automatic screening of the portal has given your study the status of <em>long-route research</em>, see <a href="https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"> appendix A in the regulations</a> for the criteria.<br/>
-<br/>
-This means that your study will be discussed during the next FEtC-H meeting, if your application was submitted at least one week before that meeting. See <a href="https://fetc-gw.wp.hum.uu.nl/en/category/agenda-en/">the FEtC-H agenda</a> for an overview of upcoming meetings. You will receive the assessment shortly after the meeting.<br/>
-{% endif %}
+    {% else %}
+        Dear colleague,<br/>
+        <br/>
+        The FEtC-H has received your application. The automatic screening of the portal has given your study the status of <em>long-route research</em>, see <a href="https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"> appendix A in the regulations</a> for the criteria.<br/>
+        <br/>
+        This means that your study will be discussed during the next FEtC-H meeting, if your application was submitted at least one week before that meeting. See <a href="https://fetc-gw.wp.hum.uu.nl/en/category/agenda-en/">the FEtC-H agenda</a> for an overview of upcoming meetings. You will receive the assessment shortly after the meeting.<br/>
+    {% endif %}
 {% endblock %}

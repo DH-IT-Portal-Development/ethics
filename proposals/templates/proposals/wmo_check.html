@@ -8,12 +8,12 @@
 {% endblock %}
 
 {% block html_head %}
-<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
-<script>
-$(function() {
-    check_metc_required("{% url 'proposals:check_wmo' %}");
-});
-</script>
+    <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
+    <script>
+        $(function() {
+            check_metc_required("{% url 'proposals:check_wmo' %}");
+        });
+    </script>
 {% endblock %}
 
 {% block content %}

@@ -15,25 +15,25 @@
 {% endblock %}
 
 {% block html_head %}
-<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
-<script>
-    $(function () {
-        depends_on_value('embargo', 'True', 'embargo_end_date');
+    <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
+    <script>
+        $(function () {
+            depends_on_value('embargo', 'True', 'embargo_end_date');
 
         // Add datepicker for date_start, set locale to current language
-        $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
+            $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
-        var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'yy-mm-dd';
-        $("#id_embargo_end_date").datepicker({
-            dateFormat: date_format,
-        })
-    });
+            var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'yy-mm-dd';
+            $("#id_embargo_end_date").datepicker({
+                dateFormat: date_format,
+            })
+        });
 
-    $(function() {
-        let translated_string = " {% trans 'Aantal woorden:' %} "
-        wordCounter("comments", translated_string)
-    });
-</script>
+        $(function() {
+            let translated_string = " {% trans 'Aantal woorden:' %} "
+            wordCounter("comments", translated_string)
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -122,51 +122,51 @@
 
             <form action="" method="post" enctype="multipart/form-data">
 
-            {% if troublesome_pages %}
-            <div class="warning">
-	      <h5>
-                    {% blocktrans trimmed %}
-                        Er zijn nog errors gevonden op de volgende pagina's:
-                    {% endblocktrans %}
-		    </h5>
-                    <ul>
-                        {% for error_page in troublesome_pages %}
-                            <li>
-                                <a href="{{ error_page.url }}">
-                                    {{ error_page.page_name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    {% blocktrans trimmed %}
-                        Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft ingevuld. Je kan je
-                        aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
-                    {% endblocktrans %}
-                </div>
-		{% endif %}
-		{% if start_date_warning %}
-		<div class="warning">
-		  <h5>{% trans "Controleer uw beoogde startdatum" %}</h5>
-		  <p>
-		    {% blocktrans trimmed %}
-		    Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer daarom bij een revisie altijd of de beoogde startdatum nog klopt.
-		    {% endblocktrans %}
-		    {% url "proposals:update" proposal.pk as first_page_url %}
-		    {% blocktrans trimmed %}
-		    De beoogde startdatum vindt u op
-		    <a href="{{first_page_url}}">deze pagina</a>.
-		    {% endblocktrans %}
-		  </p>
-		</div>		
-		{% endif %}
+                {% if troublesome_pages %}
+                    <div class="warning">
+                        <h5>
+                            {% blocktrans trimmed %}
+                                Er zijn nog errors gevonden op de volgende pagina's:
+                            {% endblocktrans %}
+                        </h5>
+                        <ul>
+                            {% for error_page in troublesome_pages %}
+                                <li>
+                                    <a href="{{ error_page.url }}">
+                                        {{ error_page.page_name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% blocktrans trimmed %}
+                            Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft ingevuld. Je kan je
+                            aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
+                        {% endblocktrans %}
+                    </div>
+                {% endif %}
+                {% if start_date_warning %}
+                    <div class="warning">
+                        <h5>{% trans "Controleer uw beoogde startdatum" %}</h5>
+                        <p>
+                            {% blocktrans trimmed %}
+                                Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer daarom bij een revisie altijd of de beoogde startdatum nog klopt.
+                            {% endblocktrans %}
+                            {% url "proposals:update" proposal.pk as first_page_url %}
+                            {% blocktrans trimmed %}
+                                De beoogde startdatum vindt u op
+                                <a href="{{first_page_url}}">deze pagina</a>.
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                {% endif %}
 
 
-		{% csrf_token %}
+                {% csrf_token %}
                 <table>{{ form.as_table }}</table>
                 {% if is_practice %}
-                <div class="info">
-                    {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
-                </div>
+                    <div class="info">
+                        {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+                    </div>
                 {% endif %}
                 {% if troublesome_pages or is_practice %}
                     {% include "base/form_buttons.html" with no_forward=1 %}

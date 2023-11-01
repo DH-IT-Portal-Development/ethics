@@ -49,16 +49,16 @@
             <h2>{% trans 'Vergelijk documenten' %}</h2>
             <p>
                 {% blocktrans %}
-                Hier kan je twee versies van een document vergelijken. Standaard
-                geeft hij een <i>gecombineerde</i> versie weer, waarbij tekst
-                die verwijderd is in het rood is gemarkeerd en nieuwe tekst
-                in het groen is gemarkeerd.
+                    Hier kan je twee versies van een document vergelijken. Standaard
+                    geeft hij een <i>gecombineerde</i> versie weer, waarbij tekst
+                    die verwijderd is in het rood is gemarkeerd en nieuwe tekst
+                    in het groen is gemarkeerd.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans %}
-                Je kan ook de bestanden naast elkaar bekijken, met dezelfde
-                markeringen. Klik hiervoor op 'Bekijk apart'.
+                    Je kan ook de bestanden naast elkaar bekijken, met dezelfde
+                    markeringen. Klik hiervoor op 'Bekijk apart'.
                 {% endblocktrans %}
             </p>
             <h4>
@@ -76,20 +76,20 @@
             </button>
         </div>
     </div>
-        <div class="uu-inner-container document-compare">
-            <div class="col-6">
-                <p>
-                    <strong>{% trans "Oud" %}: </strong>
-                    <a href="{{ old_file.url }}" download="{{ old_file.name }}">{{ old_name }}</a>
-                </p>
-            </div>
-            <div class="col-6">
-                <p>
-                    <strong>{% trans "Nieuw" %}: </strong>
-                    <a href="{{ new_file.url }}" download="{{ new_file.name }}">{{ new_name }}</a>
-                </p>
-            </div>
+    <div class="uu-inner-container document-compare">
+        <div class="col-6">
+            <p>
+                <strong>{% trans "Oud" %}: </strong>
+                <a href="{{ old_file.url }}" download="{{ old_file.name }}">{{ old_name }}</a>
+            </p>
         </div>
+        <div class="col-6">
+            <p>
+                <strong>{% trans "Nieuw" %}: </strong>
+                <a href="{{ new_file.url }}" download="{{ new_file.name }}">{{ new_name }}</a>
+            </p>
+        </div>
+    </div>
     <div class="uu-inner-container compare">
         <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
             <img src="{% static 'main/images/loading.gif' %}"/>

@@ -7,19 +7,19 @@
         <th>{% get_verbose_field_name "interventions" "intervention" "setting" %}</th><td>{{ intervention.setting.all|unordered_list }}</td>
     </tr>
     {% if intervention.setting.all|needs_details %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td>{{ intervention.setting_details }}</td>
-    </tr>
+        <tr>
+            <th>{% get_verbose_field_name "interventions" "intervention" "setting_details" %}</th><td>{{ intervention.setting_details }}</td>
+        </tr>
     {% endif %}
     {% if study.has_children and intervention.setting.all|needs_details:"needs_supervision" %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% if not intervention.supervision %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th><td>{{ intervention.leader_has_coc|yesno:_("ja,nee") }}</td>
-    </tr>
-    {% endif %}
+        <tr>
+            <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th><td>{{ intervention.supervision|yesno:_("ja,nee") }}</td>
+        </tr>
+        {% if not intervention.supervision %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th><td>{{ intervention.leader_has_coc|yesno:_("ja,nee") }}</td>
+            </tr>
+        {% endif %}
     {% endif %}
     <tr>
         <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th><td>{{ intervention.period }}</td>
@@ -43,8 +43,8 @@
         <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th><td>{{ intervention.has_controls|yesno:_("ja,nee") }}</td>
     </tr>
     {% if intervention.has_controls %}
-    <tr>
-        <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th><td>{{ intervention.controls_description }}</td>
-    </tr>
+        <tr>
+            <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th><td>{{ intervention.controls_description }}</td>
+        </tr>
     {% endif %}
 </table>

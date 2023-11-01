@@ -84,7 +84,7 @@
                 {% endif %}
             {% endif %}
         {% endif %}
-        
+
         {% if study|necessity_required or p_study|necessity_required %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th>
@@ -127,11 +127,11 @@
             <td>{{ study.hierarchy }}</td>
         </tr>
         {% if study.hierarchy or p_study.hierarchy %}
-        <tr>
-            <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th>
-            <td>{{ p_study.hierarchy_details }}</td>
-            <td>{{ study.hierarchy_details }}</td>
-        </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th>
+                <td>{{ p_study.hierarchy_details }}</td>
+                <td>{{ study.hierarchy_details }}</td>
+            </tr>
         {% endif %}
     </table>
 
