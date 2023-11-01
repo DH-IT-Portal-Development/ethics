@@ -1,12 +1,9 @@
 {% extends "base/base.html" %}
-
 {% load static %}
 {% load i18n %}
-
 {% block header_title %}
     {% trans "Bevestigingsbrief versturen" %} - {{ block.super }}
 {% endblock %}
-
 {% block html_head %}
     <script>
         $(function () {
@@ -18,7 +15,6 @@
         });
     </script>
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -28,12 +24,15 @@
                     Geef hieronder aan wanneer de bevestigingsbrief voor de aanvraag <em>{{ title }}</em> is verstuurd.
                 {% endblocktrans %}
             </p>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
-                <input class="button" type="submit"
-                       value="{% trans 'Bevestigingsbrief verstuurd' %}"/>
-                <a class="button"
-                   href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input class="button"
+                       type="submit"
+                       value="{% trans 'Bevestigingsbrief verstuurd' %}" />
+                <a class="button" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
             </form>
         </div>
     </div>

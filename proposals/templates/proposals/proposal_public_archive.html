@@ -1,13 +1,10 @@
 {% extends "base/base.html" %}
-
 {% load static %}
 {% load i18n %}
 {% get_current_language as language_code %}
-
 {% block header_title %}
     {% trans 'Goedgekeurde aanvragen' %} - {{ block.super }}
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -26,21 +23,19 @@
                         <tr>
                             <td>{{ proposal.reference_number }}</td>
                             <td>{{ proposal.title }}</td>
-                            <td>
-                                {{ proposal.date_confirmed|date:"d M Y" }}
-                            </td>
+                            <td>{{ proposal.date_confirmed|date:"d M Y" }}</td>
                             <td>
                                 {% if proposal.reviewing_committee.name == "AK" %}
-                                {% trans 'AK' %}
+                                    {% trans 'AK' %}
                                 {% else %}
-                                {% trans 'LK' %}
+                                    {% trans 'LK' %}
                                 {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <br/>
+            <br />
         </div>
     </div>
 {% endblock %}

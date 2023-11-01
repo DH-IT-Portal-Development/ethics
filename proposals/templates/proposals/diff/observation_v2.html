@@ -1,8 +1,6 @@
 {% load i18n %}
 {% load get_field_name %}
 {% load proposal_filters %}
-
-
 <table class="proposals-diff pure-table pure-table-horizontal">
     <tr>
         <th class="proposals-diff-question"></th>
@@ -25,28 +23,20 @@
         <tr>
             <th>{% get_verbose_field_name "observations" "observation" "supervision" %}</th>
             <td>
-                {% if p_observation %}
-                    {{ p_observation.supervision|yesno:_("ja,nee") }}
-                {% endif %}
+                {% if p_observation %}{{ p_observation.supervision|yesno:_("ja,nee") }}{% endif %}
             </td>
             <td>
-                {% if observation %}
-                    {{ observation.supervision|yesno:_("ja,nee") }}
-                {% endif %}
+                {% if observation %}{{ observation.supervision|yesno:_("ja,nee") }}{% endif %}
             </td>
         </tr>
         {% if not observation.supervision or not p_observation.supervision %}
             <tr>
                 <th>{% get_verbose_field_name "observations" "observation" "leader_has_coc" %}</th>
                 <td>
-                    {% if p_observation %}
-                        {{ p_observation.leader_has_coc|yesno:_("ja,nee,") }}
-                    {% endif %}
+                    {% if p_observation %}{{ p_observation.leader_has_coc|yesno:_("ja,nee,") }}{% endif %}
                 </td>
                 <td>
-                    {% if observation %}
-                        {{ observation.leader_has_coc|yesno:_("ja,nee,") }}
-                    {% endif %}
+                    {% if observation %}{{ observation.leader_has_coc|yesno:_("ja,nee,") }}{% endif %}
                 </td>
             </tr>
         {% endif %}
@@ -69,14 +59,10 @@
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "is_anonymous" %}</th>
         <td>
-            {% if p_observation %}
-                {{ p_observation.is_anonymous|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if p_observation %}{{ p_observation.is_anonymous|yesno:_("ja,nee") }}{% endif %}
         </td>
         <td>
-            {% if observation %}
-                {{ observation.is_anonymous|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if observation %}{{ observation.is_anonymous|yesno:_("ja,nee") }}{% endif %}
         </td>
     </tr>
     {% if observation.is_anonymous or p_observation.is_anonymous %}
@@ -89,14 +75,10 @@
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "is_in_target_group" %}</th>
         <td>
-            {% if p_observation %}
-                {{ p_observation.is_in_target_group|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if p_observation %}{{ p_observation.is_in_target_group|yesno:_("ja,nee") }}{% endif %}
         </td>
         <td>
-            {% if observation %}
-                {{ observation.is_in_target_group|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if observation %}{{ observation.is_in_target_group|yesno:_("ja,nee") }}{% endif %}
         </td>
     </tr>
     {% if observation.is_in_target_group or p_observation.is_in_target_group %}
@@ -109,14 +91,10 @@
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "is_nonpublic_space" %}</th>
         <td>
-            {% if p_observation %}
-                {{ p_observation.is_nonpublic_space|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if p_observation %}{{ p_observation.is_nonpublic_space|yesno:_("ja,nee") }}{% endif %}
         </td>
         <td>
-            {% if observation %}
-                {{ observation.is_nonpublic_space|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if observation %}{{ observation.is_nonpublic_space|yesno:_("ja,nee") }}{% endif %}
         </td>
     </tr>
     {% if observation.is_nonpublic_space or p_observation.is_nonpublic_space %}
@@ -128,28 +106,20 @@
         <tr>
             <th>{% get_verbose_field_name "observations" "observation" "has_advanced_consent" %}</th>
             <td>
-                {% if p_observation %}
-                    {{ p_observation.has_advanced_consent|yesno:_("ja,nee") }}
-                {% endif %}
+                {% if p_observation %}{{ p_observation.has_advanced_consent|yesno:_("ja,nee") }}{% endif %}
             </td>
             <td>
-                {% if observation %}
-                    {{ observation.has_advanced_consent|yesno:_("ja,nee") }}
-                {% endif %}
+                {% if observation %}{{ observation.has_advanced_consent|yesno:_("ja,nee") }}{% endif %}
             </td>
         </tr>
     {% endif %}
     <tr>
         <th>{% get_verbose_field_name "observations" "observation" "needs_approval" %}</th>
         <td>
-            {% if p_observation %}
-                {{ p_observation.needs_approval|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if p_observation %}{{ p_observation.needs_approval|yesno:_("ja,nee") }}{% endif %}
         </td>
         <td>
-            {% if observation %}
-                {{ observation.needs_approval|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if observation %}{{ observation.needs_approval|yesno:_("ja,nee") }}{% endif %}
         </td>
     </tr>
     {% if observation.needs_approval or p_observation.is_nonpublic_space %}

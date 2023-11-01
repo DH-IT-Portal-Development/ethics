@@ -1,26 +1,20 @@
 {% extends "base/base.html" %}
-
 {% load i18n %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {% trans "Uitloggen" %}
-            </h2>
-            <p>
-                {% trans "Je bent succesvol uitgelogd." %}
-            </p>
+            <h2>{% trans "Uitloggen" %}</h2>
+            <p>{% trans "Je bent succesvol uitgelogd." %}</p>
             <ul>
                 <li>
                     {% url 'main:landing' as landing_url %}
                     {% blocktrans trimmed %}
-                    Klik  <a href="{{ landing_url }}">hier</a> om naar de startpagina te gaan.
+                        Klik  <a href="{{ landing_url }}">hier</a> om naar de startpagina te gaan.
                     {% endblocktrans %}
                 </li>
                 <li>
                     {% blocktrans trimmed %}
-                    Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
+                        Klik <a href="http://fetc-gw.wp.hum.uu.nl">hier</a> om terug te keren naar de FETC-GW-website.
                     {% endblocktrans %}
                 </li>
             </ul>

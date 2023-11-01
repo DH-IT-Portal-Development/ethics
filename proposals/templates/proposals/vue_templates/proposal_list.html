@@ -1,13 +1,11 @@
 {% load static %}
 {% load i18n %}
-
 {% static "proposals/images/page_white_go.png" as img_next %}
 {% static "proposals/images/arrow_divide.png" as img_diff %}
 {% static "proposals/images/delete.png" as img_delete %}
 {% static "main/images/page_white_acrobat.png" as img_pdf %}
 {% static "proposals/images/folder_delete.png" as img_hide %}
 {% static 'reviews/images/scale.png' as img_decide %}
-
 <script type="text/x-template" id="proposalsUFLList">
     <FancyList
             {# It's a long, but standard, list, so we just include the default list #}
@@ -33,51 +31,27 @@
 
 
         <template #actions="{ item: proposal, context }">
-            <a
-                :href="$url('reviews:decide', [proposal.supervisor_decision.pk])"
-                v-if="proposal.status == context.proposal.SUBMITTED_TO_SUPERVISOR && proposal.supervisor && context.user_pk == proposal.supervisor.pk"
-            >
-                <img src="{% static 'reviews/images/scale.png' %}"
-                     title="{% trans 'Beslissen' %}">
+            <a :href="$url('reviews:decide', [proposal.supervisor_decision.pk])" v-if="proposal.status == context.proposal.SUBMITTED_TO_SUPERVISOR && proposal.supervisor && context.user_pk == proposal.supervisor.pk">
+                <img src="{% static 'reviews/images/scale.png' %}" title="{% trans 'Beslissen' %}">
             </a>
 
-            <a
-                :href="$url('proposals:diff', [proposal.pk])"
-                v-if="proposal.is_revision"
-            >
-                <img src="{{ img_diff }}"
-                     title="{% trans 'Toon verschillen' %}">
+            <a :href="$url('proposals:diff', [proposal.pk])" v-if="proposal.is_revision">
+                <img src="{{ img_diff }}" title="{% trans 'Toon verschillen' %}">
             </a>
 
-            <template
-                v-if="proposal.status < context.proposal.SUBMITTED_TO_SUPERVISOR"
-            >
-                <a
-                    :href="proposal.continue_url"
-                    v-if="proposal.applicants.filter( a => { return a.pk === context.user_pk}).length > 0 || (proposal.supervisor && context.user_pk == proposal.supervisor.pk)"
-                >
-                    <img src="{{ img_next }}"
-                         title="{% trans 'Naar volgende stap' %}">
+            <template v-if="proposal.status < context.proposal.SUBMITTED_TO_SUPERVISOR">
+                <a :href="proposal.continue_url" v-if="proposal.applicants.filter( a => { return a.pk === context.user_pk}).length > 0 || (proposal.supervisor && context.user_pk == proposal.supervisor.pk)">
+                    <img src="{{ img_next }}" title="{% trans 'Naar volgende stap' %}">
                 </a>
                 <a :href="$url('proposals:delete', [proposal.pk])">
-                    <img src="{{ img_delete }}"
-                         title="{% trans 'Verwijderen' %}">
+                    <img src="{{ img_delete }}" title="{% trans 'Verwijderen' %}">
                 </a>
             </template>
-            <a
-                v-if="proposal.status >= context.proposal.SUBMITTED_TO_SUPERVISOR"
-                :href="$url('proposals:pdf', [proposal.pk])"
-                target="_blank"
-            >
-                <img src="{{ img_pdf }}"
-                     title="{% trans 'Inzien' %}">
+            <a v-if="proposal.status >= context.proposal.SUBMITTED_TO_SUPERVISOR" :href="$url('proposals:pdf', [proposal.pk])" target="_blank">
+                <img src="{{ img_pdf }}" title="{% trans 'Inzien' %}">
             </a>
-            <a
-                :href="$url('proposals:archive_status', [proposal.pk])"
-                v-if="proposal.in_archive && context.is_secretary"
-            >
-                <img src="{{ img_hide }}"
-                     title="{% trans 'Verberg' %}">
+            <a :href="$url('proposals:archive_status', [proposal.pk])" v-if="proposal.in_archive && context.is_secretary">
+                <img src="{{ img_hide }}" title="{% trans 'Verberg' %}">
             </a>
         </template>
 
@@ -96,9 +70,7 @@
                     {{ proposal.date_reviewed | date("DD-MM-YYYY, HH:mm") }}
                     {% endverbatim %}
                 </span>
-                <span
-                    v-else-if="proposal.date_confirmed"
-                >
+                <span v-else-if="proposal.date_confirmed">
                     {% trans "Besloten op" %}:
                     {% verbatim %}
                     {{ proposal.date_confirmed | date("DD-MM-YYYY, HH:mm") }}
@@ -113,9 +85,7 @@
             </div>
             <div class="ufl-undertitle-line">
                 {% trans 'Status' %}:
-                <span
-                    v-if="proposal.status >= context.proposal.DECISION_MADE"
-                >
+                <span v-if="proposal.status >= context.proposal.DECISION_MADE">
                     {% verbatim %}
                     {{ proposal.latest_review.get_continuation_display }}
                     {% endverbatim %}
@@ -139,10 +109,7 @@
                                     {% trans "Revisie/amendement van" %}:
                                 </td>
                                 <td v-if="proposal.parent.pdf != undefined">
-                                    <a
-                                        :href="proposal.parent.pdf.url"
-                                        v-html="proposal.parent.reference_number"
-                                    ></a>
+                                    <a :href="proposal.parent.pdf.url" v-html="proposal.parent.reference_number"></a>
                                 </td>
                                 <td v-else v-html="proposal.parent.reference_number">
 
@@ -184,10 +151,8 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    {% trans "Indieners" %}:<br/>
-                                    <span
-                                       v-for="(applicant, index) in proposal.applicants"
-                                   >
+                                    {% trans "Indieners" %}:<br />
+                                    <span v-for="(applicant, index) in proposal.applicants">
                                         {% verbatim %}
                                         <span v-if="index != 0">, </span>
                                         {{ applicant.fullname }}

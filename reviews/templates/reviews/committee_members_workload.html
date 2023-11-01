@@ -1,95 +1,84 @@
 {% extends "base/base.html" %}
-
 {% load fetc_filters %}
 {% load get_field_name %}
 {% load static %}
 {% load i18n %}
 {% load datatables %}
-
 {% block header_title %}
     {% blocktranslate trimmed %}
         {{ committee }} werkverdeling overzicht
     {% endblocktranslate %}
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h3 class="mb-3">{% trans 'Lopende reviews' %} {{ committee }} </h3>
-
+            <h3 class="mb-3">{% trans 'Lopende reviews' %} {{ committee }}</h3>
             <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
-                <tr>
-                    <th>{% trans "Reviewer" %}</th>
-                    <th>{% trans "Traject" %}</th>
-                    <th>{% trans "Referentienummer" %}</th>
-                    <th>{% trans "Datum ingediend" %}</th>
-                    <th>{% trans "Gewenste einddatum" %}</th>
-                </tr>
+                    <tr>
+                        <th>{% trans "Reviewer" %}</th>
+                        <th>{% trans "Traject" %}</th>
+                        <th>{% trans "Referentienummer" %}</th>
+                        <th>{% trans "Datum ingediend" %}</th>
+                        <th>{% trans "Gewenste einddatum" %}</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for decision in decisions %}
-                    <tr>
-                        <th scope="row">{{ decision.reviewer.get_full_name }} </th>
-                        <td>
-                            {% if decision.review.proposal.is_revision == True %}
-                                {% trans 'Revisie' %}
-                            {% elif decision.review.short_route == True %}
-                                {% trans 'Korte route' %}
+                    {% for decision in decisions %}
+                        <tr>
+                            <th scope="row">{{ decision.reviewer.get_full_name }}</th>
+                            <td>
+                                {% if decision.review.proposal.is_revision == True %}
+                                    {% trans 'Revisie' %}
+                                {% elif decision.review.short_route == True %}
+                                    {% trans 'Korte route' %}
+                                {% else %}
+                                    {% trans 'Lange route' %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'reviews:detail' pk=decision.review.pk %}">{{ decision.review.proposal.reference_number }}</a> - {{ decision.review.proposal.title }}
+                            </td>
+                            <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_start|date:"j M Y" }}</td>
+                            {% if decision.review.date_should_end < today %}
+                                <td data-order="{{ decision.review.date_should_end|date:'c' }}"
+                                    class="text-danger">{{ decision.review.date_should_end|date:"j M Y" }}</td>
                             {% else %}
-                                {% trans 'Lange route' %}
+                                <td data-order="{{ decision.review.date_should_end|date:'c' }}">{{ decision.review.date_should_end|date:"j M Y" }}</td>
                             {% endif %}
-                        </td>
-                        <td> 
-                            <a href="{% url 'reviews:detail' pk=decision.review.pk %}">
-                                {{ decision.review.proposal.reference_number }} 
-                            </a> - {{decision.review.proposal.title}}
-                        </td>
-                        <td data-order="{{ decision.review.date_start|date:'c' }}">{{ decision.review.date_start|date:"j M Y" }}</td>
-                        {% if decision.review.date_should_end < today %}
-                            <td data-order="{{ decision.review.date_should_end|date:'c' }}" class="text-danger"> 
-                                    {{ decision.review.date_should_end|date:"j M Y" }} 
-                            </td>
-                        {% else %}
-                            <td data-order="{{ decision.review.date_should_end|date:'c' }}">
-                                {{ decision.review.date_should_end|date:"j M Y" }}
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             <br />
-            <h3 class="mb-3">{% trans 'Werkverdeling overzicht van afgelopen periode' %} </h3>
-            <p>
-                {% trans 'Vul hieronder een start- en einddatum in voor de periode van dit overzicht.'%}
-            </p>
+            <h3 class="mb-3">{% trans 'Werkverdeling overzicht van afgelopen periode' %}</h3>
+            <p>{% trans 'Vul hieronder een start- en einddatum in voor de periode van dit overzicht.' %}</p>
             <form action="" method="post">
                 {% csrf_token %}
                 <table>
-                {{ form.as_table }}
+                    {{ form.as_table }}
                 </table>
-                <input type="submit" value="{% trans 'Periode toepassen'%}">
+                <input type="submit" value="{% trans 'Periode toepassen' %}">
             </form>
             <br />
             <table class="dt w-100" data-language="{% datatables_lang %}">
                 <thead>
-                <tr>
-                    <th>{% trans "Reviewer" %}</th>
-                    <th>{% trans "Totaal" %}</th>
-                    <th>{% trans "Korte route" %}</th>
-                    <th>{% trans "Lange Route" %}</th>
-                    <th>{% trans "Revisie" %}</th>
-                </tr>
+                    <tr>
+                        <th>{% trans "Reviewer" %}</th>
+                        <th>{% trans "Totaal" %}</th>
+                        <th>{% trans "Korte route" %}</th>
+                        <th>{% trans "Lange Route" %}</th>
+                        <th>{% trans "Revisie" %}</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for reviewer in reviewers %}
                         <tr>
-                            <th scope="row" > {{ reviewer.get_full_name }} </th>
-                            <td >{{ reviewer.total }}</td>
-                            <td >{{ reviewer.num_short_route }}</td>
-                            <td >{{ reviewer.num_long_route }}</td>
-                            <td >{{ reviewer.num_revision }}</td>                       
+                            <th scope="row">{{ reviewer.get_full_name }}</th>
+                            <td>{{ reviewer.total }}</td>
+                            <td>{{ reviewer.num_short_route }}</td>
+                            <td>{{ reviewer.num_long_route }}</td>
+                            <td>{{ reviewer.num_revision }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

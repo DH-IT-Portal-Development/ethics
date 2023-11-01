@@ -1,16 +1,13 @@
 {% extends "base/base.html" %}
-
 {% load i18n %}
 {% load proposal_filters %}
 {% load static %}
 {% load uil_filters %}
 {% load get_field_name %}
 {% load diff_tags %}
-
 {% block header_title %}
     {% trans "Overzicht van wijzigingen" %} - {{ block.super }}
 {% endblock %}
-
 {% block html_head %}
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
     <script>
@@ -30,7 +27,6 @@
         });
     </script>
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -43,7 +39,7 @@
     <div class="uu-inner-container">
         <div class="col-12 compare document-compare">
             <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
-                <img src="{% static 'main/images/loading.gif' %}"/>
+                <img src="{% static 'main/images/loading.gif' %}" />
             </div>
             {% with p_proposal=proposal.parent %}
                 <h2 class="mt-3 mb-1">{% trans "Algemene informatie over de aanvraag" %}</h2>
@@ -66,30 +62,29 @@
                         </tr>
                     {% endif %}
                     {% if proposal.relation.check_in_course or p_proposal.relation.check_in_course %}
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th>
-                        <td>{{ p_proposal.student_program }}</td>
-                        <td>{{ proposal.student_program }}</td>
-                    </tr>
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th>
-                        <td>{{ p_proposal.student_context|default:"" }}</td>
-                        <td>{{ proposal.student_context|default:"" }}</td>
-                    </tr>
-                        {% if proposal.student_context.needs_details or p_proposal.student_context.needs_details %}
                         <tr>
-                            <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th>
-                            <td>{{ p_proposal.student_context_details }}</td>
-                            <td>{{ proposal.student_context_details }}</td>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th>
+                            <td>{{ p_proposal.student_program }}</td>
+                            <td>{{ proposal.student_program }}</td>
                         </tr>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th>
+                            <td>{{ p_proposal.student_context|default:"" }}</td>
+                            <td>{{ proposal.student_context|default:"" }}</td>
+                        </tr>
+                        {% if proposal.student_context.needs_details or p_proposal.student_context.needs_details %}
+                            <tr>
+                                <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th>
+                                <td>{{ p_proposal.student_context_details }}</td>
+                                <td>{{ proposal.student_context_details }}</td>
+                            </tr>
                         {% endif %}
-                    <tr>
-                        <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th>
-                        <td>{{ p_proposal.student_justification }}</td>
-                        <td>{{ proposal.student_justification }}</td>
-                    </tr>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th>
+                            <td>{{ p_proposal.student_justification }}</td>
+                            <td>{{ proposal.student_justification }}</td>
+                        </tr>
                     {% endif %}
-
                     <tr>
                         <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th>
                         <td>{{ p_proposal.other_applicants|yesno:_("ja,nee") }}</td>
@@ -100,18 +95,12 @@
                             <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th>
                             <td>
                                 <ul class="p-0">
-                                {% for applicant in p_proposal.applicants.all %}
-                                <li>{{ applicant.get_full_name }}</li>
-                                {% endfor %}
+                                    {% for applicant in p_proposal.applicants.all %}<li>{{ applicant.get_full_name }}</li>{% endfor %}
                                 </ul>
                             </td>
                             <td>
                                 <ul class="p-0">
-                                {% for applicant in proposal.applicants.all %}
-                                <li>
-                                    {{ applicant.get_full_name }}
-                                </li>
-                                {% endfor %}
+                                    {% for applicant in proposal.applicants.all %}<li>{{ applicant.get_full_name }}</li>{% endfor %}
                                 </ul>
                             </td>
                         </tr>
@@ -168,7 +157,6 @@
                         <td>{{ proposal.self_assessment }}</td>
                     </tr>
                 </table>
-
                 {% with wmo=proposal.wmo %}
                     {% with p_wmo=p_proposal.wmo %}
                         <h2 class="mt-5 mb-1">{% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}</h2>
@@ -202,7 +190,6 @@
                                 </tr>
                             {% endif %}
                         </table>
-
                         {% if wmo.status != wmo.NO_WMO or p_wmo.status != p_wmo.NO_WMO %}
                             <h2 class="mt-5 mb-1">{% trans "Aanmelding bij de METC" %}</h2>
                             <table class="proposals-diff ">
@@ -224,19 +211,20 @@
                                 <tr>
                                     <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th>
                                     {% if p_wmo.metc_decision_pdf %}
-                                        <td><a href="{{ p_wmo.metc_decision_pdf.url }}"
-                                               target="_blank">{% trans "Download" %}</a></td>
+                                        <td>
+                                            <a href="{{ p_wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a>
+                                        </td>
                                     {% endif %}
                                     {% if wmo.metc_decision_pdf %}
-                                        <td><a href="{{ wmo.metc_decision_pdf.url }}"
-                                               target="_blank">{% trans "Download" %}</a></td>
+                                        <td>
+                                            <a href="{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a>
+                                        </td>
                                     {% endif %}
                                 </tr>
                             </table>
                         {% endif %}
                     {% endwith %}
                 {% endwith %}
-
                 <h2 class="mt-5 mb-1">{% trans "Eén of meerdere trajecten?" %}</h2>
                 <table class="proposals-diff ">
                     <tr>
@@ -257,10 +245,8 @@
                         </tr>
                     {% endif %}
                 </table>
-
                 {% if proposal.wmo.status == proposal.wmo.NO_WMO or proposal.wmo.status == proposal.wmo.JUDGED %}
                     {% include 'proposals/diff/study.html' %}
-
                     <h2 class="mt-5 mb-1">{% trans "Concept-aanmelding versturen" %}</h2>
                     <table class="proposals-diff ">
                         <tr>
@@ -288,13 +274,9 @@
                     </table>
                 {% endif %}
             {% endwith %}
-
             <p class="mt-5 float-right">
-                <button class="button" onclick="window.history.back();">
-                    {% trans "Terug naar de vorige pagina" %}
-                </button>
+                <button class="button" onclick="window.history.back();">{% trans "Terug naar de vorige pagina" %}</button>
             </p>
-
         </div>
     </div>
 {% endblock %}

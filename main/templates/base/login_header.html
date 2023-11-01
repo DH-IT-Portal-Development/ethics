@@ -1,11 +1,10 @@
 {% load i18n %}
 {% load transformat %}
-
 {% if request.user.is_authenticated %}
     {% with request.user as user %}
         {% transformat "Welkom {}" user.get_full_name %}
         <a href="{% url 'logout' %}">({% trans 'Log uit' %})</a>
     {% endwith %}
-    {% else %}
+{% else %}
     &nbsp; {# UI requires a line here #}
 {% endif %}

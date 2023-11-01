@@ -1,24 +1,15 @@
 {% extends "base/base.html" %}
 {% load vue_tags %}
-
 {% load static %}
 {% load i18n %}
-
 {% get_current_language as LANGUAGE_CODE %}
-
-{% block header_title %}
-    {{ title }} - {{ block.super }}
-{% endblock %}
-
+{% block header_title %}{{ title }} - {{ block.super }}{% endblock %}
 {% block html_head %}
-
     {# This template loads in either the dev or prod Vue library, depending on settings.DEBUG #}
     {% include 'uil.vue/vueloader.html' %}
     {# Load in the base component FancyList #}
     {% load_vue_component 'FancyList' %}
-
     {% include 'proposals/vue_templates/proposal_list.html' %}
-
     <script>
         // Needs to be wrapped into an onload to ensure all dependencies are loaded
         window.onload = _ => {
@@ -37,64 +28,74 @@
             {% static "proposals/images/folder_delete.png" as img_hide %}
             {% static "proposals/images/folder_add.png" as img_add %}
             {% static 'reviews/images/scale.png' as img_decide %}
-            <p>
-                {{ body }}
-            </p>
+            <p>{{ body }}</p>
             <h3>{% trans "Uitleg" %}</h3>
             <ul>
                 {% if modifiable %}
                     <li>
                         {% blocktrans trimmed %}
-                            Klik op <img src="{{ img_next }}" title="Naar volgende stap"> om naar de volgende stap in
+                            Klik op
+                            <img src="{{ img_next }}" title="Naar volgende stap">
+                            om naar de volgende stap in
                             het proces
                             te gaan.
                         {% endblocktrans %}
                     </li>
                     <li>
                         {% blocktrans trimmed %}
-                            Klik op <img src="{{ img_diff }}" title="Toon verschillen"> om de verschillen met de
+                            Klik op
+                            <img src="{{ img_diff }}" title="Toon verschillen">
+                            om de verschillen met de
                             voorgaande
                             versie te zien (alleen beschikbaar voor revisies/amendementen).
                         {% endblocktrans %}
                     </li>
                     <li>
                         {% blocktrans trimmed %}
-                            Klik op <img src="{{ img_delete }}" title="Verwijderen"> om je aanvraag te verwijderen.
+                            Klik op
+                            <img src="{{ img_delete }}" title="Verwijderen">
+                            om je aanvraag te verwijderen.
                         {% endblocktrans %}
                     </li>
                 {% endif %}
                 {% if submitted %}
                     <li>
                         {% blocktrans trimmed %}
-                            Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende aanvraag in te zien.
+                            Klik op
+                            <img src="{{ img_pdf }}" title="Inzien">
+                            om een ingediende aanvraag in te zien.
                         {% endblocktrans %}
                     </li>
                 {% endif %}
                 {% if supervised %}
                     <li>
                         {% blocktrans trimmed %}
-                        Klik op <img src="{{ img_decide }}" title="Beslissen"> om je beslissing door te geven (als eindverantwoordelijke).
+                            Klik op
+                            <img src="{{ img_decide }}" title="Beslissen">
+                            om je beslissing door te geven (als eindverantwoordelijke).
                         {% endblocktrans %}
                     </li>
                 {% endif %}
                 {% if is_secretary %}
                     <li>
                         {% blocktrans trimmed %}
-                            Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende aanvraag te verbergen
+                            Klik op
+                            <img src="{{ img_hide }}" title="Verbergen">
+                            om een ingediende aanvraag te verbergen
                             uit het archief.
                         {% endblocktrans %}
                     </li>
                     <li>
                         {% blocktrans trimmed %}
-                            Klik op <img src="{{ img_add }}" title="Toevoegen"> om een ingediende aanvraag toe te voegen
+                            Klik op
+                            <img src="{{ img_add }}" title="Toevoegen">
+                            om een ingediende aanvraag toe te voegen
                             aan het archief.
                         {% endblocktrans %}
                     </li>
                 {% endif %}
             </ul>
-
             <div id="list"></div>
-
         </div>
     </div>
 {% endblock %}

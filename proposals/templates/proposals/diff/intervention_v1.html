@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load get_field_name %}
 {% load proposal_filters %}
-
 <table class="proposals-diff pure-table pure-table-horizontal">
     <tr>
         <th class="proposals-diff-question"></th>
@@ -24,28 +23,20 @@
         <tr>
             <th>{% get_verbose_field_name "interventions" "intervention" "supervision" %}</th>
             <td>
-                {% if p_intervention %}
-                    {{ p_intervention.supervision|yesno:_("ja,nee,") }}
-                {% endif %}
+                {% if p_intervention %}{{ p_intervention.supervision|yesno:_("ja,nee,") }}{% endif %}
             </td>
             <td>
-                {% if intervention %}
-                    {{ intervention.supervision|yesno:_("ja,nee,") }}
-                {% endif %}
+                {% if intervention %}{{ intervention.supervision|yesno:_("ja,nee,") }}{% endif %}
             </td>
         </tr>
         {% if not intervention.supervision or not p_intervention.supervision %}
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "leader_has_coc" %}</th>
                 <td>
-                    {% if p_intervention %}
-                        {{ p_intervention.leader_has_coc|yesno:_("ja,nee,") }}
-                    {% endif %}
+                    {% if p_intervention %}{{ p_intervention.leader_has_coc|yesno:_("ja,nee,") }}{% endif %}
                 </td>
                 <td>
-                    {% if intervention %}
-                        {{ intervention.leader_has_coc|yesno:_("ja,nee,") }}
-                    {% endif %}
+                    {% if intervention %}{{ intervention.leader_has_coc|yesno:_("ja,nee,") }}{% endif %}
                 </td>
             </tr>
         {% endif %}
@@ -83,14 +74,10 @@
     <tr>
         <th>{% get_verbose_field_name "interventions" "intervention" "has_controls" %}</th>
         <td>
-            {% if p_intervention %}
-                {{ p_intervention.has_controls|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if p_intervention %}{{ p_intervention.has_controls|yesno:_("ja,nee") }}{% endif %}
         </td>
         <td>
-            {% if intervention %}
-                {{ intervention.has_controls|yesno:_("ja,nee") }}
-            {% endif %}
+            {% if intervention %}{{ intervention.has_controls|yesno:_("ja,nee") }}{% endif %}
         </td>
     </tr>
     {% if intervention.has_controls or p_intervention.has_controls %}

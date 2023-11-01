@@ -1,8 +1,6 @@
 {% extends "base/base.html" %}
-
 {% load i18n %}
 {% load static %}
-
 {% block content %}
     {# TODO: when migration to SAML, this template needs to become a TemplateView #}
     <div class="coverimage">
@@ -11,24 +9,29 @@
     {# Very ugly imitation of uu-hero #}
     <div style="background: #FFCD00; margin: -10px -15px; padding:1rem;">
         <div class="uu-inner-container" style="padding-left: 15px">
-            <h2 style="font-weight: 500">
-                {% trans "Inloggen" %}
-            </h2>
+            <h2 style="font-weight: 500">{% trans "Inloggen" %}</h2>
         </div>
     </div>
     <div class="uu-inner-container mt-4">
         <div class="col-12 col-md-4">
             {% if form.errors %}
-                <p class="form-errors">
-                    {% trans "Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw." %}
-                </p>
+                <p class="form-errors">{% trans "Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw." %}</p>
             {% endif %}
-            <p>
-                {% trans "Je kan hier inloggen met je Solis-ID en wachtwoord." %}
-            </p>
-            <form class="" method="post" action="{% url 'login' %}">{% csrf_token %}
-                <input id="id_username" maxlength="254" name="username" type="text" placeholder="{% trans 'Gebruikersnaam' %}"><br/>
-                <input class="mt-1" id="id_password" name="password" type="password" placeholder="{% trans 'Wachtwoord' %}"><br/>
+            <p>{% trans "Je kan hier inloggen met je Solis-ID en wachtwoord." %}</p>
+            <form class="" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <input id="id_username"
+                       maxlength="254"
+                       name="username"
+                       type="text"
+                       placeholder="{% trans 'Gebruikersnaam' %}">
+                <br />
+                <input class="mt-1"
+                       id="id_password"
+                       name="password"
+                       type="password"
+                       placeholder="{% trans 'Wachtwoord' %}">
+                <br />
                 <input class="mt-3 mb-3" type="submit" value="{% trans 'Inloggen' %}" />
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>

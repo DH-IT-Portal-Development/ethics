@@ -1,8 +1,6 @@
 {% extends "base/base.html" %}
-
 {% load static %}
 {% load i18n %}
-
 {% block header_title %}
     {% if proposal.is_pre_assessment %}
         {% trans "Aanvraag voor voortoetsing verstuurd" %}
@@ -13,7 +11,6 @@
     {% endif %}
     - {{ block.super }}
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -35,7 +32,6 @@
                     {% trans "Je aanmelding is verstuurd." %}
                 {% endif %}
                 {% trans "Je ontvangt een e-mail ter bevestiging." %}
-
                 {% url 'proposals:my_submitted' as submitted_url %}
                 {% blocktrans trimmed %}
                     Klik <a href="{{ submitted_url }}">hier</a> om je ingediende aanvragen in te zien.

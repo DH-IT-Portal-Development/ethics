@@ -1,7 +1,5 @@
 {% extends "base/base.html" %}
-
 {% load i18n %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -10,9 +8,9 @@
                 {% trans 'Server error' %}
             </h2>
             <p>
-            {% blocktrans trimmed %}
-                Er is een fout opgetreden tijdens het opvragen van deze pagina.
-            {% endblocktrans %}
+                {% blocktrans trimmed %}
+                    Er is een fout opgetreden tijdens het opvragen van deze pagina.
+                {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}

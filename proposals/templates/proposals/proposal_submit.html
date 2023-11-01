@@ -1,8 +1,6 @@
 {% extends "base/base.html" %}
-
 {% load static %}
 {% load i18n %}
-
 {% block header_title %}
     {% if proposal.is_pre_assessment %}
         {% trans "Aanvraag voor voortoetsing klaar voor versturen" %}
@@ -13,10 +11,11 @@
     {% endif %}
     - {{ block.super }}
 {% endblock %}
-
 {% block html_head %}
-<script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
-<script>
+    <script type="text/javascript"
+            charset="utf8"
+            src="{% static 'proposals/js/word_counter.js' %}"></script>
+    <script>
     $(function () {
         depends_on_value('embargo', 'True', 'embargo_end_date');
 
@@ -33,9 +32,8 @@
         let translated_string = " {% trans 'Aantal woorden:' %} "
         wordCounter("comments", translated_string)
     });
-</script>
+    </script>
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
@@ -60,7 +58,6 @@
                         Als je er zeker van bent dat je aanvraag op adequate wijze is gespecifieerd kan je de aanmelding
                         nu ter beoordeling naar de FETC-GW versturen.
                     {% endblocktrans %}
-
                 {% elif proposal.relation.needs_supervisor %}
                     {% blocktrans %}
                         Je concept-aanmelding is compleet.
@@ -68,7 +65,6 @@
                     {% blocktrans %}
                         Je kan nu je concept-aanmelding ter beoordeling naar je supervisor versturen.
                     {% endblocktrans %}
-
                 {% else %}
                     {% blocktrans %}
                         Je aanmelding is compleet.
@@ -92,8 +88,7 @@
                     de concept-aanvraag wordt dan bewaard voor eventuele latere wijziging en indiening.
                 {% endblocktrans %}
             </p>
-
-            {% if not proposal.is_pre_assessment  %}
+            {% if not proposal.is_pre_assessment %}
                 {% for study in proposal.study_set.all %}
                     {% if study.has_missing_forms %}
                         <div class="warning">
@@ -119,54 +114,50 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-
             <form action="" method="post" enctype="multipart/form-data">
-
-            {% if troublesome_pages %}
-            <div class="warning">
-	      <h5>
-                    {% blocktrans trimmed %}
-                        Er zijn nog errors gevonden op de volgende pagina's:
-                    {% endblocktrans %}
-		    </h5>
-                    <ul>
-                        {% for error_page in troublesome_pages %}
-                            <li>
-                                <a href="{{ error_page.url }}">
-                                    {{ error_page.page_name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    {% blocktrans trimmed %}
-                        Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft ingevuld. Je kan je
-                        aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
-                    {% endblocktrans %}
-                </div>
-		{% endif %}
-		{% if start_date_warning %}
-		<div class="warning">
-		  <h5>{% trans "Controleer uw beoogde startdatum" %}</h5>
-		  <p>
-		    {% blocktrans trimmed %}
-		    Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer daarom bij een revisie altijd of de beoogde startdatum nog klopt.
-		    {% endblocktrans %}
-		    {% url "proposals:update" proposal.pk as first_page_url %}
-		    {% blocktrans trimmed %}
-		    De beoogde startdatum vindt u op
-		    <a href="{{first_page_url}}">deze pagina</a>.
-		    {% endblocktrans %}
-		  </p>
-		</div>		
-		{% endif %}
-
-
-		{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+                {% if troublesome_pages %}
+                    <div class="warning">
+                        <h5>
+                            {% blocktrans trimmed %}
+                                Er zijn nog errors gevonden op de volgende pagina's:
+                            {% endblocktrans %}
+                        </h5>
+                        <ul>
+                            {% for error_page in troublesome_pages %}
+                                <li>
+                                    <a href="{{ error_page.url }}">{{ error_page.page_name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% blocktrans trimmed %}
+                            Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft ingevuld. Je kan je
+                            aanmelding pas versturen wanneer deze fouten gecorrigeerd zijn.
+                        {% endblocktrans %}
+                    </div>
+                {% endif %}
+                {% if start_date_warning %}
+                    <div class="warning">
+                        <h5>{% trans "Controleer uw beoogde startdatum" %}</h5>
+                        <p>
+                            {% blocktrans trimmed %}
+                                Omdat de beoogde startdatum binnen twee weken van vandaag ligt, kan de FETC helaas geen officiële goedkeuring meer geven voor deze aanvraag. Controleer daarom bij een revisie altijd of de beoogde startdatum nog klopt.
+                            {% endblocktrans %}
+                            {% url "proposals:update" proposal.pk as first_page_url %}
+                            {% blocktrans trimmed %}
+                                De beoogde startdatum vindt u op
+                                <a href="{{ first_page_url }}">deze pagina</a>.
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                {% endif %}
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 {% if is_practice %}
-                <div class="info">
-                    {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
-                </div>
+                    <div class="info">
+                        {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+                    </div>
                 {% endif %}
                 {% if troublesome_pages or is_practice %}
                     {% include "base/form_buttons.html" with no_forward=1 %}

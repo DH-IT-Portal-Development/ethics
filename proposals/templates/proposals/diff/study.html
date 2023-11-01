@@ -4,21 +4,14 @@
 {% load uil_filters %}
 {% load get_field_name %}
 {% load diff_tags %}
-
 {% for study, p_study in proposal.study_set.all|zip_equalize_lists:p_proposal.study_set.all %}
     <h2 class="mt-5 mb-1">{% trans "De deelnemers" %}</h2>
     {% include "studies/study_title.html" %}
-
     {% if study and not p_study %}
-        <div class="warning">
-            {% trans "Dit traject is nieuw in de revisie." %}
-        </div>
+        <div class="warning">{% trans "Dit traject is nieuw in de revisie." %}</div>
     {% elif not study and p_study %}
-        <div class="warning">
-            {% trans "Dit traject is weggehaald uit de revisie" %}
-        </div>
+        <div class="warning">{% trans "Dit traject is weggehaald uit de revisie" %}</div>
     {% endif %}
-
     <table class="proposals-diff ">
         <tr>
             <th class="proposals-diff-question"></th>
@@ -39,14 +32,10 @@
                     {# But if you reference an attribute of None, Django will  #}
                     {# insert 'False' instead.... So this if is the only way #}
                     {# to not display anything if one of the two studies is None #}
-                    {% if p_study %}
-                        {{ p_study.legally_incapable|yesno:_("ja,nee") }}
-                    {% endif %}
+                    {% if p_study %}{{ p_study.legally_incapable|yesno:_("ja,nee") }}{% endif %}
                 </td>
                 <td>
-                    {% if study %}
-                        {{ study.legally_incapable|yesno:_("ja,nee") }}
-                    {% endif %}
+                    {% if study %}{{ study.legally_incapable|yesno:_("ja,nee") }}{% endif %}
                 </td>
             </tr>
             {% if study.legally_incapable or p_study.legally_incapable %}
@@ -57,7 +46,6 @@
                 </tr>
             {% endif %}
         {% endif %}
-
         <tr>
             <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th>
             <td>{{ p_study.has_special_details|yesno:_("ja,nee") }}</td>
@@ -84,7 +72,6 @@
                 {% endif %}
             {% endif %}
         {% endif %}
-        
         {% if study|necessity_required or p_study|necessity_required %}
             <tr>
                 <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th>
@@ -127,24 +114,20 @@
             <td>{{ study.hierarchy }}</td>
         </tr>
         {% if study.hierarchy or p_study.hierarchy %}
-        <tr>
-            <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th>
-            <td>{{ p_study.hierarchy_details }}</td>
-            <td>{{ study.hierarchy_details }}</td>
-        </tr>
+            <tr>
+                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th>
+                <td>{{ p_study.hierarchy_details }}</td>
+                <td>{{ study.hierarchy_details }}</td>
+            </tr>
         {% endif %}
     </table>
-
     {% include 'proposals/diff/intervention.html' %}
-
     {% include 'proposals/diff/observation.html' %}
-
     {% include 'proposals/diff/sessions.html' %}
-
     <h2 class="mt-5 mb-1">{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
-    <br/>
+    <br />
     {% include "studies/study_title.html" %}
-    <br/>
+    <br />
     <table class="proposals-diff ">
         <tr>
             <th class="proposals-diff-question"></th>
@@ -202,13 +185,10 @@
             </tr>
         {% endif %}
     </table>
-
     <h2 class="mt-5 mb-1">{% trans "Informed consent formulieren voor het onderzoek" %}</h2>
     {% include "studies/study_title.html" %}
-
     {% get_study_documents documents study %}
     {% get_study_documents p_documents p_study %}
-
     <table class="proposals-diff ">
         <tr>
             <th class="proposals-diff-question"></th>
@@ -230,13 +210,16 @@
         <tr>
             <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th>
             {% if p_documents.informed_consent %}
-                <td><a href="{{ p_documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <td>
+                    <a href="{{ p_documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a>
+                </td>
             {% else %}
                 <td></td>
             {% endif %}
-
             {% if documents.informed_consent %}
-                <td><a href="{{ documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <td>
+                    <a href="{{ documents.informed_consent.url }}" target="_blank">{% trans "Download" %}</a>
+                </td>
             {% else %}
                 <td></td>
             {% endif %}
@@ -244,13 +227,16 @@
         <tr>
             <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th>
             {% if p_documents.briefing %}
-                <td><a href="{{ p_documents.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <td>
+                    <a href="{{ p_documents.briefing.url }}" target="_blank">{% trans "Download" %}</a>
+                </td>
             {% else %}
                 <td></td>
             {% endif %}
-
             {% if documents.briefing %}
-                <td><a href="{{ documents.briefing.url }}" target="_blank">{% trans "Download" %}</a></td>
+                <td>
+                    <a href="{{ documents.briefing.url }}" target="_blank">{% trans "Download" %}</a>
+                </td>
             {% else %}
                 <td></td>
             {% endif %}
@@ -258,14 +244,10 @@
         <tr>
             <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th>
             <td>
-                {% if p_study %}
-                    {{ p_study.passive_consent|yesno:_("ja,nee") }}
-                {% endif %}
+                {% if p_study %}{{ p_study.passive_consent|yesno:_("ja,nee") }}{% endif %}
             </td>
             <td>
-                {% if study %}
-                    {{ study.passive_consent|yesno:_("ja,nee") }}
-                {% endif %}
+                {% if study %}{{ study.passive_consent|yesno:_("ja,nee") }}{% endif %}
             </td>
         </tr>
         {% if study.passive_consent or p_study.passive_consent %}

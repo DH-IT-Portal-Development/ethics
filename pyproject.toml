@@ -1,0 +1,3 @@
+[tool.djlint]
+profile="django"
+extend_exclude="docs"

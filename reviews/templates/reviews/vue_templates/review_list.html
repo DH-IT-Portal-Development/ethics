@@ -1,6 +1,5 @@
 {% load static %}
 {% load i18n %}
-
 {% static "proposals/images/arrow_divide.png" as img_diff %}
 {% static "main/images/page_white_acrobat.png" as img_pdf %}
 {% static "proposals/images/folder_delete.png" as img_hide %}
@@ -13,7 +12,6 @@
 {% static 'reviews/images/website.png' as img_export %}
 {% static 'reviews/images/report_go.png' as img_confirm %}
 {% static 'reviews/images/tick.png' as img_confirmed %}
-
 <script type="text/x-template" id="reviewsUFLList">
     <FancyList
             {# It's a long, but standard, list, so we just include the default list #}
@@ -40,10 +38,7 @@
 
         <template #actions="{ item: review, context }">
             {# The :href means that we use Vue to provide the actual link. Thus, the expression is Vue code! #}
-            <a
-               :href="$url('proposals:pdf', [review.proposal.pk])"
-               target="_blank"
-            >
+            <a :href="$url('proposals:pdf', [review.proposal.pk])" target="_blank">
                 {# Note the absence of {% verbatim %}, we actually use django here for the image! #}
                 <img src="{{ img_pdf }}" title="{% trans 'Aanvraag inzien' %}">
             </a>
@@ -56,49 +51,27 @@
             {# The template tag doesn't add anything by itself, so it's a good if container #}
             <template v-if="context.is_secretary && review.stage === context.review.ASSIGNMENT">
                 <a :href="$url('reviews:assign', [review.pk])">
-                    <img src="{{ img_add_reviewers }}"
-                         title="{% trans 'Aanstellen' %}">
+                    <img src="{{ img_add_reviewers }}" title="{% trans 'Aanstellen' %}">
                 </a>
                 <a :href="$url('reviews:change_chamber', [review.proposal.pk])">
-                    <img src="{{ img_change_chamber }}"
-                         title="{% trans 'Verplaats naar andere kamer' %}">
+                    <img src="{{ img_change_chamber }}" title="{% trans 'Verplaats naar andere kamer' %}">
                 </a>
             </template>
-            <a
-                    v-if="context.is_secretary && review.stage === context.review.CLOSING"
-                    :href="$url('reviews:close', [review.pk])"
-            >
+            <a v-if="context.is_secretary && review.stage === context.review.CLOSING" :href="$url('reviews:close', [review.pk])">
                 <img src="{{ img_close }}" title="{% trans 'Afsluiten' %}">
             </a>
             <template v-else-if="context.is_secretary && review.stage === context.review.CLOSED">
                 <template v-if="[context.review.GO, context.review.GO_POST_HOC].includes(review.continuation)">
                     <a :href="$url('proposals:archive_export', [review.proposal.pk])">
-                        <img src="{{ img_export }}"
-                             title="{% trans 'Website export tekst' %}">
+                        <img src="{{ img_export }}" title="{% trans 'Website export tekst' %}">
                     </a>
                     <a :href="$url('proposals:confirmation', [review.proposal.pk])">
-                        <img
-                            v-if="review.proposal.date_confirmed"
-                            src="{{ img_confirmed }}"
-                            title="{% trans 'Bevestigingsbrief verstuurd' %}"
-                        />
-                        <img
-                            v-else
-                            src="{{ img_confirm }}"
-                            title="{% trans 'Bevestigingsbrief versturen' %}"
-                        />
+                        <img v-if="review.proposal.date_confirmed" src="{{ img_confirmed }}" title="{% trans 'Bevestigingsbrief verstuurd' %}" />
+                        <img v-else src="{{ img_confirm }}" title="{% trans 'Bevestigingsbrief versturen' %}" />
                     </a>
                     <a :href="$url('proposals:archive_status', [review.proposal.pk])">
-                        <img
-                            v-if="review.proposal.in_archive === true"
-                            src="{{ img_hide }}"
-                            title="{% trans 'Verberg aanvraag uit het archief' %}"
-                        />
-                        <img
-                            v-else
-                            src="{{ img_add }}"
-                            title="{% trans 'Plaats aanvraag in archief' %}"
-                        />
+                        <img v-if="review.proposal.in_archive === true" src="{{ img_hide }}" title="{% trans 'Verberg aanvraag uit het archief' %}" />
+                        <img v-else src="{{ img_add }}" title="{% trans 'Plaats aanvraag in archief' %}" />
                     </a>
                 </template>
             </template>
@@ -139,10 +112,7 @@
                                     {% trans "Revisie/amendement van" %}:
                                 </td>
                                 <td>
-                                    <a
-                                        :href="$url('reviews:detail', [review.proposal.parent.latest_review.pk])"
-                                        v-html="review.proposal.parent.reference_number"
-                                    >
+                                    <a :href="$url('reviews:detail', [review.proposal.parent.latest_review.pk])" v-html="review.proposal.parent.reference_number">
                                     </a>
                                 </td>
                             </tr>
@@ -181,11 +151,8 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    {% trans "Indieners" %}:<br/>
-                                    <a
-                                       v-for="(applicant, index) in review.proposal.applicants"
-                                       :href="$url('main:user_detail', [applicant.pk])"
-                                   >
+                                    {% trans "Indieners" %}:<br />
+                                    <a v-for="(applicant, index) in review.proposal.applicants" :href="$url('main:user_detail', [applicant.pk])">
                                         {% verbatim %}
                                         <span v-if="index != 0">, </span>
                                         {{ applicant.fullname }}

@@ -1,21 +1,16 @@
 {% extends "base/base.html" %}
-
 {% load static %}
 {% load i18n %}
-
 {% block header_title %}
     {% trans "Aanvraag beoordelen" %} - {{ block.super }}
 {% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
-    {% with review=decision.review %}
-        {% include "reviews/review_detail_sidebar.html" %}
-    {% endwith %}
+        {% with review=decision.review %}
+            {% include "reviews/review_detail_sidebar.html" %}
+        {% endwith %}
         <div class="col-12 col-md-9">
-            <h2>
-                {% trans "Aanvraag beoordelen" %}
-            </h2>
+            <h2>{% trans "Aanvraag beoordelen" %}</h2>
             {% with proposal=decision.review.proposal %}
                 {% url 'proposals:pdf' proposal.id as pdf_url %}
                 {% url 'proposals:update' proposal.id as update_url %}
@@ -29,8 +24,9 @@
                     </p>
                 {% else %}
                     <p>
-                        {% blocktrans trimmed with title=proposal.title  %}
-                            Je kunt nu de aanvraag <em>{{ title }}</em> bekijken.<br/>
+                        {% blocktrans trimmed with title=proposal.title %}
+                            Je kunt nu de aanvraag <em>{{ title }}</em> bekijken.
+                            <br />
                         {% endblocktrans %}
                     </p>
                     <p>
@@ -49,7 +45,8 @@
                     <ol>
                         <li>
                             {% blocktrans trimmed %}
-                                door de supervisor (jijzelf)<br/>
+                                door de supervisor (jijzelf)
+                                <br />
                                 Als supervisor kan je deze aanvraag <a href="{{ update_url }}" target="_blank">hier</a>
                                 aanpassen. Daarna word je teruggeleid naar deze pagina en kun je hieronder de aanvraag
                                 goedkeuren; dat betekent dat de aanvraag wordt ingediend bij de FETC-GW.
@@ -57,12 +54,13 @@
                         </li>
                         <li class="mt-2">
                             {% blocktrans trimmed %}
-                                door de indiener (je student of promovendus)<br/>
+                                door de indiener (je student of promovendus)
+                                <br />
                                 Indien je wilt dat de indiener de aanvraag zelf aanpast voordat je de studie
                                 kunt goedkeuren en daarmee bij de FETC-GW indient, selecteer dan 'revisie noodzakelijk'
                                 of ‘niet goedgekeurd’ hieronder, voeg eventuele opmerkingen toe, en klik op 'Beslissing
                                 opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen.
-                                <br/>
+                                <br />
                             {% endblocktrans %}
                         </li>
                         {# This list item is a somewhat hacky way to simulate a p tag, as you can't use those in a li #}
@@ -83,14 +81,16 @@
                         {% endblocktrans %}
                     </p>
                 {% endif %}
-                <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                    <table>{{ form.as_table }}</table>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
                     <div class="float-right">
-                        <a class="button" href="javascript:history.go(-1);">
-                            {% trans "Terug naar de vorige pagina" %}
-                        </a>
-                        <input class="pure-button pure-button-primary" type="submit"
-                               value="{% trans 'Beslissing opslaan' %}"/>
+                        <a class="button" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+                        <input class="pure-button pure-button-primary"
+                               type="submit"
+                               value="{% trans 'Beslissing opslaan' %}" />
                     </div>
                 </form>
             {% endwith %}

@@ -1,11 +1,9 @@
 {% extends "easy_pdf/base.html" %}
-
 {% load i18n %}
 {% load fetc_filters %}
 {% load proposal_filters %}
 {% load get_field_name %}
 {% load uil_filters %}
-
 {% block extra_style %}
     <style type="text/css">
         #content table {
@@ -38,494 +36,562 @@
         }
     </style>
 {% endblock %}
-
 {% block page_header %}
-  <div id="page-header">
-    {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name trimmed %}
-      FETC-GW - <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
-    {% endblocktrans %}
-    {% if proposal.is_revision %}
-      <br>
-      <strong>
-        {% blocktrans with type=proposal.type reference_number=proposal.parent.reference_number trimmed %}
-          {{ type }} van referentienummer {{ reference_number }}
+    <div id="page-header">
+        {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name trimmed %}
+            FETC-GW - <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
         {% endblocktrans %}
-      </strong>
-    {% endif %}
-  </div>
-{% endblock %}
-
-{% block page_foot %}
-  Page <pdf:pagenumber /> of <pdf:pagecount />
-{% endblock %}
-
-{% block content %}
-  <div id="content">
-    <div class="main">
-      <h1>
-        {% blocktrans with reference_number=proposal.reference_number trimmed %}
-          Referentienummer {{ reference_number }}
-        {% endblocktrans %}
-      </h1>
-      <p>{% trans 'Huidige staat van de aanvraag' %}: <em>{{proposal.get_status_display}}</em>
-      </p>
-
-      <h2>{% trans 'Indiener' %}</h2>
-      <table>
-        <tr>
-          <th>{% trans 'Naam' %}</th><td>{{ proposal.created_by.get_full_name }}</td>
-        </tr>
-        <tr>
-          <th>{% trans 'E-mail' %}</th><td>{{ proposal.created_by.email }}</td>
-        </tr>
-      </table>
-      <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
-      <table>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th><td>{{ proposal.relation }}</td>
-        </tr>
-        {% if proposal.relation.needs_supervisor %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th><td>{{ proposal.supervisor.get_full_name }}</td>
-          </tr>
+        {% if proposal.is_revision %}
+            <br>
+            <strong>
+                {% blocktrans with type=proposal.type reference_number=proposal.parent.reference_number trimmed %}
+                    {{ type }} van referentienummer {{ reference_number }}
+                {% endblocktrans %}
+            </strong>
         {% endif %}
-        {% if proposal.relation.check_in_course %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th><td>{{ proposal.student_program }}</td>
-          </tr>
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th><td>{{ proposal.student_context }}</td>
-          </tr>
-          {% if proposal.student_context.needs_details %}
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th><td>{{ proposal.student_context_details }}</td>
-            </tr>
-          {% endif %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th><td>{{ proposal.student_justification }}</td>
-          </tr>
-        {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th><td>{{ proposal.other_applicants|yesno:_("ja,nee") }}</td>
-        </tr>
-        {% if proposal.other_applicants %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th><td>
-              <ul>
-                {% for applicant in proposal.applicants.all %}
-                  <li>
-                    {{ applicant.get_full_name }}
-                  </li>
-                {% endfor %}
-              </ul>
-            </td>
-          </tr>
-        {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</th><td>{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
-        </tr>
-        {% if proposal.other_stakeholders %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "stakeholders" %}</th><td>{{ proposal.stakeholders }}</td>
-          </tr>
-        {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
-        </tr>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th><td>{{ proposal.title }}</td>
-        </tr>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th><td>{{ proposal.funding.all|unordered_list }}</td>
-        </tr>
-        {% if proposal.funding.all|needs_details %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th><td>{{ proposal.funding_details }}</td>
-          </tr>
-        {% endif %}
-        {% if proposal.funding.all|needs_details:"needs_name" %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th><td>{{ proposal.funding_name }}</td>
-          </tr>
-        {% endif %}
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th><td>{{ proposal.self_assessment }}</td>
-        </tr>
-      </table>
-      <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
-      <p>{{ proposal.summary|linebreaks }}</p>
-
-      {% with wmo=proposal.wmo %}
-        <h2 style="page-break-before: always">{% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}</h2>
-        <table>
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th><td>{{ wmo.get_metc_display }}</td>
-          </tr>
-          {% if wmo.metc == 'Y' %}
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th><td>{{ wmo.metc_details }}</td>
-            </tr>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</th><td>{{ wmo.metc_institution }}</td>
-            </tr>
-          {% else %}
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</th><td>{{ wmo.get_is_medical_display }}</td>
-            </tr>
-          {% endif %}
-        </table>
-
-        {% if wmo.status != wmo.NO_WMO %}
-          <h2 style="page-break-before: always">{% trans "Aanmelding bij de METC" %}</h2>
-          <table>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th><td>{{ wmo.metc_application|yesno:_("ja,nee") }}</td>
-            </tr>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</th><td>{{ wmo.metc_decision|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if wmo.metc_decision_pdf and not proposal.is_practice %}
-              <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th><td><a href="{{ BASE_URL }}{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a></td>
-              </tr>
-            {% else %}
-              <tr>
-                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th>
-                <td>{% trans "Niet aangeleverd" %}</td>
-              </tr>
-            {% endif %}
-          </table>
-        {% endif %}
-      {% endwith %}
-
-      <h2 style="page-break-before: always">{% trans "Eén of meerdere trajecten?" %}</h2>
-      <table>
-        <tr>
-          <th>{% get_verbose_field_name "proposals" "proposal" "studies_similar" %}</th><td>{{ proposal.studies_similar|yesno:_("ja,nee") }}</td>
-        </tr>
-        {% if not proposal.studies_similar %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th><td>{{ proposal.studies_number }}</td>
-          </tr>
-        {% endif %}
-      </table>
-
-      {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
-        {% for study in proposal.study_set.all %}
-          <h2>{% trans "De deelnemers" %}</h2>
-          {% include "studies/study_title.html" %}
-          <table>
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th><td>{{ study.age_groups.all|unordered_list }}</td>
-            </tr>
-            {% if study|has_adults %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th><td>{{ study.legally_incapable|yesno:_("ja,nee") }}</td>
-              </tr>
-              {% if study.legally_incapable %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "legally_incapable_details" %}</th><td>{{ study.legally_incapable_details }}</td>
-                </tr>
-              {% endif %}
-            {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th><td>{{ study.has_special_details|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if study.has_special_details %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "special_details" %}</th><td>{{ study.special_details.all|unordered_list }}</td>
-              </tr>
-              {% if study.special_details.all|medical_traits %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "traits" %}</th><td>{{ study.traits.all|unordered_list }}</td>
-                </tr>
-                {% if study.traits.all|needs_details %}
-                  <tr>
-                    <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th><td>{{ study.traits_details }}</td>
-                  </tr>
-                {% endif %}
-              {% endif %}
-            {% endif %}
-            {% if study|necessity_required %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th><td>{{ study.get_necessity_display }}</td>
-              </tr>
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "necessity_reason" %}</th><td>{{ study.necessity_reason }}</td>
-              </tr>
-            {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "recruitment" %}</th><td>{{ study.recruitment.all|unordered_list }}</td>
-            </tr>
-            {% if study.recruitment.all|needs_details %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "recruitment_details" %}</th><td>{{ study.recruitment_details }}</td>
-              </tr>
-            {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th><td>{{ study.compensation }}</td>
-            </tr>
-            {% if study.compensation.needs_details %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th><td>{{ study.compensation_details }}</td>
-              </tr>
-            {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th><td>{{ study.hierarchy|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if study.hierarchy %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th><td>{{ study.hierarchy_details }}</td>
-              </tr>
-            {% endif %}
-          </table>
-
-          {% if study.has_intervention %}
-            {% with intervention=study.intervention %}
-              <h2>{% trans "Het interventieonderzoek" %}</h2>
-              {% include "studies/study_title.html" %}
-              {% if intervention.version == 1 %}
-                {% include 'proposals/pdf/intervention_v1.html' %}
-              {% elif intervention.version == 2 %}
-                {% include 'proposals/pdf/intervention_v2.html' %}
-              {% endif %}
-            {% endwith %}
-          {% endif %}
-
-          {% if study.has_observation %}
-            {% with observation=study.observation %}
-              <h2>{% trans "Het observatieonderzoek" %}</h2>
-              {% include "studies/study_title.html" %}
-              {% if observation.version == 1 %}
-                {% include 'proposals/pdf/observation_v1.html' %}
-              {% elif observation.version == 2 %}
-                {% include 'proposals/pdf/observation_v2.html' %}
-              {% endif %}
-            {% endwith %}
-          {% endif %}
-
-          {% if study.has_sessions %}
-            <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
-            {% include "studies/study_title.html" %}
-            <table>
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "sessions_number" %}</th><td>{{ study.sessions_number }}</td>
-              </tr>
-            </table>
-
-            {% for session in study.session_set.all %}
-              {% include "tasks/session_title.html" %}
-              <table>
-                <tr>
-                  <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th><td>{{ session.setting.all|unordered_list }}</td>
-                </tr>
-                {% if session.setting.all|needs_details %}
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "session" "setting_details" %}</th><td>{{ session.setting_details }}</td>
-                  </tr>
-                {% endif %}
-                {% if study.has_children and session.setting.all|needs_details:"needs_supervision" %}
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th><td>{{ session.supervision|yesno:_("ja,nee") }}</td>
-                  </tr>
-                  {% if not session.supervision %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "session" "leader_has_coc" %}</th><td>{{ session.leader_has_coc|yesno:_("ja,nee") }}</td>
-                    </tr>
-                  {% endif %}
-                {% endif %}
-                <tr>
-                  <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th><td>{{ session.tasks_number }}</td>
-                </tr>
-              </table>
-              {% for task in session.task_set.all %}
-                {% include "tasks/task_title.html" %}
-                <table>
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "name" %}</th><td>{{ task.name }}</td>
-                  </tr>
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "duration" %}</th><td>{{ task.duration }}</td>
-                  </tr>
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "registrations" %}</th><td>{{ task.registrations.all|unordered_list }}</td>
-                  </tr>
-                  {% if task.registrations.all|needs_details %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "task" "registrations_details" %}</th><td>{{ task.registrations_details }}</td>
-                    </tr>
-                  {% endif %}
-                  {% if task.registrations.all|needs_details:"needs_kind" %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "task" "registration_kinds" %}</th><td>{{ task.registration_kinds.all|unordered_list }}</td>
-                    </tr>
-                    {% if task.registration_kinds.all|needs_details %}
-                      <tr>
-                        <th>{% get_verbose_field_name "tasks" "task" "registration_kinds_details" %}</th><td>{{ task.registration_kinds_details }}</td>
-                      </tr>
-                    {% endif %}
-                  {% endif %}
-                  <tr>
-                    <th>{% get_verbose_field_name "tasks" "task" "feedback" %}</th><td>{{ task.feedback|yesno:_("ja,nee") }}</td>
-                  </tr>
-                  {% if task.feedback %}
-                    <tr>
-                      <th>{% get_verbose_field_name "tasks" "task" "feedback_details" %}</th><td>{{ task.feedback_details }}</td>
-                    </tr>
-                  {% endif %}
-                </table>
-                <h3>{% get_verbose_field_name "tasks" "task" "description" %}</h3>
-                <p>{{ task.description|linebreaks }}</p>
-              {% endfor %}
-
-              <h3>{% trans "Overzicht van het takenonderzoek" %}</h3>
-              <table>
-                <tr>
-                  <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" session.net_duration %}</th><td>{{ session.tasks_duration }}</td>
-                </tr>
-              </table>
-
-            {% endfor %}
-          {% endif %}
-
-          <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
-          {% include "studies/study_title.html" %}
-          <table>
-            {% if study.has_sessions %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th><td>{{ study.get_deception_display }}</td>
-              </tr>
-              {% if study.deception == 'Y' or study.deception == '?' %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th><td>{{ study.deception_details }}</td>
-                </tr>
-              {% endif %}
-            {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "negativity" %}</th><td>{{ study.get_negativity_display }}</td>
-            </tr>
-            {% if study.negativity == 'Y' or study.negativity == '?' %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "negativity_details" %}</th><td>{{ study.negativity_details }}</td>
-              </tr>
-            {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th><td>{{ study.get_stressful_display }}</td>
-            </tr>
-            {% if study.stressful == 'Y' or study.stressful == '?' %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "stressful_details" %}</th><td>{{ study.stressful_details }}</td>
-              </tr>
-            {% endif %}
-            <tr>
-              <th>{% get_verbose_field_name "studies" "study" "risk" %}</th><td>{{ study.get_risk_display }}</td>
-            </tr>
-            {% if study.risk == 'Y' or study.risk == '?' %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th><td>{{ study.risk_details }}</td>
-              </tr>
-            {% endif %}
-          </table>
-
-          <h2>{% trans "Informed consent formulieren" %}</h2>
-          {% include "studies/study_title.html" %}
-          {% get_study_documents study_documents study %}
-          <table>
-            <tr>
-              <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms" %}</th><td>{{ proposal.translated_forms|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if proposal.translated_forms %}
-              <tr>
-                <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms_languages" %}</th><td>{{ proposal.translated_forms_languages }}</td>
-              </tr>
-            {% endif %}
-            {% if not proposal.is_practice and study_documents.informed_consent %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
-              </tr>
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.briefing.url }}">{% trans "Download" %}</a></td>
-              </tr>
-            {% endif %}
-            {% if study.passive_consent is not None %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th><td>{{ study.passive_consent|yesno:_("ja,nee") }}</td>
-              </tr>
-              {% if study.passive_consent %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th><td>{{ study.passive_consent_details }}</td>
-                </tr>
-              {% endif %}
-            {% endif %}
-            {% if study_documents.director_consent_declaration %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "director_consent_declaration" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_declaration.url }}">{% trans "Download" %}</a></td>
-              </tr>
-            {% endif %}
-            {% if study_documents.director_consent_information %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "director_consent_information" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.director_consent_information.url }}">{% trans "Download" %}</a></td>
-              </tr>
-            {% endif %}
-            {% if study_documents.parents_information %}
-              <tr>
-                <th>{% get_verbose_field_name "studies" "documents" "parents_information" %}</th><td><a href="{{ BASE_URL }}{{ study_documents.parents_information.url }}">{% trans "Download" %}</a></td>
-              </tr>
-            {% endif %}
-          </table>
-        {% endfor %}
-
-        {% if documents.extra %}
-          {% counter extra_form_counter create 1 %}
-          {% for extra_documents in documents.extra %}
-            <h2>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h2>
-            {% counter extra_form_counter increment 1 %}
-            <table>
-              {% if extra_documents.informed_consent %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th><td><a href="{{ BASE_URL }}{{ extra_documents.informed_consent.url }}">{% trans "Download" %}</a></td>
-                </tr>
-              {% endif %}
-              {% if extra_documents.briefing %}
-                <tr>
-                  <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th><td><a href="{{ BASE_URL }}{{ extra_documents.briefing.url }}">{% trans "Download" %}</a></td>
-                </tr>
-              {% endif %}
-            </table>
-            {{ extra_form_counter.increment }}
-          {% endfor %}
-        {% endif %}
-        {% if proposal.dmp_file %}
-          <h2>{% trans "Data Management Plan" %}</h2>
-          <table>
-            <tr>
-              <th>
-                {% get_verbose_field_name "proposals" "proposal" "dmp_file" %}
-              </th>
-              <td>
-                <a href="{{ BASE_URL }}{{ proposal.dmp_file.url }}">
-                  {% trans "Download" %}
-                </a>
-              </td>
-            </tr>
-          </table>
-        {% endif %}
-        <h2>{% trans "Aanmelding versturen" %}</h2>
-        <table>
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th><td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
-          </tr>
-          {%if proposal.embargo %}
-          <tr>
-            <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th><td>{{ proposal.date_start|default:_("onbekend") }}</td>
-          </tr>
-          {% endif %}
-        </table>
-        <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
-        <p>
-          {{ proposal.comments }}
-        </p>
-      {% endif %}
     </div>
-  </div>
+{% endblock %}
+{% block page_foot %}Page <pdf:pagenumber /> of <pdf:pagecount />{% endblock %}
+{% block content %}
+    <div id="content">
+        <div class="main">
+            <h1>
+                {% blocktrans with reference_number=proposal.reference_number trimmed %}
+                    Referentienummer {{ reference_number }}
+                {% endblocktrans %}
+            </h1>
+            <p>
+                {% trans 'Huidige staat van de aanvraag' %}: <em>{{ proposal.get_status_display }}</em>
+            </p>
+            <h2>{% trans 'Indiener' %}</h2>
+            <table>
+                <tr>
+                    <th>{% trans 'Naam' %}</th>
+                    <td>{{ proposal.created_by.get_full_name }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans 'E-mail' %}</th>
+                    <td>{{ proposal.created_by.email }}</td>
+                </tr>
+            </table>
+            <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
+            <table>
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "relation" %}</th>
+                    <td>{{ proposal.relation }}</td>
+                </tr>
+                {% if proposal.relation.needs_supervisor %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "supervisor" %}</th>
+                        <td>{{ proposal.supervisor.get_full_name }}</td>
+                    </tr>
+                {% endif %}
+                {% if proposal.relation.check_in_course %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "student_program" %}</th>
+                        <td>{{ proposal.student_program }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "student_context" %}</th>
+                        <td>{{ proposal.student_context }}</td>
+                    </tr>
+                    {% if proposal.student_context.needs_details %}
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "student_context_details" %}</th>
+                            <td>{{ proposal.student_context_details }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "student_justification" %}</th>
+                        <td>{{ proposal.student_justification }}</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "other_applicants" %}</th>
+                    <td>{{ proposal.other_applicants|yesno:_("ja,nee") }}</td>
+                </tr>
+                {% if proposal.other_applicants %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "applicants" %}</th>
+                        <td>
+                            <ul>
+                                {% for applicant in proposal.applicants.all %}<li>{{ applicant.get_full_name }}</li>{% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "other_stakeholders" %}</th>
+                    <td>{{ proposal.other_stakeholders|yesno:_("ja,nee") }}</td>
+                </tr>
+                {% if proposal.other_stakeholders %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "stakeholders" %}</th>
+                        <td>{{ proposal.stakeholders }}</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "date_start" %}</th>
+                    <td>{{ proposal.date_start|default:_("onbekend") }}</td>
+                </tr>
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "title" %}</th>
+                    <td>{{ proposal.title }}</td>
+                </tr>
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "funding" %}</th>
+                    <td>{{ proposal.funding.all|unordered_list }}</td>
+                </tr>
+                {% if proposal.funding.all|needs_details %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "funding_details" %}</th>
+                        <td>{{ proposal.funding_details }}</td>
+                    </tr>
+                {% endif %}
+                {% if proposal.funding.all|needs_details:"needs_name" %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "funding_name" %}</th>
+                        <td>{{ proposal.funding_name }}</td>
+                    </tr>
+                {% endif %}
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "self_assessment" %}</th>
+                    <td>{{ proposal.self_assessment }}</td>
+                </tr>
+            </table>
+            <h3>{% get_verbose_field_name "proposals" "proposal" "summary" %}</h3>
+            <p>{{ proposal.summary|linebreaks }}</p>
+            {% with wmo=proposal.wmo %}
+                <h2 style="page-break-before: always">
+                    {% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}
+                </h2>
+                <table>
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "wmo" "metc" %}</th>
+                        <td>{{ wmo.get_metc_display }}</td>
+                    </tr>
+                    {% if wmo.metc == 'Y' %}
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "wmo" "metc_details" %}</th>
+                            <td>{{ wmo.metc_details }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "wmo" "metc_institution" %}</th>
+                            <td>{{ wmo.metc_institution }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "wmo" "is_medical" %}</th>
+                            <td>{{ wmo.get_is_medical_display }}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+                {% if wmo.status != wmo.NO_WMO %}
+                    <h2 style="page-break-before: always">{% trans "Aanmelding bij de METC" %}</h2>
+                    <table>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "wmo" "metc_application" %}</th>
+                            <td>{{ wmo.metc_application|yesno:_("ja,nee") }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision" %}</th>
+                            <td>{{ wmo.metc_decision|yesno:_("ja,nee") }}</td>
+                        </tr>
+                        {% if wmo.metc_decision_pdf and not proposal.is_practice %}
+                            <tr>
+                                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th>
+                                <td>
+                                    <a href="{{ BASE_URL }}{{ wmo.metc_decision_pdf.url }}" target="_blank">{% trans "Download" %}</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th>{% get_verbose_field_name "proposals" "wmo" "metc_decision_pdf" %}</th>
+                                <td>{% trans "Niet aangeleverd" %}</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                {% endif %}
+            {% endwith %}
+            <h2 style="page-break-before: always">{% trans "Eén of meerdere trajecten?" %}</h2>
+            <table>
+                <tr>
+                    <th>{% get_verbose_field_name "proposals" "proposal" "studies_similar" %}</th>
+                    <td>{{ proposal.studies_similar|yesno:_("ja,nee") }}</td>
+                </tr>
+                {% if not proposal.studies_similar %}
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "studies_number" %}</th>
+                        <td>{{ proposal.studies_number }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+            {% if proposal.wmo.status == proposal.wmo.NO_WMO %}
+                {% for study in proposal.study_set.all %}
+                    <h2>{% trans "De deelnemers" %}</h2>
+                    {% include "studies/study_title.html" %}
+                    <table>
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "age_groups" %}</th>
+                            <td>{{ study.age_groups.all|unordered_list }}</td>
+                        </tr>
+                        {% if study|has_adults %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "legally_incapable" %}</th>
+                                <td>{{ study.legally_incapable|yesno:_("ja,nee") }}</td>
+                            </tr>
+                            {% if study.legally_incapable %}
+                                <tr>
+                                    <th>{% get_verbose_field_name "studies" "study" "legally_incapable_details" %}</th>
+                                    <td>{{ study.legally_incapable_details }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "has_special_details" %}</th>
+                            <td>{{ study.has_special_details|yesno:_("ja,nee") }}</td>
+                        </tr>
+                        {% if study.has_special_details %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "special_details" %}</th>
+                                <td>{{ study.special_details.all|unordered_list }}</td>
+                            </tr>
+                            {% if study.special_details.all|medical_traits %}
+                                <tr>
+                                    <th>{% get_verbose_field_name "studies" "study" "traits" %}</th>
+                                    <td>{{ study.traits.all|unordered_list }}</td>
+                                </tr>
+                                {% if study.traits.all|needs_details %}
+                                    <tr>
+                                        <th>{% get_verbose_field_name "studies" "study" "traits_details" %}</th>
+                                        <td>{{ study.traits_details }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        {% if study|necessity_required %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "necessity" %}</th>
+                                <td>{{ study.get_necessity_display }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "necessity_reason" %}</th>
+                                <td>{{ study.necessity_reason }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "recruitment" %}</th>
+                            <td>{{ study.recruitment.all|unordered_list }}</td>
+                        </tr>
+                        {% if study.recruitment.all|needs_details %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "recruitment_details" %}</th>
+                                <td>{{ study.recruitment_details }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "compensation" %}</th>
+                            <td>{{ study.compensation }}</td>
+                        </tr>
+                        {% if study.compensation.needs_details %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "compensation_details" %}</th>
+                                <td>{{ study.compensation_details }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "hierarchy" %}</th>
+                            <td>{{ study.hierarchy|yesno:_("ja,nee") }}</td>
+                        </tr>
+                        {% if study.hierarchy %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "hierarchy_details" %}</th>
+                                <td>{{ study.hierarchy_details }}</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                    {% if study.has_intervention %}
+                        {% with intervention=study.intervention %}
+                            <h2>{% trans "Het interventieonderzoek" %}</h2>
+                            {% include "studies/study_title.html" %}
+                            {% if intervention.version == 1 %}
+                                {% include 'proposals/pdf/intervention_v1.html' %}
+                            {% elif intervention.version == 2 %}
+                                {% include 'proposals/pdf/intervention_v2.html' %}
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
+                    {% if study.has_observation %}
+                        {% with observation=study.observation %}
+                            <h2>{% trans "Het observatieonderzoek" %}</h2>
+                            {% include "studies/study_title.html" %}
+                            {% if observation.version == 1 %}
+                                {% include 'proposals/pdf/observation_v1.html' %}
+                            {% elif observation.version == 2 %}
+                                {% include 'proposals/pdf/observation_v2.html' %}
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
+                    {% if study.has_sessions %}
+                        <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
+                        {% include "studies/study_title.html" %}
+                        <table>
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "sessions_number" %}</th>
+                                <td>{{ study.sessions_number }}</td>
+                            </tr>
+                        </table>
+                        {% for session in study.session_set.all %}
+                            {% include "tasks/session_title.html" %}
+                            <table>
+                                <tr>
+                                    <th>{% get_verbose_field_name "tasks" "session" "setting" %}</th>
+                                    <td>{{ session.setting.all|unordered_list }}</td>
+                                </tr>
+                                {% if session.setting.all|needs_details %}
+                                    <tr>
+                                        <th>{% get_verbose_field_name "tasks" "session" "setting_details" %}</th>
+                                        <td>{{ session.setting_details }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if study.has_children and session.setting.all|needs_details:"needs_supervision" %}
+                                    <tr>
+                                        <th>{% get_verbose_field_name "tasks" "session" "supervision" %}</th>
+                                        <td>{{ session.supervision|yesno:_("ja,nee") }}</td>
+                                    </tr>
+                                    {% if not session.supervision %}
+                                        <tr>
+                                            <th>{% get_verbose_field_name "tasks" "session" "leader_has_coc" %}</th>
+                                            <td>{{ session.leader_has_coc|yesno:_("ja,nee") }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endif %}
+                                <tr>
+                                    <th>{% get_verbose_field_name "tasks" "session" "tasks_number" %}</th>
+                                    <td>{{ session.tasks_number }}</td>
+                                </tr>
+                            </table>
+                            {% for task in session.task_set.all %}
+                                {% include "tasks/task_title.html" %}
+                                <table>
+                                    <tr>
+                                        <th>{% get_verbose_field_name "tasks" "task" "name" %}</th>
+                                        <td>{{ task.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% get_verbose_field_name "tasks" "task" "duration" %}</th>
+                                        <td>{{ task.duration }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{% get_verbose_field_name "tasks" "task" "registrations" %}</th>
+                                        <td>{{ task.registrations.all|unordered_list }}</td>
+                                    </tr>
+                                    {% if task.registrations.all|needs_details %}
+                                        <tr>
+                                            <th>{% get_verbose_field_name "tasks" "task" "registrations_details" %}</th>
+                                            <td>{{ task.registrations_details }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if task.registrations.all|needs_details:"needs_kind" %}
+                                        <tr>
+                                            <th>{% get_verbose_field_name "tasks" "task" "registration_kinds" %}</th>
+                                            <td>{{ task.registration_kinds.all|unordered_list }}</td>
+                                        </tr>
+                                        {% if task.registration_kinds.all|needs_details %}
+                                            <tr>
+                                                <th>{% get_verbose_field_name "tasks" "task" "registration_kinds_details" %}</th>
+                                                <td>{{ task.registration_kinds_details }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endif %}
+                                    <tr>
+                                        <th>{% get_verbose_field_name "tasks" "task" "feedback" %}</th>
+                                        <td>{{ task.feedback|yesno:_("ja,nee") }}</td>
+                                    </tr>
+                                    {% if task.feedback %}
+                                        <tr>
+                                            <th>{% get_verbose_field_name "tasks" "task" "feedback_details" %}</th>
+                                            <td>{{ task.feedback_details }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                                <h3>{% get_verbose_field_name "tasks" "task" "description" %}</h3>
+                                <p>{{ task.description|linebreaks }}</p>
+                            {% endfor %}
+                            <h3>{% trans "Overzicht van het takenonderzoek" %}</h3>
+                            <table>
+                                <tr>
+                                    <th>{% get_verbose_field_name "tasks" "session" "tasks_duration" session.net_duration %}</th>
+                                    <td>{{ session.tasks_duration }}</td>
+                                </tr>
+                            </table>
+                        {% endfor %}
+                    {% endif %}
+                    <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
+                    {% include "studies/study_title.html" %}
+                    <table>
+                        {% if study.has_sessions %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "deception" %}</th>
+                                <td>{{ study.get_deception_display }}</td>
+                            </tr>
+                            {% if study.deception == 'Y' or study.deception == '?' %}
+                                <tr>
+                                    <th>{% get_verbose_field_name "studies" "study" "deception_details" %}</th>
+                                    <td>{{ study.deception_details }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "negativity" %}</th>
+                            <td>{{ study.get_negativity_display }}</td>
+                        </tr>
+                        {% if study.negativity == 'Y' or study.negativity == '?' %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "negativity_details" %}</th>
+                                <td>{{ study.negativity_details }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "stressful" %}</th>
+                            <td>{{ study.get_stressful_display }}</td>
+                        </tr>
+                        {% if study.stressful == 'Y' or study.stressful == '?' %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "stressful_details" %}</th>
+                                <td>{{ study.stressful_details }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% get_verbose_field_name "studies" "study" "risk" %}</th>
+                            <td>{{ study.get_risk_display }}</td>
+                        </tr>
+                        {% if study.risk == 'Y' or study.risk == '?' %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "risk_details" %}</th>
+                                <td>{{ study.risk_details }}</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                    <h2>{% trans "Informed consent formulieren" %}</h2>
+                    {% include "studies/study_title.html" %}
+                    {% get_study_documents study_documents study %}
+                    <table>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms" %}</th>
+                            <td>{{ proposal.translated_forms|yesno:_("ja,nee") }}</td>
+                        </tr>
+                        {% if proposal.translated_forms %}
+                            <tr>
+                                <th>{% get_verbose_field_name "proposals" "proposal" "translated_forms_languages" %}</th>
+                                <td>{{ proposal.translated_forms_languages }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if not proposal.is_practice and study_documents.informed_consent %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th>
+                                <td>
+                                    <a href="{{ BASE_URL }}{{ study_documents.informed_consent.url }}">{% trans "Download" %}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th>
+                                <td>
+                                    <a href="{{ BASE_URL }}{{ study_documents.briefing.url }}">{% trans "Download" %}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if study.passive_consent is not None %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "study" "passive_consent" %}</th>
+                                <td>{{ study.passive_consent|yesno:_("ja,nee") }}</td>
+                            </tr>
+                            {% if study.passive_consent %}
+                                <tr>
+                                    <th>{% get_verbose_field_name "studies" "study" "passive_consent_details" %}</th>
+                                    <td>{{ study.passive_consent_details }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                        {% if study_documents.director_consent_declaration %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "documents" "director_consent_declaration" %}</th>
+                                <td>
+                                    <a href="{{ BASE_URL }}{{ study_documents.director_consent_declaration.url }}">{% trans "Download" %}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if study_documents.director_consent_information %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "documents" "director_consent_information" %}</th>
+                                <td>
+                                    <a href="{{ BASE_URL }}{{ study_documents.director_consent_information.url }}">{% trans "Download" %}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if study_documents.parents_information %}
+                            <tr>
+                                <th>{% get_verbose_field_name "studies" "documents" "parents_information" %}</th>
+                                <td>
+                                    <a href="{{ BASE_URL }}{{ study_documents.parents_information.url }}">{% trans "Download" %}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                {% endfor %}
+                {% if documents.extra %}
+                    {% counter extra_form_counter create 1 %}
+                    {% for extra_documents in documents.extra %}
+                        <h2>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h2>
+                        {% counter extra_form_counter increment 1 %}
+                        <table>
+                            {% if extra_documents.informed_consent %}
+                                <tr>
+                                    <th>{% get_verbose_field_name "studies" "documents" "informed_consent" %}</th>
+                                    <td>
+                                        <a href="{{ BASE_URL }}{{ extra_documents.informed_consent.url }}">{% trans "Download" %}</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% if extra_documents.briefing %}
+                                <tr>
+                                    <th>{% get_verbose_field_name "studies" "documents" "briefing" %}</th>
+                                    <td>
+                                        <a href="{{ BASE_URL }}{{ extra_documents.briefing.url }}">{% trans "Download" %}</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                        {{ extra_form_counter.increment }}
+                    {% endfor %}
+                {% endif %}
+                {% if proposal.dmp_file %}
+                    <h2>{% trans "Data Management Plan" %}</h2>
+                    <table>
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "dmp_file" %}</th>
+                            <td>
+                                <a href="{{ BASE_URL }}{{ proposal.dmp_file.url }}">{% trans "Download" %}</a>
+                            </td>
+                        </tr>
+                    </table>
+                {% endif %}
+                <h2>{% trans "Aanmelding versturen" %}</h2>
+                <table>
+                    <tr>
+                        <th>{% get_verbose_field_name "proposals" "proposal" "embargo" %}</th>
+                        <td>{{ proposal.embargo|yesno:_("ja,nee") }}</td>
+                    </tr>
+                    {% if proposal.embargo %}
+                        <tr>
+                            <th>{% get_verbose_field_name "proposals" "proposal" "embargo_end_date" %}</th>
+                            <td>{{ proposal.date_start|default:_("onbekend") }}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+                <h3>{% get_verbose_field_name "proposals" "proposal" "comments" %}</h3>
+                <p>{{ proposal.comments }}</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
