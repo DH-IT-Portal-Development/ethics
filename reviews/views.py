@@ -157,7 +157,6 @@ class CommitteeMembersWorkloadView(
         decisions = self.get_committee_decisions()
 
         reviewers = get_user_model().objects.filter(decision__in=decisions)
-
         base_filter = Q(
             decision__review__date_start__gt=self.start_date,
             decision__review__date_start__lt=self.end_date,
