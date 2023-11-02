@@ -25,7 +25,7 @@ blessed==1.20.0
     # via curtsies
 bpython==0.24
     # via -r requirements.in
-cdh-django-core @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-4
+cdh-django-core[federated-auth] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-4
     # via -r requirements.in
 certifi==2023.7.22
     # via requests
@@ -57,7 +57,7 @@ defusedxml==0.7.1
     #   pysaml2
 deprecated==1.2.14
     # via cdh-django-core
-django==3.2.20
+django==3.2.23
     # via
     #   -r requirements.in
     #   cdh-django-core
@@ -93,7 +93,9 @@ djangorestframework==3.14.0
     #   -r requirements.in
     #   uil-django-core
 djangosaml2==1.6.0
-    # via cdh-django-core
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 docutils==0.18.1
     # via
     #   sphinx
