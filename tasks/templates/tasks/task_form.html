@@ -1,17 +1,19 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Het takenonderzoek en interviews" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-$(function() {
-    check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
-    check_field_required('registrations', 'needs_details', 'registrations_details', 'tasks', 'Registration');
-    check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'tasks', 'RegistrationKind');
-    depends_on_value('feedback', 'True', 'feedback_details');
-});
+        $(function() {
+            check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
+            check_field_required('registrations', 'needs_details', 'registrations_details', 'tasks', 'Registration');
+            check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'tasks', 'RegistrationKind');
+            depends_on_value('feedback', 'True', 'feedback_details');
+        });
     </script>
 {% endblock %}
 {% block content %}

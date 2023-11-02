@@ -1,12 +1,14 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Aanmelding bij de METC" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-        $(function () {
+        $(function() {
             depends_on_value('metc_application', 'True', 'metc_decision');
             depends_on_value('metc_application', 'True', 'metc_decision_pdf');
             depends_on_value('metc_decision', 'True', 'metc_decision_pdf');

@@ -1,9 +1,11 @@
 {% extends "base/base.html" %}
+
 {% load fetc_filters %}
 {% load get_field_name %}
 {% load static %}
 {% load i18n %}
 {% load datatables %}
+
 {% block header_title %}{{ user_object.get_full_name }} - {{ block.super }}{% endblock %}
 {% block content %}
     <div class="uu-inner-container">

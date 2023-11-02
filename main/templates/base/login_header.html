@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load transformat %}
+
 {% if request.user.is_authenticated %}
     {% with request.user as user %}
         {% transformat "Welkom {}" user.get_full_name %}

@@ -1,11 +1,13 @@
 {% extends "base/base.html" %}
+
 {% load i18n %}
 {% load static %}
+
 {% block html_head %}
     <script>
         // Simple function to show emails with Javascript to keep out the bots
         // Bots are stupid ;)
-        $(function () {
+        $(function() {
             $('.email').each((i, e) => {
                 let element = $(e);
                 let email = element.data('email') + '@uu.nl';

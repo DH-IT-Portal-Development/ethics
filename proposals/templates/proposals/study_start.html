@@ -1,51 +1,52 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Eén of meerdere trajecten?" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-$(function() {
-    add_title('study_name_1', "{% trans 'Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters.' %}");
+        $(function() {
+            add_title('study_name_1', "{% trans 'Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters.' %}");
 
-    $('input[name=studies_similar]').change(function() {
-        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
+            $('input[name=studies_similar]').change(function() {
+                var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
 
-        var text = "{{ is_similar }}";
-        if (is_dissimilar) {
-            // Set the default value for studies_number to 2 (if it's not already set)
-            if ($('input[name="studies_number"]').val() === '1') {
-                $('input[name="studies_number"]').val('2');
-            }
-        	text = "{{ is_dissimilar }}";
-        }
-        else {
-            $('input[name="studies_number"]').val('1');
-            $('input[name^="study_name"]').parents('tr').hide();
-            $('input[name="study_name_1"]').parents('tr').prev().hide();
-        }
+                var text = "{{ is_similar }}";
+                if (is_dissimilar) {
+                    // Set the default value for studies_number to 2 (if it's not already set)
+                    if ($('input[name="studies_number"]').val() === '1') {
+                        $('input[name="studies_number"]').val('2');
+                    }
+                    text = "{{ is_dissimilar }}";
+                } else {
+                    $('input[name="studies_number"]').val('1');
+                    $('input[name^="study_name"]').parents('tr').hide();
+                    $('input[name="study_name_1"]').parents('tr').prev().hide();
+                }
 
-        $('#next_text').html(text);
-        $('#next_text').show();
+                $('#next_text').html(text);
+                $('#next_text').show();
 
-        $('#id_studies_number').parents('tr').toggle(is_dissimilar);
-        $('#id_studies_number').change();
-    });
-    $('input[name=studies_similar]').change();
+                $('#id_studies_number').parents('tr').toggle(is_dissimilar);
+                $('#id_studies_number').change();
+            });
+            $('input[name=studies_similar]').change();
 
-    $('input[name=studies_number]').change(function() {
-        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
+            $('input[name=studies_number]').change(function() {
+                var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
 
-        if (is_dissimilar) {
-            $('input[name="study_name_1"]').parents('tr').prev().show();
-            for (var i = 1; i <= 10; i++) {
-                $('input[name="study_name_' + i + '"]').parents('tr').toggle(i <= $(this).val());
-            }
-        }
-    });
-    $('input[name=studies_number]').change();
-});
+                if (is_dissimilar) {
+                    $('input[name="study_name_1"]').parents('tr').prev().show();
+                    for (var i = 1; i <= 10; i++) {
+                        $('input[name="study_name_' + i + '"]').parents('tr').toggle(i <= $(this).val());
+                    }
+                }
+            });
+            $('input[name=studies_number]').change();
+        });
     </script>
 {% endblock %}
 {% block content %}

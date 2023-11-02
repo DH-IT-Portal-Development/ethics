@@ -1,3 +1,7 @@
 [tool.djlint]
 profile="django"
-extend_exclude="docs"
+extend_exclude="docs,reviews/templates/reviews/vue_templates/,proposals/templates/proposals/vue_templates/"
+max-blank-lines=3
+blank_line_after_tag="load,extends"
+format_css=true
+format_js=true

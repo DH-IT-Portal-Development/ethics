@@ -1,6 +1,8 @@
 {% extends "easy_pdf/base.html" %}
+
 {% load i18n %}
 {% load get_field_name %}
+
 {% block extra_style %}
     <style type="text/css">
         #content table {
@@ -18,7 +20,8 @@
             border-left-color: #cbcbcb;
         }
 
-        #content th, td {
+        #content th,
+        td {
             width: 500px;
             font-weight: normal;
             text-align: left;

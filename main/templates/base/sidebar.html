@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+
 <script type="text/javascript"
         charset="utf8"
         src="//cdnjs.cloudflare.com/ajax/libs/jquery-sidebar/3.3.2/jquery.sidebar.min.js"></script>
@@ -7,23 +8,25 @@
       type="text/css"
       href="{% static 'main/progress.css' %}">
 <script>
-$(function() {
-    // Add dividers
-    $('.progress li:even').prepend('<div class="item">');
+    $(function() {
+        // Add dividers
+        $('.progress li:even').prepend('<div class="item">');
 
-    // Set current item and remove previous URLs
-    $('a[href="{{request.path}}"]').prev().addClass('current');
+        // Set current item and remove previous URLs
+        $('a[href="{{request.path}}"]').prev().addClass('current');
 
-    // Sidebar functionality
-    $('.progress').sidebar({side: 'right'});
-    $('.open-progress').click(function() {
-        $('.progress').show();
-        $('.progress').trigger('sidebar:open');
+        // Sidebar functionality
+        $('.progress').sidebar({
+            side: 'right'
+        });
+        $('.open-progress').click(function() {
+            $('.progress').show();
+            $('.progress').trigger('sidebar:open');
+        });
+        $('.close-progress').click(function() {
+            $('.progress').trigger('sidebar:close');
+        });
     });
-    $('.close-progress').click(function() {
-        $('.progress').trigger('sidebar:close');
-    });
-});
 </script>
 <button class="pure-button open-progress show-xs">{% trans "Toon voortgang" %}</button>
 <br />

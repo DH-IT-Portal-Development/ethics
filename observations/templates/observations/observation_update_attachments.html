@@ -1,19 +1,21 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Formulieren aanpassen" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-$(function() {
-    depends_on_hidden_value('passive_consent', 'True', 'passive_consent_details');
-    depends_on_hidden_value('passive_consent', 'True', 'director_consent_declaration');
-    depends_on_hidden_value('passive_consent', 'True', 'director_consent_information');
-    depends_on_hidden_value('passive_consent', 'True', 'parents_information');
-    depends_on_hidden_value('passive_consent', 'False', 'informed_consent');
-    depends_on_hidden_value('passive_consent', 'False', 'briefing');
-});
+        $(function() {
+            depends_on_hidden_value('passive_consent', 'True', 'passive_consent_details');
+            depends_on_hidden_value('passive_consent', 'True', 'director_consent_declaration');
+            depends_on_hidden_value('passive_consent', 'True', 'director_consent_information');
+            depends_on_hidden_value('passive_consent', 'True', 'parents_information');
+            depends_on_hidden_value('passive_consent', 'False', 'informed_consent');
+            depends_on_hidden_value('passive_consent', 'False', 'briefing');
+        });
     </script>
 {% endblock %}
 {% block content %}

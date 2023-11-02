@@ -1,7 +1,9 @@
 {% extends "base/base.html" %}
+
 {% load vue_tags %}
 {% load static %}
 {% load i18n %}
+
 {% get_current_language as LANGUAGE_CODE %}
 {% block header_title %}{{ title }} - {{ block.super }}{% endblock %}
 {% block html_head %}

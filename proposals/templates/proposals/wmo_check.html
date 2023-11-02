@@ -1,6 +1,8 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "WMO-check" %} - {{ block.super }}
 {% endblock %}
@@ -9,9 +11,9 @@
             charset="utf8"
             src="{% static 'proposals/js/wmo.js' %}"></script>
     <script>
-$(function() {
-    check_metc_required("{% url 'proposals:check_wmo' %}");
-});
+        $(function() {
+            check_metc_required("{% url 'proposals:check_wmo' %}");
+        });
     </script>
 {% endblock %}
 {% block content %}

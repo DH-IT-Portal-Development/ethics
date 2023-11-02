@@ -1,14 +1,16 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Informed consent formulieren" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-        $(function () {
+        $(function() {
             depends_on_value('translated_forms', 'True', 'translated_forms_languages');
-    });
+        });
     </script>
 {% endblock %}
 {% block content %}

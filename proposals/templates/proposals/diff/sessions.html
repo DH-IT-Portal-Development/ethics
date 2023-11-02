@@ -2,6 +2,7 @@
 {% load proposal_filters %}
 {% load get_field_name %}
 {% load diff_tags %}
+
 {% if study.has_sessions or p_study.has_sessions %}
     <h2 class="mt-5 mb-1">{% trans "Het takenonderzoek en interviews" %}</h2>
     {% if study.has_sessions and not p_study.has_sessions %}

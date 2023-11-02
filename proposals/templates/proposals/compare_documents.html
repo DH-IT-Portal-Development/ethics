@@ -1,22 +1,24 @@
 {% extends 'base/base.html' %}
+
 {% load static %}
 {% load i18n %}
 {% load describe_documents %}
+
 {% block header_title %}
     {% trans "Vergelijk documenten" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
     <script defer>
-        $(function () {
+        $(function() {
 
-            $("#button-combined").click(function () {
+            $("#button-combined").click(function() {
                 $(".split_view").hide();
                 $(this).hide();
                 $("#combined_text").show();
                 $("#button-split").show();
             });
-            $("#button-split").click(function () {
+            $("#button-split").click(function() {
                 $("#combined_text").hide();
                 $(this).hide();
                 $(".split_view").show();

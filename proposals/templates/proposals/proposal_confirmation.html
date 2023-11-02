@@ -1,12 +1,14 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Bevestigingsbrief versturen" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-        $(function () {
+        $(function() {
             var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
             $("#id_date_confirmed").datepicker({
                 dateFormat: date_format,

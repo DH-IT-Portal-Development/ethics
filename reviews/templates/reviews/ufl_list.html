@@ -1,8 +1,10 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
 {% load fetc_filters %}
 {% load vue_tags %}
+
 {% get_current_language as LANGUAGE_CODE %}
 {% block header_title %}{{ committee_name }} - {{ title }} - {{ block.super }}{% endblock %}
 {% block html_head %}

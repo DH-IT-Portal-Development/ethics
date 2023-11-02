@@ -4,6 +4,7 @@
 {% load uil_filters %}
 {% load get_field_name %}
 {% load diff_tags %}
+
 {% for study, p_study in proposal.study_set.all|zip_equalize_lists:p_proposal.study_set.all %}
     <h2 class="mt-5 mb-1">{% trans "De deelnemers" %}</h2>
     {% include "studies/study_title.html" %}

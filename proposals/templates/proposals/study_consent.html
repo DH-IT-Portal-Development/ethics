@@ -1,62 +1,85 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
 {% load uil_filters %}
+
 {% block header_title %}
     {% trans "Informed consent formulieren" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-    // This function hides school-related extra forms
-    function hide_school_forms(prefix) {
-      $("#id_" + prefix + "-director_consent_information").parents("tr").hide();
-      $("#id_" + prefix + "-parents_information").parents("tr").hide();
-      // We need prev() to also hide the header for DCC
-      $("#id_" + prefix + "-director_consent_declaration").parents("tr").prev().hide();
-      $("#id_" + prefix + "-director_consent_declaration").parents("tr").hide();
-    }
-    $(function() {
-    {# We use a counter so that in case we need more than 2 extra forms, this piece of code just works without changes #}
-    {% counter extra_form_counter create 1 %}
+        // This function hides school-related extra forms
+        function hide_school_forms(prefix) {
+            $("#id_" + prefix + "-director_consent_information").parents("tr").hide();
+            $("#id_" + prefix + "-parents_information").parents("tr").hide();
+            // We need prev() to also hide the header for DCC
+            $("#id_" + prefix + "-director_consent_declaration").parents("tr").prev().hide();
+            $("#id_" + prefix + "-director_consent_declaration").parents("tr").hide();
+        }
+        $(function() {
+            {
+                # We use a counter so that in
+                    case we need more than 2 extra forms, this piece of code just works without changes #
+            } {
+                % counter extra_form_counter create 1 %
+            }
 
-    {% for form in formset %}
-      add_title('{{ form.prefix }}-informed_consent', 'Informed consent participant');
-      add_title('{{ form.prefix }}-director_consent_declaration', '{% trans 'Toestemmingsverklaring van de schoolleider/hoofd van het departement' %}');
+            {
+                %
+                for form in formset %
+            }
+            add_title('{{ form.prefix }}-informed_consent', 'Informed consent participant');
+            add_title('{{ form.prefix }}-director_consent_declaration', '{% trans '
+                Toestemmingsverklaring van de schoolleider / hoofd van het departement ' %}');
 
-      {% if not form.instance.study %}
-        if($("#extra-{% counter extra_form_counter value %}").attr('data-used') == 0)
-        $("#extra-{% counter extra_form_counter value %}").hide()
-        {% counter extra_form_counter increment 1 %}
-      {% else %}
+            {
+                %
+                if not form.instance.study %
+            }
+            if ($("#extra-{% counter extra_form_counter value %}").attr('data-used') == 0)
+                $("#extra-{% counter extra_form_counter value %}").hide() {
+                    % counter extra_form_counter increment 1 %
+                } {
+                    %
+                    else %
+                }
 
-        {% if not form.instance.study.needs_additional_external_forms %}
-          hide_school_forms("{{form.prefix}}");
-        {% endif %}
-      {% endif %}
-    {% endfor %}
+            {
+                %
+                if not form.instance.study.needs_additional_external_forms %
+            }
+            hide_school_forms("{{form.prefix}}");
+            {
+                % endif %
+            } {
+                % endif %
+            } {
+                % endfor %
+            }
 
 
-    // This code handles showing a new set of forms by clicking the add link
-    $("a.new").click(function ( event ) {
-    // Prevent the link from firing
-    event.preventDefault();
+            // This code handles showing a new set of forms by clicking the add link
+            $("a.new").click(function(event) {
+                // Prevent the link from firing
+                event.preventDefault();
 
-    // Get the form number
-    var self = $(this);
-    var n = parseInt(self.attr('data-n'));
-    // Hide the clicked button
-    self.hide();
+                // Get the form number
+                var self = $(this);
+                var n = parseInt(self.attr('data-n'));
+                // Hide the clicked button
+                self.hide();
 
-    // Show the new form, and a new add link (if present, can be run without effect)
-    $("#extra-" + n).show();
-    $("#new-" + (n + 1)).show();
+                // Show the new form, and a new add link (if present, can be run without effect)
+                $("#extra-" + n).show();
+                $("#new-" + (n + 1)).show();
 
-    return false;
-    });
+                return false;
+            });
 
-    // Show the first add link
-    $("a.new").first().show();
-    });
+            // Show the first add link
+            $("a.new").first().show();
+        });
     </script>
 {% endblock %}
 {% block content %}

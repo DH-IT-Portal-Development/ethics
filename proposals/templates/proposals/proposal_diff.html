@@ -1,19 +1,21 @@
 {% extends "base/base.html" %}
+
 {% load i18n %}
 {% load proposal_filters %}
 {% load static %}
 {% load uil_filters %}
 {% load get_field_name %}
 {% load diff_tags %}
+
 {% block header_title %}
     {% trans "Overzicht van wijzigingen" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
     <script>
-        $(function () {
+        $(function() {
             // Color changes between proposals
-            $('td:nth-child(2)').each(function () {
+            $('td:nth-child(2)').each(function() {
                 let old_el = $(this);
                 let new_el = old_el.next();
                 let before = html_to_tokens(old_el.html());

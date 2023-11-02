@@ -1,18 +1,25 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Commissieleden aanstellen" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-        $(function () {
+        $(function() {
             depends_on_list_value('short_route', ['True', 'False'], 'reviewers');
 
-            {% if review.proposal.is_pre_assessment %}
-                // Hide short_route input for preliminary assessment Proposals
-                $('input[name="short_route"]').parents('tr').hide();
-            {% endif %}
+            {
+                %
+                if review.proposal.is_pre_assessment %
+            }
+            // Hide short_route input for preliminary assessment Proposals
+            $('input[name="short_route"]').parents('tr').hide();
+            {
+                % endif %
+            }
         });
     </script>
 {% endblock %}

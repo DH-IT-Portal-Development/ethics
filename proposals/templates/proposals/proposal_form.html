@@ -1,6 +1,8 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Algemene informatie over de aanvraag" %} - {{ block.super }}
 {% endblock %}
@@ -9,7 +11,7 @@
             charset="utf8"
             src="{% static 'proposals/js/word_counter.js' %}"></script>
     <script>
-        $(function () {
+        $(function() {
             check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
             check_field_required('relation', 'check_in_course', 'student_program', 'proposals');
             check_field_required('relation', 'check_in_course', 'student_context', 'proposals');
@@ -20,58 +22,60 @@
             check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
             check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
 
-    // Add datepicker for date_start, set locale to current language
-    $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
+            // Add datepicker for date_start, set locale to current language
+            $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
             var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'yy-mm-dd';
             $("#id_date_start").datepicker({
                 dateFormat: date_format,
             })
 
-    // AJAX applicants
-    $('select#id_applicants').select2({
-      ajax: {
-        url: '{% url 'main:user_search' %}',
-        dataType: 'json',
-        data: function (params) {
-          return {
-            q: params.term || '*',
-            page: params.page || 1
-          }
-        },
-        delay: 1500,
-        error: function (err) {
-          console.log(err)
-        },
-        cache: true
-      }
-    });
+            // AJAX applicants
+            $('select#id_applicants').select2({
+                ajax: {
+                    url: '{% url '
+                    main: user_search ' %}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            q: params.term || '*',
+                            page: params.page || 1
+                        }
+                    },
+                    delay: 1500,
+                    error: function(err) {
+                        console.log(err)
+                    },
+                    cache: true
+                }
+            });
 
-    // AJAX supervisors
-    $('select#id_supervisor').select2({
-      ajax: {
-        url: '{% url 'main:user_search' %}',
-        dataType: 'json',
-        data: function (params) {
-          return {
-            q: params.term || '*',
-            page: params.page || 1
-          }
-        },
-        delay: 1500,
-        error: function (err) {
-          console.log(err)
-        },
-        cache: true
-      }
-    });
-  });
-  $(function() {
-    // adds running wordcounter for the summary and self_assessment text fields
-    let translated_string = " {% trans 'Aantal woorden:' %} "
-    wordCounter("summary", translated_string)
-    wordCounter("self_assessment", translated_string)
-  });
+            // AJAX supervisors
+            $('select#id_supervisor').select2({
+                ajax: {
+                    url: '{% url '
+                    main: user_search ' %}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            q: params.term || '*',
+                            page: params.page || 1
+                        }
+                    },
+                    delay: 1500,
+                    error: function(err) {
+                        console.log(err)
+                    },
+                    cache: true
+                }
+            });
+        });
+        $(function() {
+            // adds running wordcounter for the summary and self_assessment text fields
+            let translated_string = " {% trans 'Aantal woorden:' %} "
+            wordCounter("summary", translated_string)
+            wordCounter("self_assessment", translated_string)
+        });
     </script>
 {% endblock %}
 {% block content %}
@@ -108,51 +112,48 @@
     </div>
     <!-- Code for intended start date warning -->
     <style>
-  #date_start_warning {
-    line-height: 1.5;
-  }
+        #date_start_warning {
+            line-height: 1.5;
+        }
     </style>
     <script>
-  /* Find date start input */
-  let date_start_input = $("#id_date_start")
+        /* Find date start input */
+        let date_start_input = $("#id_date_start")
 
-  /* Insert warning element */
-  date_start_input.after(`
+        /* Insert warning element */
+        date_start_input.after(`
 <p id="date_start_warning" class="mb-2 mt-2">
     {% trans "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."%}
 </p>
   `)
 
-  /* Re-select warning paragraph */
-  const date_start_warning = $("#date_start_warning")
+        /* Re-select warning paragraph */
+        const date_start_warning = $("#date_start_warning")
 
-  /* Define checker function */
-  function checkDateStart()
-  {
-    let date_value = date_start_input.val();
-    if (date_value=="") {
-      return true
-    }
-    let parsed_date = new Date(date_value);
-    let today = new Date();
-    let date_difference = parsed_date - today;
-    const two_weeks_ms = 1000*60*60*24*14;
-    return date_difference>two_weeks_ms;
-  }
+        /* Define checker function */
+        function checkDateStart() {
+            let date_value = date_start_input.val();
+            if (date_value == "") {
+                return true
+            }
+            let parsed_date = new Date(date_value);
+            let today = new Date();
+            let date_difference = parsed_date - today;
+            const two_weeks_ms = 1000 * 60 * 60 * 24 * 14;
+            return date_difference > two_weeks_ms;
+        }
 
-  /* Define warning update function */
-  function updateWarning()
-  {
-    date_start_warning.toggleClass("text-danger", checkDateStart()==false);
-  }
+        /* Define warning update function */
+        function updateWarning() {
+            date_start_warning.toggleClass("text-danger", checkDateStart() == false);
+        }
 
-  /* Listen for changing of start date */
-  date_start_input.on('change', () =>{
-    updateWarning();
-  });
+        /* Listen for changing of start date */
+        date_start_input.on('change', () => {
+            updateWarning();
+        });
 
-  /* Give the update function a warmup run */
-  updateWarning();
-
+        /* Give the update function a warmup run */
+        updateWarning();
     </script>
 {% endblock %}

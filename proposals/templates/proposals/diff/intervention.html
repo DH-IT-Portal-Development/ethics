@@ -1,4 +1,5 @@
 {% load i18n %}
+
 {% if study.has_intervention or p_study.has_intervention %}
     <h2 class="mt-5 mb-1">{% trans "Het interventieonderzoek" %}</h2>
     {% if study.has_intervention and not p_study.has_intervention %}

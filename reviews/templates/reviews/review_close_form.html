@@ -1,12 +1,14 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Review afsluiten" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-        $(function () {
+        $(function() {
             depends_on_value('confirmation_sent', 'True', 'confirmation_comments');
             depends_on_list_value('continuation', ['0', '5'], 'has_minor_revision');
             depends_on_value('has_minor_revision', 'True', 'minor_revision_description');

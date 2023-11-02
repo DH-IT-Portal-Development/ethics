@@ -1,17 +1,19 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Het takenonderzoek en interviews" %} - {{ block.super }}
 {% endblock %}
 {% block html_head %}
     <script>
-$(function() {
-    depends_on_value('is_copy', 'True', 'parent_session');
-    depends_on_value('is_copy', 'False', 'tasks_number');
+        $(function() {
+            depends_on_value('is_copy', 'True', 'parent_session');
+            depends_on_value('is_copy', 'False', 'tasks_number');
 
-    $('input[name=tasks_number]').parents('tr').insertAfter($('input[name=is_copy]').parents('tr'));
-});
+            $('input[name=tasks_number]').parents('tr').insertAfter($('input[name=is_copy]').parents('tr'));
+        });
     </script>
 {% endblock %}
 {% block content %}

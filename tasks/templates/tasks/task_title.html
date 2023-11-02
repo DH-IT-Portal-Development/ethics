@@ -1,4 +1,5 @@
 {% load i18n %}
+
 {% with order=task.order session_order=task.session.order study_order=task.session.study.order study_name=task.session.study.name studies_number=task.session.study.proposal.studies_number %}
     {% if studies_number > 1 %}
         <h3>

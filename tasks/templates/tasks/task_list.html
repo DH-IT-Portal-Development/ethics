@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+
 <table class="pure-table" width="100%">
     <thead>
         <tr>
@@ -37,25 +38,26 @@
     </tbody>
 </table>
 <script>
-$(function() {
-    let elements = $('.task_feedback');
-    elements.each(function () {
-        let label = $(this).find('.label');
-        let help = $(this).find('.help');
-        if (help.length > 0) {
-            label.after(' <img src="{% static 'main/images/information.png' %}">');
-            label.next().qtip({
-                content: {
-                    text: help.html(),
-                },
-                hide: {
-                    fixed: true,
-                    delay: 500,
-                },
-            });
-            help.remove();
-        }
-    });
+    $(function() {
+        let elements = $('.task_feedback');
+        elements.each(function() {
+            let label = $(this).find('.label');
+            let help = $(this).find('.help');
+            if (help.length > 0) {
+                label.after(' <img src="{% static '
+                    main / images / information.png ' %}">');
+                label.next().qtip({
+                    content: {
+                        text: help.html(),
+                    },
+                    hide: {
+                        fixed: true,
+                        delay: 500,
+                    },
+                });
+                help.remove();
+            }
+        });
 
-});
+    });
 </script>

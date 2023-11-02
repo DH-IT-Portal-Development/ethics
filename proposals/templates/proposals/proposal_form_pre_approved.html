@@ -1,6 +1,8 @@
 {% extends "base/base.html" %}
+
 {% load static %}
 {% load i18n %}
+
 {% block header_title %}
     {% trans "Algemene informatie over de aanvraag" %} - {{ block.super }}
 {% endblock %}
@@ -9,68 +11,69 @@
             charset="utf8"
             src="{% static 'proposals/js/word_counter.js' %}"></script>
     <script>
-$(function() {
+        $(function() {
 
-    // Default for proposals
-    check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
-    check_field_required('relation', 'check_in_course', 'student_program', 'proposals');
-    check_field_required('relation', 'check_in_course', 'student_context', 'proposals');
-    check_field_required('relation', 'check_in_course', 'student_justification', 'proposals');
-    check_field_required('student_context', 'needs_details', 'student_context_details', 'proposals', 'studentcontext');
-    depends_on_value('relation', 'check_in_course', 'student_context_details');  
-    depends_on_value('student_context', 'needs_details', 'student_context_details');
-    depends_on_value('other_applicants', 'True', 'applicants');
-    depends_on_value('other_stakeholders', 'True', 'stakeholders');
-    check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
-    check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
+            // Default for proposals
+            check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
+            check_field_required('relation', 'check_in_course', 'student_program', 'proposals');
+            check_field_required('relation', 'check_in_course', 'student_context', 'proposals');
+            check_field_required('relation', 'check_in_course', 'student_justification', 'proposals');
+            check_field_required('student_context', 'needs_details', 'student_context_details', 'proposals', 'studentcontext');
+            depends_on_value('relation', 'check_in_course', 'student_context_details');
+            depends_on_value('student_context', 'needs_details', 'student_context_details');
+            depends_on_value('other_applicants', 'True', 'applicants');
+            depends_on_value('other_stakeholders', 'True', 'stakeholders');
+            check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
+            check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
 
-    // Additional contraints for pre-approved proposals
-    depends_on_value('is_pre_approved', 'True', 'relation');
-    depends_on_value('is_pre_approved', 'True', 'supervisor');
-    depends_on_value('is_pre_approved', 'True', 'other_applicants');
-    depends_on_value('is_pre_approved', 'True', 'other_stakeholders');
-    depends_on_value('is_pre_approved', 'True', 'date_start');
-    depends_on_value('is_pre_approved', 'True', 'title');
-    depends_on_value('is_pre_approved', 'True', 'summary');
-    depends_on_value('is_pre_approved', 'True', 'pre_assessment_pdf');
-    depends_on_value('is_pre_approved', 'True', 'funding');
-    depends_on_value('is_pre_approved', 'True', 'pre_approval_institute');
-    depends_on_value('is_pre_approved', 'True', 'pre_approval_pdf');
-    warning_on_value('is_pre_approved', 'False', 'pre_approval_warning');
+            // Additional contraints for pre-approved proposals
+            depends_on_value('is_pre_approved', 'True', 'relation');
+            depends_on_value('is_pre_approved', 'True', 'supervisor');
+            depends_on_value('is_pre_approved', 'True', 'other_applicants');
+            depends_on_value('is_pre_approved', 'True', 'other_stakeholders');
+            depends_on_value('is_pre_approved', 'True', 'date_start');
+            depends_on_value('is_pre_approved', 'True', 'title');
+            depends_on_value('is_pre_approved', 'True', 'summary');
+            depends_on_value('is_pre_approved', 'True', 'pre_assessment_pdf');
+            depends_on_value('is_pre_approved', 'True', 'funding');
+            depends_on_value('is_pre_approved', 'True', 'pre_approval_institute');
+            depends_on_value('is_pre_approved', 'True', 'pre_approval_pdf');
+            warning_on_value('is_pre_approved', 'False', 'pre_approval_warning');
 
-    // Add datepicker for date_start, set locale to current language
-    $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
+            // Add datepicker for date_start, set locale to current language
+            $.datepicker.setDefaults($.datepicker.regional["{{ LANGUAGE_CODE }}"]);
 
-    var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
-    $("#id_date_start").datepicker({
-        dateFormat: date_format,
-        minDate: 'now',
-    })
+            var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
+            $("#id_date_start").datepicker({
+                dateFormat: date_format,
+                minDate: 'now',
+            })
 
-    // AJAX applicants
-    $('select#id_applicants').select2({
-      ajax: {
-        url: '{% url 'main:user_search' %}',
-        dataType: 'json',
-        data: function (params) {
-          return {
-            q: params.term || '*',
-            page: params.page || 1
-          }
-        },
-        delay: 1500,
-        error: function (err) {
-            console.log(err)
-        },
-        cache: true
-      }
-    });
-});
-$(function() {
-    // adds running wordcounter for the summary and self_assessment text fields
-    let translated_string = " {% trans 'Aantal woorden:' %} "
-    wordCounter("summary", translated_string)
-});
+            // AJAX applicants
+            $('select#id_applicants').select2({
+                ajax: {
+                    url: '{% url '
+                    main: user_search ' %}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            q: params.term || '*',
+                            page: params.page || 1
+                        }
+                    },
+                    delay: 1500,
+                    error: function(err) {
+                        console.log(err)
+                    },
+                    cache: true
+                }
+            });
+        });
+        $(function() {
+            // adds running wordcounter for the summary and self_assessment text fields
+            let translated_string = " {% trans 'Aantal woorden:' %} "
+            wordCounter("summary", translated_string)
+        });
     </script>
 {% endblock %}
 {% block content %}
