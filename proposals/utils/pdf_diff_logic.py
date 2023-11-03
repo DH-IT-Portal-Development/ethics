@@ -132,6 +132,7 @@ class DiffSection:
             new_section_dict = {row.field: row for row in new_rows}
 
             for field in all_fields:
+                #If a field does not appear in either section, no row will be created.
                 if field in old_section_dict and field in new_section_dict:
                     rows.append({'verbose_name':old_section_dict[field].verbose_name,
                                  'old_value': old_section_dict[field].value, 
@@ -417,6 +418,7 @@ class GeneralSection(BaseSection):
 
     section_title = _("Algemene informatie over de aanvraag")
     row_fields = [
+        "is_pre_approved",
         "relation",
         "supervisor",
         "student_program",
@@ -432,6 +434,8 @@ class GeneralSection(BaseSection):
         "funding",
         "funding_details",
         "funding_name",
+        "pre_approval_institute",
+        "pre_approval_pdf",
         "self_assessment",
         "summary",
     ]
@@ -440,6 +444,10 @@ class GeneralSection(BaseSection):
         rows = copy(self.row_fields)
         obj = self.obj
 
+        if not obj.is_pre_approved:
+            rows.remove("is_pre_approved")
+            rows.remove("pre_approval_institute")
+            rows.remove("pre_approval_pdf")
         if not obj.relation.needs_supervisor:
             rows.remove("supervisor")
         if not obj.relation.check_in_course:
@@ -514,7 +522,7 @@ class TrajectoriesSection(PageBreakMixin, BaseSection):
         return rows
 
 
-class StudySection(BaseSection):
+class StudySection(PageBreakMixin, BaseSection):
     """This class receives a proposal.study object
     Note the overwritten __init__ method for adding a sub_title."""
 
@@ -939,7 +947,7 @@ class ExtraDocumentsSection(BaseSection):
         return rows
 
 
-class DMPFileSection(BaseSection):
+class DMPFileSection(PageBreakMixin, BaseSection):
     """This class receives a proposal object
     Also unnecessary I suppose. But I though why not ..."""
 
@@ -993,41 +1001,41 @@ def create_context_pdf(context, model):
 
     sections.append(GeneralSection(model))
 
-    if model.wmo:
+    if hasattr(model, 'wmo'):
         sections.append(WMOSection(model.wmo))
 
-    if model.wmo.status != model.wmo.NO_WMO:
-        sections.append(METCSection(model.wmo))
+        if model.wmo.status != model.wmo.NO_WMO:
+            sections.append(METCSection(model.wmo))
 
-    sections.append(TrajectoriesSection(model))
+        sections.append(TrajectoriesSection(model))
 
-    if model.wmo.status == model.wmo.NO_WMO:
-        for study in model.study_set.all():
-            sections.append(StudySection(study))
-            if study.has_intervention:
-                sections.append(InterventionSection(study.intervention))
-            if study.has_observation:
-                sections.append(ObservationSection(study.observation))
-            if study.has_sessions:
-                sections.append(SessionsOverviewSection(study))
-                for session in study.session_set.all():
-                    sections.append(SessionSection(session))
-                    for task in session.task_set.all():
-                        sections.append(TaskSection(task))
-                sections.append(TasksOverviewSection(session))
-            sections.append(StudyOverviewSection(study))
-            sections.append(InformedConsentFormsSection(study.documents))
+        if model.wmo.status == model.wmo.NO_WMO:
+            for study in model.study_set.all():
+                sections.append(StudySection(study))
+                if study.has_intervention:
+                    sections.append(InterventionSection(study.intervention))
+                if study.has_observation:
+                    sections.append(ObservationSection(study.observation))
+                if study.has_sessions:
+                    sections.append(SessionsOverviewSection(study))
+                    for session in study.session_set.all():
+                        sections.append(SessionSection(session))
+                        for task in session.task_set.all():
+                            sections.append(TaskSection(task))
+                    sections.append(TasksOverviewSection(session))
+                sections.append(StudyOverviewSection(study))
+                sections.append(InformedConsentFormsSection(study.documents))
 
-        extra_documents = get_extra_documents(model)
+            extra_documents = get_extra_documents(model)
 
-        for num, document in enumerate(extra_documents):
-            sections.append(ExtraDocumentsSection(document, num))
+            for num, document in enumerate(extra_documents):
+                sections.append(ExtraDocumentsSection(document, num))
 
-        if model.dmp_file:
-            sections.append(DMPFileSection(model))
+            if model.dmp_file:
+                sections.append(DMPFileSection(model))
 
-        sections.append(EmbargoSection(model))
-        sections.append(CommentsSection(model))
+    sections.append(EmbargoSection(model))
+    sections.append(CommentsSection(model))
 
     context["sections"] = sections
 
@@ -1070,135 +1078,132 @@ def create_context_diff(context, old_proposal, new_proposal):
         DiffSection(GeneralSection(old_proposal), GeneralSection(new_proposal))
     )
 
-    if (
-        new_proposal.wmo
-        or old_proposal.wmo
-    ):
+    if hasattr(new_proposal, 'wmo'):
         sections.append(
             DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
-    )
-
-    if (
-        new_proposal.wmo.status != new_proposal.wmo.NO_WMO
-        or old_proposal.wmo.status != old_proposal.wmo.NO_WMO
-    ):
-        sections.append(
-            DiffSection(METCSection(old_proposal.wmo), METCSection(new_proposal.wmo))
         )
 
-    sections.append(
-        DiffSection(
-            TrajectoriesSection(old_proposal), TrajectoriesSection(new_proposal)
-        )
-    )
-
-    if (
-        new_proposal.wmo.status == new_proposal.wmo.NO_WMO
-        or new_proposal.wmo.status == new_proposal.wmo.JUDGED
-    ):
-        for old_study, new_study in zip_equalize_lists(
-            old_proposal.study_set.all(), new_proposal.study_set.all()
+        if (
+            new_proposal.wmo.status != new_proposal.wmo.NO_WMO
+            or old_proposal.wmo.status != old_proposal.wmo.NO_WMO
         ):
-            both_studies = [old_study, new_study]
+            sections.append(
+                DiffSection(METCSection(old_proposal.wmo), METCSection(new_proposal.wmo))
+            )
 
-            sections.append(DiffSection(*multi_sections(StudySection, both_studies)))
+        sections.append(
+            DiffSection(
+                TrajectoriesSection(old_proposal), TrajectoriesSection(new_proposal)
+            )
+        )
 
-            if (
-                old_study is not None
-                and old_study.has_intervention
-                or new_study is not None
-                and new_study.has_intervention
+        if (
+            new_proposal.wmo.status == new_proposal.wmo.NO_WMO
+            or new_proposal.wmo.status == new_proposal.wmo.JUDGED
+        ):
+            for old_study, new_study in zip_equalize_lists(
+                old_proposal.study_set.all(), new_proposal.study_set.all()
             ):
-                interventions = get_all_related(both_studies, "intervention")
+                both_studies = [old_study, new_study]
 
-                sections.append(
-                    DiffSection(*multi_sections(InterventionSection, interventions))
-                )
+                sections.append(DiffSection(*multi_sections(StudySection, both_studies)))
 
-            if (
-                old_study is not None
-                and old_study.has_observation
-                or new_study is not None
-                and new_study.has_observation
-            ):
-                observations = get_all_related(both_studies, "observation")
+                if (
+                    old_study is not None
+                    and old_study.has_intervention
+                    or new_study is not None
+                    and new_study.has_intervention
+                ):
+                    interventions = get_all_related(both_studies, "intervention")
 
-                sections.append(
-                    DiffSection(*multi_sections(ObservationSection, observations))
-                )
+                    sections.append(
+                        DiffSection(*multi_sections(InterventionSection, interventions))
+                    )
 
-            if (
-                old_study is not None
-                and old_study.has_sessions
-                or new_study is not None
-                and new_study.has_sessions
-            ):
-                sections.append(
-                    DiffSection(*multi_sections(SessionsOverviewSection, both_studies))
-                )
+                if (
+                    old_study is not None
+                    and old_study.has_observation
+                    or new_study is not None
+                    and new_study.has_observation
+                ):
+                    observations = get_all_related(both_studies, "observation")
 
-                old_sessions_set, new_sessions_set = get_all_related_set(
-                    both_studies, "session_set"
-                )
+                    sections.append(
+                        DiffSection(*multi_sections(ObservationSection, observations))
+                    )
 
-                for both_sessions in zip_equalize_lists(
-                    old_sessions_set, new_sessions_set
+                if (
+                    old_study is not None
+                    and old_study.has_sessions
+                    or new_study is not None
+                    and new_study.has_sessions
                 ):
                     sections.append(
-                        DiffSection(*multi_sections(SessionSection, both_sessions))
+                        DiffSection(*multi_sections(SessionsOverviewSection, both_studies))
                     )
 
-                    old_tasks_set, new_tasks_set = get_all_related_set(
-                        both_sessions, "task_set"
+                    old_sessions_set, new_sessions_set = get_all_related_set(
+                        both_studies, "session_set"
                     )
 
-                    for both_tasks in zip_equalize_lists(old_tasks_set, new_tasks_set):
+                    for both_sessions in zip_equalize_lists(
+                        old_sessions_set, new_sessions_set
+                    ):
                         sections.append(
-                            DiffSection(*multi_sections(TaskSection, both_tasks))
+                            DiffSection(*multi_sections(SessionSection, both_sessions))
                         )
 
+                        old_tasks_set, new_tasks_set = get_all_related_set(
+                            both_sessions, "task_set"
+                        )
+
+                        for both_tasks in zip_equalize_lists(old_tasks_set, new_tasks_set):
+                            sections.append(
+                                DiffSection(*multi_sections(TaskSection, both_tasks))
+                            )
+
+                    sections.append(
+                        DiffSection(*multi_sections(TasksOverviewSection, both_sessions))
+                    )
+
                 sections.append(
-                    DiffSection(*multi_sections(TasksOverviewSection, both_sessions))
+                    DiffSection(*multi_sections(StudyOverviewSection, both_studies))
                 )
 
-            sections.append(
-                DiffSection(*multi_sections(StudyOverviewSection, both_studies))
-            )
+                both_documents = get_all_related(both_studies, "documents")
 
-            both_documents = get_all_related(both_studies, "documents")
-
-            sections.append(
-                DiffSection(
-                    *multi_sections(InformedConsentFormsSection, both_documents)
-                )
-            )
-
-        old_extra_docs = get_extra_documents(old_proposal)
-        new_extra_docs = get_extra_documents(new_proposal)
-
-        if old_extra_docs or new_extra_docs:
-            for num, zipped_extra_docs in enumerate(
-                zip_equalize_lists(old_extra_docs, new_extra_docs)
-            ):
                 sections.append(
                     DiffSection(
-                        *multi_sections(ExtraDocumentsSection, zipped_extra_docs, num)
+                        *multi_sections(InformedConsentFormsSection, both_documents)
                     )
                 )
 
-        if old_proposal.dmp_file or new_proposal.dmp_file:
-            sections.append(
-                DiffSection(
-                    *multi_sections(DMPFileSection, [old_proposal, new_proposal])
-                )
-            )
+            old_extra_docs = get_extra_documents(old_proposal)
+            new_extra_docs = get_extra_documents(new_proposal)
 
-        sections.append(
-            DiffSection(EmbargoSection(old_proposal), EmbargoSection(new_proposal))
-        )
-        sections.append(
-            DiffSection(CommentsSection(old_proposal), CommentsSection(new_proposal))
-        )
+            if old_extra_docs or new_extra_docs:
+                for num, zipped_extra_docs in enumerate(
+                    zip_equalize_lists(old_extra_docs, new_extra_docs)
+                ):
+                    sections.append(
+                        DiffSection(
+                            *multi_sections(ExtraDocumentsSection, zipped_extra_docs, num)
+                        )
+                    )
+
+            if old_proposal.dmp_file or new_proposal.dmp_file:
+                sections.append(
+                    DiffSection(
+                        *multi_sections(DMPFileSection, [old_proposal, new_proposal])
+                    )
+                )
+
+    sections.append(
+        DiffSection(EmbargoSection(old_proposal), EmbargoSection(new_proposal))
+    )
+    sections.append(
+        DiffSection(CommentsSection(old_proposal), CommentsSection(new_proposal))
+    )
 
     context["sections"] = sections
 
