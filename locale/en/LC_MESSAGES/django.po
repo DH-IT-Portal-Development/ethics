@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-01 14:10+0100\n"
+"POT-Creation-Date: 2023-11-03 15:43+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -653,12 +653,12 @@ msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
 #: main/templates/base/menu.html:85 main/templates/base/menu.html:112
-#: reviews/menus.py:32 reviews/views.py:230
+#: reviews/menus.py:32 reviews/views.py:229
 msgid "Nog af te handelen aanvragen"
 msgstr "Applications waiting for conclusion"
 
 #: main/templates/base/menu.html:88 main/templates/base/menu.html:115
-#: reviews/menus.py:47 reviews/views.py:276
+#: reviews/menus.py:47 reviews/views.py:275
 msgid "Alle ingezonden aanvragen"
 msgstr "All submitted applications"
 
@@ -1385,12 +1385,13 @@ msgstr ""
 "H."
 
 #: proposals/forms.py:192
-msgid "Je dient een eindverantwoordelijke op te geven."
-msgstr "You are required to specify the researcher with final responsibility."
+msgid "Je dient een promotor/begeleider op te geven."
+msgstr "You are required to specify a promotor/supervisor."
 
 #: proposals/forms.py:199
-msgid "Je kunt niet jezelf als eindverantwoordelijke opgeven."
-msgstr "You cannot submit yourself as the researcher with final responsibility."
+msgid "Je kunt niet jezelf als promotor/begeleider opgeven."
+msgstr ""
+"You cannot submit yourself as the promotor/supervisor."
 
 #: proposals/forms.py:213
 msgid "Je hebt jezelf niet als onderzoekers geselecteerd."
@@ -1924,13 +1925,14 @@ msgid ""
 "                    zal dan namelijk niet in behandeling kunnen worden "
 "genomen."
 msgstr ""
-"At the end of the procedure, you need to send this application to your promotor or "
-"supervisor for verification. this person is the researcher with final "
-"responsibility and can then make adjustments and submit the study to the FEtC-H. "
-"<strong>Note</strong>: if you cannot find your promotor or supervisor using this field, "
-"they may have to log into this portal at least once with their Solis-ID. You "
-"can continue filling in the application, while you wait for them to do this, "
-"but remember to come back and fill in this field before submitting."
+"At the end of the procedure, you need to send this application to your "
+"promotor or supervisor for verification. this person is the researcher with "
+"final responsibility and can then make adjustments and submit the study to "
+"the FEtC-H. <strong>Note</strong>: if you cannot find your promotor or "
+"supervisor using this field, they may have to log into this portal at least "
+"once with their Solis-ID. You can continue filling in the application, while "
+"you wait for them to do this, but remember to come back and fill in this "
+"field before submitting."
 
 #: proposals/models.py:547
 msgid ""
@@ -3878,11 +3880,11 @@ msgstr "Start date period:"
 msgid "Eind datum periode:"
 msgstr "End date period:"
 
-#: reviews/menus.py:37 reviews/views.py:242
+#: reviews/menus.py:37 reviews/views.py:241
 msgid "Aanvragen in revisie"
 msgstr "Applications in revision"
 
-#: reviews/menus.py:42 reviews/views.py:254
+#: reviews/menus.py:42 reviews/views.py:253
 msgid "Alle lopende aanvragen"
 msgstr "All running applications"
 
@@ -4788,7 +4790,7 @@ msgstr "My results"
 msgid "Openstaande besluiten commissieleden"
 msgstr "Pending decisions committee members"
 
-#: reviews/views.py:201
+#: reviews/views.py:200
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
@@ -5951,6 +5953,10 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Je dient een eindverantwoordelijke op te geven."
+#~ msgstr ""
+#~ "You are required to specify the researcher with final responsibility."
 
 #~ msgid "Eindverantwoordelijke onderzoeker"
 #~ msgstr "Researcher with final responsibility"

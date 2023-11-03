@@ -189,14 +189,14 @@ van het FETC-GW worden opgenomen.')
         if relation and relation.needs_supervisor and \
            not supervisor:
             error = forms.ValidationError(
-                _('Je dient een eindverantwoordelijke op te geven.'),
+                _('Je dient een promotor/begeleider op te geven.'),
                 code='required')
             self.add_error('supervisor', error)
 
         if relation and relation.needs_supervisor and \
             supervisor == self.user:
             error = forms.ValidationError(
-                _('Je kunt niet jezelf als eindverantwoordelijke opgeven.')
+                _('Je kunt niet jezelf als promotor/begeleider opgeven.')
             )
             self.add_error('supervisor', error)
 
