@@ -276,7 +276,7 @@ class RowValue:
     def handle_field_file(self, field_file):
         if field_file:
             output = format_html(
-                "<a href={}>{}</a>",
+                "<a href=http://{}>{}</a>",
                 f"{settings.BASE_URL}{field_file.url}",
                 _("Download"),
             )
