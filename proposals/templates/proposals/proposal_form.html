@@ -49,23 +49,7 @@
     });
 
     // AJAX supervisors
-    $('select#id_supervisor').select2({
-      ajax: {
-        url: '{% url 'main:user_search' %}',
-        dataType: 'json',
-        data: function (params) {
-          return {
-            q: params.term || '*',
-            page: params.page || 1
-          }
-        },
-        delay: 1500,
-        error: function (err) {
-          console.log(err)
-        },
-        cache: true
-      }
-    });
+    $('select#id_supervisor').select2();
   });
   $(function() {
     // adds running wordcounter for the summary and self_assessment text fields
