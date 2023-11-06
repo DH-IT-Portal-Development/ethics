@@ -119,11 +119,12 @@
                 {% endverbatim %}
             </div>
             {# For some reason context.review.REVISION and other class variables of continuation are None?#}
-            {# Only context.review.GO returns 1 for me, as it should #}
+            {# Only context.review.GO returns 0 for me, as it should #}
             {# Which is why I've hardcoded the 1 here ... #}
             <div class="ufl-undertitle-line" v-if="review.stage === context.review.CLOSED && review.continuation === 1">
+                {% trans "Reviewronde beëindigd: " %}
                 {% verbatim %}
-                {{review.decision.date_decision}}
+                {{ review.date_end | date("DD-MM-YYYY") }}
                 {% endverbatim %}
             </div>
         </template>
