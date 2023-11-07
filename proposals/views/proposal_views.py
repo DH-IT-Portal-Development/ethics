@@ -20,7 +20,7 @@ from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     HumanitiesRequiredMixin, UpdateView, UserAllowedMixin
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
-from proposals.utils.pdf_diff_logic import *
+from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_diff
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
