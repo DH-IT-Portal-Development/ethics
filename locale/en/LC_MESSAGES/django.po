@@ -2,62 +2,19 @@
 # Copyright (C) 2016
 # This file is distributed under the same license as the fetc-h package.
 # Martijn van der Klis <M.H.vanderKlis@uu.nl>, 2016.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-03 15:43+0100\n"
-"PO-Revision-Date: 2020-10-07 11:22+0200\n"
+"POT-Creation-Date: 2023-11-07 10:34+0100\n"
+"PO-Revision-Date: 2023-11-07 10:36+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
-"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
-"#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
-"#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  django.po.develop  #-#-#-#-#\n"
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  django.po.acc  #-#-#-#-#\n"
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  django.po.acc  #-#-#-#-#\n"
-"#-#-#-#-#  django.po.pr  #-#-#-#-#\n"
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  django.po.acc  #-#-#-#-#\n"
-"#-#-#-#-#  manual.po  #-#-#-#-#\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
-"#-#-#-#-#  github.po  #-#-#-#-#\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
@@ -81,9 +38,9 @@ msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 
 #: faqs/menus.py:17 main/templates/base/menu.html:134
 #: main/templates/main/index.html:209
-#: proposals/templates/proposals/proposal_pdf.html:430
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
+#: proposals/utils/pdf_diff_logic.py:859
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
@@ -152,7 +109,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: feedback/templates/feedback/feedback_form.html:23
 #: observations/templates/observations/observation_update_attachments.html:39
 #: proposals/templates/proposals/proposal_confirmation.html:36
-#: proposals/templates/proposals/proposal_diff.html:294
+#: proposals/templates/proposals/proposal_diff.html:58
 #: proposals/templates/proposals/proposal_update_attachments.html:26
 #: reviews/templates/reviews/change_chamber_form.html:19
 #: reviews/templates/reviews/decision_form.html:90
@@ -282,9 +239,8 @@ msgstr "How many times a week will the intervention session take place?"
 
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:49
-#: proposals/templates/proposals/diff/intervention.html:4
-#: proposals/templates/proposals/proposal_pdf.html:285
 #: proposals/templates/proposals/proposal_pdf_empty.html:186
+#: proposals/utils/pdf_diff_logic.py:586
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
@@ -345,11 +301,11 @@ msgstr "Log in"
 msgid "Log uit"
 msgstr "Log out"
 
-#: main/models.py:10 main/utils.py:15
+#: main/models.py:10 main/utils.py:15 proposals/utils/pdf_diff_logic.py:234
 msgid "ja"
 msgstr "yes"
 
-#: main/models.py:11 main/utils.py:15
+#: main/models.py:11 main/utils.py:15 proposals/utils/pdf_diff_logic.py:234
 msgid "nee"
 msgstr "no"
 
@@ -402,7 +358,7 @@ msgid "Gebruiksersnaam"
 msgstr "Username"
 
 #: main/templates/auth/user_detail.html:30
-#: proposals/templates/proposals/proposal_pdf.html:79
+#: proposals/templates/proposals/proposal_pdf.html:119
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:66
 msgid "E-mail"
 msgstr "E-mail"
@@ -581,27 +537,27 @@ msgid "Maak een amendement van een al goedgekeurde aanvraag"
 msgstr "Create an amendment to an already approved application"
 
 #: main/templates/base/menu.html:32 proposals/menus.py:56
-#: proposals/views/proposal_views.py:76
+#: proposals/views/proposal_views.py:77
 msgid "Mijn conceptaanvragen"
 msgstr "My draft applications"
 
 #: main/templates/base/menu.html:35 proposals/menus.py:60
-#: proposals/views/proposal_views.py:126
+#: proposals/views/proposal_views.py:127
 msgid "Mijn oefenaanvragen"
 msgstr "My practice applications"
 
 #: main/templates/base/menu.html:38 proposals/menus.py:64
-#: proposals/views/proposal_views.py:88
+#: proposals/views/proposal_views.py:89
 msgid "Mijn ingediende aanvragen"
 msgstr "My submitted applications"
 
 #: main/templates/base/menu.html:41 proposals/menus.py:68
-#: proposals/views/proposal_views.py:100
+#: proposals/views/proposal_views.py:101
 msgid "Mijn afgehandelde aanvragen"
 msgstr "My processed applications"
 
 #: main/templates/base/menu.html:44 proposals/menus.py:72
-#: proposals/views/proposal_views.py:112
+#: proposals/views/proposal_views.py:113
 msgid "Mijn aanvragen als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -610,7 +566,7 @@ msgid "Al mijn aanvragen"
 msgstr "All my applications"
 
 #: main/templates/base/menu.html:52 proposals/menus.py:110
-#: proposals/views/proposal_views.py:153
+#: proposals/views/proposal_views.py:154
 msgid "Archief"
 msgstr "Archive"
 
@@ -1282,9 +1238,8 @@ msgstr "How many hours of observation will take place on average per day?"
 
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:44
-#: proposals/templates/proposals/diff/observation.html:4
-#: proposals/templates/proposals/proposal_pdf.html:297
 #: proposals/templates/proposals/proposal_pdf_empty.html:229
+#: proposals/utils/pdf_diff_logic.py:642
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
@@ -1833,7 +1788,8 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:422 reviews/models.py:184
+#: proposals/models.py:422 proposals/utils/pdf_diff_logic.py:980
+#: reviews/models.py:184
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -2101,298 +2057,6 @@ msgstr "Old"
 msgid "Nieuw"
 msgstr "New"
 
-#: proposals/templates/proposals/diff/intervention.html:8
-msgid ""
-"De revisie bevat interventieonderzoek, terwijl de originele aanvraag dat "
-"niet bevat."
-msgstr ""
-"This revision involves intervention research, whereas the original "
-"application does not."
-
-#: proposals/templates/proposals/diff/intervention.html:12
-msgid ""
-"De revisie bevat geen interventieonderzoek, terwijl de originele aanvraag "
-"dat wel bevat."
-msgstr ""
-"This revision does not involve intervention research, whereas the original "
-"application does include this."
-
-#: proposals/templates/proposals/diff/intervention.html:28
-msgid ""
-"De revisie en de originele aanvraag hebben beide een interventieonderzoek, "
-"maar deze zijn niet te vergelijken. Dit komt doordat de revisie een andere "
-"versie van het formulier gebruikt."
-msgstr ""
-"This revision and the original application both involve intervention "
-"research, but this aspect cannot be compared. The revision uses a newer "
-"version of the form than the original."
-
-#: proposals/templates/proposals/diff/intervention_v1.html:8
-#: proposals/templates/proposals/diff/intervention_v2.html:8
-#: proposals/templates/proposals/diff/observation_v1.html:9
-#: proposals/templates/proposals/diff/observation_v2.html:9
-#: proposals/templates/proposals/diff/sessions.html:23
-#: proposals/templates/proposals/diff/sessions.html:42
-#: proposals/templates/proposals/diff/sessions.html:103
-#: proposals/templates/proposals/diff/sessions.html:174
-#: proposals/templates/proposals/diff/study.html:25
-#: proposals/templates/proposals/diff/study.html:151
-#: proposals/templates/proposals/diff/study.html:215
-#: proposals/templates/proposals/proposal_diff.html:53
-#: proposals/templates/proposals/proposal_diff.html:178
-#: proposals/templates/proposals/proposal_diff.html:211
-#: proposals/templates/proposals/proposal_diff.html:244
-#: proposals/templates/proposals/proposal_diff.html:268
-msgid "Originele aanvraag"
-msgstr "Original application"
-
-#: proposals/templates/proposals/diff/intervention_v1.html:9
-#: proposals/templates/proposals/diff/intervention_v2.html:9
-#: proposals/templates/proposals/diff/observation_v1.html:10
-#: proposals/templates/proposals/diff/observation_v2.html:10
-#: proposals/templates/proposals/diff/sessions.html:24
-#: proposals/templates/proposals/diff/sessions.html:43
-#: proposals/templates/proposals/diff/sessions.html:104
-#: proposals/templates/proposals/diff/sessions.html:175
-#: proposals/templates/proposals/diff/study.html:26
-#: proposals/templates/proposals/diff/study.html:152
-#: proposals/templates/proposals/diff/study.html:216
-#: proposals/templates/proposals/proposal_diff.html:54
-#: proposals/templates/proposals/proposal_diff.html:179
-#: proposals/templates/proposals/proposal_diff.html:212
-#: proposals/templates/proposals/proposal_diff.html:245
-#: proposals/templates/proposals/proposal_diff.html:269
-msgid "Revisie/amendement"
-msgstr "Revision/amendment"
-
-#: proposals/templates/proposals/diff/intervention_v1.html:28
-#: proposals/templates/proposals/diff/intervention_v1.html:33
-#: proposals/templates/proposals/diff/intervention_v1.html:42
-#: proposals/templates/proposals/diff/intervention_v1.html:47
-#: proposals/templates/proposals/diff/intervention_v2.html:28
-#: proposals/templates/proposals/diff/intervention_v2.html:33
-#: proposals/templates/proposals/diff/intervention_v2.html:42
-#: proposals/templates/proposals/diff/intervention_v2.html:47
-#: proposals/templates/proposals/diff/intervention_v2.html:62
-#: proposals/templates/proposals/diff/intervention_v2.html:67
-#: proposals/templates/proposals/diff/observation_v1.html:43
-#: proposals/templates/proposals/diff/observation_v1.html:48
-#: proposals/templates/proposals/diff/observation_v2.html:43
-#: proposals/templates/proposals/diff/observation_v2.html:48
-#: proposals/templates/proposals/diff/sessions.html:62
-#: proposals/templates/proposals/diff/sessions.html:67
-#: proposals/templates/proposals/diff/sessions.html:76
-#: proposals/templates/proposals/diff/sessions.html:81
-msgid "ja,nee,"
-msgstr "yes,no,"
-
-#: proposals/templates/proposals/diff/intervention_v1.html:87
-#: proposals/templates/proposals/diff/intervention_v1.html:92
-#: proposals/templates/proposals/diff/intervention_v2.html:102
-#: proposals/templates/proposals/diff/intervention_v2.html:107
-#: proposals/templates/proposals/diff/observation_v1.html:29
-#: proposals/templates/proposals/diff/observation_v1.html:34
-#: proposals/templates/proposals/diff/observation_v1.html:68
-#: proposals/templates/proposals/diff/observation_v1.html:73
-#: proposals/templates/proposals/diff/observation_v1.html:81
-#: proposals/templates/proposals/diff/observation_v1.html:86
-#: proposals/templates/proposals/diff/observation_v1.html:94
-#: proposals/templates/proposals/diff/observation_v1.html:99
-#: proposals/templates/proposals/diff/observation_v1.html:108
-#: proposals/templates/proposals/diff/observation_v1.html:113
-#: proposals/templates/proposals/diff/observation_v1.html:122
-#: proposals/templates/proposals/diff/observation_v1.html:127
-#: proposals/templates/proposals/diff/observation_v2.html:29
-#: proposals/templates/proposals/diff/observation_v2.html:34
-#: proposals/templates/proposals/diff/observation_v2.html:73
-#: proposals/templates/proposals/diff/observation_v2.html:78
-#: proposals/templates/proposals/diff/observation_v2.html:93
-#: proposals/templates/proposals/diff/observation_v2.html:98
-#: proposals/templates/proposals/diff/observation_v2.html:113
-#: proposals/templates/proposals/diff/observation_v2.html:118
-#: proposals/templates/proposals/diff/observation_v2.html:132
-#: proposals/templates/proposals/diff/observation_v2.html:137
-#: proposals/templates/proposals/diff/observation_v2.html:146
-#: proposals/templates/proposals/diff/observation_v2.html:151
-#: proposals/templates/proposals/diff/sessions.html:151
-#: proposals/templates/proposals/diff/sessions.html:156
-#: proposals/templates/proposals/diff/study.html:43
-#: proposals/templates/proposals/diff/study.html:48
-#: proposals/templates/proposals/diff/study.html:63
-#: proposals/templates/proposals/diff/study.html:64
-#: proposals/templates/proposals/diff/study.html:220
-#: proposals/templates/proposals/diff/study.html:221
-#: proposals/templates/proposals/diff/study.html:262
-#: proposals/templates/proposals/diff/study.html:267
-#: proposals/templates/proposals/pdf/intervention_v1.html:16
-#: proposals/templates/proposals/pdf/intervention_v1.html:20
-#: proposals/templates/proposals/pdf/intervention_v1.html:43
-#: proposals/templates/proposals/pdf/intervention_v2.html:16
-#: proposals/templates/proposals/pdf/intervention_v2.html:20
-#: proposals/templates/proposals/pdf/intervention_v2.html:28
-#: proposals/templates/proposals/pdf/intervention_v2.html:48
-#: proposals/templates/proposals/pdf/intervention_v2.html:57
-#: proposals/templates/proposals/pdf/observation_v1.html:16
-#: proposals/templates/proposals/pdf/observation_v1.html:20
-#: proposals/templates/proposals/pdf/observation_v1.html:31
-#: proposals/templates/proposals/pdf/observation_v1.html:34
-#: proposals/templates/proposals/pdf/observation_v1.html:37
-#: proposals/templates/proposals/pdf/observation_v1.html:41
-#: proposals/templates/proposals/pdf/observation_v1.html:45
-#: proposals/templates/proposals/pdf/observation_v2.html:16
-#: proposals/templates/proposals/pdf/observation_v2.html:20
-#: proposals/templates/proposals/pdf/observation_v2.html:34
-#: proposals/templates/proposals/pdf/observation_v2.html:42
-#: proposals/templates/proposals/pdf/observation_v2.html:50
-#: proposals/templates/proposals/pdf/observation_v2.html:57
-#: proposals/templates/proposals/pdf/observation_v2.html:67
-#: proposals/templates/proposals/proposal_diff.html:95
-#: proposals/templates/proposals/proposal_diff.html:96
-#: proposals/templates/proposals/proposal_diff.html:121
-#: proposals/templates/proposals/proposal_diff.html:122
-#: proposals/templates/proposals/proposal_diff.html:216
-#: proposals/templates/proposals/proposal_diff.html:217
-#: proposals/templates/proposals/proposal_diff.html:221
-#: proposals/templates/proposals/proposal_diff.html:222
-#: proposals/templates/proposals/proposal_diff.html:249
-#: proposals/templates/proposals/proposal_diff.html:250
-#: proposals/templates/proposals/proposal_diff.html:273
-#: proposals/templates/proposals/proposal_diff.html:274
-#: proposals/templates/proposals/proposal_pdf.html:109
-#: proposals/templates/proposals/proposal_pdf.html:125
-#: proposals/templates/proposals/proposal_pdf.html:182
-#: proposals/templates/proposals/proposal_pdf.html:185
-#: proposals/templates/proposals/proposal_pdf.html:204
-#: proposals/templates/proposals/proposal_pdf.html:223
-#: proposals/templates/proposals/proposal_pdf.html:232
-#: proposals/templates/proposals/proposal_pdf.html:274
-#: proposals/templates/proposals/proposal_pdf.html:329
-#: proposals/templates/proposals/proposal_pdf.html:333
-#: proposals/templates/proposals/proposal_pdf.html:369
-#: proposals/templates/proposals/proposal_pdf.html:435
-#: proposals/templates/proposals/proposal_pdf.html:452
-#: proposals/templates/proposals/proposal_pdf.html:516
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:92
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:109
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:75
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:91
-#: tasks/templates/tasks/task_list.html:21
-msgid "ja,nee"
-msgstr "yes,no"
-
-#: proposals/templates/proposals/diff/observation.html:8
-msgid ""
-"De revisie bevat observatieonderzoek, terwijl de originele aanvraag dat niet "
-"bevat."
-msgstr ""
-"This revision involves observation research, whereas the original "
-"application does not."
-
-#: proposals/templates/proposals/diff/observation.html:12
-msgid ""
-"De revisie bevat geen observatieonderzoek, terwijl de originele aanvraag dat "
-"wel bevat."
-msgstr ""
-"This revision does not involve intervention research, whereas the original "
-"application involve this."
-
-#: proposals/templates/proposals/diff/observation.html:28
-msgid ""
-"De revisie en de originele aanvraag hebben beide een observatieonderzoek, "
-"maar deze zijn niet te vergelijken. Dit komt doordat de revisie een andere "
-"versie van het formulier gebruikt."
-msgstr ""
-"This revision and the original application both involve observation "
-"research, but this aspect cannot be compared. The revision uses a newer "
-"version of the form than the original."
-
-#: proposals/templates/proposals/diff/observation_v1.html:139
-#: proposals/templates/proposals/diff/observation_v1.html:140
-#: proposals/templates/proposals/diff/study.html:233
-#: proposals/templates/proposals/diff/study.html:239
-#: proposals/templates/proposals/diff/study.html:247
-#: proposals/templates/proposals/diff/study.html:253
-#: proposals/templates/proposals/pdf/observation_v1.html:53
-#: proposals/templates/proposals/proposal_diff.html:228
-#: proposals/templates/proposals/proposal_diff.html:232
-#: proposals/templates/proposals/proposal_pdf.html:189
-#: proposals/templates/proposals/proposal_pdf.html:444
-#: proposals/templates/proposals/proposal_pdf.html:447
-#: proposals/templates/proposals/proposal_pdf.html:462
-#: proposals/templates/proposals/proposal_pdf.html:467
-#: proposals/templates/proposals/proposal_pdf.html:472
-#: proposals/templates/proposals/proposal_pdf.html:486
-#: proposals/templates/proposals/proposal_pdf.html:491
-#: proposals/templates/proposals/proposal_pdf.html:507
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:143
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:105
-msgid "Download"
-msgstr "Download"
-
-#: proposals/templates/proposals/diff/sessions.html:7
-#: proposals/templates/proposals/proposal_pdf.html:308
-#: proposals/templates/proposals/proposal_pdf_empty.html:279
-#: studies/templates/studies/session_start.html:7
-#: studies/templates/studies/session_start.html:17
-#: tasks/templates/tasks/task_form.html:7
-#: tasks/templates/tasks/task_form.html:30
-#: tasks/templates/tasks/task_start.html:7
-#: tasks/templates/tasks/task_start.html:28
-msgid "Het takenonderzoek en interviews"
-msgstr "Task-based research and interviews"
-
-#: proposals/templates/proposals/diff/sessions.html:11
-msgid ""
-"De revisie bevat takenonderzoek, terwijl de originele aanvraag dat niet "
-"bevat."
-msgstr ""
-"This revision involves tasks research, whereas the original application does "
-"not."
-
-#: proposals/templates/proposals/diff/sessions.html:15
-msgid ""
-"De revisie bevat geen takenonderzoek, terwijl de originele aanvraag dat wel "
-"bevat."
-msgstr ""
-"This revision does not involve tasks research, whereas the original "
-"application does involve this."
-
-#: proposals/templates/proposals/diff/sessions.html:170
-#: proposals/templates/proposals/proposal_pdf.html:381
-#: proposals/templates/proposals/proposal_pdf_empty.html:335
-#: tasks/templates/tasks/task_end.html:7 tasks/templates/tasks/task_end.html:18
-msgid "Overzicht van het takenonderzoek"
-msgstr "Overview of task-based research"
-
-#: proposals/templates/proposals/diff/study.html:9
-#: proposals/templates/proposals/proposal_pdf.html:215
-#: proposals/templates/proposals/proposal_pdf_empty.html:145
-#: studies/templates/studies/study_form.html:7
-#: studies/templates/studies/study_form.html:82
-msgid "De deelnemers"
-msgstr "Participants"
-
-#: proposals/templates/proposals/diff/study.html:14
-msgid "Dit traject is nieuw in de revisie."
-msgstr "This trajectory was added in this revision."
-
-#: proposals/templates/proposals/diff/study.html:18
-msgid "Dit traject is weggehaald uit de revisie"
-msgstr "This trajectory was removed in this revision."
-
-#: proposals/templates/proposals/diff/study.html:144
-#: proposals/templates/proposals/proposal_pdf.html:391
-#: proposals/templates/proposals/proposal_pdf_empty.html:343
-#: studies/templates/studies/study_end.html:7
-#: studies/templates/studies/study_end.html:28
-msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
-msgstr "Overview and self-assessment of the entire study"
-
-#: proposals/templates/proposals/diff/study.html:206
-#: proposals/templates/proposals/proposal_pdf_empty.html:372
-msgid "Informed consent formulieren voor het onderzoek"
-msgstr "Informed consent forms for the study"
-
 #: proposals/templates/proposals/proposal_confirm_delete.html:6
 #: proposals/templates/proposals/proposal_confirm_delete.html:12
 msgid "Aanvraag verwijderen"
@@ -2558,7 +2222,7 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
-#: proposals/templates/proposals/proposal_pdf.html:499
+#: proposals/utils/pdf_diff_logic.py:954
 #: reviews/templatetags/documents_list.py:245
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
@@ -2688,11 +2352,14 @@ msgstr ""
 "gw@uu.nl</a>."
 
 #: proposals/templates/proposals/proposal_diff.html:11
-#: proposals/templates/proposals/proposal_diff.html:37
 msgid "Overzicht van wijzigingen"
 msgstr "Summary of changes"
 
-#: proposals/templates/proposals/proposal_diff.html:39
+#: proposals/templates/proposals/proposal_diff.html:38
+msgid "Overzicht van wijzigingen bij aanmelding "
+msgstr "Summary of changes of application "
+
+#: proposals/templates/proposals/proposal_diff.html:42
 msgid ""
 "Dit overzicht toont de gemaakte wijzigingen in de revisie/het amendement ten "
 "opzichte van de originele aanvraag."
@@ -2700,64 +2367,20 @@ msgstr ""
 "This overview shows the changes made in the revision/amendment with respect "
 "to the original application."
 
-#: proposals/templates/proposals/proposal_diff.html:49
 #: proposals/templates/proposals/proposal_form.html:7
 #: proposals/templates/proposals/proposal_form.html:76
 #: proposals/templates/proposals/proposal_form_pre_approved.html:7
 #: proposals/templates/proposals/proposal_form_pre_approved.html:81
-#: proposals/templates/proposals/proposal_pdf.html:82
 #: proposals/templates/proposals/proposal_pdf_empty.html:60
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:69
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:59
-#: proposals/utils/proposal_utils.py:40 proposals/utils/proposal_utils.py:55
-#: proposals/utils/validate_proposal.py:33
+#: proposals/utils/pdf_diff_logic.py:419 proposals/utils/proposal_utils.py:40
+#: proposals/utils/proposal_utils.py:55 proposals/utils/validate_proposal.py:33
 #: proposals/utils/validate_proposal.py:43
 #: proposals/utils/validate_proposal.py:50
 #: proposals/utils/validate_proposal.py:57
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
-
-#: proposals/templates/proposals/proposal_diff.html:133
-#: proposals/templates/proposals/proposal_diff.html:134
-#: proposals/templates/proposals/proposal_pdf.html:133
-#: proposals/templates/proposals/proposal_pdf.html:520
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:119
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:99
-msgid "onbekend"
-msgstr "unknown"
-
-#: proposals/templates/proposals/proposal_diff.html:174
-#: proposals/templates/proposals/proposal_pdf.html:159
-#: proposals/templates/proposals/proposal_pdf_empty.html:104
-#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:110
-#: proposals/templates/proposals/wmo_form.html:7
-#: proposals/templates/proposals/wmo_form.html:30
-msgid ""
-"Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
-msgstr ""
-"Ethical assessment by a Medical Ethical Testing Committee (METC) required?"
-
-#: proposals/templates/proposals/proposal_diff.html:207
-#: proposals/templates/proposals/proposal_pdf.html:179
-#: proposals/templates/proposals/proposal_pdf_empty.html:120
-#: proposals/templates/proposals/wmo_application.html:7
-#: proposals/templates/proposals/wmo_application.html:27
-msgid "Aanmelding bij de METC"
-msgstr "Registration with the METC"
-
-#: proposals/templates/proposals/proposal_diff.html:240
-#: proposals/templates/proposals/proposal_pdf.html:201
-#: proposals/templates/proposals/proposal_pdf_empty.html:134
-#: proposals/templates/proposals/study_start.html:7
-#: proposals/templates/proposals/study_start.html:64
-#: proposals/utils/validate_proposal.py:87
-msgid "Eén of meerdere trajecten?"
-msgstr "One or more trajectories?"
-
-#: proposals/templates/proposals/proposal_diff.html:264
-#: proposals/templates/proposals/proposal_submit.html:179
-msgid "Concept-aanmelding versturen"
-msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_form.html:56
 #: proposals/templates/proposals/proposal_form_pre_approved.html:72
@@ -2892,7 +2515,7 @@ msgstr ""
 "Click <img src=\"%(img_add)s\" title=\"add\"> to submit an application to "
 "the archive."
 
-#: proposals/templates/proposals/proposal_pdf.html:44
+#: proposals/templates/proposals/proposal_pdf.html:87
 #, python-format
 msgid ""
 "FETC-GW - <em>%(title)s</em> (referentienummer %(reference_number)s, "
@@ -2901,46 +2524,30 @@ msgstr ""
 "FEtC-H - <em>%(title)s</em> (reference number %(reference_number)s, "
 "submitted by %(submitter)s)"
 
-#: proposals/templates/proposals/proposal_pdf.html:50
+#: proposals/templates/proposals/proposal_pdf.html:93
 #, python-format
 msgid "%(type)s van referentienummer %(reference_number)s"
 msgstr "%(type)s of reference number %(reference_number)s"
 
-#: proposals/templates/proposals/proposal_pdf.html:66
+#: proposals/templates/proposals/proposal_pdf.html:109
 #, python-format
 msgid "Referentienummer %(reference_number)s"
 msgstr "Reference number %(reference_number)s"
 
-#: proposals/templates/proposals/proposal_pdf.html:70
+#: proposals/templates/proposals/proposal_pdf.html:113
 msgid "Huidige staat van de aanvraag"
 msgstr "Current state of the application"
 
-#: proposals/templates/proposals/proposal_pdf.html:73
+#: proposals/templates/proposals/proposal_pdf.html:116
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:60
 msgid "Indiener"
 msgstr "Applicant"
 
-#: proposals/templates/proposals/proposal_pdf.html:76
+#: proposals/templates/proposals/proposal_pdf.html:118
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:63
 #: tasks/templates/tasks/task_list.html:7
 msgid "Naam"
 msgstr "Name"
-
-#: proposals/templates/proposals/proposal_pdf.html:194
-msgid "Niet aangeleverd"
-msgstr "Not provided"
-
-#: proposals/templates/proposals/proposal_pdf.html:481
-#: proposals/templates/proposals/study_consent.html:138
-msgid "Extra formulieren"
-msgstr "Additional forms"
-
-#: proposals/templates/proposals/proposal_pdf.html:513
-#: proposals/templates/proposals/proposal_pdf_empty.html:389
-#: proposals/templates/proposals/proposal_pdf_pre_approved.html:150
-#: proposals/templates/proposals/proposal_submit.html:181
-msgid "Aanmelding versturen"
-msgstr "Submit application"
 
 #: proposals/templates/proposals/proposal_pdf_empty.html:42
 msgid ""
@@ -2964,6 +2571,49 @@ msgstr ""
 "            Reference number <em>reference number</em>\n"
 "            "
 
+#: proposals/templates/proposals/proposal_pdf_empty.html:104
+#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:110
+#: proposals/templates/proposals/wmo_form.html:7
+#: proposals/templates/proposals/wmo_form.html:30
+#: proposals/utils/pdf_diff_logic.py:478
+msgid ""
+"Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
+msgstr ""
+"Ethical assessment by a Medical Ethical Testing Committee (METC) required?"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:120
+#: proposals/templates/proposals/wmo_application.html:7
+#: proposals/templates/proposals/wmo_application.html:27
+#: proposals/utils/pdf_diff_logic.py:503
+msgid "Aanmelding bij de METC"
+msgstr "Registration with the METC"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:134
+#: proposals/templates/proposals/study_start.html:7
+#: proposals/templates/proposals/study_start.html:64
+#: proposals/utils/pdf_diff_logic.py:511
+#: proposals/utils/validate_proposal.py:87
+msgid "Eén of meerdere trajecten?"
+msgstr "One or more trajectories?"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:145
+#: proposals/utils/pdf_diff_logic.py:529
+#: studies/templates/studies/study_form.html:7
+#: studies/templates/studies/study_form.html:82
+msgid "De deelnemers"
+msgstr "Participants"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:279
+#: proposals/utils/pdf_diff_logic.py:733
+#: studies/templates/studies/session_start.html:7
+#: studies/templates/studies/session_start.html:17
+#: tasks/templates/tasks/task_form.html:7
+#: tasks/templates/tasks/task_form.html:30
+#: tasks/templates/tasks/task_start.html:7
+#: tasks/templates/tasks/task_start.html:28
+msgid "Het takenonderzoek en interviews"
+msgstr "Task-based research and interviews"
+
 #: proposals/templates/proposals/proposal_pdf_empty.html:286
 #: proposals/templates/proposals/proposal_start.html:62
 #: proposals/templates/proposals/proposal_start_practice.html:63
@@ -2977,6 +2627,30 @@ msgstr "Session"
 #: proposals/templates/proposals/study_start.html:88
 msgid "Taak"
 msgstr "Task"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:335
+#: proposals/utils/pdf_diff_logic.py:308 tasks/templates/tasks/task_end.html:7
+#: tasks/templates/tasks/task_end.html:18
+msgid "Overzicht van het takenonderzoek"
+msgstr "Overview of task-based research"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:343
+#: proposals/utils/pdf_diff_logic.py:821
+#: studies/templates/studies/study_end.html:7
+#: studies/templates/studies/study_end.html:28
+msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
+msgstr "Overview and self-assessment of the entire study"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:372
+msgid "Informed consent formulieren voor het onderzoek"
+msgstr "Informed consent forms for the study"
+
+#: proposals/templates/proposals/proposal_pdf_empty.html:389
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:150
+#: proposals/templates/proposals/proposal_submit.html:181
+#: proposals/utils/pdf_diff_logic.py:962
+msgid "Aanmelding versturen"
+msgstr "Submit application"
 
 #: proposals/templates/proposals/proposal_pdf_pre_approved.html:42
 #, python-format
@@ -3002,6 +2676,25 @@ msgstr ""
 "\n"
 "            Reference number %(reference_number)s\n"
 "            "
+
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:92
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:109
+#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:75
+#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:91
+#: tasks/templates/tasks/task_list.html:21
+msgid "ja,nee"
+msgstr "yes,no"
+
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:119
+#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:99
+msgid "onbekend"
+msgstr "unknown"
+
+#: proposals/templates/proposals/proposal_pdf_pre_approved.html:143
+#: proposals/templates/proposals/proposal_pdf_pre_assessment.html:105
+#: proposals/utils/pdf_diff_logic.py:281
+msgid "Download"
+msgstr "Download"
 
 #: proposals/templates/proposals/proposal_pdf_pre_assessment.html:41
 #, python-format
@@ -3108,6 +2801,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start.html:53
 #: proposals/templates/proposals/proposal_start_practice.html:55
 #: proposals/templates/proposals/study_start.html:73
+#: proposals/utils/pdf_diff_logic.py:328
 #: reviews/templates/reviews/committee_members_workload.html:24
 msgid "Traject"
 msgstr "Trajectory"
@@ -3413,6 +3107,10 @@ msgstr ""
 msgid "Terug naar beoordeling >>"
 msgstr "Back to review >>"
 
+#: proposals/templates/proposals/proposal_submit.html:179
+msgid "Concept-aanmelding versturen"
+msgstr "Submit draft application"
+
 #: proposals/templates/proposals/proposal_submitted.html:8
 #: proposals/templates/proposals/proposal_submitted.html:22
 msgid "Aanvraag voor voortoetsing verstuurd"
@@ -3531,6 +3229,10 @@ msgstr ""
 msgid "Voeg extra formulieren toe"
 msgstr "Add additional forms"
 
+#: proposals/templates/proposals/study_consent.html:138
+msgid "Extra formulieren"
+msgstr "Additional forms"
+
 #: proposals/templates/proposals/study_start.html:13
 msgid ""
 "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."
@@ -3551,6 +3253,14 @@ msgid ""
 msgstr ""
 "You can now describe the nature of <em>each trajectory</em> of the study on "
 "the following pages."
+
+#: proposals/templates/proposals/table_with_header_diff.html:13
+msgid "Originele aanvraag"
+msgstr "Original application"
+
+#: proposals/templates/proposals/table_with_header_diff.html:14
+msgid "Revisie/amendement"
+msgstr "Revision/amendment"
 
 #: proposals/templates/proposals/translated_consent_forms.html:25
 #: proposals/utils/validate_proposal.py:223
@@ -3655,6 +3365,50 @@ msgstr "WMO check"
 msgid "Opnieuw beginnen"
 msgstr "Start again"
 
+#: proposals/utils/pdf_diff_logic.py:93
+msgid ""
+"Dit onderdeel is nieuw in de revisie en bestond niet in de originele "
+"aanvraag."
+msgstr ""
+"This section was added in the revision, and did not feature in the original "
+"application."
+
+#: proposals/utils/pdf_diff_logic.py:100
+msgid ""
+"Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
+msgstr ""
+"This section was present in the original application, but was removed for "
+"the revision."
+
+#: proposals/utils/pdf_diff_logic.py:238 reviews/models.py:126
+msgid "Onbekend"
+msgstr "Unknown"
+
+#: proposals/utils/pdf_diff_logic.py:284
+msgid "Niet aangeleverd"
+msgstr "Not provided"
+
+#: proposals/utils/pdf_diff_logic.py:321 proposals/utils/pdf_diff_logic.py:348
+#: proposals/utils/pdf_diff_logic.py:357 proposals/utils/pdf_diff_logic.py:381
+msgid "Traject "
+msgstr "Trajectory "
+
+#: proposals/utils/pdf_diff_logic.py:351 proposals/utils/pdf_diff_logic.py:384
+msgid "sessie "
+msgstr "session "
+
+#: proposals/utils/pdf_diff_logic.py:364 proposals/utils/pdf_diff_logic.py:392
+msgid "Sessie "
+msgstr "Session "
+
+#: proposals/utils/pdf_diff_logic.py:386 proposals/utils/pdf_diff_logic.py:394
+msgid ", taak "
+msgstr ", task "
+
+#: proposals/utils/pdf_diff_logic.py:930
+msgid "Extra formulieren "
+msgstr "Additional forms "
+
 #: proposals/utils/proposal_utils.py:42 proposals/utils/validate_proposal.py:69
 #: proposals/utils/validate_proposal.py:76
 msgid "Ethische toetsing nodig door een METC?"
@@ -3688,11 +3442,11 @@ msgstr "Forms"
 msgid "Versturen"
 msgstr "Submit"
 
-#: proposals/utils/proposal_utils.py:416
+#: proposals/utils/proposal_utils.py:415
 msgid "FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: A revised application uses lab facilities"
 
-#: proposals/utils/proposal_utils.py:418
+#: proposals/utils/proposal_utils.py:417
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
@@ -3741,40 +3495,40 @@ msgstr ""
 "You must confirm your understanding of the AVG before you can submit your "
 "application."
 
-#: proposals/views/proposal_views.py:43
+#: proposals/views/proposal_views.py:44
 msgid "Publiek archief"
 msgstr "Public archive"
 
-#: proposals/views/proposal_views.py:44
+#: proposals/views/proposal_views.py:45
 msgid "Dit overzicht toont alle goedgekeurde aanvragen."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:63
+#: proposals/views/proposal_views.py:64
 msgid "Mijn aanvraag"
 msgstr "My application"
 
-#: proposals/views/proposal_views.py:64
+#: proposals/views/proposal_views.py:65
 msgid "Dit overzicht toont al je aanvragen."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:77
+#: proposals/views/proposal_views.py:78
 msgid "Dit overzicht toont al je nog niet ingediende aanvragen."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:89
+#: proposals/views/proposal_views.py:90
 msgid "Dit overzicht toont al je ingediende aanvragen."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:101
+#: proposals/views/proposal_views.py:102
 msgid "Dit overzicht toont al je beoordeelde aanvragen."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:114
+#: proposals/views/proposal_views.py:115
 msgid ""
 "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:127
+#: proposals/views/proposal_views.py:128
 msgid ""
 "Dit overzicht toont alle oefenaanvragen waar je als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3782,15 +3536,15 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:246
+#: proposals/views/proposal_views.py:247
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:384
+#: proposals/views/proposal_views.py:385
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:485
+#: proposals/views/proposal_views.py:486
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -3947,10 +3701,6 @@ msgstr "Not to be assessed further"
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
-
-#: reviews/models.py:126
-msgid "Onbekend"
-msgstr "Unknown"
 
 #: reviews/models.py:143
 msgid "nog geen route"
@@ -5953,76 +5703,104 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
-#: main/templates/registration/logged_out.html:17
+#~ msgid ""
+#~ "De revisie bevat interventieonderzoek, terwijl de originele aanvraag dat "
+#~ "niet bevat."
+#~ msgstr ""
+#~ "This revision involves intervention research, whereas the original "
+#~ "application does not."
+
+#~ msgid ""
+#~ "De revisie bevat geen interventieonderzoek, terwijl de originele aanvraag "
+#~ "dat wel bevat."
+#~ msgstr ""
+#~ "This revision does not involve intervention research, whereas the "
+#~ "original application does include this."
+
+#~ msgid ""
+#~ "De revisie en de originele aanvraag hebben beide een "
+#~ "interventieonderzoek, maar deze zijn niet te vergelijken. Dit komt "
+#~ "doordat de revisie een andere versie van het formulier gebruikt."
+#~ msgstr ""
+#~ "This revision and the original application both involve intervention "
+#~ "research, but this aspect cannot be compared. The revision uses a newer "
+#~ "version of the form than the original."
+
+#~ msgid "ja,nee,"
+#~ msgstr "yes,no,"
+
+#~ msgid ""
+#~ "De revisie bevat observatieonderzoek, terwijl de originele aanvraag dat "
+#~ "niet bevat."
+#~ msgstr ""
+#~ "This revision involves observation research, whereas the original "
+#~ "application does not."
+
+#~ msgid ""
+#~ "De revisie bevat geen observatieonderzoek, terwijl de originele aanvraag "
+#~ "dat wel bevat."
+#~ msgstr ""
+#~ "This revision does not involve intervention research, whereas the "
+#~ "original application involve this."
+
+#~ msgid ""
+#~ "De revisie en de originele aanvraag hebben beide een observatieonderzoek, "
+#~ "maar deze zijn niet te vergelijken. Dit komt doordat de revisie een "
+#~ "andere versie van het formulier gebruikt."
+#~ msgstr ""
+#~ "This revision and the original application both involve observation "
+#~ "research, but this aspect cannot be compared. The revision uses a newer "
+#~ "version of the form than the original."
+
+#~ msgid ""
+#~ "De revisie bevat takenonderzoek, terwijl de originele aanvraag dat niet "
+#~ "bevat."
+#~ msgstr ""
+#~ "This revision involves tasks research, whereas the original application "
+#~ "does not."
+
+#~ msgid ""
+#~ "De revisie bevat geen takenonderzoek, terwijl de originele aanvraag dat "
+#~ "wel bevat."
+#~ msgstr ""
+#~ "This revision does not involve tasks research, whereas the original "
+#~ "application does involve this."
+
+#~ msgid "Dit traject is nieuw in de revisie."
+#~ msgstr "This trajectory was added in this revision."
+
+#~ msgid "Dit traject is weggehaald uit de revisie"
+#~ msgstr "This trajectory was removed in this revision."
+
 #, python-format
-msgid ""
-"Klik  <a href=\"%(login_url)s\">hier</a> om opnieuw in te loggen met je "
-"Solis-ID."
-msgstr ""
-"Click <a href=\"%(login_url)s\">here</a> to log in again with your Solis-ID."
+#~ msgid ""
+#~ "Klik  <a href=\"%(login_url)s\">hier</a> om opnieuw in te loggen met je "
+#~ "Solis-ID."
+#~ msgstr ""
+#~ "Click <a href=\"%(login_url)s\">here</a> to log in again with your Solis-"
+#~ "ID."
 
-#: proposals/models.py:518
-msgid ""
-"Aan het einde van de procedure kan je deze aanvraag ter\n"
-"        verificatie naar je eindverantwoordelijke sturen. De\n"
-"        eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen "
-"en\n"
-"        indienen bij de FETC-GW. <br><br><strong>NB</strong>: als je je\n"
-"        eindverantwoordelijke niet kunt vinden met dit veld, moeten zij\n"
-"        waarschijnlijk eerst één keer inloggen in deze portal. Je kunt nog "
-"wel\n"
-"        verder met de aanvraag, maar vergeet dit veld niet in te vullen voor "
-"je de\n"
-"        aanvraag indient."
-msgstr ""
-"At the end of the procedure, you can send this application to the researcher "
-"with final responsibility for verification. The researcher with final "
-"responsibility can then make adjustments and submit the study to the FEtC-H. "
-"<strong>Note</strong>: if you cannot find your supervisor using this field, "
-"they may have to log into this portal at least once with their Solis-ID. You "
-"can continue filling in the application while you wait for them to do this, "
-"but remember to come back and fill in this field before submitting."
+#~ msgid ""
+#~ "Aan het einde van de procedure kan je deze aanvraag ter\n"
+#~ "        verificatie naar je eindverantwoordelijke sturen. De\n"
+#~ "        eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen "
+#~ "en\n"
+#~ "        indienen bij de FETC-GW. <br><br><strong>NB</strong>: als je je\n"
+#~ "        eindverantwoordelijke niet kunt vinden met dit veld, moeten zij\n"
+#~ "        waarschijnlijk eerst één keer inloggen in deze portal. Je kunt "
+#~ "nog wel\n"
+#~ "        verder met de aanvraag, maar vergeet dit veld niet in te vullen "
+#~ "voor je de\n"
+#~ "        aanvraag indient."
+#~ msgstr ""
+#~ "At the end of the procedure, you can send this application to the "
+#~ "researcher with final responsibility for verification. The researcher "
+#~ "with final responsibility can then make adjustments and submit the study "
+#~ "to the FEtC-H. <strong>Note</strong>: if you cannot find your supervisor "
+#~ "using this field, they may have to log into this portal at least once "
+#~ "with their Solis-ID. You can continue filling in the application while "
+#~ "you wait for them to do this, but remember to come back and fill in this "
+#~ "field before submitting."
 
-#: proposals/templates/proposals/proposal_diff.html:38
-msgid "Overzicht van wijzigingen bij aanmelding "
-msgstr "Summary of changes of application "
-
-#: proposals/utils/pdf_diff_logic.py:88
-msgid ""
-"Dit onderdeel is nieuw in de revisie en bestond niet in de originele "
-"aanvraag."
-msgstr ""
-"This section was added in the revision, and did not feature in the original "
-"application."
-
-#: proposals/utils/pdf_diff_logic.py:95
-msgid ""
-"Dit onderdeel bestond in de originele aanvraag, maar niet meer in de revisie."
-msgstr ""
-"This section was present in the original application, but was removed for "
-"the revision."
-
-#: proposals/utils/pdf_diff_logic.py:343 proposals/utils/pdf_diff_logic.py:370
-#: proposals/utils/pdf_diff_logic.py:379 proposals/utils/pdf_diff_logic.py:403
-msgid "Traject "
-msgstr "Trajectory "
-
-#: proposals/utils/pdf_diff_logic.py:373 proposals/utils/pdf_diff_logic.py:406
-msgid "sessie "
-msgstr "session "
-
-#: proposals/utils/pdf_diff_logic.py:386 proposals/utils/pdf_diff_logic.py:414
-msgid "Sessie "
-msgstr "Session "
-
-#: proposals/utils/pdf_diff_logic.py:408 proposals/utils/pdf_diff_logic.py:416
-msgid ", taak "
-msgstr ", task "
-
-#: proposals/utils/pdf_diff_logic.py:995
-msgid "Extra formulieren "
-msgstr "Additional forms "
-
-#: reviews/templates/reviews/committee_members_workload.html:63
-msgid "Werkverdeling overzicht van afgelopen jaar"
-msgstr "Workload overview of past year"
+#~ msgid "Werkverdeling overzicht van afgelopen jaar"
+#~ msgstr "Workload overview of past year"
