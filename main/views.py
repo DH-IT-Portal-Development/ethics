@@ -1,4 +1,6 @@
 # -*- encoding: utf-8 -*-
+from urllib.parse import urlparse, urlunparse
+
 import ldap
 import os
 
@@ -13,7 +15,7 @@ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import Q
 from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect, JsonResponse, FileResponse, \
-    Http404
+    Http404, QueryDict
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
@@ -23,7 +25,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
 
 from interventions.models import Intervention
-from main.models import SystemMessage
+from main.models import Faculty, SystemMessage
+from main.utils import is_member_of_humanities
 from observations.models import Observation
 from proposals.models import Proposal
 from reviews.models import Review
@@ -40,8 +43,7 @@ except (ImportError):
 ################
 # Views
 ################
-class HomeView(LoginRequiredMixin, generic.ListView):
-    template_name = 'main/index.html'
+class _SystemMessageView(generic.ListView):
     model = SystemMessage
 
     def get_queryset(self):
@@ -50,6 +52,44 @@ class HomeView(LoginRequiredMixin, generic.ListView):
             not_after__gt=now,
             not_before__lt=now
         )
+
+
+class HomeView(LoginRequiredMixin, _SystemMessageView):
+    template_name = 'main/index.html'
+
+    def no_permissions_fail(self, request=None):
+        """
+        Overrides normal permission fail to redirect to landing instead of
+        directly to login
+        """
+        resolved_url = reverse('main:landing')
+
+        return HttpResponseRedirect(f"{resolved_url}?next=/")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['is_humanities'] = is_member_of_humanities(self.request.user)
+
+        return context
+
+class LandingView(_SystemMessageView):
+    template_name = 'main/landing.html'
+    model = SystemMessage
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['next'] = self.request.GET.get(
+            'next',
+            settings.LOGIN_REDIRECT_URL
+        )
+        context['saml'] = hasattr(settings, 'SAML_CONFIG')
+        context['show_saml'] = settings.SHOW_SAML_LOGIN
+        context['show_django'] = settings.SHOW_DJANGO_LOGIN
+        context['login_descriptors'] = settings.SHOW_LOGIN_DESCRIPTORS
+
+        return context
 
 
 class UserDetailView(GroupRequiredMixin, generic.DetailView):
@@ -251,6 +291,50 @@ class AllowErrorsOnBackbuttonMixin(object):
             return HttpResponseRedirect(self.get_back_url())
         else:
             return super(AllowErrorsOnBackbuttonMixin, self).form_invalid(form)
+
+
+class FacultyRequiredMixin:
+    """A clone of GroupRequiredMixin, but checking faculties instead"""
+    faculty_required = None
+
+    def get_faculty_required(self):
+        if self.faculty_required is None or (
+            not isinstance(self.faculty_required, (list, tuple, str))
+        ):
+
+            raise ImproperlyConfigured(
+                '{0} requires the "faculty_required" attribute to be set and be '
+                "one of the following types: string, unicode, list or "
+                "tuple".format(self.__class__.__name__)
+            )
+        if not isinstance(self.faculty_required, (list, tuple)):
+            self.faculty_required = (self.faculty_required,)
+        return self.faculty_required
+
+    def check_membership(self, faculty):
+        """Check required faculty(ies)"""
+        user_faculties = self.request.user.faculties.values_list(
+            "internal_name",
+            flat=True
+        )
+        return set(faculty).intersection(set(user_faculties))
+
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        in_faculty = False
+        if request.user.is_authenticated:
+            in_faculty = self.check_membership(self.get_faculty_required())
+
+        if not in_faculty:
+            return self.handle_no_permission(request)
+
+        return super().dispatch(
+            request, *args, **kwargs
+        )
+
+
+class HumanitiesRequiredMixin(FacultyRequiredMixin):
+    faculty_required = Faculty.InternalNames.HUMANITIES
 
 
 class UserAllowedMixin(SingleObjectMixin):

@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 import os
 
+from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,7 +30,7 @@ WSGI_APPLICATION = 'fetc.wsgi.application'
 
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -56,9 +58,9 @@ INSTALLED_APPS = (
 
     'django.contrib.admin',
     'django_user_agents',
-)
+]
 
-MIDDLEWARE = (
+MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -70,7 +72,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django_user_agents.middleware.UserAgentMiddleware',
     'impersonate.middleware.ImpersonateMiddleware',
-)
+]
 
 TEMPLATES = [
     {
@@ -92,6 +94,16 @@ ROOT_URLCONF = 'fetc.urls'
 
 LOGIN_REDIRECT_URL = '/'
 
+# Determines what login options are displayed on the landing page. NOTE: this
+# does not determine which login screen is actually used as default when using
+# a LoginRequiredMixin or similar.
+# Django login is also used by LDAP auth
+# SHOW_SAML_LOGIN is set to true if saml_settings.py is present and loaded
+SHOW_DJANGO_LOGIN = True
+SHOW_SAML_LOGIN = False
+# Debug option, adds a label to the buttons. Otherwise, the buttons are
+# identical
+SHOW_LOGIN_DESCRIPTORS = DEBUG
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -151,16 +163,6 @@ EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
 MENU_SELECT_PARENTS = True
 MENU_HIDE_EMPTY = False
 
-# Group names
-GROUP_SECRETARY = 'Secretaris'
-GROUP_PRIMARY_SECRETARY = 'Primaire secretaris'
-GROUP_LINGUISTICS_CHAMBER = 'LK'
-GROUP_GENERAL_CHAMBER = 'AK'
-
-# Route durations
-PREASSESSMENT_ROUTE_WEEKS = 1
-SHORT_ROUTE_WEEKS = 2
-
 # Base URL
 BASE_URL = '127.0.0.1:8000'
 
@@ -168,6 +170,27 @@ BASE_URL = '127.0.0.1:8000'
 CSRF_FAILURE_VIEW = 'main.error_views.csrf_failure'
 
 try:
+    from .constants import *
+except ImportError:
+    raise ImproperlyConfigured("constants.py is missing!")
+
+try:
     from .ldap_settings import *
 except ImportError:
     print('Proceeding without LDAP settings')
+
+try:
+    from .saml_settings import *
+
+    # Only add stuff to settings if we actually have SAML settings
+    INSTALLED_APPS += SAML_APPS
+    MIDDLEWARE += SAML_MIDDLEWARE
+
+    LOGIN_URL = reverse_lazy('saml-login')
+    SHOW_SAML_LOGIN = True
+
+    # Custom proxy model for SAML attribute processing
+    SAML_USER_MODEL = 'main.SamlUserProxy'
+
+except ImportError:
+    print('Proceeding without SAML settings')

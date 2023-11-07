@@ -1,12 +1,14 @@
 from django.urls import path
 
-from .views import HomeView, check_requires, UserSearchView, UserDetailView
+from .views import HomeView, LandingView, check_requires, UserSearchView, \
+    UserDetailView
 
 app_name = 'main'
 
 urlpatterns = [
     # Home
     path('', HomeView.as_view(), name='home'),
+    path('landing/', LandingView.as_view(), name='landing'),
 
     # User detail page
     path('user/<int:pk>/', UserDetailView.as_view(), name='user_detail'),

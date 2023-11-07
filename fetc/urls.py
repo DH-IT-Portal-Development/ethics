@@ -19,8 +19,9 @@ handler400 = 'main.error_views.error_400'
 
 
 urlpatterns = [
+    # Always keep the default login view available, just to be sure
+    # We set the correct login view (this or SAML) in settings
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
-    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     # Access user uploads
     path('media/<str:filename>',
@@ -50,6 +51,37 @@ if 'debug_toolbar' in settings.INSTALLED_APPS and settings.DEBUG:
 
     urlpatterns.append(
         path('__debug__/', include(debug_toolbar.urls)),
+    )
+
+# If SAML is enabled, add the required URL patterns for SAML
+if 'cdh.federated_auth' in settings.INSTALLED_APPS:
+    from djangosaml2.views import EchoAttributesView, LoginView
+    from cdh.federated_auth.saml.views import LogoutInitView
+
+    urlpatterns.extend([
+        path('saml/login/', LoginView.as_view(), name='saml-login'),
+        # We can only have one logout view. Luckily, the SAML logout view can
+        # handle local accounts as well.
+        path('saml/logout/', LogoutInitView.as_view(), name='logout'),
+        path('saml/', include('djangosaml2.urls')),
+    ])
+
+    if settings.DEBUG:
+        urlpatterns.append(
+            path(
+                'saml/echo_attributes/',
+                EchoAttributesView.as_view(),
+                name='saml-attributes'
+            )
+        )
+else:
+    # If not, append the default logout-view
+    urlpatterns.append(
+        path(
+            'accounts/logout/',
+            auth_views.LogoutView.as_view(),
+            name='logout'
+        ),
     )
 
 admin.site.site_header = 'FETC-GW'

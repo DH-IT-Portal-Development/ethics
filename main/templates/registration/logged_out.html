@@ -13,9 +13,9 @@
             </p>
             <ul>
                 <li>
-                    {% url 'login' as login_url %}
+                    {% url 'main:landing' as landing_url %}
                     {% blocktrans trimmed %}
-                    Klik  <a href="{{ login_url }}">hier</a> om opnieuw in te loggen met je Solis-ID.
+                    Klik  <a href="{{ landing_url }}">hier</a> om naar de startpagina te gaan.
                     {% endblocktrans %}
                 </li>
                 <li>
