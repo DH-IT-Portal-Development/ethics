@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-06 10:52+0100\n"
+"POT-Creation-Date: 2023-11-07 15:10+0100\n"
 "PO-Revision-Date: 2020-10-07 11:22+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -154,6 +154,7 @@ msgstr "You can leave feedback on the FEtC-H portal here."
 #: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:294
 #: proposals/templates/proposals/proposal_update_attachments.html:26
+#: proposals/templates/proposals/proposal_update_date_start.html:32
 #: reviews/templates/reviews/change_chamber_form.html:19
 #: reviews/templates/reviews/decision_form.html:90
 #: reviews/templates/reviews/review_assign_form.html:46
@@ -326,7 +327,7 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:11 main/forms/conditional_form.py:20
 #: main/forms/conditional_form.py:29 main/forms/conditional_form.py:38
 #: main/forms/conditional_form.py:48 main/forms/mixins.py:83
-#: proposals/forms.py:560 proposals/forms.py:624 proposals/forms.py:639
+#: proposals/forms.py:560 proposals/forms.py:631 proposals/forms.py:646
 #: studies/forms.py:104 tasks/forms.py:87
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -1310,6 +1311,7 @@ msgstr "Recording behaviour"
 #: proposals/templates/proposals/proposal_update_attachments.html:7
 #: proposals/templates/proposals/proposal_update_attachments.html:14
 #: proposals/templates/proposals/proposal_update_attachments.html:25
+#: proposals/templates/proposals/proposal_update_date_start.html:7
 #: studies/templates/studies/study_update_attachments.html:7
 #: studies/templates/studies/study_update_attachments.html:14
 #: studies/templates/studies/study_update_attachments.html:25
@@ -1465,7 +1467,7 @@ msgid ""
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:418 proposals/forms.py:548 proposals/forms.py:672
+#: proposals/forms.py:418 proposals/forms.py:548 proposals/forms.py:679
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
@@ -1525,15 +1527,15 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:631
+#: proposals/forms.py:638
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:635
+#: proposals/forms.py:642
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: proposals/forms.py:647
+#: proposals/forms.py:654
 msgid ""
 "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar "
 "van vandaag."
@@ -1541,7 +1543,7 @@ msgstr ""
 "The embargo-period can last a maximum of 2 years. Pick a date within 2 years "
 "from today."
 
-#: proposals/forms.py:678
+#: proposals/forms.py:685
 msgid "Vul in in welke talen de formulieren worden vertaald."
 msgstr "Please fill in the languages"
 
@@ -2547,7 +2549,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_data_management.html:24
 #: proposals/templates/proposals/proposal_pdf.html:499
-#: reviews/templatetags/documents_list.py:245
+#: reviews/templatetags/documents_list.py:250
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -3450,6 +3452,29 @@ msgstr ""
 "On this page you can edit the forms related to the proposal "
 "%(title)s(reference number <em>%(ref_number)s</em>)"
 
+#: proposals/templates/proposals/proposal_update_date_start.html:14
+#: proposals/templates/proposals/proposal_update_date_start.html:31
+msgid "Startdatum aanpassen"
+msgstr "Edit start date"
+
+#: proposals/templates/proposals/proposal_update_date_start.html:17
+msgid ""
+"Op deze pagina kan de startdatum worden aangepast van de aanvraag %(title)s "
+"(referentienummer <em>%(ref_number)s</em>). <b>Let op!</b> Als de review al "
+"is afgerond, wordt de nieuwe startdatum niet automatisch weergegeven in de "
+"PDF. Mocht u de PDF opnieuw willen genereren, neem hierover dan contact op "
+"met"
+msgstr ""
+"On this page, the start date of proposal %(title)s (reference number "
+"<em>%(ref_number)s</em>) can be edited. <b>Note!</b> If the review has "
+"already been concluded, the new start date will not be displayed in the PDF. "
+"If you would like the PDF to be generated with the new start date, please "
+"reach out to "
+
+#: proposals/templates/proposals/proposal_update_date_start.html:26
+msgid "Vul de datum in als 'DD-MM-YYYY'."
+msgstr "Enter the date as 'YYYY-MM-DD'."
+
 #: proposals/templates/proposals/study_consent.html:27
 msgid "Toestemmingsverklaring van de schoolleider/hoofd van het departement"
 msgstr "Informed consent school director/ head of the institution"
@@ -3774,11 +3799,11 @@ msgstr ""
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:384
+#: proposals/views/proposal_views.py:396
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:485
+#: proposals/views/proposal_views.py:497
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -4282,6 +4307,11 @@ msgstr "Edit Data Management Plan"
 
 #: reviews/templates/reviews/documents_list.html:44
 #: reviews/templates/reviews/documents_list.html:46
+msgid "Startdatum wijzigen"
+msgstr "Edit start date"
+
+#: reviews/templates/reviews/documents_list.html:52
+#: reviews/templates/reviews/documents_list.html:54
 msgid "Documenten wijzigen"
 msgstr "Edit documents"
 
@@ -4576,47 +4606,47 @@ msgstr "Trajectory {}: <i>{}</i>"
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:213
+#: reviews/templatetags/documents_list.py:214
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:215
+#: reviews/templatetags/documents_list.py:216
 msgid "Aanvraag in PDF-vorm"
 msgstr "Application in PDF format"
 
-#: reviews/templatetags/documents_list.py:228
+#: reviews/templatetags/documents_list.py:233
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:236
+#: reviews/templatetags/documents_list.py:241
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:257
+#: reviews/templatetags/documents_list.py:262
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:282
+#: reviews/templatetags/documents_list.py:287
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:283
+#: reviews/templatetags/documents_list.py:288
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:284
+#: reviews/templatetags/documents_list.py:289
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:286
+#: reviews/templatetags/documents_list.py:291
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:288
+#: reviews/templatetags/documents_list.py:293
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:296
+#: reviews/templatetags/documents_list.py:301
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 

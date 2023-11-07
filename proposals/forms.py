@@ -574,6 +574,13 @@ class ProposalUpdateDataManagementForm(forms.ModelForm):
             'dmp_file'
         ]
 
+class ProposalUpdateDateStartForm(forms.ModelForm):
+    class Meta:
+        model = Proposal
+        fields = [
+            'date_start'
+        ]
+
 class ProposalSubmitForm(forms.ModelForm):
     class Meta:
         model = Proposal
