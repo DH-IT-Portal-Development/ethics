@@ -14,6 +14,7 @@ def needs_details(selected_values, field='needs_details'):
             return True
     return False
 
+
 @register.filter
 def medical_traits(selected_values, field='medical_traits'):
     for sv in selected_values:
