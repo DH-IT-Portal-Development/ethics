@@ -88,9 +88,9 @@ urlpatterns = [
     path('update_date_start/<int:pk>/', ProposalUpdateDateStart.as_view(), 
          name='update_date_start'),
 
-    path('submit/<int:pk>/', include([msgstr ""
-
-
+    path('submit/<int:pk>/', include([
+        path('', ProposalSubmit.as_view(), name='submit'),
+        path('pre/', ProposalSubmitPreAssessment.as_view(),
              name='submit_pre'),
         path('pre_approved/', ProposalSubmitPreApproved.as_view(),
              name='submit_pre_approved'),
