@@ -57,7 +57,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
             }),
             'funding':            forms.CheckboxSelectMultiple(),
             'applicants':         SelectMultipleUser(),
-            'supervisor':         SelectUser(),
+            'supervisor':         forms.Select(),
         }
         error_messages = {
             'title': {
@@ -66,7 +66,6 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
         }
 
     _soft_validation_fields = ['relation',
-                               'supervisor',
                                'other_applicants',
                                'other_stakeholders',
                                'stakeholders',
@@ -133,6 +132,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
 
         self.fields['supervisor'].choices = [(None, _(
             'Selecteer...'))] + get_users_as_list(supervisors)
+        
         self.fields['applicants'].choices = get_users_as_list(applicants)
 
         if in_course:
@@ -167,6 +167,7 @@ van het FETC-GW worden opgenomen.')
         """
         Check for conditional requirements:
         - If relation needs supervisor, make sure supervisor is set
+        - If relation needs supervisor, make sure supervisor is a different person
         - If other_applicants is checked, make sure applicants are set
         - If other_stakeholders is checked, make sure stakeholders is not empty
         - Maximum number of words for summary
@@ -184,11 +185,20 @@ van het FETC-GW worden opgenomen.')
         self.mark_soft_required(cleaned_data, 'date_start')
 
         relation = cleaned_data.get('relation')
+        supervisor = cleaned_data.get('supervisor')
+            
         if relation and relation.needs_supervisor and \
-           not cleaned_data.get('supervisor'):
+           not supervisor:
             error = forms.ValidationError(
-                _('Je dient een eindverantwoordelijke op te geven.'),
+                _('Je dient een promotor/begeleider op te geven.'),
                 code='required')
+            self.add_error('supervisor', error)
+
+        if relation and relation.needs_supervisor and \
+            supervisor == self.user:
+            error = forms.ValidationError(
+                _('Je kunt niet jezelf als promotor/begeleider opgeven.')
+            )
             self.add_error('supervisor', error)
 
         if relation.check_in_course:
@@ -197,7 +207,6 @@ van het FETC-GW worden opgenomen.')
 
         other_applicants = cleaned_data.get('other_applicants')
         applicants = cleaned_data.get('applicants')
-        supervisor = cleaned_data.get('supervisor')
 
         # Always make sure the applicant is actually in the applicants list
         if self.user not in applicants and self.user != supervisor:

@@ -5845,6 +5845,3 @@ msgstr "Edit start date"
 
 #~ msgid "Werkverdeling overzicht van afgelopen jaar"
 #~ msgstr "Workload overview of past year"
-
-#~ msgid "Vul de datum in als 'DD-MM-YYYY'."
-#~ msgstr "Enter the date as 'YYYY-MM-DD'."

@@ -514,17 +514,19 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        verbose_name=_('Eindverantwoordelijke onderzoeker'),
+        verbose_name=_('Promotor/Begeleider'),
         blank=True,
         null=True,
-        help_text=_('''Aan het einde van de procedure kan je deze aanvraag ter
-        verificatie naar je eindverantwoordelijke sturen. De
-        eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen en
-        indienen bij de FETC-GW. <br><br><strong>NB</strong>: als je je
-        eindverantwoordelijke niet kunt vinden met dit veld, moeten zij
-        waarschijnlijk eerst één keer inloggen in deze portal. Je kunt nog wel
-        verder met de aanvraag, maar vergeet dit veld niet in te vullen voor je de
-        aanvraag indient.'''),
+        help_text=_('''Je aanvraag moet, als je alles hebt ingevuld, via de portal 
+                    naar je promotor of begeleider gestuurd worden. Deze persoon 
+                    is de eindverantwoordelijk onderzoeker, en zal de aanvraag 
+                    vervolgens waar nodig kunnen aanpassen en indienen bij de FETC-GW.
+                    <br><br><strong>Belangrijk</strong>: als je je promotor of 
+                    begeleider niet kunt vinden met dit veld, dan moeten zij 
+                    waarschijnlijk eerst één keer inloggen in deze portal. 
+                    Je kunt nog wel verder met de aanvraag, maar vergeet dit veld 
+                    niet in te vullen voor je de aanvraag indient. Je aanvraag 
+                    zal dan namelijk niet in behandeling kunnen worden genomen.'''),
         on_delete=models.CASCADE,
     )
 

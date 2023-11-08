@@ -20,6 +20,7 @@ from main.views import AllowErrorsOnBackbuttonMixin, CreateView, DeleteView, \
     HumanitiesRequiredMixin, UpdateView, UserAllowedMixin
 from observations.models import Observation
 from proposals.utils.validate_proposal import get_form_errors
+from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_diff
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
@@ -596,26 +597,22 @@ class ProposalAsPdf(
         return [self.template_name]
 
     def get_context_data(self, **kwargs):
-        """Adds 'BASE_URL' to template context"""
-        context = super(ProposalAsPdf, self).get_context_data(**kwargs)
-        context['BASE_URL'] = settings.BASE_URL
+        context = super().get_context_data(**kwargs)
 
-        documents = {
-            'extra': []
-        }
-        for document in Documents.objects.filter(proposal=self.object).all():
-            if document.study:
-                documents[document.study.pk] = document
-            else:
-                documents['extra'].append(document)
-        context['documents'] = documents
+        context = create_context_pdf(context, self.object)
+
         return context
-
 
 class ProposalDifference(LoginRequiredMixin, generic.DetailView):
     model = Proposal
     template_name = 'proposals/proposal_diff.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context = create_context_diff(context, self.object.parent, self.object)
+
+        return context
 
 ########################
 # Preliminary assessment
