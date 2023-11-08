@@ -22,6 +22,7 @@ class ReviewActions:
                                DiscontinueReview(review, user),
                                SendConfirmation(review, user),
                                ChangeArchiveStatus(review, user),
+                               ChangeDateStart(review, user),
         ]
         self.ufl_actions = []
 
@@ -281,4 +282,24 @@ class ChangeArchiveStatus(ReviewAction):
             return _('Verberg aanvraag uit het archief')
         else:
             return _('Plaats aanvraag in het archief.')
+        
+class ChangeDateStart(ReviewAction):
+
+    def is_available(self):
+
+        user = self.user
+
+        user_groups = user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+        
+        return True
+    
+    def action_url(self):
+
+        return reverse('proposals:update_date_start', args=(self.review.proposal.pk,))
+
+    def description(self):
+
+        return _('Startdatum wijzigen')
 

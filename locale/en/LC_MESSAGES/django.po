@@ -5703,6 +5703,47 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
+#: proposals/forms.py:190
+msgid "Je dient een eindverantwoordelijke op te geven."
+msgstr "You are required to specify the researcher with final responsibility."
+
+#: proposals/forms.py:579
+msgid "Nieuwe beoogde startdatum"
+msgstr "New intended start date"
+
+#: proposals/models.py:517
+#: proposals/templates/proposals/vue_templates/proposal_archive_list.html:115
+#: proposals/templates/proposals/vue_templates/proposal_list.html:166
+msgid "Eindverantwoordelijke onderzoeker"
+msgstr "Researcher with final responsibility"
+
+#: proposals/templates/proposals/proposal_update_date_start.html:14
+#: proposals/templates/proposals/proposal_update_date_start.html:28
+msgid "Startdatum aanpassen"
+msgstr "Edit start date"
+
+#: proposals/templates/proposals/proposal_update_date_start.html:17
+msgid ""
+"Op deze pagina kan de startdatum worden aangepast van de aanvraag %(title)s "
+"(referentienummer <em>%(ref_number)s</em>). <b>Let op!</b> Als de review al "
+"is afgerond, wordt de nieuwe startdatum niet automatisch weergegeven in de "
+"PDF. Mocht je de PDF opnieuw willen genereren, neem hierover dan contact op "
+"met"
+msgstr ""
+"On this page, the start date of proposal %(title)s (reference number "
+"<em>%(ref_number)s</em>) can be edited. <b>Note!</b> If the review has "
+"already been concluded, the new start date will not be displayed in the PDF. "
+"If you would like the PDF to be generated with the new start date, please "
+"reach out to "
+
+#: reviews/templates/reviews/vue_templates/review_list.html:122
+msgid "Reviewronde beëindigd: "
+msgstr "Reviewing round ended: "
+
+#: reviews/utils/review_actions.py:304
+msgid "Startdatum wijzigen"
+msgstr "Edit start date"
+
 #~ msgid ""
 #~ "De revisie bevat interventieonderzoek, terwijl de originele aanvraag dat "
 #~ "niet bevat."

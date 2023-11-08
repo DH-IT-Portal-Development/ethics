@@ -360,6 +360,8 @@ class BaseReviewApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
             'CLOSED': Review.CLOSED,
             'GO': Review.GO,
             'GO_POST_HOC': Review.GO_POST_HOC,
+            'REVISION': Review.REVISION,
+
         }
         context['current_user_pk'] = self.request.user.pk
 

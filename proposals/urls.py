@@ -15,7 +15,8 @@ from .views.proposal_views import CompareDocumentsView, MyConceptsView, \
     ProposalSubmitPreApproved, ProposalUpdatePreApproved, \
     ProposalUsersOnlyArchiveView, \
     ProposalCopyAmendment, ProposalsPublicArchiveView, \
-    ProposalUpdateDataManagement, TranslatedConsentFormsView
+    ProposalUpdateDataManagement, TranslatedConsentFormsView, \
+    ProposalUpdateDateStart
 
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
@@ -84,6 +85,8 @@ urlpatterns = [
          name='data_management'),
     path('update_data_management/<int:pk>/', ProposalUpdateDataManagement.as_view(), 
          name='update_data_management'),
+    path('update_date_start/<int:pk>/', ProposalUpdateDateStart.as_view(), 
+         name='update_date_start'),
 
     path('submit/<int:pk>/', include([
         path('', ProposalSubmit.as_view(), name='submit'),
