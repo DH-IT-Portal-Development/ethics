@@ -7,7 +7,7 @@ django-impersonate
 django-simple-menu
 django-debug-toolbar
 djangorestframework
-djangosaml2<1.7  # 1.7 adds a logout bug...
+djangosaml2
 mysqlclient<2
 xhtml2pdf
 sphinx
@@ -21,7 +21,7 @@ pygments
 requests
 -e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v2.0.10#egg=uil-django-core
 -e git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
-cdh-django-core[federated-auth] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0-alpha-4
+cdh-django-core[federated-auth] @ git+https://github.com/DH-IT-Portal-Development/django-shared-core.git@v3.1.0
 python-magic
 pdftotext
 bpython
