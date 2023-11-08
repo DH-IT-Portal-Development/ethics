@@ -165,7 +165,6 @@ class Container:
 
         self.edit_link = False
         self.dmp_edit_link = False
-        self.date_start_edit_link = False
         self.header = header
         self.items = []
 
@@ -222,10 +221,6 @@ def documents_list(review, user):
     proposal_pdf.sets_content_disposition = True
 
     pdf_container.items.append(proposal_pdf)
-
-    if is_secretary(user):
-        pdf_container.date_start_edit_link = reverse('proposals:update_date_start',
-                                                     args=[proposal.pk])
 
     # Pre-approval
     if proposal.pre_approval_pdf:

@@ -17,13 +17,10 @@
                 {% blocktrans trimmed with title=proposal.title ref_number=proposal.reference_number %}
                 Op deze pagina kan de startdatum worden aangepast van de aanvraag {{ title }}
                 (referentienummer <em>{{ ref_number }}</em>). <b>Let op!</b> Als de review al is afgerond,
-                wordt de nieuwe startdatum niet automatisch weergegeven in de PDF. Mocht u de PDF 
+                wordt de nieuwe startdatum niet automatisch weergegeven in de PDF. Mocht je de PDF 
                 opnieuw willen genereren, neem hierover dan contact op met 
                 {% endblocktrans %}
                 <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
-            </p>
-            <p>
-                {% trans "Vul de datum in als 'DD-MM-YYYY'." %}
             </p>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>

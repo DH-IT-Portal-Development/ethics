@@ -21,6 +21,7 @@ from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
 from .widgets import SelectMultipleUser, SelectUser
 
+from cdh.core.forms import DateField
 
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin,
                    ConditionalModelForm):
@@ -575,6 +576,8 @@ class ProposalUpdateDataManagementForm(forms.ModelForm):
         ]
 
 class ProposalUpdateDateStartForm(forms.ModelForm):
+    date_start = DateField(label=_('Nieuwe beoogde startdatum'))
+
     class Meta:
         model = Proposal
         fields = [
