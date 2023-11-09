@@ -568,6 +568,7 @@ class ProposalAsPdf(
     model = Proposal
     # The PDF mixin generates a filename with this factory
     filename_factory = FilenameFactory('Proposal')
+    template_name = 'proposals/proposal_pdf.html'
 
     def get(self, request, *args, **kwargs):
         # First, check if we should use a pregenerated pdf, if we have one

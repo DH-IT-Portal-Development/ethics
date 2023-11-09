@@ -703,13 +703,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     @property
     def pdf_template_name(self):
-        """Determine the correct PDf template for this proposal."""
-        template_name = 'proposals/proposal_pdf.html'
-        if self.is_pre_approved:
-            template_name = 'proposals/proposal_pdf_pre_approved.html'
-        elif self.is_pre_assessment:
-            template_name = 'proposals/proposal_pdf_pre_assessment.html'
-        return template_name
+        return 'proposals/proposal_pdf.html'
 
     def use_canonical_pdf(self):
         """Returns False if this proposal should regenerate its PDF
