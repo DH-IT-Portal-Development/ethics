@@ -710,17 +710,6 @@ class ProposalUpdatePreApproved(PreApprovedMixin, ProposalUpdate):
 
 
 class ProposalSubmitPreApproved(ProposalSubmit):
-    def form_valid(self, form):
-        """
-        Performs actions after saving the form
-        - Save the pre_approved PDF on the Proposal
-        - End the draft phase and start the appropiate review phase (in super function)
-        """
-        success_url = super(ProposalSubmitPreApproved, self).form_valid(form)
-        if 'save_back' not in self.request.POST:
-            proposal = self.get_object()
-            proposal.generate_pdf()
-        return success_url
 
     def get_next_url(self):
         """After submission, go to the thank-you view"""
