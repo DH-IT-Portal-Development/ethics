@@ -438,17 +438,24 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
 
     def form_valid(self, form):
         """
+        Run the method for submitting this proposal and return a
+        response object.
+        """
+        success_response = super().form_valid(form)
+        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
+            self.submit_proposal()
+        return success_response
+
+    def submit_proposal(self):
+        """
+        Perform the actions required for submission:
         - Save the PDF on the Proposal
         - Start the review process on submission (though not for practice Proposals)
         """
-
-        success_url = super(ProposalSubmit, self).form_valid(form)
-        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
-            proposal = self.get_object()
-            proposal.generate_pdf()
-            if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
-                start_review(proposal)
-        return success_url
+        proposal = self.get_object()
+        proposal.generate_pdf()
+        if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
+            start_review(proposal)
 
     def get_next_url(self):
         """After submission, go to the thank-you view. Unless a supervisor is
@@ -649,21 +656,15 @@ class ProposalUpdatePreAssessment(PreAssessmentMixin, ProposalUpdate):
 
 
 class ProposalSubmitPreAssessment(ProposalSubmit):
-    def form_valid(self, form):
+    def submit_proposal(self, form):
         """
         Performs actions after saving the form
         - Save the preassessment PDF on the Proposal
-        - End the preassessment phase
+        - Start the preassessment review
         """
-        # Note that the below method does NOT call the ProposalSubmit method,
-        # as that would start a full review route
-        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
-            proposal = self.get_object()
-            proposal.generate_pdf()
-            start_review_pre_assessment(proposal)
-        # Instead, we specifically select the form_valid that does not belong
-        # to ProposalSubmit
-        return super(UpdateView, self).form_valid(form)
+        proposal = self.get_object()
+        proposal.generate_pdf()
+        start_review_pre_assessment(proposal)
 
     def get_next_url(self):
         """After submission, go to the thank-you view"""
