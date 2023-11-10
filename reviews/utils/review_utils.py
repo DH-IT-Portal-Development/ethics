@@ -67,8 +67,15 @@ def start_supervisor_phase(proposal):
         params['creator'] = proposal.created_by.get_full_name()
         msg_plain = render_to_string('mail/concept_other_applicants.txt', params)
         msg_html = render_to_string('mail/concept_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by, proposal.supervisor]
+
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_to_remove = [proposal.supervisor]
         other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
+
         send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     subject = _('FETC-GW {}: beoordelen als eindverantwoordelijke'.format(reference))
@@ -147,10 +154,15 @@ def start_assignment_phase(proposal):
         else:
             msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
             msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by]
-        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
 
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_emails = [applicant.email for applicant in
+                             proposal.applicants.all()]
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, applicants_emails, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
