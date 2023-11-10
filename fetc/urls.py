@@ -35,7 +35,6 @@ urlpatterns = [
     path('observations/', include('observations.urls')),
     path('interventions/', include('interventions.urls')),
     path('reviews/', include('reviews.urls')),
-    path('feedback/', include('feedback.urls')),
     path('faqs/', include('faqs.urls')),
 
     path('admin/', admin.site.urls),

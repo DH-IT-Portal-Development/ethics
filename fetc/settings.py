@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'interventions',
     'observations',
     'reviews',
-    'feedback',
     'faqs',
 
     'modeltranslation',
