@@ -215,6 +215,15 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
             'Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?'
         ),
         default=False,
+        help_text=mark_safe_lazy(_('Werk je samen met een onderzoeker of '
+                                   'organisatie buiten de UU en is je '
+                                   'onderzoek niet strikt anoniem? Neem dan '
+                                   'contact op met de <a '
+                                   'href="mailto:privacy.gw@uu.nl">privacy '
+                                   'officer</a>. '
+                                   'Er moeten dan wellicht afspraken worden '
+                                   'gemaakt over de verwerking van '
+                                   'persoonsgegevens.')),
     )
 
     other_stakeholders = models.BooleanField(
