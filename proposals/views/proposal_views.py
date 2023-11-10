@@ -655,13 +655,13 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
         - Save the preassessment PDF on the Proposal
         - End the preassessment phase
         """
-        # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
-        success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
+        # Note that the below method does NOT call the ProposalSubmit method,
+        # as that would start a full review route
         if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
             proposal.generate_pdf()
             start_review_pre_assessment(proposal)
-        return success_url
+        return self.get_success_url()
 
     def get_next_url(self):
         """After submission, go to the thank-you view"""
