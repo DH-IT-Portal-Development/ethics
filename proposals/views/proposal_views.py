@@ -661,7 +661,9 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
             proposal = self.get_object()
             proposal.generate_pdf()
             start_review_pre_assessment(proposal)
-        return self.get_success_url()
+        # Instead, we specifically select the form_valid that does not belong
+        # to ProposalSubmit
+        return super(UpdateView, self).form_valid(form)
 
     def get_next_url(self):
         """After submission, go to the thank-you view"""
