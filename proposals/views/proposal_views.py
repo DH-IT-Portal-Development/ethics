@@ -591,12 +591,6 @@ class ProposalAsPdf(
             self.object = super().get_object(*args, **kwargs)
         return self.object
 
-    def get_template_names(self):
-        """Determine the correct PDf template for given proposal"""
-        proposal = self.get_object()
-        self.template_name = proposal.pdf_template_name
-        return [self.template_name]
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 

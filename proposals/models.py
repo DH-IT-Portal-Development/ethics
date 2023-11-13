@@ -701,10 +701,6 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
             )
         return pdf
 
-    @property
-    def pdf_template_name(self):
-        return 'proposals/proposal_pdf.html'
-
     def use_canonical_pdf(self):
         """Returns False if this proposal should regenerate its PDF
         on request. Proposals that have already been decided on should
