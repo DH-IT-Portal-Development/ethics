@@ -154,6 +154,7 @@ class ReviewTestCase(BaseReviewTestCase):
         # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.SUPERVISOR)
+        self.assertEqual(review.is_commission_review, False)
         self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
@@ -170,6 +171,7 @@ class ReviewTestCase(BaseReviewTestCase):
 
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.ASSIGNMENT)
+        self.assertEqual(review.is_commission_review, True)
         self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
@@ -196,6 +198,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         decision.save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)
+        self.assertEqual(review.is_commission_review, False)
 
         self.assertEqual(len(mail.outbox), 2)
         self.check_subject_lines(mail.outbox)

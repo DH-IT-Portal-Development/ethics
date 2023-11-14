@@ -63,6 +63,10 @@ class Review(models.Model):
     date_end = models.DateTimeField(blank=True, null=True)
     date_should_end = models.DateField(blank=True, null=True)
 
+    is_commission_review = models.BooleanField(
+        default=True
+    )
+
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
     def update_go(self, last_decision=None):

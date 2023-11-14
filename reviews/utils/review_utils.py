@@ -42,6 +42,7 @@ def start_supervisor_phase(proposal):
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.SUPERVISOR
+    review.is_commission_review = False
     review.save()
 
     proposal.date_submitted_supervisor = timezone.now()
