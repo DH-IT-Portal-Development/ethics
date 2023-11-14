@@ -87,6 +87,7 @@
     {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name trimmed %}
       FETC-GW - <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
     {% endblocktrans %}
+    - {% trans proposal.reviewing_committee.name %}
     {% if proposal.is_revision %}
       <br>
       <strong>
