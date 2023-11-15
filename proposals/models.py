@@ -400,9 +400,10 @@ trajecten.'),
     )
 
     avg_understood = models.BooleanField(
-        _('Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.'),
-        default=False,
-        null=False,
+        _('Ik heb mijn aanvraag en de documenten voor deelnemers besproken met de privacy officer.'),
+        default=None,
+        null=True,
+        blank=True,
         validators=[AVGUnderstoodValidator],
     )
 

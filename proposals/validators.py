@@ -27,9 +27,11 @@ class UniqueTitleValidator:
 
 
 def AVGUnderstoodValidator(value):
-
-    if value != True:
+# This does not seem to do anything, so I removed it from the model, however,
+# if I try to remove this validator entirely I get an error when making
+# migrations?
+    if value is None:
         raise forms.ValidationError(
-            _('Je dient kennis genomen te hebben van de AVG om jouw aanvraag in '
+            _('Je dient deze vraag in te vullen om jouw aanvraag in '
               'te dienen'), code='avg'
             )
