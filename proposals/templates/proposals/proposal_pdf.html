@@ -84,10 +84,9 @@
 
 {% block page_header %}
   <div id="page-header">
-    {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name trimmed %}
-      FETC-GW - <em>{{ title }}</em> (referentienummer {{ reference_number }}, ingediend door {{ submitter }})
+    {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name reviewing_committee=proposal.reviewing_committee.name trimmed %}
+      FETC-GW - <em>{{ title }}</em> (referentienummer {{ reference_number }}-{{reviewing_committee}}, ingediend door {{ submitter }})
     {% endblocktrans %}
-    - {% trans proposal.reviewing_committee.name %}
     {% if proposal.is_revision %}
       <br>
       <strong>

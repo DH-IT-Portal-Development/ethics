@@ -11,6 +11,7 @@ def update_is_commssion_review(apps, schema_editor):
         SUPERVISOR_STAGE = 0
         if review.stage == SUPERVISOR_STAGE:
             review.is_commission_review = False
+            review.update_go()
             review.save()
 
 class Migration(migrations.Migration):

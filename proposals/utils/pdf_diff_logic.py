@@ -963,7 +963,7 @@ class DMPFileSection(PageBreakMixin, BaseSection):
 
     section_title = _("Data Management Plan")
 
-    row_fields = ["dmp_file", "avg_understood"]
+    row_fields = ["dmp_file", "privacy_officer"]
 
 
 class EmbargoSection(BaseSection):

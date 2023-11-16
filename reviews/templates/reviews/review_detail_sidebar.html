@@ -90,7 +90,7 @@ Remember to include it in a with statement if the view does not provide it.
                 </em>
             </li>
         {% endif %}
-        {% if review.stage == review.SUPERVISOR %}
+        {% if review.is_commission_review == False %}
             <li>
                 <strong>
                     {% blocktrans trimmed %}
