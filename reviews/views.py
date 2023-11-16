@@ -556,7 +556,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
 
         # Don't notify the secretary if this is a supervisor decision.
         # If it was a GO they the secretary will be notified anyway
-        if review.is_commission_review == True:
+        if review.is_committee_review:
             notify_secretary(form.instance)
 
         return super(DecisionUpdateView, self).form_valid(form)

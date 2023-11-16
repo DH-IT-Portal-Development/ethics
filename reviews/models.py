@@ -63,7 +63,7 @@ class Review(models.Model):
     date_end = models.DateTimeField(blank=True, null=True)
     date_should_end = models.DateField(blank=True, null=True)
 
-    is_commission_review = models.BooleanField(
+    is_committee_review = models.BooleanField(
         default=True
     )
 
@@ -93,7 +93,7 @@ class Review(models.Model):
             self.save()
 
             # For a supervisor review:
-            if self.is_commission_review == False:
+            if self.is_committee_review == False:
                 # Update the status of the Proposal with the end date
                 self.proposal.date_reviewed_supervisor = self.date_end
                 self.proposal.save()
