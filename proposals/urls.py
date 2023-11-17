@@ -24,6 +24,7 @@ from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import WmoCreate, WmoUpdate, \
     WmoApplication, WmoCheck, check_wmo, \
     WmoCreatePreAssessment, WmoUpdatePreAssessment, WmoApplicationPreAssessment
+from .views.attachment_views import AttachmentsView
 
 app_name = 'proposals'
 
@@ -122,6 +123,19 @@ urlpatterns = [
              template_name="proposals/proposal_attach.html",
          ),
          name="attach_file",
+         ),
+
+    path("<int:other_pk>/attach/<str:kind>/",
+         AttachmentCreateView.as_view(
+             other_model=Proposal,
+             template_name="proposals/proposal_attach.html",
+         ),
+         name="attach_file",
+         ),
+
+    path("<int:pk>/attachments/",
+         AttachmentsView.as_view(),
+         name="attachments",
          ),
 
     path('copy/', include([

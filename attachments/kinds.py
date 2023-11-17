@@ -1,4 +1,7 @@
 from django.utils.translation import gettext as _
+from django.urls import reverse
+
+from proposals.models import Proposal
 
 class AttachmentKind:
     """Defines a kind of file attachment and when it is required."""
@@ -7,17 +10,41 @@ class AttachmentKind:
     name = ""
     description = ""
     max_num = None
+    attached_model = Proposal
+    attached_field = "attachments"
 
-    def test_required(self, proposal):
+    def __init__(self, object):
+        self.object = object
+
+    def get_instances_for_proposal(self):
+        manager = getattr(self.object, self.attached_field)
+        return manager.filter(kind=self.db_name)
+
+    def num_required(self):
+        return 1
+
+    def num_provided(self):
+        return self.get_instances_for_proposal().count()
+
+    def still_required(self):
+        return self.num_required() - self.num_provided()
+
+    def test_required(self):
         """Returns False if the given proposal requires this kind
         of attachment"""
-        return False
+        return self.num_required() > self.num_provided()
 
-    def test_recommended(self, proposal):
+    def test_recommended(self):
         """Returns True if the given proposal recommends, but does not
         necessarily require this kind of attachment"""
         return True
 
+    def get_attach_url(self):
+        url_kwargs = {
+            "other_pk": self.object.pk,
+            "kind": self.db_name,
+        }
+        return reverse("proposals:attach_file", kwargs=url_kwargs)
 
 class InformationLetter(AttachmentKind):
 
@@ -40,14 +67,18 @@ class DataManagementPlan(AttachmentKind):
 class OtherAttachment(AttachmentKind):
 
     db_name = "other"
-    name = _("Overig bestand")
+    name = _("Overige bestanden")
     description = _("Voor alle overige soorten bestanden")
+
+    def num_required(self):
+        return 0
 
 
 ATTACHMENTS = [
     InformationLetter,
     ConsentForm,
     DataManagementPlan,
+    OtherAttachment,
 ]
 ATTACHMENT_CHOICES = [
     (a.db_name, a.name) for a in ATTACHMENTS
