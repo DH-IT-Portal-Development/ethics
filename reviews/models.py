@@ -63,6 +63,10 @@ class Review(models.Model):
     date_end = models.DateTimeField(blank=True, null=True)
     date_should_end = models.DateField(blank=True, null=True)
 
+    is_committee_review = models.BooleanField(
+        default=True
+    )
+
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
 
     def update_go(self, last_decision=None):
@@ -89,7 +93,7 @@ class Review(models.Model):
             self.save()
 
             # For a supervisor review:
-            if self.stage == self.SUPERVISOR:
+            if self.is_committee_review == False:
                 # Update the status of the Proposal with the end date
                 self.proposal.date_reviewed_supervisor = self.date_end
                 self.proposal.save()
@@ -99,6 +103,7 @@ class Review(models.Model):
                     # in an uWSGI environment, in which it errors.
                     from reviews.utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
+                    self.stage = self.CLOSED
                 # On NO-GO, reset the Proposal status
                 else:
                     # See comment above

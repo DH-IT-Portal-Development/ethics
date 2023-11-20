@@ -573,9 +573,19 @@ class StudyStartForm(forms.ModelForm):
 class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['avg_understood', 'dmp_file']
+        fields = ['privacy_officer', 'dmp_file']
+        widgets = {
+            'privacy_officer': forms.RadioSelect(choices=YES_NO),
+        }
+    
+    def clean(self):
+        cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-    _soft_validation_fields = ['avg_understood']
+        if cleaned_data['privacy_officer'] is None:
+            self.add_error(
+                'privacy_officer', 
+                _('Dit veld is verplicht om verder te gaan.')
+            )
 
 class ProposalUpdateDataManagementForm(forms.ModelForm):
     class Meta:
