@@ -1,0 +1,14 @@
+{% extends "mail/base-internal.txt" %}
+
+{% block content %}
+Alle beoordelingen zijn toegevoegd bij de aanvraag {{ proposal.reference_number }}.
+
+De review is klaar om afgesloten te worden.
+
+Overzicht beoordelingen:
+{% for decision in decisions %}
+Beoordelaar: {{ decision.reviewer.get_full_name }}
+Beoordeling: {{ decision.get_go_display }}
+Opmerkingen: {{ decision.comments|default:"geen"|safe }}
+{% endfor %}
+{% endblock %}

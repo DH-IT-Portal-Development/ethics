@@ -114,6 +114,8 @@ class Review(models.Model):
             # For a review by commission:
             else:
                 # Set the stage to CLOSING
+                from reviews.utils import notify_secretary_all_decisions
+                notify_secretary_all_decisions(self)
                 self.stage = self.CLOSING
                 self.save()
         else:
