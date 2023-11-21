@@ -8,39 +8,25 @@ from proposals.models import Proposal
 
 
 class Review(models.Model):
-    SUPERVISOR = 0
-    ASSIGNMENT = 1
-    COMMISSION = 2
-    CLOSING = 3
-    CLOSED = 4
-    STAGES = (
-        (SUPERVISOR, _('Beoordeling door eindverantwoordelijke')),
-        (ASSIGNMENT, _('Aanstelling commissieleden')),
-        (COMMISSION, _('Beoordeling door commissie')),
-        (CLOSING, _('Afsluiting door secretaris')),
-        (CLOSED, _('Afgesloten')),
-    )
 
-    GO = 0
-    REVISION = 1
-    NO_GO = 2
-    LONG_ROUTE = 3
-    METC = 4
-    GO_POST_HOC = 5
-    NO_GO_POST_HOC = 6
-    DISCONTINUED = 7
-    CONTINUATIONS = (
-        (GO, _('Goedkeuring door FETC-GW')),
-        (REVISION, _('Revisie noodzakelijk')),
-        (NO_GO, _('Afwijzing door FETC-GW')),
-        (LONG_ROUTE, _('Open review met lange (4-weken) route')),
-        (METC, _('Laat opnieuw beoordelen door METC')),
-        (GO_POST_HOC, _('Positief advies van FETC-GW, post-hoc')),
-        (NO_GO_POST_HOC, _('Negatief advies van FETC-GW, post-hoc')),
-        (DISCONTINUED, _('Niet verder in behandeling genomen')),
-    )
+    class Stages(models.IntegerChoices):
+        SUPERVISOR = 0, _('Beoordeling door eindverantwoordelijke')
+        ASSIGNMENT = 1, _('Aanstelling commissieleden')
+        COMMISSION = 2, _('Beoordeling door commissie')
+        CLOSING = 3, _('Afsluiting door secretaris')
+        CLOSED = 4, _('Afgesloten')
 
-    stage = models.PositiveIntegerField(choices=STAGES, default=SUPERVISOR)
+    class Continuations(models.IntegerChoices):
+        GO = 0, _('Goedkeuring door FETC-GW')
+        REVISION = 1, _('Revisie noodzakelijk')
+        NO_GO = 2, _('Afwijzing door FETC-GW')
+        LONG_ROUTE = 3, _('Open review met lange (4-weken) route')
+        METC = 4, _('Laat opnieuw beoordelen door METC')
+        GO_POST_HOC = 5, _('Positief advies van FETC-GW, post-hoc')
+        NO_GO_POST_HOC = 6, _('Negatief advies van FETC-GW, post-hoc')
+        DISCONTINUED = 7, _('Niet verder in behandeling genomen')
+
+    stage = models.PositiveIntegerField(choices=Stages.choices, default=Stages.SUPERVISOR)
     short_route = models.BooleanField(
         _('Route'),
         default=None,
@@ -55,8 +41,8 @@ class Review(models.Model):
     )
     continuation = models.PositiveIntegerField(
         _('Afhandeling'),
-        choices=CONTINUATIONS,
-        default=GO,
+        choices=Continuations.choices,
+        default=Continuations.GO,
     )
 
     date_start = models.DateTimeField()
@@ -76,7 +62,7 @@ class Review(models.Model):
         """
 
         # If this review is discontinued, it is set in stone
-        if self.continuation == self.DISCONTINUED:
+        if self.continuation == self.Continuations.DISCONTINUED:
             return
 
         all_decisions = self.decision_set.count()
@@ -85,7 +71,7 @@ class Review(models.Model):
         for decision in self.decision_set.all():
             if decision.go != '':
                 closed_decisions += 1
-                final_go &= decision.go == Decision.APPROVED
+                final_go &= decision.go == Decision.Approval.APPROVED
 
         if all_decisions == closed_decisions:
             self.go = final_go
@@ -103,7 +89,7 @@ class Review(models.Model):
                     # in an uWSGI environment, in which it errors.
                     from reviews.utils import start_assignment_phase
                     start_assignment_phase(self.proposal)
-                    self.stage = self.CLOSED
+                    self.stage = self.Stages.CLOSED
                 # On NO-GO, reset the Proposal status
                 else:
                     # See comment above
@@ -114,7 +100,7 @@ class Review(models.Model):
             # For a review by commission:
             else:
                 # Set the stage to CLOSING
-                self.stage = self.CLOSING
+                self.stage = self.Stages.CLOSING
                 self.save()
         else:
             # In case there is still an unmade decision, make sure to
@@ -127,14 +113,11 @@ class Review(models.Model):
         # If this review hasn't concluded, this will only return 'Approved' as
         # this is the default. Thus, we return 'unknown' if we are still pre-
         # conclusion.
-        if self.stage <= Review.COMMISSION:
+        if self.stage <= Review.Stages.COMMISSION:
             return _("Onbekend")
 
         # Get the human readable string
-        continuation = dict(self.CONTINUATIONS).get(
-            self.continuation,
-            self.continuation
-        )
+        continuation = dict(self.Continuations.choices)[self.continuation]
 
         if self.proposal.has_minor_revision:
             continuation += str(_(', met revisie'))
@@ -170,21 +153,19 @@ class Review(models.Model):
 
 
 class Decision(models.Model):
-    APPROVED = 'Y'
-    NOT_APPROVED = 'N'
-    NEEDS_REVISION = '?'
-    APPROVAL = (
-        (APPROVED, _('goedgekeurd')),
-        (NOT_APPROVED, _('niet goedgekeurd')),
-        (NEEDS_REVISION, _('revisie noodzakelijk')),
-    )
+    class Approval(models.TextChoices):
+        APPROVED = 'Y', _('goedgekeurd')
+        NOT_APPROVED = 'N', _('niet goedgekeurd')
+        NEEDS_REVISION = '?', _('revisie noodzakelijk')
 
     go = models.CharField(
         _('Beslissing'),
         max_length=1,
-        choices=APPROVAL,
+        choices=Approval.choices,
         blank=True)
+    
     date_decision = models.DateTimeField(blank=True, null=True)
+
     comments = models.TextField(
         _('Ruimte voor eventuele opmerkingen'),
         blank=True)

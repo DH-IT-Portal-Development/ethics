@@ -55,7 +55,7 @@ class BaseProposalsApiView(LoginRequiredMixin, FancyListApiView):
             'DECISION_MADE': Proposal.DECISION_MADE,
         }
         context['review'] = {
-            'REVISION': Review.REVISION,
+            'REVISION': Review.Continuations.REVISION,
         }
         context['user_pk'] = self.request.user.pk
 

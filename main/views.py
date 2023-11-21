@@ -112,7 +112,7 @@ class UserDetailView(GroupRequiredMixin, generic.DetailView):
         """Returns all Committee Reviews of this user"""
         reviews = {}
         objects = Review.objects.filter(
-            stage__gte=Review.ASSIGNMENT,
+            stage__gte=Review.Stages.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__created_by=self.get_object()
         )

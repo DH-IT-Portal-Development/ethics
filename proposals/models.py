@@ -641,7 +641,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
             decisions = Decision.objects.filter(
                 review__proposal=self,
-                review__stage=Review.SUPERVISOR
+                review__stage=Review.Stages.SUPERVISOR
             ).order_by('-pk')
 
             if decisions:
@@ -672,7 +672,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         # Importing here to prevent circular import
         from reviews.models import Review
         self.status_review = continuation in [
-            Review.GO, Review.GO_POST_HOC
+            Review.Continuations.GO, Review.Continuations.GO_POST_HOC
         ]
         self.date_reviewed = time
         self.generate_pdf()

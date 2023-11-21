@@ -61,12 +61,12 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
         context['is_secretary'] = is_secretary(self.request.user)
         context['review'] = {
-            'ASSIGNMENT': Review.ASSIGNMENT,
-            'COMMISSION': Review.COMMISSION,
-            'CLOSING': Review.CLOSING,
-            'CLOSED': Review.CLOSED,
-            'GO': Review.GO,
-            'GO_POST_HOC': Review.GO_POST_HOC,
+            'ASSIGNMENT': Review.Stages.ASSIGNMENT,
+            'COMMISSION': Review.Stages.COMMISSION,
+            'CLOSING': Review.Stages.CLOSING,
+            'CLOSED': Review.Stages.CLOSED,
+            'GO': Review.Continuations.GO,
+            'GO_POST_HOC': Review.Continuations.GO_POST_HOC,
         }
         context['current_user_pk'] = self.request.user.pk
 
@@ -96,7 +96,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             reviewer=self.request.user,
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=Review.DISCONTINUED,
+            review__continuation__lt=Review.Continuations.DISCONTINUED,
         )
 
         for obj in objects:
@@ -119,7 +119,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=Review.DISCONTINUED,
+            review__continuation__lt=Review.Continuations.DISCONTINUED,
         )
 
         for obj in objects:
@@ -172,7 +172,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             reviewer=self.request.user,
             go='',
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=Review.DISCONTINUED,
+            review__continuation__lt=Review.Continuations.DISCONTINUED,
         )
 
         for obj in objects:
@@ -196,7 +196,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go='',
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=Review.DISCONTINUED,
+            review__continuation__lt=Review.Continuations.DISCONTINUED,
         )
 
         for obj in objects:
@@ -238,8 +238,8 @@ class OpenDecisionsApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             go='',
             review__proposal__reviewing_committee=self.committee,
-            review__continuation__lt=Review.DISCONTINUED,
-        ).exclude(review__stage=Review.SUPERVISOR)
+            review__continuation__lt=Review.Continuations.DISCONTINUED,
+        ).exclude(review__stage=Review.Stages.SUPERVISOR)
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -292,7 +292,7 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
         """
         objects = Decision.objects.filter(
             go='',
-            review__stage=Review.SUPERVISOR,
+            review__stage=Review.Stages.SUPERVISOR,
             review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR,
             review__proposal__reviewing_committee=self.committee
         )
@@ -354,13 +354,13 @@ class BaseReviewApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
         context['is_secretary'] = is_secretary(self.request.user)
         context['review'] = {
-            'ASSIGNMENT': Review.ASSIGNMENT,
-            'COMMISSION': Review.COMMISSION,
-            'CLOSING': Review.CLOSING,
-            'CLOSED': Review.CLOSED,
-            'GO': Review.GO,
-            'GO_POST_HOC': Review.GO_POST_HOC,
-            'REVISION': Review.REVISION,
+            'ASSIGNMENT': Review.Stages.ASSIGNMENT,
+            'COMMISSION': Review.Stages.COMMISSION,
+            'CLOSING': Review.Stages.CLOSING,
+            'CLOSED': Review.Stages.CLOSED,
+            'GO': Review.Continuations.GO,
+            'GO_POST_HOC': Review.Continuations.GO_POST_HOC,
+            'REVISION': Review.Continuations.REVISION,
 
         }
         context['current_user_pk'] = self.request.user.pk
@@ -375,13 +375,13 @@ class ToConcludeReviewApiView(BaseReviewApiView):
         """Returns all open Committee Decisions of all Users"""
         reviews = {}
         objects = Review.objects.filter(
-            stage__gte=Review.CLOSING,
+            stage__gte=Review.Stages.CLOSING,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__date_confirmed=None,
             proposal__reviewing_committee=self.committee,
         ).filter(
-            Q(continuation=Review.GO) |
-            Q(continuation=Review.GO_POST_HOC) |
+            Q(continuation=Review.Continuations.GO) |
+            Q(continuation=Review.Continuations.GO_POST_HOC) |
             Q(continuation=None)
         ).select_related(
             'proposal',
@@ -420,15 +420,15 @@ class InRevisionApiView(BaseReviewApiView):
         # that the review of its parent is "in revision"
         revision_reviews = Review.objects.filter(
             proposal__is_revision=True,    # Not a copy
-            stage__gte=Review.ASSIGNMENT,  # Not a supervisor review
+            stage__gte=Review.Stages.ASSIGNMENT,  # Not a supervisor review
         )
         # 2. Get candidate reviews:
         # All reviews whose conclusion is "revision necessary"
         # that are in the current committee
         candidates = Review.objects.filter(
             proposal__reviewing_committee=self.committee,
-            stage=Review.CLOSED,
-            continuation=Review.REVISION,
+            stage=Review.Stages.CLOSED,
+            continuation=Review.Continuations.REVISION,
         )
         # 3. Finally, exclude candidates whose proposal
         # has a child with a revision review
@@ -461,8 +461,8 @@ class AllOpenReviewsApiView(BaseReviewApiView):
         """Returns all open Reviews"""
         reviews = OrderedDict()
         objects = Review.objects.filter(
-            stage__gte=Review.ASSIGNMENT,
-            stage__lte=Review.CLOSING,
+            stage__gte=Review.Stages.ASSIGNMENT,
+            stage__lte=Review.Stages.CLOSING,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
         ).select_related(
@@ -508,7 +508,7 @@ class AllReviewsApiView(BaseReviewApiView):
         """Returns all open Committee Decisions of all Users"""
         reviews = OrderedDict()
         objects = Review.objects.filter(
-            stage__gte=Review.ASSIGNMENT,
+            stage__gte=Review.Stages.ASSIGNMENT,
             proposal__status__gte=Proposal.SUBMITTED,
             proposal__reviewing_committee=self.committee,
         ).select_related(

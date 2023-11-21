@@ -57,7 +57,7 @@ def get_review_qs_for_proposals(proposal_data: QuerySet) -> QuerySet:
     return Review.objects.filter(
         proposal__in=proposal_data,
     ).exclude(
-        stage=Review.SUPERVISOR,
+        stage=Review.Stages.SUPERVISOR,
         date_end=None,
     )
 

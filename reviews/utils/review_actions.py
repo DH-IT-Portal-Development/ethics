@@ -199,9 +199,9 @@ class ChangeAssignment(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
-        if self.review.stage not in [Review.REVISION,
-                                     Review.NO_GO,
-                                     Review.CLOSING,
+        if self.review.stage not in [Review.Continuations.REVISION,
+                                     Review.Continuations.NO_GO,
+                                     Review.Stages.CLOSING,
                                      ]:
             return False
 

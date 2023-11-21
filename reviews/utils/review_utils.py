@@ -41,7 +41,7 @@ def start_supervisor_phase(proposal):
     - send an e-mail to other applicants
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.SUPERVISOR
+    review.stage = Review.Stages.SUPERVISOR
     review.is_committee_review = False
     review.save()
 
@@ -106,7 +106,7 @@ def start_assignment_phase(proposal):
     short_route = len(reasons) == 0
 
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = short_route
 
     if short_route:
@@ -169,7 +169,7 @@ def remind_reviewers():
     next_two_days = today + datetime.timedelta(days=2)
 
     decisions = Decision.objects.filter(
-        review__stage=Review.COMMISSION,
+        review__stage=Review.Stages.COMMISSION,
         review__short_route=True,
         review__date_should_end__gte=today,
         review__date_should_end__lte=next_two_days,
@@ -204,7 +204,7 @@ def start_review_pre_assessment(proposal):
     :param proposal: the current Proposal
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = True
     review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.PREASSESSMENT_ROUTE_WEEKS)
     review.save()
