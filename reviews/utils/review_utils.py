@@ -309,7 +309,7 @@ def notify_secretary_all_decisions(review):
     Notifies a secretary all Decisions have been made for a certain review
     """
     secretary = get_secretary()
-    subject = _("FETC-GW {}: alle beoordelingen toegevoegd").format(
+    subject = "FETC-GW {}: alle beoordelingen toegevoegd".format(
         review.proposal.committee_prefixed_refnum(),
     )
     params = {
@@ -318,7 +318,7 @@ def notify_secretary_all_decisions(review):
         "decisions": review.decision_set.all()
     }
     msg_plain = render_to_string("mail/all_decisions_notify.txt", params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, ['fetc-gw@uu.nl'])
 
 def notify_supervisor_nogo(decision):
     secretary = get_secretary()
