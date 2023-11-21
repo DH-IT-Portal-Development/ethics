@@ -21,6 +21,8 @@ Your host OS needs some packages, below is a list of debian packages:
 + libsasl2-dev
 + libssl-dev
 + gettext
++ libcairo2-dev
++ libpoppler-cpp-dev
 
 Pip might throw errors while installing `mysqlclient` if you do not have a mysql-dev package. That package is not needed
 for development, so you can (temporarily) comment out that dependency if you run into problems. (Or just install the
