@@ -238,6 +238,8 @@ def start_review_pre_assessment(proposal):
     msg_plain = render_to_string('mail/pre_assessment_creator.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
 
+    return review
+
 
 def start_review_route(review, commission_users, use_short_route):
     """
