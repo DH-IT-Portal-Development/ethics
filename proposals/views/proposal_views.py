@@ -568,6 +568,7 @@ class ProposalAsPdf(
     model = Proposal
     # The PDF mixin generates a filename with this factory
     filename_factory = FilenameFactory('Proposal')
+    template_name = 'proposals/proposal_pdf.html'
 
     def get(self, request, *args, **kwargs):
         # First, check if we should use a pregenerated pdf, if we have one
@@ -589,12 +590,6 @@ class ProposalAsPdf(
         if not hasattr(self, "object"):
             self.object = super().get_object(*args, **kwargs)
         return self.object
-
-    def get_template_names(self):
-        """Determine the correct PDf template for given proposal"""
-        proposal = self.get_object()
-        self.template_name = proposal.pdf_template_name
-        return [self.template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -47,7 +47,7 @@ Remember to include it in a with statement if the view does not provide it.
         </li>
         {% if review.proposal.supervisor %}
             <li>
-                {% trans "Supervisor" %}: {{ review.proposal.supervisor }}
+                {% trans "Supervisor" %}: {{ review.proposal.supervisor.get_full_name }}
             </li>
         {% endif %}
         <li>
@@ -90,7 +90,7 @@ Remember to include it in a with statement if the view does not provide it.
                 </em>
             </li>
         {% endif %}
-        {% if review.stage == review.SUPERVISOR %}
+        {% if not review.is_committee_review %}
             <li>
                 <strong>
                     {% blocktrans trimmed %}
