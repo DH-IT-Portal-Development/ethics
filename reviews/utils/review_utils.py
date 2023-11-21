@@ -20,14 +20,24 @@ def start_review(proposal):
     """
     Starts a Review for the given Proposal.
 
-    If the proposal needs a supervisor, start the supervisor phase. Otherwise, start the assignment phase.
+    If the proposal needs a supervisor, start the supervisor phase.
+    Otherwise, start the assignment phase.
     """
-    if proposal.relation.needs_supervisor:
-        review = start_supervisor_phase(proposal)
-    else:
-        review = start_assignment_phase(proposal)
+    if proposal.is_practice():
+        # These should never start a review
+        return None
+    if proposal.status != Proposal.DRAFT:
+        # This prevents double submissions
+        return None
 
-    return review
+    proposal.generate_pdf()
+
+    if proposal.relation.needs_supervisor:
+        return start_supervisor_phase(proposal)
+    elif proposal.is_pre_assessment:
+        return start_review_pre_assessment(proposal)
+    else:
+        return start_assignment_phase(proposal)
 
 
 def start_supervisor_phase(proposal):
