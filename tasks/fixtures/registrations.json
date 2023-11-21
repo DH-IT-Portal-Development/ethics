@@ -49,9 +49,9 @@
     "pk": 4,
     "fields": {
         "order": 4,
-        "description": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, E-prime, etc",
-        "description_nl": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, E-prime, etc",
-        "description_en": "behavioral- and/or reaction time registration using experiment software such as jsPsych, Zep, Presentation, E-prime, etc.",
+        "description": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, etc",
+        "description_nl": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, etc",
+        "description_en": "behavioral- and/or reaction time registration using experiment software such as jsPsych, Zep, Presentation, etc.",
         "is_local": true,
         "needs_details": false,
         "needs_kind": false,
