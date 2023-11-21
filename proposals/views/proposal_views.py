@@ -433,21 +433,20 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
     def is_supervisor_edit_phase(self):
         if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:
             return True
-
         return False
 
     def form_valid(self, form):
         """
-        Run the method for submitting this proposal and return a
-        response object.
+        Start a review for this proposal and return a response.
         """
         # We pick up the response from the base class first so that
         # the fields on the Submit page get saved correctly. In the end,
         # this is still an UpdateView
         success_response = super().form_valid(form)
         # We then defer all submission logic to the utility code.
-        # This function checks for practice proposals and starts the right
-        # kind of review for this proposal.
+        # Checks for practice proposals and starting the right
+        # kind of review happen over there.
+        proposal = form.instance
         start_review(proposal)
         return success_response
 
