@@ -326,7 +326,7 @@ def notify_secretary_all_decisions(review):
         + (reverse("reviews:close", args=[review.pk])),
     }
     msg_plain = render_to_string("mail/all_decisions_notify.txt", params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, ["fetc-gw@uu.nl"])
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [settings.EMAIL_FROM])
 
     # Reset the current language
     activate(current_language)
