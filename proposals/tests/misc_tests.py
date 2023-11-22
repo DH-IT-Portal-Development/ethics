@@ -10,10 +10,10 @@ from interventions.models import Intervention
 from observations.models import Observation
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment
-from .api.views import MyProposalsApiView
-from .copy import copy_proposal
-from .models import Proposal, Relation, Wmo, Institution
-from .utils import generate_ref_number, check_local_facilities, generate_revision_ref_number
+from proposals.api.views import MyProposalsApiView
+from proposals.copy import copy_proposal
+from proposals.models import Proposal, Relation, Wmo, Institution
+from proposals.utils import generate_ref_number, check_local_facilities, generate_revision_ref_number
 
 
 class BaseProposalTestCase(TestCase):
