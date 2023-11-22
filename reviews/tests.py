@@ -402,7 +402,7 @@ class ReviewCloseTestCase(
         )
         self.assertGreaterEqual(
             p.status,
-            p.SUBMITTED_TO_SUPERVISOR,
+            p.Statuses.SUBMITTED_TO_SUPERVISOR,
         )
 
     def test_decision(self):
@@ -425,7 +425,7 @@ class ReviewCloseTestCase(
         )
         self.assertEqual(
             self.proposal.status,
-            self.proposal.DECISION_MADE,
+            self.proposal.Statuses.DECISION_MADE,
         )
         self.assertEqual(
             self.proposal.status_review,
@@ -471,7 +471,7 @@ class ReviewCloseTestCase(
         # Assertions
         self.assertEqual(
             self.proposal.status,
-            self.proposal.DRAFT,
+            self.proposal.Statuses.DRAFT,
         )
         self.assertEqual(
             self.proposal.wmo.enforced_by_commission,

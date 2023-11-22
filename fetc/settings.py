@@ -152,8 +152,10 @@ MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
 # E-mail settings
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 2525
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = "email/"
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 2525
 EMAIL_FROM = 'T.D.Mees@uu.nl'
 EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
 

@@ -359,7 +359,7 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
 
             # Mark the proposal as finished
             proposal = form.instance.proposal
-            proposal.status = Proposal.DECISION_MADE
+            proposal.status = Proposal.Statuses.DECISION_MADE
             proposal.status_review = False
             proposal.date_reviewed = timezone.now()
             proposal.save()

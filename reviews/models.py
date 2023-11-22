@@ -95,7 +95,7 @@ class Review(models.Model):
                     # See comment above
                     from reviews.utils import notify_supervisor_nogo
                     notify_supervisor_nogo(last_decision)
-                    self.proposal.status = Proposal.DRAFT
+                    self.proposal.status = Proposal.Statuses.DRAFT
                     self.proposal.save()
             # For a review by commission:
             else:

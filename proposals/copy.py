@@ -29,7 +29,7 @@ def copy_proposal(original_proposal, is_revision, created_by_user):
         copy_proposal.reference_number = generate_ref_number()
 
     copy_proposal.created_by = created_by_user
-    copy_proposal.status = Proposal.DRAFT
+    copy_proposal.status = Proposal.Statuses.DRAFT
     copy_proposal.status_review = None
     copy_proposal.pdf = None
     copy_proposal.date_created = timezone.now()

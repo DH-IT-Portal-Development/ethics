@@ -264,7 +264,7 @@ van het FETC-GW worden opgenomen.')
 class ProposalStartPracticeForm(forms.Form):
     practice_reason = forms.ChoiceField(
         label=_('Ik maak een oefenaanvraag aan'),
-        choices=Proposal.PRACTICE_REASONS,
+        choices=Proposal.PracticeReasons.choices,
         widget=forms.RadioSelect())
 
 
@@ -302,7 +302,7 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         ).filter(
             Q(applicants=self.user, ) | Q(supervisor=self.user)
         ).filter(
-            Q(status=Proposal.DRAFT) | Q(status__gte=Proposal.DECISION_MADE)
+            Q(status=Proposal.Statuses.DRAFT) | Q(status__gte=Proposal.Statuses.DECISION_MADE)
         ).distinct()
 
 
@@ -346,7 +346,7 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
         # Those are eligible for revisions
         return Proposal.objects.filter(
             is_pre_assessment=False,
-            status=Proposal.DECISION_MADE,
+            status=Proposal.Statuses.DECISION_MADE,
             status_review=False,
             children__isnull=True,
         ).filter(

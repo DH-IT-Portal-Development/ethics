@@ -293,7 +293,7 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
         objects = Decision.objects.filter(
             go='',
             review__stage=Review.Stages.SUPERVISOR,
-            review__proposal__status=Proposal.SUBMITTED_TO_SUPERVISOR,
+            review__proposal__status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
             review__proposal__reviewing_committee=self.committee
         )
 
@@ -376,7 +376,7 @@ class ToConcludeReviewApiView(BaseReviewApiView):
         reviews = {}
         objects = Review.objects.filter(
             stage__gte=Review.Stages.CLOSING,
-            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__status__gte=Proposal.Statuses.SUBMITTED,
             proposal__date_confirmed=None,
             proposal__reviewing_committee=self.committee,
         ).filter(
@@ -463,7 +463,7 @@ class AllOpenReviewsApiView(BaseReviewApiView):
         objects = Review.objects.filter(
             stage__gte=Review.Stages.ASSIGNMENT,
             stage__lte=Review.Stages.CLOSING,
-            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__status__gte=Proposal.Statuses.SUBMITTED,
             proposal__reviewing_committee=self.committee,
         ).select_related(
             'proposal',
@@ -509,7 +509,7 @@ class AllReviewsApiView(BaseReviewApiView):
         reviews = OrderedDict()
         objects = Review.objects.filter(
             stage__gte=Review.Stages.ASSIGNMENT,
-            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__status__gte=Proposal.Statuses.SUBMITTED,
             proposal__reviewing_committee=self.committee,
         ).select_related(
             'proposal',

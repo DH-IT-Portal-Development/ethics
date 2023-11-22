@@ -113,7 +113,7 @@ class UserDetailView(GroupRequiredMixin, generic.DetailView):
         reviews = {}
         objects = Review.objects.filter(
             stage__gte=Review.Stages.ASSIGNMENT,
-            proposal__status__gte=Proposal.SUBMITTED,
+            proposal__status__gte=Proposal.Statuses.SUBMITTED,
             proposal__created_by=self.get_object()
         )
 
@@ -375,10 +375,10 @@ class UserAllowedMixin(SingleObjectMixin):
             commission |= get_user_model().objects.filter(
                 groups__name=settings.GROUP_GENERAL_CHAMBER)
 
-        if proposal.status >= Proposal.SUBMITTED:
+        if proposal.status >= Proposal.Statuses.SUBMITTED:
             if self.request.user not in commission:
                 raise PermissionDenied
-        elif proposal.status >= Proposal.SUBMITTED_TO_SUPERVISOR:
+        elif proposal.status >= Proposal.Statuses.SUBMITTED_TO_SUPERVISOR:
             if self.request.user not in supervisor:
                 raise PermissionDenied
         else:
@@ -432,10 +432,10 @@ class FormSetUserAllowedMixin(UserAllowedMixin):
                     groups__name=settings.GROUP_GENERAL_CHAMBER
                 )
 
-            if proposal.status >= Proposal.SUBMITTED:
+            if proposal.status >= Proposal.Statuses.SUBMITTED:
                 if self.request.user not in commission:
                     raise PermissionDenied
-            elif proposal.status >= Proposal.SUBMITTED_TO_SUPERVISOR:
+            elif proposal.status >= Proposal.Statuses.SUBMITTED_TO_SUPERVISOR:
                 if self.request.user not in supervisor:
                     raise PermissionDenied
             else:

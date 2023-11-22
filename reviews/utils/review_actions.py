@@ -265,7 +265,7 @@ class ChangeArchiveStatus(ReviewAction):
            review.proposal.embargo_end_date > datetime.date.today():
             return False
         
-        if review.proposal.status < Proposal.DECISION_MADE:
+        if review.proposal.status < Proposal.Statuses.DECISION_MADE:
             return False
 
         return True

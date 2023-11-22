@@ -33,7 +33,7 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
         else, start the Wmo application.
         """
         wmo = self.object
-        if wmo.status == Wmo.NO_WMO:
+        if wmo.status == Wmo.WMOStatuses.NO_WMO:
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
         else:
             return reverse('proposals:wmo_application', args=(wmo.pk,))
@@ -86,7 +86,7 @@ class WmoApplication(UpdateView):
     def get_next_url(self):
         """Continue to the definition of a Study if we have completed the Wmo application"""
         wmo = self.object
-        if wmo.status == Wmo.WAITING:
+        if wmo.status == Wmo.WMOStatuses.WAITING:
             return reverse('proposals:wmo_application', args=(wmo.pk,))
         else:
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
@@ -108,7 +108,7 @@ class PreAssessmentMixin(object):
     def get_next_url(self):
         """Different continue URL for pre-assessment Proposals"""
         wmo = self.object
-        if wmo.status == Wmo.NO_WMO:
+        if wmo.status == Wmo.WMOStatuses.NO_WMO:
             return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
         else:
             return reverse('proposals:wmo_application_pre', args=(wmo.pk,))
