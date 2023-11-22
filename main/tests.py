@@ -1,6 +1,7 @@
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, PermissionDenied
 from django.db import models
-from django.test import TestCase
+from django.test import TestCase, RequestFactory, Client
+from django.contrib.auth.models import AnonymousUser
 
 from .models import Setting
 from .utils import is_empty
@@ -36,7 +37,10 @@ class BaseViewTestCase():
             self.get_view_path(),
         )
         request.user = user
-        response = self.view(request, pk=self.review.pk)
+        try:
+            response = self.view(request, **self.get_view_args())
+        except PermissionDenied:
+            return False
         return response.status_code == 200
 
     def post(self, update_dict={}):

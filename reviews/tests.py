@@ -320,6 +320,9 @@ class ReviewCloseTestCase(
         pk = self.review.pk
         return f"/reviews/close/{pk}/"
 
+    def get_view_args(self):
+        return {"pk": self.review.pk}
+
     def test_access(self):
         """Check this view is only accessible to secretary users"""
         self.assertEqual(
