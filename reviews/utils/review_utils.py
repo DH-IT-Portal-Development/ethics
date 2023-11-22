@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
-from main.models import YES, DOUBT
+from main.models import YesNoDoubt
 from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
@@ -338,7 +338,7 @@ def auto_review(proposal: Proposal):
         if study.legally_incapable:
             reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
 
-        if study.deception in [YES, DOUBT]:
+        if study.deception in [YesNoDoubt.YES, DOUBT]:
             reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
 
         if study.hierarchy:
@@ -353,11 +353,11 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.stressful in [YES, DOUBT]:
+        if study.stressful in [YesNoDoubt.YES, DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
-        if study.risk in [YES, DOUBT]:
+        if study.risk in [YesNoDoubt.YES, DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
 fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn.'))
 

@@ -13,7 +13,7 @@ from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 mark_safe_lazy = lazy(mark_safe, str)
 
-from main.models import YES, YES_NO_DOUBT
+from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
@@ -727,7 +727,7 @@ class Wmo(models.Model):
         _('Vindt de dataverzameling plaats binnen het UMC Utrecht of \
 andere instelling waar toetsing door een METC verplicht is gesteld?'),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True,
         default=None,
     )
@@ -756,7 +756,7 @@ aan medische kennis die ook geldend is voor populaties buiten de directe \
 onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk \
 onderzoek, 2005, ccmo.nl)'),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True,
     )
 
@@ -803,7 +803,7 @@ bij een METC?'),
         super(Wmo, self).save(*args, **kwargs)
 
     def update_status(self):
-        if self.metc == YES or self.is_medical == YES or self.enforced_by_commission:
+        if self.metc == YesNoDoubt.YES or self.is_medical == YesNoDoubt.YES or self.enforced_by_commission:
             if self.metc_decision and self.metc_decision_pdf:
                 self.status = self.JUDGED
             else:

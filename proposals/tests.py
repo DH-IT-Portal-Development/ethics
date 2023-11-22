@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 
-from main.models import Setting, YES, NO
+from main.models import Setting, YesNoDoubt.YES, NO
 from interventions.models import Intervention
 from observations.models import Observation
 from tasks.models import Session, Task, Registration
@@ -139,7 +139,7 @@ class ProposalTestCase(BaseProposalTestCase):
         proposal = self.p1
         self.assertEqual(proposal.status, Proposal.DRAFT)
 
-        wmo = Wmo.objects.create(proposal=proposal, metc=YES)
+        wmo = Wmo.objects.create(proposal=proposal, metc=YesNoDoubt.YES)
         self.assertEqual(proposal.wmo.status, Wmo.WAITING)
         wmo.metc = NO
         wmo.save()
@@ -281,7 +281,7 @@ class WmoTestCase(BaseProposalTestCase):
     def test_status(self):
         self.assertEqual(self.wmo.status, Wmo.NO_WMO)
 
-        self.wmo.metc = YES
+        self.wmo.metc = YesNoDoubt.YES
         self.wmo.save()
 
         self.assertEqual(self.wmo.status, Wmo.WAITING)

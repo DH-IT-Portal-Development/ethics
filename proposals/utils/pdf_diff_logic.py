@@ -286,9 +286,9 @@ class RowValue:
         return output
 
     def yes_no_doubt(self, value):
-        from main.models import YES_NO_DOUBT
+        from main.models import YesNoDoubt
 
-        d = dict(YES_NO_DOUBT)
+        d = dict(YesNoDoubt.choices)
         return d[value]
 
 

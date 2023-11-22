@@ -8,7 +8,7 @@ from django.test import TestCase, Client, RequestFactory
 
 from .models import Review, Decision
 from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
-from main.models import YES, NO, DOUBT
+from main.models import YesNoDoubt
 from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
@@ -291,13 +291,13 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 5)
 
-        self.study.stressful = YES
+        self.study.stressful = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
 
-        self.study.risk = YES
+        self.study.risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)

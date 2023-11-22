@@ -6,7 +6,7 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 
-from main.models import YES, DOUBT
+from main.models import YesNoDoubt
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from main.utils import get_secretary
 
@@ -139,8 +139,8 @@ def check_wmo(request):
     """
     This call checks which WMO message should be generated.
     """
-    is_metc = request.POST.get('metc') == YES
-    is_medical = request.POST.get('medical') == YES
+    is_metc = request.POST.get('metc') == YesNoDoubt.YES
+    is_medical = request.POST.get('medical') == YesNoDoubt.YES
 
     doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT
 

@@ -13,7 +13,7 @@ from datetime import timedelta
 mark_safe_lazy = lazy(mark_safe, str)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
-from main.models import DOUBT, NO, YES, YES_NO_DOUBT
+from main.models import YesNoDoubt
 from main.utils import YES_NO, get_users_as_list
 from .field import ParentChoiceModelField
 from .models import Proposal, Relation, Wmo
@@ -412,9 +412,9 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         """
         super(WmoForm, self).__init__(*args, **kwargs)
         self.fields['metc'].empty_label = None
-        self.fields['metc'].choices = YES_NO_DOUBT
+        self.fields['metc'].choices = YesNoDoubt.choices
         self.fields['is_medical'].empty_label = None
-        self.fields['is_medical'].choices = YES_NO_DOUBT
+        self.fields['is_medical'].choices = YesNoDoubt.choices
 
     def clean(self):
         """
@@ -429,13 +429,13 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
                                      'gaan.'))
 
         self.check_dependency(cleaned_data, 'metc', 'metc_details',
-                              f1_value=YES)
+                              f1_value=YesNoDoubt.YES)
         self.check_dependency(cleaned_data, 'metc', 'metc_institution',
-                              f1_value=YES,
+                              f1_value=YesNoDoubt.YES,
                               error_message=_(
                                   'Je dient een instelling op te geven.'))
         self.check_dependency_list(cleaned_data, 'metc', 'is_medical',
-                                   f1_value_list=[NO, DOUBT])
+                                   f1_value_list=[YesNoDoubt.NO, YesNoDoubt.DOUBT])
 
 
 class WmoCheckForm(forms.ModelForm):
@@ -455,7 +455,7 @@ class WmoCheckForm(forms.ModelForm):
         """
         super(WmoCheckForm, self).__init__(*args, **kwargs)
         self.fields['is_medical'].empty_label = None
-        self.fields['is_medical'].choices = YES_NO_DOUBT
+        self.fields['is_medical'].choices = YesNoDoubt.choices
 
 
 class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
