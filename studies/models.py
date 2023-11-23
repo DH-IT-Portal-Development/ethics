@@ -136,14 +136,6 @@ class Study(models.Model):
     A model to store a study within a Proposal.
     A Study consists of participant details, experiment design and consent forms.
     """
-    OBSERVATION = 0
-    INTERVENTION = 1
-    SESSIONS = 2
-    DESIGNS = (
-        (OBSERVATION, _('Observatieonderzoek')),
-        (INTERVENTION, _('Interventieonderzoek')),
-        (SESSIONS, _('Taakonderzoek en interviews')),
-    )
 
     order = models.PositiveIntegerField()
     name = models.CharField(
