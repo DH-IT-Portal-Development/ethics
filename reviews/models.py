@@ -117,7 +117,7 @@ class Review(models.Model):
             return _("Onbekend")
 
         # Get the human readable string
-        continuation = dict(self.Continuations.choices)[self.continuation]
+        continuation = self.Continuations(self.continuation).label
 
         if self.proposal.has_minor_revision:
             continuation += str(_(', met revisie'))

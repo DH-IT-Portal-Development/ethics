@@ -288,8 +288,7 @@ class RowValue:
     def yes_no_doubt(self, value):
         from main.models import YesNoDoubt
 
-        d = dict(YesNoDoubt.choices)
-        return d[value]
+        return YesNoDoubt(value).label
 
 
 class SubTitle:
