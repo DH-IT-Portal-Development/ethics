@@ -160,7 +160,7 @@
 <span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
 <span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="k">import</span> <span class="n">python_2_unicode_compatible</span>
 
-<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YesNoDoubt.choices</span>
+<span class="kn">from</span> <span class="nn">core.models</span> <span class="k">import</span> <span class="n">YES_NO_DOUBT</span>
 <span class="kn">from</span> <span class="nn">core.validators</span> <span class="k">import</span> <span class="n">validate_pdf_or_doc</span>
 <span class="kn">from</span> <span class="nn">proposals.models</span> <span class="k">import</span> <span class="n">Proposal</span>
 
@@ -312,7 +312,7 @@
 <span class="s1">of zou u de vraag ook kunnen beantwoorden door volwassen deelnemers </span><span class="se">\</span>
 <span class="s1">te testen?&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">choices</span><span class="o">=</span><span class="n">YesNoDoubt.choices</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">necessity_reason</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Leg uit waarom&#39;</span><span class="p">),</span>
@@ -385,7 +385,7 @@
 <span class="s1">geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: </span><span class="se">\</span>
 <span class="s1">het gaat hierbij niet om fillers.&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">choices</span><span class="o">=</span><span class="n">YesNoDoubt.choices</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">deception_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Geef een toelichting en beschrijf hoe en wanneer de deelnemer </span><span class="se">\</span>
@@ -398,7 +398,7 @@
 <span class="s1">uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of </span><span class="se">\</span>
 <span class="s1">(heel) saaie taken.&#39;</span><span class="p">),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">choices</span><span class="o">=</span><span class="n">YesNoDoubt.choices</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">negativity_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht uw antwoord toe.&#39;</span><span class="p">),</span>
@@ -417,7 +417,7 @@
 <span class="s1">tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade </span><span class="se">\</span>
 <span class="s1">door het onderzoek.&#39;</span><span class="p">)),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">choices</span><span class="o">=</span><span class="n">YesNoDoubt.choices</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">stressful_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht uw antwoord toe. Geef concrete voorbeelden van de relevante </span><span class="se">\</span>
@@ -447,7 +447,7 @@
 <span class="s1">inspanning; dit alles, waar relevant, onder begeleiding van adequaat </span><span class="se">\</span>
 <span class="s1">geschoolde specialisten).&#39;</span><span class="p">)),</span>
         <span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">choices</span><span class="o">=</span><span class="n">YesNoDoubt.choices</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">YES_NO_DOUBT</span><span class="p">,</span>
         <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">risk_details</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span>
         <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Licht toe&#39;</span><span class="p">),</span>
