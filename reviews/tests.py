@@ -247,8 +247,8 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, False)  # no go
 
         notify_secretary(decisions[1])
-        self.assertEqual(len(mail.outbox), 3)
-        self.assertIn(c, mail.outbox[2].body)
+        self.assertEqual(len(mail.outbox), 4)
+        self.assertIn(c, mail.outbox[3].body)
 
         decisions[1].go = Decision.APPROVED
         decisions[1].save()

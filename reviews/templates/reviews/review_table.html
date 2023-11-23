@@ -14,7 +14,7 @@
     <tbody>
         {% for decision in review.decision_set.all %}
         <tr>
-            <td>{{ decision.reviewer }}</td>
+            <td>{{ decision.reviewer.get_full_name }}</td>
             <td>{{ decision.get_go_display|default:_("open") }}</td>
             <td data-order="{{ decision.date_decision|date:'c' }}">{{ decision.date_decision|date:"j F Y, G:i" }}</td>
             <td>{{ decision.comments }}</td>
