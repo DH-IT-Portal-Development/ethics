@@ -14,12 +14,6 @@
     - {{ block.super }}
 {% endblock %}
 
-{% block html_head %}
-    {% if is_revision or is_amendment %}
-        <script src="{% static 'proposals/js/copy.js' %}"></script>
-    {% endif %}
-{% endblock %}
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
