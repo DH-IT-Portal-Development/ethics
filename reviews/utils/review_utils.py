@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate, get_language, ugettext_lazy as _
 from django.utils import timezone
 
 from main.models import YesNoDoubt
@@ -68,8 +68,15 @@ def start_supervisor_phase(proposal):
         params['creator'] = proposal.created_by.get_full_name()
         msg_plain = render_to_string('mail/concept_other_applicants.txt', params)
         msg_html = render_to_string('mail/concept_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by, proposal.supervisor]
+
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_to_remove = [proposal.supervisor]
         other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
+
         send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     subject = _('FETC-GW {}: beoordelen als eindverantwoordelijke'.format(reference))
@@ -148,10 +155,15 @@ def start_assignment_phase(proposal):
         else:
             msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
             msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by]
-        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
 
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_emails = [applicant.email for applicant in
+                             proposal.applicants.all()]
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, applicants_emails, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -303,6 +315,33 @@ def notify_secretary(decision):
     }
     msg_plain = render_to_string('mail/decision_notify.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
+
+def notify_secretary_all_decisions(review):
+    """
+    Notifies a secretary all Decisions have been made for a certain review
+    """
+    # Change language to Dutch for this e-mail, but save the current language to reset it later
+    current_language = get_language()
+    activate("nl")
+
+    secretary = get_secretary()
+    subject = "FETC-GW {}: alle beoordelingen toegevoegd".format(
+        review.proposal.committee_prefixed_refnum(),
+    )
+    params = {
+        "secretary": secretary.get_full_name(),
+        "review": review,
+        "decisions": review.decision_set.all(),
+        "review_detail_page": settings.BASE_URL
+        + (reverse("reviews:detail", args=[review.pk])),
+        "close_review_page": settings.BASE_URL
+        + (reverse("reviews:close", args=[review.pk])),
+    }
+    msg_plain = render_to_string("mail/all_decisions_notify.txt", params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [settings.EMAIL_FROM])
+
+    # Reset the current language
+    activate(current_language)
 
 
 def notify_supervisor_nogo(decision):
