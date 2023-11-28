@@ -1014,12 +1014,12 @@ def create_context_pdf(context, model):
         sections.append(WMOSection(model.wmo))
 
         if not model.is_pre_assessment:
-            if model.wmo.status != model.wmo.NO_WMO:
+            if model.wmo.status != model.wmo.WMOStatuses.NO_WMO:
                 sections.append(METCSection(model.wmo))
 
             sections.append(TrajectoriesSection(model))
 
-            if model.wmo.status == model.wmo.NO_WMO:
+            if model.wmo.status == model.wmo.WMOStatuses.NO_WMO:
                 for study in model.study_set.all():
                     sections.append(StudySection(study))
                     if study.has_intervention:

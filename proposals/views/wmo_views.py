@@ -142,7 +142,7 @@ def check_wmo(request):
     is_metc = request.POST.get('metc') == YesNoDoubt.YES
     is_medical = request.POST.get('medical') == YesNoDoubt.YES
 
-    doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT
+    doubt = request.POST.get('metc') == YesNoDoubt.DOUBT or request.POST.get('medical') == YesNoDoubt.DOUBT
 
     # Default message: OK.
     message = _('Je onderzoek hoeft niet te worden beoordeeld door de METC.')

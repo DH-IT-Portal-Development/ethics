@@ -141,7 +141,7 @@ class ProposalTestCase(BaseProposalTestCase):
 
         wmo = Wmo.objects.create(proposal=proposal, metc=YesNoDoubt.YES)
         self.assertEqual(proposal.wmo.status, Wmo.WMOStatuses.WAITING)
-        wmo.metc = NO
+        wmo.metc = YesNoDoubt.NO
         wmo.save()
         self.assertEqual(proposal.wmo.status, Wmo.WMOStatuses.NO_WMO)
         #self.assertEqual(proposal.continue_url(), '/studies/create/1/')
@@ -276,7 +276,7 @@ class ProposalsViewTestCase(BaseProposalTestCase):
 class WmoTestCase(BaseProposalTestCase):
     def setUp(self):
         super(WmoTestCase, self).setUp()
-        self.wmo = Wmo.objects.create(proposal=self.p1, metc=NO)
+        self.wmo = Wmo.objects.create(proposal=self.p1, metc=YesNoDoubt.NO)
 
     def test_status(self):
         self.assertEqual(self.wmo.status, Wmo.WMOStatuses.NO_WMO)

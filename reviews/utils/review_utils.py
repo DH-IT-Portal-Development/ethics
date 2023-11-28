@@ -46,7 +46,7 @@ def start_supervisor_phase(proposal):
     review.save()
 
     proposal.date_submitted_supervisor = timezone.now()
-    proposal.status = proposal.SUBMITTED_TO_SUPERVISOR
+    proposal.status = proposal.Statuses.SUBMITTED_TO_SUPERVISOR
     proposal.save()
 
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
@@ -114,7 +114,7 @@ def start_assignment_phase(proposal):
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()

@@ -104,7 +104,7 @@ class BaseReviewTestCase(TestCase):
         )
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
-            metc=NO,
+            metc=YesNoDoubt.NO,
         )
         self.study = Study.objects.create(
             proposal=self.proposal,
@@ -267,7 +267,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-        self.study.deception = DOUBT
+        self.study.deception = YesNoDoubt.DOUBT
         self.study.save()
 
         reasons = auto_review(self.proposal)
