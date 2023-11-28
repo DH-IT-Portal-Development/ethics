@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 16:02+0100\n"
+"POT-Creation-Date: 2023-11-28 14:55+0100\n"
 "PO-Revision-Date: 2023-11-07 10:36+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -186,7 +186,7 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:11 main/forms/conditional_form.py:20
 #: main/forms/conditional_form.py:29 main/forms/conditional_form.py:38
 #: main/forms/conditional_form.py:48 main/forms/mixins.py:83
-#: proposals/forms.py:570 proposals/forms.py:653 proposals/forms.py:668
+#: proposals/forms.py:544 proposals/forms.py:627 proposals/forms.py:642
 #: studies/forms.py:104 tasks/forms.py:87
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -294,7 +294,7 @@ msgstr "Phase"
 #: proposals/api/views.py:92 proposals/api/views.py:122
 #: proposals/api/views.py:172
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:102
-#: proposals/templates/proposals/vue_templates/proposal_list.html:153
+#: proposals/templates/proposals/vue_templates/proposal_list.html:157
 #: reviews/api/views.py:49 reviews/api/views.py:280 reviews/api/views.py:342
 #: reviews/templates/reviews/committee_members_workload.html:26
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
@@ -328,7 +328,7 @@ msgstr "Conclusion"
 msgid "Acties"
 msgstr "Actions"
 
-#: main/templates/auth/user_detail.html:75 reviews/models.py:140
+#: main/templates/auth/user_detail.html:75 reviews/models.py:142
 msgid ", met revisie"
 msgstr ", with revision"
 
@@ -823,7 +823,7 @@ msgstr "Log out"
 
 #: main/templates/registration/logged_out.html:12
 msgid "Je bent succesvol uitgelogd."
-msgstr ""
+msgstr "You have logged out succesfully"
 
 #: main/templates/registration/logged_out.html:17
 #, python-format
@@ -850,7 +850,7 @@ msgid "Wachtwoord"
 msgstr "Password"
 
 #: main/templatetags/compare_tags.py:80
-#: proposals/templates/proposals/vue_templates/proposal_list.html:49
+#: proposals/templates/proposals/vue_templates/proposal_list.html:51
 #: reviews/templates/reviews/review_detail_sidebar.html:34
 #: reviews/templates/reviews/simple_compare_link.html:8
 #: reviews/templates/reviews/vue_templates/decision_list.html:53
@@ -1080,7 +1080,7 @@ msgstr "Date reviewed"
 #: proposals/api/views.py:96 proposals/api/views.py:134
 #: proposals/api/views.py:155
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:71
-#: proposals/templates/proposals/vue_templates/proposal_list.html:108
+#: proposals/templates/proposals/vue_templates/proposal_list.html:112
 msgid "Laatst bijgewerkt"
 msgstr "Last edited"
 
@@ -1097,7 +1097,7 @@ msgstr ""
 "Are there any other researchers involved <strong>outside</strong> the above-"
 "mentioned institutes? "
 
-#: proposals/forms.py:64 proposals/forms.py:280 proposals/validators.py:25
+#: proposals/forms.py:64 proposals/validators.py:25
 msgid "Er bestaat al een aanvraag met deze titel."
 msgstr "There is an existing application with this title."
 
@@ -1161,33 +1161,19 @@ msgstr ""
 msgid "Ik maak een oefenaanvraag aan"
 msgstr "I am creating a practice application"
 
-#: proposals/forms.py:286 proposals/models.py:546
+#: proposals/forms.py:281 proposals/models.py:546
 msgid "Te kopiëren aanvraag"
 msgstr "Application to be copied"
 
-#: proposals/forms.py:288 proposals/models.py:548
+#: proposals/forms.py:283 proposals/models.py:548
 msgid "Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
-#: proposals/forms.py:328 proposals/forms.py:363
-msgid "Je kan de titel van je aanvraag nu, indien nodig, wijzigen."
-msgstr "You can, if necessary, change the title of your application here."
-
-#: proposals/forms.py:330 proposals/forms.py:365
-msgid ""
-"De titel die je hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer "
-"de aanvraag is goedgekeurd, ook voor alle medewerkers die in het archief van "
-"deze portal kijken."
-msgstr ""
-"The title you submit here will be visible to the FEtC-H members and, if the "
-"application is approved, also to employees viewing the archive of this "
-"portal."
-
-#: proposals/forms.py:337
+#: proposals/forms.py:321
 msgid "Te reviseren aanvraag"
 msgstr "Application to be revised"
 
-#: proposals/forms.py:338
+#: proposals/forms.py:322
 msgid ""
 "Dit veld toont enkel ingediende, (nog) niet goedgekeurde aanvragen waar jij "
 "een medeuitvoerende bent."
@@ -1195,70 +1181,70 @@ msgstr ""
 "This field only shows submitted applications that have not been approved "
 "(yet) in which you are involved."
 
-#: proposals/forms.py:372
+#: proposals/forms.py:346
 msgid "Te amenderen aanvraag"
 msgstr "Application to be amended"
 
-#: proposals/forms.py:373
+#: proposals/forms.py:347
 msgid ""
 "Dit veld toont enkel goedgekeurde aanvragen waar je zelf een medeuitvoerende "
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:428 proposals/forms.py:558 proposals/forms.py:587
-#: proposals/forms.py:701
+#: proposals/forms.py:402 proposals/forms.py:532 proposals/forms.py:561
+#: proposals/forms.py:675
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:436
+#: proposals/forms.py:410
 msgid "Je dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:494
+#: proposals/forms.py:468
 msgid "In dit geval is een beslissing van een METC vereist"
 msgstr "In this case, a decision by a METC is required"
 
-#: proposals/forms.py:502
+#: proposals/forms.py:476
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:504
+#: proposals/forms.py:478
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:506
+#: proposals/forms.py:480
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:508
+#: proposals/forms.py:482
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:510
+#: proposals/forms.py:484
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:512
+#: proposals/forms.py:486
 msgid "Naam traject 6"
 msgstr "Title of trajectory 6"
 
-#: proposals/forms.py:514
+#: proposals/forms.py:488
 msgid "Naam traject 7"
 msgstr "Title of trajectory 7"
 
-#: proposals/forms.py:516
+#: proposals/forms.py:490
 msgid "Naam traject 8"
 msgstr "Title of trajectory 8"
 
-#: proposals/forms.py:518
+#: proposals/forms.py:492
 msgid "Naam traject 9"
 msgstr "Title of trajectory 9"
 
-#: proposals/forms.py:520
+#: proposals/forms.py:494
 msgid "Naam traject 10"
 msgstr "Title of trajectory 10"
 
-#: proposals/forms.py:564
+#: proposals/forms.py:538
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1266,19 +1252,19 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:598
+#: proposals/forms.py:572
 msgid "Nieuwe beoogde startdatum"
 msgstr "New intended start date"
 
-#: proposals/forms.py:660
+#: proposals/forms.py:634
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:664
+#: proposals/forms.py:638
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: proposals/forms.py:676
+#: proposals/forms.py:650
 msgid ""
 "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar "
 "van vandaag."
@@ -1286,7 +1272,7 @@ msgstr ""
 "The embargo-period can last a maximum of 2 years. Pick a date within 2 years "
 "from today."
 
-#: proposals/forms.py:707
+#: proposals/forms.py:681
 msgid "Vul in in welke talen de formulieren worden vertaald."
 msgstr "Please fill in the languages"
 
@@ -1635,7 +1621,7 @@ msgstr ""
 "proposals."
 
 #: proposals/models.py:430 proposals/utils/pdf_diff_logic.py:990
-#: reviews/models.py:189
+#: reviews/models.py:191
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1701,7 +1687,7 @@ msgstr ""
 
 #: proposals/models.py:525
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:115
-#: proposals/templates/proposals/vue_templates/proposal_list.html:166
+#: proposals/templates/proposals/vue_templates/proposal_list.html:170
 msgid "Promotor/Begeleider"
 msgstr "Promotor/Supervisor"
 
@@ -1914,14 +1900,14 @@ msgid "Weet je zeker dat je de aanvraag <em>%(title)s</em> wilt verwijderen?"
 msgstr "Are you sure you want to delete the application <em>%(title)s</em>?"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:19
-#: proposals/templates/proposals/vue_templates/proposal_list.html:64
+#: proposals/templates/proposals/vue_templates/proposal_list.html:66
 #: tasks/templates/tasks/session_confirm_delete.html:18
 #: tasks/templates/tasks/task_confirm_delete.html:17
 msgid "Verwijderen"
 msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:21
-#: proposals/templates/proposals/proposal_copy.html:99
+#: proposals/templates/proposals/proposal_copy.html:93
 #: tasks/templates/tasks/session_confirm_delete.html:19
 #: tasks/templates/tasks/task_confirm_delete.html:18
 msgid "Annuleren"
@@ -1941,21 +1927,21 @@ msgstr ""
 "    "
 
 #: proposals/templates/proposals/proposal_copy.html:8
-#: proposals/templates/proposals/proposal_copy.html:28
+#: proposals/templates/proposals/proposal_copy.html:22
 msgid "Revisie starten"
 msgstr "Start a revision"
 
 #: proposals/templates/proposals/proposal_copy.html:10
-#: proposals/templates/proposals/proposal_copy.html:30
+#: proposals/templates/proposals/proposal_copy.html:24
 msgid "Amendement aanmaken"
 msgstr "Create an amendment"
 
 #: proposals/templates/proposals/proposal_copy.html:12
-#: proposals/templates/proposals/proposal_copy.html:32
+#: proposals/templates/proposals/proposal_copy.html:26
 msgid "Een geheel nieuwe aanvraag indienen op basis van een oude studie"
 msgstr "Submit an entirely new application from a copy of an old application"
 
-#: proposals/templates/proposals/proposal_copy.html:37
+#: proposals/templates/proposals/proposal_copy.html:31
 msgid ""
 "Je kan hier op basis van de vorige versie van een aanvraag een revisie "
 "starten. Alleen studies die door de commissie als 'revisie noodzakelijk' "
@@ -1965,7 +1951,7 @@ msgstr ""
 "application. Only applications that have been marked as 'revision necessary' "
 "by the committee can be selected here. "
 
-#: proposals/templates/proposals/proposal_copy.html:43
+#: proposals/templates/proposals/proposal_copy.html:37
 msgid ""
 "Als je supervisor je heeft gevraagd revisies te maken, dien je je huidige "
 "versie aan te passen. (Als je dat niet kan, vraag dan aan je supervisor of "
@@ -1975,7 +1961,7 @@ msgstr ""
 "original application. (If you can't, ask your supervisor if they have "
 "correctly marked your study as 'revision necessary') "
 
-#: proposals/templates/proposals/proposal_copy.html:50
+#: proposals/templates/proposals/proposal_copy.html:44
 msgid ""
 "Let op! Er kan maar één revisie tegelijk bestaan. Mocht je jouw aanvraag "
 "hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
@@ -1985,7 +1971,7 @@ msgstr ""
 "application in the list of options on this page, please check if your "
 "application is not already in your list of draft applications."
 
-#: proposals/templates/proposals/proposal_copy.html:58
+#: proposals/templates/proposals/proposal_copy.html:52
 msgid ""
 "Je kan hier op basis van een reeds goedgekeurde aanvraag een amendement "
 "indienen. Je studie moet eerst goedgekeurd en afgehandeld zijn voordat die "
@@ -1995,7 +1981,7 @@ msgstr ""
 "been approved. Your application must have been approved by the committee "
 "before it can be selected here. "
 
-#: proposals/templates/proposals/proposal_copy.html:64
+#: proposals/templates/proposals/proposal_copy.html:58
 msgid ""
 "Let op! Er kan maar één amendement tegelijk bestaan. Mocht je jouw aanvraag "
 "hier niet zien als optie om te reviseren, bekijk dan of je aanvraag niet al "
@@ -2006,14 +1992,14 @@ msgstr ""
 "check if your application is not already in the your list of draft "
 "applications."
 
-#: proposals/templates/proposals/proposal_copy.html:74
+#: proposals/templates/proposals/proposal_copy.html:68
 msgid ""
 "Je kan hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren "
 "aangepast worden."
 msgstr ""
 "Here you can copy an application. All fields can be edited after copying."
 
-#: proposals/templates/proposals/proposal_copy.html:77
+#: proposals/templates/proposals/proposal_copy.html:71
 msgid ""
 "Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe aanvraag "
 "gaat doen op basis van een eerder uitgevoerde aanvraag. Aanvragen t.b.v. "
@@ -2022,7 +2008,7 @@ msgstr ""
 "This page is only intended for creating an entirely new application based on "
 "a previous application. Applications for grant applications cannot be copied."
 
-#: proposals/templates/proposals/proposal_copy.html:83
+#: proposals/templates/proposals/proposal_copy.html:77
 #, python-format
 msgid ""
 "Als je gevraagd is om een revisie te maken van een eerder ingediende "
@@ -2031,7 +2017,7 @@ msgstr ""
 "If you have been asked to revise a previously submitted application, you can "
 "do so <a href=\"%(revision_url)s\">here</a>. "
 
-#: proposals/templates/proposals/proposal_copy.html:89
+#: proposals/templates/proposals/proposal_copy.html:83
 #, python-format
 msgid ""
 "Indien je wijzigingen hebt in een al goedgekeurde aanvraag die daarom "
@@ -2042,7 +2028,7 @@ msgstr ""
 "to be re-reviewed, please make an amendment <a "
 "href=\"%(amendment_url)s\">here</a>."
 
-#: proposals/templates/proposals/proposal_copy.html:101
+#: proposals/templates/proposals/proposal_copy.html:95
 msgid "Kopiëren"
 msgstr "Copy"
 
@@ -2279,13 +2265,13 @@ msgstr ""
 "different committee. If this is not the case, you are required to fill in "
 "the <a href=\"%(proposal_url)s\">full form</a>."
 
-#: proposals/templates/proposals/proposal_list.html:43
+#: proposals/templates/proposals/proposal_list.html:45
 #: proposals/templates/proposals/proposal_private_archive.html:43
 #: reviews/templates/reviews/action_explaination.html:19
 msgid "Uitleg"
 msgstr "Explanation"
 
-#: proposals/templates/proposals/proposal_list.html:47
+#: proposals/templates/proposals/proposal_list.html:49
 #: proposals/templates/proposals/proposal_private_archive.html:47
 #, python-format
 msgid ""
@@ -2295,7 +2281,7 @@ msgstr ""
 "Click <img src=\"%(img_next)s\" title=\"To next step\"> to move on to the "
 "next step in the progress."
 
-#: proposals/templates/proposals/proposal_list.html:54
+#: proposals/templates/proposals/proposal_list.html:56
 #: proposals/templates/proposals/proposal_private_archive.html:54
 #, python-format
 msgid ""
@@ -2307,7 +2293,7 @@ msgstr ""
 "differences between a previous version (only available for revisions/"
 "amendments)."
 
-#: proposals/templates/proposals/proposal_list.html:61
+#: proposals/templates/proposals/proposal_list.html:63
 #: proposals/templates/proposals/proposal_private_archive.html:61
 #, python-format
 msgid ""
@@ -2317,7 +2303,7 @@ msgstr ""
 "Click <img src=\"%(img_delete)s\" title=\"Delete\"> to delete your "
 "application."
 
-#: proposals/templates/proposals/proposal_list.html:68
+#: proposals/templates/proposals/proposal_list.html:70
 #: proposals/templates/proposals/proposal_private_archive.html:68
 #, python-format
 msgid ""
@@ -2328,6 +2314,14 @@ msgstr ""
 "application."
 
 #: proposals/templates/proposals/proposal_list.html:75
+msgid ""
+"Klik op <img src=\"%(img_revise)s\" title=\"Maak revisie\"> om een revisie "
+"aan te maken van je aanvraag."
+msgstr ""
+"Click <img src=\"%(img_revise)s\" title=\"Show\"> to create a revision "
+"for an application."
+
+#: proposals/templates/proposals/proposal_list.html:82
 #: proposals/templates/proposals/proposal_private_archive.html:75
 #, python-format
 msgid ""
@@ -2337,7 +2331,7 @@ msgstr ""
 "Click <img src=\"%(img_decide)s\" title=\"Decide\"> to make your decision "
 "(as a supervisor)."
 
-#: proposals/templates/proposals/proposal_list.html:82
+#: proposals/templates/proposals/proposal_list.html:89
 #: proposals/templates/proposals/proposal_private_archive.html:82
 #, python-format
 msgid ""
@@ -2347,7 +2341,7 @@ msgstr ""
 "Click <img src=\"%(img_hide)s\" title=\"Hide\"> to hide a submitted "
 "application from the archive."
 
-#: proposals/templates/proposals/proposal_list.html:88
+#: proposals/templates/proposals/proposal_list.html:95
 #: proposals/templates/proposals/proposal_private_archive.html:88
 #: reviews/templates/reviews/action_explaination.html:56
 #, python-format
@@ -3012,60 +3006,60 @@ msgstr ""
 "can be done after approval, or during a minimal revision."
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:43
-#: proposals/templates/proposals/vue_templates/proposal_list.html:73
+#: proposals/templates/proposals/vue_templates/proposal_list.html:75
 msgid "Inzien"
 msgstr "Show"
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:50
-#: proposals/templates/proposals/vue_templates/proposal_list.html:87
+#: proposals/templates/proposals/vue_templates/proposal_list.html:91
 msgid "Soort aanvraag"
 msgstr "Type of application"
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:57
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:65
-#: proposals/templates/proposals/vue_templates/proposal_list.html:94
-#: proposals/templates/proposals/vue_templates/proposal_list.html:102
+#: proposals/templates/proposals/vue_templates/proposal_list.html:98
+#: proposals/templates/proposals/vue_templates/proposal_list.html:106
 msgid "Besloten op"
 msgstr "Concluded on"
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:78
-#: proposals/templates/proposals/vue_templates/proposal_list.html:115
+#: proposals/templates/proposals/vue_templates/proposal_list.html:119
 msgid "Status"
 msgstr "State"
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:110
-#: proposals/templates/proposals/vue_templates/proposal_list.html:161
+#: proposals/templates/proposals/vue_templates/proposal_list.html:165
 msgid "Nog niet ingediend"
 msgstr "Not yet submitted"
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:129
-#: proposals/templates/proposals/vue_templates/proposal_list.html:180
+#: proposals/templates/proposals/vue_templates/proposal_list.html:184
 msgid "Route:"
 msgstr "Route:"
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:136
-#: proposals/templates/proposals/vue_templates/proposal_list.html:187
+#: proposals/templates/proposals/vue_templates/proposal_list.html:191
 #: reviews/templates/reviews/vue_templates/decision_list.html:185
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:128
 #: reviews/templates/reviews/vue_templates/review_list.html:190
 msgid "Indieners"
 msgstr "Applicants"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:41
+#: proposals/templates/proposals/vue_templates/proposal_list.html:43
 #: reviews/templates/reviews/vue_templates/decision_list.html:68
 #: reviews/templates/reviews/vue_templates/decision_list.html:71
 msgid "Beslissen"
 msgstr "Decide"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:60
+#: proposals/templates/proposals/vue_templates/proposal_list.html:62
 msgid "Naar volgende stap"
 msgstr "To next step"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:80
-msgid "Verberg"
-msgstr "Hide"
+#: proposals/templates/proposals/vue_templates/proposal_list.html:85
+msgid "Maak revisie"
+msgstr "Create revision"
 
-#: proposals/templates/proposals/vue_templates/proposal_list.html:139
+#: proposals/templates/proposals/vue_templates/proposal_list.html:143
 #: reviews/templates/reviews/vue_templates/decision_list.html:141
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:83
 #: reviews/templates/reviews/vue_templates/review_list.html:145
@@ -3118,7 +3112,7 @@ msgstr ""
 "This section was present in the original application, but was removed for "
 "the revision."
 
-#: proposals/utils/pdf_diff_logic.py:238 reviews/models.py:131
+#: proposals/utils/pdf_diff_logic.py:238 reviews/models.py:133
 msgid "Onbekend"
 msgstr "Unknown"
 
@@ -3355,11 +3349,11 @@ msgstr "Route"
 msgid "Start datum"
 msgstr "Start date review"
 
-#: reviews/forms.py:14 reviews/models.py:147
+#: reviews/forms.py:14 reviews/models.py:149
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/forms.py:15 reviews/models.py:146
+#: reviews/forms.py:15 reviews/models.py:148
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
@@ -3491,24 +3485,24 @@ msgstr "Post hoc negative advice by FETC-H"
 msgid "Niet verder in behandeling genomen"
 msgstr "Not to be assessed further"
 
-#: reviews/models.py:51 reviews/models.py:183
+#: reviews/models.py:51 reviews/models.py:185
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:148
+#: reviews/models.py:150
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:177
+#: reviews/models.py:179
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:178
+#: reviews/models.py:180
 msgid "niet goedgekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:179
+#: reviews/models.py:181
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -4234,31 +4228,31 @@ msgstr "FEtC-H {}: new application submitted"
 msgid "FETC-GW {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {}: new decision added"
 
-#: reviews/utils/review_utils.py:325
+#: reviews/utils/review_utils.py:352
 msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
-#: reviews/utils/review_utils.py:351
+#: reviews/utils/review_utils.py:378
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:354
+#: reviews/utils/review_utils.py:381
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:357
+#: reviews/utils/review_utils.py:384
 msgid ""
 "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
 msgstr ""
 "A hierarchal relationship between researcher(s) and participant(s) exists."
 
-#: reviews/utils/review_utils.py:360
+#: reviews/utils/review_utils.py:387
 msgid "Het onderzoek verzamelt bijzondere persoonsgegevens."
 msgstr "This study collects special or sensitive personal details."
 
-#: reviews/utils/review_utils.py:363
+#: reviews/utils/review_utils.py:390
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4266,7 +4260,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:369
+#: reviews/utils/review_utils.py:396
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
 "onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen "
@@ -4276,7 +4270,7 @@ msgstr ""
 "study, in part or in its entirety, is so burdensome that despite acquiring "
 "informed consent it might raise questions."
 
-#: reviews/utils/review_utils.py:373
+#: reviews/utils/review_utils.py:400
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan het onderzoek meer dan "
@@ -4286,7 +4280,7 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:380
+#: reviews/utils/review_utils.py:407
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4297,14 +4291,14 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:397
+#: reviews/utils/review_utils.py:424
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:401
+#: reviews/utils/review_utils.py:428
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4312,7 +4306,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:403
+#: reviews/utils/review_utils.py:430
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4322,11 +4316,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:408
+#: reviews/utils/review_utils.py:435
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:429
+#: reviews/utils/review_utils.py:456
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
