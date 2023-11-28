@@ -3,12 +3,14 @@ from datetime import date
 from django.contrib.auth.models import User, Group, AnonymousUser
 from django.conf import settings
 from django.test import TestCase
+from django.core.management import call_command
 
 from main.tests import BaseViewTestCase
 from main.models import Setting, YES, NO
 from proposals.models import Proposal, Wmo, Relation
 from studies.models import Study, Compensation
 from proposals.utils import generate_ref_number
+from reviews.models import Review
 
 from proposals.views.proposal_views import (
     ProposalSubmit,
@@ -76,30 +78,12 @@ class BaseProposalTestCase(TestCase):
 
     def setup_proposal(self):
 
-        self.proposal = Proposal.objects.create(
-            title='p1', reference_number=generate_ref_number(),
-            date_start=date.today(),
-            created_by=self.user,
-            supervisor=self.supervisor,
-            relation=Relation.objects.get(pk=4),
-            reviewing_committee=Group.objects.get(
-                name=settings.GROUP_LINGUISTICS_CHAMBER
-            ),
-            institution_id=1,
-        )
+        call_command("loaddata", "proposals/tests/test_proposals.json")
+        self.proposal = Proposal.objects.get(pk=1)
         self.proposal.applicants.add(self.user)
+        self.pre_assessment = Proposal.objects.get(pk=2)
+        self.pre_approval = Proposal.objects.get(pk=3)
         self.proposal.save()
-        self.proposal.wmo = Wmo.objects.create(
-            proposal=self.proposal,
-            metc=NO,
-        )
-        self.study = Study.objects.create(
-            proposal=self.proposal,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            )
-        )
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -108,7 +92,7 @@ class BaseProposalTestCase(TestCase):
         self.proposal.refresh_from_db()
 
 
-class BaseProposalSubmitTestCase(
+class ProposalSubmitTestCase(
         BaseViewTestCase,
         BaseProposalTestCase,
 ):
@@ -121,7 +105,17 @@ class BaseProposalSubmitTestCase(
     def get_view_args(self):
         return {"pk": self.proposal.pk}
 
+    def get_post_data(self):
+        return {
+            "inform_local_staff": True,
+            "embargo": True,
+            "comments": "asdf",
+            "embargo_end_date": "2025-01-01",
+        }
+
     def test_access(self,):
+        # NB: The proposal creator does not have access by default
+        # Be sure to add them to the applicants list as well.
         self.assertEqual(
             self.check_access(
                 self.proposal.created_by,
@@ -135,16 +129,78 @@ class BaseProposalSubmitTestCase(
             False
         )
 
-    def test_submission(self):
+    def test_submission_unsupervised(self):
+        """
+        Tests the following:
+        - An applicant can submit a proposal that has no errors
+        - Because there is no supervisor, a new review is created
+          in the assignment stage.
+        """
+        # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
             self.proposal.DRAFT,
         )
-        self.client.force_login(self.proposal.created_by)
-        form_values = {}
-        page = self.post(form_values)
+        self.assertEqual(
+            self.proposal.latest_review(),
+            None,
+        )
+        self.client.force_login(self.user)
+        page = self.post(
+            self.get_post_data(),
+            user=self.user,
+        )
         self.refresh()
+        # Post-submission tests
         self.assertNotEqual(
             self.proposal.status,
             self.proposal.DRAFT,
         )
+        self.assertNotEqual(
+            self.proposal.latest_review(),
+            None,
+        )
+        self.assertEqual(
+            self.proposal.latest_review().stage,
+            Review.ASSIGNMENT,
+        )
+
+    def test_proposal_supervised(self):
+        """
+        Tests the following:
+        - An applicant can submit a proposal that has no errors
+        - Because there is a supervisor, a new review is created
+          in the assignment stage.
+        """
+        self.proposal.relation = Relation.objects.get(pk=4)
+        self.proposal.supervisor = self.supervisor
+        self.proposal.save()
+        # Sanity checks to start
+        self.assertEqual(
+            self.proposal.status,
+            self.proposal.DRAFT,
+        )
+        self.assertEqual(
+            self.proposal.latest_review(),
+            None,
+        )
+        self.client.force_login(self.user)
+        page = self.post(
+            self.get_post_data(),
+            user=self.user,
+        )
+        self.refresh()
+        # Post-submission tests
+        self.assertNotEqual(
+            self.proposal.status,
+            self.proposal.DRAFT,
+        )
+        self.assertNotEqual(
+            self.proposal.latest_review(),
+            None,
+        )
+        self.assertEqual(
+            self.proposal.latest_review().stage,
+            Review.SUPERVISOR,
+        )
+
