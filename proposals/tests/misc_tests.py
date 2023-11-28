@@ -16,7 +16,7 @@ from proposals.models import Proposal, Relation, Wmo, Institution
 from proposals.utils import generate_ref_number, check_local_facilities, generate_revision_ref_number
 
 
-class BaseProposalTestCase(TestCase):
+class MiscProposalTestCase(TestCase):
     fixtures = ['relations', 'compensations', 'recruitments', 'settings',
                 'registrations', 'groups', 'institutions']
 
@@ -41,7 +41,7 @@ class BaseProposalTestCase(TestCase):
         self.p1.save()
 
 
-class ProposalTestCase(BaseProposalTestCase):
+class ProposalTestCase(MiscProposalTestCase):
     def test_reference_number(self):
         current_year = str(datetime.now().year)
 
@@ -222,7 +222,7 @@ class ProposalTestCase(BaseProposalTestCase):
         self.assertSetEqual(facs[Registration._meta.verbose_name], set([r.description for r in registrations]))
 
 
-class ProposalsViewTestCase(BaseProposalTestCase):
+class ProposalsViewTestCase(MiscProposalTestCase):
     def setUp(self):
         super(ProposalsViewTestCase, self).setUp()
         self.factory = RequestFactory()
@@ -273,7 +273,7 @@ class ProposalsViewTestCase(BaseProposalTestCase):
         )
 
 
-class WmoTestCase(BaseProposalTestCase):
+class WmoTestCase(MiscProposalTestCase):
     def setUp(self):
         super(WmoTestCase, self).setUp()
         self.wmo = Wmo.objects.create(proposal=self.p1, metc=NO)
@@ -297,7 +297,7 @@ class WmoTestCase(BaseProposalTestCase):
         self.assertEqual(self.wmo.status, Wmo.JUDGED)
 
 
-class CopyTestCase(BaseProposalTestCase):
+class CopyTestCase(MiscProposalTestCase):
 
     def setUp(self):
         super().setUp()
