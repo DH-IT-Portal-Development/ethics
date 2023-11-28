@@ -361,7 +361,10 @@ class ReviewCloseTestCase(
             "continuation": self.review.GO_POST_HOC,
         }
         self.client.force_login(self.secretary)
-        page = self.post(form_values)
+        page = self.post(
+            form_values,
+            user=self.secretary,
+        )
         self.refresh()
         # Assertions
         self.assertNotEqual(
@@ -386,7 +389,10 @@ class ReviewCloseTestCase(
             "continuation": self.review.LONG_ROUTE,
         }
         self.client.force_login(self.secretary)
-        page = self.post(form_values)
+        page = self.post(
+            form_values,
+            user=self.secretary,
+        )
         self.refresh()
         # Assertions
         self.assertEqual(
@@ -411,7 +417,10 @@ class ReviewCloseTestCase(
             "continuation": self.review.METC,
         }
         self.client.force_login(self.secretary)
-        self.post(form_values)
+        self.post(
+            form_values,
+            user=self.secretary,
+        )
         self.refresh()
         # Assertions
         self.assertEqual(
