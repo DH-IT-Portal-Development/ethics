@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, Group
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.conf import settings
 
-from main.models import Setting, YES, NO
+from main.models import Setting, YesNoDoubt
 from interventions.models import Intervention
 from observations.models import Observation
 from tasks.models import Session, Task, Registration
@@ -137,13 +137,13 @@ class ProposalTestCase(BaseProposalTestCase):
 
     def test_status(self):
         proposal = self.p1
-        self.assertEqual(proposal.status, Proposal.DRAFT)
+        self.assertEqual(proposal.status, Proposal.Statuses.DRAFT)
 
-        wmo = Wmo.objects.create(proposal=proposal, metc=YES)
-        self.assertEqual(proposal.wmo.status, Wmo.WAITING)
-        wmo.metc = NO
+        wmo = Wmo.objects.create(proposal=proposal, metc=YesNoDoubt.YES)
+        self.assertEqual(proposal.wmo.status, Wmo.WMOStatuses.WAITING)
+        wmo.metc = YesNoDoubt.NO
         wmo.save()
-        self.assertEqual(proposal.wmo.status, Wmo.NO_WMO)
+        self.assertEqual(proposal.wmo.status, Wmo.WMOStatuses.NO_WMO)
         #self.assertEqual(proposal.continue_url(), '/studies/create/1/')
 
         s = Study.objects.create(proposal=proposal, order=1)
@@ -276,25 +276,25 @@ class ProposalsViewTestCase(BaseProposalTestCase):
 class WmoTestCase(BaseProposalTestCase):
     def setUp(self):
         super(WmoTestCase, self).setUp()
-        self.wmo = Wmo.objects.create(proposal=self.p1, metc=NO)
+        self.wmo = Wmo.objects.create(proposal=self.p1, metc=YesNoDoubt.NO)
 
     def test_status(self):
-        self.assertEqual(self.wmo.status, Wmo.NO_WMO)
+        self.assertEqual(self.wmo.status, Wmo.WMOStatuses.NO_WMO)
 
-        self.wmo.metc = YES
+        self.wmo.metc = YesNoDoubt.YES
         self.wmo.save()
 
-        self.assertEqual(self.wmo.status, Wmo.WAITING)
+        self.assertEqual(self.wmo.status, Wmo.WMOStatuses.WAITING)
 
         self.wmo.metc_decision = True
         self.wmo.save()
 
-        self.assertEqual(self.wmo.status, Wmo.WAITING)
+        self.assertEqual(self.wmo.status, Wmo.WMOStatuses.WAITING)
 
         self.wmo.metc_decision_pdf = SimpleUploadedFile('test.pdf', b'contents')
         self.wmo.save()
 
-        self.assertEqual(self.wmo.status, Wmo.JUDGED)
+        self.assertEqual(self.wmo.status, Wmo.WMOStatuses.JUDGED)
 
 
 class CopyTestCase(BaseProposalTestCase):
@@ -304,7 +304,7 @@ class CopyTestCase(BaseProposalTestCase):
 
         self.wmo_1 = Wmo.objects.create(
             proposal=self.p1,
-            metc=Wmo.JUDGED,
+            metc=Wmo.WMOStatuses.JUDGED,
         )
 
         self.study_1 = Study.objects.create(

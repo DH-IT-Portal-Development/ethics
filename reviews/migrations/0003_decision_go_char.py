@@ -14,9 +14,9 @@ def forwards(apps, schema_editor):
         if decision.go is None:
             decision.go_char = ''
         elif decision.go:
-            decision.go_char = Decision.APPROVED
+            decision.go_char = Decision.Approval.APPROVED
         else:
-            decision.go_char = Decision.NOT_APPROVED
+            decision.go_char = Decision.Approval.NOT_APPROVED
 
         decision.save()
 
@@ -26,9 +26,9 @@ def backwards(apps, schema_editor):
         return
 
     for decision in apps.get_model('reviews', 'decision').objects.all():
-        if decision.go_char == Decision.APPROVED:
+        if decision.go_char == Decision.Approval.APPROVED:
             decision.go = True
-        elif decision.go_char == Decision.NOT_APPROVED:
+        elif decision.go_char == Decision.Approval.NOT_APPROVED:
             decision.go = False
         else:
             decision.go = None

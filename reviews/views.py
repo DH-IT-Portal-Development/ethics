@@ -143,7 +143,7 @@ class CommitteeMembersWorkloadView(
         open_decisions = (
             self.get_committee_decisions()
             .filter(
-                review__stage=Review.COMMISSION,
+                review__stage=Review.Stages.COMMISSION,
             )
             .order_by("reviewer", "review__date_start")
         )
@@ -160,7 +160,7 @@ class CommitteeMembersWorkloadView(
         base_filter = Q(
             decision__review__date_start__gt=self.start_date,
             decision__review__date_start__lt=self.end_date,
-            decision__review__stage__gt=Review.SUPERVISOR,
+            decision__review__stage__gt=Review.Stages.SUPERVISOR,
         )
         return reviewers.annotate(
             total=Count("decision", filter=base_filter),
@@ -353,20 +353,20 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
         else:
             # Directly mark this Proposal as closed: applicants should start a revision Proposal
             for decision in Decision.objects.filter(review=review):
-                decision.go = Decision.NEEDS_REVISION
+                decision.go = Decision.Approval.NEEDS_REVISION
                 decision.date_decision = timezone.now()
                 decision.save()
 
             # Mark the proposal as finished
             proposal = form.instance.proposal
-            proposal.status = Proposal.DECISION_MADE
+            proposal.status = Proposal.Statuses.DECISION_MADE
             proposal.status_review = False
             proposal.date_reviewed = timezone.now()
             proposal.save()
 
-            form.instance.continuation = Review.REVISION
+            form.instance.continuation = Review.Continuations.REVISION
             form.instance.date_end = timezone.now()
-            form.instance.stage = Review.CLOSED
+            form.instance.stage = Review.Stages.CLOSED
 
         return super(ReviewAssignView, self).form_valid(form)
 
@@ -434,13 +434,13 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         review = self.get_object()
 
         initial = super(ReviewCloseView, self).get_initial()
-        initial["continuation"] = Review.GO if review.go else Review.NO_GO
+        initial["continuation"] = Review.Continuations.GO if review.go else Review.Continuations.NO_GO
 
         if review.proposal.date_start and review.proposal.date_start < date.today():
             initial["continuation"] = (
-                Review.GO_POST_HOC
-                if initial["continuation"] == Review.GO
-                else Review.NO_GO_POST_HOC
+                Review.Continuations.GO_POST_HOC
+                if initial["continuation"] == Review.Continuations.GO
+                else Review.Continuations.NO_GO_POST_HOC
             )
 
         initial["in_archive"] = not review.proposal.is_pre_assessment
@@ -450,18 +450,18 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         proposal = form.instance.proposal
 
         if form.instance.continuation in [
-            Review.GO,
-            Review.NO_GO,
-            Review.GO_POST_HOC,
-            Review.NO_GO_POST_HOC,
-            Review.REVISION,
+            Review.Continuations.GO,
+            Review.Continuations.NO_GO,
+            Review.Continuations.GO_POST_HOC,
+            Review.Continuations.NO_GO_POST_HOC,
+            Review.Continuations.REVISION,
         ]:
             proposal.mark_reviewed(form.instance.continuation)
-        elif form.instance.continuation == Review.LONG_ROUTE:
+        elif form.instance.continuation == Review.Continuations.LONG_ROUTE:
             # Create a new review
             review = Review.objects.create(
                 proposal=proposal,
-                stage=Review.COMMISSION,
+                stage=Review.Stages.COMMISSION,
                 short_route=False,
                 date_start=timezone.now(),
             )
@@ -469,7 +469,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
             Decision.objects.create(review=review, reviewer=get_secretary())
             # Start the long review route
             start_review_route(review, get_reviewers(), False)
-        elif form.instance.continuation == Review.METC:
+        elif form.instance.continuation == Review.Continuations.METC:
             proposal.enforce_wmo()
 
         proposal.in_archive = form.cleaned_data["in_archive"]
@@ -479,7 +479,7 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         ]
         proposal.save()
 
-        form.instance.stage = Review.CLOSED
+        form.instance.stage = Review.Stages.CLOSED
 
         return super(ReviewCloseView, self).form_valid(form)
 

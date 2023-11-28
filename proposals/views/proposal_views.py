@@ -446,7 +446,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
             proposal = self.get_object()
             proposal.generate_pdf()
-            if not proposal.is_practice() and proposal.status == Proposal.DRAFT:
+            if not proposal.is_practice() and proposal.status == Proposal.Statuses.DRAFT:
                 start_review(proposal)
         return success_url
 
@@ -762,14 +762,14 @@ class ProposalCreatePractice(ProposalCreate):
     def get_form_kwargs(self):
         """Sets in_course as a form kwarg"""
         kwargs = super(ProposalCreatePractice, self).get_form_kwargs()
-        kwargs['in_course'] = self.kwargs['reason'] == Proposal.COURSE
+        kwargs['in_course'] = self.kwargs['reason'] == Proposal.PracticeReasons.COURSE
         return kwargs
 
     def form_valid(self, form):
         """Sets in_course and is_exploration"""
-        form.instance.in_course = self.kwargs['reason'] == Proposal.COURSE
+        form.instance.in_course = self.kwargs['reason'] == Proposal.PracticeReasons.COURSE
         form.instance.is_exploration = self.kwargs[
-                                           'reason'] == Proposal.EXPLORATION
+                                           'reason'] == Proposal.PracticeReasons.EXPLORATION
         return super(ProposalCreatePractice, self).form_valid(form)
 
 

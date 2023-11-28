@@ -6,7 +6,7 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 
-from main.models import YES, DOUBT
+from main.models import YesNoDoubt
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from main.utils import get_secretary
 
@@ -33,7 +33,7 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
         else, start the Wmo application.
         """
         wmo = self.object
-        if wmo.status == Wmo.NO_WMO:
+        if wmo.status == Wmo.WMOStatuses.NO_WMO:
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
         else:
             return reverse('proposals:wmo_application', args=(wmo.pk,))
@@ -86,7 +86,7 @@ class WmoApplication(UpdateView):
     def get_next_url(self):
         """Continue to the definition of a Study if we have completed the Wmo application"""
         wmo = self.object
-        if wmo.status == Wmo.WAITING:
+        if wmo.status == Wmo.WMOStatuses.WAITING:
             return reverse('proposals:wmo_application', args=(wmo.pk,))
         else:
             return reverse('proposals:study_start', args=(wmo.proposal.pk,))
@@ -108,7 +108,7 @@ class PreAssessmentMixin(object):
     def get_next_url(self):
         """Different continue URL for pre-assessment Proposals"""
         wmo = self.object
-        if wmo.status == Wmo.NO_WMO:
+        if wmo.status == Wmo.WMOStatuses.NO_WMO:
             return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
         else:
             return reverse('proposals:wmo_application_pre', args=(wmo.pk,))
@@ -139,10 +139,10 @@ def check_wmo(request):
     """
     This call checks which WMO message should be generated.
     """
-    is_metc = request.POST.get('metc') == YES
-    is_medical = request.POST.get('medical') == YES
+    is_metc = request.POST.get('metc') == YesNoDoubt.YES
+    is_medical = request.POST.get('medical') == YesNoDoubt.YES
 
-    doubt = request.POST.get('metc') == DOUBT or request.POST.get('medical') == DOUBT
+    doubt = request.POST.get('metc') == YesNoDoubt.DOUBT or request.POST.get('medical') == YesNoDoubt.DOUBT
 
     # Default message: OK.
     message = _('Je onderzoek hoeft niet te worden beoordeeld door de METC.')

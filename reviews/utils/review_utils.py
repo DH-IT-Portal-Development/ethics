@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import activate, get_language, ugettext_lazy as _
 from django.utils import timezone
 
-from main.models import YES, DOUBT
+from main.models import YesNoDoubt
 from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
@@ -41,12 +41,12 @@ def start_supervisor_phase(proposal):
     - send an e-mail to other applicants
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.SUPERVISOR
+    review.stage = Review.Stages.SUPERVISOR
     review.is_committee_review = False
     review.save()
 
     proposal.date_submitted_supervisor = timezone.now()
-    proposal.status = proposal.SUBMITTED_TO_SUPERVISOR
+    proposal.status = proposal.Statuses.SUBMITTED_TO_SUPERVISOR
     proposal.save()
 
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
@@ -113,7 +113,7 @@ def start_assignment_phase(proposal):
     short_route = len(reasons) == 0
 
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = short_route
 
     if short_route:
@@ -121,7 +121,7 @@ def start_assignment_phase(proposal):
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()
@@ -181,7 +181,7 @@ def remind_reviewers():
     next_two_days = today + datetime.timedelta(days=2)
 
     decisions = Decision.objects.filter(
-        review__stage=Review.COMMISSION,
+        review__stage=Review.Stages.COMMISSION,
         review__short_route=True,
         review__date_should_end__gte=today,
         review__date_should_end__lte=next_two_days,
@@ -216,7 +216,7 @@ def start_review_pre_assessment(proposal):
     :param proposal: the current Proposal
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = True
     review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.PREASSESSMENT_ROUTE_WEEKS)
     review.save()
@@ -377,7 +377,7 @@ def auto_review(proposal: Proposal):
         if study.legally_incapable:
             reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
 
-        if study.deception in [YES, DOUBT]:
+        if study.deception in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
 
         if study.hierarchy:
@@ -392,11 +392,11 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.stressful in [YES, DOUBT]:
+        if study.stressful in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
-        if study.risk in [YES, DOUBT]:
+        if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
 fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn.'))
 

@@ -8,7 +8,7 @@ from django.test import TestCase, Client, RequestFactory
 
 from .models import Review, Decision
 from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
-from main.models import YES, NO, DOUBT
+from main.models import YesNoDoubt
 from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
@@ -104,7 +104,7 @@ class BaseReviewTestCase(TestCase):
         )
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
-            metc=NO,
+            metc=YesNoDoubt.NO,
         )
         self.study = Study.objects.create(
             proposal=self.proposal,
@@ -153,7 +153,7 @@ class ReviewTestCase(BaseReviewTestCase):
         """
         # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
         review = start_review(self.proposal)
-        self.assertEqual(review.stage, Review.SUPERVISOR)
+        self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
         self.assertEqual(review.is_committee_review, False)
         self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
@@ -170,7 +170,7 @@ class ReviewTestCase(BaseReviewTestCase):
         self.proposal.save()
 
         review = start_review(self.proposal)
-        self.assertEqual(review.stage, Review.ASSIGNMENT)
+        self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.is_committee_review, True)
         self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
@@ -194,7 +194,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         mail.outbox = []
 
         decision = Decision.objects.filter(review=review)[0]
-        decision.go = Decision.APPROVED
+        decision.go = Decision.Approval.APPROVED
         decision.save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)
@@ -221,12 +221,12 @@ class CommissionTestCase(BaseReviewTestCase):
         self.proposal.relation = Relation.objects.get(pk=5)
         self.proposal.save()
         review = start_review(self.proposal)
-        self.assertEqual(review.stage, Review.ASSIGNMENT)
+        self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.go, None)
 
         # Create a Decision for a member of the commission group
         Decision.objects.create(review=review, reviewer=self.c1)
-        review.stage = Review.COMMISSION
+        review.stage = Review.Stages.COMMISSION
         review.refresh_from_db()
 
         self.assertEqual(len(mail.outbox), 2)
@@ -234,12 +234,12 @@ class CommissionTestCase(BaseReviewTestCase):
         decisions = Decision.objects.filter(review=review)
         self.assertEqual(len(decisions), 2)
 
-        decisions[0].go = Decision.APPROVED
+        decisions[0].go = Decision.Approval.APPROVED
         decisions[0].save()
         review.refresh_from_db()
         self.assertEqual(review.go, None)  # undecided
 
-        decisions[1].go = Decision.NOT_APPROVED
+        decisions[1].go = Decision.Approval.NOT_APPROVED
         c = 'Let\'s test "escaping" of < and >'
         decisions[1].comments = c
         decisions[1].save()
@@ -250,7 +250,7 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(len(mail.outbox), 4)
         self.assertIn(c, mail.outbox[3].body)
 
-        decisions[1].go = Decision.APPROVED
+        decisions[1].go = Decision.Approval.APPROVED
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
@@ -267,7 +267,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-        self.study.deception = DOUBT
+        self.study.deception = YesNoDoubt.DOUBT
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -291,13 +291,13 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 5)
 
-        self.study.stressful = YES
+        self.study.stressful = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
 
-        self.study.risk = YES
+        self.study.risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -402,7 +402,7 @@ class ReviewCloseTestCase(
         )
         self.assertGreaterEqual(
             p.status,
-            p.SUBMITTED_TO_SUPERVISOR,
+            p.Statuses.SUBMITTED_TO_SUPERVISOR,
         )
 
     def test_decision(self):
@@ -413,7 +413,7 @@ class ReviewCloseTestCase(
         previous_review_date = copy(self.proposal.date_reviewed)
         form_values = {
             # We choose GO_POST_HOC because GO (0) is already the default
-            "continuation": self.review.GO_POST_HOC,
+            "continuation": self.review.Continuations.GO_POST_HOC,
         }
         self.client.force_login(self.secretary)
         page = self.post(form_values)
@@ -425,7 +425,7 @@ class ReviewCloseTestCase(
         )
         self.assertEqual(
             self.proposal.status,
-            self.proposal.DECISION_MADE,
+            self.proposal.Statuses.DECISION_MADE,
         )
         self.assertEqual(
             self.proposal.status_review,
@@ -438,7 +438,7 @@ class ReviewCloseTestCase(
         self.review.short_route = True
         self.review.save()
         form_values = {
-            "continuation": self.review.LONG_ROUTE,
+            "continuation": self.review.Continuations.LONG_ROUTE,
         }
         self.client.force_login(self.secretary)
         page = self.post(form_values)
@@ -446,7 +446,7 @@ class ReviewCloseTestCase(
         # Assertions
         self.assertEqual(
             self.review.stage,
-            self.review.CLOSED,
+            self.review.Stages.CLOSED,
         )
         # A new review should have been created
         # with a decision
@@ -463,7 +463,7 @@ class ReviewCloseTestCase(
         """When posted with review.METC, check that proposal is turned back
         into a Draft and its WMO gets flagged."""
         form_values = {
-            "continuation": self.review.METC,
+            "continuation": self.review.Continuations.METC,
         }
         self.client.force_login(self.secretary)
         self.post(form_values)
@@ -471,7 +471,7 @@ class ReviewCloseTestCase(
         # Assertions
         self.assertEqual(
             self.proposal.status,
-            self.proposal.DRAFT,
+            self.proposal.Statuses.DRAFT,
         )
         self.assertEqual(
             self.proposal.wmo.enforced_by_commission,
