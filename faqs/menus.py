@@ -21,10 +21,6 @@ help_menu = (
     MenuItem(
         _("FAQs"),
         reverse("faqs:list"),
-    ),
-    MenuItem(
-        _("Feedback"),
-        reverse("feedback:create"),
     )
 )
 

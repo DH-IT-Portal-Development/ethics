@@ -142,7 +142,7 @@ class ProposalSubmitTestCase(
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
-            self.proposal.DRAFT,
+            self.proposal.Statuses.DRAFT,
         )
         self.assertEqual(
             self.proposal.latest_review(),
@@ -162,7 +162,7 @@ class ProposalSubmitTestCase(
         # Post-submission tests
         self.assertNotEqual(
             self.proposal.status,
-            self.proposal.DRAFT,
+            self.proposal.Statuses.DRAFT,
         )
         self.assertNotEqual(
             self.proposal.latest_review(),
@@ -170,7 +170,7 @@ class ProposalSubmitTestCase(
         )
         self.assertEqual(
             self.proposal.latest_review().stage,
-            Review.ASSIGNMENT,
+            Review.Stages.ASSIGNMENT,
         )
 
     def test_proposal_supervised(self):
@@ -189,7 +189,7 @@ class ProposalSubmitTestCase(
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
-            self.proposal.DRAFT,
+            self.proposal.Statuses.DRAFT,
         )
         self.assertEqual(
             self.proposal.latest_review(),
@@ -209,7 +209,7 @@ class ProposalSubmitTestCase(
         # Post-submission tests
         self.assertNotEqual(
             self.proposal.status,
-            self.proposal.DRAFT,
+            self.proposal.Statuses.DRAFT,
         )
         self.assertNotEqual(
             self.proposal.latest_review(),
@@ -217,7 +217,7 @@ class ProposalSubmitTestCase(
         )
         self.assertEqual(
             self.proposal.latest_review().stage,
-            Review.SUPERVISOR,
+            Review.Stages.SUPERVISOR,
         )
 
 

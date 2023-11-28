@@ -5,10 +5,10 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate, get_language, ugettext_lazy as _
 from django.utils import timezone
 
-from main.models import YES, DOUBT
+from main.models import YesNoDoubt
 from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
@@ -26,7 +26,7 @@ def start_review(proposal):
     if proposal.is_practice():
         # These should never start a review
         return None
-    if proposal.status != Proposal.DRAFT:
+    if proposal.status != Proposal.Statuses.DRAFT:
         # This prevents double submissions
         return None
 
@@ -51,11 +51,12 @@ def start_supervisor_phase(proposal):
     - send an e-mail to other applicants
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.SUPERVISOR
+    review.stage = Review.Stages.SUPERVISOR
+    review.is_committee_review = False
     review.save()
 
     proposal.date_submitted_supervisor = timezone.now()
-    proposal.status = proposal.SUBMITTED_TO_SUPERVISOR
+    proposal.status = proposal.Statuses.SUBMITTED_TO_SUPERVISOR
     proposal.save()
 
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
@@ -77,8 +78,15 @@ def start_supervisor_phase(proposal):
         params['creator'] = proposal.created_by.get_full_name()
         msg_plain = render_to_string('mail/concept_other_applicants.txt', params)
         msg_html = render_to_string('mail/concept_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by, proposal.supervisor]
+
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_to_remove = [proposal.supervisor]
         other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
+
         send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
 
     subject = _('FETC-GW {}: beoordelen als eindverantwoordelijke'.format(reference))
@@ -115,7 +123,7 @@ def start_assignment_phase(proposal):
     short_route = len(reasons) == 0
 
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = short_route
 
     if short_route:
@@ -123,7 +131,7 @@ def start_assignment_phase(proposal):
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()
@@ -157,10 +165,15 @@ def start_assignment_phase(proposal):
         else:
             msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
             msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by]
-        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
 
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_emails = [applicant.email for applicant in
+                             proposal.applicants.all()]
+        send_mail(subject, msg_plain, settings.EMAIL_FROM, applicants_emails, html_message=msg_html)
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -178,7 +191,7 @@ def remind_reviewers():
     next_two_days = today + datetime.timedelta(days=2)
 
     decisions = Decision.objects.filter(
-        review__stage=Review.COMMISSION,
+        review__stage=Review.Stages.COMMISSION,
         review__short_route=True,
         review__date_should_end__gte=today,
         review__date_should_end__lte=next_two_days,
@@ -213,13 +226,13 @@ def start_review_pre_assessment(proposal):
     :param proposal: the current Proposal
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = True
     review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.PREASSESSMENT_ROUTE_WEEKS)
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()
@@ -315,6 +328,33 @@ def notify_secretary(decision):
     msg_plain = render_to_string('mail/decision_notify.txt', params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
+def notify_secretary_all_decisions(review):
+    """
+    Notifies a secretary all Decisions have been made for a certain review
+    """
+    # Change language to Dutch for this e-mail, but save the current language to reset it later
+    current_language = get_language()
+    activate("nl")
+
+    secretary = get_secretary()
+    subject = "FETC-GW {}: alle beoordelingen toegevoegd".format(
+        review.proposal.committee_prefixed_refnum(),
+    )
+    params = {
+        "secretary": secretary.get_full_name(),
+        "review": review,
+        "decisions": review.decision_set.all(),
+        "review_detail_page": settings.BASE_URL
+        + (reverse("reviews:detail", args=[review.pk])),
+        "close_review_page": settings.BASE_URL
+        + (reverse("reviews:close", args=[review.pk])),
+    }
+    msg_plain = render_to_string("mail/all_decisions_notify.txt", params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [settings.EMAIL_FROM])
+
+    # Reset the current language
+    activate(current_language)
+
 
 def notify_supervisor_nogo(decision):
     secretary = get_secretary()
@@ -349,7 +389,7 @@ def auto_review(proposal: Proposal):
         if study.legally_incapable:
             reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
 
-        if study.deception in [YES, DOUBT]:
+        if study.deception in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
 
         if study.hierarchy:
@@ -364,11 +404,11 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.stressful in [YES, DOUBT]:
+        if study.stressful in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
 als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
 
-        if study.risk in [YES, DOUBT]:
+        if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
 fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn.'))
 

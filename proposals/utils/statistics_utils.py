@@ -27,7 +27,7 @@ def get_qs_for_year(year: int) -> QuerySet:
     return Proposal.objects.filter(
         date_submitted__year=year,
         is_revision=False,
-        status__gte=Proposal.DECISION_MADE,
+        status__gte=Proposal.Statuses.DECISION_MADE,
     )
 
 
@@ -57,7 +57,7 @@ def get_review_qs_for_proposals(proposal_data: QuerySet) -> QuerySet:
     return Review.objects.filter(
         proposal__in=proposal_data,
     ).exclude(
-        stage=Review.SUPERVISOR,
+        stage=Review.Stages.SUPERVISOR,
         date_end=None,
     )
 

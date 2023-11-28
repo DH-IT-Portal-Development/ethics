@@ -5,8 +5,12 @@ from django.db import migrations, models
 import django.db.models.deletion
 import main.validators
 import proposals.utils.proposal_utils
-import proposals.validators
 
+def AVGUnderstoodValidator():
+    '''This was formerly a validator, imported from proposals.validators,
+    but it is currently no longer required, so it has been removed.
+    To prevent an error, it has been replaced with this stub.'''
+    pass
 
 class Migration(migrations.Migration):
 
@@ -18,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='proposal',
             name='avg_understood',
-            field=models.BooleanField(default=False, validators=[proposals.validators.AVGUnderstoodValidator], verbose_name='Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.'),
+            field=models.BooleanField(default=False, validators=[AVGUnderstoodValidator], verbose_name='Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.'),
         ),
         migrations.AlterField(
             model_name='proposal',

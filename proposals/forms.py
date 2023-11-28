@@ -13,7 +13,7 @@ from datetime import timedelta
 mark_safe_lazy = lazy(mark_safe, str)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
-from main.models import DOUBT, NO, YES, YES_NO_DOUBT
+from main.models import YesNoDoubt
 from main.utils import YES_NO, get_users_as_list
 from .field import ParentChoiceModelField
 from .models import Proposal, Relation, Wmo
@@ -264,7 +264,7 @@ van het FETC-GW worden opgenomen.')
 class ProposalStartPracticeForm(forms.Form):
     practice_reason = forms.ChoiceField(
         label=_('Ik maak een oefenaanvraag aan'),
-        choices=Proposal.PRACTICE_REASONS,
+        choices=Proposal.PracticeReasons.choices,
         widget=forms.RadioSelect())
 
 
@@ -302,7 +302,7 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         ).filter(
             Q(applicants=self.user, ) | Q(supervisor=self.user)
         ).filter(
-            Q(status=Proposal.DRAFT) | Q(status__gte=Proposal.DECISION_MADE)
+            Q(status=Proposal.Statuses.DRAFT) | Q(status__gte=Proposal.Statuses.DECISION_MADE)
         ).distinct()
 
 
@@ -346,7 +346,7 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
         # Those are eligible for revisions
         return Proposal.objects.filter(
             is_pre_assessment=False,
-            status=Proposal.DECISION_MADE,
+            status=Proposal.Statuses.DECISION_MADE,
             status_review=False,
             children__isnull=True,
         ).filter(
@@ -412,9 +412,9 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         """
         super(WmoForm, self).__init__(*args, **kwargs)
         self.fields['metc'].empty_label = None
-        self.fields['metc'].choices = YES_NO_DOUBT
+        self.fields['metc'].choices = YesNoDoubt.choices
         self.fields['is_medical'].empty_label = None
-        self.fields['is_medical'].choices = YES_NO_DOUBT
+        self.fields['is_medical'].choices = YesNoDoubt.choices
 
     def clean(self):
         """
@@ -429,13 +429,13 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
                                      'gaan.'))
 
         self.check_dependency(cleaned_data, 'metc', 'metc_details',
-                              f1_value=YES)
+                              f1_value=YesNoDoubt.YES)
         self.check_dependency(cleaned_data, 'metc', 'metc_institution',
-                              f1_value=YES,
+                              f1_value=YesNoDoubt.YES,
                               error_message=_(
                                   'Je dient een instelling op te geven.'))
         self.check_dependency_list(cleaned_data, 'metc', 'is_medical',
-                                   f1_value_list=[NO, DOUBT])
+                                   f1_value_list=[YesNoDoubt.NO, YesNoDoubt.DOUBT])
 
 
 class WmoCheckForm(forms.ModelForm):
@@ -455,7 +455,7 @@ class WmoCheckForm(forms.ModelForm):
         """
         super(WmoCheckForm, self).__init__(*args, **kwargs)
         self.fields['is_medical'].empty_label = None
-        self.fields['is_medical'].choices = YES_NO_DOUBT
+        self.fields['is_medical'].choices = YesNoDoubt.choices
 
 
 class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
@@ -573,9 +573,19 @@ class StudyStartForm(forms.ModelForm):
 class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Proposal
-        fields = ['avg_understood', 'dmp_file']
+        fields = ['privacy_officer', 'dmp_file']
+        widgets = {
+            'privacy_officer': forms.RadioSelect(choices=YES_NO),
+        }
+    
+    def clean(self):
+        cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-    _soft_validation_fields = ['avg_understood']
+        if cleaned_data['privacy_officer'] is None:
+            self.add_error(
+                'privacy_officer', 
+                _('Dit veld is verplicht om verder te gaan.')
+            )
 
 class ProposalUpdateDataManagementForm(forms.ModelForm):
     class Meta:

@@ -431,7 +431,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         return start_date <= two_weeks_from_now
 
     def is_supervisor_edit_phase(self):
-        if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:
+        if self.object.status == self.object.Statuses.SUBMITTED_TO_SUPERVISOR:
             return True
         return False
 
@@ -568,6 +568,7 @@ class ProposalAsPdf(
     model = Proposal
     # The PDF mixin generates a filename with this factory
     filename_factory = FilenameFactory('Proposal')
+    template_name = 'proposals/proposal_pdf.html'
 
     def get(self, request, *args, **kwargs):
         # First, check if we should use a pregenerated pdf, if we have one
@@ -589,12 +590,6 @@ class ProposalAsPdf(
         if not hasattr(self, "object"):
             self.object = super().get_object(*args, **kwargs)
         return self.object
-
-    def get_template_names(self):
-        """Determine the correct PDf template for given proposal"""
-        proposal = self.get_object()
-        self.template_name = proposal.pdf_template_name
-        return [self.template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -743,14 +738,14 @@ class ProposalCreatePractice(ProposalCreate):
     def get_form_kwargs(self):
         """Sets in_course as a form kwarg"""
         kwargs = super(ProposalCreatePractice, self).get_form_kwargs()
-        kwargs['in_course'] = self.kwargs['reason'] == Proposal.COURSE
+        kwargs['in_course'] = self.kwargs['reason'] == Proposal.PracticeReasons.COURSE
         return kwargs
 
     def form_valid(self, form):
         """Sets in_course and is_exploration"""
-        form.instance.in_course = self.kwargs['reason'] == Proposal.COURSE
+        form.instance.in_course = self.kwargs['reason'] == Proposal.PracticeReasons.COURSE
         form.instance.is_exploration = self.kwargs[
-                                           'reason'] == Proposal.EXPLORATION
+                                           'reason'] == Proposal.PracticeReasons.EXPLORATION
         return super(ProposalCreatePractice, self).form_valid(form)
 
 
