@@ -77,13 +77,20 @@ class BaseProposalTestCase(TestCase):
         )
 
     def setup_proposal(self):
-
+        """
+        Load our test proposals from a fixture, then add our user as
+        an applicant to each of them.
+        """
         call_command("loaddata", "proposals/tests/test_proposals.json")
         self.proposal = Proposal.objects.get(pk=1)
         self.proposal.applicants.add(self.user)
-        self.pre_assessment = Proposal.objects.get(pk=2)
-        self.pre_approval = Proposal.objects.get(pk=3)
         self.proposal.save()
+        self.pre_assessment = Proposal.objects.get(pk=2)
+        self.pre_assessment.applicants.add(self.user)
+        self.pre_assessment.save()
+        self.pre_approval = Proposal.objects.get(pk=3)
+        self.pre_approval.applicants.add(self.user)
+        self.pre_approval.save()
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -132,6 +139,7 @@ class ProposalSubmitTestCase(
     def test_submission_unsupervised(self):
         """
         Tests the following:
+        - The current proposal is a draft
         - An applicant can submit a proposal that has no errors
         - Because there is no supervisor, a new review is created
           in the assignment stage.
@@ -168,9 +176,10 @@ class ProposalSubmitTestCase(
     def test_proposal_supervised(self):
         """
         Tests the following:
+        - The current proposal is a draft
         - An applicant can submit a proposal that has no errors
         - Because there is a supervisor, a new review is created
-          in the assignment stage.
+          in the supervisor stage.
         """
         self.proposal.relation = Relation.objects.get(pk=4)
         self.proposal.supervisor = self.supervisor
@@ -204,3 +213,22 @@ class ProposalSubmitTestCase(
             Review.SUPERVISOR,
         )
 
+
+class PreassessmentSubmitTestCase(
+        ProposalSubmitTestCase,
+):
+    view_class = ProposalSubmitPreAssessment
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
+class PreapprovedSubmitTestCase(
+        ProposalSubmitTestCase,
+):
+    view_class = ProposalSubmitPreApproved
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_approval
