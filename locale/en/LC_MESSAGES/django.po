@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 14:55+0100\n"
+"POT-Creation-Date: 2023-11-28 15:08+0100\n"
 "PO-Revision-Date: 2023-11-07 10:36+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2314,12 +2314,13 @@ msgstr ""
 "application."
 
 #: proposals/templates/proposals/proposal_list.html:75
+#, python-format
 msgid ""
 "Klik op <img src=\"%(img_revise)s\" title=\"Maak revisie\"> om een revisie "
 "aan te maken van je aanvraag."
 msgstr ""
-"Click <img src=\"%(img_revise)s\" title=\"Show\"> to create a revision "
-"for an application."
+"Click <img src=\"%(img_revise)s\" title=\"Show\"> to create a revision for "
+"an application."
 
 #: proposals/templates/proposals/proposal_list.html:82
 #: proposals/templates/proposals/proposal_private_archive.html:75
@@ -4175,8 +4176,8 @@ msgid "Geef jouw beslissing en/of commentaar door"
 msgstr "Provide feedback on this proposal"
 
 #: reviews/utils/review_actions.py:156
-msgid "Deze aanvraag afsluiten"
-msgstr "Conclude this application"
+msgid "Deze versie afhandelen"
+msgstr "Conclude this version"
 
 #: reviews/utils/review_actions.py:186
 msgid "Beëindig definitief de afhandeling van deze aanvraag"
