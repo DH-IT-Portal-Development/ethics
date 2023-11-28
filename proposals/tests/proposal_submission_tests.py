@@ -1,15 +1,10 @@
-from datetime import date
-
 from django.contrib.auth.models import User, Group, AnonymousUser
 from django.conf import settings
 from django.test import TestCase
 from django.core.management import call_command
 
 from main.tests import BaseViewTestCase
-from main.models import Setting, YES, NO
-from proposals.models import Proposal, Wmo, Relation
-from studies.models import Study, Compensation
-from proposals.utils import generate_ref_number
+from proposals.models import Proposal, Relation
 from reviews.models import Review
 
 from proposals.views.proposal_views import (
@@ -153,10 +148,15 @@ class ProposalSubmitTestCase(
             self.proposal.latest_review(),
             None,
         )
+        # POST and check status code
         self.client.force_login(self.user)
         page = self.post(
             self.get_post_data(),
             user=self.user,
+        )
+        self.assertIn(
+            page.status_code,
+            [302, 200]
         )
         self.refresh()
         # Post-submission tests
@@ -181,6 +181,8 @@ class ProposalSubmitTestCase(
         - Because there is a supervisor, a new review is created
           in the supervisor stage.
         """
+        # Select the PHD relation, which needs a supervisor
+        # but doesn't check for a study/course
         self.proposal.relation = Relation.objects.get(pk=4)
         self.proposal.supervisor = self.supervisor
         self.proposal.save()
@@ -193,10 +195,15 @@ class ProposalSubmitTestCase(
             self.proposal.latest_review(),
             None,
         )
+        # POST and check status code
         self.client.force_login(self.user)
         page = self.post(
             self.get_post_data(),
             user=self.user,
+        )
+        self.assertIn(
+            page.status_code,
+            [302, 200]
         )
         self.refresh()
         # Post-submission tests
