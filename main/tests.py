@@ -43,13 +43,13 @@ class BaseViewTestCase():
             return False
         return response.status_code == 200
 
-    def post(self, update_dict={}):
+    def post(self, update_dict={}, user=AnonymousUser):
         """Generic function to test form submission"""
         post_data = {}
         post_data.update(update_dict)
         if self.enforce_csrf:
             csrf_token = self.fetch_csrf_token(
-                user=self.secretary,
+                user=user,
             )
             post_data["csrfmiddlewaretoken"] = csrf_token
         response = self.client.post(
