@@ -25,7 +25,7 @@ blessed==1.20.0
     # via curtsies
 bpython==0.24
     # via -r requirements.in
-cdh-django-core @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.1.0
+cdh-django-core[federated-auth] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.1.0
     # via -r requirements.in
 certifi==2023.7.22
     # via requests
@@ -37,7 +37,7 @@ click==8.1.7
     # via pyhanko
 closure==20191111
     # via uil-django-core
-cryptography==41.0.5
+cryptography==41.0.6
     # via
     #   pyhanko
     #   pyhanko-certvalidator
@@ -201,6 +201,7 @@ qrcode==7.4.2
     # via pyhanko
 reportlab[pycairo]==4.0.7
     # via
+    #   reportlab
     #   svglib
     #   xhtml2pdf
 requests==2.31.0
