@@ -382,9 +382,9 @@ class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
         review = self.get_object()
 
         if review.continuation in [
-            review.DISCONTINUED,
-            review.GO,
-            review.GO_POST_HOC,
+            review.Continuations.DISCONTINUED,
+            review.Continuations.GO,
+            review.Continuations.GO_POST_HOC,
         ]:
             return HttpResponseRedirect(self.get_success_url())
 
