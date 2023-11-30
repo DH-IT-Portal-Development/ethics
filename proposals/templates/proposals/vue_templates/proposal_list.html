@@ -75,10 +75,14 @@
                      title="{% trans 'Inzien' %}">
             </a>
             <a
-                v-if="!proposal.is_pre_assessment &&
-                proposal.status == context.proposal.DECISION_MADE &&
-                !proposal.status_review &&
-                proposal.children.length === 0"
+            :href="$url('proposals:archive_status', [proposal.pk])"
+            v-if="proposal.in_archive && context.is_secretary"
+            >
+            <img src="{{ img_hide }}"
+                 title="{% trans 'Verberg' %}">
+            </a>
+            <a
+                v-if="proposal.is_revisable"
                 :href="$url('proposals:copy_revision')"
             >
                 <img src="{{ img_revise }}"
