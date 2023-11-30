@@ -222,7 +222,7 @@ def start_review_pre_assessment(proposal):
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()
@@ -466,7 +466,7 @@ def discontinue_review(review):
 
     # Set review continuation
     review.continuation = review.DISCONTINUED
-    review.proposal.status = review.proposal.DECISION_MADE
+    review.proposal.status = review.proposal.Statuses.DECISION_MADE
     review.stage = review.CLOSED
     review.date_end = datetime.datetime.now()
     review.save()

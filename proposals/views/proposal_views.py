@@ -431,7 +431,7 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
         return start_date <= two_weeks_from_now
 
     def is_supervisor_edit_phase(self):
-        if self.object.status == self.object.SUBMITTED_TO_SUPERVISOR:
+        if self.object.status == self.object.Statuses.SUBMITTED_TO_SUPERVISOR:
             return True
 
         return False

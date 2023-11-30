@@ -69,7 +69,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
             _('Ethische toetsing nodig door een METC?'),
             proposal.wmo,
         )
-        if proposal.wmo.status != proposal.wmo.NO_WMO:
+        if proposal.wmo.status != proposal.wmo.WMOStatuses.NO_WMO:
             forms['wmo_application'] = (
                 WmoApplicationForm,
                 reverse(wmo_application_url, args=[proposal.pk]),

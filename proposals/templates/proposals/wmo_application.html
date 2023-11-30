@@ -28,7 +28,7 @@
             </h2>
             <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
                 <table>{{ form.as_table }}</table>
-                {% if wmo.status == wmo.WAITING %}
+                {% if wmo.status == wmo.WMOStatuses.WAITING %}
                     <div class="warning">
                         {% trans "Zolang je aanvraag nog niet is beoordeeld door de METC, kan je niet verder in het aanmeldingsproces." %}
                     </div>

@@ -1095,8 +1095,8 @@ def create_context_diff(context, old_proposal, new_proposal):
         
         if new_proposal.is_pre_assessment:
             if (
-                new_proposal.wmo.status != new_proposal.wmo.NO_WMO
-                or old_proposal.wmo.status != old_proposal.wmo.NO_WMO
+                new_proposal.wmo.status != new_proposal.wmo.WMOStatuses.NO_WMO
+                or old_proposal.wmo.status != old_proposal.wmo.WMOStatuses.NO_WMO
             ):
                 sections.append(
                     DiffSection(METCSection(old_proposal.wmo), METCSection(new_proposal.wmo))
@@ -1109,8 +1109,8 @@ def create_context_diff(context, old_proposal, new_proposal):
             )
 
             if (
-                new_proposal.wmo.status == new_proposal.wmo.NO_WMO
-                or new_proposal.wmo.status == new_proposal.wmo.JUDGED
+                new_proposal.wmo.status == new_proposal.wmo.WMOStatuses.NO_WMO
+                or new_proposal.wmo.status == new_proposal.wmo.WMOStatuses.JUDGED
             ):
                 for old_study, new_study in zip_equalize_lists(
                     old_proposal.study_set.all(), new_proposal.study_set.all()
