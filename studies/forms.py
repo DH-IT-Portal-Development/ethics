@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
-from main.models import DOUBT, YES, YES_NO_DOUBT
+from main.models import YesNoDoubt
 from main.utils import YES_NO
 from .models import AgeGroup, Documents, Study
 from .utils import check_necessity_required
@@ -56,7 +56,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         super(StudyForm, self).__init__(*args, **kwargs)
         self.fields['compensation'].empty_label = None
         self.fields['necessity'].empty_label = None
-        self.fields['necessity'].choices = YES_NO_DOUBT
+        self.fields['necessity'].choices = YesNoDoubt.choices
 
         self.fields['age_groups'].queryset = AgeGroup.objects.filter(
             is_active=True)
@@ -183,13 +183,13 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
         self.fields['deception'].empty_label = None
-        self.fields['deception'].choices = YES_NO_DOUBT
+        self.fields['deception'].choices = YesNoDoubt.choices
         self.fields['negativity'].empty_label = None
-        self.fields['negativity'].choices = YES_NO_DOUBT
+        self.fields['negativity'].choices = YesNoDoubt.choices
         self.fields['stressful'].empty_label = None
-        self.fields['stressful'].choices = YES_NO_DOUBT
+        self.fields['stressful'].choices = YesNoDoubt.choices
         self.fields['risk'].empty_label = None
-        self.fields['risk'].choices = YES_NO_DOUBT
+        self.fields['risk'].choices = YesNoDoubt.choices
 
         self.fields['negativity'].label = mark_safe(
             self.fields['negativity'].label)
@@ -224,15 +224,15 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
 
         self.check_dependency_list(cleaned_data, 'deception',
                                    'deception_details',
-                                   f1_value_list=[YES, DOUBT])
+                                   f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT])
         self.check_dependency_list(cleaned_data, 'negativity',
                                    'negativity_details',
-                                   f1_value_list=[YES, DOUBT])
+                                   f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT])
         self.check_dependency_list(cleaned_data, 'stressful',
                                    'stressful_details',
-                                   f1_value_list=[YES, DOUBT])
+                                   f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT])
         self.check_dependency_list(cleaned_data, 'risk', 'risk_details',
-                                   f1_value_list=[YES, DOUBT])
+                                   f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT])
 
 
 class StudyUpdateAttachmentsForm(forms.ModelForm):

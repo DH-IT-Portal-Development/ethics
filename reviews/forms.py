@@ -102,7 +102,8 @@ class ReviewCloseForm(forms.ModelForm):
         allow_long_route_continuation = kwargs.pop('allow_long_route_continuation', False)
         super(ReviewCloseForm, self).__init__(*args, **kwargs)
         if not allow_long_route_continuation:
-            self.fields['continuation'].choices = [x for x in Review.CONTINUATIONS if x[0] != Review.LONG_ROUTE]
+            self.fields['continuation'].choices = [x for x in Review.Continuations.choices 
+                                                   if x[0] != Review.Continuations.LONG_ROUTE]
 
         self.fields['in_archive'].label = _('Voeg deze aanvraag toe aan het archief')
         self.fields['in_archive'].widget = forms.RadioSelect(choices=YES_NO)
@@ -145,7 +146,7 @@ class DecisionForm(forms.ModelForm):
         """Removes the empty label for the go field, and sets it as required"""
         super(DecisionForm, self).__init__(*args, **kwargs)
         self.fields['go'].empty_label = None
-        self.fields['go'].choices = Decision.APPROVAL
+        self.fields['go'].choices = Decision.Approval.choices
         self.fields['go'].required = True
 
 class StartEndDateForm(forms.Form):

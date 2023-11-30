@@ -13,7 +13,7 @@ from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 mark_safe_lazy = lazy(mark_safe, str)
 
-from main.models import YES, YES_NO_DOUBT
+from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import available_urls, FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
@@ -133,28 +133,17 @@ class Proposal(models.Model):
 
     objects = ProposalQuerySet.as_manager()
 
-    DRAFT = 1
-    SUBMITTED_TO_SUPERVISOR = 40
-    SUBMITTED = 50
-    DECISION_MADE = 55
-    WMO_DECISION_MADE = 60
-    STATUSES = (
-        (DRAFT, _('Concept')),
+    class Statuses(models.IntegerChoices):
+        DRAFT = 1, _('Concept')
+        SUBMITTED_TO_SUPERVISOR = 40, _('Opgestuurd ter beoordeling door eindverantwoordelijke')
+        SUBMITTED = 50, _('Opgestuurd ter beoordeling door FETC-GW')
+        DECISION_MADE = 55, _('Aanvraag is beoordeeld door FETC-GW')
+        WMO_DECISION_MADE = 60, _('Aanvraag is beoordeeld door FETC-GW')
 
-        (SUBMITTED_TO_SUPERVISOR,
-         _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
-        (SUBMITTED, _('Opgestuurd ter beoordeling door FETC-GW')),
+    class PracticeReasons(models.IntegerChoices):
+        COURSE = 1, _('om de portal te exploreren')
+        EXPLORATION = 2, _('in het kader van een cursus')
 
-        (DECISION_MADE, _('Aanvraag is beoordeeld door FETC-GW')),
-        (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door FETC-GW')),
-    )
-
-    COURSE = 1
-    EXPLORATION = 2
-    PRACTICE_REASONS = (
-        (COURSE, _('in het kader van een cursus')),
-        (EXPLORATION, _('om de portal te exploreren')),
-    )
 
     # Fields of a proposal
     reference_number = models.CharField(
@@ -397,8 +386,8 @@ trajecten.'),
 
     # Status
     status = models.PositiveIntegerField(
-        choices=STATUSES,
-        default=DRAFT,
+        choices=Statuses.choices,
+        default=Statuses.DRAFT,
     )
 
     status_review = models.BooleanField(
@@ -647,10 +636,10 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         """Returns the Decision of the supervisor for this Proposal (if any and in current stage)"""
         from reviews.models import Review, Decision
 
-        if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
+        if self.supervisor and self.status == Proposal.Statuses.SUBMITTED_TO_SUPERVISOR:
             decisions = Decision.objects.filter(
                 review__proposal=self,
-                review__stage=Review.SUPERVISOR
+                review__stage=Review.Stages.SUPERVISOR
             ).order_by('-pk')
 
             if decisions:
@@ -668,7 +657,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
     def enforce_wmo(self):
         """Send proposal back to draft phase with WMO enforced."""
-        self.status = self.DRAFT
+        self.status = self.Statuses.DRAFT
         self.save()
         self.wmo.enforced_by_commission = True
         self.wmo.save()
@@ -677,11 +666,11 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         """Finalize a proposal after a decision has been made."""
         if time is None:
             time = timezone.now()
-        self.status = self.DECISION_MADE
+        self.status = self.Statuses.DECISION_MADE
         # Importing here to prevent circular import
         from reviews.models import Review
         self.status_review = continuation in [
-            Review.GO, Review.GO_POST_HOC
+            Review.Continuations.GO, Review.Continuations.GO_POST_HOC
         ]
         self.date_reviewed = time
         self.generate_pdf()
@@ -723,20 +712,16 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
 
 
 class Wmo(models.Model):
-    NO_WMO = 0
-    WAITING = 1
-    JUDGED = 2
-    WMO_STATUSES = (
-        (NO_WMO, _('Geen beoordeling door METC noodzakelijk')),
-        (WAITING, _('In afwachting beslissing METC')),
-        (JUDGED, _('Beslissing METC geüpload')),
-    )
+    class WMOStatuses(models.IntegerChoices):
+        NO_WMO = 0, _('Geen beoordeling door METC noodzakelijk')
+        WAITING = 1, _('In afwachting beslissing METC')
+        JUDGED = 2, _('Beslissing METC geüpload')
 
     metc = models.CharField(
         _('Vindt de dataverzameling plaats binnen het UMC Utrecht of \
 andere instelling waar toetsing door een METC verplicht is gesteld?'),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True,
         default=None,
     )
@@ -765,7 +750,7 @@ aan medische kennis die ook geldend is voor populaties buiten de directe \
 onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk \
 onderzoek, 2005, ccmo.nl)'),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True,
     )
 
@@ -793,8 +778,8 @@ bij een METC?'),
 
     # Status
     status = models.PositiveIntegerField(
-        choices=WMO_STATUSES,
-        default=NO_WMO,
+        choices=WMOStatuses.choices,
+        default=WMOStatuses.NO_WMO,
     )
 
     enforced_by_commission = models.BooleanField(default=False)
@@ -812,13 +797,13 @@ bij een METC?'),
         super(Wmo, self).save(*args, **kwargs)
 
     def update_status(self):
-        if self.metc == YES or self.is_medical == YES or self.enforced_by_commission:
+        if self.metc == YesNoDoubt.YES or self.is_medical == YesNoDoubt.YES or self.enforced_by_commission:
             if self.metc_decision and self.metc_decision_pdf:
-                self.status = self.JUDGED
+                self.status = self.WMOStatuses.JUDGED
             else:
-                self.status = self.WAITING
+                self.status = self.WMOStatuses.WAITING
         else:
-            self.status = self.NO_WMO
+            self.status = self.WMOStatuses.NO_WMO
 
     def __str__(self):
         return _('WMO {title}, status {status}').format(

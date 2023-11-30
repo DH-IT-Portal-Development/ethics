@@ -199,9 +199,9 @@ class ChangeAssignment(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
-        if self.review.stage not in [Review.REVISION,
-                                     Review.NO_GO,
-                                     Review.CLOSING,
+        if self.review.stage not in [Review.Continuations.REVISION,
+                                     Review.Continuations.NO_GO,
+                                     Review.Stages.CLOSING,
                                      ]:
             return False
 
@@ -265,7 +265,7 @@ class ChangeArchiveStatus(ReviewAction):
            review.proposal.embargo_end_date > datetime.date.today():
             return False
         
-        if review.proposal.status < Proposal.DECISION_MADE:
+        if review.proposal.status < Proposal.Statuses.DECISION_MADE:
             return False
 
         return True

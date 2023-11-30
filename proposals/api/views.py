@@ -51,11 +51,11 @@ class BaseProposalsApiView(LoginRequiredMixin, FancyListApiView):
 
         context['is_secretary'] = is_secretary(self.request.user)
         context['proposal'] = {
-            'SUBMITTED_TO_SUPERVISOR': Proposal.SUBMITTED_TO_SUPERVISOR,
-            'DECISION_MADE': Proposal.DECISION_MADE,
+            'SUBMITTED_TO_SUPERVISOR': Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
+            'DECISION_MADE': Proposal.Statuses.DECISION_MADE,
         }
         context['review'] = {
-            'REVISION': Review.REVISION,
+            'REVISION': Review.Continuations.REVISION,
         }
         context['user_pk'] = self.request.user.pk
 
@@ -81,7 +81,7 @@ class MyConceptsApiView(BaseProposalsApiView):
     def get_queryset(self):
         """Returns all non-submitted Proposals for the current User"""
         return self.get_my_proposals().filter(
-            status__lt=Proposal.SUBMITTED_TO_SUPERVISOR
+            status__lt=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR
         )
 
 
@@ -101,8 +101,8 @@ class MySubmittedApiView(BaseProposalsApiView):
     def get_queryset(self):
         """Returns all submitted Proposals for the current User"""
         return self.get_my_proposals().filter(
-            status__gte=Proposal.SUBMITTED_TO_SUPERVISOR,
-            status__lt=Proposal.DECISION_MADE
+            status__gte=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
+            status__lt=Proposal.Statuses.DECISION_MADE
         )
 
 
@@ -111,7 +111,7 @@ class MyCompletedApiView(BaseProposalsApiView):
     def get_queryset(self):
         """Returns all completed Proposals for the current User"""
         return self.get_my_proposals().filter(
-            status__gte=Proposal.DECISION_MADE
+            status__gte=Proposal.Statuses.DECISION_MADE
         )
 
 

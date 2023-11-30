@@ -286,10 +286,9 @@ class RowValue:
         return output
 
     def yes_no_doubt(self, value):
-        from main.models import YES_NO_DOUBT
+        from main.models import YesNoDoubt
 
-        d = dict(YES_NO_DOUBT)
-        return d[value]
+        return YesNoDoubt(value).label
 
 
 class SubTitle:
@@ -1015,12 +1014,12 @@ def create_context_pdf(context, model):
         sections.append(WMOSection(model.wmo))
 
         if not model.is_pre_assessment:
-            if model.wmo.status != model.wmo.NO_WMO:
+            if model.wmo.status != model.wmo.WMOStatuses.NO_WMO:
                 sections.append(METCSection(model.wmo))
 
             sections.append(TrajectoriesSection(model))
 
-            if model.wmo.status == model.wmo.NO_WMO:
+            if model.wmo.status == model.wmo.WMOStatuses.NO_WMO:
                 for study in model.study_set.all():
                     sections.append(StudySection(study))
                     if study.has_intervention:

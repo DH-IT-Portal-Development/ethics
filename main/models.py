@@ -3,39 +3,32 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-YES = 'Y'
-NO = 'N'
-DOUBT = '?'
-YES_NO_DOUBT = (
-    (YES, _('ja')),
-    (NO, _('nee')),
-    (DOUBT, _('twijfel')),
-)
 
+class YesNoDoubt(models.TextChoices):
+    YES = 'Y', _('ja')
+    NO = 'N', _('nee')
+    DOUBT = '?', _('twijfel')
 
 class SystemMessage(models.Model):
-    URGENT = 1
-    ATTENTION = 2
-    INFO = 3
-    # Not translated, as it's backend only
-    LEVELS = (
-        (URGENT, "Urgent"),
-        (ATTENTION, "Attention"),
-        (INFO, "Info")
-    )
+
+    class Levels(models.IntegerChoices):
+        # Not translated, as it's backend only
+        URGENT = 1, "Urgent"
+        ATTENTION = 2, "Attention"
+        INFO = 3, "Info"
 
     message = models.TextField()
-    level = models.IntegerField(choices=LEVELS)
+    level = models.IntegerField(choices=Levels.choices)
     not_before = models.DateTimeField()
     not_after = models.DateTimeField()
 
     @property
     def css_class(self):
-        if self.level == self.URGENT:
+        if self.level == self.Levels.URGENT:
             return 'failed'
-        if self.level == self.ATTENTION:
+        if self.level == self.Levels.ATTENTION:
             return 'warning'
-        if self.level == self.INFO:
+        if self.level == self.Levels.INFO:
             return 'info'
 
         return ''

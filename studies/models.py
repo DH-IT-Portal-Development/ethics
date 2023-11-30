@@ -12,7 +12,7 @@ from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 mark_safe_lazy = lazy(mark_safe, str)
 
-from main.models import YES_NO_DOUBT
+from main.models import YesNoDoubt
 from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
 from studies.utils import study_urls
@@ -136,14 +136,6 @@ class Study(models.Model):
     A model to store a study within a Proposal.
     A Study consists of participant details, experiment design and consent forms.
     """
-    OBSERVATION = 0
-    INTERVENTION = 1
-    SESSIONS = 2
-    DESIGNS = (
-        (OBSERVATION, _('Observatieonderzoek')),
-        (INTERVENTION, _('Interventieonderzoek')),
-        (SESSIONS, _('Taakonderzoek en interviews')),
-    )
 
     order = models.PositiveIntegerField()
     name = models.CharField(
@@ -216,7 +208,7 @@ laten meedoen?'),
 of zou je de vraag ook kunnen beantwoorden door volwassen deelnemers \
 te testen?'),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True)
     necessity_reason = models.TextField(
         _('Leg uit waarom'),
@@ -290,7 +282,7 @@ deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale \
 geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: \
 het gaat hierbij niet om fillers.'),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True)
     deception_details = models.TextField(
         _('Geef een toelichting en beschrijf hoe en wanneer de deelnemer \
@@ -303,7 +295,7 @@ Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende \
 uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of \
 (heel) saaie taken.'),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True)
     negativity_details = models.TextField(
         _('Licht je antwoord toe.'),
@@ -322,7 +314,7 @@ Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting \
 tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade \
 door het onderzoek.')),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True)
     stressful_details = models.TextField(
         _('Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
@@ -352,7 +344,7 @@ intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke \
 inspanning; dit alles, waar relevant, onder begeleiding van adequaat \
 geschoolde specialisten).')),
         max_length=1,
-        choices=YES_NO_DOUBT,
+        choices=YesNoDoubt.choices,
         blank=True)
     risk_details = models.TextField(
         _('Licht toe'),
