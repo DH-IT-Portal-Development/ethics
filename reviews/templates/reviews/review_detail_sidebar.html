@@ -62,7 +62,7 @@ Remember to include it in a with statement if the view does not provide it.
                 {% endblocktrans %}
             </li>
         {% endif %}
-        {% if review.stage == review.CLOSED %}
+        {% if review.stage == review.Stages.CLOSED %}
             <li>
                 {% blocktrans with continuation=review.get_continuation_display %}
                     Afhandeling:<br/> {{ continuation }}.

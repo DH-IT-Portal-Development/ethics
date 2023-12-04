@@ -222,7 +222,7 @@ def start_review_pre_assessment(proposal):
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()
@@ -465,9 +465,9 @@ def discontinue_review(review):
     and set DECISION_MADE on its proposal. """
 
     # Set review continuation
-    review.continuation = review.DISCONTINUED
-    review.proposal.status = review.proposal.DECISION_MADE
-    review.stage = review.CLOSED
+    review.continuation = review.Continuations.DISCONTINUED
+    review.proposal.status = review.proposal.Statuses.DECISION_MADE
+    review.stage = review.Stages.CLOSED
     review.date_end = datetime.datetime.now()
     review.save()
     review.proposal.save()
@@ -478,9 +478,9 @@ def assign_reviewers(review, list_of_users, route):
 
     # Set stage to commission if users are assigned
     if len(list_of_users) > 0:
-        review.stage = review.COMMISSION
+        review.stage = review.Stages.COMMISSION
     else:
-        review.stage = review.ASSIGNMENT
+        review.stage = review.Stages.ASSIGNMENT
 
     current_reviewers = set(review.current_reviewers())
     new_reviewers = list_of_users - current_reviewers

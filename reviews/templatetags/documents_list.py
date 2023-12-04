@@ -252,7 +252,7 @@ def documents_list(review, user):
         pdf_container.items.append(dmp_file)
 
     # WMO
-    if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.JUDGED:
+    if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.WMOStatuses.JUDGED:
 
         metc_decision = DocItem(_('Beslissing METC'))
         metc_decision.field = proposal.wmo.metc_decision_pdf

@@ -94,7 +94,7 @@ class DecideAction(ReviewAction):
         user = self.user
         review = self.review
 
-        if review.stage != review.COMMISSION:
+        if review.stage != review.Stages.COMMISSION:
             return False
 
         try:
@@ -138,7 +138,7 @@ class CloseReview(ReviewAction):
 
         review = self.review
 
-        if review.stage != review.CLOSING:
+        if review.stage != review.Stages.CLOSING:
             return False
 
         user_groups = self.user.groups.values_list("name", flat=True)
@@ -169,9 +169,9 @@ class DiscontinueReview(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
-        if review.continuation in [review.DISCONTINUED,
-                                   review.GO,
-                                   review.GO_POST_HOC,
+        if review.continuation in [review.Continuations.DISCONTINUED,
+                                   review.Continuations.GO,
+                                   review.Continuations.GO_POST_HOC,
                                    ]:
             return False
 
@@ -228,10 +228,10 @@ class SendConfirmation(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
         
-        if review.stage < review.CLOSED:
+        if review.stage < review.Stages.CLOSED:
             return False
         
-        if not review.continuation in [review.GO, review.GO_POST_HOC]:
+        if not review.continuation in [review.Continuations.GO, review.Continuations.GO_POST_HOC]:
             return False
         
         return True
