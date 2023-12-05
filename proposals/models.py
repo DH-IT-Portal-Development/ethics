@@ -361,8 +361,8 @@ Zep software)'),
 
     # Fields with respect to Studies
     studies_similar = models.BooleanField(
-        _('Kan voor alle deelnemersgroepen dezelfde informatiebrief en \
-        toestemmingsverklaring gebruikt worden?'),
+        _('Kan voor alle deelnemers dezelfde informatiebrief en, indien van \
+          toepassing, dezelfde toestemmingsverklaring gebruikt worden?'),
         help_text=_('Daar waar de verschillen klein en qua belasting of \
 risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
 voldoet één set documenten voor de informed consent. Denk \
