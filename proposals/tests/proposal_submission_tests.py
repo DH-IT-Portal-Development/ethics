@@ -30,6 +30,8 @@ class BaseProposalTestCase(TestCase):
         "traits",
         "registrationkinds",
         "registrations",
+        "testing/test_users",
+        "testing/test_proposals",
     ]
 
     def setUp(self):
@@ -75,8 +77,10 @@ class BaseProposalTestCase(TestCase):
         """
         Load our test proposals from a fixture, then add our user as
         an applicant to each of them.
+
+        Please note, this currently uses a mish-mash of both fixtures
+        and programmatically created users and objects.
         """
-        call_command("loaddata", "proposals/tests/test_proposals.json")
         self.proposal = Proposal.objects.get(pk=1)
         self.proposal.applicants.add(self.user)
         self.proposal.save()
