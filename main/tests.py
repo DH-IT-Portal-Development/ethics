@@ -19,7 +19,7 @@ class BaseViewTestCase():
 
     # for example:
     # "/proposals/update/1/"
-    # NOT a full URL including protocal and domain
+    # NOT a full URL including protocol and domain
     view_path = None
 
     allowed_users = []
