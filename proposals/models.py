@@ -361,8 +361,8 @@ Zep software)'),
 
     # Fields with respect to Studies
     studies_similar = models.BooleanField(
-        _('Kan voor alle deelnemersgroepen dezelfde informatiebrief en \
-        toestemmingsverklaring gebruikt worden?'),
+        _('Kan voor alle deelnemers dezelfde informatiebrief en, indien van \
+          toepassing, dezelfde toestemmingsverklaring gebruikt worden?'),
         help_text=_('Daar waar de verschillen klein en qua belasting of \
 risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
 voldoet één set documenten voor de informed consent. Denk \
@@ -545,6 +545,18 @@ Als dat wel moet, geef dan hier aan wat de reden is:'),
         ),
         default=False,
     )
+
+    @property
+    def is_revisable(self):
+        """A check to see if a proposal is revisable. For use in Querysets,
+        keep in mind to also check if the user is one of the applicants 
+        or the supervisor."""
+        if not self.is_pre_assessment and \
+           not self.status_review and \
+           self.status == self.Statuses.DECISION_MADE and \
+           not self.children.all():
+            return True
+        return False
 
     def is_practice(self):
         return self.in_course or self.is_exploration

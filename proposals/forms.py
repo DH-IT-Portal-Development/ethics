@@ -275,11 +275,6 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
         widgets = {
             'is_revision': forms.HiddenInput(),
         }
-        error_messages = {
-            'title': {
-                'unique': _('Er bestaat al een aanvraag met deze titel.'),
-            },
-        }
 
     parent = ParentChoiceModelField(
         queryset=Proposal.objects.all(),
@@ -323,17 +318,6 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-
-        if 'title' in self.fields:
-            self.fields['title'].label = _('Je kan de titel van je aanvraag nu, '
-                                           'indien nodig, wijzigen.')
-            self.fields['title'].help_text = _('De titel die je hier opgeeft is '
-                                               'zichtbaar voor de FETC-GW-leden en,'
-                                               ' wanneer de aanvraag is goedgekeurd,'
-                                               ' ook voor alle medewerkers die in'
-                                               ' het archief van deze portal '
-                                               'kijken.')
-
         self.fields['parent'].label = _('Te reviseren aanvraag')
         self.fields['parent'].help_text = _('Dit veld toont enkel ingediende,'
                                             ' (nog) niet goedgekeurde aanvragen '
@@ -358,16 +342,6 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        if 'title' in self.fields:
-            self.fields['title'].label = _('Je kan de titel van je aanvraag nu, '
-                                           'indien nodig, wijzigen.')
-            self.fields['title'].help_text = _('De titel die je hier opgeeft is '
-                                               'zichtbaar voor de FETC-GW-leden en,'
-                                               ' wanneer de aanvraag is goedgekeurd,'
-                                               ' ook voor alle medewerkers die in'
-                                               ' het archief van deze portal '
-                                               'kijken.')
 
         self.fields['parent'].label = _('Te amenderen aanvraag')
         self.fields['parent'].help_text = _('Dit veld toont enkel goedgekeurde'

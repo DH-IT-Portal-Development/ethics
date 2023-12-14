@@ -68,7 +68,7 @@ class ProposalSerializer(ProposalInlineSerializer):
                   'date_submitted_supervisor', 'date_reviewed', 'date_modified',
                   'parent', 'latest_review', 'supervisor_decision',
                   'applicants', 'status', 'supervisor', 'continue_url',
-                  'pdf', 'in_archive']
+                  'pdf', 'in_archive', 'is_revisable']
 
     parent = serializers.SerializerMethodField()
 

@@ -153,7 +153,7 @@ class CloseReview(ReviewAction):
 
     def description(self):
 
-        return _('Deze aanvraag afsluiten')
+        return _('Deze versie afhandelen')
 
 
 class DiscontinueReview(ReviewAction):

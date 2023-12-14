@@ -37,6 +37,8 @@
             {% static "proposals/images/folder_delete.png" as img_hide %}
             {% static "proposals/images/folder_add.png" as img_add %}
             {% static 'reviews/images/scale.png' as img_decide %}
+            {% static 'proposals/images/edit-undo.png' as img_revise %}
+
             <p>
                 {{ body }}
             </p>
@@ -62,11 +64,16 @@
                             Klik op <img src="{{ img_delete }}" title="Verwijderen"> om je aanvraag te verwijderen.
                         {% endblocktrans %}
                     </li>
-                {% endif %}
-                {% if submitted %}
+                    {% endif %}
+                    {% if submitted %}
                     <li>
                         {% blocktrans trimmed %}
-                            Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende aanvraag in te zien.
+                        Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende aanvraag in te zien.
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans trimmed %}
+                            Klik op <img src="{{ img_revise }}" title="Maak revisie"> om een revisie aan te maken van je aanvraag.
                         {% endblocktrans %}
                     </li>
                 {% endif %}
