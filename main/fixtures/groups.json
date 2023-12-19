@@ -30,5 +30,13 @@
         },
         "model": "auth.group",
         "pk": 4
+    },
+    {
+        "fields": {
+            "name": "Voorzitter",
+            "permissions": []
+        },
+        "model": "auth.group",
+        "pk": 5
     }
 ]
