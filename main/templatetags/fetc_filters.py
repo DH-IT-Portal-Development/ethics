@@ -29,3 +29,14 @@ def is_secretary(current_user):
     Check whether the current user is in the 'Secretary' group
     """
     return Group.objects.get(name=settings.GROUP_SECRETARY) in current_user.groups.all()
+
+@register.filter
+def is_chair_or_secretary(current_user):
+    """
+    Check whether the current user is in the 'Chair' group
+    """
+    user_groups = current_user.groups.all()
+    return (
+        Group.objects.get(name=settings.GROUP_CHAIR) in user_groups
+        or Group.objects.get(name=settings.GROUP_SECRETARY) in user_groups
+    )
