@@ -1,11 +1,12 @@
 from __future__ import division
 
-from proposals.tests import BaseProposalTestCase
+from proposals.tests import MiscProposalTestCase
 from .models import Study
 from .utils import STUDY_PROGRESS_START, STUDY_PROGRESS_TOTAL, get_study_progress
 
 
-class ProgressTestCase(BaseProposalTestCase):
+
+class ProgressTestCase(MiscProposalTestCase):
     def test_progress_single(self):
         self.p1.studies_number = 1
         self.p1.save()

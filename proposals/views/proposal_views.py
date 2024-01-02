@@ -433,22 +433,22 @@ class ProposalSubmit(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateV
     def is_supervisor_edit_phase(self):
         if self.object.status == self.object.Statuses.SUBMITTED_TO_SUPERVISOR:
             return True
-
         return False
 
     def form_valid(self, form):
         """
-        - Save the PDF on the Proposal
-        - Start the review process on submission (though not for practice Proposals)
+        Start a review for this proposal and return a response.
         """
-
-        success_url = super(ProposalSubmit, self).form_valid(form)
-        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
-            proposal = self.get_object()
-            proposal.generate_pdf()
-            if not proposal.is_practice() and proposal.status == Proposal.Statuses.DRAFT:
-                start_review(proposal)
-        return success_url
+        # We pick up the response from the base class first so that
+        # the fields on the Submit page get saved correctly. In the end,
+        # this is still an UpdateView
+        success_response = super().form_valid(form)
+        # We then defer all submission logic to the utility code.
+        # Checks for practice proposals and starting the right
+        # kind of review happen over there.
+        proposal = form.instance
+        start_review(proposal)
+        return success_response
 
     def get_next_url(self):
         """After submission, go to the thank-you view. Unless a supervisor is
@@ -644,19 +644,6 @@ class ProposalUpdatePreAssessment(PreAssessmentMixin, ProposalUpdate):
 
 
 class ProposalSubmitPreAssessment(ProposalSubmit):
-    def form_valid(self, form):
-        """
-        Performs actions after saving the form
-        - Save the preassessment PDF on the Proposal
-        - End the preassessment phase
-        """
-        # Note that the below method does NOT call the ProposalSubmit method, as that would generate the full PDF.
-        success_url = super(ProposalSubmitPreAssessment, self).form_valid(form)
-        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
-            proposal = self.get_object()
-            proposal.generate_pdf()
-            start_review_pre_assessment(proposal)
-        return success_url
 
     def get_next_url(self):
         """After submission, go to the thank-you view"""
@@ -705,17 +692,6 @@ class ProposalUpdatePreApproved(PreApprovedMixin, ProposalUpdate):
 
 
 class ProposalSubmitPreApproved(ProposalSubmit):
-    def form_valid(self, form):
-        """
-        Performs actions after saving the form
-        - Save the pre_approved PDF on the Proposal
-        - End the draft phase and start the appropiate review phase (in super function)
-        """
-        success_url = super(ProposalSubmitPreApproved, self).form_valid(form)
-        if 'save_back' not in self.request.POST:
-            proposal = self.get_object()
-            proposal.generate_pdf()
-        return success_url
 
     def get_next_url(self):
         """After submission, go to the thank-you view"""
