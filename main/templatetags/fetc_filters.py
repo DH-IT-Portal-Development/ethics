@@ -33,7 +33,7 @@ def is_secretary(current_user):
 @register.filter
 def is_chair_or_secretary(current_user):
     """
-    Check whether the current user is in the 'Chair' group
+    Check whether the current user is in the 'Chair' or 'Secretary' Group
     """
     user_groups = current_user.groups.all()
     return (
