@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load proposal_filters %}
+{% load fetc_filters %}
+{% load i18n %}
+{% load compare_tags %}
+{% load uil_filters %}
+
+{% block header_title %}
+    {% trans 'Aanvraag al beoordeeld' %}
+    - {{ review.proposal.reference_number }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    {% url 'proposals:my_supervised' as my_supervised_url %}
+    <div class="uu-inner-container">
+        <div class="col-12 col-md-9">
+            <h2>
+                {% trans 'Aanvraag al beoordeeld' %}
+                - {{ review.proposal.reference_number }}
+            </h2>
+            <p>
+                {% blocktrans trimmed %}
+                    Je hebt deze aanvraag al beoordeeld. Controleer of dit inderdaad de aanvraag is die je wou beoordelen. Op <a href="{{ my_supervised_url }}">deze pagina</a> vind je alle aanvragen waarvan je eindverantwoordelijke bent.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Wil je je beoordeling veranderen? Neem dan contact op met de <a href="mailto:fetc-gw@uu.nl">secretaris van de FETC</a>.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Denk je dat dit niet klopt?
+                {% endblocktrans %}
+                {% blocktrans trimmed %}
+                    Neem dan contact op met het technisch beheer van de portal via <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
+                {% endblocktrans %}
+            </p>
+        </div>
+        {% include "reviews/review_detail_sidebar.html" %}
+    </div>
+{% endblock %}
