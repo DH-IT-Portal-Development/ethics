@@ -43,6 +43,7 @@ class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateV
         settings.GROUP_SECRETARY,
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
+        settings.GROUP_CHAIR,
     ]
 
     def get_context_data(self, **kwargs):
@@ -74,7 +75,7 @@ class DecisionMyOpenView(BaseDecisionListView):
 
 
 class DecisionOpenView(BaseDecisionListView):
-    group_required = settings.GROUP_SECRETARY
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -90,7 +91,7 @@ class CommitteeMembersWorkloadView(
     GroupRequiredMixin, CommitteeMixin, generic.FormView
 ):
     template_name = "reviews/committee_members_workload.html"
-    group_required = [settings.GROUP_SECRETARY]
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
     form_class = StartEndDateForm
 
     def __init__(self, **kwargs):
@@ -192,7 +193,7 @@ class SupervisorDecisionOpenView(BaseDecisionListView):
     This page displays all proposals to be reviewed by supervisors.
     """
 
-    group_required = settings.GROUP_SECRETARY
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -208,9 +209,7 @@ class SupervisorDecisionOpenView(BaseDecisionListView):
 
 class BaseReviewListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
     template_name = "reviews/ufl_list.html"
-    group_required = [
-        settings.GROUP_SECRETARY,
-    ]
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -221,7 +220,7 @@ class BaseReviewListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateVie
 
 
 class ToConcludeProposalView(BaseReviewListView):
-    group_required = settings.GROUP_SECRETARY
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -233,7 +232,7 @@ class ToConcludeProposalView(BaseReviewListView):
 
 
 class InRevisionReviewsView(BaseReviewListView):
-    group_required = [settings.GROUP_SECRETARY]
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -258,7 +257,7 @@ class AllOpenProposalReviewsView(BaseReviewListView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY]
+        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
         if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
@@ -280,7 +279,7 @@ class AllProposalReviewsView(BaseReviewListView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY]
+        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
         if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
@@ -303,6 +302,7 @@ class ReviewDetailView(
         obj = self.get_object()
         group_required = [
             settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
             obj.proposal.reviewing_committee.name,
         ]
 

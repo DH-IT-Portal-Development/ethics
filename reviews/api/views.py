@@ -21,6 +21,7 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
     serializer_class = DecisionSerializer
     group_required = [
         settings.GROUP_SECRETARY,
+        settings.GROUP_CHAIR,
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
@@ -227,6 +228,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
 class OpenDecisionsApiView(BaseDecisionApiView):
     group_required = [
         settings.GROUP_SECRETARY,
+        settings.GROUP_CHAIR,
     ]
 
     def get_queryset(self):
@@ -269,6 +271,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
 class OpenSupervisorDecisionApiView(BaseDecisionApiView):
     group_required = [
         settings.GROUP_SECRETARY,
+        settings.GROUP_CHAIR,
     ]
 
     sort_definitions = [
@@ -369,7 +372,10 @@ class BaseReviewApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
 
 class ToConcludeReviewApiView(BaseReviewApiView):
-    group_required = settings.GROUP_SECRETARY
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_CHAIR,
+    ]
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
@@ -412,7 +418,7 @@ class InRevisionApiView(BaseReviewApiView):
     but for which a revision has not yet been submitted"""
 
     default_sort = ('date_start', 'desc')
-    group_required = [settings.GROUP_SECRETARY]
+    group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
     def get_queryset(self):
         # 1. Find reviews of revisions:
@@ -448,7 +454,7 @@ class AllOpenReviewsApiView(BaseReviewApiView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY]
+        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
         if self.committee.name == 'AK':
             group_required += [settings.GROUP_GENERAL_CHAMBER]
@@ -495,7 +501,7 @@ class AllReviewsApiView(BaseReviewApiView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY]
+        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
         if self.committee.name == 'AK':
             group_required += [settings.GROUP_GENERAL_CHAMBER]
