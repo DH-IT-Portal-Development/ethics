@@ -11,10 +11,12 @@ from cdh.core.forms import DateField
 
 from django.core.exceptions import ValidationError
 
-SHORT_LONG_REVISE = [(True, _('korte (2-weken) route')),
-                     (False, _('lange (4-weken) route')),
-                     (None, _('direct naar revisie'))]
 
+SHORT_LONG_REVISE = [
+    (True, _("korte route of revisie (2-weken)")),
+    (False, _("lange route (4-weken)")),
+    (None, _("Direct terug naar aanvrager (Nog niet in behandeling)")),
+]
 
 class ChangeChamberForm(forms.ModelForm):
     class Meta:

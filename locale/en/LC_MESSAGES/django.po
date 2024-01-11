@@ -1631,7 +1631,7 @@ msgstr "Space for possible comments"
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:436 reviews/forms.py:111
+#: proposals/models.py:436 reviews/forms.py:113
 msgid "Is er een revisie geweest na het indienen van deze aanvraag?"
 msgstr "Has this proposal been amended after it was submitted?"
 
@@ -3356,51 +3356,51 @@ msgstr "Route"
 msgid "Start datum"
 msgstr "Start date review"
 
-#: reviews/forms.py:14 reviews/models.py:132
-msgid "korte (2-weken) route"
-msgstr "short (2-week) route"
-
-#: reviews/forms.py:15 reviews/models.py:131
-msgid "lange (4-weken) route"
-msgstr "long (4-week) route"
-
 #: reviews/forms.py:16
-msgid "direct naar revisie"
-msgstr "straight to revision"
+msgid "korte route of revisie (2-weken)"
+msgstr "short route or revision (2-weeks)"
 
-#: reviews/forms.py:31 reviews/menus.py:60 reviews/mixins.py:169
+#: reviews/forms.py:17
+msgid "lange route (4-weken)"
+msgstr "long route (4-weeks)"
+
+#: reviews/forms.py:18
+msgid "Direct terug naar aanvrager (Nog niet in behandeling)"
+msgstr "Return directly to applicant (not yet under review)"
+
+#: reviews/forms.py:33 reviews/menus.py:60 reviews/mixins.py:127
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
-#: reviews/forms.py:32 reviews/menus.py:67 reviews/mixins.py:172
+#: reviews/forms.py:34 reviews/menus.py:67 reviews/mixins.py:130
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
 
-#: reviews/forms.py:64
+#: reviews/forms.py:66
 msgid "Selecteer de commissieleden"
 msgstr "Select committee members"
 
-#: reviews/forms.py:73
+#: reviews/forms.py:75
 msgid "Er moet tenminste één beoordelaar geselecteerd worden."
 msgstr "You must select at least one reviewer."
 
-#: reviews/forms.py:108
+#: reviews/forms.py:110
 msgid "Voeg deze aanvraag toe aan het archief"
 msgstr "Add this application to the archive"
 
-#: reviews/forms.py:114
+#: reviews/forms.py:116
 msgid "Opmerkingen over revisie"
 msgstr "Comments about this revision"
 
-#: reviews/forms.py:121
+#: reviews/forms.py:123
 msgid "Bevestig beëindiging"
 msgstr "Confirm termination of this review"
 
-#: reviews/forms.py:154
+#: reviews/forms.py:156
 msgid "Start datum periode:"
 msgstr "Start date period:"
 
-#: reviews/forms.py:155
+#: reviews/forms.py:157
 msgid "Eind datum periode:"
 msgstr "End date period:"
 
@@ -3496,6 +3496,14 @@ msgstr "Not to be assessed further"
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
+
+#: reviews/models.py:131
+msgid "lange (4-weken) route"
+msgstr "long (4-week) route"
+
+#: reviews/models.py:132
+msgid "korte (2-weken) route"
+msgstr "short (2-week) route"
 
 #: reviews/models.py:133
 msgid "nog geen route"
@@ -4371,7 +4379,7 @@ msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
 #: reviews/views.py:567
-msgid ""
+msgid ""vind je alle aanvragen waarvan je de eindverantwoordelijke bent
 "Deze aanvraag is al beoordeeld, dus je kan je beoordeling niet meer "
 "toevoegen/aanpassen"
 msgstr ""
