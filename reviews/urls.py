@@ -4,7 +4,7 @@ from .views import \
     AllOpenProposalReviewsView, AllProposalReviewsView, DecisionListView, \
     InRevisionReviewsView, \
     DecisionMyOpenView, \
-    SupervisorDecisionOpenView, \
+    ReviewClosedDecisionView, SupervisorDecisionOpenView, \
     DecisionOpenView, \
     ReviewDetailView, \
     ReviewAssignView, ReviewCloseView, ReviewDiscontinueView, \
@@ -41,6 +41,7 @@ urlpatterns = [
     path('discontinue/<int:pk>/', ReviewDiscontinueView.as_view(), name='discontinue'),
 
     path('decide/<int:pk>/', DecisionUpdateView.as_view(), name='decide'),
+    path('decide/closed/<int:pk>/', ReviewClosedDecisionView.as_view(), name='review-closed-decision'),
     path('decide/new/<int:review>/', CreateDecisionRedirectView.as_view(),
       name='decide_new'),
 ]

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-18 11:52+0100\n"
+"POT-Creation-Date: 2024-01-11 16:40+0100\n"
 "PO-Revision-Date: 2023-11-07 10:36+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -441,6 +441,7 @@ msgstr "If this problem persists; "
 
 #: main/templates/error/400.html:21 main/templates/error/403.html:41
 #: main/templates/error/403_csrf.html:39 main/templates/error/500.html:20
+#: reviews/templates/reviews/review_closed.html:37
 msgid ""
 "Neem dan contact op met het technisch beheer van de portal via <a "
 "href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>."
@@ -484,6 +485,7 @@ msgstr ""
 "You are not logged in, please <a href=\"%(login_url)s\"> try to log in</a>."
 
 #: main/templates/error/403.html:38 main/templates/error/403_csrf.html:36
+#: reviews/templates/reviews/review_closed.html:34
 msgid "Denk je dat dit niet klopt?"
 msgstr "Do you think this is in error?"
 
@@ -3402,7 +3404,7 @@ msgstr "Start date period:"
 msgid "Eind datum periode:"
 msgstr "End date period:"
 
-#: reviews/menus.py:14 reviews/views.py:70
+#: reviews/menus.py:14 reviews/views.py:71
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
@@ -3418,19 +3420,19 @@ msgstr "All pending decisions committee members"
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: reviews/menus.py:32 reviews/views.py:229
+#: reviews/menus.py:32 reviews/views.py:230
 msgid "Nog af te handelen aanvragen"
 msgstr "Applications waiting for conclusion"
 
-#: reviews/menus.py:37 reviews/views.py:241
+#: reviews/menus.py:37 reviews/views.py:242
 msgid "Aanvragen in revisie"
 msgstr "Applications in revision"
 
-#: reviews/menus.py:42 reviews/views.py:253
+#: reviews/menus.py:42 reviews/views.py:254
 msgid "Alle lopende aanvragen"
 msgstr "All running applications"
 
-#: reviews/menus.py:47 reviews/views.py:275
+#: reviews/menus.py:47 reviews/views.py:276
 msgid "Alle ingezonden aanvragen"
 msgstr "All submitted applications"
 
@@ -3892,6 +3894,30 @@ msgstr "Individual decisions"
 msgid "Uiteindelijk besluit"
 msgstr "Final decision"
 
+#: reviews/templates/reviews/review_closed.html:11
+#: reviews/templates/reviews/review_closed.html:20
+msgid "Aanvraag al beoordeeld"
+msgstr "Application has already been reviewed"
+
+#: reviews/templates/reviews/review_closed.html:24
+#, python-format
+msgid ""
+"Je hebt deze aanvraag al beoordeeld. Controleer of dit inderdaad de aanvraag "
+"is die je wilde beoordelen. Op <a href=\"%(my_supervised_url)s\">deze "
+"pagina</a> vind je alle aanvragen waarvan je de eindverantwoordelijke bent."
+msgstr ""
+"You have already reviewed this request. Please check if this is indeed the "
+"application you wanted to review. On <a href=\"%(my_supervised_url)s\">this "
+"page</a>, you can find all your supervised applications."
+
+#: reviews/templates/reviews/review_closed.html:29
+msgid ""
+"Wil je je beoordeling veranderen? Neem dan contact op met de <a "
+"href=\"mailto:fetc-gw@uu.nl\">secretaris van de FETC</a>."
+msgstr ""
+"Do you want to change your decision? Please contact the <a href=\"mailto:"
+"fetc-gw@uu.nl\">secretary of the FEtC-H</a>."
+
 #: reviews/templates/reviews/review_detail.html:11
 #, python-format
 msgid ""
@@ -4211,61 +4237,61 @@ msgstr "Add this application to the archive"
 msgid "Startdatum wijzigen"
 msgstr "Edit start date"
 
-#: reviews/utils/review_utils.py:55
+#: reviews/utils/review_utils.py:65
 msgid "FETC-GW {}: bevestiging indienen concept-aanmelding"
 msgstr "FEtC-H {}: confirmation of draft application submission"
 
-#: reviews/utils/review_utils.py:82
+#: reviews/utils/review_utils.py:92
 msgid "FETC-GW {}: beoordelen als eindverantwoordelijke"
 msgstr "FEtC-H {}: assess as researcher with final responsibility"
 
-#: reviews/utils/review_utils.py:132
+#: reviews/utils/review_utils.py:142
 msgid "FETC-GW {}: aanmelding ontvangen"
 msgstr "FEtC-H {}: application received"
 
-#: reviews/utils/review_utils.py:231
+#: reviews/utils/review_utils.py:241
 msgid "FETC-GW {}: nieuwe aanvraag voor voortoetsing"
 msgstr "FEtC-H {}: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:245
+#: reviews/utils/review_utils.py:255
 msgid "FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H {}: confirmation of submission of application for preliminary "
 "assessment"
 
-#: reviews/utils/review_utils.py:294
+#: reviews/utils/review_utils.py:306
 msgid "FETC-GW {}: nieuwe aanvraag ingediend"
 msgstr "FEtC-H {}: new application submitted"
 
-#: reviews/utils/review_utils.py:309
+#: reviews/utils/review_utils.py:321
 msgid "FETC-GW {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {}: new decision added"
 
-#: reviews/utils/review_utils.py:352
+#: reviews/utils/review_utils.py:364
 msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
-#: reviews/utils/review_utils.py:378
+#: reviews/utils/review_utils.py:390
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:381
+#: reviews/utils/review_utils.py:393
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:384
+#: reviews/utils/review_utils.py:396
 msgid ""
 "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
 msgstr ""
 "A hierarchal relationship between researcher(s) and participant(s) exists."
 
-#: reviews/utils/review_utils.py:387
+#: reviews/utils/review_utils.py:399
 msgid "Het onderzoek verzamelt bijzondere persoonsgegevens."
 msgstr "This study collects special or sensitive personal details."
 
-#: reviews/utils/review_utils.py:390
+#: reviews/utils/review_utils.py:402
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4273,7 +4299,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:396
+#: reviews/utils/review_utils.py:408
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
 "onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen "
@@ -4283,7 +4309,7 @@ msgstr ""
 "study, in part or in its entirety, is so burdensome that despite acquiring "
 "informed consent it might raise questions."
 
-#: reviews/utils/review_utils.py:400
+#: reviews/utils/review_utils.py:412
 msgid ""
 "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
 "psychische of fysieke schade bij deelname aan het onderzoek meer dan "
@@ -4293,7 +4319,7 @@ msgstr ""
 "psychological or physical harm in participating in the study are more than "
 "minimal."
 
-#: reviews/utils/review_utils.py:407
+#: reviews/utils/review_utils.py:419
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4304,14 +4330,14 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:424
+#: reviews/utils/review_utils.py:436
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:428
+#: reviews/utils/review_utils.py:440
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4319,7 +4345,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:430
+#: reviews/utils/review_utils.py:442
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4329,28 +4355,36 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:435
+#: reviews/utils/review_utils.py:447
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:456
+#: reviews/utils/review_utils.py:468
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
 "The application contains psychophysiological measurements on children under "
 "{} year(s) old."
 
-#: reviews/views.py:60
+#: reviews/views.py:61
 msgid "Mijn besluiten"
 msgstr "My results"
 
-#: reviews/views.py:82
+#: reviews/views.py:83
 msgid "Openstaande besluiten commissieleden"
 msgstr "Pending decisions committee members"
 
-#: reviews/views.py:200
+#: reviews/views.py:201
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
+
+#: reviews/views.py:567
+msgid ""vind je alle aanvragen waarvan je de eindverantwoordelijke bent
+"Deze aanvraag is al beoordeeld, dus je kan je beoordeling niet meer "
+"toevoegen/aanpassen"
+msgstr ""
+"This application has already been assessed, so you cannot add/change your "
+"assessment"
 
 #: studies/forms.py:41
 msgid ""
@@ -5515,6 +5549,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "direct naar revisie"
-#~ msgstr "straight to revision"

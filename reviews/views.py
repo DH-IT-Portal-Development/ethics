@@ -2,6 +2,7 @@ from datetime import date, timedelta
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -23,7 +24,7 @@ from .forms import (
 )
 from .mixins import (
     AutoReviewMixin,
-    UserAllowedMixin,
+    UserAllowedToDecisionMixin,
     CommitteeMixin,
     UsersOrGroupsAllowedMixin,
 )
@@ -317,13 +318,13 @@ class ReviewDetailView(
         return context
 
 
-class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class ChangeChamberView(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateView):
     model = Proposal
     form_class = ChangeChamberForm
     template_name = "reviews/change_chamber_form.html"
+    group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        committee = self.object.reviewing_committee.name
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
 
 
@@ -524,7 +525,7 @@ class CreateDecisionRedirectView(
         return reverse("reviews:decide", args=[decision_pk])
 
 
-class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class DecisionUpdateView(LoginRequiredMixin, UserAllowedToDecisionMixin, generic.UpdateView):
     """
     Allows a User to make a Decision on a Review.
     """
@@ -532,22 +533,12 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
     model = Decision
     form_class = DecisionForm
 
-    def is_reviewer(self):
-        if self.request.user.is_superuser:
-            return True
-        user_groups = self.request.user.groups.values_list("name", flat=True)
-        return {
-            settings.GROUP_SECRETARY,
-            settings.GROUP_LINGUISTICS_CHAMBER,
-            settings.GROUP_GENERAL_CHAMBER,
-        }.intersection(set(user_groups))
-
     def get_success_url(self):
-        if self.is_reviewer():
-            committee = self.object.review.proposal.reviewing_committee.name
-            return reverse("reviews:detail", args=[self.object.review.pk])
+        obj = self.get_object()
+        if obj.review.is_committee_review:
+            return reverse("reviews:detail", args=[obj.review.pk])
         else:
-            return reverse("proposals:my_archive")
+            return reverse("proposals:my_supervised")
 
     def form_valid(self, form):
         """Save the decision date and send e-mail to secretary"""
@@ -560,3 +551,44 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateVie
             notify_secretary(form.instance)
 
         return super(DecisionUpdateView, self).form_valid(form)
+
+    def handle_review_closed(self, request, exception):
+        # Redirect to our 'this review is closed' page for supervisor reviews
+        redirect_url = reverse(
+            "reviews:review-closed-decision",
+            args=[self.get_object().pk]
+        )
+        # And go to the details page for committee reviews
+        if self.get_object().review.is_committee_review:
+            # Show a message for this case.
+            messages.warning(
+                request,
+                _(
+                    'Deze aanvraag is al beoordeeld, dus je kan je beoordeling '
+                    'niet meer toevoegen/aanpassen'
+                )
+            )
+            redirect_url = self.get_success_url()
+
+        return HttpResponseRedirect(redirect_url)
+
+
+class ReviewClosedDecisionView(LoginRequiredMixin, UserAllowedToDecisionMixin,
+                       generic.DetailView):
+    """Custom page for supervisors visiting links to already concluded
+    supervisor reviews
+    """
+    template_name = "reviews/review_closed.html"
+    model = Decision
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['review'] = self.object.review
+
+        return context
+
+    def handle_review_closed(self, request, exception):
+        # Do nothing; we only use the permission check, this page is only for
+        # cases where the review is closed.
+        return None
