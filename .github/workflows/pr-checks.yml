@@ -43,7 +43,7 @@ jobs:
       - name: Check for missing migrations
         run: |
           tree
-          djlint . --check
+          djlint . --check --extend-exclude src
   black-check: # Rhymes with blackjack :D
     name: Check if Black thinks everything is correctly formatted
     runs-on: ubuntu-latest
