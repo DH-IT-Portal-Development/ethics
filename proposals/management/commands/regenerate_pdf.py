@@ -1,13 +1,14 @@
 from django.core.management.base import BaseCommand, CommandError
 from proposals.models import Proposal
 
+
 class Command(BaseCommand):
-    help = 'Regenerates the PDF for a Proposal'
+    help = "Regenerates the PDF for a Proposal"
 
     def add_arguments(self, parser):
         parser.add_argument(
-            'reference_numbers',
-            nargs='+',
+            "reference_numbers",
+            nargs="+",
             type=str,
             help="Space separated list of reference number for which PDFs \
             should be regenerated",
@@ -19,17 +20,21 @@ class Command(BaseCommand):
             proposal's state. This applies to ALL reference numbers provided.",
         )
 
-    def get_proposals(self, ):
+    def get_proposals(
+        self,
+    ):
         refnums = self.options["reference_numbers"]
         proposals = []
         for num in refnums:
             try:
                 proposal = Proposal.objects.get(reference_number=num)
             except Proposal.DoesNotExist:
-                raise CommandError(f"""
+                raise CommandError(
+                    f"""
                 Proposal with reference number {num} could not be found.
                 Aborting generation of all PDFs.
-                """)
+                """
+                )
             proposals.append(proposal)
         return proposals
 

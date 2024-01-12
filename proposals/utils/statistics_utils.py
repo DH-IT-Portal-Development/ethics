@@ -62,12 +62,9 @@ def get_review_qs_for_proposals(proposal_data: QuerySet) -> QuerySet:
     )
 
 
-def _get_review_qs_by_route(proposal_data: QuerySet, short_route: bool) -> \
-        QuerySet:
+def _get_review_qs_by_route(proposal_data: QuerySet, short_route: bool) -> QuerySet:
     """Returns all Reviews for the given proposals and taken route"""
-    return get_review_qs_for_proposals(proposal_data).filter(
-        short_route=short_route
-    )
+    return get_review_qs_for_proposals(proposal_data).filter(short_route=short_route)
 
 
 def get_qs_for_short_route_reviews(proposal_data: QuerySet) -> QuerySet:
@@ -162,9 +159,7 @@ def get_total_turnaround_time(review_data: QuerySet) -> Counter:
     :return: A Counter of (days, count) pairs
     :rtype: Counter
     """
-    return Counter(
-        [(x.date_end - x.date_start).days for x in review_data]
-    )
+    return Counter([(x.date_end - x.date_start).days for x in review_data])
 
 
 def get_average_turnaround_time(review_data: QuerySet) -> float:
@@ -177,9 +172,7 @@ def get_average_turnaround_time(review_data: QuerySet) -> float:
     using a float to represent partial days)
     :rtype: float
     """
-    return statistics.mean(
-        [(x.date_end - x.date_start).days for x in review_data]
-    )
+    return statistics.mean([(x.date_end - x.date_start).days for x in review_data])
 
 
 #
@@ -205,30 +198,33 @@ def get_registrations_for_proposal(proposal: Proposal) -> dict:
             for registration in study.observation.registrations.all():
                 if registration in ObsReg.objects.filter(needs_details=True):
                     registrations[study.order].append(
-                        'obs: {}: {}'.format(registration.description,
-                                             study.observation.registrations_details))
+                        "obs: {}: {}".format(
+                            registration.description,
+                            study.observation.registrations_details,
+                        )
+                    )
                 else:
                     registrations[study.order].append(
-                        'obs: {}'.format(registration.description))
+                        "obs: {}".format(registration.description)
+                    )
         if study.has_sessions:
             for session in study.session_set.all():
                 for task in session.task_set.all():
                     for registration in task.registrations.all():
-                        if registration in TasReg.objects.filter(
-                                needs_details=True):
+                        if registration in TasReg.objects.filter(needs_details=True):
                             registrations[study.order].append(
-                                's{}t{}: {}: {}'.format(
+                                "s{}t{}: {}: {}".format(
                                     session.order,
                                     task.order,
                                     registration.description,
-                                    task.registrations_details)
+                                    task.registrations_details,
+                                )
                             )
                         else:
                             registrations[study.order].append(
-                                's{}t{}: {}'.format(
-                                    session.order,
-                                    task.order,
-                                    registration.description)
+                                "s{}t{}: {}".format(
+                                    session.order, task.order, registration.description
+                                )
                             )
 
     return registrations
@@ -246,10 +242,10 @@ def get_studytypes_for_proposal(proposal: Proposal) -> dict:
 
     for study in proposal.study_set.all():
         if study.has_intervention:
-            study_types[study.order].append('intervention')
+            study_types[study.order].append("intervention")
         if study.has_observation:
-            study_types[study.order].append('observation')
+            study_types[study.order].append("observation")
         if study.has_sessions:
-            study_types[study.order].append('task')
+            study_types[study.order].append("task")
 
     return study_types

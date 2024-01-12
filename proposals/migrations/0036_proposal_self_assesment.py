@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0035_auto_20220607_1315'),
+        ("proposals", "0035_auto_20220607_1315"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proposal',
-            name='self_assesment',
-            field=models.TextField(blank=True, max_length=500, verbose_name='Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.'),
+            model_name="proposal",
+            name="self_assesment",
+            field=models.TextField(
+                blank=True,
+                max_length=500,
+                verbose_name="Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe ga je daarmee omgaat.",
+            ),
         ),
     ]

@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0015_auto_20211213_1503'),
+        ("observations", "0015_auto_20211213_1503"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='observation',
-            name='registrations',
-            field=models.ManyToManyField(help_text="Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>.", to='observations.Registration', verbose_name='Hoe wordt het gedrag geregistreerd?'),
+            model_name="observation",
+            name="registrations",
+            field=models.ManyToManyField(
+                help_text="Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>.",
+                to="observations.Registration",
+                verbose_name="Hoe wordt het gedrag geregistreerd?",
+            ),
         ),
     ]

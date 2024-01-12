@@ -21,77 +21,74 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-SECRET_KEY = 'j8dwfg6kvg=fnfs33s0x(t&0pfe)p9$3dm943)6hvurj6@=+4j'
+SECRET_KEY = "j8dwfg6kvg=fnfs33s0x(t&0pfe)p9$3dm943)6hvurj6@=+4j"
 DEBUG = True
 ALLOWED_HOSTS = []
-INTERNAL_IPS = ['127.0.0.1', 'localhost']
-WSGI_APPLICATION = 'fetc.wsgi.application'
+INTERNAL_IPS = ["127.0.0.1", "localhost"]
+WSGI_APPLICATION = "fetc.wsgi.application"
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'menu',
-    'debug_toolbar',
-    'django_extensions',
-    'rest_framework',
-
-    'main',
-    'uil.core',
-    'uil.vue',
-    'proposals',
-    'studies',
-    'tasks',
-    'interventions',
-    'observations',
-    'reviews',
-    'faqs',
-
-    'modeltranslation',
-    'impersonate',
-
-    'django.contrib.admin',
-    'django_user_agents',
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "menu",
+    "debug_toolbar",
+    "django_extensions",
+    "rest_framework",
+    "main",
+    "uil.core",
+    "uil.vue",
+    "proposals",
+    "studies",
+    "tasks",
+    "interventions",
+    "observations",
+    "reviews",
+    "faqs",
+    "modeltranslation",
+    "impersonate",
+    "django.contrib.admin",
+    "django_user_agents",
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django_user_agents.middleware.UserAgentMiddleware',
-    'impersonate.middleware.ImpersonateMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django_user_agents.middleware.UserAgentMiddleware",
+    "impersonate.middleware.ImpersonateMiddleware",
 ]
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-ROOT_URLCONF = 'fetc.urls'
+ROOT_URLCONF = "fetc.urls"
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = "/"
 
 # Determines what login options are displayed on the landing page. NOTE: this
 # does not determine which login screen is actually used as default when using
@@ -108,53 +105,50 @@ SHOW_LOGIN_DESCRIPTORS = DEBUG
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     },
     #'mysql': {
     #    'ENGINE': 'django.db.backends.mysql',
     #    'NAME': 'ethics',
     #    'USER': 'root',
     #    'PASSWORD': 'root++',
-    #}
+    # }
 }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'nl-NL'
+LANGUAGE_CODE = "nl-NL"
 LANGUAGES = (
-    ('nl', _('Nederlands')),
-    ('en', _('Engels')),
+    ("nl", _("Nederlands")),
+    ("en", _("Engels")),
 )
 USE_I18N = True
 USE_L10N = True
-LOCALE_PATHS = (
-    'locale',
-)
+LOCALE_PATHS = ("locale",)
 
-TIME_ZONE = 'Europe/Amsterdam'
+TIME_ZONE = "Europe/Amsterdam"
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # File handling
-MEDIA_ROOT = 'media'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = "media"
+MEDIA_URL = "/media/"
 
 # E-mail settings
-EMAIL_HOST = 'localhost'
+EMAIL_HOST = "localhost"
 EMAIL_PORT = 2525
-EMAIL_FROM = 'T.D.Mees@uu.nl'
-EMAIL_LOCAL_STAFF = 'T.D.Mees@uu.nl'
+EMAIL_FROM = "T.D.Mees@uu.nl"
+EMAIL_LOCAL_STAFF = "T.D.Mees@uu.nl"
 
 # Django Simple Menu
 # https://django-simple-menu.readthedocs.io/en/latest/index.html
@@ -163,10 +157,10 @@ MENU_SELECT_PARENTS = True
 MENU_HIDE_EMPTY = False
 
 # Base URL
-BASE_URL = '127.0.0.1:8000'
+BASE_URL = "127.0.0.1:8000"
 
 # CSRF Setting
-CSRF_FAILURE_VIEW = 'main.error_views.csrf_failure'
+CSRF_FAILURE_VIEW = "main.error_views.csrf_failure"
 
 try:
     from .constants import *
@@ -176,7 +170,7 @@ except ImportError:
 try:
     from .ldap_settings import *
 except ImportError:
-    print('Proceeding without LDAP settings')
+    print("Proceeding without LDAP settings")
 
 try:
     from .saml_settings import *
@@ -185,11 +179,11 @@ try:
     INSTALLED_APPS += SAML_APPS
     MIDDLEWARE += SAML_MIDDLEWARE
 
-    LOGIN_URL = reverse_lazy('saml-login')
+    LOGIN_URL = reverse_lazy("saml-login")
     SHOW_SAML_LOGIN = True
 
     # Custom proxy model for SAML attribute processing
-    SAML_USER_MODEL = 'main.SamlUserProxy'
+    SAML_USER_MODEL = "main.SamlUserProxy"
 
 except ImportError:
-    print('Proceeding without SAML settings')
+    print("Proceeding without SAML settings")

@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('interventions', '0007_auto_20200428_1337'),
+        ("interventions", "0007_auto_20200428_1337"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='intervention',
-            name='measurement',
-            field=models.TextField(blank=True, help_text='Wanneer je de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet je op de vorige pagina ook "takenonderzoek" aanvinken.', verbose_name='Hoe wordt het effect van de interventie gemeten?'),
+            model_name="intervention",
+            name="measurement",
+            field=models.TextField(
+                blank=True,
+                help_text='Wanneer je de deelnemer extra taken laat uitvoeren, dus een taak die niet behoort tot het reguliere onderwijspakket, dan moet je op de vorige pagina ook "takenonderzoek" aanvinken.',
+                verbose_name="Hoe wordt het effect van de interventie gemeten?",
+            ),
         ),
     ]

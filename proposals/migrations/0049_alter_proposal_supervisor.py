@@ -6,16 +6,22 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('proposals', '0048_auto_20231016_1202'),
+        ("proposals", "0048_auto_20231016_1202"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='supervisor',
-            field=models.ForeignKey(blank=True, help_text='Je aanvraag moet, als je alles hebt ingevuld, via de portal \n                    naar je promotor of begeleider gestuurd worden. Deze persoon \n                    is de eindverantwoordelijk onderzoeker, en zal de aanvraag \n                    vervolgens waar nodig kunnen aanpassen en indienen bij de FETC-GW.\n                    <br><br><strong>Belangrijk</strong>: als je je promotor of \n                    begeleider niet kunt vinden met dit veld, dan moeten zij \n                    waarschijnlijk eerst één keer inloggen in deze portal. \n                    Je kunt nog wel verder met de aanvraag, maar vergeet dit veld \n                    niet in te vullen voor je de aanvraag indient. Je aanvraag \n                    zal dan namelijk niet in behandeling kunnen worden genomen.', null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Promotor/Begeleider'),
+            model_name="proposal",
+            name="supervisor",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Je aanvraag moet, als je alles hebt ingevuld, via de portal \n                    naar je promotor of begeleider gestuurd worden. Deze persoon \n                    is de eindverantwoordelijk onderzoeker, en zal de aanvraag \n                    vervolgens waar nodig kunnen aanpassen en indienen bij de FETC-GW.\n                    <br><br><strong>Belangrijk</strong>: als je je promotor of \n                    begeleider niet kunt vinden met dit veld, dan moeten zij \n                    waarschijnlijk eerst één keer inloggen in deze portal. \n                    Je kunt nog wel verder met de aanvraag, maar vergeet dit veld \n                    niet in te vullen voor je de aanvraag indient. Je aanvraag \n                    zal dan namelijk niet in behandeling kunnen worden genomen.",
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Promotor/Begeleider",
+            ),
         ),
     ]

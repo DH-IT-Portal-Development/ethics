@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0009_faculty_samluserproxy'),
+        ("main", "0009_faculty_samluserproxy"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='faculty',
-            name='internal_name',
-            field=models.CharField(choices=[('humanities', 'Humanities'), ('other', 'Other')], default='other', max_length=50),
+            model_name="faculty",
+            name="internal_name",
+            field=models.CharField(
+                choices=[("humanities", "Humanities"), ("other", "Other")],
+                default="other",
+                max_length=50,
+            ),
         ),
     ]

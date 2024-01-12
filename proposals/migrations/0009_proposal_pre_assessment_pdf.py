@@ -6,15 +6,19 @@ import main.validators
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0008_relation_check_pre_assessment'),
+        ("proposals", "0008_relation_check_pre_assessment"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proposal',
-            name='pre_assessment_pdf',
-            field=models.FileField(blank=True, upload_to=b'', verbose_name='Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)', validators=[main.validators.validate_pdf_or_doc]),
+            model_name="proposal",
+            name="pre_assessment_pdf",
+            field=models.FileField(
+                blank=True,
+                upload_to=b"",
+                verbose_name="Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)",
+                validators=[main.validators.validate_pdf_or_doc],
+            ),
         ),
     ]

@@ -65,7 +65,7 @@ class UserAllowedToDecisionMixin(SingleObjectMixin):
                     raise self.ReviewClosed
             else:
                 raise ImproperlyConfigured(
-                    'UserAllowedToDecisionMixin used for a non-decision object!'
+                    "UserAllowedToDecisionMixin used for a non-decision object!"
                 )
         except self.ReviewClosed as e:
             ret = self.handle_review_closed(request, e)
@@ -88,7 +88,9 @@ class UserOrSecretaryAllowedMixin(SingleObjectMixin):
         current_user = self.request.user
 
         if isinstance(obj, Review):
-            secretary_reviewers = obj.decision_set.filter(reviewer__groups__name=settings.GROUP_SECRETARY)
+            secretary_reviewers = obj.decision_set.filter(
+                reviewer__groups__name=settings.GROUP_SECRETARY
+            )
             if secretary_reviewers and is_secretary(current_user):
                 return obj
             if not obj.decision_set.filter(reviewer=current_user):
@@ -100,15 +102,15 @@ class UserOrSecretaryAllowedMixin(SingleObjectMixin):
 
             if date_end:
                 raise PermissionDenied
-            if (self.request.user != reviewer) and \
-                    not (is_secretary(reviewer) and is_secretary(current_user)):
+            if (self.request.user != reviewer) and not (
+                is_secretary(reviewer) and is_secretary(current_user)
+            ):
                 raise PermissionDenied
 
         return obj
 
 
-class UsersOrGroupsAllowedMixin():
-
+class UsersOrGroupsAllowedMixin:
     def get_group_required(self):
         """Is overwritten to provide a dynamic list of
         groups which have access"""
@@ -124,7 +126,7 @@ class UsersOrGroupsAllowedMixin():
         return self.allowed_users
 
     def check_membership(self, groups):
-        """ Check required group(s) """
+        """Check required group(s)"""
         if self.current_user.is_superuser:
             return True
         return set(groups).intersection(set(self.current_user_groups))
@@ -132,14 +134,18 @@ class UsersOrGroupsAllowedMixin():
     def dispatch(self, request, *args, **kwargs):
         authorized = False
         self.current_user = request.user
-        self.current_user_groups = set(self.current_user.groups.values_list("name", flat=True))
+        self.current_user_groups = set(
+            self.current_user.groups.values_list("name", flat=True)
+        )
 
         # Default allowed groups and users
-        try: group_required = self.group_required
+        try:
+            group_required = self.group_required
         except AttributeError:
             self.group_required = None
 
-        try: allowed_users = self.allowed_users
+        try:
+            allowed_users = self.allowed_users
         except AttributeError:
             self.allowed_users = None
 
@@ -152,32 +158,30 @@ class UsersOrGroupsAllowedMixin():
         if not authorized:
             raise PermissionDenied
 
-        return super(UsersOrGroupsAllowedMixin, self).dispatch(
-            request, *args, **kwargs)
+        return super(UsersOrGroupsAllowedMixin, self).dispatch(request, *args, **kwargs)
 
 
 class CommitteeMixin(ContextMixin):
-
     @cached_property
     def committee(self):
-        group = self.kwargs.get('committee')
+        group = self.kwargs.get("committee")
 
         return Group.objects.get(name=group)
 
     @cached_property
     def committee_display_name(self):
-        committee = _('Algemene Kamer')
+        committee = _("Algemene Kamer")
 
-        if self.committee.name == 'LK':
-            committee = _('Linguïstiek Kamer')
+        if self.committee.name == "LK":
+            committee = _("Linguïstiek Kamer")
 
         return committee
 
     def get_context_data(self, **kwargs):
         context = super(CommitteeMixin, self).get_context_data(**kwargs)
 
-        context['committee'] = self.committee
-        context['committee_name'] = self.committee_display_name
+        context["committee"] = self.committee
+        context["committee_name"] = self.committee_display_name
 
         return context
 
@@ -187,6 +191,6 @@ class AutoReviewMixin(object):
         """Adds the results of the machine-wise review to the context."""
         context = super(AutoReviewMixin, self).get_context_data(**kwargs)
         reasons = auto_review(self.get_object().proposal)
-        context['auto_review_go'] = len(reasons) == 0
-        context['auto_review_reasons'] = reasons
+        context["auto_review_go"] = len(reasons) == 0
+        context["auto_review_reasons"] = reasons
         return context

@@ -4,15 +4,14 @@ from django.conf import settings
 
 import os
 
+
 def list_fixtures_in_dir(rel_path):
     files = os.listdir(rel_path)
 
     def is_fixture(fn):
         return fn.lower()[-5:] == ".json"
 
-    return [
-        os.path.join(rel_path, fn) for fn in files if is_fixture(fn)
-    ]
+    return [os.path.join(rel_path, fn) for fn in files if is_fixture(fn)]
 
 
 fixture_dirs = {

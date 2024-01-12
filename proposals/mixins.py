@@ -14,29 +14,29 @@ from .models import Proposal
 from .forms import ProposalForm
 from .utils.proposal_utils import pdf_link_callback
 
+
 class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
-    success_message = _('Aanvraag %(title)s bewerkt')
+    success_message = _("Aanvraag %(title)s bewerkt")
 
     def get_next_url(self):
         """If the Proposal has a Wmo model attached, go to update, else, go to create"""
         proposal = self.object
-        if hasattr(proposal, 'wmo'):
-            return reverse('proposals:wmo_update', args=(proposal.pk,))
+        if hasattr(proposal, "wmo"):
+            return reverse("proposals:wmo_update", args=(proposal.pk,))
         else:
-            return reverse('proposals:wmo_create', args=(proposal.pk,))
+            return reverse("proposals:wmo_create", args=(proposal.pk,))
 
 
 class ProposalContextMixin:
-
     def current_user_is_supervisor(self):
         return self.object.supervisor == self.request.user
 
     def get_context_data(self, **kwargs):
         context = super(ProposalContextMixin, self).get_context_data(**kwargs)
-        context['is_supervisor'] = self.current_user_is_supervisor()
-        context['is_practice'] = self.object.is_practice()
+        context["is_supervisor"] = self.current_user_is_supervisor()
+        context["is_practice"] = self.object.is_practice()
         return context
 
 
@@ -92,8 +92,8 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
             cd = "inline"
 
         self.content_disposition = '{}; filename="{}"'.format(
-            cd,
-            self.get_pdf_filename())
+            cd, self.get_pdf_filename()
+        )
 
         return self.content_disposition
 
@@ -104,8 +104,8 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         if not dest:
             # Create a Django response object, and specify content_type as pdf
             # This is the default when using this view
-            response = HttpResponse(content_type='application/pdf')
-            response['Content-Disposition'] = self.get_content_disposition()
+            response = HttpResponse(content_type="application/pdf")
+            response["Content-Disposition"] = self.get_content_disposition()
             dest = response
 
         # find the template and render it.
@@ -130,12 +130,11 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         )
 
         if pisa_status.err:
-            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+            return HttpResponse("We had some errors <pre>" + html + "</pre>")
         return dest
 
     def render_to_response(self, context, **response_kwargs):
-
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = self.get_content_disposition()
+        response = HttpResponse(content_type="application/pdf")
+        response["Content-Disposition"] = self.get_content_disposition()
 
         return self.get_pdf_response(context, **response_kwargs, dest=response)

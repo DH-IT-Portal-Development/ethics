@@ -4,8 +4,12 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from menu import Menu, MenuItem
 
-from main.templatetags.fetc_filters import in_general_chamber, \
-    in_linguistics_chamber, is_secretary, is_chair_or_secretary
+from main.templatetags.fetc_filters import (
+    in_general_chamber,
+    in_linguistics_chamber,
+    is_secretary,
+    is_chair_or_secretary,
+)
 
 
 def create_committee_menu(commitee: str) -> List[MenuItem]:
@@ -56,16 +60,22 @@ def create_committee_menu(commitee: str) -> List[MenuItem]:
     ]
 
 
-Menu.add_item("main", MenuItem(
-    _("Algemene Kamer"),
-    "#",
-    children=create_committee_menu('AK'),
-    check=lambda x: in_general_chamber(x.user)
-))
+Menu.add_item(
+    "main",
+    MenuItem(
+        _("Algemene Kamer"),
+        "#",
+        children=create_committee_menu("AK"),
+        check=lambda x: in_general_chamber(x.user),
+    ),
+)
 
-Menu.add_item("main", MenuItem(
-    _("Linguïstiek Kamer"),
-    "#",
-    children=create_committee_menu('LK'),
-    check=lambda x: in_linguistics_chamber(x.user)
-))
+Menu.add_item(
+    "main",
+    MenuItem(
+        _("Linguïstiek Kamer"),
+        "#",
+        children=create_committee_menu("LK"),
+        check=lambda x: in_linguistics_chamber(x.user),
+    ),
+)

@@ -10,8 +10,7 @@ register = template.Library()
 
 
 class CompareLinkNode(template.Node):
-
-    def __init__(self, type, obj, attribute=''):
+    def __init__(self, type, obj, attribute=""):
         self.type = type
         self.obj = template.Variable(obj)
         self.attribute = attribute
@@ -22,19 +21,11 @@ class CompareLinkNode(template.Node):
                 order=obj.study.order,
             )  # type: Study
 
-            args = [
-                parent_study.documents.pk,
-                obj.pk,
-                self.attribute
-            ]
+            args = [parent_study.documents.pk, obj.pk, self.attribute]
 
         else:
-            old_set = proposal.parent.documents_set.filter(
-                study=None
-            )
-            new_set = proposal.documents_set.filter(
-                study=None
-            )
+            old_set = proposal.parent.documents_set.filter(study=None)
+            new_set = proposal.documents_set.filter(study=None)
             new_index = -1
             for i, el in enumerate(new_set):
                 if el.pk == obj.pk:
@@ -45,13 +36,9 @@ class CompareLinkNode(template.Node):
             except (IndexError, AttributeError):
                 return None
 
-            args = [
-                old_obj,
-                obj.pk,
-                self.attribute
-            ]
+            args = [old_obj, obj.pk, self.attribute]
 
-        return reverse('proposals:compare_documents', args=args)
+        return reverse("proposals:compare_documents", args=args)
 
     def _get_observation_url(self, obj, proposal):
         order = obj.study.order
@@ -61,37 +48,33 @@ class CompareLinkNode(template.Node):
             return None
 
         if old_study.has_observation:
-            if not obj.approval_document or not \
-                    old_study.observation.approval_document:
+            if not obj.approval_document or not old_study.observation.approval_document:
                 return None
 
-            args = [
-                old_study.observation.pk,
-                obj.pk
-            ]
+            args = [old_study.observation.pk, obj.pk]
 
-            return reverse('proposals:compare_observation_approval', args=args)
+            return reverse("proposals:compare_observation_approval", args=args)
 
         return None
 
     def render(self, context):
-        "This function gets called when the template gets rendered"        
-        
+        "This function gets called when the template gets rendered"
+
         title = _("Toon verschillen")
-        img = get_static_file('proposals/images/arrow_divide.png')
+        img = get_static_file("proposals/images/arrow_divide.png")
         obj = self.obj.resolve(context)
 
         # Documents associated with a study
         # or extra Documents objects
-        if self.type == 'documents':
+        if self.type == "documents":
             proposal = obj.proposal
             if not proposal.parent:
                 return ""
 
             url = self._get_documents_url(obj, proposal)
-            
+
         # Observations, possibly unused
-        elif self.type == 'observation':
+        elif self.type == "observation":
             proposal = obj.study.proposal
             if not proposal.parent:
                 return ""
@@ -99,7 +82,7 @@ class CompareLinkNode(template.Node):
             url = self._get_observation_url(obj, proposal)
 
         # General proposal docs
-        elif self.type == 'proposal':
+        elif self.type == "proposal":
             if not obj.parent:
                 return ""
 
@@ -109,10 +92,10 @@ class CompareLinkNode(template.Node):
                 self.attribute,
             ]
 
-            url = reverse('proposals:compare_proposal_docs', args=args)
-            
+            url = reverse("proposals:compare_proposal_docs", args=args)
+
         # METC Decision files
-        elif self.type == 'wmo':
+        elif self.type == "wmo":
             if not obj.proposal.parent or not obj.proposal.parent.wmo:
                 return ""
 
@@ -121,19 +104,21 @@ class CompareLinkNode(template.Node):
                 obj.pk,
             ]
 
-            url = reverse('proposals:compare_wmo_decision', args=args)
+            url = reverse("proposals:compare_wmo_decision", args=args)
         else:
             return ""
 
         if url is None:
             return ""
 
-        return '<a href="{url}" target="_blank" class="icon-link">' \
-               '<img src="{img}" title="{title}">' \
-               '</a>'.format(
-            url=url,
-            img=img,
-            title=title,
+        return (
+            '<a href="{url}" target="_blank" class="icon-link">'
+            '<img src="{img}" title="{title}">'
+            "</a>".format(
+                url=url,
+                img=img,
+                title=title,
+            )
         )
 
 
@@ -141,7 +126,7 @@ class CompareLinkNode(template.Node):
 def get_compare_link(parser, token):
     """This function splits up the arguments given inside the tag
     and passes them on to the CompareLinkNode class"""
-    
+
     parts = token.split_contents()
 
     if not (3 <= len(parts) < 5):
@@ -151,11 +136,11 @@ def get_compare_link(parser, token):
         )
 
     args = {
-        'type': parts[1],
-        'obj': parts[2],
+        "type": parts[1],
+        "obj": parts[2],
     }
 
     if len(parts) == 4:
-        args['attribute'] = parts[3]
+        args["attribute"] = parts[3]
 
     return CompareLinkNode(**args)

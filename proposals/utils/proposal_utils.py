@@ -20,11 +20,16 @@ from main.utils import AvailableURL, get_secretary
 from studies.utils import study_urls
 
 
-__all__ = ['available_urls', 'generate_ref_number',
-           'generate_revision_ref_number', 'generate_pdf',
-           'check_local_facilities', 'notify_local_staff',
-           'FilenameFactory', 'OverwriteStorage',
-           ]
+__all__ = [
+    "available_urls",
+    "generate_ref_number",
+    "generate_revision_ref_number",
+    "generate_pdf",
+    "check_local_facilities",
+    "notify_local_staff",
+    "FilenameFactory",
+    "OverwriteStorage",
+]
 
 
 def available_urls(proposal):
@@ -36,60 +41,63 @@ def available_urls(proposal):
     urls = list()
 
     if proposal.is_pre_assessment:
-        urls.append(AvailableURL(url=reverse('proposals:update_pre', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de aanvraag')))
+        urls.append(
+            AvailableURL(
+                url=reverse("proposals:update_pre", args=(proposal.pk,)),
+                title=_("Algemene informatie over de aanvraag"),
+            )
+        )
 
-        wmo_url = AvailableURL(title=_('Ethische toetsing nodig door een METC?'))
-        if hasattr(proposal, 'wmo'):
-            wmo_url.url = reverse('proposals:wmo_update_pre', args=(proposal.wmo.pk,))
+        wmo_url = AvailableURL(title=_("Ethische toetsing nodig door een METC?"))
+        if hasattr(proposal, "wmo"):
+            wmo_url.url = reverse("proposals:wmo_update_pre", args=(proposal.wmo.pk,))
         else:
-            wmo_url.url = reverse('proposals:wmo_create_pre', args=(proposal.pk,))
+            wmo_url.url = reverse("proposals:wmo_create_pre", args=(proposal.pk,))
         urls.append(wmo_url)
 
-        submit_url = AvailableURL(title=_('Aanvraag voor voortoetsing klaar voor versturen'))
-        if hasattr(proposal, 'wmo'):
-            submit_url.url = reverse('proposals:submit_pre', args=(proposal.pk,))
+        submit_url = AvailableURL(
+            title=_("Aanvraag voor voortoetsing klaar voor versturen")
+        )
+        if hasattr(proposal, "wmo"):
+            submit_url.url = reverse("proposals:submit_pre", args=(proposal.pk,))
         urls.append(submit_url)
     elif proposal.is_pre_approved:
-        urls.append(AvailableURL(url=reverse('proposals:update_pre_approved', args=(proposal.pk,)),
-                                 title=_('Algemene informatie over de aanvraag')))
+        urls.append(
+            AvailableURL(
+                url=reverse("proposals:update_pre_approved", args=(proposal.pk,)),
+                title=_("Algemene informatie over de aanvraag"),
+            )
+        )
 
         submit_url = AvailableURL(
-            title=_('Aanvraag voor voortoetsing klaar voor versturen'),
+            title=_("Aanvraag voor voortoetsing klaar voor versturen"),
             margin=0,
-            url = reverse('proposals:submit_pre_approved', args=(proposal.pk,))
+            url=reverse("proposals:submit_pre_approved", args=(proposal.pk,)),
         )
         urls.append(submit_url)
     else:
-        update_url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
+        update_url = (
+            "proposals:update_practice"
+            if proposal.is_practice()
+            else "proposals:update"
+        )
         urls.append(
             AvailableURL(
                 url=reverse(update_url, args=(proposal.pk,)),
-                title=_('Algemeen'),
+                title=_("Algemeen"),
             )
         )
 
-        wmo_url = AvailableURL(
-            title=_('METC')
-        )
-        if hasattr(proposal, 'wmo'):
-            wmo_url.url = reverse(
-                'proposals:wmo_update',
-                args=(proposal.wmo.pk,)
-            )
+        wmo_url = AvailableURL(title=_("METC"))
+        if hasattr(proposal, "wmo"):
+            wmo_url.url = reverse("proposals:wmo_update", args=(proposal.wmo.pk,))
         else:
-            wmo_url.url = reverse(
-                'proposals:wmo_create',
-                args=(proposal.pk,)
-            )
+            wmo_url.url = reverse("proposals:wmo_create", args=(proposal.pk,))
         urls.append(wmo_url)
 
-        studies_url = AvailableURL(title=_('Trajecten'))
-        if hasattr(proposal, 'wmo'):
-            studies_url.url = reverse(
-                        'proposals:study_start',
-                        args=(proposal.pk,)
-                    )
+        studies_url = AvailableURL(title=_("Trajecten"))
+        if hasattr(proposal, "wmo"):
+            studies_url.url = reverse("proposals:study_start", args=(proposal.pk,))
 
             if proposal.study_set.count() > 0:
                 _add_study_urls(studies_url, proposal)
@@ -97,37 +105,28 @@ def available_urls(proposal):
         urls.append(studies_url)
 
         consent_docs_url = AvailableURL(
-            title=_('Uploaden'), 
-            url=reverse(
-                'proposals:consent', 
-                args=(proposal.pk, )
-                )
-            )
+            title=_("Uploaden"), url=reverse("proposals:consent", args=(proposal.pk,))
+        )
         translated_docs_url = AvailableURL(
-            title=_('Vertaling'), 
-            url=reverse(
-                'proposals:translated', 
-                args=(proposal.pk, )
-                )
-            )
+            title=_("Vertaling"),
+            url=reverse("proposals:translated", args=(proposal.pk,)),
+        )
         consent_url = AvailableURL(
-            title=_('Formulieren'), 
-            children=[
-                translated_docs_url, 
-                consent_docs_url
-                ]
-            )
+            title=_("Formulieren"), children=[translated_docs_url, consent_docs_url]
+        )
 
-        data_management_url = AvailableURL(title=_('Datamanagement'))
-        submit_url = AvailableURL(title=_('Versturen'))
+        data_management_url = AvailableURL(title=_("Datamanagement"))
+        submit_url = AvailableURL(title=_("Versturen"))
 
         if proposal.last_study() and proposal.last_study().is_completed():
-            consent_url.url = reverse('proposals:translated', args=(proposal.pk, ))
-            data_management_url.url = reverse('proposals:data_management', args=(proposal.pk, ))
-            submit_url.url = reverse('proposals:submit', args=(proposal.pk,))
+            consent_url.url = reverse("proposals:translated", args=(proposal.pk,))
+            data_management_url.url = reverse(
+                "proposals:data_management", args=(proposal.pk,)
+            )
+            submit_url.url = reverse("proposals:submit", args=(proposal.pk,))
 
         if proposal.translated_forms is not None:
-            consent_url.url = reverse('proposals:consent', args=(proposal.pk,))
+            consent_url.url = reverse("proposals:consent", args=(proposal.pk,))
 
         urls.append(consent_url)
         urls.append(data_management_url)
@@ -148,9 +147,7 @@ def _add_study_urls(main_element, proposal):
     # Otherwise, add them all with the parent node
     prev_study_completed = True
     for study in proposal.study_set.all():
-        main_element.children.append(
-            study_urls(study, prev_study_completed)
-        )
+        main_element.children.append(study_urls(study, prev_study_completed))
         prev_study_completed = study.is_completed()
 
 
@@ -169,7 +166,7 @@ def generate_ref_number():
     proposal_number = _get_next_proposal_number(current_year)
     version_number = 1
 
-    return '{}-{:03}-{:02}'.format(
+    return "{}-{:03}-{:02}".format(
         current_year_formatted,
         proposal_number,
         version_number,
@@ -192,7 +189,7 @@ def generate_revision_ref_number(parent):
     will use the next available version number (this might not be the same as
     parent.vr + 1, as that one might already exist).
     """
-    parent_parts = parent.reference_number.split('-')
+    parent_parts = parent.reference_number.split("-")
 
     # If we have 4 parts, the ref.number is in the user-nr-vr-year format
     if len(parent_parts) == 4:
@@ -211,7 +208,7 @@ def _generate_revision_ref_number_oldformat(parent, version):
     """
     from ..models import Proposal
 
-    parent_parts = parent.reference_number.split('-')
+    parent_parts = parent.reference_number.split("-")
 
     old_proposal_number = int(parent_parts[1])
     proposal_number = -1
@@ -233,18 +230,18 @@ def _generate_revision_ref_number_oldformat(parent, version):
     # part and the same year. (This way we find both old and new style ref.nums)
     num_versions = Proposal.objects.filter(
         Q(
-            reference_number__istartswith="{}-{:02}".format(username,
-                                                            old_proposal_number),
-            reference_number__endswith=str(year)
-        ) | Q(reference_number__istartswith="{}-{:03}".format(year,
-                                                              proposal_number))
-
+            reference_number__istartswith="{}-{:02}".format(
+                username, old_proposal_number
+            ),
+            reference_number__endswith=str(year),
+        )
+        | Q(reference_number__istartswith="{}-{:03}".format(year, proposal_number))
     ).count()
 
     # The new revision is number of current versions + 1
     version_number = num_versions + 1
 
-    return '{}-{:03}-{:02}'.format(
+    return "{}-{:03}-{:02}".format(
         year[2:],
         proposal_number,
         version_number,
@@ -257,7 +254,7 @@ def _generate_revision_ref_number_newformat(parent):
     """
     from ..models import Proposal
 
-    parent_parts = parent.reference_number.split('-')
+    parent_parts = parent.reference_number.split("-")
     year = int(parent_parts[0])
     proposal_number = int(parent_parts[1])
 
@@ -269,14 +266,14 @@ def _generate_revision_ref_number_newformat(parent):
     # Loop through all them, and note the newest version seen
     newest = None
     for parent_proposal in parent_proposals:
-        version = parent_proposal.reference_number.split('-')[2]
+        version = parent_proposal.reference_number.split("-")[2]
         version = int(version)
         if not newest or version > newest:
             newest = version
 
     version_number = newest + 1
 
-    return '{}-{:03}-{:02}'.format(
+    return "{}-{:03}-{:02}".format(
         year,
         proposal_number,
         version_number,
@@ -289,21 +286,27 @@ def _get_next_proposal_number(current_year) -> int:
     try:
         # We count all proposals for this year by selecting all proposals
         # with a reference number ending with the current year.
-        last_proposal = Proposal.objects.filter(
-            reference_number__startswith="{}-".format(str(current_year)[2:])
-        ).order_by('-reference_number').first()
+        last_proposal = (
+            Proposal.objects.filter(
+                reference_number__startswith="{}-".format(str(current_year)[2:])
+            )
+            .order_by("-reference_number")
+            .first()
+        )
 
         if not last_proposal:
             return 1
 
-        _, num, _ = last_proposal.reference_number.split('-', maxsplit=2)
+        _, num, _ = last_proposal.reference_number.split("-", maxsplit=2)
 
         return int(num) + 1
     except Proposal.DoesNotExist:
         return 1
 
 
-def generate_pdf(proposal,):
+def generate_pdf(
+    proposal,
+):
     """
     Returns a PDF of a proposal using the ProposalAsPdf view
     and the proposal's own recommended PDF template.
@@ -328,6 +331,7 @@ def generate_pdf(proposal,):
 
     return pdf
 
+
 def pdf_link_callback(uri, rel):
     """
     Convert HTML URIs to absolute system paths so xhtml2pdf can access those
@@ -340,12 +344,12 @@ def pdf_link_callback(uri, rel):
         if not isinstance(result, (list, tuple)):
             result = [result]
         result = list(os.path.realpath(path) for path in result)
-        path=result[0]
+        path = result[0]
     else:
-        sUrl = settings.STATIC_URL        # Typically /static/
-        sRoot = settings.STATIC_ROOT      # Typically /home/userX/project_static/
-        mUrl = settings.MEDIA_URL         # Typically /media/
-        mRoot = settings.MEDIA_ROOT       # Typically /home/userX/project_static/media/
+        sUrl = settings.STATIC_URL  # Typically /static/
+        sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
+        mUrl = settings.MEDIA_URL  # Typically /media/
+        mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
 
         if uri.startswith(mUrl):
             path = os.path.join(mRoot, uri.replace(mUrl, ""))
@@ -356,9 +360,7 @@ def pdf_link_callback(uri, rel):
 
     # make sure that file exists
     if not os.path.isfile(path):
-        raise Exception(
-            'media URI must start with %s or %s' % (sUrl, mUrl)
-        )
+        raise Exception("media URI must start with %s or %s" % (sUrl, mUrl))
     return path
 
 
@@ -407,23 +409,25 @@ def notify_local_staff(proposal):
     """
     # Change language to Dutch for this e-mail, but save the current language to reset it later
     current_language = get_language()
-    activate('nl')
+    activate("nl")
 
     secretary = get_secretary()
 
     if proposal.is_revision:
-        subject = _('FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten')
+        subject = _("FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten")
     else:
-        subject = _('FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten')
+        subject = _("FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten")
 
     params = {
-        'secretary': secretary.get_full_name(),
-        'proposal': proposal,
-        'applicants': [applicant.get_full_name() for applicant in proposal.applicants.all()],
-        'facilities': sorted(check_local_facilities(proposal).items()),
-        'is_revision': proposal.is_revision,
+        "secretary": secretary.get_full_name(),
+        "proposal": proposal,
+        "applicants": [
+            applicant.get_full_name() for applicant in proposal.applicants.all()
+        ],
+        "facilities": sorted(check_local_facilities(proposal).items()),
+        "is_revision": proposal.is_revision,
     }
-    msg_plain = render_to_string('mail/local_staff_notify.txt', params)
+    msg_plain = render_to_string("mail/local_staff_notify.txt", params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [settings.EMAIL_LOCAL_STAFF])
 
     # Reset the current language
@@ -432,11 +436,10 @@ def notify_local_staff(proposal):
 
 @deconstructible
 class FilenameFactory:
-    '''A callable class which can be passed to upload_to() in FileFields
-    and can be deconstructed for migrations'''
+    """A callable class which can be passed to upload_to() in FileFields
+    and can be deconstructed for migrations"""
 
     def __init__(self, document_type):
-
         # document_type is a string describing the document kind,
         # such as "Informed_Consent"
         self.document_type = document_type
@@ -460,7 +463,7 @@ class FilenameFactory:
             # In case of Documents objects
             proposal = instance.proposal
             try:
-                trajectory = 'T' + str(instance.study.order)
+                trajectory = "T" + str(instance.study.order)
             except AttributeError:
                 # No associated study, so this is an extra Documents instance
                 # We need to give it an index so they don't overwrite each other
@@ -468,50 +471,51 @@ class FilenameFactory:
 
                 # Again, to prevent circular imports
                 from studies.models import Documents
-                qs = Documents.objects.filter(
-                    proposal=proposal).filter(
-                        study=None)
+
+                qs = Documents.objects.filter(proposal=proposal).filter(study=None)
 
                 for docs in qs:
                     # The current Documents instance might not yet be saved and
                     # therefore not exist in the QS. Hence the for loop instead of
                     # the more traditional while
                     if docs == instance:
-                        break # i.e. this may never happen
+                        break  # i.e. this may never happen
                     extra_index += 1
 
                 # Unknown
-                trajectory = 'Extra' + str(extra_index)
+                trajectory = "Extra" + str(extra_index)
 
         chamber = proposal.reviewing_committee.name
         lastname = proposal.created_by.last_name
         refnum = proposal.reference_number
 
-        extension = '.' + original_fn.split('.')[-1][-7:] # At most 7 chars seems reasonable
+        extension = (
+            "." + original_fn.split(".")[-1][-7:]
+        )  # At most 7 chars seems reasonable
 
-        fn_parts = ['FETC',
-                    chamber,
-                    refnum,
-                    lastname,
-                    trajectory,
-                    self.document_type,
-                    ]
+        fn_parts = [
+            "FETC",
+            chamber,
+            refnum,
+            lastname,
+            trajectory,
+            self.document_type,
+        ]
 
         def not_empty(item):
             if item == None:
                 return False
-            if str(item) == '':
+            if str(item) == "":
                 return False
             return True
 
         # Translations will trip up join(), so we convert them here
         fn_parts = [str(p) for p in filter(not_empty, fn_parts)]
 
-        return '-'.join(fn_parts) + extension
+        return "-".join(fn_parts) + extension
 
 
 class OverwriteStorage(FileSystemStorage):
-
     def get_available_name(self, name, **kwargs):
         """Returns a filename that's free on the target storage system, and
         available for new content to be written to.

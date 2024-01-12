@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('reviews', '0003_decision_go_char'),
+        ("reviews", "0003_decision_go_char"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='review',
-            name='short_route',
-            field=models.NullBooleanField(default=None, verbose_name='Route'),
+            model_name="review",
+            name="short_route",
+            field=models.NullBooleanField(default=None, verbose_name="Route"),
         ),
     ]

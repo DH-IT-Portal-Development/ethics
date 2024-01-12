@@ -4,7 +4,7 @@ from django import template
 register = template.Library()
 
 
-@register.filter(name='zip_equalize_lists')
+@register.filter(name="zip_equalize_lists")
 def zip_equalize_lists(a, b):
     """
     A zip implementation which will not stop when reaching the end of the
@@ -13,7 +13,7 @@ def zip_equalize_lists(a, b):
 
     a = [] if a is None else list(a)
     b = [] if b is None else list(b)
-    
+
     a_len = len(a)
     b_len = len(b)
     diff = abs(a_len - b_len)

@@ -4,20 +4,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0016_auto_20210301_1626'),
+        ("studies", "0016_auto_20210301_1626"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='study',
-            name='age_groups',
-            field=models.ManyToManyField(help_text='De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.', to='studies.AgeGroup', verbose_name='Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
+            model_name="study",
+            name="age_groups",
+            field=models.ManyToManyField(
+                help_text="De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.",
+                to="studies.AgeGroup",
+                verbose_name="Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?",
+            ),
         ),
         migrations.AlterField(
-            model_name='study',
-            name='legally_incapable',
-            field=models.BooleanField(default=False, help_text='Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen.', verbose_name='Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?'),
+            model_name="study",
+            name="legally_incapable",
+            field=models.BooleanField(
+                default=False,
+                help_text="Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen.",
+                verbose_name="Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?",
+            ),
         ),
     ]

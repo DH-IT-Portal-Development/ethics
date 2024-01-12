@@ -6,33 +6,42 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0006_auto_20180822_1207'),
+        ("observations", "0006_auto_20180822_1207"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='observation',
-            name='details_frequency',
-            field=models.TextField(default='', verbose_name='Beschrijf hoe vaak en hoe lang de observant wordt geobserveerd.'),
+            model_name="observation",
+            name="details_frequency",
+            field=models.TextField(
+                default="",
+                verbose_name="Beschrijf hoe vaak en hoe lang de observant wordt geobserveerd.",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='observation',
-            name='details_who',
-            field=models.TextField(default=' ', verbose_name='Beschrijf wie er wordt geobserveerd.'),
+            model_name="observation",
+            name="details_who",
+            field=models.TextField(
+                default=" ", verbose_name="Beschrijf wie er wordt geobserveerd."
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='observation',
-            name='details_why',
-            field=models.TextField(default=' ', verbose_name='Beschrijf waarom er wordt geobserveerd.'),
+            model_name="observation",
+            name="details_why",
+            field=models.TextField(
+                default=" ", verbose_name="Beschrijf waarom er wordt geobserveerd."
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='observation',
-            name='version',
-            field=models.PositiveIntegerField(default=2, verbose_name='INTERNAL - Describes which version of the observation model is used'),
+            model_name="observation",
+            name="version",
+            field=models.PositiveIntegerField(
+                default=2,
+                verbose_name="INTERNAL - Describes which version of the observation model is used",
+            ),
         ),
     ]

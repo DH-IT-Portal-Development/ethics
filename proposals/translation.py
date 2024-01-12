@@ -5,18 +5,19 @@ from .models import Funding, Relation, Institution, StudentContext
 
 @register(Funding)
 class FundingTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ("description",)
 
 
 @register(Institution)
 class FundingTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ("description",)
 
 
 @register(Relation)
 class RelationTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ("description",)
+
 
 @register(StudentContext)
 class RelationTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ("description",)

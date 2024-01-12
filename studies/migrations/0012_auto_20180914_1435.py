@@ -6,30 +6,29 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0011_auto_20180914_1358'),
+        ("studies", "0011_auto_20180914_1358"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='study',
-            name='briefing',
+            model_name="study",
+            name="briefing",
         ),
         migrations.RemoveField(
-            model_name='study',
-            name='director_consent_declaration',
+            model_name="study",
+            name="director_consent_declaration",
         ),
         migrations.RemoveField(
-            model_name='study',
-            name='director_consent_information',
+            model_name="study",
+            name="director_consent_information",
         ),
         migrations.RemoveField(
-            model_name='study',
-            name='informed_consent',
+            model_name="study",
+            name="informed_consent",
         ),
         migrations.RemoveField(
-            model_name='study',
-            name='parents_information',
+            model_name="study",
+            name="parents_information",
         ),
     ]
