@@ -25,3 +25,5 @@ cdh-django-core[federated-auth] @ git+https://github.com/CentreForDigitalHumanit
 python-magic
 pdftotext
 bpython
+black
+djlint
