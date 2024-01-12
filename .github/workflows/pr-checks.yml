@@ -4,6 +4,7 @@ on:
   pull_request:
 jobs:
   check-migrations:
+    name: Check if there are any missing migrations
     runs-on: ubuntu-latest
     steps:
       - name: Install OS dependencies
@@ -23,6 +24,7 @@ jobs:
         run: |
           python manage.py makemigrations --check --dry-run
   check-djlint:
+    name: Check if DJLint thinks everything is correctly formatted
     runs-on: ubuntu-latest
     steps:
       - name: Install OS dependencies
@@ -38,9 +40,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Check for missing migrations
+      - name: Run DJLint
+        # This exclude flag is needed because Github downloads dependencies there, which causes djlint to judge those
         run: |
-          djlint . --check
+          djlint . --check --exclude src
   black-check: # Rhymes with blackjack :D
     name: Check if Black thinks everything is correctly formatted
     runs-on: ubuntu-latest
@@ -48,5 +51,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
         with:
-          src: . # Change if you don't want to run black on the entire repo.
+          src: .
 
