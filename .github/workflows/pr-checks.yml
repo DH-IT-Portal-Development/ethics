@@ -4,6 +4,7 @@ on:
   pull_request:
 jobs:
   check-migrations:
+    name: Check if there are any missing migrations
     runs-on: ubuntu-latest
     steps:
       - name: Install OS dependencies
@@ -23,6 +24,7 @@ jobs:
         run: |
           python manage.py makemigrations --check --dry-run
   check-djlint:
+    name: Check if DJLint thinks everything is correctly formatted
     runs-on: ubuntu-latest
     steps:
       - name: Install OS dependencies
@@ -40,6 +42,7 @@ jobs:
           pip install -r requirements.txt
       - name: Check for missing migrations
         run: |
+          tree
           djlint . --check
   black-check: # Rhymes with blackjack :D
     name: Check if Black thinks everything is correctly formatted
