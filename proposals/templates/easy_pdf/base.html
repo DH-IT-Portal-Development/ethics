@@ -10,13 +10,9 @@
             {% block layout_style %}
                 <style type="text/css">
                     @page {
-                        size: {
-                                {
-                                pagesize|default: "A4"
-                            }
-                        }
-
-                        ;
+                        {# djlint:off #}
+                        size: {{ pagesize|default:"A4" }};
+                        {# djlint:on #}
                         margin-left: 2.5cm;
                         margin-right: 2.5cm;
                         margin-top: 2.5cm;
